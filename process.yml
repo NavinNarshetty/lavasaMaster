@@ -1,0 +1,5 @@
+apps:
+  - script: "app.js"
+    name: "Node App - Port"
+    watch: false
+    args: "--prod"
