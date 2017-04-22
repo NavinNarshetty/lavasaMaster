@@ -1,0 +1,47 @@
+{
+    "title": "Registration",
+    "description": "List of Registered School",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "School Name",
+        "isSort": "",
+        "tableRef": "_id"
+    }, {
+        "name": "School Type",
+        "isSort": "",
+        "tableRef": "schoolDetails.schoolType"
+    }, {
+        "name": "School Category",
+        "isSort": "",
+        "tableRef": "schoolDetails.schoolCategory"
+    }],
+    "action": [{
+        "name": "edit",
+        "icon": "fa-pencil",
+        "buttonClass": "btn-primary",
+        "type": "page",
+        "action": "editRegistration",
+        "fieldsToSend": {
+            "_id": "_id"
+        }
+    }, {
+        "name": "delete",
+        "icon": "fa-trash",
+        "buttonClass": "btn-danger",
+        "type": "apiCallConfirm",
+        "title": "Delete User",
+        "content": "Are you sure you want to delete User?",
+        "api": "registration/delete",
+        "fieldsToSend": {
+            "name": "_id",
+            "value": "_id"
+        }
+    }],
+
+    "apiCall": {
+        "url": "Registration/search",
+        "params": "_id"
+    }
+}

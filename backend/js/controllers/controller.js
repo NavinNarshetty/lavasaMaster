@@ -12,7 +12,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         if ($.jStorage.get("accessToken")) {
 
         } else {
-            $state.go("login");
+            // $state.go("login");
         }
     })
 
@@ -1095,7 +1095,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         };
     })
 
-    .controller('headerCtrl', function ($scope, TemplateService, $uibModal) {
+    .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
         $scope.template = TemplateService;
         $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
             $(window).scrollTop(0);

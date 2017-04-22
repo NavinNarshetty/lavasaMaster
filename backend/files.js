@@ -37,24 +37,24 @@ module.exports = [
     'bower_components/textAngular/dist/textAngular.min.js',
 
     //App.js
-    'backend/js/app.js',
+    'js/app.js',
 
     // Languages
-    'backend/js/languages/language.js',
+    'js/languages/language.js',
 
     // Directives
-    'backend/js/directives/directive.js',
+    'js/directives/directive.js',
 
     // Filters
-    'backend/js/filters/filter.js',
+    'js/filters/filter.js',
 
     // Services
-    'backend/js/services/template.js',
-    'backend/js/services/jsonService.js',
+    'js/services/template.js',
+    'js/services/jsonService.js',
 
     //Factories
-    'backend/js/factories/navigation.js',
+    'js/factories/navigation.js',
 
     // Contorllers
-    'backend/js/controllers/controller.js',
+    'js/controllers/controller.js',
 ];

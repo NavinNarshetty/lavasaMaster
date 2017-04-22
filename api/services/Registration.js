@@ -71,21 +71,7 @@ var schema = new Schema({
             type: String
         }]
     },
-    registrationFee: {
-        cash: {
-            type: Boolean,
-            default: "false"
-        },
-        chequeDD: {
-            type: Boolean,
-            default: "false"
-        },
-
-        onlinePAYU: {
-            type: Boolean,
-            default: "false"
-        },
-    }
+    registrationFee: String
 });
 
 schema.plugin(deepPopulate, {});
@@ -105,38 +91,57 @@ var model = {
 
     saveRegistrationForm: function (data, callback) {
         var schoolname = data.schoolname;
-        // Registration.findOne({}, {
-        //     _id: 0,
-        //     // sfaID: 1,
-        //     // schoolName: schoolname
-        // }).sort({
-        //     createdAt: -1
-        // }).exec(function (err, schoolData) {
-        //     console.log("schoolData", schoolData);
-        //     if (err) {
-        //         console.log(err);
-        //         callback(err, null);
-        //     } else {
-        //         if (_.isEmpty(schoolData)) {
-        //             console.log("isempty");
-        //         } else {
-        // data.sfaID = "SFA" + 1;
-        Registration.saveData(data, function (err, registerData) {
-            console.log("orderData", registerData);
+
+        Registration.findOne({}, {
+            _id: 0,
+            registerID: 1,
+            sfaID: 1,
+
+        }).sort({
+            createdAt: -1
+        }).exec(function (err, schoolData) {
+            console.log("schoolData", schoolData);
             if (err) {
-                console.log("err", err);
-                callback("There was an error while saving order", null);
+                console.log(err);
+                callback(err, null);
             } else {
-                if (_.isEmpty(registerData)) {
-                    callback("No order data found", null);
+                if (_.isEmpty(schoolData)) {
+                    data.registerID = 1;
+                    data.sfaID = "SFA0";
+                    Registration.saveData(data, function (err, registerData) {
+                        console.log("orderData", registerData);
+                        if (err) {
+                            console.log("err", err);
+                            callback("There was an error while saving order", null);
+                        } else {
+                            if (_.isEmpty(registerData)) {
+                                callback("No order data found", null);
+                            } else {
+                                callback(null, registerData);
+                            }
+                        }
+                    });
+                    console.log("isempty");
                 } else {
-                    callback(null, registerData);
+                    console.log(schoolData.registerID);
+                    data.registerID = schoolData.registerID + 1;
+                    data.sfaID = "SFA" + data.registerID;
+                    Registration.saveData(data, function (err, registerData) {
+                        console.log("Registration", registerData);
+                        if (err) {
+                            console.log("err", err);
+                            callback("There was an error while saving order", null);
+                        } else {
+                            if (_.isEmpty(registerData)) {
+                                callback("No order data found", null);
+                            } else {
+                                callback(null, registerData);
+                            }
+                        }
+                    });
                 }
             }
         });
-        //         }
-        //     }
-        // });
     },
 
     getAllRegistrationDetails: function (data, callback) {

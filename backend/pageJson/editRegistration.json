@@ -1,0 +1,168 @@
+{
+    "title": "Edit School Registration",
+    "name": "User",
+    "jsonPage": "viewRegistration",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+            "name": "School Name",
+            "type": "text",
+            "tableRef": "schoolDetails.schoolName",
+            "placeholder": "Enter School Name",
+            "id": "name"
+        }, {
+            "name": "School Type",
+            "type": "text",
+            "tableRef": "schoolDetails.schoolType",
+            "placeholder": "Enter type",
+            "id": "type"
+        }, {
+            "name": "School Category",
+            "type": "text",
+            "tableRef": "schoolDetails.schoolCategory",
+            "placeholder": "Enter category",
+            "id": "category"
+        }, {
+            "name": "Affiliated Board",
+            "type": "text",
+            "tableRef": "schoolDetails.affiliatedBoard",
+            "placeholder": "Enter Board",
+            "id": "board"
+        }, {
+            "name": "School Logo",
+            "type": "image",
+            "size": "250 x 250",
+            "view": true,
+            "disabled": true,
+            "tableRef": "schoolDetails.schoolLogo",
+            "placeholder": "Upload Logo",
+            "id": "logo"
+        }, {
+            "name": "School Address",
+            "type": "text",
+            "tableRef": "contactDetails.schoolAddress",
+            "placeholder": "Enter Address",
+            "id": "address"
+        }, {
+            "name": "State",
+            "type": "text",
+            "tableRef": "contactDetails.state",
+            "placeholder": "Enter State",
+            "id": "state"
+        }, {
+            "name": "District",
+            "type": "text",
+            "tableRef": "contactDetails.district",
+            "placeholder": "Enter district",
+            "id": "district"
+        }, {
+            "name": "City",
+            "type": "text",
+            "tableRef": "contactDetails.city",
+            "placeholder": "Enter city",
+            "id": "city"
+        }, {
+            "name": "Locality",
+            "type": "text",
+            "tableRef": "contactDetails.locality",
+            "placeholder": "Enter locality",
+            "id": "locality"
+        }, {
+            "name": "pinCode",
+            "type": "text",
+            "tableRef": "contactDetails.pinCode",
+            "placeholder": "Enter pinCode",
+            "id": "pinCode"
+        }, {
+            "name": "Contact Person",
+            "type": "text",
+            "tableRef": "detailsForCorrespondence.contactPerson",
+            "placeholder": "Enter contactPerson",
+            "id": "contactPerson"
+        }, {
+            "name": "Landline",
+            "type": "text",
+            "tableRef": "contactDetails.landline",
+            "placeholder": "Enter landline",
+            "id": "landline"
+        }, {
+            "name": "Email",
+            "type": "text",
+            "tableRef": "contactDetails.email",
+            "placeholder": "Enter email",
+            "id": "email"
+        }, {
+            "name": "Website",
+            "type": "text",
+            "tableRef": "contactDetails.website",
+            "placeholder": "Enter website",
+            "id": "website"
+        }, {
+            "name": "Mobile",
+            "type": "text",
+            "tableRef": "contactDetails.mobile",
+            "placeholder": "Enter mobile",
+            "id": "mobile"
+        }, {
+            "name": "Principal Name",
+            "type": "text",
+            "tableRef": "schoolPrincipal.name",
+            "placeholder": "Enter Principal name",
+            "id": "principalName"
+        }, {
+            "name": "Principal Mobile",
+            "type": "text",
+            "tableRef": "schoolPrincipal.mobile",
+            "placeholder": "Enter Principal mobile",
+            "id": "principalMobile"
+        }, {
+            "name": "Principal landline",
+            "type": "text",
+            "tableRef": "schoolPrincipal.landline",
+            "placeholder": "Enter Principal Landline",
+            "id": "principalLandline"
+        }, {
+            "name": "Principal email",
+            "type": "text",
+            "tableRef": "schoolPrincipal.email",
+            "placeholder": "Enter Principal email",
+            "id": "principalEmail"
+        },
+        {
+            "name": "Registration Fee",
+            "type": "text",
+            "tableRef": "registrationFee",
+            "placeholder": "Enter Registration fee",
+            "id": "registration"
+        }
+    ],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewUser"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewUser"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "User/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "User/getOne",
+        "params": "_id"
+    }
+
+}
