@@ -1,63 +1,54 @@
 var schema = new Schema({
 
     deleteStatus: Boolean,
-    timestamp: Date,
+    hours: String,
+    minutes: String,
+    timer: String,
+    via: String,
+    payment: String,
     sfaid: String,
-    name: String,
-    board: String,
-    status: Boolean,
+    school: {
+        type: Schema.Types.ObjectId,
+        ref: 'School',
+        index: true
+    },
+    lastname: String,
+    firstname: String,
+    middlename: String,
+    gender: String,
+    dob: Date,
     address: String,
-    location: String,
-    email: String,
     contact: String,
-    department: [{
-        email: String,
-        contact: String,
-        designation: String,
-        name: String,
-        year: String,
-    }],
+    email: String,
+    dateOfForm: String,
+    name: String,
     image: [{
         type: String
     }],
     video: [{
         type: String
     }],
-    contingentLeader: [{
-        type: String
-    }],
-    sports: [{
-        year: String,
-        sporttype: String,
-        name: String,
-    }],
-    principal: String,
-    paymentType: String,
-    numberOfSports: String,
-    representative: String,
-    notpaidfor: String,
-    year: [{
-        type: String
-    }],
+
+    year: String,
     totalPoints: Number,
     totalPoints2015: Number,
     totalPoints2016: Number,
-    totalPoints2017: Number
-
+    totalPoints2017: Number,
+    status: Boolean
 });
 
 schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
-module.exports = mongoose.model('School', schema);
+module.exports = mongoose.model('Student', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    updateSFAID: function (data, callback) {
+    updateStudentSFAID: function (data, callback) {
         var result = {};
         result.msg = "Updated";
-        School.find().exec(function (err, found) {
+        Student.find().exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
@@ -66,12 +57,17 @@ var model = {
                 var count = 0;
                 async.eachSeries(found, function (value, callback) {
 
-                    console.log("sfa:", value.timestamp);
-                    var year = value.timestamp.getFullYear();
+                    console.log("sfa:", value.year);
+                    if (value.year) {
+                        var year = value.year;
+                    } else {
+                        var year = "2016";
+                    }
+
                     console.log("index", year);
                     count++;
                     var sfa = "M" + "A" + year + value.sfaid;
-                    School.update({
+                    Student.update({
                         _id: value._id,
                     }, {
                         sfaid: sfa,
@@ -102,8 +98,6 @@ var model = {
 
 
     }
-
-
 
 };
 module.exports = _.assign(module.exports, exports, model);
