@@ -1,6 +1,6 @@
 var schema = new Schema({
 
-    atheleteID: String,
+    atheleteID: Number,
     school: {
         type: Schema.Types.ObjectId,
         ref: 'Registration',

@@ -70,7 +70,7 @@ var schema = new Schema({
         type: String
     }],
 
-    registrationFee: String
+    registrationFee: String,
 });
 
 schema.plugin(deepPopulate, {});
@@ -105,8 +105,14 @@ var model = {
                 callback(err, null);
             } else {
                 if (_.isEmpty(schoolData)) {
+                    var newDate = new Date();
+                    var year = newDate.getFullYear();
                     data.registerID = 1;
-                    data.sfaID = "SFA0";
+                    var city = data.city;
+                    var prefixCity = city.charAt(0);
+                    console.log("prefixCity", prefixCity);
+                    data.sfaID = prefixCity + "-" + "S-" + year + "-" + data.registerID;
+                    // data.sfaID = "SFA" + data.registerID;
                     Registration.saveData(data, function (err, registerData) {
                         console.log("orderData", registerData);
                         if (err) {
@@ -123,8 +129,14 @@ var model = {
                     console.log("isempty");
                 } else {
                     console.log(schoolData.registerID);
+                    var newDate = new Date();
+                    var year = newDate.getFullYear();
+                    data.registerID = 1;
+                    var city = data.city;
+                    var prefixCity = city.charAt(0);
+                    console.log("prefixCity", prefixCity);
                     data.registerID = schoolData.registerID + 1;
-                    data.sfaID = "SFA" + data.registerID;
+                    data.sfaID = prefixCity + "-" + "S-" + year + "-" + data.registerID;
                     Registration.saveData(data, function (err, registerData) {
                         console.log("Registration", registerData);
                         if (err) {
