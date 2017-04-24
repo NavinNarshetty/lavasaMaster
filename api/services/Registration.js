@@ -18,35 +18,34 @@ var schema = new Schema({
         type: String,
         default: ""
     },
-    schoolDetails: {
-        schoolName: String,
-        schoolType: String,
-        schoolCategory: String,
-        affiliatedBoard: String,
-        schoolLogo: String
-    },
-    contactDetails: {
-        schoolAddress: String,
-        state: String,
-        district: String,
-        city: String,
-        locality: String,
-        pinCode: String
-    },
-    detailsForCorrespondence: {
-        contactPerson: String,
-        landline: String,
-        email: String,
-        website: String,
-        mobile: String,
-        enterOTP: String
-    },
-    schoolPrincipal: {
-        name: String,
-        mobile: String,
-        landline: String,
-        email: String
-    },
+
+    schoolName: String,
+    schoolType: String,
+    schoolCategory: String,
+    affiliatedBoard: String,
+    schoolLogo: String,
+
+
+    schoolAddress: String,
+    state: String,
+    district: String,
+    city: String,
+    locality: String,
+    pinCode: String,
+
+
+    contactPerson: String,
+    landline: String,
+    email: String,
+    website: String,
+    mobile: String,
+    enterOTP: String,
+
+
+    schoolPrincipalName: String,
+    schoolPrincipalMobile: String,
+    schoolPrincipalLandline: String,
+    schoolPrincipalEmail: String,
     sportsDepartment: [{
         name: String,
         designation: String,
@@ -54,23 +53,23 @@ var schema = new Schema({
         email: String,
         photograph: String
     }],
-    selectedSports: {
-        teamSports: [{
-            type: String
-        }],
-        racquetSports: [{
-            type: String
-        }],
-        combatSports: [{
-            type: String
-        }],
-        targetSports: [{
-            type: String
-        }],
-        individualSports: [{
-            type: String
-        }]
-    },
+
+    teamSports: [{
+        type: String
+    }],
+    racquetSports: [{
+        type: String
+    }],
+    combatSports: [{
+        type: String
+    }],
+    targetSports: [{
+        type: String
+    }],
+    individualSports: [{
+        type: String
+    }],
+
     registrationFee: String
 });
 

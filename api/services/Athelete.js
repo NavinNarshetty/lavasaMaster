@@ -7,46 +7,41 @@ var schema = new Schema({
         index: true
     },
     idProof: String,
-    athleteDetails: {
-        surname: String,
-        firstName: String,
-        middleName: String,
-        gender: String,
-        standard: String,
-        photograph: String,
-        dob: Date,
-        ageProof: String,
-        playedTournaments: {
-            type: Boolean,
-            default: "false"
-        },
-    },
-    contactDetails: {
-        mobile: String,
-        enterOTP: String,
-        email: String,
-        residentialAddress: {
-            address: String,
-            state: String,
-            district: String,
-            city: String,
-            pinCode: String
-        }
-    },
-    parentDetails: {
-        termsAndCondition: {
-            type: Boolean,
-            default: "false"
-        },
-        details: [{
-            relation: String,
-            name: String,
-            surname: String,
-            mobile: String,
-            email: String
-        }]
 
+    surname: String,
+    firstName: String,
+    athleteMiddleName: String,
+    gender: String,
+    standard: String,
+    photograph: String,
+    dob: Date,
+    ageProof: String,
+    playedTournaments: {
+        type: Boolean,
+        default: "false"
     },
+
+    mobile: String,
+    enterOTP: String,
+    email: String,
+
+    address: String,
+    state: String,
+    district: String,
+    city: String,
+    pinCode: String,
+
+    termsAndCondition: {
+        type: Boolean,
+        default: "false"
+    },
+    parentDetails: [{
+        relation: String,
+        name: String,
+        surname: String,
+        mobile: String,
+        email: String
+    }],
     registrationFee: String
 });
 
