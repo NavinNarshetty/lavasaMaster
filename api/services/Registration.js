@@ -100,7 +100,7 @@ var model = {
         }).sort({
             createdAt: -1
         }).exec(function (err, schoolData) {
-            console.log("schoolData", schoolData);
+            console.log("schoolData", schoolData); // retrives registration data
             if (err) {
                 console.log(err);
                 callback(err, null);
@@ -113,7 +113,6 @@ var model = {
                     var prefixCity = city.charAt(0);
                     console.log("prefixCity", prefixCity);
                     data.sfaID = prefixCity + "S" + year + data.registerID;
-                    // data.sfaID = "SFA" + data.registerID;
                     Registration.saveData(data, function (err, registerData) {
                         console.log("orderData", registerData);
                         if (err) {
@@ -132,7 +131,6 @@ var model = {
                     console.log(schoolData.registerID);
                     var newDate = new Date();
                     var year = newDate.getFullYear();
-                    // data.registerID = 1;
                     var city = data.city;
                     console.log("City", city);
                     var prefixCity = city.charAt(0);
@@ -182,6 +180,26 @@ var model = {
                 callback(null, found);
             }
 
+        });
+    },
+
+    generateOTP: function (data, callback) {
+        var mobileOtp = (Math.random() + "").substring(2, 6);
+        var smsData = {};
+        smsData.mobile = data.mobile;
+
+        smsData.content = "OTP" + mobileOtp + ",";
+        console.log("smsdata", smsData);
+        Config.sendSms(smsData, function (err, smsRespo) {
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else if (smsRespo) {
+                console.log(smsRespo, "sms sent");
+                callback(null, smsRespo);
+            } else {
+                callback(null, "Invalid data");
+            }
         });
     },
 
