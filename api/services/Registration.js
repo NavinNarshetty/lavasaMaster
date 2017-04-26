@@ -27,6 +27,7 @@ var schema = new Schema({
 
 
     schoolAddress: String,
+    schoolAddressLine2: String,
     state: String,
     district: String,
     city: String,
@@ -91,7 +92,7 @@ var model = {
     saveRegistrationForm: function (data, callback) {
         var schoolname = data.schoolname;
 
-        Registration.findOne({}, {
+        Registration.findOne({}, { //to check registration exist and if it exist retrive previous data
             _id: 0,
             registerID: 1,
             sfaID: 1,
@@ -107,11 +108,11 @@ var model = {
                 if (_.isEmpty(schoolData)) {
                     var newDate = new Date();
                     var year = newDate.getFullYear();
-                    data.registerID = 1;
+                    data.registerID = 1; //init registerID 
                     var city = data.city;
                     var prefixCity = city.charAt(0);
                     console.log("prefixCity", prefixCity);
-                    data.sfaID = prefixCity + "-" + "S-" + year + "-" + data.registerID;
+                    data.sfaID = prefixCity + "S" + year + data.registerID;
                     // data.sfaID = "SFA" + data.registerID;
                     Registration.saveData(data, function (err, registerData) {
                         console.log("orderData", registerData);
@@ -131,12 +132,13 @@ var model = {
                     console.log(schoolData.registerID);
                     var newDate = new Date();
                     var year = newDate.getFullYear();
-                    data.registerID = 1;
+                    // data.registerID = 1;
                     var city = data.city;
+                    console.log("City", city);
                     var prefixCity = city.charAt(0);
                     console.log("prefixCity", prefixCity);
-                    data.registerID = schoolData.registerID + 1;
-                    data.sfaID = prefixCity + "-" + "S-" + year + "-" + data.registerID;
+                    data.registerID = schoolData.registerID + 1; //increment with previous refrence
+                    data.sfaID = prefixCity + "S" + year + data.registerID; // prefix "S" for school
                     Registration.saveData(data, function (err, registerData) {
                         console.log("Registration", registerData);
                         if (err) {

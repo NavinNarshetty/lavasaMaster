@@ -7,7 +7,7 @@ var uploadurl = imgurl;
 
 myApp.factory('NavigationService', function ($http) {
     var navigation = [{
-            name: "Registrations",
+            name: "School",
             classis: "active",
             sref: "#!/page/viewRegistration//",
             icon: "phone"

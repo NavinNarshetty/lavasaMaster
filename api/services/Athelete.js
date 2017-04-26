@@ -1,6 +1,7 @@
 var schema = new Schema({
 
     atheleteID: Number,
+    sfaId: String,
     school: {
         type: Schema.Types.ObjectId,
         ref: 'Registration',
@@ -67,7 +68,16 @@ var model = {
                 callback(err, null);
             } else {
                 if (_.isEmpty(found)) {
+                    var newDate = new Date(); //get current date
+                    var year = newDate.getFullYear(); //get only year 
                     data.atheleteID = 1; //init atheleteID for first time
+                    var city = data.city;
+                    city = city.toUpperCase();
+                    console.log("city", city);
+                    var prefixCity = city.charAt(0);
+                    console.log("prefixCity", prefixCity);
+                    data.sfaId = prefixCity + "A" + year + data.atheleteID; //ex: city-> 'M'+'A'+2017+1
+
                     Athelete.saveData(data, function (err, athleteData) {
                         console.log("athleteData", athleteData);
                         if (err) {
@@ -84,7 +94,13 @@ var model = {
                     console.log("isempty");
                 } else {
                     data.atheleteID = found.atheleteID + 1; //increment next atheleteID
-                    Athelete.saveData(data, function (err, athleteData) {
+                    var newDate = new Date();
+                    var year = newDate.getFullYear();
+                    var city = data.city;
+                    var prefixCity = city.charAt(0);
+                    console.log("prefixCity", prefixCity);
+                    data.sfaId = prefixCity + "A" + year + data.atheleteID;
+                    Athelete.saveData(data, function (err, athleteData) { //saves data to database collection
                         console.log("athleteData", athleteData);
                         if (err) {
                             console.log("err", err);
@@ -103,7 +119,7 @@ var model = {
     },
 
     getAllAtheleteDetails: function (data, callback) {
-        Athelete.find().exec(function (err, found) {
+        Athelete.find().exec(function (err, found) { //finds all athelete
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
@@ -116,7 +132,7 @@ var model = {
     },
 
     getOneAtheleteDetails: function (data, callback) {
-        Athelete.findOne({
+        Athelete.findOne({ //finds one with refrence to id
             _id: data._id
         }).exec(function (err, found) {
             if (err) {
