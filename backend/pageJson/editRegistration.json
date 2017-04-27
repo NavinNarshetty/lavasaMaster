@@ -30,6 +30,18 @@
             "placeholder": "Enter Board",
             "id": "board"
         }, {
+            "name": "SFA ID",
+            "type": "text",
+            "tableRef": "sfaId",
+            "placeholder": "Enter SFA ID",
+            "id": "sfaId"
+        }, {
+            "name": "Status",
+            "type": "text",
+            "tableRef": "status",
+            "placeholder": "Enter Status",
+            "id": "status"
+        }, {
             "name": "School Logo",
             "type": "image",
             "size": "250 x 250",
@@ -128,6 +140,134 @@
             "tableRef": "schoolPrincipalEmail",
             "placeholder": "Enter Principal email",
             "id": "principalEmail"
+        }, {
+            "name": "Sports Department",
+            "type": "box",
+            "tableRef": "sportsDepartment",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                    "name": "Name",
+                    "type": "text",
+                    "tableRef": "name",
+                    "tableValue": "name",
+                    "placeholder": "Enter name",
+                    "id": "name",
+                    "onView": true,
+                    "validation": ["", "trim", ""]
+                }, {
+                    "name": "Designation",
+                    "type": "text",
+                    "tableRef": "designation",
+                    "tableValue": "designation",
+                    "placeholder": "Enter Designation",
+                    "id": "designation",
+                    "onView": true,
+                    "validation": ["", "trim", ""]
+                }, {
+                    "name": "Email",
+                    "type": "text",
+                    "tableRef": "email",
+                    "tableValue": "email",
+                    "placeholder": "Enter Email",
+                    "id": "email",
+                    "onView": true,
+                    "validation": ["", "trim", ""]
+                },
+                {
+                    "name": "Mobile",
+                    "type": "text",
+                    "tableRef": "mobile",
+                    "tableValue": "mobile",
+                    "placeholder": "Enter Mobile",
+                    "id": "mobile",
+                    "onView": true,
+                    "validation": ["", "trim", ""]
+                }, {
+                    "name": "Photograph",
+                    "type": "image",
+                    "tableRef": "photograph",
+                    "tableValue": "photograph",
+                    "placeholder": "Enter Photograph",
+                    "id": "photograph",
+                    "onView": true,
+                    "validation": ["", "trim", ""]
+                }
+            ]
+        }, {
+            "name": "Individual Sports",
+            "type": "box",
+            "tableRef": "individualSports",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Name",
+                "type": "text",
+                "tableRef": "name",
+                "tableValue": "name",
+                "placeholder": "Enter Name",
+                "id": "name",
+                "onView": true,
+                "validation": ["", "trim", ""]
+            }]
+        }, {
+            "name": "Team Sports",
+            "type": "box",
+            "tableRef": "teamSports",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Name",
+                "type": "text",
+                "tableRef": "name",
+                "tableValue": "name",
+                "placeholder": "Enter Name",
+                "id": "name",
+                "onView": true,
+                "validation": ["", "trim", ""]
+            }]
+        }, {
+            "name": "Racquet Sports",
+            "type": "box",
+            "tableRef": "racquetSports",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Name",
+                "type": "text",
+                "tableRef": "name",
+                "tableValue": "name",
+                "placeholder": "Enter Name",
+                "id": "name",
+                "onView": true,
+                "validation": ["", "trim", ""]
+            }]
+        }, {
+            "name": "Combat Sports",
+            "type": "box",
+            "tableRef": "combatSports",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Name",
+                "type": "text",
+                "tableRef": "name",
+                "tableValue": "name",
+                "placeholder": "Enter Name",
+                "id": "name",
+                "onView": true,
+                "validation": ["", "trim", ""]
+            }]
+        }, {
+            "name": "Target Sports",
+            "type": "box",
+            "tableRef": "targetSports",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Name",
+                "type": "text",
+                "tableRef": "name",
+                "tableValue": "name",
+                "placeholder": "Enter Name",
+                "id": "name",
+                "onView": true,
+                "validation": ["", "trim", ""]
+            }]
         },
         {
             "name": "Registration Fee",

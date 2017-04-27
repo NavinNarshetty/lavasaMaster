@@ -12,6 +12,17 @@ var controller = {
         }
     },
 
+    generateSfaID: function (req, res) {
+        if (req.body) {
+            Registration.generateSfaID(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     getAllRegistrationDetails: function (req, res) {
         if (req.body) {
             Registration.getAllRegistrationDetails(req.body, res.callback);
@@ -33,6 +44,18 @@ var controller = {
             });
         }
     },
+
+    generateOTP: function (req, res) {
+        if (req.body) {
+            Registration.generateOTP(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
 
 };
 module.exports = _.assign(module.exports, controller);

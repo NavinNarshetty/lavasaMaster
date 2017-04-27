@@ -441,14 +441,60 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
 
             };
         }
+        // if ($scope.type.type == "box") {
+
+        //     if (!_.isArray($scope.formData[$scope.type.tableRef]) && $scope.formData[$scope.type.tableRef] === '') {
+        //         $scope.formData[$scope.type.tableRef] = [];
+        //         $scope.model = [];
+        //     } else {
+        //         if ($scope.formData[$scope.type.tableRef]) {
+        //             $scope.model = $scope.formData[$scope.type.tableRef];
+        //         }
+        //     }
+        //     $scope.search = {
+        //         text: ""
+        //     };
+        // }
+        // $scope.state = "";
+        // $scope.createBox = function (state) {
+        //     $scope.state = state;
+        //     $scope.model.push({});
+        //     $scope.editBox("Create", $scope.model[$scope.model.length - 1]);
+        // };
+        // $scope.editBox = function (state, data) {
+        //     $scope.state = state;
+        //     $scope.data = data;
+        //     var modalInstance = $uibModal.open({
+        //         animation: $scope.animationsEnabled,
+        //         templateUrl: '/backend/views/modal/modal.html',
+        //         size: 'lg',
+        //         scope: $scope
+        //     });
+        //     $scope.close = function (value) {
+        //         callback(value);
+        //         modalInstance.close("cancel");
+        //     };
+        // };
+        // $scope.deleteBox = function (index, data) {
+        //     console.log(data);
+        //     data.splice(index, 1);
+        // };
+
         if ($scope.type.type == "box") {
+            console.log("In Box", $scope.formData);
 
             if (!_.isArray($scope.formData[$scope.type.tableRef]) && $scope.formData[$scope.type.tableRef] === '') {
                 $scope.formData[$scope.type.tableRef] = [];
                 $scope.model = [];
             } else {
                 if ($scope.formData[$scope.type.tableRef]) {
-                    $scope.model = $scope.formData[$scope.type.tableRef];
+                    if ($scope.type.tableValue) {
+                        console.log($scope.formData[$scope.type.tableRef][$scope.type.tableValue]);
+                        $scope.model = $scope.formData[$scope.type.tableRef][$scope.type.tableValue];
+                    } else {
+                        $scope.model = $scope.formData[$scope.type.tableRef];
+                        console.log($scope.model);
+                    }
                 }
             }
             $scope.search = {
@@ -462,11 +508,12 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
             $scope.editBox("Create", $scope.model[$scope.model.length - 1]);
         };
         $scope.editBox = function (state, data) {
+            console.log("insise edit", state, data);
             $scope.state = state;
             $scope.data = data;
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: '/backend/views/modal/modal.html',
+                templateUrl: 'views/modal/modal.html',
                 size: 'lg',
                 scope: $scope
             });
@@ -479,6 +526,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
             console.log(data);
             data.splice(index, 1);
         };
+
 
         //  TAGS STATIC AND FROM TABLE
         $scope.refreshTags = function (search) {

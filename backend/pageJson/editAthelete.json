@@ -24,6 +24,18 @@
         "placeholder": "Enter Middle Name",
         "id": "middleName"
     }, {
+        "name": "SFA ID",
+        "type": "text",
+        "tableRef": "sfaId",
+        "placeholder": "Enter SFA ID",
+        "id": "sfaId"
+    }, {
+        "name": "Status",
+        "type": "text",
+        "tableRef": "status",
+        "placeholder": "Enter Status",
+        "id": "status"
+    }, {
         "name": "Gender",
         "type": "text",
         "tableRef": "gender",
@@ -113,6 +125,50 @@
         "tableRef": "pinCode",
         "placeholder": "Enter pinCode",
         "id": "pinCode"
+    }, {
+        "name": "Parent Details",
+        "type": "box",
+        "tableRef": "parentDetails",
+        "validation": ["", "trim", ""],
+        "fields": [{
+                "name": "Name",
+                "type": "text",
+                "tableRef": "name",
+                "tableValue": "name",
+                "placeholder": "Enter name",
+                "id": "name",
+                "onView": true,
+                "validation": ["", "trim", ""]
+            }, {
+                "name": "Email",
+                "type": "text",
+                "tableRef": "email",
+                "tableValue": "email",
+                "placeholder": "Enter Email",
+                "id": "email",
+                "onView": true,
+                "validation": ["", "trim", ""]
+            },
+            {
+                "name": "Mobile",
+                "type": "text",
+                "tableRef": "mobile",
+                "tableValue": "mobile",
+                "placeholder": "Enter Mobile",
+                "id": "mobile",
+                "onView": true,
+                "validation": ["", "trim", ""]
+            }, {
+                "name": "Relation",
+                "type": "text",
+                "tableRef": "relation",
+                "tableValue": "relation",
+                "placeholder": "Enter Relation",
+                "id": "relation",
+                "onView": true,
+                "validation": ["", "trim", ""]
+            }
+        ]
     }, {
         "name": "Registration Fee",
         "type": "text",

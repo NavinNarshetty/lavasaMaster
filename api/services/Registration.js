@@ -18,6 +18,7 @@ var schema = new Schema({
         type: String,
         default: ""
     },
+    status: String,
 
     schoolName: String,
     schoolType: String,
@@ -56,19 +57,29 @@ var schema = new Schema({
     }],
 
     teamSports: [{
-        type: String
+        name: {
+            type: String
+        }
     }],
     racquetSports: [{
-        type: String
+        name: {
+            type: String
+        }
     }],
     combatSports: [{
-        type: String
+        name: {
+            type: String
+        }
     }],
     targetSports: [{
-        type: String
+        name: {
+            type: String
+        }
     }],
     individualSports: [{
-        type: String
+        name: {
+            type: String
+        }
     }],
 
     registrationFee: String,
@@ -90,13 +101,28 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     saveRegistrationForm: function (data, callback) {
+        data.status = "Pending";
+        Registration.saveData(data, function (err, registerData) {
+            console.log("registerData", registerData);
+            if (err) {
+                console.log("err", err);
+                callback("There was an error while saving order", null);
+            } else {
+                if (_.isEmpty(registerData)) {
+                    callback("No order data found", null);
+                } else {
+                    callback(null, registerData);
+                }
+            }
+        });
+    },
+
+    generateSfaID: function (data, callback) {
+        console.log("inside");
         var schoolname = data.schoolname;
 
-        Registration.findOne({}, { //to check registration exist and if it exist retrive previous data
-            _id: 0,
-            registerID: 1,
-            sfaID: 1,
-
+        Registration.findOne({ //to check registration exist and if it exist retrive previous data
+            _id: data._id
         }).sort({
             createdAt: -1
         }).exec(function (err, schoolData) {
@@ -106,37 +132,22 @@ var model = {
                 callback(err, null);
             } else {
                 if (_.isEmpty(schoolData)) {
-                    var newDate = new Date();
-                    var year = newDate.getFullYear();
-                    data.registerID = 1; //init registerID 
-                    var city = data.city;
-                    var prefixCity = city.charAt(0);
-                    console.log("prefixCity", prefixCity);
-                    data.sfaID = prefixCity + "S" + year + data.registerID;
-                    Registration.saveData(data, function (err, registerData) {
-                        console.log("orderData", registerData);
-                        if (err) {
-                            console.log("err", err);
-                            callback("There was an error while saving order", null);
-                        } else {
-                            if (_.isEmpty(registerData)) {
-                                callback("No order data found", null);
-                            } else {
-                                callback(null, registerData);
-                            }
-                        }
-                    });
                     console.log("isempty");
+                    callback(null, "No data found");
                 } else {
                     console.log(schoolData.registerID);
-                    var newDate = new Date();
-                    var year = newDate.getFullYear();
-                    var city = data.city;
-                    console.log("City", city);
-                    var prefixCity = city.charAt(0);
-                    console.log("prefixCity", prefixCity);
-                    data.registerID = schoolData.registerID + 1; //increment with previous refrence
-                    data.sfaID = prefixCity + "S" + year + data.registerID; // prefix "S" for school
+                    if (data.sfaID = "") {
+                        var newDate = new Date();
+                        var year = newDate.getFullYear();
+                        var city = schoolData.city;
+                        console.log("City", city);
+                        var prefixCity = city.charAt(0);
+                        console.log("prefixCity", prefixCity);
+                        var register = schoolData.registerID; //increment with previous refrence
+                        data.sfaID = prefixCity + "S" + year + register; // prefix "S" for school
+
+                    }
+                    console.log("data", data);
                     Registration.saveData(data, function (err, registerData) {
                         console.log("Registration", registerData);
                         if (err) {
@@ -186,9 +197,10 @@ var model = {
     generateOTP: function (data, callback) {
         var mobileOtp = (Math.random() + "").substring(2, 6);
         var smsData = {};
+        console.log("mobileOtp", mobileOtp);
         smsData.mobile = data.mobile;
 
-        smsData.content = "OTP" + mobileOtp + ",";
+        smsData.content = "OTP School:Your Mobile OTP (One time Password) for SFA registration is " + mobileOtp;
         console.log("smsdata", smsData);
         Config.sendSms(smsData, function (err, smsRespo) {
             if (err) {

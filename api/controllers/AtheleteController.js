@@ -11,6 +11,16 @@ var controller = {
             });
         }
     },
+    generateAtheleteSfaID: function (req, res) {
+        if (req.body) {
+            Athelete.generateAtheleteSfaID(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
 
     getAllAtheleteDetails: function (req, res) {
         if (req.body) {

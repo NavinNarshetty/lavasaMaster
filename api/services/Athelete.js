@@ -1,7 +1,19 @@
+var mongoose = require('mongoose');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+var uniqueValidator = require('mongoose-unique-validator');
+var timestamps = require('mongoose-timestamp');
+var validators = require('mongoose-validators');
+var monguurl = require('monguurl');
+var autoIncrement = require('mongoose-auto-increment');
+var objectid = require("mongodb").ObjectID;
+var moment = require('moment');
+var request = require("request");
+autoIncrement.initialize(mongoose);
 var schema = new Schema({
 
     atheleteID: Number,
     sfaId: String,
+    status: String,
     school: {
         type: Schema.Types.ObjectId,
         ref: 'Registration',
@@ -48,6 +60,12 @@ var schema = new Schema({
 
 schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
+schema.plugin(autoIncrement.plugin, {
+    model: 'Athelete',
+    field: 'atheleteID',
+    startAt: 1,
+    incrementBy: 1
+});
 schema.plugin(timestamps);
 module.exports = mongoose.model('Athelete', schema);
 
@@ -56,9 +74,26 @@ var model = {
 
     //on athelete save and submit press 
     saveAthelete: function (data, callback) {
+        data.status = "Pending";
+        Athelete.saveData(data, function (err, athleteData) {
+            console.log("athleteData", athleteData);
+            if (err) {
+                console.log("err", err);
+                callback("There was an error while saving order", null);
+            } else {
+                if (_.isEmpty(athleteData)) {
+                    callback("No order data found", null);
+                } else {
+                    callback(null, athleteData);
+                }
+            }
+        });
+    },
+
+    generateAtheleteSfaID: function (data, callback) {
         //find and first time atheleteID idea is for string id generation if required
-        Athelete.findOne({}, {
-            _id: 0,
+        Athelete.findOne({
+            _id: data_id
         }).sort({
             createdAt: -1
         }).exec(function (err, found) {
@@ -68,38 +103,16 @@ var model = {
                 callback(err, null);
             } else {
                 if (_.isEmpty(found)) {
-                    var newDate = new Date(); //get current date
-                    var year = newDate.getFullYear(); //get only year 
-                    data.atheleteID = 1; //init atheleteID for first time
-                    var city = data.city;
-                    city = city.toUpperCase();
-                    console.log("city", city);
-                    var prefixCity = city.charAt(0);
-                    console.log("prefixCity", prefixCity);
-                    data.sfaId = prefixCity + "A" + year + data.atheleteID; //ex: city-> 'M'+'A'+2017+1
-
-                    Athelete.saveData(data, function (err, athleteData) {
-                        console.log("athleteData", athleteData);
-                        if (err) {
-                            console.log("err", err);
-                            callback("There was an error while saving order", null);
-                        } else {
-                            if (_.isEmpty(athleteData)) {
-                                callback("No order data found", null);
-                            } else {
-                                callback(null, athleteData);
-                            }
-                        }
-                    });
                     console.log("isempty");
+                    callback("No order data found", null);
                 } else {
-                    data.atheleteID = found.atheleteID + 1; //increment next atheleteID
                     var newDate = new Date();
                     var year = newDate.getFullYear();
-                    var city = data.city;
+                    var city = found.city;
                     var prefixCity = city.charAt(0);
                     console.log("prefixCity", prefixCity);
-                    data.sfaId = prefixCity + "A" + year + data.atheleteID;
+                    data.sfaId = prefixCity + "A" + year + found.atheleteID;
+                    data.status = "verified";
                     Athelete.saveData(data, function (err, athleteData) { //saves data to database collection
                         console.log("athleteData", athleteData);
                         if (err) {
@@ -117,7 +130,6 @@ var model = {
             }
         });
     },
-
     getAllAtheleteDetails: function (data, callback) {
         Athelete.find().exec(function (err, found) { //finds all athelete
             if (err) {
