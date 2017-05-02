@@ -34,6 +34,17 @@ var controller = {
         }
     },
 
+    getSchoolName: function (req, res) {
+        if (req.body) {
+            Registration.getSchoolName(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     getOneRegistrationDetails: function (req, res) {
         if (req.body) {
             Registration.getOneRegistrationDetails(req.body, res.callback);

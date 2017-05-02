@@ -26,19 +26,30 @@ var schema = new Schema({
     athleteMiddleName: String,
     gender: String,
     standard: String,
+    bloodGroup: String,
     photograph: String,
     dob: Date,
+    age: String,
     ageProof: String,
+    photoImage: String,
+    birthImage: String,
     playedTournaments: {
         type: Boolean,
         default: "false"
     },
+    sportLevel: [{
+        level: String,
+        sport: String,
+    }],
+
 
     mobile: String,
-    enterOTP: String,
+    smsOTP: String,
     email: String,
+    emailOTP: String,
 
     address: String,
+    addressLine2: String,
     state: String,
     district: String,
     city: String,

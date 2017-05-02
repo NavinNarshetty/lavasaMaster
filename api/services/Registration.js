@@ -213,7 +213,7 @@ var model = {
                 callback(null, "Invalid data");
             }
         });
-    },
+    }
 
 };
 module.exports = _.assign(module.exports, exports, model);
