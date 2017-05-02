@@ -66,6 +66,10 @@ var schema = new Schema({
         mobile: String,
         email: String
     }],
+    atheleteSchoolName: String,
+    atheleteSchoolLocality: String,
+    atheleteSchoolContact: String,
+    atheleteSchoolIdImage: String,
     registrationFee: String
 });
 
