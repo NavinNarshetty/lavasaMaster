@@ -32,15 +32,26 @@
         }, {
             "name": "SFA ID",
             "type": "text",
-            "tableRef": "sfaId",
+            "tableRef": "sfaID",
             "placeholder": "Enter SFA ID",
-            "id": "sfaId"
+            "id": "sfaID"
         }, {
             "name": "Status",
-            "type": "text",
+            "type": "tags",
             "tableRef": "status",
             "placeholder": "Enter Status",
-            "id": "status"
+            "url": "",
+            "id": "status",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Pending", "Verified", "Rejected"]
+        }, {
+            "name": "Password",
+            "type": "text",
+            "tableRef": "password",
+            "placeholder": "Enter password",
+            "id": "password"
         }, {
             "name": "School Logo",
             "type": "image",
@@ -283,7 +294,7 @@
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewRegisteration"
+                "id": "viewRegistration"
             }
         }
     }, {
@@ -292,12 +303,12 @@
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewRegisteration"
+                "id": "viewRegistration"
             }
         }
     }],
     "apiCall": {
-        "url": "Registration/save",
+        "url": "Registration/generateSfaID",
         "params": "_id"
     },
     "preApi": {

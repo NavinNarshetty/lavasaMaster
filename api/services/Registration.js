@@ -8,6 +8,7 @@ var autoIncrement = require('mongoose-auto-increment');
 var objectid = require("mongodb").ObjectID;
 var moment = require('moment');
 var request = require("request");
+var generator = require('generate-password');
 autoIncrement.initialize(mongoose);
 require('mongoose-middleware').initialize(mongoose);
 
@@ -18,7 +19,11 @@ var schema = new Schema({
         type: String,
         default: ""
     },
-    status: String,
+    status: {
+        type: String,
+        default: "Pending"
+    },
+    password: String,
 
     schoolName: String,
     schoolType: String,
@@ -101,15 +106,22 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     saveRegistrationForm: function (data, callback) {
-        data.status = "Pending";
+        //auto password generator
+        data.password = generator.generate({
+            length: 10,
+            numbers: true
+        });
+        console.log("data", data);
+
+
         Registration.saveData(data, function (err, registerData) {
             console.log("registerData", registerData);
             if (err) {
                 console.log("err", err);
-                callback("There was an error while saving order", null);
+                callback("There was an error while saving data", null);
             } else {
                 if (_.isEmpty(registerData)) {
-                    callback("No order data found", null);
+                    callback("No register data found", null);
                 } else {
                     callback(null, registerData);
                 }
@@ -117,10 +129,10 @@ var model = {
         });
     },
 
+
     generateSfaID: function (data, callback) {
         console.log("inside");
         var schoolname = data.schoolname;
-
         Registration.findOne({ //to check registration exist and if it exist retrive previous data
             _id: data._id
         }).sort({
@@ -135,12 +147,15 @@ var model = {
                     console.log("isempty");
                     callback(null, "No data found");
                 } else {
-                    console.log(schoolData.registerID);
-                    if (data.sfaID = "") {
-                        var newDate = new Date();
-                        var year = newDate.getFullYear();
-                        var city = schoolData.city;
+                    console.log("regiserid", schoolData.registerID);
+                    if (_.isEmpty(data.sfaID) && data.status == "verified") {
+                        var year = new Date().getFullYear().toString().substr(2, 2);
+
                         console.log("City", city);
+                        if (_.isEmpty(found.city)) {
+                            schoolData.city = "Mumbai"
+                        }
+                        var city = schoolData.city;
                         var prefixCity = city.charAt(0);
                         console.log("prefixCity", prefixCity);
                         var register = schoolData.registerID; //increment with previous refrence

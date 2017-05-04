@@ -8,12 +8,16 @@ var autoIncrement = require('mongoose-auto-increment');
 var objectid = require("mongodb").ObjectID;
 var moment = require('moment');
 var request = require("request");
+var generator = require('generate-password');
 autoIncrement.initialize(mongoose);
 var schema = new Schema({
 
     atheleteID: Number,
     sfaId: String,
-    status: String,
+    status: {
+        type: String,
+        default: "Pending"
+    },
     school: {
         type: Schema.Types.ObjectId,
         ref: 'Registration',
@@ -22,8 +26,9 @@ var schema = new Schema({
     idProof: String,
 
     surname: String,
+    password: String,
     firstName: String,
-    athleteMiddleName: String,
+    middleName: String,
     gender: String,
     standard: String,
     bloodGroup: String,
@@ -89,7 +94,12 @@ var model = {
 
     //on athelete save and submit press 
     saveAthelete: function (data, callback) {
-        data.status = "Pending";
+        data.password = generator.generate({
+            length: 10,
+            numbers: true
+        });
+        console.log(data.password);
+        // data.status = "Pending";
         Athelete.saveData(data, function (err, athleteData) {
             console.log("athleteData", athleteData);
             if (err) {
@@ -105,10 +115,11 @@ var model = {
         });
     },
 
+    //genarate sfa when status changes to verified and sfaid is blank
     generateAtheleteSfaID: function (data, callback) {
         //find and first time atheleteID idea is for string id generation if required
         Athelete.findOne({
-            _id: data_id
+            _id: data._id
         }).sort({
             createdAt: -1
         }).exec(function (err, found) {
@@ -121,13 +132,18 @@ var model = {
                     console.log("isempty");
                     callback("No order data found", null);
                 } else {
-                    var newDate = new Date();
-                    var year = newDate.getFullYear();
-                    var city = found.city;
-                    var prefixCity = city.charAt(0);
-                    console.log("prefixCity", prefixCity);
-                    data.sfaId = prefixCity + "A" + year + found.atheleteID;
-                    data.status = "verified";
+                    if (_.isEmpty(data.sfaID) && data.status == "verified") {
+                        var year = new Date().getFullYear().toString().substr(2, 2);
+                        // var value = newDate.getFullYear();
+                        // var year = value.splice(2, 3);
+                        if (_.isEmpty(found.city)) {
+                            found.city = "Mumbai"
+                        }
+                        var city = found.city;
+                        var prefixCity = city.charAt(0);
+                        console.log("prefixCity", prefixCity);
+                        data.sfaId = prefixCity + "A" + year + found.atheleteID;
+                    }
                     Athelete.saveData(data, function (err, athleteData) { //saves data to database collection
                         console.log("athleteData", athleteData);
                         if (err) {

@@ -31,10 +31,21 @@
         "id": "sfaId"
     }, {
         "name": "Status",
-        "type": "text",
+        "type": "tags",
         "tableRef": "status",
         "placeholder": "Enter Status",
-        "id": "status"
+        "url": "",
+        "id": "status",
+        "dropDownField": "",
+        "dropDownType": "single",
+        "onView": true,
+        "dropDown": ["Pending", "Verified", "Rejected"]
+    }, {
+        "name": "Password",
+        "type": "text",
+        "tableRef": "password",
+        "placeholder": "Enter password",
+        "id": "password"
     }, {
         "name": "Gender",
         "type": "text",
@@ -196,7 +207,7 @@
         }
     }],
     "apiCall": {
-        "url": "Athelete/save",
+        "url": "Athelete/generateAtheleteSfaID",
         "params": "_id"
     },
     "preApi": {
