@@ -6,187 +6,213 @@
     "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
-        "name": "First Name",
-        "type": "text",
-        "tableRef": "firstName",
-        "placeholder": "Enter School Name",
-        "id": "name"
-    }, {
-        "name": "Surname",
-        "type": "text",
-        "tableRef": "surname",
-        "placeholder": "Enter type",
-        "id": "type"
-    }, {
-        "name": "Middle Name",
-        "type": "text",
-        "tableRef": "middleName",
-        "placeholder": "Enter Middle Name",
-        "id": "middleName"
-    }, {
-        "name": "SFA ID",
-        "type": "text",
-        "tableRef": "sfaId",
-        "placeholder": "Enter SFA ID",
-        "id": "sfaId"
-    }, {
-        "name": "Status",
-        "type": "tags",
-        "tableRef": "status",
-        "placeholder": "Enter Status",
-        "url": "",
-        "id": "status",
-        "dropDownField": "",
-        "dropDownType": "single",
-        "onView": true,
-        "dropDown": ["Pending", "Verified", "Rejected"]
-    }, {
-        "name": "Password",
-        "type": "text",
-        "tableRef": "password",
-        "placeholder": "Enter password",
-        "id": "password"
-    }, {
-        "name": "Gender",
-        "type": "text",
-        "tableRef": "gender",
-        "placeholder": "Enter gender",
-        "id": "gender"
-    }, {
-        "name": "Standard",
-        "type": "text",
-        "tableRef": "standard",
-        "placeholder": "Enter standard",
-        "id": "standard"
-    }, {
-        "name": "Photograph",
-        "type": "image",
-        "size": "250 x 250",
-        "view": true,
-        "disabled": true,
-        "tableRef": "photograph",
-        "placeholder": "Upload Logo",
-        "id": "photograph"
-    }, {
-        "name": "DOB",
-        "type": "text",
-        "tableRef": "dob",
-        "placeholder": "Enter DOB",
-        "id": "dob"
-    }, {
-        "name": "Age Proof",
-        "type": "image",
-        "size": "250 x 250",
-        "view": true,
-        "disabled": true,
-        "tableRef": "ageProof",
-        "placeholder": "Upload Age Proof",
-        "id": "ageProof"
-    }, {
-        "name": "Played Tournament",
-        "type": "text",
-        "tableRef": "playedTournaments",
-        "placeholder": "Enter Played Tournaments",
-        "id": "playedTournaments"
-    }, {
-        "name": "Mobile",
-        "type": "text",
-        "tableRef": "mobile",
-        "placeholder": "Enter mobile",
-        "id": "mobile"
-    }, {
-        "name": "Enter OTP",
-        "type": "text",
-        "tableRef": "enterOTP",
-        "placeholder": "Enter OTP",
-        "id": "enterOTP"
-    }, {
-        "name": "Email",
-        "type": "text",
-        "tableRef": "email",
-        "placeholder": "Enter email",
-        "id": "email"
-    }, {
-        "name": "Address",
-        "type": "text",
-        "tableRef": "address",
-        "placeholder": "Enter Address",
-        "id": "address"
-    }, {
-        "name": "State",
-        "type": "text",
-        "tableRef": "state",
-        "placeholder": "Enter State",
-        "id": "state"
-    }, {
-        "name": "District",
-        "type": "text",
-        "tableRef": "district",
-        "placeholder": "Enter district",
-        "id": "district"
-    }, {
-        "name": "City",
-        "type": "text",
-        "tableRef": "city",
-        "placeholder": "Enter city",
-        "id": "city"
-    }, {
-        "name": "pinCode",
-        "type": "text",
-        "tableRef": "pinCode",
-        "placeholder": "Enter pinCode",
-        "id": "pinCode"
-    }, {
-        "name": "Parent Details",
-        "type": "box",
-        "tableRef": "parentDetails",
-        "validation": ["", "trim", ""],
-        "fields": [{
-                "name": "Name",
+            "name": "First Name",
+            "type": "text",
+            "tableRef": "firstName",
+            "placeholder": "Enter School Name",
+            "id": "name"
+        }, {
+            "name": "Surname",
+            "type": "text",
+            "tableRef": "surname",
+            "placeholder": "Enter type",
+            "id": "type"
+        }, {
+            "name": "Middle Name",
+            "type": "text",
+            "tableRef": "middleName",
+            "placeholder": "Enter Middle Name",
+            "id": "middleName"
+        }, {
+            "name": "SFA ID",
+            "type": "text",
+            "tableRef": "sfaId",
+            "placeholder": "Enter SFA ID",
+            "id": "sfaId"
+        }, {
+            "name": "Status",
+            "type": "tags",
+            "tableRef": "status",
+            "placeholder": "Enter Status",
+            "url": "",
+            "id": "status",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Pending", "Verified", "Rejected"]
+        }, {
+            "name": "Password",
+            "type": "text",
+            "tableRef": "password",
+            "placeholder": "Enter password",
+            "id": "password"
+        }, {
+            "name": "Gender",
+            "type": "text",
+            "tableRef": "gender",
+            "placeholder": "Enter gender",
+            "id": "gender"
+        }, {
+            "name": "Standard",
+            "type": "text",
+            "tableRef": "standard",
+            "placeholder": "Enter standard",
+            "id": "standard"
+        }, {
+            "name": "Photograph",
+            "type": "image",
+            "size": "250 x 250",
+            "view": true,
+            "disabled": true,
+            "tableRef": "photograph",
+            "placeholder": "Upload Logo",
+            "id": "photograph"
+        }, {
+            "name": "DOB",
+            "type": "text",
+            "tableRef": "dob",
+            "placeholder": "Enter DOB",
+            "id": "dob"
+        }, {
+            "name": "Age Proof",
+            "type": "image",
+            "size": "250 x 250",
+            "view": true,
+            "disabled": true,
+            "tableRef": "ageProof",
+            "placeholder": "Upload Age Proof",
+            "id": "ageProof"
+        }, {
+            "name": "Played Tournament",
+            "type": "text",
+            "tableRef": "playedTournaments",
+            "placeholder": "Enter Played Tournaments",
+            "id": "playedTournaments"
+        }, {
+            "name": "Mobile",
+            "type": "text",
+            "tableRef": "mobile",
+            "placeholder": "Enter mobile",
+            "id": "mobile"
+        }, {
+            "name": "Enter OTP",
+            "type": "text",
+            "tableRef": "enterOTP",
+            "placeholder": "Enter OTP",
+            "id": "enterOTP"
+        }, {
+            "name": "Email",
+            "type": "text",
+            "tableRef": "email",
+            "placeholder": "Enter email",
+            "id": "email"
+        }, {
+            "name": "Address",
+            "type": "text",
+            "tableRef": "address",
+            "placeholder": "Enter Address",
+            "id": "address"
+        }, {
+            "name": "State",
+            "type": "text",
+            "tableRef": "state",
+            "placeholder": "Enter State",
+            "id": "state"
+        }, {
+            "name": "District",
+            "type": "text",
+            "tableRef": "district",
+            "placeholder": "Enter district",
+            "id": "district"
+        }, {
+            "name": "City",
+            "type": "text",
+            "tableRef": "city",
+            "placeholder": "Enter city",
+            "id": "city"
+        }, {
+            "name": "pinCode",
+            "type": "text",
+            "tableRef": "pinCode",
+            "placeholder": "Enter pinCode",
+            "id": "pinCode"
+        }, {
+            "name": "Parent Details",
+            "type": "box",
+            "tableRef": "parentDetails",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                    "name": "Name",
+                    "type": "text",
+                    "tableRef": "name",
+                    "tableValue": "name",
+                    "placeholder": "Enter name",
+                    "id": "name",
+                    "onView": true,
+                    "validation": ["", "trim", ""]
+                }, {
+                    "name": "Email",
+                    "type": "text",
+                    "tableRef": "email",
+                    "tableValue": "email",
+                    "placeholder": "Enter Email",
+                    "id": "email",
+                    "onView": true,
+                    "validation": ["", "trim", ""]
+                },
+                {
+                    "name": "Mobile",
+                    "type": "text",
+                    "tableRef": "mobile",
+                    "tableValue": "mobile",
+                    "placeholder": "Enter Mobile",
+                    "id": "mobile",
+                    "onView": true,
+                    "validation": ["", "trim", ""]
+                }, {
+                    "name": "Relation",
+                    "type": "text",
+                    "tableRef": "relation",
+                    "tableValue": "relation",
+                    "placeholder": "Enter Relation",
+                    "id": "relation",
+                    "onView": true,
+                    "validation": ["", "trim", ""]
+                }
+            ]
+        },
+        {
+            "name": "Sports Details",
+            "type": "box",
+            "tableRef": "sportLevel",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Level",
                 "type": "text",
-                "tableRef": "name",
-                "tableValue": "name",
-                "placeholder": "Enter name",
-                "id": "name",
+                "tableRef": "level",
+                "tableValue": "level",
+                "placeholder": "Enter level",
+                "id": "level",
                 "onView": true,
                 "validation": ["", "trim", ""]
             }, {
-                "name": "Email",
+                "name": "Sport",
                 "type": "text",
-                "tableRef": "email",
-                "tableValue": "email",
-                "placeholder": "Enter Email",
-                "id": "email",
+                "tableRef": "sport",
+                "tableValue": "sport",
+                "placeholder": "Enter sport",
+                "id": "sport",
                 "onView": true,
                 "validation": ["", "trim", ""]
-            },
-            {
-                "name": "Mobile",
-                "type": "text",
-                "tableRef": "mobile",
-                "tableValue": "mobile",
-                "placeholder": "Enter Mobile",
-                "id": "mobile",
-                "onView": true,
-                "validation": ["", "trim", ""]
-            }, {
-                "name": "Relation",
-                "type": "text",
-                "tableRef": "relation",
-                "tableValue": "relation",
-                "placeholder": "Enter Relation",
-                "id": "relation",
-                "onView": true,
-                "validation": ["", "trim", ""]
-            }
-        ]
-    }, {
-        "name": "Registration Fee",
-        "type": "text",
-        "tableRef": "registrationFee",
-        "placeholder": "Enter Registration fee",
-        "id": "registration"
-    }],
+            }]
+        }, {
+            "name": "Registration Fee",
+            "type": "text",
+            "tableRef": "registrationFee",
+            "placeholder": "Enter Registration fee",
+            "id": "registration"
+        }
+    ],
     "action": [{
         "name": "submit",
         "action": "submitUser",
