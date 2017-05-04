@@ -1,6 +1,6 @@
 {
     "title": "Registration",
-    "description": "List of Registered School",
+    "description": "List of Registered Athelete",
     "pageType": "view",
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
