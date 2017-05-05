@@ -1,6 +1,10 @@
 var historyApiFallback = require('connect-history-api-fallback');
 module.exports = function (grunt) {
     var folderName = grunt.option('target');
+    var route = {
+        "/bower_components": "bower_components"
+    };
+    route["/" + folderName] = folderName;
     grunt.config.set('browserSync', {
         bsFiles: {
             src: [folderName + '/**/*.css', folderName + "/**/*.js", folderName + "/**/*.html", folderName + "/img/**"]
@@ -8,9 +12,7 @@ module.exports = function (grunt) {
         options: {
             server: {
                 baseDir: folderName,
-                routes: {
-                    "/bower_components": "bower_components"
-                },
+                routes: route,
                 middleware: [historyApiFallback()]
             },
             port: 8080,
