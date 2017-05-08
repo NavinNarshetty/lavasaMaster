@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 var sha512 = require('sha512');
 var request = require('request');
-var development = false;
+var development = true;
 if (development) {
     var payukey = "sWGItI";
     var payusalt = "11yVS4fo";
@@ -70,55 +70,46 @@ var models = {
         });
     },
 
-    atheletePayment: function (data, callback) {
-        Athelete.findOne({
-            "_id": data._id
-        }).exec(function (err, found) {
-            console.log('found0000000000000000000000000000', found);
+    atheletePayment: function (found, callback) {
+
+        var txnid = "fd3e847h2";
+        var amount = "20.00";
+        var firstname = found.firstName;
+        var email = found.email;
+        var phone = found.mobile;
+        // var pg = found.;
+        var productinfo = "Athelete registeration to SFA";
+        // var hash = sha512("" + payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
+        var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
+        var hashtext = hash.toString('hex');
+        request.post({
+            url: payuurl,
+            form: {
+                key: payukey,
+                txnid: txnid,
+                amount: amount,
+                productinfo: productinfo,
+                firstname: firstname,
+                email: email,
+                phone: phone,
+                surl: 'http://localhost:8080/#/formathlete',
+                furl: 'http://localhost/payU/successError',
+                hash: hashtext,
+            }
+        }, function (err, res) {
             if (err) {
                 callback(err, null);
-            } else if (found) {
-                var txnid = found.sfaId;
-                var amount = "20.00";
-                var firstname = found.firstName;
-                var email = found.email;
-                var phone = found.mobile;
-                // var pg = found.paymentMethod;
-                var productinfo = "Athelete registeration to SFA";
-                // var hash = sha512("" + payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
-                var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
-                var hashtext = hash.toString('hex');
-                request.post({
-                    url: payuurl,
-                    form: {
-                        key: payukey,
-                        txnid: txnid,
-                        amount: amount,
-                        productinfo: productinfo,
-                        firstname: firstname,
-                        email: email,
-                        phone: phone,
-                        surl: 'http://localhost:1337/payU/successError',
-                        furl: 'http://localhost/payU/successError',
-                        hash: hashtext,
-                        // pg: pg
-                    }
-                }, function (err, res) {
+            } else if (res.status == "captured") {
+                console.log("response", res);
+                Athelete.updatePaymentStatus(found, function (err, found) {
                     if (err) {
                         callback(err, null);
-                    } else if (res) {
-                        console.log("response", res);
-                        Athelete.updatePaymentStatus(data, function (err, found) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (found) {
-                                callback(null, res);
-                            }
-                        });
+                    } else if (found) {
+                        callback(null, res);
                     }
                 });
             } else {
-                callback(null, {});
+                console.log("res", res);
             }
         });
     },

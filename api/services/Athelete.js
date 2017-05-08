@@ -111,19 +111,44 @@ var model = {
                 if (_.isEmpty(athleteData)) {
                     callback("No order data found", null);
                 } else {
-                    // callback(null, athleteData);
-                    PayU.atheletePayment(data, function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(found)) {
-                                callback(null, "Data not found");
-                            } else {
-                                callback(null, found);
-                            }
-                        }
+                    if (athleteData.atheleteSchoolName) {
+                        var schoolData = {};
+                        schoolData.name = athleteData.atheleteSchoolName;
+                        schoolData.locality = athleteData.atheleteSchoolLocality;
+                        schoolData.schoolLogo = athleteData.atheleteSchoolIdImage;
+                        schoolData.mobile = athleteData.atheleteSchoolContact;
+                        console.log("need to save");
+                        Registration.saveData(schoolData, function (err, registerData) {
+                            console.log("registerData", registerData);
+                            // if (err) {
+                            //     console.log("err", err);
+                            //     callback("There was an error while saving data", null);
+                            // } else {
+                            //     if (_.isEmpty(registerData)) {
+                            //         callback("No register data found", null);
+                            //     } else {
+                            //        // callback(null, registerData)
+                            //     }
+                            // }
+                        });
 
-                    });
+                    }
+                    if (athleteData.registrationFee == "online PAYU") {
+                        PayU.atheletePayment(athleteData, function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(found)) {
+                                    callback(null, "Data not found");
+                                } else {
+                                    callback(null, found);
+                                }
+                            }
+
+                        });
+                    } else {
+                        callback(null, athleteData);
+                    }
                 }
             }
         });
