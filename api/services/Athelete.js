@@ -111,7 +111,19 @@ var model = {
                 if (_.isEmpty(athleteData)) {
                     callback("No order data found", null);
                 } else {
-                    callback(null, athleteData);
+                    // callback(null, athleteData);
+                    PayU.atheletePayment(data, function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, "Data not found");
+                            } else {
+                                callback(null, found);
+                            }
+                        }
+
+                    });
                 }
             }
         });

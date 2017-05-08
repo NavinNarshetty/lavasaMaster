@@ -107,11 +107,12 @@ var models = {
                     if (err) {
                         callback(err, null);
                     } else if (res) {
+                        console.log("response", res);
                         Athelete.updatePaymentStatus(data, function (err, found) {
                             if (err) {
                                 callback(err, null);
                             } else if (found) {
-                                callback(null, found);
+                                callback(null, res);
                             }
                         });
                     }
