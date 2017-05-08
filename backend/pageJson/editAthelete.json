@@ -53,6 +53,12 @@
             "placeholder": "Enter gender",
             "id": "gender"
         }, {
+            "name": "Blood Group",
+            "type": "text",
+            "tableRef": "bloodGroup",
+            "placeholder": "Enter bloodGroup",
+            "id": "bloodGroup"
+        }, {
             "name": "Standard",
             "type": "text",
             "tableRef": "standard",

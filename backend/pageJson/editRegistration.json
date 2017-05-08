@@ -69,22 +69,37 @@
             "id": "address"
         }, {
             "name": "State",
-            "type": "text",
+            "type": "tags",
             "tableRef": "state",
             "placeholder": "Enter State",
-            "id": "state"
+            "id": "state",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Maharastra"]
         }, {
             "name": "District",
-            "type": "text",
+            "type": "tags",
             "tableRef": "district",
             "placeholder": "Enter district",
-            "id": "district"
+            "id": "district",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Mumbai City ", "Mumbai Suburban", "Thane", "Palghar", "Raigad"]
         }, {
             "name": "City",
-            "type": "text",
+            "type": "tags",
             "tableRef": "city",
             "placeholder": "Enter city",
-            "id": "city"
+            "id": "city",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Kalyan-Dombivali", "Mira-Bhayandar", "Mumbai", "Navi Mumbai", "Panvel", "Thane", "Ulhasnagar", "Vasai-Virar", "Raigad"]
         }, {
             "name": "Locality",
             "type": "text",
@@ -211,12 +226,16 @@
             "validation": ["", "trim", ""],
             "fields": [{
                 "name": "Name",
-                "type": "text",
+                "type": "tags",
                 "tableRef": "name",
                 "tableValue": "name",
                 "placeholder": "Enter Name",
+                "url": "",
                 "id": "name",
+                "dropDownField": "",
+                "dropDownType": "single",
                 "onView": true,
+                "dropDown": ["Athletics", "Carrom", "Chess"],
                 "validation": ["", "trim", ""]
             }]
         }, {
@@ -226,13 +245,17 @@
             "validation": ["", "trim", ""],
             "fields": [{
                 "name": "Name",
-                "type": "text",
+                "type": "tags",
                 "tableRef": "name",
                 "tableValue": "name",
                 "placeholder": "Enter Name",
+                "url": "",
                 "id": "name",
                 "onView": true,
-                "validation": ["", "trim", ""]
+                "validation": ["", "trim", ""],
+                "dropDownField": "",
+                "dropDownType": "single",
+                "dropDown": ["Basketball", "Handball", "Hockey", "Kabaddi", "Kho Kho", "Throwball", "Volleyball"]
             }]
         }, {
             "name": "Racquet Sports",
@@ -241,51 +264,101 @@
             "validation": ["", "trim", ""],
             "fields": [{
                 "name": "Name",
-                "type": "text",
+                "type": "tags",
                 "tableRef": "name",
                 "tableValue": "name",
+                "url": "",
                 "placeholder": "Enter Name",
                 "id": "name",
                 "onView": true,
-                "validation": ["", "trim", ""]
+                "validation": ["", "trim", ""],
+                "dropDownField": "",
+                "dropDownType": "single",
+                "dropDown": ["Table Tennis", "addRacquetSports", "Tennis", "Squash", "Badminton"]
             }]
-        }, {
+        },
+        {
             "name": "Combat Sports",
             "type": "box",
             "tableRef": "combatSports",
             "validation": ["", "trim", ""],
             "fields": [{
                 "name": "Name",
-                "type": "text",
+                "type": "tags",
                 "tableRef": "name",
                 "tableValue": "name",
+                "url": "",
                 "placeholder": "Enter Name",
                 "id": "name",
                 "onView": true,
-                "validation": ["", "trim", ""]
+                "validation": ["", "trim", ""],
+                "dropDownField": "",
+                "dropDownType": "single",
+                "dropDown": ["Boxing", "Fencing", "Judo", "Karate", " Sport Mma", "Taekwondo"]
             }]
-        }, {
+        },
+        {
             "name": "Target Sports",
             "type": "box",
             "tableRef": "targetSports",
             "validation": ["", "trim", ""],
             "fields": [{
                 "name": "Name",
-                "type": "text",
+                "type": "tags",
                 "tableRef": "name",
                 "tableValue": "name",
+                "url": "",
                 "placeholder": "Enter Name",
                 "id": "name",
                 "onView": true,
-                "validation": ["", "trim", ""]
+                "validation": ["", "trim", ""],
+                "dropDownField": "",
+                "dropDownType": "single",
+                "dropDown": ["Archery", "Shooting"]
+            }]
+        }, {
+            "name": "Aquatics Sports",
+            "type": "box",
+            "tableRef": "aquaticsSports",
+            "validation": ["", "trim", ""],
+            "fields": [{
+                "name": "Name",
+                "type": "tags",
+                "tableRef": "name",
+                "tableValue": "name",
+                "url": "",
+                "placeholder": "Enter Name",
+                "id": "name",
+                "onView": true,
+                "validation": ["", "trim", ""],
+                "dropDownField": "",
+                "dropDownType": "single",
+                "dropDown": ["Swimming", "Water Polo"]
             }]
         },
         {
             "name": "Registration Fee",
-            "type": "text",
+            "type": "tags",
             "tableRef": "registrationFee",
             "placeholder": "Enter Registration fee",
-            "id": "registration"
+            "url": "",
+            "id": "registration",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Cash", "Cheque/DD", "OnlinePAYU"]
+        },
+        {
+            "name": "Payment Status",
+            "type": "tags",
+            "tableRef": "paymentStatus",
+            "placeholder": "Enter Status",
+            "url": "",
+            "id": "status",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Paid", "Pending"]
         }
     ],
     "action": [{

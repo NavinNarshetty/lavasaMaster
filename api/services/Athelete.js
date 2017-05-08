@@ -23,6 +23,7 @@ var schema = new Schema({
         ref: 'Registration',
         index: true
     },
+    year: String,
     idProof: String,
 
     surname: String,
@@ -94,11 +95,8 @@ var model = {
 
     //on athelete save and submit press 
     saveAthelete: function (data, callback) {
-        data.password = generator.generate({
-            length: 10,
-            numbers: true
-        });
-        console.log(data.password);
+        data.year = new Date().getFullYear();
+
         // data.status = "Pending";
         Athelete.saveData(data, function (err, athleteData) {
             console.log("athleteData", athleteData);
@@ -132,17 +130,24 @@ var model = {
                     console.log("isempty");
                     callback("No order data found", null);
                 } else {
-                    if (_.isEmpty(data.sfaID) && data.status == "verified") {
-                        var year = new Date().getFullYear().toString().substr(2, 2);
-                        // var value = newDate.getFullYear();
-                        // var year = value.splice(2, 3);
-                        if (_.isEmpty(found.city)) {
-                            found.city = "Mumbai"
+                    if (data.status == "verified") {
+                        data.password = generator.generate({
+                            length: 10,
+                            numbers: true
+                        });
+                        if (_.isEmpty(data.sfaID)) {
+                            console.log(data.password);
+                            var year = new Date().getFullYear().toString().substr(2, 2);
+                            // var value = newDate.getFullYear();
+                            // var year = value.splice(2, 3);
+                            if (_.isEmpty(found.city)) {
+                                found.city = "Mumbai"
+                            }
+                            var city = found.city;
+                            var prefixCity = city.charAt(0);
+                            console.log("prefixCity", prefixCity);
+                            data.sfaId = prefixCity + "A" + year + found.atheleteID;
                         }
-                        var city = found.city;
-                        var prefixCity = city.charAt(0);
-                        console.log("prefixCity", prefixCity);
-                        data.sfaId = prefixCity + "A" + year + found.atheleteID;
                     }
                     Athelete.saveData(data, function (err, athleteData) { //saves data to database collection
                         console.log("athleteData", athleteData);

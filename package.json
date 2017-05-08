@@ -62,7 +62,8 @@
     "sails": "~0.12.3",
     "sails-disk": "~0.10.9",
     "sails-wohlig-controller": "latest",
-    "sails-wohlig-service": "latest"
+    "sails-wohlig-service": "latest",
+    "sha512": "0.0.1"
   },
   "scripts": {
     "debug": "node debug app.js",

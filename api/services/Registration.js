@@ -24,6 +24,7 @@ var schema = new Schema({
         default: "Pending"
     },
     password: String,
+    year: String,
 
     schoolName: String,
     schoolType: String,
@@ -71,6 +72,11 @@ var schema = new Schema({
             type: String
         }
     }],
+    aquaticsSports: [{
+        name: {
+            type: String
+        }
+    }],
     combatSports: [{
         name: {
             type: String
@@ -88,6 +94,10 @@ var schema = new Schema({
     }],
 
     registrationFee: String,
+    paymentStatus: {
+        type: String,
+        default: "Pending"
+    },
 });
 
 schema.plugin(deepPopulate, {});
@@ -107,12 +117,9 @@ var model = {
 
     saveRegistrationForm: function (data, callback) {
         //auto password generator
-        data.password = generator.generate({
-            length: 10,
-            numbers: true
-        });
-        console.log("data", data);
 
+        console.log("data", data);
+        data.year = new Date().getFullYear();
 
         Registration.saveData(data, function (err, registerData) {
             console.log("registerData", registerData);
@@ -129,7 +136,7 @@ var model = {
         });
     },
 
-
+    //on backend save click (update)
     generateSfaID: function (data, callback) {
         console.log("inside");
         var schoolname = data.schoolname;
@@ -148,20 +155,29 @@ var model = {
                     callback(null, "No data found");
                 } else {
                     console.log("regiserid", schoolData.registerID);
-                    if (_.isEmpty(data.sfaID) && data.status == "verified") {
-                        var year = new Date().getFullYear().toString().substr(2, 2);
+                    if (data.status == "verified") {
+                        data.password = generator.generate({
+                            length: 10,
+                            numbers: true
+                        });
+                        if (_.isEmpty(data.sfaID)) {
+                            var year = new Date().getFullYear().toString().substr(2, 2);
 
-                        console.log("City", city);
-                        if (_.isEmpty(found.city)) {
-                            schoolData.city = "Mumbai"
+                            console.log("City", city);
+                            if (_.isEmpty(found.city)) {
+                                schoolData.city = "Mumbai"
+                            }
+                            var city = schoolData.city;
+                            var prefixCity = city.charAt(0);
+                            console.log("prefixCity", prefixCity);
+                            var register = schoolData.registerID; //increment with previous refrence
+                            data.sfaID = prefixCity + "S" + year + register; // prefix "S" for school
                         }
-                        var city = schoolData.city;
-                        var prefixCity = city.charAt(0);
-                        console.log("prefixCity", prefixCity);
-                        var register = schoolData.registerID; //increment with previous refrence
-                        data.sfaID = prefixCity + "S" + year + register; // prefix "S" for school
 
                     }
+
+
+
                     console.log("data", data);
                     Registration.saveData(data, function (err, registerData) {
                         console.log("Registration", registerData);
@@ -228,7 +244,11 @@ var model = {
                 callback(null, "Invalid data");
             }
         });
-    }
+    },
+
+    updatePaymentStatus: function (data, callback) {
+
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);
