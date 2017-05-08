@@ -76,7 +76,11 @@ var schema = new Schema({
     atheleteSchoolLocality: String,
     atheleteSchoolContact: String,
     atheleteSchoolIdImage: String,
-    registrationFee: String
+    registrationFee: String,
+    paymentStatus: {
+        type: String,
+        default: "Pending"
+    },
 });
 
 schema.plugin(deepPopulate, {});
@@ -192,6 +196,26 @@ var model = {
             }
 
         });
+    },
+
+    updatePaymentStatus: function (data, callback) {
+        var matchObj = {
+            $set: {
+                paymentStatus: "Paid"
+            }
+        }
+        Athelete.update({
+            _id: data._id
+        }, matchObj).exec(
+            function (err, data3) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else if (data3) {
+                    console.log("data3", data3);
+                    callback(null, data3);
+                }
+            });
     },
 
 

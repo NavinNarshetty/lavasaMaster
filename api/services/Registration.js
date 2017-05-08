@@ -130,7 +130,19 @@ var model = {
                 if (_.isEmpty(registerData)) {
                     callback("No register data found", null);
                 } else {
-                    callback(null, registerData);
+                    //callback(null, registerData);
+                    PayU.schoolPayment(data, function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, "Data not found");
+                            } else {
+                                callback(null, found);
+                            }
+                        }
+
+                    });
                 }
             }
         });
@@ -247,7 +259,23 @@ var model = {
     },
 
     updatePaymentStatus: function (data, callback) {
-
+        var matchObj = {
+            $set: {
+                paymentStatus: "Paid"
+            }
+        }
+        Registration.update({
+            _id: data._id
+        }, matchObj).exec(
+            function (err, data3) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else if (data3) {
+                    console.log("data3", data3);
+                    callback(null, data3);
+                }
+            });
     },
 
 };

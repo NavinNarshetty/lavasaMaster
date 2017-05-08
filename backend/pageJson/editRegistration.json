@@ -13,22 +13,40 @@
             "id": "name"
         }, {
             "name": "School Type",
-            "type": "text",
+            "type": "tags",
             "tableRef": "schoolType",
             "placeholder": "Enter type",
-            "id": "type"
+            "id": "type",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Co-Educational", "Boys", "Girls"]
         }, {
             "name": "School Category",
-            "type": "text",
+            "type": "tags",
             "tableRef": "schoolCategory",
             "placeholder": "Enter category",
-            "id": "category"
+            "id": "category",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Un-aided", "Government", "Aided"]
         }, {
             "name": "Affiliated Board",
-            "type": "text",
+            "type": "tags",
             "tableRef": "affiliatedBoard",
             "placeholder": "Enter Board",
-            "id": "board"
+            "id": "board",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Central Board of Secondary Education (CBSE)", "International Baccalaureate (IB)", "Indian Certificate of Secondary Education (ICSE )",
+                "International General Certificate of Secondary Education (IGCSE)", "National Institute of Open Schooling (NIOS)",
+                "Secondary School Certificate (SSC)", "A Level"
+            ]
         }, {
             "name": "SFA ID",
             "type": "text",

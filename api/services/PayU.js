@@ -8,14 +8,12 @@ if (development) {
     var payuurl = "https://test.payu.in/_payment";
 } else {
     var payukey = "l6hqaC";
-    var payusalt = "";
+    var payusalt = "8nQHfYcJ";
     var payuurl = "https://secure.payu.in/_payment";
 }
 
 
 var models = {
-
-
     schoolPayment: function (data, callback) {
         Registration.findOne({
             "_id": data._id
@@ -47,16 +45,25 @@ var models = {
                         firstname: firstname,
                         email: email,
                         phone: phone,
-                        // surl: 'http://35.154.98.245:1337/payU/successError',
-                        // furl: 'http://35.154.98.245:1337/payU/successError',
                         surl: 'http://localhost:1337/payU/successError',
                         furl: 'http://localhost:1337/payU/successError',
-                        // furl: 'http://localhost:1337/payU/successError',
-                        // surl: 'http://localhost:1337/payU/successError',
                         hash: hashtext,
                         // pg: pg
                     }
-                }, callback);
+                }, function (err, res) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (res) {
+                        console.log("response", res);
+                        Registration.updatePaymentStatus(data, function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (found) {
+                                callback(null, res);
+                            }
+                        });
+                    }
+                });
             } else {
                 callback(null, {});
             }
@@ -66,15 +73,12 @@ var models = {
     atheletePayment: function (data, callback) {
         Athelete.findOne({
             "_id": data._id
-        }).deepPopulate("buyer").exec(function (err, found) {
+        }).exec(function (err, found) {
             console.log('found0000000000000000000000000000', found);
             if (err) {
                 callback(err, null);
             } else if (found) {
-                // var txnid = found.orderId + parseInt(Math.random() * 100000);
                 var txnid = found.sfaId;
-                // var txnid = found._id;
-                // var amount = found.totalAmount;
                 var amount = "20.00";
                 var firstname = found.firstName;
                 var email = found.email;
@@ -99,7 +103,19 @@ var models = {
                         hash: hashtext,
                         // pg: pg
                     }
-                }, callback);
+                }, function (err, res) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (res) {
+                        Athelete.updatePaymentStatus(data, function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (found) {
+                                callback(null, found);
+                            }
+                        });
+                    }
+                });
             } else {
                 callback(null, {});
             }
