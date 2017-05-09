@@ -130,19 +130,46 @@ var model = {
                 if (_.isEmpty(registerData)) {
                     callback("No register data found", null);
                 } else {
-                    //callback(null, registerData);
-                    PayU.schoolPayment(data, function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(found)) {
-                                callback(null, "Data not found");
+                    if (registerData.registrationFee == "online PAYU") {
+                        PayU.schoolPayment(data, function (err, found) {
+                            if (err) {
+                                callback(err, null);
                             } else {
-                                callback(null, found);
-                            }
-                        }
+                                if (_.isEmpty(found)) {
+                                    callback(null, "Data not found");
+                                } else {
+                                    Registration.onlinePaymentMailSms(data, function (err, mailsms) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(mailsms)) {
+                                                callback(null, "Data not found");
+                                            } else {
+                                                callback(null, mailsms);
+                                            }
+                                        }
 
-                    });
+                                    });
+                                }
+                            }
+
+                        });
+                    } else if (registerData.registrationFee == "Cash" && registerData.registrationFee == "Cheque/DD") {
+                        Registration.cashPaymentMailSms(data, function (err, mailsms) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(mailsms)) {
+                                    callback(null, "Data not found");
+                                } else {
+                                    callback(null, mailsms);
+                                }
+                            }
+
+                        });
+                    } else {
+                        callback(null, registerData);
+                    }
                 }
             }
         });
@@ -408,7 +435,7 @@ var model = {
                     emailData.email = data.email;
                     emailData.sfaID = data.sfaID;
                     emailData.password = data.password;
-                    emailData.filename = "registeredVerification.ejs";
+                    emailData.filename = "successVerification.ejs";
                     emailData.subject = "SFA: You are now a verified School for SFA Mumbai 2017";
                     console.log("emaildata", emailData);
 
@@ -507,6 +534,7 @@ var model = {
 
             });
     },
+
 
 };
 module.exports = _.assign(module.exports, exports, model);

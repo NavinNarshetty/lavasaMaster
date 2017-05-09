@@ -154,6 +154,19 @@ var model = {
                             }
 
                         });
+                    } else if (athleteData.registrationFee == "Cash" && athleteData.registrationFee == "Cheque/DD") {
+                        Registration.cashPaymentMailSms(data, function (err, mailsms) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(mailsms)) {
+                                    callback(null, "Data not found");
+                                } else {
+                                    callback(null, mailsms);
+                                }
+                            }
+
+                        });
                     } else {
                         callback(null, athleteData);
                     }
@@ -338,7 +351,46 @@ var model = {
             });
     },
 
+    registeredAtheletePaymentMail: function (data, callback) {
+        School.findOne({ //finds one with refrence to id
+            _id: data._id
+        }).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "Data is empty");
+            } else {
+                console.log("school", found.name);
+                Registration.findOne({ //finds one with refrence to id
+                    schoolName: found.name
+                }).exec(function (err, schhol) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(school)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        var year = moment(school.createdAt).getFullYear().toString().substr(2, 2);
+                        if (school.status == "Verified" && year == "17") {
+                            Athelete.registeredCashPaymentMailSms(data, function (err, vData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (vData) {
+                                    callback(null, vData);
+                                }
+                            });
+
+                        }
+                    }
+                });
+
+            }
+
+        });
+
+    },
+
     registeredOnlinePaymentMailSms: function (data, callback) {
+
 
         async.parallel([
                 function (callback) {
