@@ -311,7 +311,7 @@ var model = {
             });
     },
 
-    onlinePaymentMailSms: function (data, callback) {
+    registeredOnlinePaymentMailSms: function (data, callback) {
         async.parallel([
                 function (callback) {
                     var emailOtp = (Math.random() + "").substring(2, 6);
@@ -365,7 +365,7 @@ var model = {
             });
     },
 
-    cashPaymentMailSms: function (data, callback) {
+    registeredCashPaymentMailSms: function (data, callback) {
         async.parallel([
                 function (callback) {
 
@@ -418,7 +418,7 @@ var model = {
             });
     },
 
-    registedVerifiedMailSms: function (data, callback) {
+    successVerifiedMailSms: function (data, callback) {
         async.parallel([
                 function (callback) {
                     var emailData = {};
@@ -448,6 +448,60 @@ var model = {
                     smsData.mobile = data.mobile;
 
                     smsData.content = "Congratulations! You are now a verified SFA Athlete. Kindly check your registered Email ID for your SFA ID and Password.";
+                    console.log("smsdata", smsData);
+                    Config.sendSms(smsData, function (err, smsRespo) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else if (smsRespo) {
+                            console.log(smsRespo, "sms sent");
+                            callback(null, smsRespo);
+                        } else {
+                            callback(null, "Invalid data");
+                        }
+                    });
+                }
+            ],
+            function (err, final) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, final);
+                }
+
+            });
+    },
+
+    failureVerifiedMailSms: function (data, callback) {
+        async.parallel([
+                function (callback) {
+                    var emailData = {};
+                    emailData.from = "info@sfanow.in";
+                    emailData.email = data.email;
+                    emailData.sfaID = data.sfaID;
+                    emailData.password = data.password;
+                    emailData.filename = "rejection.ejs";
+                    emailData.subject = "SFA: Rejection of Your Application for SFA Mumbai 2017";
+                    console.log("emaildata", emailData);
+
+                    Config.email(emailData, function (err, emailRespo) {
+                        if (err) {
+                            console.log(err);
+                            callback(null, err);
+                        } else if (emailRespo) {
+                            //callback(null, emailRespo);
+                        } else {
+                            //callback(null, "Invalid data");
+                        }
+                    });
+                },
+                function (callback) {
+
+                    var smsData = {};
+                    console.log("mobileOtp", mobileOtp);
+                    smsData.mobile = data.mobile;
+
+                    smsData.content = "We regret to inform you that your application has been rejected for SFA Mumbai 2017. For further queries please email us at info@sfanow.in";
                     console.log("smsdata", smsData);
                     Config.sendSms(smsData, function (err, smsRespo) {
                         if (err) {
@@ -535,6 +589,59 @@ var model = {
                     emailData.sfaID = data.sfaID;
                     emailData.password = data.password;
                     emailData.filename = "unregisteredOnlinePayment.ejs";
+                    emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
+                    console.log("emaildata", emailData);
+
+                    Config.email(emailData, function (err, emailRespo) {
+                        if (err) {
+                            console.log(err);
+                            callback(null, err);
+                        } else if (emailRespo) {
+                            //callback(null, emailRespo);
+                        } else {
+                            //callback(null, "Invalid data");
+                        }
+                    });
+                },
+                function (callback) {
+
+                    var smsData = {};
+                    console.log("mobileOtp", mobileOtp);
+                    smsData.mobile = data.mobile;
+
+                    smsData.content = "Thank you for registering for SFA Mumbai 2017. For further details please check your registered email ID.";
+                    console.log("smsdata", smsData);
+                    Config.sendSms(smsData, function (err, smsRespo) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else if (smsRespo) {
+                            console.log(smsRespo, "sms sent");
+                            callback(null, smsRespo);
+                        } else {
+                            callback(null, "Invalid data");
+                        }
+                    });
+                }
+            ],
+            function (err, final) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, final);
+                }
+
+            });
+    },
+
+    unregistedCashPaymentMailSms: function (data, callback) {
+        async.parallel([
+                function (callback) {
+
+                    var emailData = {};
+                    emailData.from = "info@sfanow.in";
+                    emailData.email = data.email;
+                    emailData.filename = "unregistedCashPayment.ejs";
                     emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
                     console.log("emaildata", emailData);
 
