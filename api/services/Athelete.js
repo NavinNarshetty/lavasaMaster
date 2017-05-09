@@ -20,9 +20,10 @@ var schema = new Schema({
     },
     school: {
         type: Schema.Types.ObjectId,
-        ref: 'Registration',
+        ref: 'School',
         index: true
     },
+
     year: String,
     idProof: String,
 
@@ -141,7 +142,14 @@ var model = {
                                 if (_.isEmpty(found)) {
                                     callback(null, "Data not found");
                                 } else {
-                                    callback(null, found);
+                                    Athelete.failureVerifiedMailSms(data, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+
                                 }
                             }
 
@@ -171,7 +179,7 @@ var model = {
                     console.log("isempty");
                     callback("No order data found", null);
                 } else {
-                    if (data.status == "verified") {
+                    if (data.status == "Verified") {
                         data.password = generator.generate({
                             length: 10,
                             numbers: true
@@ -189,6 +197,7 @@ var model = {
                             console.log("prefixCity", prefixCity);
                             data.sfaId = prefixCity + "A" + year + found.atheleteID;
                         }
+
                     }
                     Athelete.saveData(data, function (err, athleteData) { //saves data to database collection
                         console.log("athleteData", athleteData);
@@ -199,7 +208,25 @@ var model = {
                             if (_.isEmpty(athleteData)) {
                                 callback("No order data found", null);
                             } else {
-                                callback(null, athleteData);
+                                if (data.status == "Verified") {
+                                    Athelete.successVerifiedMailSms(data, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+                                } else if (data.status == "Rejected") {
+                                    Athelete.failureVerifiedMailSms(data, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+                                } else {
+                                    callback(null, athleteData);
+                                }
                             }
                         }
                     });
@@ -312,6 +339,7 @@ var model = {
     },
 
     registeredOnlinePaymentMailSms: function (data, callback) {
+
         async.parallel([
                 function (callback) {
                     var emailOtp = (Math.random() + "").substring(2, 6);
@@ -502,60 +530,6 @@ var model = {
                     smsData.mobile = data.mobile;
 
                     smsData.content = "We regret to inform you that your application has been rejected for SFA Mumbai 2017. For further queries please email us at info@sfanow.in";
-                    console.log("smsdata", smsData);
-                    Config.sendSms(smsData, function (err, smsRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (smsRespo) {
-                            console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
-                }
-            ],
-            function (err, final) {
-                if (err) {
-                    callback(err, null);
-                } else {
-                    callback(null, final);
-                }
-
-            });
-    },
-
-    unregistedVerifiedMailSms: function (data, callback) {
-        async.parallel([
-                function (callback) {
-                    var emailData = {};
-                    emailData.from = "info@sfanow.in";
-                    emailData.email = data.email;
-                    emailData.sfaID = data.sfaID;
-                    emailData.password = data.password;
-                    emailData.filename = "unregisteredVerification.ejs";
-                    emailData.subject = "SFA: Congratulations, You are now a verified School for SFA Mumbai 2017";
-                    console.log("emaildata", emailData);
-
-                    Config.email(emailData, function (err, emailRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else if (emailRespo) {
-                            //callback(null, emailRespo);
-                        } else {
-                            //callback(null, "Invalid data");
-                        }
-                    });
-                },
-                function (callback) {
-
-                    var smsData = {};
-                    console.log("mobileOtp", mobileOtp);
-                    smsData.mobile = data.mobile;
-
-                    smsData.content = "Congratulations! You are now a verified SFA Athlete. Kindly check your registered Email ID for your SFA ID and Password.";
                     console.log("smsdata", smsData);
                     Config.sendSms(smsData, function (err, smsRespo) {
                         if (err) {

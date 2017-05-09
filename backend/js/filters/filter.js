@@ -130,6 +130,7 @@ myApp.filter('capitalize', function () {
         }) : '';
     };
 });
+
 myApp.filter('formatDate', function () {
     return function (input, type) {
 

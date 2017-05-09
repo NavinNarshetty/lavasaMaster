@@ -196,7 +196,26 @@ var model = {
                             if (_.isEmpty(registerData)) {
                                 callback("No order data found", null);
                             } else {
-                                callback(null, registerData);
+                                if (data.status == "Verified") {
+                                    Registration.successVerifiedMailSms(data, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+                                } else if (data.status == "Rejected") {
+                                    Registration.failureVerifiedMailSms(data, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+                                } else {
+                                    callback(null, registerData);
+                                }
+
                             }
                         }
                     });
@@ -390,7 +409,7 @@ var model = {
                     emailData.sfaID = data.sfaID;
                     emailData.password = data.password;
                     emailData.filename = "registeredVerification.ejs";
-                    emailData.subject = "SFA: Congratulations, You are now a verified School for SFA Mumbai 2017";
+                    emailData.subject = "SFA: You are now a verified School for SFA Mumbai 2017";
                     console.log("emaildata", emailData);
 
                     Config.email(emailData, function (err, emailRespo) {
