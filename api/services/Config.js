@@ -354,7 +354,6 @@ var models = {
                 callback(err, null);
             } else if (userdata && userdata.length > 0) {
                 if (data.filename && data.filename != "") {
-                    //console.log("filename ", data.filename);
                     request.post({
                         url: requrl + "config/emailReader/",
                         json: data
@@ -364,7 +363,6 @@ var models = {
                             console.log(err);
                             callback(err, null);
                         } else {
-                            //console.log('email else');
                             if (body && body.value != false) {
                                 var helper = require('sendgrid').mail
 
@@ -386,9 +384,6 @@ var models = {
                                         callback(null, error);
                                         console.log('Error response received');
                                     } else {
-                                        // console.log(response.statusCode)
-                                        // console.log(response.body)
-                                        // console.log(response.headers)
                                         callback(null, response);
                                     }
                                 })

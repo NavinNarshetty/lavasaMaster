@@ -130,3 +130,16 @@ myApp.filter('capitalize', function () {
         }) : '';
     };
 });
+myApp.filter('formatDate', function () {
+    return function (input, type) {
+
+        if (type == 'date') {
+            var returnVal = moment(input).format('D MMM, YYYY');
+        } else if (type == 'time') {
+            var returnVal = moment(input).format('hh:mm a');
+        } else if (type == 'year') {
+            var returnVal = moment(input).format('YYYY');
+        }
+        return returnVal;
+    };
+});

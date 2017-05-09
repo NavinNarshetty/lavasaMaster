@@ -3,8 +3,8 @@ var sha512 = require('sha512');
 var request = require('request');
 var development = true;
 if (development) {
-    var payukey = "sWGItI";
-    var payusalt = "11yVS4fo";
+    var payukey = "gtKFFx ";
+    var payusalt = "eCwWELxi";
     var payuurl = "https://test.payu.in/_payment";
 } else {
     var payukey = "l6hqaC";
@@ -72,7 +72,7 @@ var models = {
 
     atheletePayment: function (found, callback) {
 
-        var txnid = "fd3e847h2";
+        var txnid = "ab2x3e56";
         var amount = "20.00";
         var firstname = found.firstName;
         var email = found.email;
@@ -93,7 +93,7 @@ var models = {
                 email: email,
                 phone: phone,
                 surl: 'http://localhost:8080/#/formathlete',
-                furl: 'http://localhost/payU/successError',
+                furl: 'http://localhost/8080/#/formregis',
                 hash: hashtext,
             }
         }, function (err, res) {

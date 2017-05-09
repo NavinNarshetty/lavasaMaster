@@ -147,7 +147,6 @@ var model = {
             }
         });
     },
-
     //on backend save click (update)
     generateSfaID: function (data, callback) {
         console.log("inside");
