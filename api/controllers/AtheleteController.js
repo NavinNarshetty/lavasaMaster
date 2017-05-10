@@ -44,6 +44,17 @@ var controller = {
         }
     },
 
+    registeredAtheletePaymentMail: function (req, res) {
+        if (req.body) {
+            Athelete.registeredAtheletePaymentMail(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
 
 
 

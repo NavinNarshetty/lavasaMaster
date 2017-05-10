@@ -101,8 +101,6 @@ var model = {
     //on athelete save and submit press 
     saveAthelete: function (data, callback) {
         data.year = new Date().getFullYear();
-
-        // data.status = "Pending";
         Athelete.saveData(data, function (err, athleteData) {
             console.log("athleteData", athleteData);
             if (err) {
@@ -112,64 +110,80 @@ var model = {
                 if (_.isEmpty(athleteData)) {
                     callback("No order data found", null);
                 } else {
-                    if (athleteData.atheleteSchoolName) {
-                        var schoolData = {};
-                        schoolData.name = athleteData.atheleteSchoolName;
-                        schoolData.locality = athleteData.atheleteSchoolLocality;
-                        schoolData.schoolLogo = athleteData.atheleteSchoolIdImage;
-                        schoolData.mobile = athleteData.atheleteSchoolContact;
-                        console.log("need to save");
-                        Registration.saveData(schoolData, function (err, registerData) {
-                            console.log("registerData", registerData);
-                            // if (err) {
-                            //     console.log("err", err);
-                            //     callback("There was an error while saving data", null);
-                            // } else {
-                            //     if (_.isEmpty(registerData)) {
-                            //         callback("No register data found", null);
-                            //     } else {
-                            //        // callback(null, registerData)
-                            //     }
-                            // }
-                        });
+                    async.parallel([
+                            function (callback) {
+                                console.log("inside school save")
+                                if (data.atheleteSchoolName) {
+                                    var schoolData = {};
+                                    schoolData.name = data.atheleteSchoolName;
+                                    schoolData.locality = data.atheleteSchoolLocality;
+                                    schoolData.schoolLogo = data.atheleteSchoolIdImage;
+                                    schoolData.mobile = data.atheleteSchoolContact;
+                                    console.log("need to save");
 
-                    }
-                    if (athleteData.registrationFee == "online PAYU") {
-                        PayU.atheletePayment(athleteData, function (err, found) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                if (_.isEmpty(found)) {
-                                    callback(null, "Data not found");
-                                } else {
-                                    Athelete.failureVerifiedMailSms(data, function (err, vData) {
+                                    Registration.saveData(schoolData, function (err, registerData) {
+                                        console.log("registerData", registerData);
+                                        if (err) {
+                                            console.log("err", err);
+                                            callback("There was an error while saving data", null);
+                                        } else {
+                                            if (_.isEmpty(registerData)) {
+                                                callback("No register data found", null);
+                                            } else {
+                                                callback(null, registerData)
+                                            }
+                                        }
+                                    });
+                                }
+                            },
+                            function (callback) {
+                                console.log("inside payment check");
+                                if (athleteData.registrationFee == "online PAYU") {
+
+                                    PayU.atheletePayment(athleteData, function (err, found) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(found)) {
+                                                callback(null, "Data not found");
+                                            } else {
+                                                Athelete.registeredAtheletePaymentMail(athleteData, function (err, vData) {
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else if (vData) {
+                                                        callback(null, vData);
+                                                    }
+                                                });
+
+                                            }
+                                        }
+
+                                    });
+                                } else if (athleteData.registrationFee == "cash" || athleteData.registrationFee == "cheque/DD") {
+                                    Athelete.registeredAtheletePaymentMail(athleteData, function (err, vData) {
                                         if (err) {
                                             callback(err, null);
                                         } else if (vData) {
                                             callback(null, vData);
                                         }
                                     });
-
-                                }
-                            }
-
-                        });
-                    } else if (athleteData.registrationFee == "Cash" && athleteData.registrationFee == "Cheque/DD") {
-                        Registration.cashPaymentMailSms(data, function (err, mailsms) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                if (_.isEmpty(mailsms)) {
-                                    callback(null, "Data not found");
                                 } else {
-                                    callback(null, mailsms);
+                                    callback(null, athleteData);
                                 }
                             }
-
+                        ],
+                        function (err, data2) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, []);
+                            } else if (data2) {
+                                if (_.isEmpty(data2)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, data2);
+                                }
+                            }
                         });
-                    } else {
-                        callback(null, athleteData);
-                    }
                 }
             }
         });
@@ -208,7 +222,7 @@ var model = {
                             var city = found.city;
                             var prefixCity = city.charAt(0);
                             console.log("prefixCity", prefixCity);
-                            data.sfaId = prefixCity + "A" + year + found.atheleteID;
+                            data.sfaId = "M" + "A" + year + found.atheleteID;
                         }
 
                     }
@@ -352,9 +366,11 @@ var model = {
     },
 
     registeredAtheletePaymentMail: function (data, callback) {
+        console.log("getting inside", data);
         School.findOne({ //finds one with refrence to id
-            _id: data._id
+            _id: data.school
         }).exec(function (err, found) {
+            // console.log("found", found);
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
@@ -363,21 +379,55 @@ var model = {
                 console.log("school", found.name);
                 Registration.findOne({ //finds one with refrence to id
                     schoolName: found.name
-                }).exec(function (err, schhol) {
+                }).exec(function (err, school) {
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(school)) {
-                        callback(null, "Data is empty");
-                    } else {
-                        var year = moment(school.createdAt).getFullYear().toString().substr(2, 2);
-                        if (school.status == "Verified" && year == "17") {
-                            Athelete.registeredCashPaymentMailSms(data, function (err, vData) {
+                        if (data.registrationFee == "cash" || data.registrationFee == "cheque/DD") {
+                            console.log("cash or cheque payment mail");
+                            Athelete.unregistedCashPaymentMailSms(data, function (err, vData) {
                                 if (err) {
                                     callback(err, null);
                                 } else if (vData) {
                                     callback(null, vData);
                                 }
                             });
+                        } else if (data.registrationFee == "online PAYU") {
+                            console.log("online payment mail");
+                            Athelete.unregistedOnlinePaymentMailSms(data, function (err, vData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (vData) {
+                                    callback(null, vData);
+                                }
+                            });
+                        }
+                    } else {
+                        var val = school.createdAt;
+                        console.log("data of register school", val);
+                        var year = new Date(val).getFullYear().toString().substr(2, 2);
+                        console.log("year", year);
+                        if (school.status == "Verified" && year == '17') {
+                            console.log("inside verified");
+                            if (data.registrationFee == "cash" || data.registrationFee == "cheque/DD") {
+                                console.log("cash or cheque payment mail");
+                                Athelete.registeredCashPaymentMailSms(data, function (err, vData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (vData) {
+                                        callback(null, vData);
+                                    }
+                                });
+                            } else if (data.registrationFee == "online PAYU") {
+                                console.log("online payment mail");
+                                Athelete.registeredOnlinePaymentMailSms(data, function (err, vData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (vData) {
+                                        callback(null, vData);
+                                    }
+                                });
+                            }
 
                         }
                     }
@@ -388,6 +438,7 @@ var model = {
         });
 
     },
+
 
     registeredOnlinePaymentMailSms: function (data, callback) {
 

@@ -110,6 +110,7 @@ var models = {
                 });
             } else {
                 console.log("res", res);
+                callback(null, res);
             }
         });
     },
