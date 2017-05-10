@@ -280,7 +280,7 @@
             "dropDownField": "",
             "dropDownType": "single",
             "onView": true,
-            "dropDown": ["Cash", "Cheque/DD", "OnlinePAYU"]
+            "dropDown": ["cash", "cheque/DD", "onlinePAYU"]
         },
         {
             "name": "Payment Status",

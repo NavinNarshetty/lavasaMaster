@@ -100,92 +100,106 @@ var model = {
 
     //on athelete save and submit press 
     saveAthelete: function (data, callback) {
-        data.year = new Date().getFullYear();
-        Athelete.saveData(data, function (err, athleteData) {
-            console.log("athleteData", athleteData);
+        Athelete.count({
+            email: data.email,
+            firstName: data.firstName,
+            lastname: data.lastname,
+        }).exec(function (err, data2) {
             if (err) {
-                console.log("err", err);
-                callback("There was an error while saving order", null);
+                callback(err, data);
             } else {
-                if (_.isEmpty(athleteData)) {
-                    callback("No order data found", null);
-                } else {
-                    async.parallel([
-                            function (callback) {
-                                console.log("inside school save")
-                                if (data.atheleteSchoolName) {
-                                    var schoolData = {};
-                                    schoolData.name = data.atheleteSchoolName;
-                                    schoolData.locality = data.atheleteSchoolLocality;
-                                    schoolData.schoolLogo = data.atheleteSchoolIdImage;
-                                    schoolData.mobile = data.atheleteSchoolContact;
-                                    console.log("need to save");
+                if (data2 === 0) {
+                    data.year = new Date().getFullYear();
+                    Athelete.saveData(data, function (err, athleteData) {
+                        console.log("athleteData", athleteData);
+                        if (err) {
+                            console.log("err", err);
+                            callback("There was an error while saving order", null);
+                        } else {
+                            if (_.isEmpty(athleteData)) {
+                                callback("No order data found", null);
+                            } else {
+                                async.parallel([
+                                        function (callback) {
+                                            console.log("inside school save")
+                                            if (data.atheleteSchoolName) {
+                                                var schoolData = {};
+                                                schoolData.name = data.atheleteSchoolName;
+                                                schoolData.locality = data.atheleteSchoolLocality;
+                                                schoolData.schoolLogo = data.atheleteSchoolIdImage;
+                                                schoolData.mobile = data.atheleteSchoolContact;
+                                                console.log("need to save");
 
-                                    Registration.saveData(schoolData, function (err, registerData) {
-                                        console.log("registerData", registerData);
-                                        if (err) {
-                                            console.log("err", err);
-                                            callback("There was an error while saving data", null);
-                                        } else {
-                                            if (_.isEmpty(registerData)) {
-                                                callback("No register data found", null);
+                                                Registration.saveData(schoolData, function (err, registerData) {
+                                                    console.log("registerData", registerData);
+                                                    if (err) {
+                                                        console.log("err", err);
+                                                        callback("There was an error while saving data", null);
+                                                    } else {
+                                                        if (_.isEmpty(registerData)) {
+                                                            callback("No register data found", null);
+                                                        } else {
+                                                            callback(null, registerData)
+                                                        }
+                                                    }
+                                                });
                                             } else {
-                                                callback(null, registerData)
+                                                callback(null, "no Data");
                                             }
-                                        }
-                                    });
-                                } else {
-                                    callback(null, "no Data");
-                                }
-                            },
-                            function (callback) {
-                                console.log("inside payment check");
-                                if (athleteData.registrationFee == "online PAYU") {
+                                        },
+                                        function (callback) {
+                                            console.log("inside payment check");
+                                            if (athleteData.registrationFee == "online PAYU") {
 
-                                    PayU.atheletePayment(athleteData, function (err, found) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else {
-                                            if (_.isEmpty(found)) {
-                                                callback(null, "Data not found");
-                                            } else {
-                                                Athelete.registeredAtheletePaymentMail(athleteData, function (err, vData) {
+                                                PayU.atheletePayment(athleteData, function (err, found) {
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else {
+                                                        if (_.isEmpty(found)) {
+                                                            callback(null, "Data not found");
+                                                        } else {
+                                                            Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                                if (err) {
+                                                                    callback(err, null);
+                                                                } else if (vData) {
+                                                                    callback(null, vData);
+                                                                }
+                                                            });
+
+                                                        }
+                                                    }
+
+                                                });
+                                            } else if (athleteData.registrationFee == "cash" || athleteData.registrationFee == "cheque/DD") {
+                                                Athelete.atheletePaymentMail(athleteData, function (err, vData) {
                                                     if (err) {
                                                         callback(err, null);
                                                     } else if (vData) {
                                                         callback(null, vData);
                                                     }
                                                 });
-
+                                            } else {
+                                                callback(null, athleteData);
                                             }
                                         }
-
-                                    });
-                                } else if (athleteData.registrationFee == "cash" || athleteData.registrationFee == "cheque/DD") {
-                                    Athelete.registeredAtheletePaymentMail(athleteData, function (err, vData) {
+                                    ],
+                                    function (err, data2) {
                                         if (err) {
-                                            callback(err, null);
-                                        } else if (vData) {
-                                            callback(null, vData);
+                                            console.log(err);
+                                            callback(null, []);
+                                        } else if (data2) {
+                                            if (_.isEmpty(data2)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, data2);
+                                            }
                                         }
                                     });
-                                } else {
-                                    callback(null, athleteData);
-                                }
                             }
-                        ],
-                        function (err, data2) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, []);
-                            } else if (data2) {
-                                if (_.isEmpty(data2)) {
-                                    callback(null, []);
-                                } else {
-                                    callback(null, data2);
-                                }
-                            }
-                        });
+                        }
+                    });
+                } else {
+                    callback(null, "Athelete Already Exist");
                 }
             }
         });
@@ -213,10 +227,7 @@ var model = {
                             numbers: true
                         });
                         if (_.isEmpty(data.sfaID)) {
-                            console.log(data.password);
                             var year = new Date().getFullYear().toString().substr(2, 2);
-                            // var value = newDate.getFullYear();
-                            // var year = value.splice(2, 3);
                             if (_.isEmpty(found.city)) {
                                 found.city = "Mumbai"
                             }
@@ -310,63 +321,54 @@ var model = {
             });
     },
 
-    generateOTP: function (data, callback) {
-        async.parallel([
-                function (callback) {
-                    var emailOtp = (Math.random() + "").substring(2, 6);
+    generateMobileOTP: function (data, callback) {
 
-                    var emailData = {};
-                    emailData.from = "info@sfanow.in";
-                    emailData.email = data.email;
-                    emailData.otp = emailOtp;
-                    emailData.filename = "emailOtp.ejs";
-                    emailData.subject = "SFA: Your Email OTP (One time Password) for SFA registration is";
-                    console.log("emaildata", emailData);
+        var mobileOtp = (Math.random() + "").substring(2, 6);
+        var smsData = {};
+        console.log("mobileOtp", mobileOtp);
+        smsData.mobile = data.mobile;
 
-                    Config.email(emailData, function (err, emailRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else if (emailRespo) {
-                            //callback(null, emailRespo);
-                        } else {
-                            //callback(null, "Invalid data");
-                        }
-                    });
-                },
-                function (callback) {
-
-                    var mobileOtp = (Math.random() + "").substring(2, 6);
-                    var smsData = {};
-                    console.log("mobileOtp", mobileOtp);
-                    smsData.mobile = data.mobile;
-
-                    smsData.content = "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is" + mobileOtp;
-                    console.log("smsdata", smsData);
-                    Config.sendSms(smsData, function (err, smsRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (smsRespo) {
-                            console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
-                }
-            ],
-            function (err, final) {
-                if (err) {
-                    callback(err, null);
-                } else {
-                    callback(null, final);
-                }
-
-            });
+        smsData.content = "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is" + mobileOtp;
+        console.log("smsdata", smsData);
+        Config.sendSms(smsData, function (err, smsRespo) {
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else if (smsRespo) {
+                console.log(smsRespo, "sms sent");
+                callback(null, smsRespo);
+            } else {
+                callback(null, "Invalid data");
+            }
+        });
     },
 
-    registeredAtheletePaymentMail: function (data, callback) {
+    generateEmailOTP: function (data, callback) {
+
+
+        var emailOtp = (Math.random() + "").substring(2, 6);
+
+        var emailData = {};
+        emailData.from = "info@sfanow.in";
+        emailData.email = data;
+        emailData.otp = emailOtp;
+        emailData.filename = "emailOtp.ejs";
+        emailData.subject = "SFA: Your Email OTP (One time Password) for SFA registration is";
+        console.log("emaildata", emailData);
+
+        Config.email(emailData, function (err, emailRespo) {
+            if (err) {
+                console.log(err);
+                callback(null, err);
+            } else if (emailRespo) {
+                //callback(null, emailRespo);
+            } else {
+                //callback(null, "Invalid data");
+            }
+        });
+    },
+
+    atheletePaymentMail: function (data, callback) {
         console.log("getting inside", data);
         School.findOne({ //finds one with refrence to id
             _id: data.school
@@ -470,7 +472,6 @@ var model = {
 
                     var smsData = {};
                     smsData.mobile = data.mobile;
-
                     smsData.content = "Thank you for registering for SFA Mumbai 2017. For further details please check your registered email ID.";
                     console.log("smsdata", smsData);
                     Config.sendSms(smsData, function (err, smsRespo) {
@@ -521,7 +522,7 @@ var model = {
                 function (callback) {
 
                     var smsData = {};
-                    console.log("mobileOtp", mobileOtp);
+
                     smsData.mobile = data.mobile;
 
                     smsData.content = "Thank you for registering for SFA Mumbai 2017. For further details please check your registered email ID.";
@@ -555,10 +556,10 @@ var model = {
                     var emailData = {};
                     emailData.from = "info@sfanow.in";
                     emailData.email = data.email;
-                    emailData.sfaID = data.sfaID;
+                    emailData.sfaID = data.sfaId;
                     emailData.password = data.password;
                     emailData.filename = "registeredVerification.ejs";
-                    emailData.subject = "SFA: Congratulations, You are now a verified School for SFA Mumbai 2017";
+                    emailData.subject = "SFA: You are now a verified School for SFA Mumbai 2017";
                     console.log("emaildata", emailData);
 
                     Config.email(emailData, function (err, emailRespo) {
@@ -575,7 +576,6 @@ var model = {
                 function (callback) {
 
                     var smsData = {};
-                    console.log("mobileOtp", mobileOtp);
                     smsData.mobile = data.mobile;
 
                     smsData.content = "Congratulations! You are now a verified SFA Athlete. Kindly check your registered Email ID for your SFA ID and Password.";
@@ -629,7 +629,6 @@ var model = {
                 function (callback) {
 
                     var smsData = {};
-                    console.log("mobileOtp", mobileOtp);
                     smsData.mobile = data.mobile;
 
                     smsData.content = "We regret to inform you that your application has been rejected for SFA Mumbai 2017. For further queries please email us at info@sfanow.in";
@@ -683,7 +682,6 @@ var model = {
                 function (callback) {
 
                     var smsData = {};
-                    console.log("mobileOtp", mobileOtp);
                     smsData.mobile = data.mobile;
 
                     smsData.content = "Thank you for registering for SFA Mumbai 2017. For further details please check your registered email ID.";
@@ -716,8 +714,7 @@ var model = {
                 function (callback) {
 
                     var emailData = {};
-                    // emailData.from = "info@sfanow.in";
-                    emailData.from = "supriya.bhartiya7@gmail.com";
+                    emailData.from = "info@sfanow.in";
                     emailData.email = data.email;
                     emailData.filename = "unregistercashpayment.ejs";
                     emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
@@ -736,7 +733,6 @@ var model = {
                 function (callback) {
 
                     var smsData = {};
-                    // console.log("mobileOtp", mobileOtp);
                     smsData.mobile = data.mobile;
 
                     smsData.content = "Thank you for registering for SFA Mumbai 2017. For further details please check your registered email ID.";

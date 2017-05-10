@@ -209,7 +209,7 @@ var model = {
                             var prefixCity = city.charAt(0);
                             console.log("prefixCity", prefixCity);
                             var register = schoolData.registerID; //increment with previous refrence
-                            data.sfaID = prefixCity + "S" + year + register; // prefix "S" for school
+                            data.sfaID = "M" + "S" + year + register; // prefix "S" for school
                         }
 
                     }
@@ -351,7 +351,7 @@ var model = {
                     var emailData = {};
                     emailData.from = "info@sfanow.in";
                     emailData.email = data.email;
-                    emailData.filename = "atheleteOnlinePayment.ejs";
+                    emailData.filename = "schoolOnlinePayment.ejs";
                     emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
                     console.log("emaildata", emailData);
 
@@ -404,7 +404,7 @@ var model = {
                     var emailData = {};
                     emailData.from = "info@sfanow.in";
                     emailData.email = data.email;
-                    emailData.filename = "atheleteCashPayment.ejs";
+                    emailData.filename = "schoolCashPayment.ejs";
                     emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
                     console.log("emaildata", emailData);
 
