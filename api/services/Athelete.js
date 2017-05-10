@@ -134,6 +134,8 @@ var model = {
                                             }
                                         }
                                     });
+                                } else {
+                                    callback(null, "no Data");
                                 }
                             },
                             function (callback) {
@@ -188,7 +190,6 @@ var model = {
             }
         });
     },
-
     //genarate sfa when status changes to verified and sfaid is blank
     generateAtheleteSfaID: function (data, callback) {
         //find and first time atheleteID idea is for string id generation if required
@@ -468,7 +469,6 @@ var model = {
                 function (callback) {
 
                     var smsData = {};
-                    console.log("mobileOtp", mobileOtp);
                     smsData.mobile = data.mobile;
 
                     smsData.content = "Thank you for registering for SFA Mumbai 2017. For further details please check your registered email ID.";
@@ -716,27 +716,27 @@ var model = {
                 function (callback) {
 
                     var emailData = {};
-                    emailData.from = "info@sfanow.in";
+                    // emailData.from = "info@sfanow.in";
+                    emailData.from = "supriya.bhartiya7@gmail.com";
                     emailData.email = data.email;
-                    emailData.filename = "unregistedCashPayment.ejs";
+                    emailData.filename = "unregistercashpayment.ejs";
                     emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
                     console.log("emaildata", emailData);
-
                     Config.email(emailData, function (err, emailRespo) {
                         if (err) {
                             console.log(err);
                             callback(null, err);
                         } else if (emailRespo) {
-                            //callback(null, emailRespo);
+                            callback(null, emailRespo);
                         } else {
-                            //callback(null, "Invalid data");
+                            callback(null, "Invalid data");
                         }
                     });
                 },
                 function (callback) {
 
                     var smsData = {};
-                    console.log("mobileOtp", mobileOtp);
+                    // console.log("mobileOtp", mobileOtp);
                     smsData.mobile = data.mobile;
 
                     smsData.content = "Thank you for registering for SFA Mumbai 2017. For further details please check your registered email ID.";

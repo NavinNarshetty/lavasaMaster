@@ -224,35 +224,35 @@ var model = {
                                 callback("No order data found", null);
                             } else {
                                 if (data.status == "Verified") {
-                                    async.parallel([
-                                            function (callback) {
-                                                Registration.successVerifiedMailSms(data, function (err, vData) {
-                                                    if (err) {
-                                                        callback(err, null);
-                                                    } else if (vData) {
-                                                        callback(null, vData);
-                                                    }
-                                                });
-                                            },
-                                            function (callback) {
-                                                // School.find({
+                                    // async.parallel([
+                                    //         function (callback) {
+                                    Registration.successVerifiedMailSms(data, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+                                    //     },
+                                    //     function (callback) {
+                                    //         // School.find({
 
-                                                // });
+                                    //         // });
 
-                                            }
-                                        ],
-                                        function (err, data2) {
-                                            if (err) {
-                                                console.log(err);
-                                                callback(null, []);
-                                            } else if (data2) {
-                                                if (_.isEmpty(data2)) {
-                                                    callback(null, []);
-                                                } else {
-                                                    callback(null, data2);
-                                                }
-                                            }
-                                        });
+                                    //     }
+                                    // ],
+                                    // function (err, data2) {
+                                    //     if (err) {
+                                    //         console.log(err);
+                                    //         callback(null, []);
+                                    //     } else if (data2) {
+                                    //         if (_.isEmpty(data2)) {
+                                    //             callback(null, []);
+                                    //         } else {
+                                    //             callback(null, data2);
+                                    //         }
+                                    //     }
+                                    // });
 
                                 } else if (data.status == "Rejected") {
                                     Registration.failureVerifiedMailSms(data, function (err, vData) {

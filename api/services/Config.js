@@ -1,30 +1,17 @@
-/**
- * Config.js
- *
- * @description :: TODO: You might write a short summary of how this model works and what it represents here.
- * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
- */
-
-
-var MaxImageSize = 1600;
-
-
-
 var schema = new Schema({
-    name: String,
-    content: String,
+    name: {
+        type: String,
+    }
 });
 
-// var client = new Twitter({
-//     consumer_key: 'w0Mizb3YKniG8GfZmhQJbMvER',
-//     consumer_secret: '6wnwpnm6a475ROm3aY8aOy8YXynQxQgZkcoJ05Y8D9EvL0Duov',
-//     access_token_key: '121427044-PJTEM2zmqwcRu4K0FBotK9jtTibsNOiomyVlkSo0',
-//     access_token_secret: 'TvMPCXaXpJOvpu8hCGc61kzp5EpIPbrAgOT7u6lDnastg'
-// });
-
+schema.plugin(deepPopulate, {});
+schema.plugin(uniqueValidator);
+schema.plugin(timestamps);
 module.exports = mongoose.model('Config', schema);
+var requrl = "http://localhost:1337/api/";
 
-var models = {
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
+var model = {
     maxRow: 10,
     getForeignKeys: function (schema) {
         var arr = [];
@@ -371,7 +358,7 @@ var models = {
                                 subject = data.subject
                                 content = new helper.Content("text/html", body)
                                 mail = new helper.Mail(from_email, subject, to_email, content)
-
+                                console.log("api_key", userdata[0].name);
                                 var sg = require('sendgrid')(userdata[0].name);
                                 var request = sg.emptyRequest({
                                     method: 'POST',
@@ -516,4 +503,4 @@ var models = {
         });
     }
 };
-module.exports = _.assign(module.exports, models);
+module.exports = _.assign(module.exports, exports, model);
