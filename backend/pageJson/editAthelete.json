@@ -6,24 +6,6 @@
     "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
-            "name": "First Name",
-            "type": "text",
-            "tableRef": "firstName",
-            "placeholder": "Enter School Name",
-            "id": "name"
-        }, {
-            "name": "Surname",
-            "type": "text",
-            "tableRef": "surname",
-            "placeholder": "Enter type",
-            "id": "type"
-        }, {
-            "name": "Middle Name",
-            "type": "text",
-            "tableRef": "middleName",
-            "placeholder": "Enter Middle Name",
-            "id": "middleName"
-        }, {
             "name": "School",
             "type": "selectFromTable",
             "tableRef": "school",
@@ -32,28 +14,23 @@
             "id": "school",
             "url": "school/search"
         }, {
-            "name": "SFA ID",
+            "name": "Surname",
             "type": "text",
-            "tableRef": "sfaId",
-            "placeholder": "Enter SFA ID",
-            "id": "sfaId"
+            "tableRef": "surname",
+            "placeholder": "Enter type",
+            "id": "type"
         }, {
-            "name": "Status",
-            "type": "tags",
-            "tableRef": "status",
-            "placeholder": "Enter Status",
-            "url": "",
-            "id": "status",
-            "dropDownField": "",
-            "dropDownType": "single",
-            "onView": true,
-            "dropDown": ["Pending", "Verified", "Rejected"]
-        }, {
-            "name": "Password",
+            "name": "First Name",
             "type": "text",
-            "tableRef": "password",
-            "placeholder": "Enter password",
-            "id": "password"
+            "tableRef": "firstName",
+            "placeholder": "Enter School Name",
+            "id": "name"
+        }, {
+            "name": "Middle Name",
+            "type": "text",
+            "tableRef": "middleName",
+            "placeholder": "Enter Middle Name",
+            "id": "middleName"
         }, {
             "name": "Gender",
             "type": "tags",
@@ -66,17 +43,6 @@
             "onView": true,
             "dropDown": ["Male", "Female"]
         }, {
-            "name": "Blood Group",
-            "type": "tags",
-            "tableRef": "bloodGroup",
-            "placeholder": "Enter bloodGroup",
-            "id": "bloodGroup",
-            "url": "",
-            "dropDownField": "",
-            "dropDownType": "single",
-            "onView": true,
-            "dropDown": ["AB+", "AB-", "A+", "A-", "O+", "O-", "B+", "B-"]
-        }, {
             "name": "Standard",
             "type": "tags",
             "tableRef": "standard",
@@ -87,6 +53,17 @@
             "dropDownType": "single",
             "onView": true,
             "dropDown": ["Jr. KG ", "Sr. KG ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
+        }, {
+            "name": "Blood Group",
+            "type": "tags",
+            "tableRef": "bloodGroup",
+            "placeholder": "Enter bloodGroup",
+            "id": "bloodGroup",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["AB+", "AB-", "A+", "A-", "O+", "O-", "B+", "B-"]
         }, {
             "name": "Photograph",
             "type": "image",
@@ -112,29 +89,11 @@
             "placeholder": "Upload Age Proof",
             "id": "ageProof"
         }, {
-            "name": "Played Tournament",
-            "type": "tags",
-            "tableRef": "playedTournaments",
-            "placeholder": "Enter Played Tournaments",
-            "id": "playedTournaments",
-            "url": "",
-            "dropDownField": "",
-            "dropDownType": "single",
-            "onView": true,
-            "dropDown": ["True", "False"]
-
-        }, {
             "name": "Mobile",
             "type": "text",
             "tableRef": "mobile",
             "placeholder": "Enter mobile",
             "id": "mobile"
-        }, {
-            "name": "Enter OTP",
-            "type": "text",
-            "tableRef": "enterOTP",
-            "placeholder": "Enter OTP",
-            "id": "enterOTP"
         }, {
             "name": "Email",
             "type": "text",
@@ -147,6 +106,12 @@
             "tableRef": "address",
             "placeholder": "Enter Address",
             "id": "address"
+        }, {
+            "name": "Line 2",
+            "type": "text",
+            "tableRef": "addressLine2",
+            "placeholder": "Enter Address",
+            "id": "addressline2"
         }, {
             "name": "State",
             "type": "tags",
@@ -293,6 +258,29 @@
             "dropDownType": "single",
             "onView": true,
             "dropDown": ["Paid", "Pending"]
+        }, {
+            "name": "Status",
+            "type": "tags",
+            "tableRef": "status",
+            "placeholder": "Enter Status",
+            "url": "",
+            "id": "status",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Pending", "Verified", "Rejected"]
+        }, {
+            "name": "SFA ID",
+            "type": "text",
+            "tableRef": "sfaId",
+            "placeholder": "Enter SFA ID",
+            "id": "sfaId"
+        }, {
+            "name": "Password",
+            "type": "text",
+            "tableRef": "password",
+            "placeholder": "Enter password",
+            "id": "password"
         }
     ],
     "action": [{

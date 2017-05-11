@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
 var sha512 = require('sha512');
 var request = require('request');
+var generator = require('generate-password');
+
 var development = false;
 if (development) {
     var payukey = "gtKFFx ";

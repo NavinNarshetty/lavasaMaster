@@ -316,7 +316,7 @@ var model = {
                 callback(err, null);
             } else if (smsRespo) {
                 console.log(smsRespo, "sms sent");
-                callback(null, smsRespo);
+                callback(null, mobileOtp);
             } else {
                 callback(null, "Invalid data");
             }

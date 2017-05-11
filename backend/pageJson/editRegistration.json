@@ -6,6 +6,13 @@
     "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
+            "name": "Year",
+            "type": "text",
+            "tableRef": "year",
+            "placeholder": "Enter year",
+            "id": "year"
+        },
+        {
             "name": "School Name",
             "type": "text",
             "tableRef": "schoolName",
@@ -48,11 +55,14 @@
                 "Secondary School Certificate (SSC)", "A Level"
             ]
         }, {
-            "name": "SFA ID",
-            "type": "text",
-            "tableRef": "sfaID",
-            "placeholder": "Enter SFA ID",
-            "id": "sfaID"
+            "name": "School Logo",
+            "type": "image",
+            "size": "250 x 250",
+            "view": true,
+            "disabled": true,
+            "tableRef": "schoolLogo",
+            "placeholder": "Upload Logo",
+            "id": "logo"
         }, {
             "name": "Status",
             "type": "tags",
@@ -64,21 +74,6 @@
             "dropDownType": "single",
             "onView": true,
             "dropDown": ["Pending", "Verified", "Rejected"]
-        }, {
-            "name": "Password",
-            "type": "text",
-            "tableRef": "password",
-            "placeholder": "Enter password",
-            "id": "password"
-        }, {
-            "name": "School Logo",
-            "type": "image",
-            "size": "250 x 250",
-            "view": true,
-            "disabled": true,
-            "tableRef": "schoolLogo",
-            "placeholder": "Upload Logo",
-            "id": "logo"
         }, {
             "name": "School Address",
             "type": "text",
@@ -143,6 +138,12 @@
             "placeholder": "Enter landline",
             "id": "landline"
         }, {
+            "name": "Mobile",
+            "type": "text",
+            "tableRef": "mobile",
+            "placeholder": "Enter mobile",
+            "id": "mobile"
+        }, {
             "name": "Email",
             "type": "text",
             "tableRef": "email",
@@ -155,29 +156,23 @@
             "placeholder": "Enter website",
             "id": "website"
         }, {
-            "name": "Mobile",
-            "type": "text",
-            "tableRef": "mobile",
-            "placeholder": "Enter mobile",
-            "id": "mobile"
-        }, {
             "name": "Principal Name",
             "type": "text",
             "tableRef": "schoolPrincipalName",
             "placeholder": "Enter Principal name",
             "id": "principalName"
         }, {
-            "name": "Principal Mobile",
-            "type": "text",
-            "tableRef": "schoolPrincipalMobile",
-            "placeholder": "Enter Principal mobile",
-            "id": "principalMobile"
-        }, {
             "name": "Principal landline",
             "type": "text",
             "tableRef": "schoolPrincipalLandline",
             "placeholder": "Enter Principal Landline",
             "id": "principalLandline"
+        }, {
+            "name": "Principal Mobile",
+            "type": "text",
+            "tableRef": "schoolPrincipalMobile",
+            "placeholder": "Enter Principal mobile",
+            "id": "principalMobile"
         }, {
             "name": "Principal email",
             "type": "text",
@@ -377,6 +372,19 @@
             "dropDownType": "single",
             "onView": true,
             "dropDown": ["Paid", "Pending"]
+        },
+        {
+            "name": "SFA ID",
+            "type": "text",
+            "tableRef": "sfaID",
+            "placeholder": "Enter SFA ID",
+            "id": "sfaID"
+        }, {
+            "name": "Password",
+            "type": "text",
+            "tableRef": "password",
+            "placeholder": "Enter password",
+            "id": "password"
         }
     ],
     "action": [{

@@ -98,6 +98,7 @@ var model = {
             extension = "jpg";
         }
         var newFilename = id + "." + extension;
+        var MaxImageSize = 1200;
 
         var writestream = gfs.createWriteStream({
             filename: newFilename

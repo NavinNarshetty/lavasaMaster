@@ -108,6 +108,7 @@ var model = {
             if (err) {
                 callback(err, data);
             } else {
+                console.log("count", data2);
                 if (data2 === 0) {
                     data.year = new Date().getFullYear();
                     Athelete.saveData(data, function (err, athleteData) {
@@ -336,7 +337,7 @@ var model = {
                 callback(err, null);
             } else if (smsRespo) {
                 console.log(smsRespo, "sms sent");
-                callback(null, smsRespo);
+                callback(null, mobileOtp);
             } else {
                 callback(null, "Invalid data");
             }
@@ -344,13 +345,12 @@ var model = {
     },
 
     generateEmailOTP: function (data, callback) {
-
+        console.log("email otp");
 
         var emailOtp = (Math.random() + "").substring(2, 6);
-
         var emailData = {};
         emailData.from = "info@sfanow.in";
-        emailData.email = data;
+        emailData.email = data.email;
         emailData.otp = emailOtp;
         emailData.filename = "emailOtp.ejs";
         emailData.subject = "SFA: Your Email OTP (One time Password) for SFA registration is";
@@ -361,9 +361,9 @@ var model = {
                 console.log(err);
                 callback(null, err);
             } else if (emailRespo) {
-                //callback(null, emailRespo);
+                callback(null, emailOtp);
             } else {
-                //callback(null, "Invalid data");
+                callback(null, "Invalid data");
             }
         });
     },
