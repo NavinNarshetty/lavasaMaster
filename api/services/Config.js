@@ -8,7 +8,7 @@ schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Config', schema);
-var requrl = "https://104.198.190.241:878/api/";
+var requrl = "https://sfa.wohlig.co.in/api/";
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
