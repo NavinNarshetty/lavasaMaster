@@ -214,6 +214,7 @@ var model = {
 
                     }
                     console.log("data", data);
+
                     Registration.saveData(data, function (err, registerData) {
                         console.log("Registration", registerData);
                         if (err) {
@@ -224,35 +225,96 @@ var model = {
                                 callback("No order data found", null);
                             } else {
                                 if (data.status == "Verified") {
-                                    // async.parallel([
-                                    //         function (callback) {
-                                    Registration.successVerifiedMailSms(data, function (err, vData) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (vData) {
-                                            callback(null, vData);
-                                        }
-                                    });
-                                    //     },
-                                    //     function (callback) {
-                                    //         // School.find({
+                                    async.parallel([
+                                            function (callback) {
+                                                Registration.successVerifiedMailSms(data, function (err, vData) {
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else if (vData) {
+                                                        callback(null, vData);
+                                                    }
+                                                });
+                                            },
+                                            function (callback) {
+                                                School.findOne({ //to check registration exist and if it exist retrive previous data
+                                                    sfaid: registerData.sfaID
+                                                }).sort({
+                                                    createdAt: -1
+                                                }).exec(function (err, replica) {
+                                                    console.log("replica", replica); // retrives registration data
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback(err, null);
+                                                    } else {
+                                                        if (_.isEmpty(replica)) {
+                                                            console.log("isempty");
+                                                            callback(null, "No data found");
+                                                        } else {
+                                                            Athelete.findOne({ //to check registration exist and if it exist retrive previous data
+                                                                school: replica._id
+                                                            }).sort({
+                                                                createdAt: -1
+                                                            }).exec(function (err, atheleteData) {
+                                                                console.log("atheleteData", atheleteData); // retrives registration data
+                                                                if (err) {
+                                                                    console.log(err);
+                                                                    callback(err, null);
+                                                                } else {
+                                                                    if (_.isEmpty(atheleteData)) {
+                                                                        console.log("isempty");
+                                                                        callback(null, "No data found");
+                                                                    } else {
+                                                                        async.each(atheleteData, function (data, callback) {
+                                                                            var emailData = {};
+                                                                            emailData.from = "info@sfanow.in";
+                                                                            emailData.email = data.email;
+                                                                            emailData.filename = "allAthelete.ejs";
+                                                                            emailData.subject = "SFA: Your school has officially registered for SFA Mumbai 2017";
+                                                                            console.log("emaildata", emailData);
 
-                                    //         // });
+                                                                            Config.email(emailData, function (err, emailRespo) {
+                                                                                if (err) {
+                                                                                    console.log(err);
+                                                                                    callback(null, err);
+                                                                                } else if (emailRespo) {
+                                                                                    callback(null, emailRespo);
+                                                                                } else {
+                                                                                    callback(null, "Invalid data");
+                                                                                }
+                                                                            });
+                                                                        }, function (err, data4) {
+                                                                            if (err) {
+                                                                                console.log(err);
+                                                                                callback(err, null);
+                                                                            } else {
+                                                                                callback(null, "Successfully removed!");
+                                                                            }
+                                                                        });
 
-                                    //     }
-                                    // ],
-                                    // function (err, data2) {
-                                    //     if (err) {
-                                    //         console.log(err);
-                                    //         callback(null, []);
-                                    //     } else if (data2) {
-                                    //         if (_.isEmpty(data2)) {
-                                    //             callback(null, []);
-                                    //         } else {
-                                    //             callback(null, data2);
-                                    //         }
-                                    //     }
-                                    // });
+
+                                                                    }
+                                                                }
+                                                            });
+
+
+                                                        }
+                                                    }
+                                                });
+
+                                            }
+                                        ],
+                                        function (err, data2) {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(null, []);
+                                            } else if (data2) {
+                                                if (_.isEmpty(data2)) {
+                                                    callback(null, []);
+                                                } else {
+                                                    callback(null, data2);
+                                                }
+                                            }
+                                        });
 
                                 } else if (data.status == "Rejected") {
                                     Registration.failureVerifiedMailSms(data, function (err, vData) {
@@ -269,6 +331,7 @@ var model = {
                             }
                         }
                     });
+
                 }
             }
         });
@@ -362,9 +425,9 @@ var model = {
                             console.log(err);
                             callback(null, err);
                         } else if (emailRespo) {
-                            //callback(null, emailRespo);
+                            callback(null, emailRespo);
                         } else {
-                            //callback(null, "Invalid data");
+                            callback(null, "Invalid data");
                         }
                     });
                 },
@@ -415,9 +478,9 @@ var model = {
                             console.log(err);
                             callback(null, err);
                         } else if (emailRespo) {
-                            //callback(null, emailRespo);
+                            callback(null, emailRespo);
                         } else {
-                            //callback(null, "Invalid data");
+                            callback(null, "Invalid data");
                         }
                     });
                 },
@@ -469,18 +532,17 @@ var model = {
                             console.log(err);
                             callback(null, err);
                         } else if (emailRespo) {
-                            //callback(null, emailRespo);
+                            callback(null, emailRespo);
                         } else {
-                            //callback(null, "Invalid data");
+                            callback(null, "Invalid data");
                         }
                     });
                 },
                 function (callback) {
 
                     var smsData = {};
-                    console.log("mobileOtp", mobileOtp);
-                    smsData.mobile = data.mobile;
 
+                    smsData.mobile = data.mobile;
                     smsData.content = "Congratulations! You are now a verified SFA Athlete. Kindly check your registered Email ID for your SFA ID and Password.";
                     console.log("smsdata", smsData);
                     Config.sendSms(smsData, function (err, smsRespo) {
@@ -494,6 +556,7 @@ var model = {
                             callback(null, "Invalid data");
                         }
                     });
+
                 }
             ],
             function (err, final) {
@@ -523,9 +586,9 @@ var model = {
                             console.log(err);
                             callback(null, err);
                         } else if (emailRespo) {
-                            //callback(null, emailRespo);
+                            callback(null, emailRespo);
                         } else {
-                            //callback(null, "Invalid data");
+                            callback(null, "Invalid data");
                         }
                     });
                 },

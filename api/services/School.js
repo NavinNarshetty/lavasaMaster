@@ -43,8 +43,11 @@
      totalPoints: Number,
      totalPoints2015: Number,
      totalPoints2016: Number,
-     totalPoints2017: Number
-
+     totalPoints2017: Number,
+     isRegistered: {
+         type: Boolean,
+         default: false
+     }
  });
 
  schema.plugin(deepPopulate, {});

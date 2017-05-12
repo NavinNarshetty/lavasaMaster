@@ -64,17 +64,6 @@
             "placeholder": "Upload Logo",
             "id": "logo"
         }, {
-            "name": "Status",
-            "type": "tags",
-            "tableRef": "status",
-            "placeholder": "Enter Status",
-            "url": "",
-            "id": "status",
-            "dropDownField": "",
-            "dropDownType": "single",
-            "onView": true,
-            "dropDown": ["Pending", "Verified", "Rejected"]
-        }, {
             "name": "School Address",
             "type": "text",
             "tableRef": "schoolAddress",
@@ -379,6 +368,17 @@
             "tableRef": "sfaID",
             "placeholder": "Enter SFA ID",
             "id": "sfaID"
+        }, {
+            "name": "Status",
+            "type": "tags",
+            "tableRef": "status",
+            "placeholder": "Enter Status",
+            "url": "",
+            "id": "status",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Pending", "Verified", "Rejected"]
         }, {
             "name": "Password",
             "type": "text",
