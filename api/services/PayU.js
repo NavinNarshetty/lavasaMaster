@@ -35,13 +35,13 @@ var models = {
             form: {
                 key: payukey,
                 txnid: txnid,
-                amount: amount,
+                amount: "12000.00",
                 productinfo: productinfo,
                 firstname: firstname,
                 email: email,
                 phone: phone,
-                surl: 'http://localhost:1337/payU/successError',
-                furl: 'http://localhost:1337/payU/successError',
+                surl: 'http://localhost:8080/#/paymentSuccess',
+                furl: 'http://localhost:8080/#/paymentFailure',
                 hash: hashtext,
                 pg: pg
             }
@@ -68,7 +68,7 @@ var models = {
             numbers: true
         });
 
-        var amount = "20.00";
+        var amount = "200.00";
         var firstname = found.firstName;
         var email = found.email;
         var phone = found.mobile;
@@ -85,8 +85,8 @@ var models = {
                 firstname: firstname,
                 email: email,
                 phone: phone,
-                surl: 'http://localhost:8080/#/formathlete',
-                furl: 'http://localhost/8080/#/formregis',
+                surl: adminUrl + '/paymentSuccess',
+                furl: adminUrl + '/sorryAthelete',
                 hash: hashtext,
             }
         }, function (err, res) {
@@ -107,41 +107,6 @@ var models = {
             }
         });
     },
-
-    // atheletePayment: function (found, callback) {
-    //     console.log("inside payU");
-    //     var txnid = "ase445";
-    //     // var txnid = found._id;
-    //     var amount = "20.00";
-    //     var firstname = found.firstName;
-    //     var email = found.email;
-    //     var phone = found.mobile;
-    //     var productinfo = "Purchase of test";
-    //     // var hash = sha512("" + payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
-    //     var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
-    //     var hashtext = hash.toString('hex');
-    //     var pg = "debit";
-    //     request.post({
-    //         url: payuurl,
-    //         form: {
-    //             key: payukey,
-    //             txnid: txnid,
-    //             amount: amount,
-    //             productinfo: productinfo,
-    //             firstname: firstname,
-    //             email: email,
-    //             phone: phone,
-    //             // surl: 'http://35.154.98.245:1337/payU/successError',
-    //             // furl: 'http://35.154.98.245:1337/payU/successError',
-    //             surl: 'http://localhost:8080/#/formathlete',
-    //             furl: 'http://localhost/8080/#/formregis',
-    //             // furl: 'http://localhost:1337/payU/successError',
-    //             // surl: 'http://localhost:1337/payU/successError',
-    //             hash: hashtext,
-    //             pg: pg
-    //         }
-    //     }, callback);
-    // },
 
 };
 
