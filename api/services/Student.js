@@ -145,9 +145,9 @@ var model = {
             if (err) throw err
             obj = JSON.parse(data)
             // console.log("obj", obj);
-            _.eachSeries(obj, function (data) {
+            async.each(obj, function (data, callback) {
                 console.log("id", data._id);
-                Student.findOne({ //finds one with refrence to id
+                Student.remove({ //finds one with refrence to id
                     _id: data._id
                 }).exec(function (err, found) {
                     if (err) {
@@ -155,10 +155,18 @@ var model = {
                     } else if (_.isEmpty(found)) {
                         callback(null, "Data is empty");
                     } else {
+                        console.log("found", found);
                         callback(null, found);
                     }
 
                 });
+            }, function (err, data4) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, "Successfully removed!");
+                }
             });
 
             // You can now play with your datas
