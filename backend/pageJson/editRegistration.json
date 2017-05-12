@@ -6,11 +6,11 @@
     "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
-            "name": "Year",
+            "name": "Date of Registration",
             "type": "text",
-            "tableRef": "year",
+            "tableRef": "createdAt",
             "placeholder": "Enter year",
-            "id": "year"
+            "id": "createdAt"
         },
         {
             "name": "School Name",

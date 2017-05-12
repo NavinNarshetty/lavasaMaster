@@ -80,6 +80,8 @@ gfs.mongo = mongoose.mongo;
 global["stream"] = require('stream');
 global["Jimp"] = require("jimp");
 
+global["ObjectId"] = mongoose.Types.ObjectId;
+
 // Util Globals
 global["moment"] = require("moment");
 global["exec"] = require('child_process').exec;

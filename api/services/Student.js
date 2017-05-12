@@ -1,3 +1,4 @@
+var objectid = require("mongodb").ObjectID;
 var schema = new Schema({
 
     deleteStatus: Boolean,
@@ -129,6 +130,39 @@ var model = {
             // .deepPopulate(deepSearch)
             .keyword(options)
             .page(options, callback);
+
+    },
+
+    removeDuplicates: function (data, callback) {
+
+        var obj = {};
+
+        // Read the file and send to the callback
+        fs.readFile(data.path, handleFile)
+
+        // Write the callback function
+        function handleFile(err, data) {
+            if (err) throw err
+            obj = JSON.parse(data)
+            // console.log("obj", obj);
+            _.eachSeries(obj, function (data) {
+                console.log("id", data._id);
+                Student.findOne({ //finds one with refrence to id
+                    _id: data._id
+                }).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        callback(null, found);
+                    }
+
+                });
+            });
+
+            // You can now play with your datas
+        }
 
     },
 

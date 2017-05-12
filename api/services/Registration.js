@@ -303,20 +303,22 @@ var model = {
     },
 
     generateOTP: function (data, callback) {
-        var mobileOtp = (Math.random() + "").substring(2, 6);
-        var smsData = {};
-        console.log("mobileOtp", mobileOtp);
-        smsData.mobile = data.mobile;
+        console.log("email otp");
+        var emailOtp = (Math.random() + "").substring(2, 6);
+        var emailData = {};
+        emailData.from = "info@sfanow.in";
+        emailData.email = data.email;
+        emailData.otp = emailOtp;
+        emailData.filename = "emailOtp.ejs";
+        emailData.subject = "SFA: Your Email OTP (One time Password) for SFA registration is";
+        console.log("emaildata", emailData);
 
-        smsData.content = "OTP School:Your Mobile OTP (One time Password) for SFA registration is " + mobileOtp;
-        console.log("smsdata", smsData);
-        Config.sendSms(smsData, function (err, smsRespo) {
+        Config.email(emailData, function (err, emailRespo) {
             if (err) {
                 console.log(err);
-                callback(err, null);
-            } else if (smsRespo) {
-                console.log(smsRespo, "sms sent");
-                callback(null, mobileOtp);
+                callback(null, err);
+            } else if (emailRespo) {
+                callback(null, emailOtp);
             } else {
                 callback(null, "Invalid data");
             }

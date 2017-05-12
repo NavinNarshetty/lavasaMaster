@@ -6,6 +6,12 @@
     "pageType": "edit",
     "urlFields": ["_id"],
     "fields": [{
+            "name": "Date of Registration",
+            "type": "text",
+            "tableRef": "createdAt",
+            "placeholder": "Enter year",
+            "id": "createdAt"
+        }, {
             "name": "School",
             "type": "selectFromTable",
             "tableRef": "school",
@@ -13,6 +19,33 @@
             "placeholder": "Enter school",
             "id": "school",
             "url": "school/search"
+        }, {
+            "name": "Added School Name",
+            "type": "text",
+            "tableRef": "atheleteSchoolName",
+            "placeholder": "Enter type",
+            "id": "type"
+        }, {
+            "name": "Locality",
+            "type": "text",
+            "tableRef": "atheleteSchoolLocality",
+            "placeholder": "Enter type",
+            "id": "type"
+        }, {
+            "name": "School Contact",
+            "type": "text",
+            "tableRef": "atheleteSchoolContact",
+            "placeholder": "Enter type",
+            "id": "type"
+        }, {
+            "name": "Upload Image ID",
+            "type": "image",
+            "size": "250 x 250",
+            "view": true,
+            "disabled": true,
+            "tableRef": "atheleteSchoolIdImage",
+            "placeholder": "Upload Logo",
+            "id": "atheleteSchoolIdImage"
         }, {
             "name": "Surname",
             "type": "text",
@@ -80,12 +113,21 @@
             "placeholder": "Enter DOB",
             "id": "dob"
         }, {
+            "name": "Photo ID",
+            "type": "image",
+            "size": "250 x 250",
+            "view": true,
+            "disabled": true,
+            "tableRef": "photoImage",
+            "placeholder": "Upload Age Proof",
+            "id": "ageProof"
+        }, {
             "name": "Age Proof",
             "type": "image",
             "size": "250 x 250",
             "view": true,
             "disabled": true,
-            "tableRef": "ageProof",
+            "tableRef": "birthImage",
             "placeholder": "Upload Age Proof",
             "id": "ageProof"
         }, {
