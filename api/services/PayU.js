@@ -50,7 +50,7 @@ var models = {
         }, function (err, res) {
             if (err) {
                 callback(err, null);
-            } else if (res) {
+            } else if (res.status == "captured") {
                 console.log("response", res);
                 Registration.updatePaymentStatus(data, function (err, found) {
                     if (err) {
@@ -59,6 +59,10 @@ var models = {
                         callback(null, res);
                     }
                 });
+            } else {
+                console.log("res", res);
+                callback(null, res);
+
             }
         });
     },
