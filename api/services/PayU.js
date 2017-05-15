@@ -24,9 +24,9 @@ var models = {
             numbers: true
         });
         var amount = "20.00";
-        var firstname = found.schoolName;
-        var email = found.email;
-        var phone = found.mobile;
+        var firstname = data.schoolName;
+        var email = data.email;
+        var phone = data.mobile;
         // var pg = found.paymentMethod;
         var productinfo = "School Registration to SFA";
         // var hash = sha512("" + payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
