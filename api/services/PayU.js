@@ -2,6 +2,8 @@ var mongoose = require('mongoose');
 var sha512 = require('sha512');
 var request = require('request');
 var generator = require('generate-password');
+var adminUrl = "https://sfa.wohlig.co.in";
+// var adminUrl = "http://wohlig.io:1337";
 
 var development = false;
 if (development) {
@@ -40,8 +42,8 @@ var models = {
                 firstname: firstname,
                 email: email,
                 phone: phone,
-                surl: 'http://localhost:8080/#/paymentSuccess',
-                furl: 'http://localhost:8080/#/paymentFailure',
+                surl: adminUrl + '/paymentSuccess',
+                furl: adminUrl + '/sorryAthelete',
                 hash: hashtext,
                 pg: pg
             }
