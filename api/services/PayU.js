@@ -45,7 +45,7 @@ var models = {
                 surl: adminUrl + '/paymentSuccess',
                 furl: adminUrl + '/sorryAthelete',
                 hash: hashtext,
-                pg: pg
+                // pg: pg
             }
         }, function (err, res) {
             if (err) {
