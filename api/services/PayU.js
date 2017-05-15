@@ -2,9 +2,9 @@ var mongoose = require('mongoose');
 var sha512 = require('sha512');
 var request = require('request');
 var generator = require('generate-password');
-// var adminUrl = "https://sfa.wohlig.co.in";
+var adminUrl = "https://sfa.wohlig.co.in";
 // var adminUrl = "https://104.198.190.241:1337/";
-var adminUrl = "https://sfa.wohlig.co.in/api";
+// var adminUrl = "https://sfa.wohlig.co.in/api";
 
 var development = false;
 if (development) {
@@ -28,6 +28,7 @@ var models = {
         var firstname = data.schoolName;
         var email = data.email;
         var phone = data.mobile;
+        console.log(data);
         // var pg = found.paymentMethod;
         var productinfo = "School Registration to SFA";
         // var hash = sha512("" + payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
@@ -53,7 +54,6 @@ var models = {
             if (err) {
                 callback(err, null);
             } else if (res.status == "captured") {
-                console.log("response", res);
                 Registration.updatePaymentStatus(found, function (err, found) {
                     if (err) {
                         callback(err, null);
@@ -111,12 +111,18 @@ var models = {
             if (err) {
                 callback(err, null);
             } else if (res.status == "captured") {
-                console.log("response", res);
                 Athelete.updatePaymentStatus(found, function (err, found) {
                     if (err) {
                         callback(err, null);
                     } else if (found) {
-                        callback(null, res);
+                        Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (vData) {
+                                callback(null, res);
+                            }
+                        });
+
                     }
                 });
             } else {

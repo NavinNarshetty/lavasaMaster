@@ -150,28 +150,29 @@ var model = {
                                         },
                                         function (callback) {
                                             console.log("inside payment check");
-                                            if (athleteData.registrationFee == "online PAYU") {
+                                            // if (athleteData.registrationFee == "online PAYU") {
 
-                                                PayU.atheletePayment(athleteData, function (err, found) {
-                                                    if (err) {
-                                                        callback(err, null);
-                                                    } else {
-                                                        if (_.isEmpty(found)) {
-                                                            callback(null, "Data not found");
-                                                        } else {
-                                                            Athelete.atheletePaymentMail(athleteData, function (err, vData) {
-                                                                if (err) {
-                                                                    callback(err, null);
-                                                                } else if (vData) {
-                                                                    callback(null, vData);
-                                                                }
-                                                            });
+                                            //     PayU.atheletePayment(athleteData, function (err, found) {
+                                            //         if (err) {
+                                            //             callback(err, null);
+                                            //         } else {
+                                            //             if (_.isEmpty(found)) {
+                                            //                 callback(null, "Data not found");
+                                            //             } else {
+                                            //                 Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                            //                     if (err) {
+                                            //                         callback(err, null);
+                                            //                     } else if (vData) {
+                                            //                         callback(null, vData);
+                                            //                     }
+                                            //                 });
 
-                                                        }
-                                                    }
+                                            //             }
+                                            //         }
 
-                                                });
-                                            } else if (athleteData.registrationFee == "cash" || athleteData.registrationFee == "cheque/DD") {
+                                            //     });
+                                            // } else 
+                                            if (athleteData.registrationFee == "cash" || athleteData.registrationFee == "cheque/DD") {
                                                 Athelete.atheletePaymentMail(athleteData, function (err, vData) {
                                                     if (err) {
                                                         callback(err, null);

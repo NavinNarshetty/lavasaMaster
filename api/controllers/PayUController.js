@@ -3,25 +3,13 @@ var controller = {
 
     schoolPayment: function (req, res) {
         if (req) {
-            formdata
             var id = (req.query.id);
             Registration.findOne({
                 _id: id
             }).lean().exec(function (err, data) {
-                console.log("---------------------------->>>>>>>>>>>>", sails.getBaseUrl());
                 PayU.schoolPayment(data, function (err, httpResponse) {
-                    console.log('err', err);
-                    console.log('httpResponse****', httpResponse);
-                    //console.log('body***', req.headers.origin);
                     if (httpResponse.statusCode == 302) {
-                        res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
-                        res.header("Access-Control-Allow-Headers", "*");
-                        res.header('Access-Control-Allow-Credentials', true);
-                        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-
-                        console.log("location*****************", httpResponse.headers.location);
                         res.redirect(httpResponse.headers.location);
-
                     } else {
                         res.send(data);
                     }
@@ -38,21 +26,19 @@ var controller = {
 
     atheletePayment: function (req, res) {
         if (req) {
-            console.log(sails.getBaseUrl());
-            PayU.atheletePayment(req.body, function (err, httpResponse, body) {
-                console.log('err', err);
-                console.log('httpResponse', httpResponse);
-                console.log('body', req.headers.origin);
-                if (httpResponse.statusCode == 302) {
-                    res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
-                    res.header("Access-Control-Allow-Headers", "*");
-                    res.header('Access-Control-Allow-Credentials', true);
-                    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-                    res.redirect(httpResponse.headers.location);
-                } else {
-                    res.send(body);
-                }
+            var id = (req.query.id);
+            Registration.findOne({
+                _id: id
+            }).lean().exec(function (err, data) {
+                PayU.atheletePayment(data, function (err, httpResponse) {
+                    if (httpResponse.statusCode == 302) {
+                        res.redirect(httpResponse.headers.location);
+                    } else {
+                        res.send(data);
+                    }
+                });
             });
+
         } else {
             res.json({
                 value: false,
