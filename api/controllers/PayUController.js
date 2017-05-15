@@ -3,24 +3,31 @@ var controller = {
 
     schoolPayment: function (req, res) {
         if (req) {
-            console.log("---------------------------->>>>>>>>>>>>", sails.getBaseUrl());
-            PayU.schoolPayment(req.body, function (err, httpResponse) {
-                console.log('err', err);
-                console.log('httpResponse****', httpResponse);
-                //console.log('body***', req.headers.origin);
-                if (httpResponse.statusCode == 302) {
-                    res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
-                    res.header("Access-Control-Allow-Headers", "*");
-                    res.header('Access-Control-Allow-Credentials', true);
-                    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+            formdata
+            var id = (req.query.id);
+            Registration.findOne({
+                _id: id
+            }).lean().exec(function (err, data) {
+                console.log("---------------------------->>>>>>>>>>>>", sails.getBaseUrl());
+                PayU.schoolPayment(data, function (err, httpResponse) {
+                    console.log('err', err);
+                    console.log('httpResponse****', httpResponse);
+                    //console.log('body***', req.headers.origin);
+                    if (httpResponse.statusCode == 302) {
+                        res.setHeader("Access-Control-Allow-Origin", req.headers.origin);
+                        res.header("Access-Control-Allow-Headers", "*");
+                        res.header('Access-Control-Allow-Credentials', true);
+                        res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
 
-                    console.log("location*****************", httpResponse.headers.location);
-                    res.redirect(httpResponse.headers.location);
+                        console.log("location*****************", httpResponse.headers.location);
+                        res.redirect(httpResponse.headers.location);
 
-                } else {
-                    res.send(body);
-                }
+                    } else {
+                        res.send(data);
+                    }
+                });
             });
+
         } else {
             res.json({
                 value: false,
