@@ -424,7 +424,7 @@ var model = {
                 function (callback) {
 
                     var smsData = {};
-                    console.log("mobileOtp", mobileOtp);
+                    // console.log("mobileOtp", mobileOtp);
                     smsData.mobile = data.mobile;
 
                     smsData.content = "Thank you for registering for SFA Mumbai 2017. For further details please check your registered email ID.";
@@ -477,7 +477,7 @@ var model = {
                 function (callback) {
 
                     var smsData = {};
-                    console.log("mobileOtp", mobileOtp);
+                    // console.log("mobileOtp", mobileOtp);
                     smsData.mobile = data.mobile;
 
                     smsData.content = "Thank you for registering for SFA Mumbai 2017. For further details please check your registered email ID.";
@@ -585,7 +585,7 @@ var model = {
                 function (callback) {
 
                     var smsData = {};
-                    console.log("mobileOtp", mobileOtp);
+                    // console.log("mobileOtp", mobileOtp);
                     smsData.mobile = data.mobile;
 
                     smsData.content = "We regret to inform you that your application has been rejected for SFA Mumbai 2017. For further queries please email us at info@sfanow.in";
