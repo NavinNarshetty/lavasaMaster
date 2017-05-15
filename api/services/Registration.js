@@ -131,6 +131,7 @@ var model = {
                     callback("No register data found", null);
                 } else {
                     if (registerData.registrationFee == "online PAYU") {
+                        console.log("inside payu");
                         PayU.schoolPayment(data, function (err, found) {
                             if (err) {
                                 callback(err, null);
