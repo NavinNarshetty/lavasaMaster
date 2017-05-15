@@ -330,7 +330,7 @@ var model = {
         console.log("mobileOtp", mobileOtp);
         smsData.mobile = data.mobile;
 
-        smsData.content = "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is" + mobileOtp;
+        smsData.content = "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is " + mobileOtp;
         console.log("smsdata", smsData);
         Config.sendSms(smsData, function (err, smsRespo) {
             if (err) {
