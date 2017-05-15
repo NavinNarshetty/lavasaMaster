@@ -13,7 +13,8 @@ var controller = {
                     res.header("Access-Control-Allow-Headers", "*");
                     res.header('Access-Control-Allow-Credentials', true);
                     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
-                    res.redirect(httpResponse.headers.location);
+                    // res.redirect(httpResponse.headers.location);
+                    console.log("location", httpResponse.headers.location);
                 } else {
                     res.send(body);
                 }
