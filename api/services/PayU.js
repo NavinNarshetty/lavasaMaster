@@ -3,6 +3,7 @@ var sha512 = require('sha512');
 var request = require('request');
 var generator = require('generate-password');
 var adminUrl = "https://sfa.wohlig.co.in";
+// var adminUrl = "https://104.198.190.241:1337/";
 // var adminUrl = "http://wohlig.io:1337";
 
 var development = false;
@@ -23,7 +24,7 @@ var models = {
             length: 8,
             numbers: true
         });
-        var amount = "20.00";
+        var amount = "12000.00";
         var firstname = data.schoolName;
         var email = data.email;
         var phone = data.mobile;
@@ -32,12 +33,13 @@ var models = {
         // var hash = sha512("" + payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
         var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
         var hashtext = hash.toString('hex');
+
         request.post({
             url: payuurl,
             form: {
                 key: payukey,
                 txnid: txnid,
-                amount: "12000.00",
+                amount: amount,
                 productinfo: productinfo,
                 firstname: firstname,
                 email: email,
