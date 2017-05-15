@@ -52,19 +52,29 @@ var models = {
         }, function (err, res) {
             if (err) {
                 callback(err, null);
-            } else if (res.status == "captured") {
+            } else if (res.status == 302) {
                 console.log("response", res);
-                Registration.updatePaymentStatus(data, function (err, found) {
+                Athelete.updatePaymentStatus(found, function (err, found) {
                     if (err) {
                         callback(err, null);
                     } else if (found) {
-                        callback(null, res);
+                        Registration.onlinePaymentMailSms(req, function (err, mailsms) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(mailsms)) {
+                                    callback(null, "Data not found");
+                                } else {
+                                    callback(null, mailsms);
+                                }
+                            }
+                        });
+                        // callback(null, res);
                     }
                 });
             } else {
                 console.log("res", res);
                 callback(null, res);
-
             }
         });
     },
@@ -100,7 +110,7 @@ var models = {
         }, function (err, res) {
             if (err) {
                 callback(err, null);
-            } else if (res.status == "captured") {
+            } else if (res.status == 302) {
                 console.log("response", res);
                 Athelete.updatePaymentStatus(found, function (err, found) {
                     if (err) {
