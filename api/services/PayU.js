@@ -4,7 +4,7 @@ var request = require('request');
 var generator = require('generate-password');
 // var adminUrl = "https://sfa.wohlig.co.in";
 // var adminUrl = "https://104.198.190.241:1337/";
-var adminUrl = "http://wohlig.io:1337/api/";
+var adminUrl = "https://sfa.wohlig.co.in/api";
 
 var development = false;
 if (development) {
@@ -52,26 +52,26 @@ var models = {
         }, function (err, res) {
             if (err) {
                 callback(err, null);
-            } else if (res.status == 302) {
+            } else if (res.status == "captured") {
                 console.log("response", res);
-                Athelete.updatePaymentStatus(found, function (err, found) {
+                Registration.updatePaymentStatus(found, function (err, found) {
                     if (err) {
                         callback(err, null);
                     } else if (found) {
-                        Registration.onlinePaymentMailSms(req, function (err, mailsms) {
+                        Registration.onlinePaymentMailSms(data, function (err, mailsms) {
                             if (err) {
                                 callback(err, null);
                             } else {
                                 if (_.isEmpty(mailsms)) {
                                     callback(null, "Data not found");
                                 } else {
-                                    callback(null, mailsms);
+                                    callback(null, res);
                                 }
                             }
                         });
-                        // callback(null, res);
                     }
                 });
+
             } else {
                 console.log("res", res);
                 callback(null, res);
@@ -110,7 +110,7 @@ var models = {
         }, function (err, res) {
             if (err) {
                 callback(err, null);
-            } else if (res.status == 302) {
+            } else if (res.status == "captured") {
                 console.log("response", res);
                 Athelete.updatePaymentStatus(found, function (err, found) {
                     if (err) {

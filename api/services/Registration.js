@@ -130,32 +130,33 @@ var model = {
                 if (_.isEmpty(registerData)) {
                     callback("No register data found", null);
                 } else {
-                    if (registerData.registrationFee == "online PAYU") {
-                        // console.log("inside payu");
-                        // PayU.schoolPayment(data, function (err, found) {
-                        //     if (err) {
-                        //         callback(err, null);
-                        //     } else {
-                        //         if (_.isEmpty(found)) {
-                        //             callback(null, "Data not found");
-                        //         } else {
-                        //             Registration.onlinePaymentMailSms(data, function (err, mailsms) {
-                        //                 if (err) {
-                        //                     callback(err, null);
-                        //                 } else {
-                        //                     if (_.isEmpty(mailsms)) {
-                        //                         callback(null, "Data not found");
-                        //                     } else {
-                        //                         callback(null, mailsms);
-                        //                     }
-                        //                 }
+                    // if (registerData.registrationFee == "online PAYU") {
+                    // console.log("inside payu");
+                    // PayU.schoolPayment(data, function (err, found) {
+                    //     if (err) {
+                    //         callback(err, null);
+                    //     } else {
+                    //         if (_.isEmpty(found)) {
+                    //             callback(null, "Data not found");
+                    //         } else {
+                    //             Registration.onlinePaymentMailSms(data, function (err, mailsms) {
+                    //                 if (err) {
+                    //                     callback(err, null);
+                    //                 } else {
+                    //                     if (_.isEmpty(mailsms)) {
+                    //                         callback(null, "Data not found");
+                    //                     } else {
+                    //                         callback(null, mailsms);
+                    //                     }
+                    //                 }
 
-                        //             });
-                        //         }
-                        //     }
+                    //             });
+                    //         }
+                    //     }
 
-                        // });
-                    } else if (registerData.registrationFee == "Cash" && registerData.registrationFee == "Cheque/DD") {
+                    // });
+                    // } else 
+                    if (registerData.registrationFee == "Cash" && registerData.registrationFee == "Cheque/DD") {
                         Registration.cashPaymentMailSms(data, function (err, mailsms) {
                             if (err) {
                                 callback(err, null);
