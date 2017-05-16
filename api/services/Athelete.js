@@ -139,12 +139,13 @@ var model = {
             email: data.email,
             firstName: data.firstName,
             lastname: data.lastname,
-        }).exec(function (err, data2) {
+        }).lean().exec(function (err, data2) {
             if (err) {
                 callback(err, data);
             } else {
                 console.log("count", data2);
                 if (data2 === 0) {
+                    console.log("data", data);
                     data.year = new Date().getFullYear();
                     Athelete.saveData(data, function (err, athleteData) {
                         console.log("athleteData", athleteData);
@@ -180,7 +181,7 @@ var model = {
                                                     }
                                                 });
                                             } else {
-                                                callback(null, "no Data");
+                                                callback(null, athleteData);
                                             }
                                         },
                                         function (callback) {
@@ -422,7 +423,7 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(school)) {
-                        if (data.registrationFee == "cash" || data.registrationFee == "cheque/DD") {
+                        if (data.registrationFee == "cash") {
                             console.log("cash or cheque payment mail");
                             Athelete.unregistedCashPaymentMailSms(data, function (err, vData) {
                                 if (err) {
@@ -448,7 +449,7 @@ var model = {
                         console.log("year", year);
                         if (school.status == "Verified" && year == '17') {
                             console.log("inside verified");
-                            if (data.registrationFee == "cash" || data.registrationFee == "cheque/DD") {
+                            if (data.registrationFee == "cash") {
                                 console.log("cash or cheque payment mail");
                                 Athelete.registeredCashPaymentMailSms(data, function (err, vData) {
                                     if (err) {
