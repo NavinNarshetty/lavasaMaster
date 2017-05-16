@@ -3,8 +3,6 @@ var sha512 = require('sha512');
 var request = require('request');
 var generator = require('generate-password');
 var adminUrl = "https://sfa.wohlig.co.in";
-// var adminUrl = "https://104.198.190.241:1337/";
-// var adminUrl = "https://sfa.wohlig.co.in/api";
 
 var development = false;
 if (development) {

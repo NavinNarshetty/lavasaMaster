@@ -156,7 +156,7 @@ var model = {
 
                     // });
                     // } else 
-                    if (registerData.registrationFee == "Cash" && registerData.registrationFee == "Cheque/DD") {
+                    if (registerData.registrationFee == "cash") {
                         Registration.cashPaymentMailSms(data, function (err, mailsms) {
                             if (err) {
                                 callback(err, null);
