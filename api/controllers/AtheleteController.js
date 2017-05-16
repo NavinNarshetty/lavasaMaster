@@ -21,6 +21,16 @@ var controller = {
             });
         }
     },
+    search: function (req, res) {
+        if (req.body) {
+            Athelete.search(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
 
     getAllAtheleteDetails: function (req, res) {
         if (req.body) {

@@ -23,6 +23,18 @@ var controller = {
         }
     },
 
+    search: function (req, res) {
+        if (req.body) {
+            Registration.search(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
+
     getAllRegistrationDetails: function (req, res) {
         if (req.body) {
             Registration.getAllRegistrationDetails(req.body, res.callback);

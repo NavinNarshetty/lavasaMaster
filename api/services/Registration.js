@@ -115,6 +115,40 @@ module.exports = mongoose.model('Registration', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
+
+    search: function (data, callback) {
+        var Model = this;
+        var Const = this(data);
+        var maxRow = Config.maxRow;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['name'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var Search = Model.find(data.filter)
+
+            .order(options)
+            // .deepPopulate(deepSearch)
+            .keyword(options)
+            .page(options, callback);
+
+    },
+
     saveRegistrationForm: function (data, callback) {
         //auto password generator
 
