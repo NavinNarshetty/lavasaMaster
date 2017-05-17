@@ -7,7 +7,7 @@
     "urlFields": ["_id"],
     "fields": [{
             "name": "Date of Registration",
-            "type": "text",
+            "type": "date",
             "tableRef": "createdAt",
             "placeholder": "Enter year",
             "id": "createdAt"
@@ -108,7 +108,7 @@
             "id": "photograph"
         }, {
             "name": "DOB",
-            "type": "text",
+            "type": "date",
             "tableRef": "dob",
             "placeholder": "Enter DOB",
             "id": "dob"
@@ -188,7 +188,7 @@
             "onView": true,
             "dropDown": ["Kalyan-Dombivali", "Mira-Bhayandar", "Mumbai", "Navi Mumbai", "Panvel", "Thane", "Ulhasnagar", "Vasai-Virar", "Raigad"]
         }, {
-            "name": "pinCode",
+            "name": "PinCode",
             "type": "text",
             "tableRef": "pinCode",
             "placeholder": "Enter pinCode",
@@ -278,7 +278,7 @@
                 "validation": ["", "trim", ""]
             }]
         }, {
-            "name": "Registration Fee",
+            "name": "Payment Mode",
             "type": "tags",
             "tableRef": "registrationFee",
             "placeholder": "Enter Registration fee",
@@ -301,7 +301,13 @@
             "onView": true,
             "dropDown": ["Paid", "Pending"]
         }, {
-            "name": "Status",
+            "name": "Transaction ID",
+            "type": "text",
+            "tableRef": "transactionID",
+            "placeholder": "Enter transactionID",
+            "id": "transactionID"
+        }, {
+            "name": "Verification Status",
             "type": "tags",
             "tableRef": "status",
             "placeholder": "Enter Status",

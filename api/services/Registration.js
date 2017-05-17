@@ -102,6 +102,9 @@ var schema = new Schema({
         type: Number,
         default: 0,
     },
+    transactionID: {
+        type: String,
+    },
 });
 
 schema.plugin(deepPopulate, {});
@@ -217,7 +220,6 @@ var model = {
     //on backend save click (update)
     generateSfaID: function (data, callback) {
         console.log("inside");
-        var schoolname = data.schoolname;
         Registration.findOne({ //to check registration exist and if it exist retrive previous data
             _id: data._id
         }).sort({
@@ -238,6 +240,33 @@ var model = {
                             data.password = generator.generate({
                                 length: 10,
                                 numbers: true
+                            });
+                            School.findOne({ //finds one with refrence to id
+                                name: schoolData.schoolName
+                            }).exec(function (err, found) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (_.isEmpty(found)) {
+                                    var school = {};
+                                    school.name = schoolData.schoolName;
+                                    school.sfaid = schoolData.sfaID;
+                                    School.saveData(school, function (err, newData) {
+                                        console.log("school created", newData);
+                                        if (err) {
+                                            console.log("err", err);
+                                            callback("There was an error while saving order", null);
+                                        } else {
+                                            if (_.isEmpty(newData)) {
+                                                callback("No order data found", null);
+                                            } else {
+                                                callback(null, newData);
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    callback(null, found);
+                                }
+
                             });
                             if (_.isEmpty(data.sfaID)) {
                                 var year = new Date().getFullYear().toString().substr(2, 2);
@@ -425,7 +454,8 @@ var model = {
     updatePaymentStatus: function (data, callback) {
         var matchObj = {
             $set: {
-                paymentStatus: "Paid"
+                paymentStatus: "Paid",
+                transactionID: data.transactionID
             }
         }
         Registration.update({

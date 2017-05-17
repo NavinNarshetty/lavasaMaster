@@ -7,7 +7,7 @@
     "urlFields": ["_id"],
     "fields": [{
             "name": "Date of Registration",
-            "type": "text",
+            "type": "date",
             "tableRef": "createdAt",
             "placeholder": "Enter year",
             "id": "createdAt"
@@ -339,7 +339,7 @@
             }]
         },
         {
-            "name": "Registration Fee",
+            "name": "Payment Mode",
             "type": "tags",
             "tableRef": "registrationFee",
             "placeholder": "Enter Registration fee",
@@ -361,6 +361,12 @@
             "dropDownType": "single",
             "onView": true,
             "dropDown": ["Paid", "Pending"]
+        }, {
+            "name": "Transaction ID",
+            "type": "text",
+            "tableRef": "transactionID",
+            "placeholder": "Enter transactionID",
+            "id": "transactionID"
         },
         {
             "name": "SFA ID",
@@ -369,7 +375,7 @@
             "placeholder": "Enter SFA ID",
             "id": "sfaID"
         }, {
-            "name": "Status",
+            "name": "Verification Status",
             "type": "tags",
             "tableRef": "status",
             "placeholder": "Enter Status",

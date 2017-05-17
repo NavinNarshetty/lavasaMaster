@@ -18,6 +18,12 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#!/page/viewAthelete//",
             icon: "phone"
         },
+        {
+            name: "Old School",
+            classis: "active",
+            sref: "#!/page/viewOldSchool//",
+            icon: "phone"
+        },
         //{
         //     name: "Users",
         //     classis: "active",

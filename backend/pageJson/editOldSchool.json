@@ -1,0 +1,43 @@
+{
+    "title": "Edit Old School",
+    "name": "User",
+    "jsonPage": "viewOldSchool",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "School Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter School Name",
+        "id": "name"
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitUser",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewOldSchool"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewRegistration"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "School/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "School/getOne",
+        "params": "_id"
+    }
+
+}

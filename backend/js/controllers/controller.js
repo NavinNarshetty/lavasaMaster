@@ -408,6 +408,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         // BOX
         if ($scope.type.type == "date") {
             $scope.formData[$scope.type.tableRef] = moment($scope.formData[$scope.type.tableRef]).toDate();
+            console.log("$scope.formData[$scope.type.tableRef]", $scope.formData[$scope.type.tableRef]);
         }
         if ($scope.type.type == "password") {
             $scope.formData[$scope.type.tableRef] = "";

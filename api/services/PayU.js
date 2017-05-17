@@ -32,6 +32,7 @@ var models = {
         // var hash = sha512("" + payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
         var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
         var hashtext = hash.toString('hex');
+        data.transactionID = txnid;
 
         request.post({
             url: payuurl,
@@ -52,7 +53,7 @@ var models = {
             if (err) {
                 callback(err, null);
             } else if (res.status == "captured") {
-                Registration.updatePaymentStatus(found, function (err, found) {
+                Registration.updatePaymentStatus(data, function (err, found) {
                     if (err) {
                         callback(err, null);
                     } else if (found) {
@@ -83,6 +84,7 @@ var models = {
             length: 8,
             numbers: true
         });
+        found.transactionID = txnid;
 
         var amount = "200.00";
         var firstname = found.firstName;
@@ -109,11 +111,11 @@ var models = {
             if (err) {
                 callback(err, null);
             } else if (res.status == "captured") {
-                Athelete.updatePaymentStatus(found, function (err, found) {
+                Athelete.updatePaymentStatus(found, function (err, foundNew) {
                     if (err) {
                         callback(err, null);
-                    } else if (found) {
-                        Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                    } else if (foundNew) {
+                        Athelete.atheletePaymentMail(found, function (err, vData) {
                             if (err) {
                                 callback(err, null);
                             } else if (vData) {

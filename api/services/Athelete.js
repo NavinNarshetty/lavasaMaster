@@ -86,6 +86,9 @@ var schema = new Schema({
         type: Number,
         default: 0,
     },
+    transactionID: {
+        type: String,
+    },
 });
 
 schema.plugin(deepPopulate, {});
@@ -349,7 +352,8 @@ var model = {
     updatePaymentStatus: function (data, callback) {
         var matchObj = {
             $set: {
-                paymentStatus: "Paid"
+                paymentStatus: "Paid",
+                transactionID: data.transactionID
             }
         }
         Athelete.update({
