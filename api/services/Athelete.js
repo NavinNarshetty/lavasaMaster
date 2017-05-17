@@ -353,10 +353,42 @@ var model = {
                     console.log(err);
                     callback(err, null);
                 } else if (data3) {
-                    console.log("data3", data3);
-                    callback(null, data3);
+                    Athelete.receiptMail(data, function (err, mailsms) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(mailsms)) {
+                                callback(null, "Data not found");
+                            } else {
+                                callback(null, mailsms);
+                            }
+                        }
+
+                    });
                 }
             });
+    },
+
+    receiptMail: function (data, callback) {
+        var emailData = {};
+        emailData.from = "info@sfanow.in";
+        emailData.email = data.email;
+        emailData.sfaID = data.sfaID;
+        emailData.password = data.password;
+        emailData.filename = "receipt.ejs";
+        emailData.subject = "SFA: You are now a verified School for SFA Mumbai 2017";
+        console.log("emaildata", emailData);
+
+        Config.email(emailData, function (err, emailRespo) {
+            if (err) {
+                console.log(err);
+                callback(null, err);
+            } else if (emailRespo) {
+                callback(null, emailRespo);
+            } else {
+                callback(null, "Invalid data");
+            }
+        });
     },
 
     generateMobileOTP: function (data, callback) {
