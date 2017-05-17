@@ -82,6 +82,10 @@ var schema = new Schema({
         type: String,
         default: "Pending"
     },
+    verifyCount: {
+        type: Number,
+        default: 0,
+    },
 });
 
 schema.plugin(deepPopulate, {});
@@ -148,7 +152,7 @@ var model = {
                     console.log("data", data);
                     data.year = new Date().getFullYear();
                     Athelete.saveData(data, function (err, athleteData) {
-                        console.log("athleteData", athleteData);
+                        //console.log("athleteData", athleteData);
                         if (err) {
                             console.log("err", err);
                             callback("There was an error while saving order", null);
@@ -208,7 +212,7 @@ var model = {
 
                                             //     });
                                             // } else 
-                                            if (athleteData.registrationFee == "cash" || athleteData.registrationFee == "cheque/DD") {
+                                            if (athleteData.registrationFee == "cash") {
                                                 Athelete.atheletePaymentMail(athleteData, function (err, vData) {
                                                     if (err) {
                                                         callback(err, null);
@@ -259,23 +263,26 @@ var model = {
                     console.log("isempty");
                     callback("No order data found", null);
                 } else {
-                    if (data.status == "Verified") {
-                        data.password = generator.generate({
-                            length: 10,
-                            numbers: true
-                        });
-                        if (_.isEmpty(data.sfaID)) {
-                            var year = new Date().getFullYear().toString().substr(2, 2);
-                            if (_.isEmpty(found.city)) {
-                                found.city = "Mumbai"
+                    if (found.verifyCount == 0) {
+                        if (data.status == "Verified") {
+                            data.password = generator.generate({
+                                length: 10,
+                                numbers: true
+                            });
+                            if (_.isEmpty(data.sfaID)) {
+                                var year = new Date().getFullYear().toString().substr(2, 2);
+                                if (_.isEmpty(found.city)) {
+                                    found.city = "Mumbai"
+                                }
+                                var city = found.city;
+                                var prefixCity = city.charAt(0);
+                                console.log("prefixCity", prefixCity);
+                                data.sfaId = "M" + "A" + year + found.atheleteID;
                             }
-                            var city = found.city;
-                            var prefixCity = city.charAt(0);
-                            console.log("prefixCity", prefixCity);
-                            data.sfaId = "M" + "A" + year + found.atheleteID;
-                        }
 
+                        }
                     }
+
                     Athelete.saveData(data, function (err, athleteData) { //saves data to database collection
                         console.log("athleteData", athleteData);
                         if (err) {
@@ -397,7 +404,6 @@ var model = {
         var smsData = {};
         console.log("mobileOtp", mobileOtp);
         smsData.mobile = data.mobile;
-
         smsData.content = "OTP Athlete: Your Mobile OTP (One time Password) for SFA registration is " + mobileOtp;
         console.log("smsdata", smsData);
         Config.sendSms(smsData, function (err, smsRespo) {

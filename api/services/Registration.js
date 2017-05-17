@@ -98,6 +98,10 @@ var schema = new Schema({
         type: String,
         default: "Pending"
     },
+    verifyCount: {
+        type: Number,
+        default: 0,
+    },
 });
 
 schema.plugin(deepPopulate, {});
@@ -228,27 +232,31 @@ var model = {
                     console.log("isempty");
                     callback(null, "No data found");
                 } else {
-                    console.log("regiserid", schoolData.registerID);
-                    if (data.status == "Verified") {
-                        data.password = generator.generate({
-                            length: 10,
-                            numbers: true
-                        });
-                        if (_.isEmpty(data.sfaID)) {
-                            var year = new Date().getFullYear().toString().substr(2, 2);
+                    if (schoolData.verifyCount == 0) {
+                        if (data.status == "Verified") {
+                            data.verifyCount = 1;
+                            data.password = generator.generate({
+                                length: 10,
+                                numbers: true
+                            });
+                            if (_.isEmpty(data.sfaID)) {
+                                var year = new Date().getFullYear().toString().substr(2, 2);
 
-                            console.log("City", city);
-                            if (_.isEmpty(schoolData.city)) {
-                                schoolData.city = "Mumbai"
+                                console.log("City", city);
+                                if (_.isEmpty(schoolData.city)) {
+                                    schoolData.city = "Mumbai"
+                                }
+                                var city = schoolData.city;
+                                var prefixCity = city.charAt(0);
+                                console.log("prefixCity", prefixCity);
+                                var register = schoolData.registerID; //increment with previous refrence
+                                data.sfaID = "M" + "S" + year + register; // prefix "S" for school
                             }
-                            var city = schoolData.city;
-                            var prefixCity = city.charAt(0);
-                            console.log("prefixCity", prefixCity);
-                            var register = schoolData.registerID; //increment with previous refrence
-                            data.sfaID = "M" + "S" + year + register; // prefix "S" for school
-                        }
 
+                        }
                     }
+                    console.log("regiserid", schoolData.registerID);
+
                     console.log("data", data);
 
                     Registration.saveData(data, function (err, registerData) {

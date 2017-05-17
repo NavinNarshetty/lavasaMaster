@@ -473,7 +473,7 @@ var model = {
         if (data.mobile) {
             request.get({
                 // url: "http://api-alerts.solutionsinfini.com/v3/?method=sms&api_key=A2673b52d60295c217f83efd42a6ab576&to=" + data.mobile + "&sender=TAGBOS&message=" + data.content + "&format=json"
-                url: "http://api-alerts.solutionsinfini.com/v3/?method=sms&api_key=A585fda4adf7602034258066781832097&to=" + data.contact + "&sender=SFANOW&message=" + data.content + "&format=json"
+                url: "http://api-alerts.solutionsinfini.com/v3/?method=sms&api_key=A585fda4adf7602034258066781832097&to=" + data.mobile + "&sender=SFANOW&message=" + data.content + "&format=json"
             }, function (err, http, body) {
                 if (err) {
                     console.log(err);
