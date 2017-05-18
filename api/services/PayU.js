@@ -45,8 +45,8 @@ var models = {
                 firstname: firstname,
                 email: email,
                 phone: phone,
-                surl: 'https://sfanow.in/payU/successErrorSchool',
-                furl: 'https://sfanow.in/payU/successErrorSchool',
+                surl: 'https://sfa.wohlig.co.in/payU/successErrorSchool',
+                furl: 'https://sfa.wohlig.co.in/payU/successErrorSchool',
                 hash: hashtext
                 // pg: pg
             }
@@ -80,8 +80,8 @@ var models = {
                 firstname: firstname,
                 email: email,
                 phone: phone,
-                surl: 'https://sfanow.in/payU/successErrorAthelete',
-                furl: 'https://sfanow.in/payU/successErrorAthelete',
+                surl: 'https://sfa.wohlig.co.in/payU/successErrorAthelete',
+                furl: 'https://sfa.wohlig.co.in/payU/successErrorAthelete',
                 hash: hashtext
             }
         }, callback);

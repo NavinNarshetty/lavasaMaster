@@ -13,12 +13,11 @@
             "id": "createdAt"
         }, {
             "name": "School",
-            "type": "selectFromTable",
+            "type": "text",
             "tableRef": "school",
-            "searchApi": "searchCall",
             "placeholder": "Enter school",
-            "id": "school",
-            "url": "school/search"
+            "id": "school"
+
         }, {
             "name": "Added School Name",
             "type": "text",

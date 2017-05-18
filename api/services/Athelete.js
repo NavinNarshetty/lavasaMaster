@@ -19,9 +19,7 @@ var schema = new Schema({
         default: "Pending"
     },
     school: {
-        type: Schema.Types.ObjectId,
-        ref: 'School',
-        index: true
+        type: String
     },
 
     year: String,
@@ -155,7 +153,6 @@ var model = {
                     console.log("data", data);
                     data.year = new Date().getFullYear();
                     Athelete.saveData(data, function (err, athleteData) {
-                        //console.log("athleteData", athleteData);
                         if (err) {
                             console.log("err", err);
                             callback("There was an error while saving order", null);
