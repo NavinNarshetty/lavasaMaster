@@ -241,8 +241,23 @@ var model = {
                                 length: 10,
                                 numbers: true
                             });
+
+                            if (_.isEmpty(data.sfaID)) {
+                                var year = new Date().getFullYear().toString().substr(2, 2);
+
+                                console.log("City", city);
+                                if (_.isEmpty(schoolData.city)) {
+                                    schoolData.city = "Mumbai"
+                                }
+                                var city = schoolData.city;
+                                var prefixCity = city.charAt(0);
+                                console.log("prefixCity", prefixCity);
+                                var register = schoolData.registerID; //increment with previous refrence
+                                data.sfaID = "M" + "S" + year + register; // prefix "S" for school
+                            }
                             School.findOne({ //finds one with refrence to id
-                                name: schoolData.schoolName
+                                name: schoolData.schoolName,
+                                sfaid: data.sfaID
                             }).exec(function (err, found) {
                                 if (err) {
                                     callback(err, null);
@@ -268,19 +283,7 @@ var model = {
                                 }
 
                             });
-                            if (_.isEmpty(data.sfaID)) {
-                                var year = new Date().getFullYear().toString().substr(2, 2);
 
-                                console.log("City", city);
-                                if (_.isEmpty(schoolData.city)) {
-                                    schoolData.city = "Mumbai"
-                                }
-                                var city = schoolData.city;
-                                var prefixCity = city.charAt(0);
-                                console.log("prefixCity", prefixCity);
-                                var register = schoolData.registerID; //increment with previous refrence
-                                data.sfaID = "M" + "S" + year + register; // prefix "S" for school
-                            }
 
                         }
                     }
