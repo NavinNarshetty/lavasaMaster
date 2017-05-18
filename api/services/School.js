@@ -153,6 +153,22 @@
 
      },
 
+     generateExcel: function (res) {
+         console.log("dataIN");
+         School.find().lean().exec(function (err, data) {
+             var excelData = [];
+             _.each(data, function (n) {
+                 var obj = {};
+                 obj.sfaId = n.sfaId;
+                 obj.name = n.name;
+
+
+             });
+             excelData.push(obj);
+         });
+         Config.generateExcel("Registration", excelData, res);
+     });
+
 
 
 

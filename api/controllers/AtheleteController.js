@@ -32,6 +32,11 @@ var controller = {
         }
     },
 
+    generateExcel: function (req, res) {
+        console.log("inside controller");
+        Athelete.generateExcel(res);
+    },
+
     getAllAtheleteDetails: function (req, res) {
         if (req.body) {
             Athelete.getAllAtheleteDetails(req.body, res.callback);

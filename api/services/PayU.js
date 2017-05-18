@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var sha512 = require('sha512');
 var request = require('request');
 var generator = require('generate-password');
-var adminUrl = "https://sfanow.in";
+
 
 var development = false;
 if (development) {
@@ -18,10 +18,11 @@ if (development) {
 
 var models = {
     schoolPayment: function (data, callback) {
-        var txnid = generator.generate({
-            length: 8,
-            numbers: true
-        });
+        // var txnid = generator.generate({
+        //     length: 8,
+        //     numbers: true
+        // });
+        var txnid = data._id;
         var amount = "1.00";
         var firstname = data.schoolName;
         var email = data.email;
@@ -44,47 +45,23 @@ var models = {
                 firstname: firstname,
                 email: email,
                 phone: phone,
-                surl: adminUrl + '/paymentSuccess',
-                furl: adminUrl + '/paymentFailure',
+                surl: 'https://sfanow.in/payU/successErrorSchool',
+                furl: 'https://sfanow.in/payU/successErrorSchool',
                 hash: hashtext,
                 // pg: pg
             }
-        }, function (err, res) {
-            if (err) {
-                callback(err, null);
-            } else if (res.status == "captured") {
-                Registration.updatePaymentStatus(data, function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (found) {
-                        Registration.onlinePaymentMailSms(data, function (err, mailsms) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                if (_.isEmpty(mailsms)) {
-                                    callback(null, "Data not found");
-                                } else {
-                                    callback(null, res);
-                                }
-                            }
-                        });
-                    }
-                });
-
-            } else {
-                console.log("res", res);
-                callback(null, res);
-            }
-        });
+        }, callback);
     },
 
     atheletePayment: function (found, callback) {
 
-        var txnid = generator.generate({
-            length: 8,
-            numbers: true
-        });
-        found.transactionID = txnid;
+        // var txnid = generator.generate({
+        //     length: 8,
+        //     numbers: true
+        // });
+
+        var txnid = found._id;
+        // found.transactionID = txnid;
 
         var amount = "200.00";
         var firstname = found.firstName;
@@ -103,35 +80,12 @@ var models = {
                 firstname: firstname,
                 email: email,
                 phone: phone,
-                surl: adminUrl + '/paymentSuccess',
-                furl: adminUrl + '/sorryAthelete',
+                surl: 'https://sfanow.in/payU/successErrorAthelete',
+                furl: 'https://sfanow.in/payU/successErrorAthelete',
                 hash: hashtext,
             }
-        }, function (err, res) {
-            if (err) {
-                callback(err, null);
-            } else if (res.status == "captured") {
-                Athelete.updatePaymentStatus(found, function (err, foundNew) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (foundNew) {
-                        Athelete.atheletePaymentMail(found, function (err, vData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (vData) {
-                                callback(null, res);
-                            }
-                        });
-
-                    }
-                });
-            } else {
-                console.log("res", res);
-                callback(null, res);
-            }
-        });
+        }, callback);
     },
-
 };
 
 module.exports = _.assign(module.exports, models);

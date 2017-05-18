@@ -353,31 +353,68 @@ var model = {
         var matchObj = {
             $set: {
                 paymentStatus: "Paid",
-                transactionID: data.transactionID
+                transactionID: data.transactionid
             }
         }
-        Athelete.update({
+
+        Athelete.findOne({ //finds one with refrence to id
             _id: data._id
-        }, matchObj).exec(
-            function (err, data3) {
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else if (data3) {
-                    Athelete.receiptMail(data, function (err, mailsms) {
+        }).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "Data is empty");
+            } else {
+                Athelete.update({
+                    _id: data._id
+                }, matchObj).exec(
+                    function (err, data3) {
                         if (err) {
+                            console.log(err);
                             callback(err, null);
-                        } else {
-                            if (_.isEmpty(mailsms)) {
-                                callback(null, "Data not found");
-                            } else {
-                                callback(null, mailsms);
-                            }
+                        } else if (data3) {
+                            async.parallel([
+                                    function (callback) {
+                                        Athelete.atheletePaymentMail(found, function (err, vData) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (vData) {
+                                                callback(null, res);
+                                            }
+                                        });
+                                    },
+                                    function (callback) {
+                                        Athelete.receiptMail(data, function (err, mailsms) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else {
+                                                if (_.isEmpty(mailsms)) {
+                                                    callback(null, "Data not found");
+                                                } else {
+                                                    callback(null, mailsms);
+                                                }
+                                            }
+
+                                        });
+                                    }
+                                ],
+                                function (err, data2) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, []);
+                                    } else if (data2) {
+                                        if (_.isEmpty(data2)) {
+                                            callback(null, []);
+                                        } else {
+                                            callback(null, data2);
+                                        }
+                                    }
+                                });
                         }
 
                     });
-                }
-            });
+            }
+        });
     },
 
     receiptMail: function (data, callback) {
@@ -838,6 +875,51 @@ var model = {
 
             });
     },
+
+    generateExcel: function (res) {
+        console.log("dataIN");
+        Athelete.find().lean().exec(function (err, data) {
+            var excelData = [];
+            _.each(data, function (n) {
+                var obj = {};
+
+                obj.sfaId = n.sfaId;
+                obj.school = n.school;
+                obj.idProof = n.idProof;
+                obj.surname = n.surname;
+                obj.firstName = n.firstName;
+                obj.middleName = n.middleName;
+                obj.gender = n.gender;
+                obj.standard = n.standard;
+                obj.bloodGroup = n.bloodGroup;
+                obj.photograph = n.photograph;
+                obj.dob = n.dob;
+                obj.age = n.age;
+                obj.ageProof = n.ageProof;
+                obj.photoImage = n.photoImage;
+                obj.birthImage = n.birthImage;
+                obj.playedTournaments = n.playedTournaments;
+                obj.mobile = n.mobile;
+                obj.email = n.email;
+                obj.smsOTP = n.smsOTP;
+                obj.emailOTP = n.emailOTP;
+                obj.address = n.address;
+                obj.addressLine2 = n.addressLine2;
+                obj.state = n.state;
+                obj.district = n.district;
+                obj.city = n.city;
+                obj.pinCode = n.pinCode;
+                obj.status = n.status;
+                obj.password = n.password;
+                obj.year = n.year;
+                obj.registrationFee = n.registrationFee;
+                obj.paymentStatus = n.paymentStatus;
+                obj.transactionID = n.transactionID
+            });
+            excelData.push(obj);
+        });
+        Config.generateExcel("Registration", excelData, res);
+    });
 
 
 

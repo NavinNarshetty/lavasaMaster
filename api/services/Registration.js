@@ -458,31 +458,70 @@ var model = {
         var matchObj = {
             $set: {
                 paymentStatus: "Paid",
-                transactionID: data.transactionID
+                transactionID: data.transactionid
             }
         }
-        Registration.update({
+        Registration.findOne({ //finds one with refrence to id
             _id: data._id
-        }, matchObj).exec(
-            function (err, data3) {
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else if (data3) {
-                    Registration.receiptMail(data, function (err, mailsms) {
+        }).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "Data is empty");
+            } else {
+                Registration.update({
+                    _id: data._id
+                }, matchObj).exec(
+                    function (err, data3) {
                         if (err) {
+                            console.log(err);
                             callback(err, null);
-                        } else {
-                            if (_.isEmpty(mailsms)) {
-                                callback(null, "Data not found");
-                            } else {
-                                callback(null, mailsms);
-                            }
-                        }
+                        } else if (data3) {
+                            async.parallel([
+                                    function (callback) {
+                                        Registration.onlinePaymentMailSms(data, function (err, mailsms) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else {
+                                                if (_.isEmpty(mailsms)) {
+                                                    callback(null, "Data not found");
+                                                } else {
+                                                    callback(null, res);
+                                                }
+                                            }
+                                        });
+                                    },
+                                    function (callback) {
+                                        Registration.receiptMail(data, function (err, mailsms) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else {
+                                                if (_.isEmpty(mailsms)) {
+                                                    callback(null, "Data not found");
+                                                } else {
+                                                    callback(null, mailsms);
+                                                }
+                                            }
 
+                                        });
+                                    }
+                                ],
+                                function (err, data2) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, []);
+                                    } else if (data2) {
+                                        if (_.isEmpty(data2)) {
+                                            callback(null, []);
+                                        } else {
+                                            callback(null, data2);
+                                        }
+                                    }
+                                });
+                        }
                     });
-                }
-            });
+            }
+        });
     },
 
     onlinePaymentMailSms: function (data, callback) {
@@ -620,7 +659,7 @@ var model = {
                     var smsData = {};
 
                     smsData.mobile = data.mobile;
-                    smsData.content = "Congratulations! You are now a verified SFA Athlete. Kindly check your registered Email ID for your SFA ID and Password.";
+                    smsData.content = "Congratulations! You are now a verified SFA School. Kindly check your registered Email ID for your SFA ID and Password.";
                     console.log("smsdata", smsData);
                     Config.sendSms(smsData, function (err, smsRespo) {
                         if (err) {
@@ -780,14 +819,44 @@ var model = {
             var excelData = [];
             _.each(data, function (n) {
                 var obj = {};
-                obj.schoolName = n.schoolName;
-                excelData.push(obj);
-            });
-            Config.generateExcel("Registration", excelData, res);
-        });
-    },
 
-    filter: function (data, callback) {
+                obj.sfaID = n.sfaID;
+                obj.schoolName = n.schoolName;
+                obj.schoolType = n.schoolType;
+                obj.schoolCategory = n.schoolCategory;
+                obj.affiliatedBoard = n.affiliatedBoard;
+                obj.schoolLogo = n.schoolLogo;
+                obj.schoolAddress = n.schoolAddress;
+                obj.schoolAddressLine2 = n.schoolAddressLine2;
+                obj.state = n.state;
+                obj.district = n.district;
+                obj.city = n.city;
+                obj.locality = n.locality;
+                obj.pinCode = n.pinCode;
+                obj.contactPerson = n.contactPerson;
+                obj.landline = n.landline;
+                obj.email = n.email;
+                obj.website = n.website;
+                obj.mobile = n.mobile;
+                obj.enterOTP = n.enterOTP;
+                obj.schoolPrincipalName = n.schoolPrincipalName;
+                obj.schoolPrincipalMobile = n.schoolPrincipalMobile;
+                obj.schoolPrincipalLandline = n.schoolPrincipalLandline;
+                obj.schoolPrincipalEmail = n.schoolPrincipalEmail;
+                obj.status = n.status;
+                obj.password = n.password;
+                obj.year = n.year;
+                obj.registrationFee = n.registrationFee;
+                obj.paymentStatus = n.paymentStatus;
+                obj.transactionID = n.transactionID
+            });
+            excelData.push(obj);
+        });
+        Config.generateExcel("Registration", excelData, res);
+    });
+},
+
+filter: function (data, callback) {
         var matchObj = {};
         if (data.sfaID) {
             matchObj = {

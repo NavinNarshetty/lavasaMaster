@@ -44,6 +44,16 @@
         }
     }],
 
+    "button": [{
+        "name": "excelexport",
+        "icon": "print",
+        "type": "redirect",
+        "text": "export",
+        "linkType": "admin",
+        "action": "Athelete/generateExcel"
+    }],
+
+
     "apiCall": {
         "url": "Athelete/search",
         "params": "_id"

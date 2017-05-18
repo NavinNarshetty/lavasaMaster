@@ -21,6 +21,12 @@ var controller = {
             });
         }
     },
+
+    generateExcel: function (req, res) {
+        console.log("inside controller");
+        School.generateExcel(res);
+    },
+
     getAllSchoolDetails: function (req, res) {
         if (req.body) {
             School.getAllSchoolDetails(req.body, res.callback);
