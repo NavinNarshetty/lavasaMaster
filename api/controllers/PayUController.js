@@ -76,7 +76,33 @@ var controller = {
 
             } else {
                 console.log('some errror');
-                res.redirect("https://sfanow.in/paymentFailure");
+                Registration.findOne({
+                    schoolName: param.schoolName
+                }).exec(function (err, data) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(data)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        console.log("found", data);
+                        Registration.remove({ //finds one with refrence to id
+                            _id: data._id
+                        }).exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(found)) {
+                                callback(null, "Data is empty");
+                            } else {
+                                console.log("found", found);
+                                res.redirect("https://sfanow.in/paymentFailure");
+                            }
+
+                        });
+                    }
+
+
+                });
+
             }
         } else {
             res.json({
@@ -115,7 +141,32 @@ var controller = {
 
             } else {
                 console.log('some errror');
-                res.redirect("https://sfanow.in/sorryAthelete");
+                Athelete.findOne({
+                    firstName: param.firstName
+                }).exec(function (err, data) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(data)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        console.log("found", data);
+                        Athelete.remove({ //finds one with refrence to id
+                            _id: data._id
+                        }).exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(found)) {
+                                callback(null, "Data is empty");
+                            } else {
+                                console.log("found", found);
+                                res.redirect("https://sfanow.in/sorryAthelete");
+                            }
+
+                        });
+                    }
+
+
+                });
             }
         } else {
             res.json({

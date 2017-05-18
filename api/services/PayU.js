@@ -80,8 +80,8 @@ var models = {
                 firstname: firstname,
                 email: email,
                 phone: phone,
-                surl: 'https://sfa.wohlig.co.in/payU/successErrorAthelete',
-                furl: 'https://sfa.wohlig.co.in/payU/successErrorAthelete',
+                surl: 'https://sfa.wohlig.co.in/api/payU/successErrorAthelete',
+                furl: 'https://sfa.wohlig.co.in/api/payU/successErrorAthelete',
                 hash: hashtext
             }
         }, callback);
