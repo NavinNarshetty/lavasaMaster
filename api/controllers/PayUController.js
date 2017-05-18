@@ -60,10 +60,9 @@ var controller = {
         if (req) {
             if (data.status == "success") {
                 console.log('yes success');
-                Registration.updatePaymentStatus(id, transactionid, function (err, data) {
+                Registration.updatePaymentStatus(param, function (err, data) {
                     if (err) {
                         console.log('amoutn not match issue');
-                        // res.redirect("http://localhost:8080/#/sorry/" + orderid + "/" + finalPayAmt);
                         res.json({
                             value: false,
                             data: "Invalid Request"
