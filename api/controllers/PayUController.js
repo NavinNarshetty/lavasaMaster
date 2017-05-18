@@ -49,8 +49,10 @@ var controller = {
 
     successErrorSchool: function (req, res) {
         var data = req.allParams();
-        var _id = data.txnid;
-        var transactionid = data.mihpayid;
+        var param = {};
+
+        param.schoolName = data.firstname;
+        param.transactionid = data.mihpayid;
         var status = data.status;
 
         console.log('Inside SuccesssErrorrr', data);
@@ -86,8 +88,10 @@ var controller = {
 
     successErrorAthelete: function (req, res) {
         var data = req.allParams();
-        var _id = data.txnid;
-        var transactionid = data.mihpayid;
+        var param = {};
+
+        param.firstName = data.firstname;
+        param.transactionid = data.mihpayid;
         var status = data.status;
 
         console.log('Inside SuccesssErrorrr', data);
@@ -95,7 +99,7 @@ var controller = {
         if (req) {
             if (data.status == "success") {
                 console.log('yes success');
-                Athelete.updatePaymentStatus(id, transactionid, function (err, data) {
+                Athelete.updatePaymentStatus(param, function (err, data) {
                     if (err) {
                         console.log('amoutn not match issue');
                         // res.redirect("http://localhost:8080/#/sorry/" + orderid + "/" + finalPayAmt);

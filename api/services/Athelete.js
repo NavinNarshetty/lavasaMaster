@@ -358,7 +358,7 @@ var model = {
         }
 
         Athelete.findOne({ //finds one with refrence to id
-            _id: data._id
+            firstName: data.firstName
         }).exec(function (err, found) {
             if (err) {
                 callback(err, null);

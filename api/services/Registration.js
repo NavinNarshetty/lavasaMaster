@@ -462,7 +462,7 @@ var model = {
             }
         }
         Registration.findOne({ //finds one with refrence to id
-            _id: data._id
+            schoolName: data.schoolName
         }).exec(function (err, found) {
             if (err) {
                 callback(err, null);
@@ -470,7 +470,7 @@ var model = {
                 callback(null, "Data is empty");
             } else {
                 Registration.update({
-                    _id: data._id
+                    _id: found._id
                 }, matchObj).exec(
                     function (err, data3) {
                         if (err) {

@@ -18,11 +18,11 @@ if (development) {
 
 var models = {
     schoolPayment: function (data, callback) {
-        // var txnid = generator.generate({
-        //     length: 8,
-        //     numbers: true
-        // });
-        var txnid = data._id;
+        var txnid = generator.generate({
+            length: 8,
+            numbers: true
+        });
+        //var txnid = data.;
         var amount = "1.00";
         var firstname = data.schoolName;
         var email = data.email;
@@ -33,7 +33,7 @@ var models = {
         // var hash = sha512("" + payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
         var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
         var hashtext = hash.toString('hex');
-        data.transactionID = txnid;
+        // data.transactionID = txnid;
 
         request.post({
             url: payuurl,
@@ -47,7 +47,7 @@ var models = {
                 phone: phone,
                 surl: 'https://sfanow.in/payU/successErrorSchool',
                 furl: 'https://sfanow.in/payU/successErrorSchool',
-                hash: hashtext,
+                hash: hashtext
                 // pg: pg
             }
         }, callback);
@@ -55,12 +55,12 @@ var models = {
 
     atheletePayment: function (found, callback) {
 
-        // var txnid = generator.generate({
-        //     length: 8,
-        //     numbers: true
-        // });
+        var txnid = generator.generate({
+            length: 8,
+            numbers: true
+        });
 
-        var txnid = found._id;
+        // var txnid = found._id;
         // found.transactionID = txnid;
 
         var amount = "200.00";
@@ -82,7 +82,7 @@ var models = {
                 phone: phone,
                 surl: 'https://sfanow.in/payU/successErrorAthelete',
                 furl: 'https://sfanow.in/payU/successErrorAthelete',
-                hash: hashtext,
+                hash: hashtext
             }
         }, callback);
     },
