@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 var sha512 = require('sha512');
 var request = require('request');
 var generator = require('generate-password');
-var adminUrl = "https://sfa.wohlig.co.in";
+var adminUrl = "https://sfanow.in";
 
 var development = false;
 if (development) {
@@ -22,7 +22,7 @@ var models = {
             length: 8,
             numbers: true
         });
-        var amount = "12000.00";
+        var amount = "1.00";
         var firstname = data.schoolName;
         var email = data.email;
         var phone = data.mobile;
@@ -45,7 +45,7 @@ var models = {
                 email: email,
                 phone: phone,
                 surl: adminUrl + '/paymentSuccess',
-                furl: adminUrl + '/sorryAthelete',
+                furl: adminUrl + '/paymentFailure',
                 hash: hashtext,
                 // pg: pg
             }

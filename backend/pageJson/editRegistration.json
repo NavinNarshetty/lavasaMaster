@@ -412,6 +412,7 @@
             }
         }
     }],
+
     "apiCall": {
         "url": "Registration/generateSfaID",
         "params": "_id"
