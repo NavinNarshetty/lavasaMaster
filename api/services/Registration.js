@@ -853,45 +853,45 @@ var model = {
             excelData.push(obj);
         });
         Config.generateExcel("Registration", excelData, res);
-    });
-},
+    }
 
-filter: function (data, callback) {
-        var matchObj = {};
-        if (data.sfaID) {
-            matchObj = {
-                sfaID: data.sfaID
-            }
-        } else if (data.schoolName) {
-            matchObj = {
-                sfaID: data.sfaID
-            }
-        } else if (data.registrationFee) {
-            matchObj = {
-                sfaID: data.sfaID
-            }
-        } else if (data.schoolName) {
-            matchObj = {
-                sfaID: data.sfaID
-            }
-        } else if (data.schoolName) {
-            matchObj = {
-                sfaID: data.sfaID
-            }
-        }
-        Registration.find({
-            _id: data._id
-        }).exec(function (err, found) {
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback(null, "Data is empty");
-            } else {
-                callback(null, found);
-            }
 
-        });
-    },
+    // filter: function (data, callback) {
+    //     var matchObj = {};
+    //     if (data.sfaID) {
+    //         matchObj = {
+    //             sfaID: data.sfaID
+    //         }
+    //     } else if (data.schoolName) {
+    //         matchObj = {
+    //             sfaID: data.sfaID
+    //         }
+    //     } else if (data.registrationFee) {
+    //         matchObj = {
+    //             sfaID: data.sfaID
+    //         }
+    //     } else if (data.schoolName) {
+    //         matchObj = {
+    //             sfaID: data.sfaID
+    //         }
+    //     } else if (data.schoolName) {
+    //         matchObj = {
+    //             sfaID: data.sfaID
+    //         }
+    //     }
+    //     Registration.find({
+    //         _id: data._id
+    //     }).exec(function (err, found) {
+    //         if (err) {
+    //             callback(err, null);
+    //         } else if (_.isEmpty(found)) {
+    //             callback(null, "Data is empty");
+    //         } else {
+    //             callback(null, found);
+    //         }
+
+    //     });
+    // },
 
 
 

@@ -167,7 +167,7 @@
              excelData.push(obj);
          });
          Config.generateExcel("Registration", excelData, res);
-     });
+     }
 
 
 
