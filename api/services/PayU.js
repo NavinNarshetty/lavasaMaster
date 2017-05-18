@@ -45,8 +45,8 @@ var models = {
                 firstname: firstname,
                 email: email,
                 phone: phone,
-                surl: 'https://sfa.wohlig.co.in/payU/successErrorSchool',
-                furl: 'https://sfa.wohlig.co.in/payU/successErrorSchool',
+                surl: 'https://sfa.wohlig.co.in/api/payU/successErrorSchool',
+                furl: 'https://sfa.wohlig.co.in/api/payU/successErrorSchool',
                 hash: hashtext
                 // pg: pg
             }
