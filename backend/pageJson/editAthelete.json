@@ -259,7 +259,7 @@
                 "url": "",
                 "dropDownField": "",
                 "dropDownType": "single",
-                "dropDown": ["National", "State", "District"],
+                "dropDown": ["National", "State", "International"],
                 "validation": ["", "trim", ""]
             }, {
                 "name": "Sport",
