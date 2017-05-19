@@ -157,15 +157,14 @@ var model = {
                     ]
                 }
             }],
-            function (err, data) {
+            function (err, found) {
+                console.log("data", data);
                 if (err) {
                     console.log(err);
                     callback(err, null);
-                } else if (data) {
+                } else if (found) {
                     // data.order.bills = null;
-                    if (data) {
-                        callback("Athelete Already Exist", null);
-                    } else {
+                    if (_.isEmpty(found)) {
                         console.log("data", data);
                         data.year = new Date().getFullYear();
                         data.verifyCount = 0;
@@ -257,6 +256,9 @@ var model = {
                                 }
                             }
                         });
+
+                    } else {
+                        callback("Athelete Already Exist", null);
                     }
 
 

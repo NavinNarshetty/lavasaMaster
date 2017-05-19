@@ -805,16 +805,17 @@ var model = {
             } else {
                 var emailData = {};
                 if (data.sfaID) {
-                    emailData.sfaID = data.sfaID;
+                    emailData.sfaID = found.sfaID;
                 } else {
                     emailData.sfaID = "";
                 }
-                emailData.schoolName = data.schoolName;
-                emailData.transactionID = data.transactionID;
+                emailData.schoolName = found.schoolName;
+                emailData.transactionID = found.transactionID;
                 emailData.Date = moment().format("DD-MM-YYYY");
-                emailData.receiptNo = "SFA" + data.registerID;
+                var receipt = "SFA" + found.registerID;
+                emailData.receiptNo = receipt;
                 emailData.from = "info@sfanow.in";
-                emailData.email = data.email;
+                emailData.email = found.email;
                 emailData.filename = "receipt.ejs";
                 emailData.subject = "SFA: Your Payment Receipt as School for SFA Mumbai 2017";
                 console.log("emaildata", emailData);

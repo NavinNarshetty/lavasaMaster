@@ -83,6 +83,17 @@ var controller = {
         }
     },
 
+    receiptMail: function (req, res) {
+        if (req.body) {
+            Registration.receiptMail(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
 
 };
 module.exports = _.assign(module.exports, controller);
