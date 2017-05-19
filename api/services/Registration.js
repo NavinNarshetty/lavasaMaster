@@ -795,30 +795,40 @@ var model = {
     },
 
     receiptMail: function (data, callback) {
-        var emailData = {};
-        if (data.sfaID) {
-            emailData.sfaID = data.sfaID;
-        } else {
-            emailData.sfaID = "";
-        }
-        emailData.schoolName = data.schoolName;
-        emailData.transactionID = data.transactionID;
-        emailData.Date = moment().format("DD-MM-YYYY");
-        emailData.receiptNo = "SFA" + data.registerID;
-        emailData.from = "info@sfanow.in";
-        emailData.email = data.email;
-        emailData.filename = "receipt.ejs";
-        emailData.subject = "SFA: Your Payment Receipt as School for SFA Mumbai 2017";
-        console.log("emaildata", emailData);
-
-        Config.email(emailData, function (err, emailRespo) {
+        Registration.findOne({ //finds one with refrence to id
+            _id: data._id
+        }).exec(function (err, found) {
             if (err) {
-                console.log(err);
-                callback(null, err);
-            } else if (emailRespo) {
-                callback(null, emailRespo);
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "Data is empty");
             } else {
-                callback(null, "Invalid data");
+                var emailData = {};
+                if (data.sfaID) {
+                    emailData.sfaID = data.sfaID;
+                } else {
+                    emailData.sfaID = "";
+                }
+                emailData.schoolName = data.schoolName;
+                emailData.transactionID = data.transactionID;
+                emailData.Date = moment().format("DD-MM-YYYY");
+                emailData.receiptNo = "SFA" + data.registerID;
+                emailData.from = "info@sfanow.in";
+                emailData.email = data.email;
+                emailData.filename = "receipt.ejs";
+                emailData.subject = "SFA: Your Payment Receipt as School for SFA Mumbai 2017";
+                console.log("emaildata", emailData);
+
+                Config.email(emailData, function (err, emailRespo) {
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else if (emailRespo) {
+                        callback(null, emailRespo);
+                    } else {
+                        callback(null, "Invalid data");
+                    }
+                });
             }
         });
     },
