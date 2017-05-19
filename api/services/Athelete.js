@@ -163,7 +163,7 @@ var model = {
                     callback(err, null);
                 } else if (data) {
                     // data.order.bills = null;
-                    if (_.isEmpty(data)) {
+                    if (data) {
                         callback("Athelete Already Exist", null);
                     } else {
                         console.log("data", data);
