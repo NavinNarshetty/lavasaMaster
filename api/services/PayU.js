@@ -63,7 +63,7 @@ var models = {
         // var txnid = found._id;
         // found.transactionID = txnid;
 
-        var amount = "200.00";
+        var amount = "1.00";
         var firstname = found.firstName;
         var email = found.email;
         var phone = found.mobile;
