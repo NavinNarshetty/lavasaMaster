@@ -158,7 +158,7 @@ var model = {
 
     saveRegistrationForm: function (data, callback) {
         //auto password generator
-
+        data.verifyCount = 0;
         console.log("data", data);
         data.year = new Date().getFullYear();
 
@@ -300,18 +300,15 @@ var model = {
                             if (_.isEmpty(registerData)) {
                                 callback("No order data found", null);
                             } else {
-                                if (data.status == "Verified") {
-                                    async.parallel([
-                                            function (callback) {
-                                                Registration.successVerifiedMailSms(data, function (err, vData) {
-                                                    if (err) {
-                                                        callback(err, null);
-                                                    } else if (vData) {
-                                                        callback(null, vData);
-                                                    }
-                                                });
-                                            },
-                                            function (callback) {
+                                if (schoolData.verifyCount == 0) {
+                                    if (data.status == "Verified") {
+                                        // async.parallel([
+                                        //         function (callback) {
+                                        Registration.successVerifiedMailSms(data, function (err, vData) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (vData) {
+                                                // callback(null, vData);
                                                 School.findOne({ //to check registration exist and if it exist retrive previous data
                                                     sfaid: registerData.sfaID
                                                 }).sort({
@@ -324,7 +321,7 @@ var model = {
                                                     } else {
                                                         if (_.isEmpty(replica)) {
                                                             console.log("isempty");
-                                                            callback(null, "No data found");
+                                                            // callback(null, "No data found");
                                                         } else {
                                                             Athelete.findOne({ //to check registration exist and if it exist retrive previous data
                                                                 school: replica._id
@@ -338,7 +335,7 @@ var model = {
                                                                 } else {
                                                                     if (_.isEmpty(atheleteData)) {
                                                                         console.log("isempty");
-                                                                        callback(null, "No data found");
+                                                                        // callback(null, "No data found");
                                                                     } else {
                                                                         async.each(atheleteData, function (data, callback) {
                                                                             Registration.allAtheleteMailSms(data, function (err, vData) {
@@ -366,32 +363,37 @@ var model = {
                                                         }
                                                     }
                                                 });
-
-                                            }
-                                        ],
-                                        function (err, data2) {
-                                            if (err) {
-                                                console.log(err);
-                                                callback(null, []);
-                                            } else if (data2) {
-                                                if (_.isEmpty(data2)) {
-                                                    callback(null, []);
-                                                } else {
-                                                    callback(null, data2);
-                                                }
                                             }
                                         });
 
-                                } else if (data.status == "Rejected") {
-                                    Registration.failureVerifiedMailSms(data, function (err, vData) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (vData) {
-                                            callback(null, vData);
-                                        }
-                                    });
+                                        // }
+                                        // ],
+                                        // function (err, data2) {
+                                        //     if (err) {
+                                        //         console.log(err);
+                                        //         callback(null, []);
+                                        //     } else if (data2) {
+                                        //         if (_.isEmpty(data2)) {
+                                        //             callback(null, []);
+                                        //         } else {
+                                        //             callback(null, data2);
+                                        //         }
+                                        //     }
+                                        // });
+
+                                    } else if (data.status == "Rejected") {
+                                        Registration.failureVerifiedMailSms(data, function (err, vData) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (vData) {
+                                                callback(null, vData);
+                                            }
+                                        });
+                                    } else {
+                                        callback(null, registerData);
+                                    }
                                 } else {
-                                    callback(null, registerData);
+                                    callback(null, "updated Successfully !!");
                                 }
 
                             }
@@ -479,7 +481,7 @@ var model = {
                         } else if (data3) {
                             async.parallel([
                                     function (callback) {
-                                        Registration.onlinePaymentMailSms(data, function (err, mailsms) {
+                                        Registration.onlinePaymentMailSms(found, function (err, mailsms) {
                                             if (err) {
                                                 callback(err, null);
                                             } else {
@@ -492,7 +494,7 @@ var model = {
                                         });
                                     },
                                     function (callback) {
-                                        Registration.receiptMail(data, function (err, mailsms) {
+                                        Registration.receiptMail(found, function (err, mailsms) {
                                             if (err) {
                                                 callback(err, null);
                                             } else {
@@ -848,11 +850,13 @@ var model = {
                 obj.year = n.year;
                 obj.registrationFee = n.registrationFee;
                 obj.paymentStatus = n.paymentStatus;
-                obj.transactionID = n.transactionID
+                obj.transactionID = n.transactionID;
+                excelData.push(obj);
             });
-            excelData.push(obj);
+
+
+            Config.generateExcel("Registration", excelData, res);
         });
-        Config.generateExcel("Registration", excelData, res);
     }
 
 

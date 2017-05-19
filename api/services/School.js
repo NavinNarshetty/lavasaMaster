@@ -161,12 +161,11 @@
                  var obj = {};
                  obj.sfaId = n.sfaId;
                  obj.name = n.name;
-
-
+                 excelData.push(obj);
              });
-             excelData.push(obj);
+
+             Config.generateExcel("oldSchool", excelData, res);
          });
-         Config.generateExcel("Registration", excelData, res);
      }
 
 

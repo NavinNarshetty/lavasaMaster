@@ -19,7 +19,9 @@ var schema = new Schema({
         default: "Pending"
     },
     school: {
-        type: String
+        type: Schema.Types.ObjectId,
+        ref: 'School',
+        index: true
     },
 
     year: String,
@@ -152,6 +154,7 @@ var model = {
                 if (data2 === 0) {
                     console.log("data", data);
                     data.year = new Date().getFullYear();
+                    data.verifyCount = 0;
                     Athelete.saveData(data, function (err, athleteData) {
                         if (err) {
                             console.log("err", err);
@@ -241,7 +244,7 @@ var model = {
                         }
                     });
                 } else {
-                    callback(null, "Athelete Already Exist");
+                    callback("Athelete Already Exist", null);
                 }
             }
         });
@@ -292,24 +295,28 @@ var model = {
                             if (_.isEmpty(athleteData)) {
                                 callback("No order data found", null);
                             } else {
-                                if (data.status == "Verified") {
-                                    Athelete.successVerifiedMailSms(data, function (err, vData) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (vData) {
-                                            callback(null, vData);
-                                        }
-                                    });
-                                } else if (data.status == "Rejected") {
-                                    Athelete.failureVerifiedMailSms(data, function (err, vData) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (vData) {
-                                            callback(null, vData);
-                                        }
-                                    });
+                                if (found.verifyCount == 0) {
+                                    if (data.status == "Verified") {
+                                        Athelete.successVerifiedMailSms(data, function (err, vData) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (vData) {
+                                                callback(null, vData);
+                                            }
+                                        });
+                                    } else if (data.status == "Rejected") {
+                                        Athelete.failureVerifiedMailSms(data, function (err, vData) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (vData) {
+                                                callback(null, vData);
+                                            }
+                                        });
+                                    } else {
+                                        callback(null, athleteData);
+                                    }
                                 } else {
-                                    callback(null, athleteData);
+                                    callback(null, "Updated Successfully");
                                 }
                             }
                         }
@@ -363,7 +370,7 @@ var model = {
                 callback(null, "Data is empty");
             } else {
                 Athelete.update({
-                    _id: data._id
+                    _id: found._id
                 }, matchObj).exec(
                     function (err, data3) {
                         if (err) {
@@ -381,7 +388,7 @@ var model = {
                                         });
                                     },
                                     function (callback) {
-                                        Athelete.receiptMail(data, function (err, mailsms) {
+                                        Athelete.receiptMail(found, function (err, mailsms) {
                                             if (err) {
                                                 callback(err, null);
                                             } else {
@@ -911,11 +918,13 @@ var model = {
                 obj.year = n.year;
                 obj.registrationFee = n.registrationFee;
                 obj.paymentStatus = n.paymentStatus;
-                obj.transactionID = n.transactionID
+                obj.transactionID = n.transactionID;
+                excelData.push(obj);
+
             });
-            excelData.push(obj);
+
+            Config.generateExcel("Athlete", excelData, res);
         });
-        Config.generateExcel("Registration", excelData, res);
     }
 
 

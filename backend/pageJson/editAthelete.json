@@ -13,10 +13,12 @@
             "id": "createdAt"
         }, {
             "name": "School",
-            "type": "text",
+            "type": "selectFromTable",
             "tableRef": "school",
-            "placeholder": "Enter school",
-            "id": "school"
+            "searchApi": "searchCall",
+            "placeholder": "Enter School",
+            "id": "school",
+            "url": "School/search"
 
         }, {
             "name": "Added School Name",
@@ -286,7 +288,7 @@
             "dropDownField": "",
             "dropDownType": "single",
             "onView": true,
-            "dropDown": ["cash", "cheque/DD", "onlinePAYU"]
+            "dropDown": ["cash", "onlinePAYU"]
         },
         {
             "name": "Payment Status",
