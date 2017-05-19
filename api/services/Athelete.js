@@ -383,7 +383,7 @@ var model = {
                                             if (err) {
                                                 callback(err, null);
                                             } else if (vData) {
-                                                callback(null, res);
+                                                callback(null, vData);
                                             }
                                         });
                                     },
@@ -423,12 +423,22 @@ var model = {
 
     receiptMail: function (data, callback) {
         var emailData = {};
+        if (data.sfaId) {
+            emailData.sfaId = data.sfaId;
+        } else {
+            emailData.sfaId = "";
+        }
+        emailData.firstName = data.firstName;
+        emailData.surname = data.surname;
+        emailData.transactionID = data.transactionID;
+        emailData.Date = moment().format("DD-MM-YYYY");
+        emailData.receiptNo = "SFA" + atheleteID;
         emailData.from = "info@sfanow.in";
         emailData.email = data.email;
-        emailData.sfaID = data.sfaID;
-        emailData.password = data.password;
+        // emailData.sfaID = data.sfaID;
+        // emailData.password = data.password;
         emailData.filename = "receipt.ejs";
-        emailData.subject = "SFA: You are now a verified School for SFA Mumbai 2017";
+        emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA Mumbai 2017";
         console.log("emaildata", emailData);
 
         Config.email(emailData, function (err, emailRespo) {

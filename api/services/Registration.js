@@ -488,7 +488,7 @@ var model = {
                                                 if (_.isEmpty(mailsms)) {
                                                     callback(null, "Data not found");
                                                 } else {
-                                                    callback(null, res);
+                                                    callback(null, mailsms);
                                                 }
                                             }
                                         });
@@ -529,9 +529,10 @@ var model = {
     onlinePaymentMailSms: function (data, callback) {
         async.parallel([
                 function (callback) {
-                    var emailOtp = (Math.random() + "").substring(2, 6);
+                    // var emailOtp = (Math.random() + "").substring(2, 6);
 
                     var emailData = {};
+
                     emailData.from = "info@sfanow.in";
                     emailData.email = data.email;
                     emailData.filename = "schoolOnlinePayment.ejs";
@@ -795,12 +796,19 @@ var model = {
 
     receiptMail: function (data, callback) {
         var emailData = {};
+        if (data.sfaID) {
+            emailData.sfaID = data.sfaID;
+        } else {
+            emailData.sfaID = "";
+        }
+        emailData.schoolName = data.schoolName;
+        emailData.transactionID = data.transactionID;
+        emailData.Date = moment().format("DD-MM-YYYY");
+        emailData.receiptNo = "SFA" + registerID;
         emailData.from = "info@sfanow.in";
         emailData.email = data.email;
-        emailData.sfaID = data.sfaID;
-        emailData.password = data.password;
         emailData.filename = "receipt.ejs";
-        emailData.subject = "SFA: You are now a verified School for SFA Mumbai 2017";
+        emailData.subject = "SFA: Your Payment Receipt as School for SFA Mumbai 2017";
         console.log("emaildata", emailData);
 
         Config.email(emailData, function (err, emailRespo) {
