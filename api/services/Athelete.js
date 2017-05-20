@@ -407,6 +407,7 @@ var model = {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
+                console.log("empty in Athelete found");
                 callback(null, "Data is empty");
             } else {
                 console.log("found in update", found);
