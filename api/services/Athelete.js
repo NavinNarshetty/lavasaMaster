@@ -403,7 +403,7 @@ var model = {
             firstName: data.firstName,
             surname: data.surname,
             email: data.email,
-        }).exec(function (err, found) {
+        }).lean().exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
