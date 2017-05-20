@@ -184,7 +184,7 @@ var model = {
                                                 console.log("inside school save")
                                                 if (data.atheleteSchoolName) {
                                                     var schoolData = {};
-                                                    schoolData.name = data.atheleteSchoolName;
+                                                    schoolData.schoolName = data.atheleteSchoolName;
                                                     schoolData.locality = data.atheleteSchoolLocality;
                                                     schoolData.schoolLogo = data.atheleteSchoolIdImage;
                                                     schoolData.mobile = data.atheleteSchoolContact;
@@ -199,17 +199,18 @@ var model = {
                                                             if (_.isEmpty(registerData)) {
                                                                 callback("No register data found", null);
                                                             } else {
-                                                                if (athleteData.registrationFee == "cash") {
-                                                                    Athelete.atheletePaymentMail(athleteData, function (err, vData) {
-                                                                        if (err) {
-                                                                            callback(err, null);
-                                                                        } else if (vData) {
-                                                                            callback(null, vData);
-                                                                        }
-                                                                    });
-                                                                } else {
-                                                                    callback(null, athleteData);
-                                                                }
+                                                                // if (registerData.registrationFee == "cash") {
+                                                                //     Athelete.atheletePaymentMail(registerData, function (err, vData) {
+                                                                //         if (err) {
+                                                                //             callback(err, null);
+                                                                //         } else if (vData) {
+                                                                //             callback(null, vData);
+                                                                //         }
+                                                                //     });
+                                                                // } else {
+                                                                //     callback(null, athleteData);
+                                                                // }
+                                                                callback(null, registerData);
                                                             }
                                                         }
                                                     });
@@ -543,51 +544,46 @@ var model = {
 
     atheletePaymentMail: function (data, callback) {
         console.log("getting inside", data);
-        School.findOne({ //finds one with refrence to id
-            _id: data.school
-        }).exec(function (err, found) {
-            // console.log("found", found);
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback(null, "Data is empty");
-            } else {
-                console.log("school", found.name);
-                Registration.findOne({ //finds one with refrence to id
-                    schoolName: found.name
-                }).exec(function (err, school) {
+        if (data.atheleteSchoolName) {
+            if (data.registrationFee == "cash") {
+                console.log("cash or cheque payment mail");
+                Athelete.unregistedCashPaymentMailSms(data, function (err, vData) {
                     if (err) {
                         callback(err, null);
-                    } else if (_.isEmpty(school)) {
-                        if (data.registrationFee == "cash") {
-                            console.log("cash or cheque payment mail");
-                            Athelete.unregistedCashPaymentMailSms(data, function (err, vData) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (vData) {
-                                    callback(null, vData);
-                                }
-                            });
-                        } else if (data.registrationFee == "online PAYU") {
-                            console.log("online payment mail");
-                            Athelete.unregistedOnlinePaymentMailSms(data, function (err, vData) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (vData) {
-                                    callback(null, vData);
-                                }
-                            });
-                        }
-                    } else {
-                        var val = school.createdAt;
-                        console.log("data of register school", val);
-                        var year = new Date(val).getFullYear().toString().substr(2, 2);
-                        console.log("year", year);
-                        if (school.status == "Verified" && year == '17') {
-                            console.log("inside verified");
+                    } else if (vData) {
+                        callback(null, vData);
+                    }
+                });
+            } else if (data.registrationFee == "online PAYU") {
+                console.log("online payment mail");
+                Athelete.unregistedOnlinePaymentMailSms(data, function (err, vData) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (vData) {
+                        callback(null, vData);
+                    }
+                });
+            }
+        } else {
+            School.findOne({ //finds one with refrence to id
+                _id: data.school
+            }).exec(function (err, found) {
+                // console.log("found", found);
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback(null, "Data is empty");
+                } else {
+                    console.log("school", found.name);
+                    Registration.findOne({ //finds one with refrence to id
+                        schoolName: found.name
+                    }).exec(function (err, school) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(school)) {
                             if (data.registrationFee == "cash") {
                                 console.log("cash or cheque payment mail");
-                                Athelete.registeredCashPaymentMailSms(data, function (err, vData) {
+                                Athelete.unregistedCashPaymentMailSms(data, function (err, vData) {
                                     if (err) {
                                         callback(err, null);
                                     } else if (vData) {
@@ -596,7 +592,7 @@ var model = {
                                 });
                             } else if (data.registrationFee == "online PAYU") {
                                 console.log("online payment mail");
-                                Athelete.registeredOnlinePaymentMailSms(data, function (err, vData) {
+                                Athelete.unregistedOnlinePaymentMailSms(data, function (err, vData) {
                                     if (err) {
                                         callback(err, null);
                                     } else if (vData) {
@@ -604,14 +600,41 @@ var model = {
                                     }
                                 });
                             }
+                        } else {
+                            var val = school.createdAt;
+                            console.log("data of register school", val);
+                            var year = new Date(val).getFullYear().toString().substr(2, 2);
+                            console.log("year", year);
+                            if (school.status == "Verified" && year == '17') {
+                                console.log("inside verified");
+                                if (data.registrationFee == "cash") {
+                                    console.log("cash or cheque payment mail");
+                                    Athelete.registeredCashPaymentMailSms(data, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+                                } else if (data.registrationFee == "online PAYU") {
+                                    console.log("online payment mail");
+                                    Athelete.registeredOnlinePaymentMailSms(data, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+                                }
 
+                            }
                         }
-                    }
-                });
+                    });
 
-            }
+                }
 
-        });
+            });
+        }
 
     },
 
