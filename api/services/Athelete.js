@@ -199,7 +199,17 @@ var model = {
                                                             if (_.isEmpty(registerData)) {
                                                                 callback("No register data found", null);
                                                             } else {
-                                                                callback(null, registerData)
+                                                                if (athleteData.registrationFee == "cash") {
+                                                                    Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                                        if (err) {
+                                                                            callback(err, null);
+                                                                        } else if (vData) {
+                                                                            callback(null, vData);
+                                                                        }
+                                                                    });
+                                                                } else {
+                                                                    callback(null, athleteData);
+                                                                }
                                                             }
                                                         }
                                                     });
