@@ -327,7 +327,7 @@ var model = {
                                                             console.log("isempty");
                                                             // callback(null, "No data found");
                                                         } else {
-                                                            Athelete.findOne({ //to check registration exist and if it exist retrive previous data
+                                                            Athelete.find({ //to check registration exist and if it exist retrive previous data
                                                                 school: replica._id
                                                             }).sort({
                                                                 createdAt: -1
@@ -340,7 +340,7 @@ var model = {
                                                                     if (_.isEmpty(atheleteData)) {
                                                                         console.log("school id might be undefined");
                                                                         //if schoolName only exist with Athelete (school is undefined)
-                                                                        Athelete.findOne({ //to check registration exist and if it exist retrive previous data
+                                                                        Athelete.find({ //to check registration exist and if it exist retrive previous data
                                                                             atheleteSchoolName: replica.name
                                                                         }).sort({
                                                                             createdAt: -1
