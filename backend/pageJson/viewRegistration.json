@@ -41,8 +41,9 @@
     }],
 
     "button": [{
-        "name": "excelexport",
+        "name": "Excel Export",
         "icon": "print",
+        "class": "btn-success",
         "type": "redirect",
         "text": "export",
         "linkType": "admin",

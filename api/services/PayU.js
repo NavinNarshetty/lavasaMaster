@@ -25,6 +25,11 @@ var models = {
         //var txnid = data.;
         var amount = "1.00";
         var firstname = data.schoolName;
+        var pincode = data.pinCode;
+        var city = data.city;
+        var country = "India";
+        var state = data.state;
+        var address = data.address;
         var email = data.email;
         var phone = data.mobile;
         console.log(data);
@@ -43,6 +48,7 @@ var models = {
                 amount: amount,
                 productinfo: productinfo,
                 firstname: firstname,
+
                 email: email,
                 phone: phone,
                 surl: 'https://sfa.wohlig.co.in/api/payU/successErrorSchool',
@@ -54,6 +60,7 @@ var models = {
     },
 
     atheletePayment: function (found, callback) {
+        console.log("found", found);
 
         var txnid = generator.generate({
             length: 8,
@@ -64,9 +71,15 @@ var models = {
         // found.transactionID = txnid;
 
         var amount = "1.00";
-        var firstname = found.firstName;
-        var email = found.email;
-        var phone = found.mobile;
+        var firstname = found[0].firstName;
+        var lastname = found[0].surname;
+        var pincode = found[0].pinCode;
+        var city = found[0].city;
+        var country = "India";
+        var state = found[0].state;
+        var address = found[0].address;
+        var email = found[0].email;
+        var phone = found[0].mobile;
         var productinfo = "Athelete registeration to SFA";
         var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
         var hashtext = hash.toString('hex');
@@ -78,11 +91,17 @@ var models = {
                 amount: amount,
                 productinfo: productinfo,
                 firstname: firstname,
+                lastname: lastname,
                 email: email,
                 phone: phone,
                 surl: 'https://sfa.wohlig.co.in/api/payU/successErrorAthelete',
                 furl: 'https://sfa.wohlig.co.in/api/payU/successErrorAthelete',
-                hash: hashtext
+                hash: hashtext,
+                address: address,
+                state: state,
+                country: country,
+                postalcode: pincode,
+
             }
         }, callback);
     },

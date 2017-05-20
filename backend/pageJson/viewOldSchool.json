@@ -28,6 +28,7 @@
         "name": "excelexport",
         "icon": "print",
         "type": "redirect",
+        "class": "btn-success",
         "text": "export",
         "linkType": "admin",
         "action": "School/generateExcel"

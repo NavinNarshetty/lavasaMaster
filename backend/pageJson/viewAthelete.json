@@ -47,6 +47,7 @@
     "button": [{
         "name": "excelexport",
         "icon": "print",
+        "class": "btn-success",
         "type": "redirect",
         "text": "export",
         "linkType": "admin",
