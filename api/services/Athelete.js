@@ -299,7 +299,7 @@ var model = {
                     console.log("isempty");
                     callback("No order data found", null);
                 } else {
-                    if (found.atheleteSchoolName == '') {
+                    if (found.atheleteSchoolName) {
                         data.school = undefined;
                     }
                     if (found.verifyCount == 0) {
