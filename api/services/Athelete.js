@@ -391,6 +391,7 @@ var model = {
     },
 
     updatePaymentStatus: function (data, callback) {
+        console.log("inside update", data);
         var matchObj = {
             $set: {
                 paymentStatus: "Paid",
@@ -401,13 +402,14 @@ var model = {
         Athelete.findOne({ //finds one with refrence to id
             firstName: data.firstName,
             surname: data.surname,
-            email: data.email
+            email: data.email,
         }).exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
                 callback(null, "Data is empty");
             } else {
+                console.log("found in update", found);
                 Athelete.update({
                     _id: found._id
                 }, matchObj).exec(

@@ -134,8 +134,14 @@ var controller = {
                             value: false,
                             data: "Invalid Request"
                         });
-                    } else {
+                    } else if (data) {
                         res.redirect("https://sfanow.in/paymentSuccess");
+
+                    } else {
+                        res.json({
+                            value: false,
+                            data: "Invalid Request"
+                        });
 
                     }
                 });
@@ -143,7 +149,9 @@ var controller = {
             } else {
                 console.log('some errror');
                 Athelete.findOne({
-                    firstName: param.firstName
+                    firstName: param.firstName,
+                    surname: param.surname,
+                    email: param.email,
                 }).exec(function (err, data) {
                     if (err) {
                         callback(err, null);
