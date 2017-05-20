@@ -142,7 +142,7 @@ var model = {
 
     //on athelete save and submit press 
     saveAthelete: function (data, callback) {
-        if (._isEmpty(sfaId)) {
+        if (_.isEmpty(sfaId)) {
             data.sfaId = undefined;
         }
         Athelete.aggregate([{
