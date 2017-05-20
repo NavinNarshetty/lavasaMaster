@@ -142,6 +142,9 @@ var model = {
 
     //on athelete save and submit press 
     saveAthelete: function (data, callback) {
+        if (._isEmpty(sfaId)) {
+            data.sfaId = undefined;
+        }
         Athelete.aggregate([{
                 $match: {
                     $and: [{
@@ -287,6 +290,7 @@ var model = {
                 } else {
                     if (found.verifyCount == 0) {
                         if (data.status == "Verified") {
+                            data.verifyCount = 1;
                             data.password = generator.generate({
                                 length: 10,
                                 numbers: true
@@ -821,8 +825,8 @@ var model = {
                     var emailData = {};
                     emailData.from = "info@sfanow.in";
                     emailData.email = data.email;
-                    emailData.sfaID = data.sfaID;
-                    emailData.password = data.password;
+                    // emailData.sfaID = data.sfaID;
+                    // emailData.password = data.password;
                     emailData.filename = "unregisteredOnlinePayment.ejs";
                     emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
                     console.log("emaildata", emailData);
