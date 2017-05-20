@@ -317,7 +317,7 @@ var model = {
                                                     sfaid: registerData.sfaID
                                                 }).sort({
                                                     createdAt: -1
-                                                }).exec(function (err, replica) {
+                                                }).lean().exec(function (err, replica) {
                                                     console.log("replica", replica); // retrives registration data
                                                     if (err) {
                                                         console.log(err);
@@ -331,15 +331,50 @@ var model = {
                                                                 school: replica._id
                                                             }).sort({
                                                                 createdAt: -1
-                                                            }).exec(function (err, atheleteData) {
+                                                            }).lean().exec(function (err, atheleteData) {
                                                                 console.log("atheleteData", atheleteData); // retrives registration data
                                                                 if (err) {
                                                                     console.log(err);
                                                                     callback(err, null);
                                                                 } else {
                                                                     if (_.isEmpty(atheleteData)) {
-                                                                        console.log("isempty");
-                                                                        // callback(null, "No data found");
+                                                                        console.log("school id might be undefined");
+                                                                        //if schoolName only exist with Athelete (school is undefined)
+                                                                        Athelete.findOne({ //to check registration exist and if it exist retrive previous data
+                                                                            atheleteSchoolName: replica.name
+                                                                        }).sort({
+                                                                            createdAt: -1
+                                                                        }).lean().exec(function (err, atheleteData) {
+                                                                            console.log("atheleteData", atheleteData); // retrives registration data
+                                                                            if (err) {
+                                                                                console.log(err);
+                                                                                callback(err, null);
+                                                                            } else {
+                                                                                if (_.isEmpty(atheleteData)) {
+                                                                                    console.log("isempty");
+
+                                                                                } else {
+                                                                                    async.each(atheleteData, function (data, callback) {
+                                                                                        Registration.allAtheleteMailSms(data, function (err, vData) {
+                                                                                            if (err) {
+                                                                                                callback(err, null);
+                                                                                            } else if (vData) {
+                                                                                                callback(null, vData);
+                                                                                            }
+                                                                                        });
+                                                                                    }, function (err, data4) {
+                                                                                        if (err) {
+                                                                                            console.log(err);
+                                                                                            callback(err, null);
+                                                                                        } else {
+                                                                                            callback(null, "Successfully removed!");
+                                                                                        }
+                                                                                    });
+
+
+                                                                                }
+                                                                            }
+                                                                        });
                                                                     } else {
                                                                         async.each(atheleteData, function (data, callback) {
                                                                             Registration.allAtheleteMailSms(data, function (err, vData) {
