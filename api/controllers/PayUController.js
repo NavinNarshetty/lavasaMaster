@@ -27,7 +27,7 @@ var controller = {
     atheletePayment: function (req, res) {
         if (req) {
             var id = (req.query.id);
-            Registration.findOne({
+            Athelete.findOne({
                 _id: id
             }).lean().exec(function (err, data) {
                 PayU.atheletePayment(data, function (err, httpResponse) {
