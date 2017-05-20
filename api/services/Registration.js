@@ -264,7 +264,11 @@ var model = {
                                 } else if (_.isEmpty(found)) {
                                     var school = {};
                                     school.name = schoolData.schoolName;
-                                    school.sfaid = schoolData.sfaID;
+                                    if (_.isEmpty(schoolData.sfaID)) {
+                                        school.sfaid = data.sfaID;
+                                    } else {
+                                        school.sfaid = schoolData.sfaID;
+                                    }
                                     School.saveData(school, function (err, newData) {
                                         console.log("school created", newData);
                                         if (err) {
