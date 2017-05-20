@@ -187,7 +187,7 @@ var model = {
                                                     schoolData.schoolName = data.atheleteSchoolName;
                                                     schoolData.locality = data.atheleteSchoolLocality;
                                                     schoolData.schoolLogo = data.atheleteSchoolIdImage;
-                                                    schoolData.mobile = data.atheleteSchoolContact;
+                                                    schoolData.landline = data.atheleteSchoolContact;
                                                     console.log("need to save");
 
                                                     Registration.saveData(schoolData, function (err, registerData) {
@@ -299,6 +299,9 @@ var model = {
                     console.log("isempty");
                     callback("No order data found", null);
                 } else {
+                    if (found.atheleteSchoolName == '') {
+                        data.school = undefined;
+                    }
                     if (found.verifyCount == 0) {
                         if (data.status == "Verified") {
                             data.verifyCount = 1;
