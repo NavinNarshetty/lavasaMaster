@@ -482,7 +482,7 @@ var model = {
                 emailData.email = found.email;
                 // emailData.sfaID = data.sfaID;
                 // emailData.password = data.password;
-                emailData.filename = "receipt.ejs";
+                emailData.filename = "receiptAthelete.ejs";
                 emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA Mumbai 2017";
                 console.log("emaildata", emailData);
 
