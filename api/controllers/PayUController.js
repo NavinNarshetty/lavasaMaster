@@ -116,6 +116,8 @@ var controller = {
         var param = {};
 
         param.firstName = data.firstname;
+        param.surname = data.lastname;
+        param.email = data.email;
         param.transactionid = data.mihpayid;
         var status = data.status;
 
