@@ -766,9 +766,9 @@ var model = {
                             console.log(err);
                             callback(null, err);
                         } else if (emailRespo) {
-                            //callback(null, emailRespo);
+                            callback(null, emailRespo);
                         } else {
-                            //callback(null, "Invalid data");
+                            callback(null, "Invalid data");
                         }
                     });
                 },
