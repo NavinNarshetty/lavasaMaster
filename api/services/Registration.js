@@ -855,7 +855,7 @@ var model = {
                 emailData.receiptNo = receipt;
                 emailData.from = "info@sfanow.in";
                 emailData.email = found.email;
-                emailData.filename = "receipt.ejs";
+                emailData.filename = "receiptAthelete.ejs";
                 emailData.subject = "SFA: Your Payment Receipt as School for SFA Mumbai 2017";
                 console.log("emaildata", emailData);
 
