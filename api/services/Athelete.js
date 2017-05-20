@@ -142,8 +142,8 @@ var model = {
 
     //on athelete save and submit press 
     saveAthelete: function (data, callback) {
-        if (_.isEmpty(sfaId)) {
-            data.sfaId = undefined;
+        if (_.isEmpty(data.school)) {
+            data.school = undefined;
         }
         Athelete.aggregate([{
                 $match: {
