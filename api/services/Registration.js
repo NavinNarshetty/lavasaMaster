@@ -514,9 +514,11 @@ var model = {
                     _id: found._id
                 }, matchObj).exec(
                     function (err, data3) {
+
+                        callback(err, data3);
                         if (err) {
                             console.log(err);
-                            callback(err, null);
+                            // callback(err, null);
                         } else if (data3) {
                             async.parallel([
                                     function (callback) {
@@ -548,16 +550,16 @@ var model = {
                                     }
                                 ],
                                 function (err, data2) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(null, []);
-                                    } else if (data2) {
-                                        if (_.isEmpty(data2)) {
-                                            callback(null, []);
-                                        } else {
-                                            callback(null, data2);
-                                        }
-                                    }
+                                    // if (err) {
+                                    //     console.log(err);
+
+                                    // } else if (data2) {
+                                    //     if (_.isEmpty(data2)) {
+                                    //         callback(null, data2);
+                                    //     } else {
+                                    //         callback(null, data2);
+                                    //     }
+                                    // }
                                 });
                         }
                     });
@@ -953,19 +955,19 @@ var model = {
             matchObj = {
                 sfaID: data.input
             }
-        } else if (data.type == "schoolName") {
+        } else if (data.type == "School Name") {
             matchObj = {
                 schoolName: data.input
             }
-        } else if (data.type == "paymentMode") {
+        } else if (data.type == "Payment Mode") {
             matchObj = {
                 registrationFee: data.input
             }
-        } else if (data.type == "paymentStatus") {
+        } else if (data.type == "Payment Status") {
             matchObj = {
                 paymentStatus: data.input
             }
-        } else if (data.type == "status") {
+        } else if (data.type == "Status") {
             matchObj = {
                 status: data.input
             }

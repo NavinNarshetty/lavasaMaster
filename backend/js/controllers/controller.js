@@ -242,7 +242,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         globalfunction.confDel = function (callback) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: '/backend/views/modal/conf-delete.html',
+                templateUrl: '/views/modal/conf-delete.html',
                 size: 'sm',
                 scope: $scope
             });
@@ -307,6 +307,26 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
                 page: page,
                 keyword: $scope.search.keyword
             });
+        };
+
+        $scope.getFilterType = function (data) {
+            $scope.type = data;
+            if ($scope.type == "Date") {
+                $scope.show = 1;
+            } else {
+                $scope.show = 2;
+            }
+
+        };
+
+        $scope.filterSchool = function (data) {
+            console.log("inside");
+            console.log("data", data, $scope.type);
+            // $scope.paramData={};
+            //  $scope.paramData.type=$scope.type;
+            //  $scope.paramData.data
+
+
         };
 
         $scope.getAllItems = function (keywordChange) {

@@ -173,23 +173,23 @@ var model = {
             matchObj = {
                 sfaId: data.input
             }
-        } else if (data.type == "Name") {
+        } else if (data.type == "Athlete Name") {
             matchObj = {
                 schoolName: data.input
             }
-        } else if (data.type == "School") {
+        } else if (data.type == "School Name") {
             matchObj = {
                 registrationFee: data.input
             }
-        } else if (data.type == "paymentMode") {
+        } else if (data.type == "Payment Mode") {
             matchObj = {
                 registrationFee: data.input
             }
-        } else if (data.type == "paymentStatus") {
+        } else if (data.type == "Payment Status") {
             matchObj = {
                 paymentStatus: data.input
             }
-        } else if (data.type == "status") {
+        } else if (data.type == "Status") {
             matchObj = {
                 status: data.input
             }

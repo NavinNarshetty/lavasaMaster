@@ -21,45 +21,44 @@
                             <h3>{{json.json.description}} <span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
                             <div class="row">
                                 <div class="col-md-6">
-                                    <div class="form-goup">
+                                    <div ng-if="json.json.title=='School Registration'" class="form-goup">
                                         <div class="mtp5">
 
                                             <div class="dropdown">
                                                 <button class="btn default btn-md dropdown-toggle mbt5" type="button" data-toggle="dropdown">Filter
                                                 <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
-                                                    <li ng-click="show=1">Date</li>
-                                                    <li ng-click="show=2">SFA-ID</a>
-                                                    </li>
-                                                    <li ng-click="show=2">School Name</li>
-                                                    <li ng-click="show=2">Payment Mode</li>
-                                                    <li ng-click="show=2">Payment Status</li>
-                                                    <li ng-click="show=2">Status</li>
+                                                    <li ng-click="getFilterType('Date');">Date</li>
+                                                    <li ng-click="getFilterType('SFA-ID');">SFA-ID</li>
+                                                    <li ng-click="getFilterType('School Name');">School Name</li>
+                                                    <li ng-click="getFilterType('Payment Mode');">Payment Mode</li>
+                                                    <li ng-click="getFilterType('Payment Status');">Payment Status</li>
+                                                    <li ng-click="getFilterType('Status')">Status</li>
                                                 </ul>
                                             </div>
                                             <div class="row" ng-if="show==1">
                                                 <div class="col-md-4">
-                                                    <input type="text" class="form-control" placeholder="From">
+                                                    <input type="text" ng-model="formData.startDate" class="form-control" placeholder="From">
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <input type="text" class="form-control" placeholder="To">
+                                                    <input type="text" ng-model="formData.endDate" class="form-control" placeholder="To">
                                                 </div>
                                                 <div class="col-md-4 ">
-                                                    <button class="btn btn-sm" type="button">Go</button>
+                                                    <button class="btn btn-sm" type="button" ng-click="filterSchool(formData)">Go</button>
                                                 </div>
                                             </div>
                                             <div class="row" ng-if="show==2">
                                                 <div class="col-md-6 mtp5">
-                                                    <input type="text" class="form-control">
+                                                    <input type="text" ng-model="formData.input" class="form-control">
                                                 </div>
                                                 <div class="col-md-4 mtp5">
-                                                    <button class="btn btn-sm" type="button">Go</button>
+                                                    <button class="btn btn-sm" type="button" ng-click="filterSchool(formData)">Go</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="form-goup">
+                                    <div ng-if="json.json.title!='School Registration'" class="form-goup">
                                         <div class="mtp5">
 
                                             <div class="dropdown">
@@ -67,8 +66,8 @@
                                                 <span class="caret"></span></button>
                                                 <ul class="dropdown-menu">
                                                     <li ng-click="show=1">Date</li>
-                                                    <li ng-click="show=2">SFA-ID</a>
-                                                    </li>
+                                                    <li ng-click="show=2">SFA-ID</li>
+                                                    <li ng-click="show=2">Athlete Name</li>
                                                     <li ng-click="show=2">School Name</li>
                                                     <li ng-click="show=2">Payment Mode</li>
                                                     <li ng-click="show=2">Payment Status</li>

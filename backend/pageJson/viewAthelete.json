@@ -1,5 +1,5 @@
 {
-    "title": "Registration",
+    "title": "Athlete Registration",
     "description": "List of Registered Athelete",
     "pageType": "view",
     "sendIdWithCreate": true,
