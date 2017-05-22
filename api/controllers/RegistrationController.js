@@ -34,6 +34,17 @@ var controller = {
         }
     },
 
+    filterSchool: function (req, res) {
+        if (req.body) {
+            Registration.filterSchool(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     generateExcel: function (req, res) {
         console.log("inside controller");
         Registration.generateExcel(res);

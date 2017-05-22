@@ -161,6 +161,7 @@
                  var obj = {};
                  obj.sfaId = n.sfaId;
                  obj.name = n.name;
+                 obj.date = n.createdAt;
                  excelData.push(obj);
              });
 

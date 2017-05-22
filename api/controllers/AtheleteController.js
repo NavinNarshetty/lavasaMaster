@@ -37,6 +37,17 @@ var controller = {
         Athelete.generateExcel(res);
     },
 
+    filterAthlete: function (req, res) {
+        if (req.body) {
+            Athelete.filterAthlete(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     getAllAtheleteDetails: function (req, res) {
         if (req.body) {
             Athelete.getAllAtheleteDetails(req.body, res.callback);

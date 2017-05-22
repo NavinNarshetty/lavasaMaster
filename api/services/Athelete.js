@@ -169,9 +169,9 @@ var model = {
                     $lt: ISODate(data.endDate),
                 }
             }
-        } else if (data.type == "sfaID") {
+        } else if (data.type == "SFA-ID") {
             matchObj = {
-                sfaID: data.input
+                sfaId: data.input
             }
         } else if (data.type == "Name") {
             matchObj = {
@@ -1046,6 +1046,7 @@ var model = {
 
                 obj.sfaId = n.sfaId;
                 obj.school = n.school;
+                obj.date = n.createdAt;
                 obj.idProof = n.idProof;
                 obj.surname = n.surname;
                 obj.firstName = n.firstName;

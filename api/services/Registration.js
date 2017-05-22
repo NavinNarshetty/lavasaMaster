@@ -882,6 +882,7 @@ var model = {
 
                 obj.sfaID = n.sfaID;
                 obj.schoolName = n.schoolName;
+                obj.date = n.createdAt;
                 obj.schoolType = n.schoolType;
                 obj.schoolCategory = n.schoolCategory;
                 obj.affiliatedBoard = n.affiliatedBoard;
@@ -944,11 +945,11 @@ var model = {
         if (data.type == "Date") {
             matchObj = {
                 createdAt: {
-                    $gt: ISODate(data.startDate),
-                    $lt: ISODate(data.endDate),
+                    $gt: data.startDate,
+                    $lt: data.endDate,
                 }
             }
-        } else if (data.type == "sfaID") {
+        } else if (data.type == "SFA-ID") {
             matchObj = {
                 sfaID: data.input
             }
