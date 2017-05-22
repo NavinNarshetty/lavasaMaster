@@ -320,12 +320,14 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         };
 
         $scope.filterSchool = function (data) {
+            $scope.formData = data;
+            $scope.formData.type = $scope.type;
             console.log("inside");
-            console.log("data", data, $scope.type);
-            // $scope.paramData={};
-            //  $scope.paramData.type=$scope.type;
-            //  $scope.paramData.data
+            console.log("data", $scope.formData);
 
+            NavigationService.apiCall($scope.url, formData, function (data) {
+                $scope.emailOtp = data.data;
+            });
 
         };
 
