@@ -234,14 +234,14 @@ var model = {
                 }
             }],
             function (err, found) {
-                console.log("data", data);
+                // console.log("data", data);
                 if (err) {
                     console.log(err);
                     callback(err, null);
                 } else if (found) {
                     // data.order.bills = null;
                     if (_.isEmpty(found)) {
-                        console.log("data", data);
+                        // console.log("data", data);
                         data.year = new Date().getFullYear();
                         data.verifyCount = 0;
                         Athelete.saveData(data, function (err, athleteData) {
@@ -283,7 +283,7 @@ var model = {
                                                                 // } else {
                                                                 //     callback(null, athleteData);
                                                                 // }
-                                                                callback(null, registerData);
+                                                                callback(null, athleteData);
                                                             }
                                                         }
                                                     });
