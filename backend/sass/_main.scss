@@ -1186,7 +1186,19 @@ body {
     line-height: 120%;
 }
 
-
+.drp-class{
+    background: 0 0 !important;
+    border-color: #d3d3d3 !important;
+}
+.drp-class:focus{
+    outline: 0;
+}
+.mtp5{
+    margin-top: 5px;
+}
+.mbt5{
+    margin-bottom: 5px;
+}
 /* Start writing sass here */
 
 @import "fancybox-override";
