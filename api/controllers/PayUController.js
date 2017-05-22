@@ -134,15 +134,8 @@ var controller = {
                             value: false,
                             data: "Invalid Request"
                         });
-                    } else if (data) {
-                        res.redirect("https://sfanow.in/paymentSuccess");
-
                     } else {
-                        res.json({
-                            value: false,
-                            data: "Invalid Request"
-                        });
-
+                        res.redirect("https://sfanow.in/paymentSuccess");
                     }
                 });
 
