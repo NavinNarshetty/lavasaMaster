@@ -139,6 +139,79 @@ var model = {
 
     },
 
+    filterAthlete: function (data, callback) {
+        var maxRow = Config.maxRow;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['name'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var matchObj = {};
+        if (data.type == "Date") {
+            matchObj = {
+                createdAt: {
+                    $gt: ISODate(data.startDate),
+                    $lt: ISODate(data.endDate),
+                }
+            }
+        } else if (data.type == "sfaID") {
+            matchObj = {
+                sfaID: data.input
+            }
+        } else if (data.type == "Name") {
+            matchObj = {
+                schoolName: data.input
+            }
+        } else if (data.type == "School") {
+            matchObj = {
+                registrationFee: data.input
+            }
+        } else if (data.type == "paymentMode") {
+            matchObj = {
+                registrationFee: data.input
+            }
+        } else if (data.type == "paymentStatus") {
+            matchObj = {
+                paymentStatus: data.input
+            }
+        } else if (data.type == "status") {
+            matchObj = {
+                status: data.input
+            }
+        }
+        Athelete.find(matchObj)
+            .sort({
+                createdAt: -1
+            })
+            .order(options)
+            .keyword(options)
+            .page(options, function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback(null, "Data is empty");
+                } else {
+                    callback(null, found);
+                }
+
+            });
+    },
+
 
     //on athelete save and submit press 
     saveAthelete: function (data, callback) {
@@ -309,7 +382,7 @@ var model = {
                                 length: 10,
                                 numbers: true
                             });
-                            if (_.isEmpty(data.sfaID)) {
+                            if (_.isEmpty(data.sfaId)) {
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 if (_.isEmpty(found.city)) {
                                     found.city = "Mumbai"

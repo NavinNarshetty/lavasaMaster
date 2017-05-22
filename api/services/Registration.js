@@ -915,45 +915,77 @@ var model = {
 
             Config.generateExcel("Registration", excelData, res);
         });
-    }
+    },
 
 
-    // filter: function (data, callback) {
-    //     var matchObj = {};
-    //     if (data.sfaID) {
-    //         matchObj = {
-    //             sfaID: data.sfaID
-    //         }
-    //     } else if (data.schoolName) {
-    //         matchObj = {
-    //             sfaID: data.sfaID
-    //         }
-    //     } else if (data.registrationFee) {
-    //         matchObj = {
-    //             sfaID: data.sfaID
-    //         }
-    //     } else if (data.schoolName) {
-    //         matchObj = {
-    //             sfaID: data.sfaID
-    //         }
-    //     } else if (data.schoolName) {
-    //         matchObj = {
-    //             sfaID: data.sfaID
-    //         }
-    //     }
-    //     Registration.find({
-    //         _id: data._id
-    //     }).exec(function (err, found) {
-    //         if (err) {
-    //             callback(err, null);
-    //         } else if (_.isEmpty(found)) {
-    //             callback(null, "Data is empty");
-    //         } else {
-    //             callback(null, found);
-    //         }
+    filterSchool: function (data, callback) {
+        var maxRow = Config.maxRow;
 
-    //     });
-    // },
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['name'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var matchObj = {};
+        if (data.type == "Date") {
+            matchObj = {
+                createdAt: {
+                    $gt: ISODate(data.startDate),
+                    $lt: ISODate(data.endDate),
+                }
+            }
+        } else if (data.type == "sfaID") {
+            matchObj = {
+                sfaID: data.input
+            }
+        } else if (data.type == "schoolName") {
+            matchObj = {
+                schoolName: data.input
+            }
+        } else if (data.type == "paymentMode") {
+            matchObj = {
+                registrationFee: data.input
+            }
+        } else if (data.type == "paymentStatus") {
+            matchObj = {
+                paymentStatus: data.input
+            }
+        } else if (data.type == "status") {
+            matchObj = {
+                status: data.input
+            }
+        }
+        Registration.find(matchObj)
+            .sort({
+                createdAt: -1
+            })
+            .order(options)
+            .keyword(options)
+            .page(options, function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback(null, "Data is empty");
+                } else {
+                    callback(null, found);
+                }
+
+            });
+    },
 
 
 
