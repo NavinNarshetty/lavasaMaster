@@ -940,7 +940,7 @@ var model = {
                 }
             },
             sort: {
-                desc: 'createdAt'
+                asc: 'createdAt'
             },
             start: (page - 1) * maxRow,
             count: maxRow
@@ -959,19 +959,38 @@ var model = {
             }
         } else if (data.type == "School Name") {
             matchObj = {
-                schoolName: data.input
+                $or: [{
+                    'schoolName': {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }]
             }
         } else if (data.type == "Payment Mode") {
+            $or: [{
+                'registrationFee': {
+                    $regex: data.input,
+                    $options: "i"
+                }
+            }]
+        }
+        else if (data.type == "Payment Status") {
             matchObj = {
-                registrationFee: data.input
+                $or: [{
+                    'paymentStatus': {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }]
             }
-        } else if (data.type == "Payment Status") {
+        } else if (data.type == "Verified Status") {
             matchObj = {
-                paymentStatus: data.input
-            }
-        } else if (data.type == "Status") {
-            matchObj = {
-                status: data.input
+                $or: [{
+                    'status': {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }]
             }
         }
         Registration.find(matchObj)

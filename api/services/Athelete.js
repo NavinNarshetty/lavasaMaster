@@ -156,7 +156,7 @@ var model = {
                 }
             },
             sort: {
-                desc: 'createdAt'
+                asc: 'createdAt'
             },
             start: (page - 1) * maxRow,
             count: maxRow
@@ -165,8 +165,8 @@ var model = {
         if (data.type == "Date") {
             matchObj = {
                 createdAt: {
-                    $gt: ISODate(data.startDate),
-                    $lt: ISODate(data.endDate),
+                    $gt: data.startDate,
+                    $lt: data.endDate,
                 }
             }
         } else if (data.type == "SFA-ID") {
@@ -175,41 +175,128 @@ var model = {
             }
         } else if (data.type == "Athlete Name") {
             matchObj = {
-                schoolName: data.input
-            }
-        } else if (data.type == "School Name") {
-            matchObj = {
-                registrationFee: data.input
+                $or: [{
+                    'firstName': {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }, {
+                    'surname': {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }, {
+                    'middleName': {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }]
             }
         } else if (data.type == "Payment Mode") {
             matchObj = {
-                registrationFee: data.input
+                $or: [{
+                    'registrationFee': {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }]
             }
         } else if (data.type == "Payment Status") {
             matchObj = {
-                paymentStatus: data.input
+                $or: [{
+                    'paymentStatus': {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }]
             }
-        } else if (data.type == "Status") {
+        } else if (data.type == "Verified Status") {
             matchObj = {
-                status: data.input
+                $or: [{
+                    'status': {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }]
             }
         }
-        Athelete.find(matchObj)
-            .sort({
-                createdAt: -1
-            })
-            .order(options)
-            .keyword(options)
-            .page(options, function (err, found) {
-                if (err) {
-                    callback(err, null);
-                } else if (_.isEmpty(found)) {
-                    callback(null, "Data is empty");
-                } else {
-                    callback(null, found);
-                }
+        if (data.type == "School Name") {
+            Athelete.aggregate(
+                [{
+                        $lookup: {
+                            "from": "schools",
+                            "localField": "school",
+                            "foreignField": "_id",
+                            "as": "schoolData"
+                        }
+                    },
+                    // Stage 2
+                    {
+                        $unwind: {
+                            path: "$schoolData"
 
-            });
+                        }
+
+                    },
+                    // Stage 3
+                    {
+                        $match: {
+                            "schoolData.name": {
+                                $regex: data.input
+                            }
+                        }
+                    },
+                ],
+                function (err, returnReq) {
+                    // console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            callback(null, []);
+                        } else {
+                            matchObj = {
+                                school: returnReq._id
+                            }
+                            Athelete.find(matchObj)
+                                .sort({
+                                    createdAt: -1
+                                })
+                                .order(options)
+                                .keyword(options)
+                                .page(options, function (err, found) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (_.isEmpty(found)) {
+                                        callback(null, "Data is empty");
+                                    } else {
+                                        callback(null, found);
+                                    }
+
+                                });
+
+                        }
+                    }
+                });
+        } else {
+            Athelete.find(matchObj)
+                .sort({
+                    createdAt: -1
+                })
+                .order(options)
+                .keyword(options)
+                .page(options, function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        callback(null, found);
+                    }
+                });
+
+        }
     },
 
 
@@ -836,7 +923,7 @@ var model = {
                     emailData.sfaID = data.sfaId;
                     emailData.password = data.password;
                     emailData.filename = "registeredVerification.ejs";
-                    emailData.subject = "SFA: You are now a verified School for SFA Mumbai 2017";
+                    emailData.subject = "SFA: You are now a verified Athlete for SFA Mumbai 2017";
                     console.log("emaildata", emailData);
 
                     Config.email(emailData, function (err, emailRespo) {
@@ -1044,10 +1131,38 @@ var model = {
             _.each(data, function (n) {
                 var obj = {};
 
-                obj.sfaId = n.sfaId;
-                obj.school = n.school;
+
+
+                School.findOne({
+                    _id: n.school
+                }).exec(function (err, found) {
+                    if (err) {
+                        obj.school = "";
+                    } else {
+                        obj.school = found.name;
+                        console.log("found", obj.school);
+                    }
+
+                });
+
+                var parentInfo;
+                var count = 0;
+                _.each(n.parentDetails, function (details) {
+                    var name = details.name + details.surname;
+                    var email = details.email;
+                    var mobile = details.mobile;
+                    var relation = details.relation;
+                    if (count == 0) {
+                        parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                    } else {
+                        parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                    }
+                    count++;
+
+                    console.log("parentDetails", parentInfo);
+
+                });
                 var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
-                // console.log("dateTime", n.createdAt, dateTime);
                 obj.date = dateTime;
                 obj.idProof = n.idProof;
                 obj.surname = n.surname;

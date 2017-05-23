@@ -321,15 +321,34 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
 
         $scope.filterSchool = function (data) {
             $scope.formData = data;
+            $scope.formData.startDate = moment($scope.formData.startDate).format();
+            $scope.formData.endDate = moment($scope.formData.endDate).format();
             $scope.formData.type = $scope.type;
-
             console.log("inside");
             console.log("data", $scope.formData);
-
-            $scope.url = "Registration/filterAthlete";
+            $scope.url = "Registration/filterSchool";
 
             NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                $scope.items = data.data.results;
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
+            });
 
+        };
+
+        $scope.filterAthlete = function (data) {
+            $scope.formData = data;
+            $scope.formData.startDate = moment($scope.formData.startDate).format();
+            $scope.formData.endDate = moment($scope.formData.endDate).format();
+            $scope.formData.type = $scope.type;
+            console.log("inside");
+            console.log("data", $scope.formData);
+            $scope.url = "Athelete/filterAthlete";
+
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                $scope.items = data.data.results;
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
             });
 
         };
