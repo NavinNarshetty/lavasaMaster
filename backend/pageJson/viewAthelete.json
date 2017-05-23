@@ -5,21 +5,25 @@
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
-        "name": "First Name",
+        "name": "SFA-ID",
+        "isSort": "",
+        "tableRef": "sfaId"
+    }, {
+        "name": "Athlete Name",
         "isSort": "",
         "tableRef": "firstName"
     }, {
-        "name": "Surname",
+        "name": "Verification Status",
         "isSort": "",
-        "tableRef": "surname"
+        "tableRef": "status"
     }, {
-        "name": "Date Of Birth",
+        "name": "Payment Mode",
         "isSort": "",
-        "tableRef": "dob"
+        "tableRef": "registrationFee"
     }, {
-        "name": "email",
+        "name": "Payment Status",
         "isSort": "",
-        "tableRef": "email"
+        "tableRef": "paymentStatus"
     }],
     "action": [{
         "name": "edit",

@@ -5,17 +5,25 @@
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
+        "name": "SFA-ID",
+        "isSort": "",
+        "tableRef": "sfaID"
+    }, {
         "name": "School Name",
         "isSort": "",
         "tableRef": "schoolName"
     }, {
-        "name": "School Type",
+        "name": "Verification Status",
         "isSort": "",
-        "tableRef": "schoolType"
+        "tableRef": "status"
     }, {
-        "name": "School Category",
+        "name": "Payment Mode",
         "isSort": "",
-        "tableRef": "schoolCategory"
+        "tableRef": "registrationFee"
+    }, {
+        "name": "Payment Status",
+        "isSort": "",
+        "tableRef": "paymentStatus"
     }],
     "action": [{
         "name": "edit",
