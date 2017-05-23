@@ -881,7 +881,6 @@ var model = {
             var excelData = [];
             _.each(data, function (n) {
                 var obj = {};
-
                 obj.sfaID = n.sfaID;
                 obj.schoolName = n.schoolName;
                 var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
@@ -893,6 +892,102 @@ var model = {
                 obj.schoolLogo = n.schoolLogo;
                 obj.schoolAddress = n.schoolAddress;
                 obj.schoolAddressLine2 = n.schoolAddressLine2;
+                var teamSports = '';
+                var racquetSports = '';
+                var targetSports = '';
+                var aquaticsSports = '';
+                var combatSports = '';
+                var individualSports = '';
+
+
+                //teamSports
+                _.each(n.teamSports, function (details) {
+                    teamSports += "," + details.name;
+                });
+                console.log("name", teamSports);
+                if (teamSports) {
+                    teamSports = teamSports.slice(1);
+                    obj.teamSports = teamSports;
+                } else {
+                    obj.teamSports = "";
+                }
+
+                //racquetSports
+                _.each(n.racquetSports, function (details) {
+                    racquetSports += "," + details.name;
+                });
+                console.log("name", racquetSports);
+                if (racquetSports) {
+                    racquetSports = racquetSports.slice(1);
+                    obj.racquetSports = racquetSports;
+                } else {
+                    obj.racquetSports = "";
+                }
+                //aquaticsSports
+                _.each(n.aquaticsSports, function (details) {
+                    aquaticsSports += "," + details.name;
+                });
+                console.log("name", aquaticsSports);
+                if (aquaticsSports) {
+                    aquaticsSports = aquaticsSports.slice(1);
+                    obj.aquaticsSports = aquaticsSports;
+                } else {
+                    obj.aquaticsSports = "";
+                }
+
+                //combatSports
+                _.each(n.combatSports, function (details) {
+                    combatSports += "," + details.name;
+                });
+                console.log("name", combatSports);
+                if (combatSports) {
+                    combatSports = combatSports.slice(1);
+                    obj.combatSports = combatSports;
+                } else {
+                    obj.combatSports = "";
+                }
+
+                //targetSports
+                _.each(n.targetSports, function (details) {
+                    targetSports += "," + details.name;
+                });
+                console.log("name", targetSports);
+                if (targetSports) {
+                    targetSports = targetSports.slice(1);
+                    obj.targetSports = targetSports;
+                } else {
+                    obj.targetSports = "";
+                }
+
+                //individualSports
+                _.each(n.individualSports, function (details) {
+                    individualSports += "," + details.name;
+                });
+                console.log("name", individualSports);
+                if (individualSports) {
+                    individualSports = individualSports.slice(1);
+                    obj.individualSports = individualSports;
+                } else {
+                    obj.individualSports = "";
+                }
+                var sportsInfo;
+                var count = 0;
+                _.each(n.sportsDepartment, function (details) {
+                    var name = details.name;
+                    var email = details.email;
+                    var mobile = details.mobile;
+                    var designation = details.designation;
+                    if (count == 0) {
+                        sportsInfo = "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                    } else {
+                        sportsInfo = sportsInfo + "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                    }
+                    count++;
+
+                    console.log("sportsInfo", sportsInfo);
+
+                });
+                obj.sportsDepartment = sportsInfo;
                 obj.state = n.state;
                 obj.district = n.district;
                 obj.city = n.city;

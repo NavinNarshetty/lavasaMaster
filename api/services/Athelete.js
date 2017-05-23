@@ -1131,37 +1131,57 @@ var model = {
             _.each(data, function (n) {
                 var obj = {};
 
-
-
-                School.findOne({
-                    _id: n.school
-                }).exec(function (err, found) {
-                    if (err) {
-                        obj.school = "";
-                    } else {
+                if (_isEmpty(n.school)) {
+                    obj.school = "";
+                } else {
+                    School.findOne({
+                        _id: n.school
+                    }).exec(function (err, found) {
+                        if (_.isEmpty(found)) {
+                            console.log("name is null");
+                            obj.school = "";
+                        }
                         obj.school = found.name;
                         console.log("found", obj.school);
-                    }
+                    });
 
-                });
+                }
+
 
                 var parentInfo;
-                var count = 0;
+                var countParent = 0;
+                var levelInfo;
+                var countLevel = 0;
                 _.each(n.parentDetails, function (details) {
                     var name = details.name + details.surname;
                     var email = details.email;
                     var mobile = details.mobile;
                     var relation = details.relation;
-                    if (count == 0) {
+                    if (countParent == 0) {
                         parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
                     } else {
                         parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
                     }
-                    count++;
+                    countParent++;
 
                     console.log("parentDetails", parentInfo);
 
                 });
+                obj.parentDetails = parentInfo;
+                _.each(n.sportLevel, function (details) {
+                    var level = details.level;
+                    var sport = details.sport;
+                    if (countLevel == 0) {
+                        levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
+                    } else {
+                        levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
+                    }
+                    countLevel++;
+
+                    console.log("levelInfo", levelInfo);
+
+                });
+                obj.sportLevel = levelInfo;
                 var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
                 obj.date = dateTime;
                 obj.idProof = n.idProof;
