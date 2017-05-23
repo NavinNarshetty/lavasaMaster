@@ -161,7 +161,10 @@
                  var obj = {};
                  obj.sfaId = n.sfaId;
                  obj.name = n.name;
-                 obj.date = n.createdAt;
+                 var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                 // console.log("dateTime", n.createdAt, dateTime);
+                 obj.date = dateTime;
+
                  excelData.push(obj);
              });
 

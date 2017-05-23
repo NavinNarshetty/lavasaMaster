@@ -1046,7 +1046,9 @@ var model = {
 
                 obj.sfaId = n.sfaId;
                 obj.school = n.school;
-                obj.date = n.createdAt;
+                var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                // console.log("dateTime", n.createdAt, dateTime);
+                obj.date = dateTime;
                 obj.idProof = n.idProof;
                 obj.surname = n.surname;
                 obj.firstName = n.firstName;

@@ -884,7 +884,9 @@ var model = {
 
                 obj.sfaID = n.sfaID;
                 obj.schoolName = n.schoolName;
-                obj.date = n.createdAt;
+                var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                // console.log("dateTime", n.createdAt, dateTime);
+                obj.date = dateTime;
                 obj.schoolType = n.schoolType;
                 obj.schoolCategory = n.schoolCategory;
                 obj.affiliatedBoard = n.affiliatedBoard;
