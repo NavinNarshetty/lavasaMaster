@@ -219,6 +219,7 @@ var model = {
     },
     //on backend save click (update)
     generateSfaID: function (data, callback) {
+
         console.log("inside");
         Registration.findOne({ //to check registration exist and if it exist retrive previous data
             _id: data._id
