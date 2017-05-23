@@ -322,11 +322,14 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         $scope.filterSchool = function (data) {
             $scope.formData = data;
             $scope.formData.type = $scope.type;
+
             console.log("inside");
             console.log("data", $scope.formData);
 
-            NavigationService.apiCall($scope.url, formData, function (data) {
-                $scope.emailOtp = data.data;
+            $scope.url = "Registration/filterAthlete";
+
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+
             });
 
         };
