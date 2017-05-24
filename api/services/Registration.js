@@ -105,17 +105,18 @@ var schema = new Schema({
     transactionID: {
         type: String,
     },
+    verifiedDate: Date,
 });
 
 schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
 
-schema.plugin(autoIncrement.plugin, {
-    model: 'Registration',
-    field: 'registerID',
-    startAt: 1,
-    incrementBy: 1
-});
+// schema.plugin(autoIncrement.plugin, {
+//     model: 'Registration',
+//     field: 'registerID',
+//     startAt: 1,
+//     incrementBy: 1
+// });
 schema.plugin(timestamps);
 module.exports = mongoose.model('Registration', schema);
 
@@ -157,11 +158,67 @@ var model = {
     },
 
     saveRegistrationForm: function (data, callback) {
-        //auto password generator
+        Athelete.aggregate([{
+                $match: {
+                    $and: [{
+                            schoolName: data.schoolName
+                        },
+                        {
+                            $or: [{
+                                email: data.email
+                            }]
+                        },
+                    ]
+                }
+            }],
+            function (err, found) {
+                // console.log("data", data);
+                if (err) {
+                    console.log(err);
+                    //callback(err, null);
+                } else if (found) {
+                    if (_.isEmpty(found)) {
+                        Registration.saveRegistration(data, function (err, vData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (vData) {
+                                callback(null, vData);
+                            }
+                        });
+                    } else {
+                        if (found.registrationFee == 'online PAYU' && found.paymentStatus == 'Pending') {
+                            Registration.remove({ //finds one with refrence to id
+                                _id: found._id
+                            }).exec(function (err, removed) {
+
+                                Registration.saveRegistration(data, function (err, vData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (vData) {
+                                        callback(null, vData);
+                                    }
+                                });
+                            });
+                        } else {
+                            Registration.saveRegistration(data, function (err, vData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (vData) {
+                                    callback(null, vData);
+                                }
+                            });
+
+                        }
+                    }
+                }
+            });
+
+    },
+
+    saveRegistration: function (data, callback) {
         data.verifyCount = 0;
         console.log("data", data);
         data.year = new Date().getFullYear();
-
         Registration.saveData(data, function (err, registerData) {
             console.log("registerData", registerData);
             if (err) {
@@ -171,32 +228,6 @@ var model = {
                 if (_.isEmpty(registerData)) {
                     callback("No register data found", null);
                 } else {
-                    // if (registerData.registrationFee == "online PAYU") {
-                    // console.log("inside payu");
-                    // PayU.schoolPayment(data, function (err, found) {
-                    //     if (err) {
-                    //         callback(err, null);
-                    //     } else {
-                    //         if (_.isEmpty(found)) {
-                    //             callback(null, "Data not found");
-                    //         } else {
-                    //             Registration.onlinePaymentMailSms(data, function (err, mailsms) {
-                    //                 if (err) {
-                    //                     callback(err, null);
-                    //                 } else {
-                    //                     if (_.isEmpty(mailsms)) {
-                    //                         callback(null, "Data not found");
-                    //                     } else {
-                    //                         callback(null, mailsms);
-                    //                     }
-                    //                 }
-
-                    //             });
-                    //         }
-                    //     }
-
-                    // });
-                    // } else 
                     if (registerData.registrationFee == "cash") {
                         Registration.cashPaymentMailSms(data, function (err, mailsms) {
                             if (err) {
@@ -253,8 +284,40 @@ var model = {
                                 var city = schoolData.city;
                                 var prefixCity = city.charAt(0);
                                 console.log("prefixCity", prefixCity);
-                                var register = schoolData.registerID; //increment with previous refrence
-                                data.sfaID = "M" + "S" + year + register; // prefix "S" for school
+                                Registration.find({
+                                    "status": 'Verified'
+                                }).sort({
+                                    verifiedDate: -1
+                                }).lean().exec(
+                                    function (err, datafound) {
+                                        console.log("found", datafound);
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(datafound)) {
+                                                data.registerID = 1;
+                                                console.log("registerID", data.registerID);
+                                                data.sfaID = "M" + "S" + year + data.registerID;
+
+                                            } else {
+                                                console.log("found", datafound[0].sfaID);
+                                                data.registerID = ++datafound[0].registerID;
+                                                console.log("registerID", data.registerID);
+                                                data.sfaID = "M" + "A" + year + data.registerID;
+                                            }
+                                            data.verifiedDate = new Date();
+                                            Registration.saveVerify(data, schoolData, function (err, vData) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else if (vData) {
+                                                    callback(null, vData);
+                                                }
+                                            });
+                                        }
+                                    });
+                                // data.sfaId = sfa;
+
                             }
                             School.findOne({ //finds one with refrence to id
                                 name: schoolData.schoolName,
@@ -291,45 +354,70 @@ var model = {
 
 
                         }
+                    } else {
+                        Registration.saveVerify(data, schoolData, function (err, vData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (vData) {
+                                callback(null, vData);
+                            }
+                        });
                     }
-                    console.log("regiserid", schoolData.registerID);
 
-                    console.log("data", data);
+                }
+            }
+        });
+    },
 
-                    Registration.saveData(data, function (err, registerData) {
-                        console.log("Registration", registerData);
-                        if (err) {
-                            console.log("err", err);
-                            callback("There was an error while saving order", null);
-                        } else {
-                            if (_.isEmpty(registerData)) {
-                                callback("No order data found", null);
-                            } else {
-                                if (schoolData.verifyCount == 0) {
-                                    if (data.status == "Verified") {
-                                        // async.parallel([
-                                        //         function (callback) {
-                                        Registration.successVerifiedMailSms(data, function (err, vData) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else if (vData) {
-                                                // callback(null, vData);
-                                                School.findOne({ //to check registration exist and if it exist retrive previous data
-                                                    sfaid: registerData.sfaID
+
+    saveVerify: function (data, schoolData, callback) {
+        Registration.saveData(data, function (err, registerData) {
+            console.log("Registration", registerData);
+            if (err) {
+                console.log("err", err);
+                callback("There was an error while saving school", null);
+            } else {
+                if (_.isEmpty(registerData)) {
+                    callback("No order data found", null);
+                } else {
+                    if (schoolData.verifyCount == 0) {
+                        if (data.status == "Verified") {
+                            // async.parallel([
+                            //         function (callback) {
+                            Registration.successVerifiedMailSms(data, function (err, vData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (vData) {
+                                    // callback(null, vData);
+                                    School.findOne({ //to check registration exist and if it exist retrive previous data
+                                        sfaid: registerData.sfaID
+                                    }).sort({
+                                        createdAt: -1
+                                    }).lean().exec(function (err, replica) {
+                                        console.log("replica", replica); // retrives registration data
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(replica)) {
+                                                console.log("isempty");
+                                                // callback(null, "No data found");
+                                            } else {
+                                                Athelete.find({ //to check registration exist and if it exist retrive previous data
+                                                    school: replica._id
                                                 }).sort({
                                                     createdAt: -1
-                                                }).lean().exec(function (err, replica) {
-                                                    console.log("replica", replica); // retrives registration data
+                                                }).lean().exec(function (err, atheleteData) {
+                                                    console.log("atheleteData", atheleteData); // retrives registration data
                                                     if (err) {
                                                         console.log(err);
                                                         callback(err, null);
                                                     } else {
-                                                        if (_.isEmpty(replica)) {
-                                                            console.log("isempty");
-                                                            // callback(null, "No data found");
-                                                        } else {
+                                                        if (_.isEmpty(atheleteData)) {
+                                                            console.log("school id might be undefined");
+                                                            //if schoolName only exist with Athelete (school is undefined)
                                                             Athelete.find({ //to check registration exist and if it exist retrive previous data
-                                                                school: replica._id
+                                                                atheleteSchoolName: replica.name
                                                             }).sort({
                                                                 createdAt: -1
                                                             }).lean().exec(function (err, atheleteData) {
@@ -339,43 +427,8 @@ var model = {
                                                                     callback(err, null);
                                                                 } else {
                                                                     if (_.isEmpty(atheleteData)) {
-                                                                        console.log("school id might be undefined");
-                                                                        //if schoolName only exist with Athelete (school is undefined)
-                                                                        Athelete.find({ //to check registration exist and if it exist retrive previous data
-                                                                            atheleteSchoolName: replica.name
-                                                                        }).sort({
-                                                                            createdAt: -1
-                                                                        }).lean().exec(function (err, atheleteData) {
-                                                                            console.log("atheleteData", atheleteData); // retrives registration data
-                                                                            if (err) {
-                                                                                console.log(err);
-                                                                                callback(err, null);
-                                                                            } else {
-                                                                                if (_.isEmpty(atheleteData)) {
-                                                                                    console.log("isempty");
+                                                                        console.log("isempty");
 
-                                                                                } else {
-                                                                                    async.each(atheleteData, function (data, callback) {
-                                                                                        Registration.allAtheleteMailSms(data, function (err, vData) {
-                                                                                            if (err) {
-                                                                                                callback(err, null);
-                                                                                            } else if (vData) {
-                                                                                                callback(null, vData);
-                                                                                            }
-                                                                                        });
-                                                                                    }, function (err, data4) {
-                                                                                        if (err) {
-                                                                                            console.log(err);
-                                                                                            callback(err, null);
-                                                                                        } else {
-                                                                                            callback(null, "Successfully removed!");
-                                                                                        }
-                                                                                    });
-
-
-                                                                                }
-                                                                            }
-                                                                        });
                                                                     } else {
                                                                         async.each(atheleteData, function (data, callback) {
                                                                             Registration.allAtheleteMailSms(data, function (err, vData) {
@@ -398,47 +451,65 @@ var model = {
                                                                     }
                                                                 }
                                                             });
+                                                        } else {
+                                                            async.each(atheleteData, function (data, callback) {
+                                                                Registration.allAtheleteMailSms(data, function (err, vData) {
+                                                                    if (err) {
+                                                                        callback(err, null);
+                                                                    } else if (vData) {
+                                                                        callback(null, vData);
+                                                                    }
+                                                                });
+                                                            }, function (err, data4) {
+                                                                if (err) {
+                                                                    console.log(err);
+                                                                    callback(err, null);
+                                                                } else {
+                                                                    callback(null, "Successfully removed!");
+                                                                }
+                                                            });
 
 
                                                         }
                                                     }
                                                 });
-                                            }
-                                        });
 
-                                        // }
-                                        // ],
-                                        // function (err, data2) {
-                                        //     if (err) {
-                                        //         console.log(err);
-                                        //         callback(null, []);
-                                        //     } else if (data2) {
-                                        //         if (_.isEmpty(data2)) {
-                                        //             callback(null, []);
-                                        //         } else {
-                                        //             callback(null, data2);
-                                        //         }
-                                        //     }
-                                        // });
 
-                                    } else if (data.status == "Rejected") {
-                                        Registration.failureVerifiedMailSms(data, function (err, vData) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else if (vData) {
-                                                callback(null, vData);
                                             }
-                                        });
-                                    } else {
-                                        callback(null, registerData);
-                                    }
-                                } else {
-                                    callback(null, "updated Successfully !!");
+                                        }
+                                    });
                                 }
+                            });
 
-                            }
+                            // }
+                            // ],
+                            // function (err, data2) {
+                            //     if (err) {
+                            //         console.log(err);
+                            //         callback(null, []);
+                            //     } else if (data2) {
+                            //         if (_.isEmpty(data2)) {
+                            //             callback(null, []);
+                            //         } else {
+                            //             callback(null, data2);
+                            //         }
+                            //     }
+                            // });
+
+                        } else if (data.status == "Rejected") {
+                            Registration.failureVerifiedMailSms(data, function (err, vData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (vData) {
+                                    callback(null, vData);
+                                }
+                            });
+                        } else {
+                            callback(null, registerData);
                         }
-                    });
+                    } else {
+                        callback(null, "updated Successfully !!");
+                    }
 
                 }
             }
