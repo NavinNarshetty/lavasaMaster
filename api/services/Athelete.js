@@ -91,6 +91,7 @@ var schema = new Schema({
         type: String,
     },
     verifiedDate: Date,
+    remarks: String,
 });
 
 schema.plugin(deepPopulate, {});
@@ -301,7 +302,6 @@ var model = {
         }
     },
 
-
     //on athelete save and submit press 
     saveAthelete: function (data, callback) {
         if (_.isEmpty(data.school)) {
@@ -406,72 +406,76 @@ var model = {
                             Athelete.remove({ //finds one with refrence to id
                                 _id: found._id
                             }).exec(function (err, removed) {
-                                Athelete.saveData(data, function (err, athleteData) {
-                                    if (err) {
-                                        console.log("err", err);
-                                        callback("There was an error while saving order", null);
-                                    } else {
-                                        if (_.isEmpty(athleteData)) {
-                                            callback("No order data found", null);
+                                if (removed) {
+                                    console.log("data removed");
+                                    Athelete.saveData(data, function (err, athleteData) {
+                                        if (err) {
+                                            console.log("err", err);
+                                            callback("There was an error while saving order", null);
                                         } else {
-                                            async.parallel([
-                                                    function (callback) {
-                                                        console.log("inside school save")
-                                                        if (data.atheleteSchoolName) {
-                                                            var schoolData = {};
-                                                            schoolData.schoolName = data.atheleteSchoolName;
-                                                            schoolData.locality = data.atheleteSchoolLocality;
-                                                            schoolData.schoolLogo = data.atheleteSchoolIdImage;
-                                                            schoolData.landline = data.atheleteSchoolContact;
-                                                            console.log("need to save");
+                                            if (_.isEmpty(athleteData)) {
+                                                callback("No order data found", null);
+                                            } else {
+                                                console.log("data removed and moved to save again");
+                                                async.parallel([
+                                                        function (callback) {
+                                                            console.log("inside school save")
+                                                            if (data.atheleteSchoolName) {
+                                                                var schoolData = {};
+                                                                schoolData.schoolName = data.atheleteSchoolName;
+                                                                schoolData.locality = data.atheleteSchoolLocality;
+                                                                schoolData.schoolLogo = data.atheleteSchoolIdImage;
+                                                                schoolData.landline = data.atheleteSchoolContact;
+                                                                console.log("need to save");
 
-                                                            Registration.saveData(schoolData, function (err, registerData) {
-                                                                console.log("registerData", registerData);
-                                                                if (err) {
-                                                                    console.log("err", err);
-                                                                    callback("There was an error while saving data", null);
-                                                                } else {
-                                                                    if (_.isEmpty(registerData)) {
-                                                                        callback("No register data found", null);
+                                                                Registration.saveData(schoolData, function (err, registerData) {
+                                                                    console.log("registerData", registerData);
+                                                                    if (err) {
+                                                                        console.log("err", err);
+                                                                        callback("There was an error while saving data", null);
                                                                     } else {
-                                                                        callback(null, athleteData);
+                                                                        if (_.isEmpty(registerData)) {
+                                                                            callback("No register data found", null);
+                                                                        } else {
+                                                                            callback(null, athleteData);
+                                                                        }
                                                                     }
-                                                                }
-                                                            });
-                                                        } else {
-                                                            callback(null, athleteData);
+                                                                });
+                                                            } else {
+                                                                callback(null, athleteData);
+                                                            }
+                                                        },
+                                                        function (callback) {
+                                                            console.log("inside payment check");
+                                                            if (athleteData.registrationFee == "cash") {
+                                                                Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                                    if (err) {
+                                                                        callback(err, null);
+                                                                    } else if (vData) {
+                                                                        callback(null, vData);
+                                                                    }
+                                                                });
+                                                            } else {
+                                                                callback(null, athleteData);
+                                                            }
                                                         }
-                                                    },
-                                                    function (callback) {
-                                                        console.log("inside payment check");
-                                                        if (athleteData.registrationFee == "cash") {
-                                                            Athelete.atheletePaymentMail(athleteData, function (err, vData) {
-                                                                if (err) {
-                                                                    callback(err, null);
-                                                                } else if (vData) {
-                                                                    callback(null, vData);
-                                                                }
-                                                            });
-                                                        } else {
-                                                            callback(null, athleteData);
-                                                        }
-                                                    }
-                                                ],
-                                                function (err, data2) {
-                                                    if (err) {
-                                                        console.log(err);
-                                                        callback(null, []);
-                                                    } else if (data2) {
-                                                        if (_.isEmpty(data2)) {
+                                                    ],
+                                                    function (err, data2) {
+                                                        if (err) {
+                                                            console.log(err);
                                                             callback(null, []);
-                                                        } else {
-                                                            callback(null, data2);
+                                                        } else if (data2) {
+                                                            if (_.isEmpty(data2)) {
+                                                                callback(null, []);
+                                                            } else {
+                                                                callback(null, data2);
+                                                            }
                                                         }
-                                                    }
-                                                });
+                                                    });
+                                            }
                                         }
-                                    }
-                                });
+                                    });
+                                }
 
                             });
                         } else {
@@ -1223,7 +1227,7 @@ var model = {
                 var obj = {};
 
                 if (_.isEmpty(n.school)) {
-                    obj.school = "";
+                    obj.school = n.atheleteSchoolName;
                 } else {
                     School.findOne({
                         _id: n.school
@@ -1305,6 +1309,7 @@ var model = {
                 obj.registrationFee = n.registrationFee;
                 obj.paymentStatus = n.paymentStatus;
                 obj.transactionID = n.transactionID;
+                obj.remarks = n.remarks;
                 excelData.push(obj);
 
             });

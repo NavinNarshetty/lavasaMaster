@@ -106,6 +106,8 @@ var schema = new Schema({
         type: String,
     },
     verifiedDate: Date,
+
+    remarks: String,
 });
 
 schema.plugin(deepPopulate, {});
@@ -1081,10 +1083,9 @@ var model = {
                 obj.registrationFee = n.registrationFee;
                 obj.paymentStatus = n.paymentStatus;
                 obj.transactionID = n.transactionID;
+                obj.remarks = n.remarks;
                 excelData.push(obj);
             });
-
-
             Config.generateExcel("Registration", excelData, res);
         });
     },
@@ -1176,6 +1177,33 @@ var model = {
                 }
 
             });
+    },
+
+    getSchoolwithPaymentDue: function (data, callback) {
+        Registration.find({
+            paymentStatus: "Pending"
+        }).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "Data is empty");
+            } else {
+                // callback(null, found);
+                var now = moment(new Date()); //todays date
+                var end = moment(found.createdAt); // another date
+                var duration = moment.duration(now.diff(end));
+                var dump = duration.asDays();
+                var days = parseInt(dump);
+                console.log("days", days)
+                if (days == 5) {
+
+                } else if (days == 10) {
+
+                }
+
+            }
+        });
+
     },
 
 

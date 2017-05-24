@@ -330,6 +330,12 @@
             "tableRef": "password",
             "placeholder": "Enter password",
             "id": "password"
+        }, {
+            "name": "Remarks",
+            "type": "text",
+            "tableRef": "remarks",
+            "placeholder": "Enter Remark",
+            "id": "remarks"
         }
     ],
     "action": [{
