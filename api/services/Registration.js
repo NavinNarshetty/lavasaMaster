@@ -188,7 +188,7 @@ var model = {
                             }
                         });
                     } else {
-                        if (found.registrationFee == 'online PAYU' && found.paymentStatus == 'Pending') {
+                        if (found[0].registrationFee == 'online PAYU' && found[0].paymentStatus == 'Pending') {
                             Registration.remove({ //finds one with refrence to id
                                 _id: found._id
                             }).exec(function (err, removed) {

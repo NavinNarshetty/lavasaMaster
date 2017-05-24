@@ -323,7 +323,7 @@ var model = {
                 }
             }],
             function (err, found) {
-                // console.log("data", data);
+                console.log("found athelete", found);
                 if (err) {
                     console.log(err);
                     callback(err, null);
@@ -402,7 +402,7 @@ var model = {
                         });
 
                     } else {
-                        if (found.registrationFee == 'online PAYU' && found.paymentStatus == 'Pending') {
+                        if (found[0].registrationFee == 'online PAYU' && found[0].paymentStatus == 'Pending') {
                             Athelete.remove({ //finds one with refrence to id
                                 _id: found._id
                             }).exec(function (err, removed) {
