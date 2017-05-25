@@ -329,7 +329,6 @@ var model = {
                                         callback(null, vData);
                                     }
                                 });
-
                             }
                             School.findOne({ //finds one with refrence to id
                                 // name: schoolData.schoolName,
@@ -340,11 +339,8 @@ var model = {
                                 } else if (_.isEmpty(found)) {
                                     var school = {};
                                     school.name = schoolData.schoolName;
-                                    if (_.isEmpty(schoolData.sfaID)) {
-                                        school.sfaid = data.sfaID;
-                                    } else {
-                                        school.sfaid = schoolData.sfaID;
-                                    }
+                                    school.sfaid = schoolData.sfaID;
+
                                     School.saveData(school, function (err, newData) {
                                         console.log("school created", newData);
                                         if (err) {
