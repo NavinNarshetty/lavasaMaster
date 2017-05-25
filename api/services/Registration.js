@@ -320,6 +320,15 @@ var model = {
                                     });
                                 // data.sfaId = sfa;
 
+                            } else {
+                                Registration.saveVerify(data, schoolData, function (err, vData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (vData) {
+                                        callback(null, vData);
+                                    }
+                                });
+
                             }
                             School.findOne({ //finds one with refrence to id
                                 name: schoolData.schoolName,

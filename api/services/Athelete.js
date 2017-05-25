@@ -110,6 +110,18 @@ var model = {
 
 
     search: function (data, callback) {
+        var matchObj = {
+            $and: [{
+                registrationFee: {
+                    $ne: "online PAYU"
+                }
+            }, {
+                pendingStatus: {
+                    $ne: "Pending"
+                }
+            }]
+        }
+        console.log("match", matchObj);
         var Model = this;
         var Const = this(data);
         var maxRow = Config.maxRow;
@@ -133,7 +145,7 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        var Search = Model.find(data.filter)
+        var Search = Model.find(matchObj)
 
             .order(options)
             // .deepPopulate(deepSearch)
@@ -170,11 +182,29 @@ var model = {
                 createdAt: {
                     $gt: data.startDate,
                     $lt: data.endDate,
-                }
+                },
+                $and: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    pendingStatus: {
+                        $ne: "Pending"
+                    }
+                }]
             }
         } else if (data.type == "SFA-ID") {
             matchObj = {
-                sfaId: data.input
+                sfaId: data.input,
+                $and: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    pendingStatus: {
+                        $ne: "Pending"
+                    }
+                }]
             }
         } else if (data.type == "Athlete Name") {
             matchObj = {
@@ -562,6 +592,14 @@ var model = {
                                     });
                                 // data.sfaId = sfa;
 
+                            } else {
+                                Athelete.saveVerify(data, found, function (err, vData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (vData) {
+                                        callback(null, vData);
+                                    }
+                                });
                             }
 
                         }
