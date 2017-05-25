@@ -310,11 +310,63 @@ var model = {
                                                 data.sfaID = "M" + "S" + year + data.registerID;
                                             }
                                             data.verifiedDate = new Date();
-                                            Registration.saveVerify(data, schoolData, function (err, vData) {
+                                            async.parallel([
+
+                                                //All bills
+                                                function (callback) {
+                                                    School.findOne({ //finds one with refrence to id
+                                                        // name: schoolData.schoolName,
+                                                        sfaid: data.sfaID
+                                                    }).exec(function (err, found) {
+                                                        console.log("found old school", found);
+                                                        if (err) {
+                                                            callback(err, null);
+                                                        } else if (_.isEmpty(found)) {
+
+                                                            var school = {};
+                                                            school.name = schoolData.schoolName;
+                                                            if (_.isEmpty(schoolData.sfaID)) {
+                                                                school.sfaid = data.sfaID;
+                                                            } else {
+                                                                school.sfaid = schoolData.sfaID;
+                                                            }
+                                                            School.saveData(school, function (err, newData) {
+                                                                console.log("school created", newData);
+                                                                if (err) {
+                                                                    console.log("err", err);
+                                                                    callback("There was an error while saving order", null);
+                                                                } else {
+                                                                    if (_.isEmpty(newData)) {
+                                                                        callback("No order data found", null);
+                                                                    } else {
+                                                                        callback(null, newData);
+                                                                    }
+                                                                }
+                                                            });
+                                                        } else {
+                                                            callback(null, found);
+                                                        }
+
+                                                    });
+                                                },
+                                                function (callback) {
+
+
+                                                    Registration.saveVerify(data, schoolData, function (err, vData) {
+                                                        if (err) {
+                                                            callback(err, null);
+                                                        } else if (vData) {
+                                                            callback(null, vData);
+                                                        }
+                                                    });
+                                                }
+                                            ], function (err, data3) {
+                                                console.log("data3 : ", data3);
                                                 if (err) {
+                                                    console.log(err);
                                                     callback(err, null);
-                                                } else if (vData) {
-                                                    callback(null, vData);
+                                                } else {
+                                                    callback(null, data3);
                                                 }
                                             });
                                         }
@@ -331,38 +383,7 @@ var model = {
                                 });
 
                             }
-                            School.findOne({ //finds one with refrence to id
-                                // name: schoolData.schoolName,
-                                sfaid: data.sfaID
-                            }).exec(function (err, found) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (_.isEmpty(found)) {
-                                    var school = {};
-                                    school.name = schoolData.schoolName;
-                                    if (_.isEmpty(schoolData.sfaID)) {
-                                        school.sfaid = data.sfaID;
-                                    } else {
-                                        school.sfaid = schoolData.sfaID;
-                                    }
-                                    School.saveData(school, function (err, newData) {
-                                        console.log("school created", newData);
-                                        if (err) {
-                                            console.log("err", err);
-                                            // callback("There was an error while saving order", null);
-                                        } else {
-                                            if (_.isEmpty(newData)) {
-                                                // callback("No order data found", null);
-                                            } else {
-                                                // callback(null, newData);
-                                            }
-                                        }
-                                    });
-                                } else {
-                                    callback(null, found);
-                                }
 
-                            });
 
 
                         } else {
@@ -402,7 +423,6 @@ var model = {
                 } else {
                     if (schoolData.verifyCount == 0) {
                         if (data.status == "Verified") {
-
                             Registration.successVerifiedMailSms(data, function (err, vData) {
                                 if (err) {
                                     callback(err, null);
@@ -516,6 +536,7 @@ var model = {
                 }
             }
         });
+
     },
 
     getAllRegistrationDetails: function (data, callback) {
@@ -766,16 +787,14 @@ var model = {
                             console.log(err);
                             callback(null, err);
                         } else if (emailRespo) {
-                            // callback(null, emailRespo);
+                            callback(null, emailRespo);
                         } else {
                             callback(null, "Invalid data");
                         }
                     });
                 },
                 function (callback) {
-
                     var smsData = {};
-
                     smsData.mobile = data.mobile;
                     smsData.content = "Congratulations! You are now a verified SFA School. Kindly check your registered Email ID for your SFA ID and Password.";
                     console.log("smsdata", smsData);
@@ -785,12 +804,11 @@ var model = {
                             callback(err, null);
                         } else if (smsRespo) {
                             console.log(smsRespo, "sms sent");
-                            // callback(null, smsRespo);
+                            callback(null, smsRespo);
                         } else {
                             callback(null, "Invalid data");
                         }
                     });
-
                 }
             ],
             function (err, final) {
