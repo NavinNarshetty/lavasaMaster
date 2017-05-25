@@ -307,7 +307,7 @@ var model = {
                                                 console.log("found", datafound[0].sfaID);
                                                 data.registerID = ++datafound[0].registerID;
                                                 console.log("registerID", data.registerID);
-                                                data.sfaID = "M" + "A" + year + data.registerID;
+                                                data.sfaID = "M" + "S" + year + data.registerID;
                                             }
                                             data.verifiedDate = new Date();
                                             Registration.saveVerify(data, schoolData, function (err, vData) {
