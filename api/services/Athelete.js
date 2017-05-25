@@ -208,49 +208,95 @@ var model = {
             }
         } else if (data.type == "Athlete Name") {
             matchObj = {
-                $or: [{
-                    'firstName': {
-                        $regex: data.input,
-                        $options: "i"
+                $and: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
                     }
                 }, {
-                    'surname': {
-                        $regex: data.input,
-                        $options: "i"
+                    pendingStatus: {
+                        $ne: "Pending"
                     }
                 }, {
-                    'middleName': {
-                        $regex: data.input,
-                        $options: "i"
-                    }
+                    $or: [{
+                        firstName: {
+                            $regex: data.input,
+                            $options: "i"
+                        }
+                    }, {
+                        surname: {
+                            $regex: data.input,
+                            $options: "i"
+                        }
+                    }, {
+                        middleName: {
+                            $regex: data.input,
+                            $options: "i"
+                        }
+                    }]
                 }]
+
             }
         } else if (data.type == "Payment Mode") {
             matchObj = {
-                $or: [{
-                    'registrationFee': {
-                        $regex: data.input,
-                        $options: "i"
+                $and: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
                     }
+                }, {
+                    pendingStatus: {
+                        $ne: "Pending"
+                    }
+                }, {
+                    $or: [{
+                        registrationFee: {
+                            $regex: data.input,
+                            $options: "i"
+                        }
+                    }]
                 }]
+
             }
         } else if (data.type == "Payment Status") {
+
             matchObj = {
-                $or: [{
-                    'paymentStatus': {
-                        $regex: data.input,
-                        $options: "i"
+                $and: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
                     }
+                }, {
+                    pendingStatus: {
+                        $ne: "Pending"
+                    }
+                }, {
+                    $or: [{
+                        'paymentStatus': {
+                            $regex: data.input,
+                            $options: "i"
+                        }
+                    }]
                 }]
+
             }
         } else if (data.type == "Verified Status") {
+
             matchObj = {
-                $or: [{
-                    'status': {
-                        $regex: data.input,
-                        $options: "i"
+                $and: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
                     }
+                }, {
+                    pendingStatus: {
+                        $ne: "Pending"
+                    }
+                }, {
+                    $or: [{
+                        'status': {
+                            $regex: data.input,
+                            $options: "i"
+                        }
+                    }]
                 }]
+
             }
         }
         if (data.type == "School Name") {
@@ -363,7 +409,7 @@ var model = {
                         // console.log("data", data);
                         data.year = new Date().getFullYear();
                         data.verifyCount = 0;
-                        // data.atheleteID = 0;
+                        data.atheleteID = 0;
                         Athelete.saveData(data, function (err, athleteData) {
                             if (err) {
                                 console.log("err", err);
@@ -575,6 +621,9 @@ var model = {
 
                                             } else {
                                                 console.log("found", datafound[0].sfaId);
+                                                if (datafound[0].atheleteID == undefined) {
+                                                    datafound[0].atheleteID = 0;
+                                                }
                                                 data.atheleteID = ++datafound[0].atheleteID;
                                                 console.log("atheleteID", data.atheleteID);
                                                 data.sfaId = "M" + "A" + year + data.atheleteID;

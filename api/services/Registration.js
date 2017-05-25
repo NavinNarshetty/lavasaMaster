@@ -177,7 +177,7 @@ var model = {
                 console.log("found school", found);
                 if (err) {
                     console.log(err);
-                    //callback(err, null);
+                    callback(err, null);
                 } else if (found) {
                     if (_.isEmpty(found)) {
                         Registration.saveRegistration(data, function (err, vData) {
@@ -219,6 +219,7 @@ var model = {
 
     saveRegistration: function (data, callback) {
         data.verifyCount = 0;
+        data.registerID = 0;
         console.log("data", data);
         data.year = new Date().getFullYear();
         Registration.saveData(data, function (err, registerData) {
@@ -331,7 +332,7 @@ var model = {
 
                             }
                             School.findOne({ //finds one with refrence to id
-                                name: schoolData.schoolName,
+                                // name: schoolData.schoolName,
                                 sfaid: data.sfaID
                             }).exec(function (err, found) {
                                 if (err) {
@@ -348,22 +349,30 @@ var model = {
                                         console.log("school created", newData);
                                         if (err) {
                                             console.log("err", err);
-                                            callback("There was an error while saving order", null);
+                                            // callback("There was an error while saving order", null);
                                         } else {
                                             if (_.isEmpty(newData)) {
-                                                callback("No order data found", null);
+                                                // callback("No order data found", null);
                                             } else {
-                                                callback(null, newData);
+                                                // callback(null, newData);
                                             }
                                         }
                                     });
                                 } else {
-                                    callback(null, found);
+                                    // callback(null, found);
                                 }
 
                             });
 
 
+                        } else {
+                            Registration.saveVerify(data, schoolData, function (err, vData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (vData) {
+                                    callback(null, vData);
+                                }
+                            });
                         }
                     } else {
                         Registration.saveVerify(data, schoolData, function (err, vData) {
@@ -393,8 +402,7 @@ var model = {
                 } else {
                     if (schoolData.verifyCount == 0) {
                         if (data.status == "Verified") {
-                            // async.parallel([
-                            //         function (callback) {
+
                             Registration.successVerifiedMailSms(data, function (err, vData) {
                                 if (err) {
                                     callback(err, null);
@@ -412,7 +420,7 @@ var model = {
                                         } else {
                                             if (_.isEmpty(replica)) {
                                                 console.log("isempty");
-                                                // callback(null, "No data found");
+                                                callback(null, "No data found");
                                             } else {
                                                 Athelete.find({ //to check registration exist and if it exist retrive previous data
                                                     school: replica._id
@@ -439,7 +447,7 @@ var model = {
                                                                 } else {
                                                                     if (_.isEmpty(atheleteData)) {
                                                                         console.log("isempty");
-
+                                                                        callback(null, "mail sent");
                                                                     } else {
                                                                         async.each(atheleteData, function (data, callback) {
                                                                             Registration.allAtheleteMailSms(data, function (err, vData) {
@@ -457,8 +465,6 @@ var model = {
                                                                                 callback(null, "Successfully removed!");
                                                                             }
                                                                         });
-
-
                                                                     }
                                                                 }
                                                             });
@@ -491,21 +497,6 @@ var model = {
                                     });
                                 }
                             });
-
-                            // }
-                            // ],
-                            // function (err, data2) {
-                            //     if (err) {
-                            //         console.log(err);
-                            //         callback(null, []);
-                            //     } else if (data2) {
-                            //         if (_.isEmpty(data2)) {
-                            //             callback(null, []);
-                            //         } else {
-                            //             callback(null, data2);
-                            //         }
-                            //     }
-                            // });
 
                         } else if (data.status == "Rejected") {
                             Registration.failureVerifiedMailSms(data, function (err, vData) {
