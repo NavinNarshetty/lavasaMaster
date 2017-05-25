@@ -131,6 +131,18 @@ var model = {
         var Const = this(data);
         var maxRow = Config.maxRow;
 
+        var matchObj = {
+            $and: [{
+                registrationFee: {
+                    $ne: "online PAYU"
+                }
+            }, {
+                pendingStatus: {
+                    $ne: "Pending"
+                }
+            }]
+        }
+
         var page = 1;
         if (data.page) {
             page = data.page;
@@ -150,7 +162,7 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        var Search = Model.find(data.filter)
+        var Search = Model.find(matchObj)
 
             .order(options)
             // .deepPopulate(deepSearch)
