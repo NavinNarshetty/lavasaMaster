@@ -606,8 +606,8 @@ var model = {
                                 Athelete.find({
                                     "status": 'Verified'
                                 }).sort({
-                                    verifiedDate: -1
-                                }).lean().exec(
+                                    atheleteID: -1
+                                }).limit(1).lean().exec(
                                     function (err, datafound) {
                                         console.log("found", datafound);
                                         if (err) {
@@ -621,9 +621,9 @@ var model = {
 
                                             } else {
                                                 console.log("found", datafound[0].sfaId);
-                                                if (datafound[0].atheleteID == undefined) {
-                                                    datafound[0].atheleteID = 0;
-                                                }
+                                                // if (datafound[0].atheleteID == undefined) {
+                                                //     datafound[0].atheleteID = 0;
+                                                // }
                                                 data.atheleteID = ++datafound[0].atheleteID;
                                                 console.log("atheleteID", data.atheleteID);
                                                 data.sfaId = "M" + "A" + year + data.atheleteID;

@@ -290,8 +290,8 @@ var model = {
                                 Registration.find({
                                     "status": 'Verified'
                                 }).sort({
-                                    verifiedDate: -1
-                                }).lean().exec(
+                                    registerID: -1
+                                }).limit(1).lean().exec(
                                     function (err, datafound) {
                                         console.log("found", datafound);
                                         if (err) {
