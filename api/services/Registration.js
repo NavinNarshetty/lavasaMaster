@@ -323,8 +323,6 @@ var model = {
                                             }
                                             data.verifiedDate = new Date();
                                             async.parallel([
-
-                                                //All bills
                                                 function (callback) {
                                                     School.findOne({ //finds one with refrence to id
                                                         // name: schoolData.schoolName,
@@ -441,7 +439,7 @@ var model = {
                                 } else if (vData) {
                                     // callback(null, vData);
                                     School.findOne({ //to check registration exist and if it exist retrive previous data
-                                        sfaid: registerData.sfaID
+                                        sfaid: schoolData.sfaID
                                     }).sort({
                                         createdAt: -1
                                     }).lean().exec(function (err, replica) {
