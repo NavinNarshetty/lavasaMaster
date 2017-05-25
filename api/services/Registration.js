@@ -174,7 +174,7 @@ var model = {
                 }
             }],
             function (err, found) {
-                // console.log("data", data);
+                console.log("found school", found);
                 if (err) {
                     console.log(err);
                     //callback(err, null);
@@ -188,9 +188,9 @@ var model = {
                             }
                         });
                     } else {
-                        if (found[0].registrationFee == 'online PAYU' && found[0].paymentStatus == 'Pending') {
+                        if (found.registrationFee == 'online PAYU' && found.paymentStatus == 'Pending') {
                             Registration.remove({ //finds one with refrence to id
-                                _id: found[0]._id
+                                _id: found._id
                             }).exec(function (err, removed) {
 
                                 Registration.saveRegistration(data, function (err, vData) {
