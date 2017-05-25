@@ -329,6 +329,7 @@ var model = {
                                         callback(null, vData);
                                     }
                                 });
+
                             }
                             School.findOne({ //finds one with refrence to id
                                 // name: schoolData.schoolName,
@@ -339,8 +340,11 @@ var model = {
                                 } else if (_.isEmpty(found)) {
                                     var school = {};
                                     school.name = schoolData.schoolName;
-                                    school.sfaid = schoolData.sfaID;
-
+                                    if (_.isEmpty(schoolData.sfaID)) {
+                                        school.sfaid = data.sfaID;
+                                    } else {
+                                        school.sfaid = schoolData.sfaID;
+                                    }
                                     School.saveData(school, function (err, newData) {
                                         console.log("school created", newData);
                                         if (err) {
@@ -355,7 +359,7 @@ var model = {
                                         }
                                     });
                                 } else {
-                                    // callback(null, found);
+                                    callback(null, found);
                                 }
 
                             });
@@ -762,7 +766,7 @@ var model = {
                             console.log(err);
                             callback(null, err);
                         } else if (emailRespo) {
-                            callback(null, emailRespo);
+                            // callback(null, emailRespo);
                         } else {
                             callback(null, "Invalid data");
                         }
@@ -781,7 +785,7 @@ var model = {
                             callback(err, null);
                         } else if (smsRespo) {
                             console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
+                            // callback(null, smsRespo);
                         } else {
                             callback(null, "Invalid data");
                         }
