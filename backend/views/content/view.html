@@ -23,11 +23,10 @@
                                 <div class="col-md-6">
                                     <div ng-if="json.json.title=='School Registration'" class="form-goup">
                                         <div class="mtp5">
-
                                             <div class="dropdown">
                                                 <button class="btn default btn-md dropdown-toggle mbt5" type="button" data-toggle="dropdown">Filter
                                                 <span class="caret"></span></button>
-                                                <ul class="dropdown-menu">
+                                                <ul class="dropdown-menu cur">
                                                     <li ng-click="getFilterType('Date');">Date</li>
                                                     <li ng-click="getFilterType('SFA-ID');">SFA-ID</li>
                                                     <li ng-click="getFilterType('School Name');">School Name</li>
@@ -38,13 +37,17 @@
                                             </div>
                                             <div class="row" ng-if="show==1">
                                                 <div class="col-md-4">
-                                                    <input type="date" ng-model="formData.startDate" class="form-control" placeholder="From">
+                                                    <span>From:</span>
+                                                    <input-date ng-model="formData.startDate" placeholder="From"></input-date>
+                                                    <!--<input type="date" ng-model="formData.startDate" class="form-control" placeholder="From">-->
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <input type="date" ng-model="formData.endDate" class="form-control" placeholder="To">
+                                                    <span>To:</span>
+                                                    <input-date ng-model="formData.endDate" placeholder="To"></input-date>
+                                                    <!--<input type="date" ng-model="formData.endDate" class="form-control" placeholder="To">-->
                                                 </div>
                                                 <div class="col-md-4 ">
-                                                    <button class="btn btn-sm" type="button" ng-click="filterSchool(formData)">Go</button>
+                                                    <button class="btn btn-sm mrtp" type="button" ng-click="filterSchool(formData)">Go</button>
                                                 </div>
                                             </div>
                                             <div class="row" ng-if="show==2">
@@ -57,14 +60,12 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <div ng-if="json.json.title=='Athlete Registration'" class="form-goup">
                                         <div class="mtp5">
-
                                             <div class="dropdown">
                                                 <button class="btn default btn-md dropdown-toggle mbt5" type="button" data-toggle="dropdown">Filter
                                                 <span class="caret"></span></button>
-                                                <ul class="dropdown-menu">
+                                                <ul class="dropdown-menu cur">
                                                     <li ng-click="getFilterType('Date');">Date</li>
                                                     <li ng-click="getFilterType('SFA-ID');">SFA-ID</li>
                                                     <li ng-click="getFilterType('Athlete Name');">Athlete Name</li>
@@ -76,13 +77,17 @@
                                             </div>
                                             <div class="row" ng-if="show==1">
                                                 <div class="col-md-4">
-                                                    <input type="date" ng-model="formData.startDate" class="form-control" placeholder="From">
+                                                    <span>From:</span>
+                                                    <input-date ng-model="formData.startDate" placeholder="From"></input-date>
+                                                    <!--<input type="date" ng-model="formData.startDate" class="form-control" placeholder="From">-->
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <input type="date" ng-model="formData.endDate" class="form-control" placeholder="To">
+                                                    <span>To:</span>
+                                                    <input-date ng-model="formData.endDate" placeholder="To"></input-date>
+                                                    <!--<input type="date" ng-model="formData.endDate" class="form-control" placeholder="To">-->
                                                 </div>
                                                 <div class="col-md-4 ">
-                                                    <button class="btn btn-sm" type="button" ng-click="filterAthlete(formData)">Go</button>
+                                                    <button class="btn btn-sm mrtp" type="button" ng-click="filterAthlete(formData)">Go</button>
                                                 </div>
                                             </div>
                                             <div class="row" ng-if="show==2">

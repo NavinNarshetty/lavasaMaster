@@ -35,6 +35,7 @@ module.exports = [
     'bower_components/textAngular/dist/textAngular-rangy.min.js',
     'bower_components/textAngular/dist/textAngular-sanitize.min.js',
     'bower_components/textAngular/dist/textAngular.min.js',
+    'bower_components/angular-ui-date/dist/date.js',
 
     //App.js
     'backend/js/app.js',

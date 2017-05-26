@@ -14,6 +14,7 @@
 /* ====================================================================================================================
  * FONT-FACE
  * ====================================================================================================================*/
+@import url(../../bower_components/jquery-ui/themes/smoothness/jquery-ui.css);
 @import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,400italic,600italic,700,700italic,300,300italic");
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,700");
 @font-face {
@@ -33131,6 +33132,15 @@ body {
 
 .mbt5 {
   margin-bottom: 5px; }
+
+.ui-datepicker {
+  z-index: 9999 !important; }
+
+.mrtp {
+  margin-top: 21px; }
+
+.cur {
+  cursor: pointer; }
 
 /* Start writing sass here */
 #fancybox-loading, .fancybox-close, .fancybox-next span, .fancybox-prev span {

@@ -18,7 +18,8 @@ var myApp = angular.module('myApp', [
     'ngMap',
     'toggle-switch',
     'cfp.hotkeys',
-    'ui.sortable'
+    'ui.sortable',
+    'ui.date'
 ]);
 
 myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
@@ -93,6 +94,34 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
     $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);
 });
+myApp.directive('inputDate', function ($compile, $parse) {
+    return {
+        restrict: 'E',
+        replace: false,
+        scope: {
+            value: "=ngModel",
+        },
+        templateUrl: 'views/directive/date.html',
+        link: function ($scope, element, attrs) {
+            console.log("This is loaded atlease");
+            $scope.data = {};
+            console.log($scope.value);
+            $scope.dateOptions = {
+                dateFormat: "dd/mm/yy",
+                changeYear: true,
+                changeMonth: true,
+                yearRange: "1900:-0"
+            };
+            if (!_.isEmpty($scope.value)) {
+                $scope.data.dob = moment($scope.value).toDate();
+            }
+            $scope.changeDate = function (data) {
+                console.log("ChangeDate Called");
+                $scope.value = $scope.data.dob;
+            };
+        }
+    };
+})
 
 myApp.config(function ($translateProvider) {
     $translateProvider.translations('en', LanguageEnglish);
