@@ -106,14 +106,8 @@ var controller = {
     },
 
     cronSchoolWithPaymentDue: function (req, res) {
-        if (req.body) {
-            Registration.cronSchoolWithPaymentDue(req.body, res.callback);
-        } else {
-            res.json({
-                value: false,
-                data: "Invalid Request"
-            });
-        }
+        Registration.cronSchoolWithPaymentDue(req.body, res.callback);
+
     },
 
 

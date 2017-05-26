@@ -104,14 +104,8 @@ var controller = {
     },
 
     cronAthleteWithPaymentDue: function (req, res) {
-        if (req.body) {
-            Athelete.cronAthleteWithPaymentDue(req.body, res.callback);
-        } else {
-            res.json({
-                value: false,
-                data: "Invalid Request"
-            });
-        }
+        Athelete.cronAthleteWithPaymentDue(req.body, res.callback);
+
     },
 
 
