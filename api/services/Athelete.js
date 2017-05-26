@@ -121,7 +121,6 @@ var model = {
                 }
             }]
         }
-        console.log("match", matchObj);
         var Model = this;
         var Const = this(data);
         var maxRow = Config.maxRow;
@@ -320,40 +319,77 @@ var model = {
                     // Stage 3
                     {
                         $match: {
-                            "schoolData.name": {
-                                $regex: data.input
-                            }
+
+                            $and: [{
+                                registrationFee: {
+                                    $ne: "online PAYU"
+                                }
+                            }, {
+                                pendingStatus: {
+                                    $ne: "Pending"
+                                }
+                            }, {
+                                $or: [{
+                                    "schoolData.name": {
+                                        $regex: data.input
+                                    }
+                                }]
+                            }]
+                        }
+                    },
+                    {
+                        $sort: {
+                            "createdAt": -1
+
                         }
                     },
                 ],
                 function (err, returnReq) {
-                    // console.log("returnReq : ", returnReq);
+                    console.log("returnReq : ", returnReq);
                     if (err) {
                         console.log(err);
                         callback(null, err);
                     } else {
                         if (_.isEmpty(returnReq)) {
-                            callback(null, []);
-                        } else {
-                            matchObj = {
-                                school: returnReq._id
-                            }
-                            Athelete.find(matchObj)
-                                .sort({
-                                    createdAt: -1
-                                })
-                                .order(options)
-                                .keyword(options)
-                                .page(options, function (err, found) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else if (_.isEmpty(found)) {
-                                        callback(null, "Data is empty");
-                                    } else {
-                                        callback(null, found);
-                                    }
+                            var count = returnReq.length;
+                            console.log("count", count);
 
-                                });
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+                        } else {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            // matchObj = {
+                            //     school: returnReq._id
+                            // }
+                            // Athelete.find(matchObj)
+                            //     .sort({
+                            //         createdAt: -1
+                            //     })
+                            //     .order(options)
+                            //     .keyword(options)
+                            //     .page(options, function (err, found) {
+                            //         if (err) {
+                            //             callback(err, null);
+                            //         } else if (_.isEmpty(found)) {
+                            //             callback(null, "Data is empty");
+                            //         } else {
+                            //             callback(null, found);
+                            //         }
+
+                            //     });
+
+                            callback(null, data);
 
                         }
                     }
@@ -1403,7 +1439,69 @@ var model = {
 
             Config.generateExcel("Athlete", excelData, res);
         });
-    }
+    },
+
+    cronAthleteWithPaymentDue: function (data, callback) {
+        Athelete.find({
+            paymentStatus: "Pending"
+        }).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "Data is empty");
+            } else {
+                async.each(found, function (data, callback) {
+                    var now = moment(new Date()); //todays date
+                    var end = moment(data.createdAt); // another date
+                    var duration = moment.duration(now.diff(end));
+                    var dump = duration.asDays();
+                    var days = parseInt(dump);
+                    console.log("days", days)
+                    if (days == 5) {
+                        var emailData = {};
+                        emailData.from = "info@sfanow.in";
+                        emailData.email = data.email;
+                        emailData.filename = "paymentReminderSchool.ejs";
+                        emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
+                        console.log("emaildata", emailData);
+
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+
+                    } else if (days == 10) {
+                        var emailData = {};
+                        emailData.from = "info@sfanow.in";
+                        emailData.email = data.email;
+                        emailData.filename = "paymentReminderAthlete.ejs";
+                        emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
+                        console.log("emaildata", emailData);
+
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+
+                    }
+                }, callback);
+
+            }
+        });
+
+    },
 
 
 

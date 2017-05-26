@@ -1147,46 +1147,142 @@ var model = {
                 createdAt: {
                     $gt: data.startDate,
                     $lt: data.endDate,
-                }
+                },
+                $and: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    pendingStatus: {
+                        $ne: "Pending"
+                    }
+                }]
             }
         } else if (data.type == "SFA-ID") {
             matchObj = {
-                sfaID: data.input
+                sfaID: data.input,
+                $and: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    pendingStatus: {
+                        $ne: "Pending"
+                    }
+                }]
             }
         } else if (data.type == "School Name") {
+            // matchObj = {
+            //     $or: [{
+            //         'schoolName': {
+            //             $regex: data.input,
+            //             $options: "i"
+            //         }
+            //     }]
+            // }
+
             matchObj = {
-                $or: [{
-                    'schoolName': {
-                        $regex: data.input,
-                        $options: "i"
+                $and: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
                     }
+                }, {
+                    pendingStatus: {
+                        $ne: "Pending"
+                    }
+                }, {
+                    $or: [{
+                        'schoolName': {
+                            $regex: data.input,
+                            $options: "i"
+                        }
+                    }]
                 }]
+
             }
         } else if (data.type == "Payment Mode") {
-            $or: [{
-                'registrationFee': {
-                    $regex: data.input,
-                    $options: "i"
-                }
-            }]
-        }
-        else if (data.type == "Payment Status") {
+            // $or: [{
+            //     'registrationFee': {
+            //         $regex: data.input,
+            //         $options: "i"
+            //     }
+            // }]
+
             matchObj = {
-                $or: [{
-                    'paymentStatus': {
-                        $regex: data.input,
-                        $options: "i"
+                $and: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
                     }
+                }, {
+                    pendingStatus: {
+                        $ne: "Pending"
+                    }
+                }, {
+                    $or: [{
+                        registrationFee: {
+                            $regex: data.input,
+                            $options: "i"
+                        }
+                    }]
                 }]
+
+            }
+        } else if (data.type == "Payment Status") {
+            // matchObj = {
+            //     $or: [{
+            //         'paymentStatus': {
+            //             $regex: data.input,
+            //             $options: "i"
+            //         }
+            //     }]
+            // }
+            matchObj = {
+                $and: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    pendingStatus: {
+                        $ne: "Pending"
+                    }
+                }, {
+                    $or: [{
+                        'paymentStatus': {
+                            $regex: data.input,
+                            $options: "i"
+                        }
+                    }]
+                }]
+
             }
         } else if (data.type == "Verified Status") {
+            // matchObj = {
+            //     $or: [{
+            //         'status': {
+            //             $regex: data.input,
+            //             $options: "i"
+            //         }
+            //     }]
+            // }
+
             matchObj = {
-                $or: [{
-                    'status': {
-                        $regex: data.input,
-                        $options: "i"
+                $and: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
                     }
+                }, {
+                    pendingStatus: {
+                        $ne: "Pending"
+                    }
+                }, {
+                    $or: [{
+                        'status': {
+                            $regex: data.input,
+                            $options: "i"
+                        }
+                    }]
                 }]
+
             }
         }
         Registration.find(matchObj)
@@ -1207,7 +1303,7 @@ var model = {
             });
     },
 
-    getSchoolwithPaymentDue: function (data, callback) {
+    cronSchoolWithPaymentDue: function (data, callback) {
         Registration.find({
             paymentStatus: "Pending"
         }).exec(function (err, found) {
@@ -1217,17 +1313,54 @@ var model = {
                 callback(null, "Data is empty");
             } else {
                 // callback(null, found);
-                var now = moment(new Date()); //todays date
-                var end = moment(found.createdAt); // another date
-                var duration = moment.duration(now.diff(end));
-                var dump = duration.asDays();
-                var days = parseInt(dump);
-                console.log("days", days)
-                if (days == 5) {
+                async.each(found, function (data, callback) {
+                    var now = moment(new Date()); //todays date
+                    var end = moment(data.createdAt); // another date
+                    var duration = moment.duration(now.diff(end));
+                    var dump = duration.asDays();
+                    var days = parseInt(dump);
+                    console.log("days", days)
+                    if (days == 5) {
+                        var emailData = {};
+                        emailData.from = "info@sfanow.in";
+                        emailData.email = data.email;
+                        emailData.filename = "paymentReminderSchool.ejs";
+                        emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
+                        console.log("emaildata", emailData);
 
-                } else if (days == 10) {
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
 
-                }
+                    } else if (days == 10) {
+                        var emailData = {};
+                        emailData.from = "info@sfanow.in";
+                        emailData.email = data.email;
+                        emailData.filename = "paymentReminderSchool.ejs";
+                        emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
+                        console.log("emaildata", emailData);
+
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+
+                    }
+                }, callback);
+
 
             }
         });
