@@ -1495,6 +1495,8 @@ var model = {
                             }
                         });
 
+                    } else {
+                        callback(null, "no Athlete found");
                     }
                 }, callback);
 
