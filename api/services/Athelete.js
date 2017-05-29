@@ -1348,6 +1348,8 @@ var model = {
             var excelData = [];
             _.each(data, function (n) {
                 var obj = {};
+                obj.sfaID = n.sfaId;
+
 
                 if (_.isEmpty(n.school)) {
                     obj.school = n.atheleteSchoolName;
