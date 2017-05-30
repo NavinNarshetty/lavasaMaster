@@ -24,6 +24,48 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#!/page/viewOldSchool//",
             icon: "phone"
         },
+        {
+            name: "Age Group",
+            classis: "active",
+            sref: "#!/page/viewAgeGroup//",
+            icon: "phone"
+        },
+        {
+            name: "First Category",
+            classis: "active",
+            sref: "#!/page/viewFirstCategory//",
+            icon: "phone"
+        },
+        {
+            name: "Second Category",
+            classis: "active",
+            sref: "#!/page/viewSecondCategory//",
+            icon: "phone"
+        },
+        {
+            name: "Third Category",
+            classis: "active",
+            sref: "#!/page/viewThirdCategory//",
+            icon: "phone"
+        },
+        {
+            name: "Sport",
+            classis: "active",
+            sref: "#!/page/viewSport//",
+            icon: "phone"
+        },
+        {
+            name: "Sports List",
+            classis: "active",
+            sref: "#!/page/viewSportsList//",
+            icon: "phone"
+        },
+        {
+            name: "Draw Format",
+            classis: "active",
+            sref: "#!/page/viewDrawFormat//",
+            icon: "phone"
+        },
         //{
         //     name: "Users",
         //     classis: "active",

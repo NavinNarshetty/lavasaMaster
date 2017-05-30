@@ -1,0 +1,39 @@
+{
+    "title": "Create Second Category",
+    "name": "SecondCategory",
+    "jsonPage": "viewSecondCategory",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["SecondCategory"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitSecondCategory",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewSecondCategory"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewSecondCategory"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "SecondCategory/save"
+    }
+}

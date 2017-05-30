@@ -1,0 +1,58 @@
+{
+    "title": "Sport",
+    "description": "List of Sport",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Sports List",
+        "isSort": "",
+        "tableRef": "sportslist"
+    }, {
+        "name": "Year",
+        "isSort": "",
+        "tableRef": "year"
+    }, {
+        "name": "Min Player",
+        "isSort": "",
+        "tableRef": "minPlayers"
+    }, {
+        "name": "Max Player",
+        "isSort": "",
+        "tableRef": "maxPlayers"
+    }],
+    "action": [{
+        "name": "edit",
+        "icon": "fa-pencil",
+        "buttonClass": "btn-primary",
+        "type": "page",
+        "action": "editSport",
+        "fieldsToSend": {
+            "_id": "_id"
+        }
+    }, {
+        "name": "delete",
+        "icon": "fa-trash",
+        "buttonClass": "btn-danger",
+        "type": "apiCallConfirm",
+        "title": "Delete Sport",
+        "content": "Are you sure you want to delete Sport?",
+        "api": "Sport/delete",
+        "fieldsToSend": {
+            "name": "_id",
+            "value": "_id"
+        }
+    }],
+    "button": [{
+        "name": "Create",
+        "icon": "plus",
+        "class": "btn-success",
+        "type": "page",
+        "action": "createSport"
+    }],
+
+    "apiCall": {
+        "url": "Sport/search",
+        "params": "_id"
+    }
+}

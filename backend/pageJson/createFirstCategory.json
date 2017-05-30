@@ -1,0 +1,39 @@
+{
+    "title": "Create First Category",
+    "name": "FirstCategory",
+    "jsonPage": "viewFirstCategory",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["FirstCategory"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitFirstCategory",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewFirstCategory"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewFirstCategory"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "FirstCategory/save"
+    }
+}

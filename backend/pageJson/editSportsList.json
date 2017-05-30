@@ -1,0 +1,90 @@
+{
+    "title": "Edit Sports List",
+    "name": "SportsList",
+    "jsonPage": "viewSportsList",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Sport Type",
+        "type": "text",
+        "tableRef": "sporttype",
+        "placeholder": "Enter sporttype",
+        "id": "sporttype",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Draw Format",
+        "type": "selectFromTable",
+        "tableRef": "drawFormat",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
+        "placeholder": "Enter Draw Format",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "DrawFormat/search"
+    }, {
+        "name": "Table Header",
+        "type": "text",
+        "tableRef": "tableContent",
+        "option": "single",
+        "placeholder": "Enter table Content",
+        "id": "tableContent",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Inactive Image",
+        "type": "image",
+        "tableRef": "inactiveimage",
+        "option": "single",
+        "placeholder": "Enter Inactive Image",
+        "id": "inactiveimage",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Image",
+        "type": "image",
+        "tableRef": "image",
+        "option": "single",
+        "placeholder": "Enter image",
+        "id": "image",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitSportsList",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewSportsList"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewSportsList"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "SportsList/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "SportsList/getOne",
+        "params": "_id"
+    }
+
+}

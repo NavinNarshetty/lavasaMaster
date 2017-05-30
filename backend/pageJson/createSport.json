@@ -1,0 +1,127 @@
+{
+    "title": "Create Sport",
+    "name": "Sport",
+    "jsonPage": "viewSport",
+    "desciption": "",
+    "pageType": "create",
+    "urlFields": ["Sport"],
+    "fields": [{
+        "name": "Gender",
+        "type": "tags",
+        "tableRef": "gender",
+        "placeholder": "Select Gender",
+        "id": "gender",
+        "validation": ["", "trim", ""],
+        "onView": true,
+        "url": "",
+        "dropDownField": "",
+        "dropDownType": "single",
+        "dropDown": ["Male", "Female"]
+    }, {
+        "name": "Year",
+        "type": "text",
+        "tableRef": "year",
+        "placeholder": "Enter year",
+        "id": "year",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Min Players",
+        "type": "text",
+        "tableRef": "minPlayers",
+        "placeholder": "Enter Min Players",
+        "id": "minPlayers",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Max Players",
+        "type": "text",
+        "tableRef": "maxPlayers",
+        "placeholder": "Enter Max Players",
+        "id": "maxPlayers",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Sports List",
+        "type": "selectFromTable",
+        "dropDownType": "single",
+        "tableRef": "sportslist",
+        "searchApi": "searchCall",
+        "placeholder": "Enter sports list",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "SportsList/search"
+    }, {
+        "name": "Age Group",
+        "type": "selectFromTable",
+        "dropDownType": "single",
+        "tableRef": "ageGroup",
+        "searchApi": "searchCall",
+        "placeholder": "Enter age group",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "AgeGroup/search"
+    }, {
+        "name": "First Category",
+        "type": "selectFromTable",
+        "tableRef": "firstCategory",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
+        "placeholder": "Enter first category",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "FirstCategory/search"
+    }, {
+        "name": "Second Category",
+        "type": "selectFromTable",
+        "tableRef": "secondCategory",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
+        "placeholder": "Enter second category",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "SecondCategory/search"
+    }, {
+        "name": "Third Category",
+        "type": "selectFromTable",
+        "tableRef": "thirdCategory",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
+        "placeholder": "Enter third category",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "ThirdCategory/search"
+    }, {
+        "name": "Draw Format",
+        "type": "selectFromTable",
+        "tableRef": "drawFormat",
+        "dropDownType": "single",
+        "searchApi": "searchCall",
+        "placeholder": "Enter draw Format",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "DrawFormat/search"
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitSport",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewSport"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewSport"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "Sport/save"
+    }
+}

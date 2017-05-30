@@ -1,0 +1,45 @@
+{
+    "title": "Edit Third Category",
+    "name": "ThirdCategory",
+    "jsonPage": "viewThirdCategory",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Name",
+        "type": "text",
+        "tableRef": "name",
+        "placeholder": "Enter Name",
+        "id": "name",
+        "validation": ["required", "trim", "unique"],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitThirdCategory",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewThirdCategory"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewThirdCategory"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "ThirdCategory/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "ThirdCategory/getOne",
+        "params": "_id"
+    }
+
+}
