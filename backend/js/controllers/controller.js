@@ -237,6 +237,8 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         $scope.menutitle = NavigationService.makeactive("Country List");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+
+
         JsonService.getJson($stateParams.id, function () {});
 
         globalfunction.confDel = function (callback) {
@@ -285,11 +287,13 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         $scope.json = JsonService;
         $scope.template = TemplateService;
         var i = 0;
+        console.log($state);
         if ($stateParams.page && !isNaN(parseInt($stateParams.page))) {
             $scope.currentPage = $stateParams.page;
         } else {
             $scope.currentPage = 1;
         }
+        $scope.formData = {};
 
         $scope.search = {
             keyword: ""
@@ -297,35 +301,34 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         if ($stateParams.keyword) {
             $scope.search.keyword = $stateParams.keyword;
         }
+        if ($stateParams.filter) {
+            $scope.formData = JSON.parse($stateParams.filter);
+        }
         $scope.changePage = function (page) {
             var goTo = "page";
             if ($scope.search.keyword) {
                 goTo = "page";
             }
+            console.log(page);
             $state.go(goTo, {
                 id: $stateParams.id,
                 page: page,
-                keyword: $scope.search.keyword
+                keyword: $scope.search.keyword,
+                filter: JSON.stringify($scope.formData)
             });
         };
 
-        $scope.getFilterType = function (data) {
-            $scope.type = data;
-            if ($scope.type == "Date") {
-                $scope.show = 1;
-            } else {
-                $scope.show = 2;
-            }
+        // $scope.getFilterType = function (data) {
+        //     $scope.type = data;
+        //     if ($scope.type == "Date") {
+        //         $scope.show = 1;
+        //     } else {
+        //         $scope.show = 2;
+        //     }
 
-        };
+        // };
 
-        $scope.filterSchool = function (data) {
-            $scope.formData = data;
-            $scope.formData.startDate = moment($scope.formData.startDate).format();
-            $scope.formData.endDate = moment($scope.formData.endDate).format();
-            $scope.formData.type = $scope.type;
-            console.log("inside");
-            console.log("data", $scope.formData);
+        $scope.filterSchool = function () {
             $scope.url = "Registration/filterSchool";
 
             NavigationService.apiCall($scope.url, $scope.formData, function (data) {
@@ -337,12 +340,12 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         };
 
         $scope.filterAthlete = function (data) {
-            $scope.formData = data;
-            $scope.formData.startDate = moment($scope.formData.startDate).format();
-            $scope.formData.endDate = moment($scope.formData.endDate).format();
-            $scope.formData.type = $scope.type;
-            console.log("inside");
-            console.log("data", $scope.formData);
+            // $scope.formData = data;
+            // $scope.formData.startDate = moment($scope.formData.startDate).format();
+            // $scope.formData.endDate = moment($scope.formData.endDate).format();
+            // $scope.formData.type = $scope.type;
+            // console.log("inside");
+            // console.log("data", $scope.formData);
             $scope.url = "Athelete/filterAthlete";
 
             NavigationService.apiCall($scope.url, $scope.formData, function (data) {
@@ -371,7 +374,14 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
                 });
         };
         JsonService.refreshView = $scope.getAllItems;
-        $scope.getAllItems();
+        if ($stateParams.id == "viewRegistration") {
+            $scope.filterSchool();
+        } else if ($stateParams.id == "viewAthelete") {
+            $scope.filterAthlete();
+        } else {
+            $scope.getAllItems();
+        }
+
 
     })
 

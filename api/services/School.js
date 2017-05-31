@@ -77,7 +77,7 @@
                  }
              },
              sort: {
-                 asc: 'sfaid'
+                 asc: 'createdAt'
              },
              start: (page - 1) * maxRow,
              count: maxRow

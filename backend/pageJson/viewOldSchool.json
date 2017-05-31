@@ -22,6 +22,18 @@
         "fieldsToSend": {
             "_id": "_id"
         }
+    }, {
+        "name": "delete",
+        "icon": "fa-trash",
+        "buttonClass": "btn-danger",
+        "type": "apiCallConfirm",
+        "title": "Delete User",
+        "content": "Are you sure you want to delete User?",
+        "api": "school/delete",
+        "fieldsToSend": {
+            "name": "_id",
+            "value": "_id"
+        }
     }],
 
     "button": [{

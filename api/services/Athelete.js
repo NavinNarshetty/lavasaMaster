@@ -92,6 +92,7 @@ var schema = new Schema({
     },
     verifiedDate: Date,
     remarks: String,
+
 });
 
 schema.plugin(deepPopulate, {});
@@ -111,12 +112,12 @@ var model = {
 
     search: function (data, callback) {
         var matchObj = {
-            $and: [{
+            $or: [{
                 registrationFee: {
                     $ne: "online PAYU"
                 }
             }, {
-                pendingStatus: {
+                paymentStatus: {
                     $ne: "Pending"
                 }
             }]
@@ -182,12 +183,12 @@ var model = {
                     $gt: data.startDate,
                     $lt: data.endDate,
                 },
-                $and: [{
+                $or: [{
                     registrationFee: {
                         $ne: "online PAYU"
                     }
                 }, {
-                    pendingStatus: {
+                    paymentStatus: {
                         $ne: "Pending"
                     }
                 }]
@@ -195,105 +196,89 @@ var model = {
         } else if (data.type == "SFA-ID") {
             matchObj = {
                 sfaId: data.input,
-                $and: [{
+                $or: [{
                     registrationFee: {
                         $ne: "online PAYU"
                     }
                 }, {
-                    pendingStatus: {
+                    paymentStatus: {
                         $ne: "Pending"
                     }
                 }]
             }
         } else if (data.type == "Athlete Name") {
             matchObj = {
-                $and: [{
+                $or: [{
+                    firstName: {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }, {
+                    surname: {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }, {
+                    middleName: {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }],
+                $or: [{
                     registrationFee: {
                         $ne: "online PAYU"
                     }
                 }, {
-                    pendingStatus: {
+                    paymentStatus: {
                         $ne: "Pending"
                     }
-                }, {
-                    $or: [{
-                        firstName: {
-                            $regex: data.input,
-                            $options: "i"
-                        }
-                    }, {
-                        surname: {
-                            $regex: data.input,
-                            $options: "i"
-                        }
-                    }, {
-                        middleName: {
-                            $regex: data.input,
-                            $options: "i"
-                        }
-                    }]
                 }]
 
             }
         } else if (data.type == "Payment Mode") {
-            matchObj = {
-                $and: [{
-                    registrationFee: {
-                        $ne: "online PAYU"
-                    }
-                }, {
-                    pendingStatus: {
+            if (data.input == "cash" || data.input == "Cash") {
+                matchObj = {
+                    'registrationFee': "cash",
+                }
+            } else if (data.input == "online" || data.input == "Online") {
+                matchObj = {
+                    'registrationFee': "online PAYU",
+                    paymentStatus: {
                         $ne: "Pending"
                     }
-                }, {
-                    $or: [{
-                        registrationFee: {
-                            $regex: data.input,
-                            $options: "i"
-                        }
-                    }]
-                }]
+                }
 
             }
+
         } else if (data.type == "Payment Status") {
 
-            matchObj = {
-                $and: [{
+            if (data.input == "Paid" || data.input == "paid") {
+                matchObj = {
+                    'paymentStatus': "Paid",
+                }
+            } else if (data.input == "Pending" || data.input == "pending") {
+                matchObj = {
+                    'paymentStatus': "Pending",
                     registrationFee: {
                         $ne: "online PAYU"
                     }
-                }, {
-                    pendingStatus: {
-                        $ne: "Pending"
-                    }
-                }, {
-                    $or: [{
-                        'paymentStatus': {
-                            $regex: data.input,
-                            $options: "i"
-                        }
-                    }]
-                }]
-
+                }
             }
         } else if (data.type == "Verified Status") {
 
             matchObj = {
-                $and: [{
+                'status': {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
                     registrationFee: {
                         $ne: "online PAYU"
                     }
                 }, {
-                    pendingStatus: {
+                    paymentStatus: {
                         $ne: "Pending"
                     }
-                }, {
-                    $or: [{
-                        'status': {
-                            $regex: data.input,
-                            $options: "i"
-                        }
-                    }]
                 }]
 
             }
@@ -319,21 +304,18 @@ var model = {
                     // Stage 3
                     {
                         $match: {
+                            "schoolData.name": {
+                                $regex: data.input
+                            },
 
-                            $and: [{
+                            $or: [{
                                 registrationFee: {
                                     $ne: "online PAYU"
                                 }
                             }, {
-                                pendingStatus: {
+                                paymentStatus: {
                                     $ne: "Pending"
                                 }
-                            }, {
-                                $or: [{
-                                    "schoolData.name": {
-                                        $regex: data.input
-                                    }
-                                }]
                             }]
                         }
                     },
@@ -369,26 +351,6 @@ var model = {
 
                             data.results = returnReq;
                             data.total = count;
-                            // matchObj = {
-                            //     school: returnReq._id
-                            // }
-                            // Athelete.find(matchObj)
-                            //     .sort({
-                            //         createdAt: -1
-                            //     })
-                            //     .order(options)
-                            //     .keyword(options)
-                            //     .page(options, function (err, found) {
-                            //         if (err) {
-                            //             callback(err, null);
-                            //         } else if (_.isEmpty(found)) {
-                            //             callback(null, "Data is empty");
-                            //         } else {
-                            //             callback(null, found);
-                            //         }
-
-                            //     });
-
                             callback(null, data);
 
                         }
@@ -414,7 +376,7 @@ var model = {
         }
     },
 
-    //on athelete save and submit press 
+    //on athelete save or submit press 
     saveAthelete: function (data, callback) {
         if (_.isEmpty(data.school)) {
             data.school = undefined;
@@ -654,7 +616,6 @@ var model = {
                                                 data.atheleteID = 1;
                                                 console.log("atheleteID", data.atheleteID);
                                                 data.sfaId = "M" + "A" + year + data.atheleteID;
-
                                             } else {
                                                 console.log("found", datafound[0].sfaId);
                                                 // if (datafound[0].atheleteID == undefined) {
@@ -1346,97 +1307,121 @@ var model = {
         console.log("dataIN");
         Athelete.find().lean().exec(function (err, data) {
             var excelData = [];
+            var schoolData;
             _.each(data, function (n) {
-                var obj = {};
-                obj.sfaID = n.sfaId;
+                if (n.registrationFee != "online PAYU" && n.paymentStatus != "Pending") {
+                    var obj = {};
+                    obj.sfaID = n.sfaId;
+                    if (_.isEmpty(n.school)) {
+                        obj.school = n.atheleteSchoolName;
+                        // callback(null, schoolData);
+                    } else {
+                        // School.findOne({
+                        //     _id: n.school
+                        // }).lean().exec(function (err, found) {
+                        //     if (_.isEmpty(found)) {
+                        //         console.log("name is null");
+                        //         schoolData = "";
+                        //         callback(null, schoolData);
+                        //     } else {
+                        //         schoolData = found.name;
+                        //         console.log("found", schoolData);
+                        //         callback(null, schoolData);
+                        //     }
 
+                        // });
+                        School.aggregate([{
+                                    $match: {
+                                        _id: n.school
+                                    }
+                                }
 
-                if (_.isEmpty(n.school)) {
-                    obj.school = n.atheleteSchoolName;
-                } else {
-                    School.findOne({
-                        _id: n.school
-                    }).exec(function (err, found) {
-                        if (_.isEmpty(found)) {
-                            console.log("name is null");
-                            obj.school = "";
+                            ],
+                            function (err, returnReq) {
+                                if (returnReq) {
+                                    // console.log("returnReq", returnReq[0]);
+                                    obj.school = returnReq[0].name;
+                                    console.log("school", obj.school);
+                                }
+                            });
+                        console.log("school", obj.school);
+                    }
+
+                    // obj.school = schoolData;
+                    // console.log("obj", obj.school);
+                    // console.log("obj", obj.school);
+                    var parentInfo;
+                    var countParent = 0;
+                    var levelInfo;
+                    var countLevel = 0;
+                    _.each(n.parentDetails, function (details) {
+                        var name = details.name + details.surname;
+                        var email = details.email;
+                        var mobile = details.mobile;
+                        var relation = details.relation;
+                        if (countParent == 0) {
+                            parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
                         } else {
-                            obj.school = found.name;
-                            console.log("found", obj.school);
+                            parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
                         }
+                        countParent++;
+
+                        console.log("parentDetails", parentInfo);
+
                     });
+                    obj.parentDetails = parentInfo;
+                    _.each(n.sportLevel, function (details) {
+                        var level = details.level;
+                        var sport = details.sport;
+                        if (countLevel == 0) {
+                            levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
+                        } else {
+                            levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
+                        }
+                        countLevel++;
+
+                        console.log("levelInfo", levelInfo);
+
+                    });
+                    obj.sportLevel = levelInfo;
+                    var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                    obj.date = dateTime;
+                    obj.idProof = n.idProof;
+                    obj.surname = n.surname;
+                    obj.firstName = n.firstName;
+                    obj.middleName = n.middleName;
+                    obj.gender = n.gender;
+                    obj.standard = n.standard;
+                    obj.bloodGroup = n.bloodGroup;
+                    obj.photograph = n.photograph;
+                    obj.dob = n.dob;
+                    obj.age = n.age;
+                    obj.ageProof = n.ageProof;
+                    obj.photoImage = n.photoImage;
+                    obj.birthImage = n.birthImage;
+                    obj.playedTournaments = n.playedTournaments;
+                    obj.mobile = n.mobile;
+                    obj.email = n.email;
+                    obj.smsOTP = n.smsOTP;
+                    obj.emailOTP = n.emailOTP;
+                    obj.address = n.address;
+                    obj.addressLine2 = n.addressLine2;
+                    obj.state = n.state;
+                    obj.district = n.district;
+                    obj.city = n.city;
+                    obj.pinCode = n.pinCode;
+                    obj.status = n.status;
+                    obj.password = n.password;
+                    obj.year = n.year;
+                    obj.registrationFee = n.registrationFee;
+                    obj.paymentStatus = n.paymentStatus;
+                    obj.transactionID = n.transactionID;
+                    obj.remarks = n.remarks;
+                    console.log("obj", obj);
+                    excelData.push(obj);
+                } else {
+                    console.log("data to be hidden");
                 }
-
-
-                var parentInfo;
-                var countParent = 0;
-                var levelInfo;
-                var countLevel = 0;
-                _.each(n.parentDetails, function (details) {
-                    var name = details.name + details.surname;
-                    var email = details.email;
-                    var mobile = details.mobile;
-                    var relation = details.relation;
-                    if (countParent == 0) {
-                        parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
-                    } else {
-                        parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
-                    }
-                    countParent++;
-
-                    console.log("parentDetails", parentInfo);
-
-                });
-                obj.parentDetails = parentInfo;
-                _.each(n.sportLevel, function (details) {
-                    var level = details.level;
-                    var sport = details.sport;
-                    if (countLevel == 0) {
-                        levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
-                    } else {
-                        levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
-                    }
-                    countLevel++;
-
-                    console.log("levelInfo", levelInfo);
-
-                });
-                obj.sportLevel = levelInfo;
-                var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
-                obj.date = dateTime;
-                obj.idProof = n.idProof;
-                obj.surname = n.surname;
-                obj.firstName = n.firstName;
-                obj.middleName = n.middleName;
-                obj.gender = n.gender;
-                obj.standard = n.standard;
-                obj.bloodGroup = n.bloodGroup;
-                obj.photograph = n.photograph;
-                obj.dob = n.dob;
-                obj.age = n.age;
-                obj.ageProof = n.ageProof;
-                obj.photoImage = n.photoImage;
-                obj.birthImage = n.birthImage;
-                obj.playedTournaments = n.playedTournaments;
-                obj.mobile = n.mobile;
-                obj.email = n.email;
-                obj.smsOTP = n.smsOTP;
-                obj.emailOTP = n.emailOTP;
-                obj.address = n.address;
-                obj.addressLine2 = n.addressLine2;
-                obj.state = n.state;
-                obj.district = n.district;
-                obj.city = n.city;
-                obj.pinCode = n.pinCode;
-                obj.status = n.status;
-                obj.password = n.password;
-                obj.year = n.year;
-                obj.registrationFee = n.registrationFee;
-                obj.paymentStatus = n.paymentStatus;
-                obj.transactionID = n.transactionID;
-                obj.remarks = n.remarks;
-                excelData.push(obj);
-
             });
 
             Config.generateExcel("Athlete", excelData, res);
@@ -1447,58 +1432,64 @@ var model = {
         Athelete.find({
             paymentStatus: "Pending"
         }).exec(function (err, found) {
+            console.log("found", found);
             if (err) {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
+
                 callback(null, "Data is empty");
             } else {
                 async.each(found, function (data, callback) {
-                    var now = moment(new Date()); //todays date
-                    var end = moment(data.createdAt); // another date
-                    var duration = moment.duration(now.diff(end));
-                    var dump = duration.asDays();
-                    var days = parseInt(dump);
-                    console.log("days", days)
-                    if (days == 5) {
-                        var emailData = {};
-                        emailData.from = "info@sfanow.in";
-                        emailData.email = data.email;
-                        emailData.filename = "paymentReminderSchool.ejs";
-                        emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
-                        console.log("emaildata", emailData);
+                    if (data.registrationFee != "online PAYU" && data.paymentStatus != "Pending") {
+                        var now = moment(new Date()); //todays date
+                        var end = moment(data.createdAt); // another date
+                        var duration = moment.duration(now.diff(end));
+                        var dump = duration.asDays();
+                        var days = parseInt(dump);
+                        console.log("days", days)
+                        if (days == 5) {
+                            var emailData = {};
+                            emailData.from = "info@sfanow.in";
+                            emailData.email = data.email;
+                            emailData.filename = "paymentReminderAthlete.ejs";
+                            emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
+                            console.log("emaildata", emailData);
 
-                        Config.email(emailData, function (err, emailRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
-                                callback(null, emailRespo);
-                            } else {
-                                callback(null, "Invalid data");
-                            }
-                        });
+                            // Config.email(emailData, function (err, emailRespo) {
+                            //     if (err) {
+                            //         console.log(err);
+                            //         callback(null, err);
+                            //     } else if (emailRespo) {
+                            //         callback(null, emailRespo);
+                            //     } else {
+                            //         callback(null, "Invalid data");
+                            //     }
+                            // });
 
-                    } else if (days == 10) {
-                        var emailData = {};
-                        emailData.from = "info@sfanow.in";
-                        emailData.email = data.email;
-                        emailData.filename = "paymentReminderAthlete.ejs";
-                        emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
-                        console.log("emaildata", emailData);
+                        } else if (days == 10) {
+                            var emailData = {};
+                            emailData.from = "info@sfanow.in";
+                            emailData.email = data.email;
+                            emailData.filename = "paymentReminderAthlete.ejs";
+                            emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
+                            console.log("emaildata", emailData);
 
-                        Config.email(emailData, function (err, emailRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
-                                callback(null, emailRespo);
-                            } else {
-                                callback(null, "Invalid data");
-                            }
-                        });
+                            // Config.email(emailData, function (err, emailRespo) {
+                            //     if (err) {
+                            //         console.log(err);
+                            //         callback(null, err);
+                            //     } else if (emailRespo) {
+                            //         callback(null, emailRespo);
+                            //     } else {
+                            //         callback(null, "Invalid data");
+                            //     }
+                            // });
 
+                        } else {
+                            callback(null, "no Athlete found");
+                        }
                     } else {
-                        callback(null, "no Athlete found");
+                        callback(null, "hidden athlete found");
                     }
                 }, callback);
 

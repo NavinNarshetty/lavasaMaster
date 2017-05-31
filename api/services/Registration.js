@@ -43,7 +43,7 @@ var schema = new Schema({
 
 
     contactPerson: String,
-    landline: String,
+    lorline: String,
     email: String,
     website: String,
     mobile: String,
@@ -132,12 +132,12 @@ var model = {
         var maxRow = Config.maxRow;
 
         var matchObj = {
-            $and: [{
+            $or: [{
                 registrationFee: {
                     $ne: "online PAYU"
                 }
             }, {
-                pendingStatus: {
+                paymentStatus: {
                     $ne: "Pending"
                 }
             }]
@@ -152,7 +152,7 @@ var model = {
             field: data.field,
             filters: {
                 keyword: {
-                    fields: ['name'],
+                    fields: ['schoolName', 'paymentStatus'],
                     term: data.keyword
                 }
             },
@@ -439,7 +439,7 @@ var model = {
                                     callback(err, null);
                                 } else if (vData) {
                                     async.waterfall([
-                                        //moc
+
                                         function (callback) {
 
                                             Registration.findOne({
@@ -454,7 +454,7 @@ var model = {
                                                     callback(null, schoolSfa);
                                                 }
                                             });
-                                            callback(null, "schoolSfa");
+                                            // callback(null, "schoolSfa");
                                         },
                                         // callback(null, vData);
                                         function (schoolSfa, callback) {
@@ -983,137 +983,140 @@ var model = {
         Registration.find().lean().exec(function (err, data) {
             var excelData = [];
             _.each(data, function (n) {
-                var obj = {};
-                obj.sfaID = n.sfaID;
-                obj.schoolName = n.schoolName;
-                var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
-                // console.log("dateTime", n.createdAt, dateTime);
-                obj.date = dateTime;
-                obj.schoolType = n.schoolType;
-                obj.schoolCategory = n.schoolCategory;
-                obj.affiliatedBoard = n.affiliatedBoard;
-                obj.schoolLogo = n.schoolLogo;
-                obj.schoolAddress = n.schoolAddress;
-                obj.schoolAddressLine2 = n.schoolAddressLine2;
-                var teamSports = '';
-                var racquetSports = '';
-                var targetSports = '';
-                var aquaticsSports = '';
-                var combatSports = '';
-                var individualSports = '';
+                if (n.registrationFee != "online PAYU" && n.paymentStatus != "Pending") {
+                    var obj = {};
+                    obj.sfaID = n.sfaID;
+                    obj.schoolName = n.schoolName;
+                    var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                    // console.log("dateTime", n.createdAt, dateTime);
+                    obj.date = dateTime;
+                    obj.schoolType = n.schoolType;
+                    obj.schoolCategory = n.schoolCategory;
+                    obj.affiliatedBoard = n.affiliatedBoard;
+                    obj.schoolLogo = n.schoolLogo;
+                    obj.schoolAddress = n.schoolAddress;
+                    obj.schoolAddressLine2 = n.schoolAddressLine2;
+                    var teamSports = '';
+                    var racquetSports = '';
+                    var targetSports = '';
+                    var aquaticsSports = '';
+                    var combatSports = '';
+                    var individualSports = '';
 
-
-                //teamSports
-                _.each(n.teamSports, function (details) {
-                    teamSports += "," + details.name;
-                });
-                console.log("name", teamSports);
-                if (teamSports) {
-                    teamSports = teamSports.slice(1);
-                    obj.teamSports = teamSports;
-                } else {
-                    obj.teamSports = "";
-                }
-
-                //racquetSports
-                _.each(n.racquetSports, function (details) {
-                    racquetSports += "," + details.name;
-                });
-                console.log("name", racquetSports);
-                if (racquetSports) {
-                    racquetSports = racquetSports.slice(1);
-                    obj.racquetSports = racquetSports;
-                } else {
-                    obj.racquetSports = "";
-                }
-                //aquaticsSports
-                _.each(n.aquaticsSports, function (details) {
-                    aquaticsSports += "," + details.name;
-                });
-                console.log("name", aquaticsSports);
-                if (aquaticsSports) {
-                    aquaticsSports = aquaticsSports.slice(1);
-                    obj.aquaticsSports = aquaticsSports;
-                } else {
-                    obj.aquaticsSports = "";
-                }
-
-                //combatSports
-                _.each(n.combatSports, function (details) {
-                    combatSports += "," + details.name;
-                });
-                console.log("name", combatSports);
-                if (combatSports) {
-                    combatSports = combatSports.slice(1);
-                    obj.combatSports = combatSports;
-                } else {
-                    obj.combatSports = "";
-                }
-
-                //targetSports
-                _.each(n.targetSports, function (details) {
-                    targetSports += "," + details.name;
-                });
-                console.log("name", targetSports);
-                if (targetSports) {
-                    targetSports = targetSports.slice(1);
-                    obj.targetSports = targetSports;
-                } else {
-                    obj.targetSports = "";
-                }
-
-                //individualSports
-                _.each(n.individualSports, function (details) {
-                    individualSports += "," + details.name;
-                });
-                console.log("name", individualSports);
-                if (individualSports) {
-                    individualSports = individualSports.slice(1);
-                    obj.individualSports = individualSports;
-                } else {
-                    obj.individualSports = "";
-                }
-                var sportsInfo;
-                var count = 0;
-                _.each(n.sportsDepartment, function (details) {
-                    var name = details.name;
-                    var email = details.email;
-                    var mobile = details.mobile;
-                    var designation = details.designation;
-                    if (count == 0) {
-                        sportsInfo = "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                    //teamSports
+                    _.each(n.teamSports, function (details) {
+                        teamSports += "," + details.name;
+                    });
+                    console.log("name", teamSports);
+                    if (teamSports) {
+                        teamSports = teamSports.slice(1);
+                        obj.teamSports = teamSports;
                     } else {
-                        sportsInfo = sportsInfo + "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                        obj.teamSports = "";
                     }
-                    count++;
 
-                    console.log("sportsInfo", sportsInfo);
+                    //racquetSports
+                    _.each(n.racquetSports, function (details) {
+                        racquetSports += "," + details.name;
+                    });
+                    console.log("name", racquetSports);
+                    if (racquetSports) {
+                        racquetSports = racquetSports.slice(1);
+                        obj.racquetSports = racquetSports;
+                    } else {
+                        obj.racquetSports = "";
+                    }
+                    //aquaticsSports
+                    _.each(n.aquaticsSports, function (details) {
+                        aquaticsSports += "," + details.name;
+                    });
+                    console.log("name", aquaticsSports);
+                    if (aquaticsSports) {
+                        aquaticsSports = aquaticsSports.slice(1);
+                        obj.aquaticsSports = aquaticsSports;
+                    } else {
+                        obj.aquaticsSports = "";
+                    }
 
-                });
-                obj.sportsDepartment = sportsInfo;
-                obj.state = n.state;
-                obj.district = n.district;
-                obj.city = n.city;
-                obj.locality = n.locality;
-                obj.pinCode = n.pinCode;
-                obj.contactPerson = n.contactPerson;
-                obj.landline = n.landline;
-                obj.email = n.email;
-                obj.website = n.website;
-                obj.mobile = n.mobile;
-                obj.enterOTP = n.enterOTP;
-                obj.schoolPrincipalName = n.schoolPrincipalName;
-                obj.schoolPrincipalMobile = n.schoolPrincipalMobile;
-                obj.schoolPrincipalLandline = n.schoolPrincipalLandline;
-                obj.schoolPrincipalEmail = n.schoolPrincipalEmail;
-                obj.status = n.status;
-                obj.password = n.password;
-                obj.year = n.year;
-                obj.registrationFee = n.registrationFee;
-                obj.paymentStatus = n.paymentStatus;
-                obj.transactionID = n.transactionID;
-                obj.remarks = n.remarks;
-                excelData.push(obj);
+                    //combatSports
+                    _.each(n.combatSports, function (details) {
+                        combatSports += "," + details.name;
+                    });
+                    console.log("name", combatSports);
+                    if (combatSports) {
+                        combatSports = combatSports.slice(1);
+                        obj.combatSports = combatSports;
+                    } else {
+                        obj.combatSports = "";
+                    }
+
+                    //targetSports
+                    _.each(n.targetSports, function (details) {
+                        targetSports += "," + details.name;
+                    });
+                    console.log("name", targetSports);
+                    if (targetSports) {
+                        targetSports = targetSports.slice(1);
+                        obj.targetSports = targetSports;
+                    } else {
+                        obj.targetSports = "";
+                    }
+
+                    //individualSports
+                    _.each(n.individualSports, function (details) {
+                        individualSports += "," + details.name;
+                    });
+                    console.log("name", individualSports);
+                    if (individualSports) {
+                        individualSports = individualSports.slice(1);
+                        obj.individualSports = individualSports;
+                    } else {
+                        obj.individualSports = "";
+                    }
+                    var sportsInfo;
+                    var count = 0;
+                    _.each(n.sportsDepartment, function (details) {
+                        var name = details.name;
+                        var email = details.email;
+                        var mobile = details.mobile;
+                        var designation = details.designation;
+                        if (count == 0) {
+                            sportsInfo = "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                        } else {
+                            sportsInfo = sportsInfo + "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                        }
+                        count++;
+
+                        console.log("sportsInfo", sportsInfo);
+
+                    });
+                    obj.sportsDepartment = sportsInfo;
+                    obj.state = n.state;
+                    obj.district = n.district;
+                    obj.city = n.city;
+                    obj.locality = n.locality;
+                    obj.pinCode = n.pinCode;
+                    obj.contactPerson = n.contactPerson;
+                    obj.landline = n.landline;
+                    obj.email = n.email;
+                    obj.website = n.website;
+                    obj.mobile = n.mobile;
+                    obj.enterOTP = n.enterOTP;
+                    obj.schoolPrincipalName = n.schoolPrincipalName;
+                    obj.schoolPrincipalMobile = n.schoolPrincipalMobile;
+                    obj.schoolPrincipalLandline = n.schoolPrincipalLandline;
+                    obj.schoolPrincipalEmail = n.schoolPrincipalEmail;
+                    obj.status = n.status;
+                    obj.password = n.password;
+                    obj.year = n.year;
+                    obj.registrationFee = n.registrationFee;
+                    obj.paymentStatus = n.paymentStatus;
+                    obj.transactionID = n.transactionID;
+                    obj.remarks = n.remarks;
+                    excelData.push(obj);
+                } else {
+                    console.log("data to be hidden");
+                }
             });
             Config.generateExcel("Registration", excelData, res);
         });
@@ -1122,17 +1125,17 @@ var model = {
 
     filterSchool: function (data, callback) {
         var maxRow = Config.maxRow;
-
+        console.log(data);
         var page = 1;
         if (data.page) {
             page = data.page;
         }
-        var field = data.field;
+        var field = data.type;
         var options = {
-            field: data.field,
+            field: data.type,
             filters: {
                 keyword: {
-                    fields: ['name'],
+                    fields: ['schoolName'],
                     term: data.keyword
                 }
             },
@@ -1142,142 +1145,111 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        var matchObj = {};
+        var matchObj = {
+            $or: [{
+                registrationFee: {
+                    $ne: "online PAYU"
+                }
+            }, {
+                paymentStatus: {
+                    $ne: "Pending"
+                }
+            }]
+        };
         if (data.type == "Date") {
-            matchObj = {
-                createdAt: {
-                    $gt: data.startDate,
-                    $lt: data.endDate,
-                },
-                $and: [{
-                    registrationFee: {
-                        $ne: "online PAYU"
-                    }
-                }, {
-                    pendingStatus: {
-                        $ne: "Pending"
-                    }
-                }]
-            }
+            matchObj.createdAt = {
+                $gt: data.startDate,
+                $lt: data.endDate,
+            };
         } else if (data.type == "SFA-ID") {
             matchObj = {
                 sfaID: data.input,
-                $and: [{
+                $or: [{
                     registrationFee: {
                         $ne: "online PAYU"
                     }
                 }, {
-                    pendingStatus: {
+                    paymentStatus: {
                         $ne: "Pending"
                     }
                 }]
             }
         } else if (data.type == "School Name") {
-            // matchObj = {
-            //     $or: [{
-            //         'schoolName': {
-            //             $regex: data.input,
-            //             $options: "i"
-            //         }
-            //     }]
-            // }
-
             matchObj = {
-                $and: [{
+                'schoolName': {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
                     registrationFee: {
                         $ne: "online PAYU"
                     }
                 }, {
-                    pendingStatus: {
+                    paymentStatus: {
                         $ne: "Pending"
                     }
-                }, {
-                    $or: [{
-                        'schoolName': {
-                            $regex: data.input,
-                            $options: "i"
-                        }
-                    }]
                 }]
 
             }
         } else if (data.type == "Payment Mode") {
-
-            matchObj = {
-                $and: [{
-                    registrationFee: {
-                        $ne: "online PAYU"
-                    }
-                }, {
-                    pendingStatus: {
+            if (data.input == "cash") {
+                matchObj = {
+                    'registrationFee': "cash",
+                }
+            } else if (data.input == "online" || data.input == "Online") {
+                matchObj = {
+                    'registrationFee': "online PAYU",
+                    paymentStatus: {
                         $ne: "Pending"
                     }
-                }, {
-                    $or: [{
-                        registrationFee: {
-                            $regex: data.input,
-                            $options: "i"
-                        }
-                    }]
-                }]
+                }
 
             }
+
+
         } else if (data.type == "Payment Status") {
-            // matchObj = {
-            //     $or: [{
-            //         'paymentStatus': {
-            //             $regex: data.input,
-            //             $options: "i"
-            //         }
-            //     }]
-            // }
-            matchObj = {
-                $and: [{
+            if (data.input == "Paid" || data.input == "paid") {
+                matchObj = {
+                    'paymentStatus': "Paid",
+                }
+            } else if (data.input == "Pending" || data.input == "pending") {
+                matchObj = {
+                    'paymentStatus': "Pending",
                     registrationFee: {
                         $ne: "online PAYU"
                     }
-                }, {
-                    pendingStatus: {
-                        $ne: "Pending"
-                    }
-                }, {
-                    $or: [{
-                        'paymentStatus': {
-                            $regex: data.input,
-                            $options: "i"
-                        }
-                    }]
-                }]
-
+                }
             }
-        } else if (data.type == "Verified Status") {
-            // matchObj = {
-            //     $or: [{
-            //         'status': {
-            //             $regex: data.input,
-            //             $options: "i"
-            //         }
-            //     }]
-            // }
 
+        } else if (data.type == "Verified Status") {
             matchObj = {
-                $and: [{
+                'status': {
+                    $regex: data.input,
+                    $options: "i"
+
+                },
+
+                $or: [{
                     registrationFee: {
                         $ne: "online PAYU"
                     }
                 }, {
-                    pendingStatus: {
+                    paymentStatus: {
                         $ne: "Pending"
                     }
-                }, {
-                    $or: [{
-                        'status': {
-                            $regex: data.input,
-                            $options: "i"
-                        }
-                    }]
                 }]
-
+            }
+        } else {
+            var matchObj = {
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
             }
         }
         Registration.find(matchObj)
@@ -1287,12 +1259,17 @@ var model = {
             .order(options)
             .keyword(options)
             .page(options, function (err, found) {
+                // console.log("found", found);
+
                 if (err) {
                     callback(err, null);
                 } else if (_.isEmpty(found)) {
                     callback(null, "Data is empty");
                 } else {
+
                     callback(null, found);
+
+
                 }
             });
     },
@@ -1308,52 +1285,58 @@ var model = {
             } else {
                 // callback(null, found);
                 async.each(found, function (data, callback) {
-                    var now = moment(new Date()); //todays date
-                    var end = moment(data.createdAt); // another date
-                    var duration = moment.duration(now.diff(end));
-                    var dump = duration.asDays();
-                    var days = parseInt(dump);
-                    console.log("days", days)
-                    if (days == 5) {
-                        var emailData = {};
-                        emailData.from = "info@sfanow.in";
-                        emailData.email = data.email;
-                        emailData.filename = "paymentReminderSchool.ejs";
-                        emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
-                        console.log("emaildata", emailData);
+                    if (found.registrationFee != "online PAYU" && found.paymentStatus != "Pending") {
+                        console.log("data to show");
+                        var now = moment(new Date()); //todays date
+                        var end = moment(data.createdAt); // another date
+                        var duration = moment.duration(now.diff(end));
+                        var dump = duration.asDays();
+                        var days = parseInt(dump);
+                        console.log("days", days)
+                        if (days == 5) {
+                            var emailData = {};
+                            emailData.from = "info@sfanow.in";
+                            emailData.email = data.email;
+                            emailData.filename = "paymentReminderSchool.ejs";
+                            emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
+                            console.log("emaildata", emailData);
 
-                        Config.email(emailData, function (err, emailRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
-                                callback(null, emailRespo);
-                            } else {
-                                callback(null, "Invalid data");
-                            }
-                        });
+                            Config.email(emailData, function (err, emailRespo) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, err);
+                                } else if (emailRespo) {
+                                    callback(null, emailRespo);
+                                } else {
+                                    callback(null, "Invalid data");
+                                }
+                            });
 
-                    } else if (days == 10) {
-                        var emailData = {};
-                        emailData.from = "info@sfanow.in";
-                        emailData.email = data.email;
-                        emailData.filename = "paymentReminderSchool.ejs";
-                        emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
-                        console.log("emaildata", emailData);
+                        } else if (days == 10) {
+                            var emailData = {};
+                            emailData.from = "info@sfanow.in";
+                            emailData.email = data.email;
+                            emailData.filename = "paymentReminderSchool.ejs";
+                            emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
+                            console.log("emaildata", emailData);
 
-                        Config.email(emailData, function (err, emailRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
-                                callback(null, emailRespo);
-                            } else {
-                                callback(null, "Invalid data");
-                            }
-                        });
+                            Config.email(emailData, function (err, emailRespo) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, err);
+                                } else if (emailRespo) {
+                                    callback(null, emailRespo);
+                                } else {
+                                    callback(null, "Invalid data");
+                                }
+                            });
 
+                        } else {
+                            callback(null, "no School found");
+                        }
                     } else {
-                        callback(null, "no School found");
+                        console.log("hidden School found");
+                        callback(null, "hidden School found");
                     }
                 }, callback);
 

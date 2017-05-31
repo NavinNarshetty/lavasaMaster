@@ -9,10 +9,8 @@ var myApp = angular.module('myApp', [
     "internationalPhoneNumber",
     'ui.bootstrap',
     'ui.select',
-    'ngAnimate',
     'toastr',
     'textAngular',
-    'ngSanitize',
     'angular-flexslider',
     'imageupload',
     'ngMap',
@@ -39,8 +37,13 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'LoginCtrl'
         })
 
+        // .state('page', {
+        //     url: "/page/:id/:keyword/:filter:/:page",
+        //     templateUrl: "views/template.html",
+        //     controller: 'PageJsonCtrl'
+        // })
         .state('page', {
-            url: "/page/:id/{page:.*}/{keyword:.*}",
+            url: "/page/:id/{page:.*}/{keyword:.*}/{filter:.*}",
             templateUrl: "views/template.html",
             controller: 'PageJsonCtrl'
         })

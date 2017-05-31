@@ -60,7 +60,7 @@
 
 
     "apiCall": {
-        "url": "Athelete/search",
+        "url": "Athelete/filterAthlete",
         "params": "_id"
     }
 }

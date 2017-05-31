@@ -33,7 +33,7 @@
         "url": "DrawFormat/search"
     }, {
         "name": "Table Header",
-        "type": "mixed",
+        "type": "text",
         "tableRef": "tableContent",
         "option": "single",
         "placeholder": "Enter table Content",
