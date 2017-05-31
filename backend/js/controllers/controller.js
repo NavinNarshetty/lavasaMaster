@@ -287,7 +287,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         $scope.json = JsonService;
         $scope.template = TemplateService;
         var i = 0;
-        console.log($state);
+        console.log($stateParams);
         if ($stateParams.page && !isNaN(parseInt($stateParams.page))) {
             $scope.currentPage = $stateParams.page;
         } else {
@@ -327,28 +327,37 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         //     }
 
         // };
-
+        $scope.formData.type = "";
+        $scope.search.keyword = "";
+        console.log($stateParams.keyword);
+        console.log($scope.search);
+        console.log($scope.search.keyword);
         $scope.filterSchool = function () {
-            $scope.url = "Registration/filterSchool";
 
-            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log($scope.formData);
+            console.log($stateParams.keyword);
+            console.log($scope.search);
+            console.log($scope.search.keyword);
+            $scope.url = "Registration/filterSchool";
+            $stateParams.filter = $scope.formData;
+            $stateParams.keyword = $scope.search.keyword;
+            $stateParams.page = $scope.currentPage;
+
+            NavigationService.apiCall($scope.url, $stateParams, function (data) {
                 $scope.items = data.data.results;
                 $scope.totalItems = data.data.total;
                 $scope.maxRow = data.data.options.count;
             });
 
+
         };
 
-        $scope.filterAthlete = function (data) {
-            // $scope.formData = data;
-            // $scope.formData.startDate = moment($scope.formData.startDate).format();
-            // $scope.formData.endDate = moment($scope.formData.endDate).format();
-            // $scope.formData.type = $scope.type;
-            // console.log("inside");
-            // console.log("data", $scope.formData);
+        $scope.filterAthlete = function () {
+
+            $stateParams.filter = $scope.formData;
             $scope.url = "Athelete/filterAthlete";
 
-            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            NavigationService.apiCall($scope.url, $stateParams, function (data) {
                 $scope.items = data.data.results;
                 $scope.totalItems = data.data.total;
                 $scope.maxRow = data.data.options.count;

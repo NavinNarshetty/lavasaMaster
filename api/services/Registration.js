@@ -152,7 +152,7 @@ var model = {
             field: data.field,
             filters: {
                 keyword: {
-                    fields: ['schoolName', 'paymentStatus'],
+                    fields: ['schoolName'],
                     term: data.keyword
                 }
             },
@@ -1130,9 +1130,9 @@ var model = {
         if (data.page) {
             page = data.page;
         }
-        var field = data.type;
+        var field = data.field;
         var options = {
-            field: data.type,
+            field: data.field,
             filters: {
                 keyword: {
                     fields: ['schoolName'],
@@ -1140,7 +1140,7 @@ var model = {
                 }
             },
             sort: {
-                asc: 'createdAt'
+                desc: 'createdAt'
             },
             start: (page - 1) * maxRow,
             count: maxRow
@@ -1156,14 +1156,14 @@ var model = {
                 }
             }]
         };
-        if (data.type == "Date") {
+        if (data.filter.type == "Date") {
             matchObj.createdAt = {
-                $gt: data.startDate,
-                $lt: data.endDate,
+                $gt: data.filter.startDate,
+                $lt: data.filter.endDate,
             };
-        } else if (data.type == "SFA-ID") {
+        } else if (data.filter.type == "SFA-ID") {
             matchObj = {
-                sfaID: data.input,
+                sfaID: data.filter.input,
                 $or: [{
                     registrationFee: {
                         $ne: "online PAYU"
@@ -1174,10 +1174,10 @@ var model = {
                     }
                 }]
             }
-        } else if (data.type == "School Name") {
+        } else if (data.filter.type == "School Name") {
             matchObj = {
                 'schoolName': {
-                    $regex: data.input,
+                    $regex: data.filter.input,
                     $options: "i"
                 },
                 $or: [{
@@ -1191,12 +1191,12 @@ var model = {
                 }]
 
             }
-        } else if (data.type == "Payment Mode") {
-            if (data.input == "cash") {
+        } else if (data.filter.type == "Payment Mode") {
+            if (data.filter.input == "cash") {
                 matchObj = {
                     'registrationFee': "cash",
                 }
-            } else if (data.input == "online" || data.input == "Online") {
+            } else if (data.filter.input == "online" || data.filter.input == "Online") {
                 matchObj = {
                     'registrationFee': "online PAYU",
                     paymentStatus: {
@@ -1205,14 +1205,12 @@ var model = {
                 }
 
             }
-
-
-        } else if (data.type == "Payment Status") {
-            if (data.input == "Paid" || data.input == "paid") {
+        } else if (data.filter.type == "Payment Status") {
+            if (data.filter.input == "Paid" || data.filter.input == "paid") {
                 matchObj = {
                     'paymentStatus': "Paid",
                 }
-            } else if (data.input == "Pending" || data.input == "pending") {
+            } else if (data.filter.input == "Pending" || data.filter.input == "pending") {
                 matchObj = {
                     'paymentStatus': "Pending",
                     registrationFee: {
@@ -1221,10 +1219,10 @@ var model = {
                 }
             }
 
-        } else if (data.type == "Verified Status") {
+        } else if (data.filter.type == "Verified Status") {
             matchObj = {
                 'status': {
-                    $regex: data.input,
+                    $regex: data.filter.input,
                     $options: "i"
 
                 },
@@ -1253,9 +1251,6 @@ var model = {
             }
         }
         Registration.find(matchObj)
-            .sort({
-                createdAt: -1
-            })
             .order(options)
             .keyword(options)
             .page(options, function (err, found) {
@@ -1266,10 +1261,7 @@ var model = {
                 } else if (_.isEmpty(found)) {
                     callback(null, "Data is empty");
                 } else {
-
                     callback(null, found);
-
-
                 }
             });
     },
