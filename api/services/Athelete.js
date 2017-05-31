@@ -208,22 +208,27 @@ var model = {
             }
         } else if (data.filter.type == "Athlete Name") {
             matchObj = {
-                $or: [{
-                    firstName: {
-                        $regex: data.filter.input,
-                        $options: "i"
-                    }
-                }, {
-                    surname: {
-                        $regex: data.filter.input,
-                        $options: "i"
-                    }
-                }, {
-                    middleName: {
-                        $regex: data.filter.input,
-                        $options: "i"
-                    }
-                }],
+                // $or: [{
+                //     firstName: {
+                //         $regex: data.filter.input,
+                //         $options: "i"
+                //     }
+                // }, {
+                //     surname: {
+                //         $regex: data.filter.input,
+                //         $options: "i"
+                //     }
+                // }, {
+                //     middleName: {
+                //         $regex: data.filter.input,
+                //         $options: "i"
+                //     }
+                // }],
+                firstName: {
+                    $regex: data.filter.input,
+                    $options: "i"
+
+                },
                 $or: [{
                     registrationFee: {
                         $ne: "online PAYU"
