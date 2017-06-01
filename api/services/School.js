@@ -85,7 +85,6 @@
          var Search = Model.find(data.filter)
 
              .order(options)
-             // .deepPopulate(deepSearch)
              .keyword(options)
              .page(options, callback);
 

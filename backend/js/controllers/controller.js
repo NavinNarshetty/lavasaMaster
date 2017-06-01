@@ -7,15 +7,75 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
     $scope.navigation = NavigationService.getnav();
 })
 
-myApp.controller('viewSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+myApp.controller('viewSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("viewschool");
     $scope.menutitle = NavigationService.makeactive("View School");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    // if ($stateParams.page && !isNaN(parseInt($stateParams.page))) {
+    //     $scope.currentPage = $stateParams.page;
+    // } else {
+    //     $scope.currentPage = 1;
+    // }
+    // $scope.formData = {};
+
+    // $scope.search = {
+    //     keyword: ""
+    // };
+
+    // if ($stateParams.keyword) {
+    //     $scope.search.keyword = $stateParams.keyword;
+    // }
+
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    // $scope.selectedStatus = 'All';
+    $scope.searchInOrder = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.filterSchool();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.filterSchool();
+        }
+    }
+    // $scope.filterDelivery = function (data) {
+    //     $scope.oConstraints.pagenumber = 1;
+    //     $scope.oConstraints.pagesize = 10;
+    //     $scope.oConstraints.deliveryStatus = data;
+    //     $scope.selectedStatus = data;
+    //     $scope.getMyOrders();
+    // }
+
+
+    $scope.filterSchool = function () {
+        $scope.url = "Registration/filterSchool";
+        // $stateParams.filter = $scope.formData;
+        // $stateParams.keyword = $scope.search.keyword;
+        // $stateParams.page = $scope.currentPage;
+        //  console.log($scope.currentPage);
+        // $scope.formData.page = $scope.currentPage + 1;
+        // $scope.formData.keyword = $scope.search.keyword;
+        // $scope.items = undefined;
+        $scope.search = $scope.formData.keyword;
+        $scope.formData.page = $scope.formData.page++;
+
+
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
+        });
+    };
+    $scope.filterSchool();
+
 })
 
 myApp.controller('viewAthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+    //athlete filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("viewathlete");
     $scope.menutitle = NavigationService.makeactive("View Athlete");
@@ -24,6 +84,7 @@ myApp.controller('viewAthleteCtrl', function ($scope, TemplateService, Navigatio
 })
 
 myApp.controller('viewReplicaCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+        //old school filter view
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("viewoldschool");
         $scope.menutitle = NavigationService.makeactive("View Old School");

@@ -1146,7 +1146,7 @@ var model = {
             field: data.field,
             filters: {
                 keyword: {
-                    fields: ['schoolName'],
+                    fields: ['name', 'schoolName'],
                     term: data.keyword
                 }
             },
@@ -1165,7 +1165,7 @@ var model = {
                 paymentStatus: {
                     $ne: "Pending"
                 }
-            }]
+            }],
         };
         if (data.type == "Date") {
             matchObj.createdAt = {

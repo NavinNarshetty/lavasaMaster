@@ -71,16 +71,16 @@
                             <div class="col-md-6 ">
                                 <div class="pull-right">
                                     <form class="search-form mr-form ">
-                                        <input type="text " ng-change="filterSchool(true) " placeholder="Search Here...
-                             " ng-model="search.keyword" />
+                                        <input type="text " ng-change="searchInOrder(search) " placeholder="Search Here...
+                             " ng-model="search" />
                                     </form>
                                 </div>
                             </div>
                         </div>
 
                     </div>
-                    <div class="table-responsive ">
-                        <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
+                    <!--<div class="table-responsive ">-->
+                    <div class="table-responsive " ng-show="totalItems>0 ">
                         <table class="table">
                             <thead>
                                 <tr>
@@ -104,16 +104,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <!--<tr ng-repeat="item in items">-->
-                                <tr>
-                                    <td>1</td>
-                                    <td>MS171</td>
-                                    <td>ABC</td>
-                                    <td>Pending</td>
-                                    <td>Cash</td>
-                                    <!--<td>{{($index + 1)+((currentPage-1)*maxRow)}}</td>-->
+                                <tr ng-repeat="item in items">
+                                    <!--<tr>-->
+                                    <!--<td>{{$index + 1}}</td>-->
+                                    <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
+                                    <td>{{item.sfaID}}</td>
+                                    <td>{{item.schoolName}}</td>
+                                    <td>{{item.status}}</td>
+                                    <td>{{item.registrationFee}}</td>
+
                                     <td>
-                                        Pending
+                                        {{item.paymentStatus}}
                                     </td>
                                     <td>
                                         <a class="btn btn-info">
@@ -135,10 +136,8 @@
                     <div class="tableData " ng-show="totalItems===undefined ">
                         <h5>Loading Data</h5>
                     </div>
-                    <ul ng-if="totalItems " ng-change="changePage(currentPage); " uib-pagination total-items="totalItems
-                                            " items-per-page="maxRow " ng-model="currentPage " max-size="template.pageMax "
-                        class="pagination-sm
-                                            " boundary-links="true " force-ellipses="true "></ul>
+                    <ul ng-if="totalItems" ng-change="filterSchool();" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
+                        max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
                 </div>
             </div>
         </div>
