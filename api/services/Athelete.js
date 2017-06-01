@@ -177,11 +177,11 @@ var model = {
             count: maxRow
         };
         var matchObj = {};
-        if (data.filter.type == "Date") {
+        if (data.type == "Date") {
             matchObj = {
                 createdAt: {
-                    $gt: data.filter.startDate,
-                    $lt: data.filter.endDate,
+                    $gt: data.startDate,
+                    $lt: data.endDate,
                 },
                 $or: [{
                     registrationFee: {
@@ -193,9 +193,9 @@ var model = {
                     }
                 }]
             }
-        } else if (data.filter.type == "SFA-ID") {
+        } else if (data.type == "SFA-ID") {
             matchObj = {
-                sfaId: data.filter.input,
+                sfaId: data.input,
                 $or: [{
                     registrationFee: {
                         $ne: "online PAYU"
@@ -206,26 +206,26 @@ var model = {
                     }
                 }]
             }
-        } else if (data.filter.type == "Athlete Name") {
+        } else if (data.type == "Athlete Name") {
             matchObj = {
                 // $or: [{
                 //     firstName: {
-                //         $regex: data.filter.input,
+                //         $regex: data.input,
                 //         $options: "i"
                 //     }
                 // }, {
                 //     surname: {
-                //         $regex: data.filter.input,
+                //         $regex: data.input,
                 //         $options: "i"
                 //     }
                 // }, {
                 //     middleName: {
-                //         $regex: data.filter.input,
+                //         $regex: data.input,
                 //         $options: "i"
                 //     }
                 // }],
                 firstName: {
-                    $regex: data.filter.input,
+                    $regex: data.input,
                     $options: "i"
 
                 },
@@ -240,12 +240,12 @@ var model = {
                 }]
 
             }
-        } else if (data.filter.type == "Payment Mode") {
-            if (data.filter.input == "cash" || data.filter.input == "Cash") {
+        } else if (data.type == "Payment Mode") {
+            if (data.input == "cash" || data.input == "Cash") {
                 matchObj = {
                     'registrationFee': "cash",
                 }
-            } else if (data.filter.input == "online" || data.filter.input == "Online") {
+            } else if (data.input == "online" || data.input == "Online") {
                 matchObj = {
                     'registrationFee': "online PAYU",
                     paymentStatus: {
@@ -255,13 +255,13 @@ var model = {
 
             }
 
-        } else if (data.filter.type == "Payment Status") {
+        } else if (data.type == "Payment Status") {
 
-            if (data.filter.input == "Paid" || data.filter.input == "paid") {
+            if (data.input == "Paid" || data.input == "paid") {
                 matchObj = {
                     'paymentStatus': "Paid",
                 }
-            } else if (data.filter.input == "Pending" || data.filter.input == "pending") {
+            } else if (data.input == "Pending" || data.input == "pending") {
                 matchObj = {
                     'paymentStatus': "Pending",
                     registrationFee: {
@@ -269,11 +269,11 @@ var model = {
                     }
                 }
             }
-        } else if (data.filter.type == "Verified Status") {
+        } else if (data.type == "Verified Status") {
 
             matchObj = {
                 'status': {
-                    $regex: data.filter.input,
+                    $regex: data.input,
                     $options: "i"
                 },
                 $or: [{
@@ -300,7 +300,7 @@ var model = {
                 }]
             }
         }
-        if (data.filter.type == "School Name") {
+        if (data.type == "School Name") {
             Athelete.aggregate(
                 [{
                         $lookup: {
@@ -322,7 +322,7 @@ var model = {
                     {
                         $match: {
                             "schoolData.name": {
-                                $regex: data.filter.input
+                                $regex: data.input
                             },
 
                             $or: [{

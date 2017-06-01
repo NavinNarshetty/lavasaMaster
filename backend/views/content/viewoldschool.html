@@ -47,8 +47,8 @@
                                     <!--<tr>-->
                                     <!--<td>{{$index + 1}}</td>-->
                                     <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
-                                    <td>{{item.sfaID}}</td>
-                                    <td>{{item.schoolName}}</td>
+                                    <td>{{item.sfaid}}</td>
+                                    <td>{{item.name}}</td>
                                     <td>
                                         <a class="btn btn-info">
                                             <i class="fa fa-eye"></i> View
@@ -69,7 +69,7 @@
                     <div class="tableData " ng-show="totalItems===undefined ">
                         <h5>Loading Data</h5>
                     </div>
-                    <ul ng-if="totalItems" ng-change="filterOldSchool();" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
+                    <ul ng-if="totalItems" ng-change="getAllItems();" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
                         max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
                 </div>
             </div>

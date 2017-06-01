@@ -83,6 +83,8 @@ myApp.controller('viewAthleteCtrl', function ($scope, TemplateService, Navigatio
     $scope.navigation = NavigationService.getnav();
     $scope.formData = {};
     $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
     // $scope.selectedStatus = 'All';
     $scope.searchInAthlete = function (data) {
         $scope.formData.page = 1;
@@ -129,15 +131,16 @@ myApp.controller('viewReplicaCtrl', function ($scope, TemplateService, Navigatio
         $scope.navigation = NavigationService.getnav();
         $scope.formData = {};
         $scope.formData.page = 1;
+        var i = 0;
         // $scope.selectedStatus = 'All';
         $scope.searchInOldSchool = function (data) {
             $scope.formData.page = 1;
             if (data.length >= 2) {
                 $scope.formData.keyword = data;
-                $scope.filterSchool();
+                $scope.getAllItems();
             } else if (data.length == '') {
                 $scope.formData.keyword = data;
-                $scope.filterSchool();
+                $scope.getAllItems();
             }
         }
         // $scope.filterDelivery = function (data) {
@@ -155,7 +158,7 @@ myApp.controller('viewReplicaCtrl', function ($scope, TemplateService, Navigatio
             // if (keywordChange) {
             //     $scope.currentPage = 1;
             // }
-            NavigationService.search($scope.json.json.apiCall.url, {
+            NavigationService.search('School/search', {
                     page: $scope.formData.page,
                     keyword: $scope.formData.keyword
                 }, ++i,
@@ -168,7 +171,7 @@ myApp.controller('viewReplicaCtrl', function ($scope, TemplateService, Navigatio
                 });
         };
 
-        JsonService.refreshView = $scope.getAllItems;
+        // JsonService.refreshView = $scope.getAllItems;
         $scope.getAllItems();
     })
 
