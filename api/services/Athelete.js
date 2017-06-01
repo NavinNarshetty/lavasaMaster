@@ -287,6 +287,18 @@ var model = {
                 }]
 
             }
+        } else {
+            var matchObj = {
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
         }
         if (data.filter.type == "School Name") {
             Athelete.aggregate(
@@ -362,6 +374,7 @@ var model = {
                     }
                 });
         } else {
+
             Athelete.find(matchObj)
                 .sort({
                     createdAt: -1
