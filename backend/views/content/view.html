@@ -18,128 +18,114 @@
                 <div class="widget ">
                     <div class="table-area ">
                         <div class="widget-title ">
+                            <div class="pull-right">
+                                <!--<form class="search-form mr-form ">
+                                    <input type="text " ng-change="getAllItems(true) " placeholder="Search Here...
+                             " ng-model="search.keyword" />
+                                </form>-->
+                                <a ng-repeat="btn in json.json.button " class="btn " ng-class="btn.class " ng-click="json.eventAction(btn)">{{btn.name}}</a>
+                            </div>
                             <h3>{{json.json.description}} <span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
-                            <div class="row">
+                            <!--<div class="row">
                                 <div class="col-md-6">
                                     <div ng-if="json.json.title=='School Registration'" class="form-goup">
                                         <div class="mtp5">
-                                            <!--<pre>{{formData|json}}</pre>-->
-                                            <div class="dropdown">
-                                                <button class="btn default btn-md dropdown-toggle mbt5" type="button" data-toggle="dropdown">Filter
+                            <div class="dropdown">
+                                <button class="btn default btn-md dropdown-toggle mbt5" type="button" data-toggle="dropdown">Filter
                                                 <span class="caret"></span></button>
-                                                <ul class="dropdown-menu cur">
-                                                    <li><input type="radio" ng-model="formData.type" value="Date"> Date</li>
-                                                    <li><input type="radio" ng-model="formData.type" value="SFA-ID">SFA-ID</li>
-                                                    <li><input type="radio" ng-model="formData.type" value="School Name"> School
-                                                        Name
-                                                    </li>
-                                                    <li><input type="radio" ng-model="formData.type" value="Payment Mode">Payment
-                                                        Mode
-                                                    </li>
-                                                    <li><input type="radio" ng-model="formData.type" value="Payment Status">Payment
-                                                        Status
-                                                    </li>
-                                                    <li><input type="radio" ng-model="formData.type" value="Verified Status">Verified
-                                                        Status
-                                                    </li>
-
-                                                    <!--<li ng-click="getFilterType('Date');">Date</li>
-                                                    <li ng-click="getFilterType('SFA-ID');">SFA-ID</li>
-                                                    <li ng-click="getFilterType('School Name');">School Name</li>
-                                                    <li ng-click="getFilterType('Payment Mode');">Payment Mode</li>
-                                                    <li ng-click="getFilterType('Payment Status');">Payment Status</li>
-                                                    <li ng-click="getFilterType('Verified Status')">Verified Status</li>-->
-                                                </ul>
-                                            </div>
-                                            <div class="row" ng-if="formData.type == 'Date'">
-                                                <div class="col-md-4">
-                                                    <span>From:</span>
-                                                    <input-date ng-model="formData.startDate" placeholder="From"></input-date>
-                                                    <!--<input type="date" ng-model="formData.startDate" class="form-control" placeholder="From">-->
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <span>To:</span>
-                                                    <input-date ng-model="formData.endDate" placeholder="To"></input-date>
-                                                    <!--<input type="date" ng-model="formData.endDate" class="form-control" placeholder="To">-->
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <!--<pre>{{formData}}</pre>-->
-                                                    <button class="btn btn-sm mrtp" type="button" ng-click="filterSchool(formData)">Go</button>
-                                                </div>
-                                            </div>
-                                            <div class="row" ng-if="formData.type != 'Date' && formData.type != ''">
-                                                <div class="col-md-6 mtp5">
-                                                    <input type="text" ng-model="formData.input" class="form-control">
-                                                </div>
-                                                <div class="col-md-4 mtp5">
-                                                    <!--<pre>{{formData}}</pre>-->
-                                                    <button class="btn btn-sm" type="button" ng-click="filterSchool(formData)">Go</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div ng-if="json.json.title=='Athlete Registration'" class="form-goup">
-                                        <div class="mtp5">
-                                            <div class="dropdown">
-                                                <button class="btn default btn-md dropdown-toggle mbt5" type="button" data-toggle="dropdown">Filter
-                                                <span class="caret"></span></button>
-                                                <ul class="dropdown-menu cur">
-                                                    <li><input type="radio" ng-model="formData.type" value="Date"> Date</li>
-                                                    <li><input type="radio" ng-model="formData.type" value="SFA-ID">SFA-ID</li>
-                                                    <li><input type="radio" ng-model="formData.type" value="School Name"> School
-                                                        Name
-                                                    </li>
-                                                    <li><input type="radio" ng-model="formData.type" value="Athlete Name"> Athlete
-                                                        Name
-                                                    </li>
-                                                    <li><input type="radio" ng-model="formData.type" value="Payment Mode">Payment
-                                                        Mode
-                                                    </li>
-                                                    <li><input type="radio" ng-model="formData.type" value="Payment Status">Payment
-                                                        Status
-                                                    </li>
-                                                    <li><input type="radio" ng-model="formData.type" value="Verified Status">Verified
-                                                        Status
-                                                    </li>
-
-                                                </ul>
-                                            </div>
-                                            <div class="row" ng-if="formData.type == 'Date'">
-                                                <div class="col-md-4">
-                                                    <span>From:</span>
-                                                    <input-date ng-model="formData.startDate" placeholder="From"></input-date>
-                                                    <!--<input type="date" ng-model="formData.startDate" class="form-control" placeholder="From">-->
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <span>To:</span>
-                                                    <input-date ng-model="formData.endDate" placeholder="To"></input-date>
-                                                    <!--<input type="date" ng-model="formData.endDate" class="form-control" placeholder="To">-->
-                                                </div>
-                                                <div class="col-md-4 ">
-                                                    <button class="btn btn-sm mrtp" type="button" ng-click="filterAthlete(formData)">Go</button>
-                                                </div>
-                                            </div>
-                                            <div class="row" ng-if="formData.type != 'Date' && formData.type != ''">
-                                                <div class="col-md-6 mtp5">
-                                                    <input type="text" ng-model="formData.input" class="form-control">
-                                                </div>
-                                                <div class="col-md-4 mtp5">
-                                                    <button class="btn btn-sm" type="button" ng-click="filterAthlete(formData)">Go</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <ul class="dropdown-menu cur">
+                                    <li><input type="radio" ng-model="formData.type" value="Date"> Date</li>
+                                    <li><input type="radio" ng-model="formData.type" value="SFA-ID">SFA-ID</li>
+                                    <li><input type="radio" ng-model="formData.type" value="School Name"> School Name
+                                    </li>
+                                    <li><input type="radio" ng-model="formData.type" value="Payment Mode">Payment Mode
+                                    </li>
+                                    <li><input type="radio" ng-model="formData.type" value="Payment Status">Payment Status
+                                    </li>
+                                    <li><input type="radio" ng-model="formData.type" value="Verified Status">Verified Status
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="row" ng-if="formData.type == 'Date'">
+                                <div class="col-md-4">
+                                    <span>From:</span>
+                                    <input-date ng-model="formData.startDate" placeholder="From"></input-date>
+                                    
                                 </div>
-                                <div class="col-md-6 ">
-                                    <div class="pull-right">
-                                        <form class="search-form mr-form ">
-                                            <input type="text " ng-change="filterSchool(true) " placeholder="Search Here...
-                        " ng-model="search.keyword" />
-                                        </form>
-                                        <a ng-repeat="btn in json.json.button " class="btn " ng-class="btn.class " ng-click="json.eventAction(btn)">{{btn.name}}</a>
-                                    </div>
+                                <div class="col-md-4">
+                                    <span>To:</span>
+                                    <input-date ng-model="formData.endDate" placeholder="To"></input-date>
+                                </div>
+                                <div class="col-md-4">
+                                    <button class="btn btn-sm mrtp" type="button" ng-click="filterSchool(formData)">Go</button>
                                 </div>
                             </div>
+                            <div class="row" ng-if="formData.type != 'Date' && formData.type != ''">
+                                <div class="col-md-6 mtp5">
+                                    <input type="text" ng-model="formData.input" class="form-control">
+                                </div>
+                                <div class="col-md-4 mtp5">
+                                    <button class="btn btn-sm" type="button" ng-click="filterSchool(formData)">Go</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="json.json.title=='Athlete Registration'" class="form-goup">
+                        <div class="mtp5">
+                            <div class="dropdown">
+                                <button class="btn default btn-md dropdown-toggle mbt5" type="button" data-toggle="dropdown">Filter
+                                                <span class="caret"></span></button>
+                                <ul class="dropdown-menu cur">
+                                    <li><input type="radio" ng-model="formData.type" value="Date"> Date</li>
+                                    <li><input type="radio" ng-model="formData.type" value="SFA-ID">SFA-ID</li>
+                                    <li><input type="radio" ng-model="formData.type" value="School Name"> School Name
+                                    </li>
+                                    <li><input type="radio" ng-model="formData.type" value="Athlete Name"> Athlete Name
+                                    </li>
+                                    <li><input type="radio" ng-model="formData.type" value="Payment Mode">Payment Mode
+                                    </li>
+                                    <li><input type="radio" ng-model="formData.type" value="Payment Status">Payment Status
+                                    </li>
+                                    <li><input type="radio" ng-model="formData.type" value="Verified Status">Verified Status
+                                    </li>
+
+                                </ul>
+                            </div>
+                            <div class="row" ng-if="formData.type == 'Date'">
+                                <div class="col-md-4">
+                                    <span>From:</span>
+                                    <input-date ng-model="formData.startDate" placeholder="From"></input-date>
+                                </div>
+                                <div class="col-md-4">
+                                    <span>To:</span>
+                                    <input-date ng-model="formData.endDate" placeholder="To"></input-date>
+                                </div>
+                                <div class="col-md-4 ">
+                                    <button class="btn btn-sm mrtp" type="button" ng-click="filterAthlete(formData)">Go</button>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="formData.type != 'Date' && formData.type != ''">
+                                <div class="col-md-6 mtp5">
+                                    <input type="text" ng-model="formData.input" class="form-control">
+                                </div>
+                                <div class="col-md-4 mtp5">
+                                    <button class="btn btn-sm" type="button" ng-click="filterAthlete(formData)">Go</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 ">
+                    <div class="pull-right">
+                        <form class="search-form mr-form ">
+                            <input type="text " ng-change="filterSchool(true) " placeholder="Search Here...
+                             " ng-model="search.keyword" />
+                        </form>
+                        <a ng-repeat="btn in json.json.button " class="btn " ng-class="btn.class " ng-click="json.eventAction(btn)">{{btn.name}}</a>
+                    </div>
+                </div>
+            </div>-->
+
                         </div>
                         <div class="table-responsive " ng-show="totalItems>0 ">
                             <table class="table">

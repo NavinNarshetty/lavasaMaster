@@ -298,12 +298,14 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         $scope.search = {
             keyword: ""
         };
+
         if ($stateParams.keyword) {
             $scope.search.keyword = $stateParams.keyword;
         }
-        if ($stateParams.filter) {
-            $scope.formData = JSON.parse($stateParams.filter);
-        }
+        // if ($stateParams.filter) {
+        //     $scope.formData = JSON.parse($stateParams.filter);
+        //     // $scope.formData = $stateParams.filter;
+        // }
         $scope.changePage = function (page) {
             var goTo = "page";
             if ($scope.search.keyword) {
@@ -314,8 +316,9 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
                 id: $stateParams.id,
                 page: page,
                 keyword: $scope.search.keyword,
-                filter: JSON.stringify($scope.formData)
+                // filter: JSON.stringify($scope.formData)
             });
+
         };
 
         // $scope.getFilterType = function (data) {
@@ -334,16 +337,16 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
         console.log($scope.search.keyword);
         $scope.filterSchool = function () {
 
-            console.log($scope.formData);
-            console.log($stateParams.keyword);
-            console.log($scope.search);
-            console.log($scope.search.keyword);
+            // console.log($scope.formData);
+            // console.log($stateParams.keyword);
+            // console.log($scope.search);
+            // console.log($scope.search.keyword);
             $scope.url = "Registration/filterSchool";
-            $stateParams.filter = $scope.formData;
-            $stateParams.keyword = $scope.search.keyword;
-            $stateParams.page = $scope.currentPage;
+            // $stateParams.filter = $scope.formData;
+            // $stateParams.keyword = $scope.search.keyword;
+            // $stateParams.page = $scope.currentPage;
 
-            NavigationService.apiCall($scope.url, $stateParams, function (data) {
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
                 $scope.items = data.data.results;
                 $scope.totalItems = data.data.total;
                 $scope.maxRow = data.data.options.count;
@@ -354,7 +357,8 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
 
         $scope.filterAthlete = function () {
 
-            $stateParams.filter = $scope.formData;
+            // $stateParams.filter = $scope.formData;
+
             $scope.url = "Athelete/filterAthlete";
 
             NavigationService.apiCall($scope.url, $stateParams, function (data) {
@@ -382,14 +386,16 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
                     }
                 });
         };
+
         JsonService.refreshView = $scope.getAllItems;
-        if ($stateParams.id == "viewRegistration") {
-            $scope.filterSchool();
-        } else if ($stateParams.id == "viewAthelete") {
-            $scope.filterAthlete();
-        } else {
-            $scope.getAllItems();
-        }
+        $scope.getAllItems();
+        // if ($stateParams.id == "viewRegistration") {
+        //     $scope.filterSchool();
+        // } else if ($stateParams.id == "viewAthelete") {
+        //     $scope.filterAthlete();
+        // } else {
+        //     $scope.getAllItems();
+        // }
 
 
     })

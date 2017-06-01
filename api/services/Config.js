@@ -12,7 +12,7 @@ var requrl = "https://sfa.wohlig.co.in/api/";
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
-    maxRow: 10,
+    maxRow: 20,
     getForeignKeys: function (schema) {
         var arr = [];
         _.each(schema.tree, function (n, name) {

@@ -36,17 +36,16 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/login.html",
             controller: 'LoginCtrl'
         })
-
-        // .state('page', {
-        //     url: "/page/:id/:keyword/:filter:/:page",
-        //     templateUrl: "views/template.html",
-        //     controller: 'PageJsonCtrl'
-        // })
         .state('page', {
-            url: "/page/:id/{page:.*}/{keyword:.*}/{filter:.*}",
+            url: "/page/:id/{page:.*}/{keyword:.*}",
             templateUrl: "views/template.html",
             controller: 'PageJsonCtrl'
         })
+        // .state('page', {
+        //     url: "/page/:id/{page:.*}/{keyword:.*}/{filter:.*}",
+        //     templateUrl: "views/template.html",
+        //     controller: 'PageJsonCtrl'
+        // })
 
         .state('loginapp', {
             url: "/login/:id",

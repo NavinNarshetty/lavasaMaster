@@ -9,19 +9,19 @@ myApp.factory('NavigationService', function ($http) {
     var navigation = [{
             name: "School",
             classis: "active",
-            sref: "#!/page/viewRegistration///",
+            sref: "#!/page/viewRegistration//",
             icon: "phone"
         },
         {
             name: "Athelete",
             classis: "active",
-            sref: "#!/page/viewAthelete///",
+            sref: "#!/page/viewAthelete//",
             icon: "phone"
         },
         {
             name: "Old School",
             classis: "active",
-            sref: "#!/page/viewOldSchool///",
+            sref: "#!/page/viewOldSchool//",
             icon: "phone"
         },
         {

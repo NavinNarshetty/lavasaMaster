@@ -608,7 +608,7 @@ var model = {
                         if (data.status == "Verified") {
                             data.verifyCount = 1;
                             data.password = generator.generate({
-                                length: 10,
+                                length: 8,
                                 numbers: true
                             });
                             if (_.isEmpty(data.sfaId)) {
@@ -625,7 +625,7 @@ var model = {
                                     atheleteID: -1
                                 }).limit(1).lean().exec(
                                     function (err, datafound) {
-                                        console.log("found", datafound);
+                                        console.log("found1***", datafound);
                                         if (err) {
                                             console.log(err);
                                             callback(err, null);
@@ -665,6 +665,15 @@ var model = {
                                     }
                                 });
                             }
+
+                        } else {
+                            Athelete.saveVerify(data, found, function (err, vData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (vData) {
+                                    callback(null, vData);
+                                }
+                            });
 
                         }
                     } else {
@@ -1141,17 +1150,18 @@ var model = {
 
                     smsData.content = "Congratulations! You are now a verified SFA Athlete. Kindly check your registered Email ID for your SFA ID and Password.";
                     console.log("smsdata", smsData);
-                    Config.sendSms(smsData, function (err, smsRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (smsRespo) {
-                            console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
+                    callback(null, smsData);
+                    // Config.sendSms(smsData, function (err, smsRespo) {
+                    //     if (err) {
+                    //         console.log(err);
+                    //         callback(err, null);
+                    //     } else if (smsRespo) {
+                    //         console.log(smsRespo, "sms sent");
+                    //         callback(null, smsRespo);
+                    //     } else {
+                    //         callback(null, "Invalid data");
+                    //     }
+                    // });
                 }
             ],
             function (err, final) {
@@ -1323,7 +1333,18 @@ var model = {
 
     generateExcel: function (res) {
         console.log("dataIN");
-        Athelete.find().lean().exec(function (err, data) {
+        var matchObj = {
+            $or: [{
+                registrationFee: {
+                    $ne: "online PAYU"
+                }
+            }, {
+                paymentStatus: {
+                    $ne: "Pending"
+                }
+            }]
+        }
+        Athelete.find(matchObj).lean().exec(function (err, data) {
             var excelData = [];
             var schoolData;
             async.each(data, function (n, callback) {

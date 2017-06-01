@@ -60,7 +60,7 @@
 
 
     "apiCall": {
-        "url": "Registration/filterSchool",
+        "url": "Registration/search",
         "params": "_id"
     }
 }

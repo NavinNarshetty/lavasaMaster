@@ -285,7 +285,7 @@ var model = {
                         if (data.status == "Verified") {
                             data.verifyCount = 1;
                             data.password = generator.generate({
-                                length: 10,
+                                length: 8,
                                 numbers: true
                             });
 
@@ -809,6 +809,7 @@ var model = {
                     smsData.mobile = data.mobile;
                     smsData.content = "Congratulations! You are now a verified SFA School. Kindly check your registered Email ID for your SFA ID and Password.";
                     console.log("smsdata", smsData);
+                    // callback(null, smsData);
                     Config.sendSms(smsData, function (err, smsRespo) {
                         if (err) {
                             console.log(err);
@@ -820,6 +821,7 @@ var model = {
                             callback(null, "Invalid data");
                         }
                     });
+
                 }
             ],
             function (err, final) {
@@ -980,143 +982,152 @@ var model = {
 
     generateExcel: function (res) {
         console.log("dataIN");
-        Registration.find().lean().exec(function (err, data) {
+        var matchObj = {
+            $or: [{
+                registrationFee: {
+                    $ne: "online PAYU"
+                }
+            }, {
+                paymentStatus: {
+                    $ne: "Pending"
+                }
+            }]
+        }
+        Registration.find(matchObj).lean().exec(function (err, data) {
             var excelData = [];
             _.each(data, function (n) {
-                if (n.registrationFee != "online PAYU" && n.paymentStatus != "Pending") {
-                    var obj = {};
-                    obj.sfaID = n.sfaID;
-                    obj.schoolName = n.schoolName;
-                    var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
-                    // console.log("dateTime", n.createdAt, dateTime);
-                    obj.date = dateTime;
-                    obj.schoolType = n.schoolType;
-                    obj.schoolCategory = n.schoolCategory;
-                    obj.affiliatedBoard = n.affiliatedBoard;
-                    obj.schoolLogo = n.schoolLogo;
-                    obj.schoolAddress = n.schoolAddress;
-                    obj.schoolAddressLine2 = n.schoolAddressLine2;
-                    var teamSports = '';
-                    var racquetSports = '';
-                    var targetSports = '';
-                    var aquaticsSports = '';
-                    var combatSports = '';
-                    var individualSports = '';
 
-                    //teamSports
-                    _.each(n.teamSports, function (details) {
-                        teamSports += "," + details.name;
-                    });
-                    console.log("name", teamSports);
-                    if (teamSports) {
-                        teamSports = teamSports.slice(1);
-                        obj.teamSports = teamSports;
-                    } else {
-                        obj.teamSports = "";
-                    }
+                var obj = {};
+                obj.sfaID = n.sfaID;
+                obj.schoolName = n.schoolName;
+                var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                // console.log("dateTime", n.createdAt, dateTime);
+                obj.date = dateTime;
+                obj.schoolType = n.schoolType;
+                obj.schoolCategory = n.schoolCategory;
+                obj.affiliatedBoard = n.affiliatedBoard;
+                obj.schoolLogo = n.schoolLogo;
+                obj.schoolAddress = n.schoolAddress;
+                obj.schoolAddressLine2 = n.schoolAddressLine2;
+                var teamSports = '';
+                var racquetSports = '';
+                var targetSports = '';
+                var aquaticsSports = '';
+                var combatSports = '';
+                var individualSports = '';
 
-                    //racquetSports
-                    _.each(n.racquetSports, function (details) {
-                        racquetSports += "," + details.name;
-                    });
-                    console.log("name", racquetSports);
-                    if (racquetSports) {
-                        racquetSports = racquetSports.slice(1);
-                        obj.racquetSports = racquetSports;
-                    } else {
-                        obj.racquetSports = "";
-                    }
-                    //aquaticsSports
-                    _.each(n.aquaticsSports, function (details) {
-                        aquaticsSports += "," + details.name;
-                    });
-                    console.log("name", aquaticsSports);
-                    if (aquaticsSports) {
-                        aquaticsSports = aquaticsSports.slice(1);
-                        obj.aquaticsSports = aquaticsSports;
-                    } else {
-                        obj.aquaticsSports = "";
-                    }
-
-                    //combatSports
-                    _.each(n.combatSports, function (details) {
-                        combatSports += "," + details.name;
-                    });
-                    console.log("name", combatSports);
-                    if (combatSports) {
-                        combatSports = combatSports.slice(1);
-                        obj.combatSports = combatSports;
-                    } else {
-                        obj.combatSports = "";
-                    }
-
-                    //targetSports
-                    _.each(n.targetSports, function (details) {
-                        targetSports += "," + details.name;
-                    });
-                    console.log("name", targetSports);
-                    if (targetSports) {
-                        targetSports = targetSports.slice(1);
-                        obj.targetSports = targetSports;
-                    } else {
-                        obj.targetSports = "";
-                    }
-
-                    //individualSports
-                    _.each(n.individualSports, function (details) {
-                        individualSports += "," + details.name;
-                    });
-                    console.log("name", individualSports);
-                    if (individualSports) {
-                        individualSports = individualSports.slice(1);
-                        obj.individualSports = individualSports;
-                    } else {
-                        obj.individualSports = "";
-                    }
-                    var sportsInfo;
-                    var count = 0;
-                    _.each(n.sportsDepartment, function (details) {
-                        var name = details.name;
-                        var email = details.email;
-                        var mobile = details.mobile;
-                        var designation = details.designation;
-                        if (count == 0) {
-                            sportsInfo = "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
-                        } else {
-                            sportsInfo = sportsInfo + "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
-                        }
-                        count++;
-
-                        console.log("sportsInfo", sportsInfo);
-
-                    });
-                    obj.sportsDepartment = sportsInfo;
-                    obj.state = n.state;
-                    obj.district = n.district;
-                    obj.city = n.city;
-                    obj.locality = n.locality;
-                    obj.pinCode = n.pinCode;
-                    obj.contactPerson = n.contactPerson;
-                    obj.landline = n.landline;
-                    obj.email = n.email;
-                    obj.website = n.website;
-                    obj.mobile = n.mobile;
-                    obj.enterOTP = n.enterOTP;
-                    obj.schoolPrincipalName = n.schoolPrincipalName;
-                    obj.schoolPrincipalMobile = n.schoolPrincipalMobile;
-                    obj.schoolPrincipalLandline = n.schoolPrincipalLandline;
-                    obj.schoolPrincipalEmail = n.schoolPrincipalEmail;
-                    obj.status = n.status;
-                    obj.password = n.password;
-                    obj.year = n.year;
-                    obj.registrationFee = n.registrationFee;
-                    obj.paymentStatus = n.paymentStatus;
-                    obj.transactionID = n.transactionID;
-                    obj.remarks = n.remarks;
-                    excelData.push(obj);
+                //teamSports
+                _.each(n.teamSports, function (details) {
+                    teamSports += "," + details.name;
+                });
+                console.log("name", teamSports);
+                if (teamSports) {
+                    teamSports = teamSports.slice(1);
+                    obj.teamSports = teamSports;
                 } else {
-                    console.log("data to be hidden");
+                    obj.teamSports = "";
                 }
+
+                //racquetSports
+                _.each(n.racquetSports, function (details) {
+                    racquetSports += "," + details.name;
+                });
+                console.log("name", racquetSports);
+                if (racquetSports) {
+                    racquetSports = racquetSports.slice(1);
+                    obj.racquetSports = racquetSports;
+                } else {
+                    obj.racquetSports = "";
+                }
+                //aquaticsSports
+                _.each(n.aquaticsSports, function (details) {
+                    aquaticsSports += "," + details.name;
+                });
+                console.log("name", aquaticsSports);
+                if (aquaticsSports) {
+                    aquaticsSports = aquaticsSports.slice(1);
+                    obj.aquaticsSports = aquaticsSports;
+                } else {
+                    obj.aquaticsSports = "";
+                }
+
+                //combatSports
+                _.each(n.combatSports, function (details) {
+                    combatSports += "," + details.name;
+                });
+                console.log("name", combatSports);
+                if (combatSports) {
+                    combatSports = combatSports.slice(1);
+                    obj.combatSports = combatSports;
+                } else {
+                    obj.combatSports = "";
+                }
+
+                //targetSports
+                _.each(n.targetSports, function (details) {
+                    targetSports += "," + details.name;
+                });
+                console.log("name", targetSports);
+                if (targetSports) {
+                    targetSports = targetSports.slice(1);
+                    obj.targetSports = targetSports;
+                } else {
+                    obj.targetSports = "";
+                }
+
+                //individualSports
+                _.each(n.individualSports, function (details) {
+                    individualSports += "," + details.name;
+                });
+                console.log("name", individualSports);
+                if (individualSports) {
+                    individualSports = individualSports.slice(1);
+                    obj.individualSports = individualSports;
+                } else {
+                    obj.individualSports = "";
+                }
+                var sportsInfo;
+                var count = 0;
+                _.each(n.sportsDepartment, function (details) {
+                    var name = details.name;
+                    var email = details.email;
+                    var mobile = details.mobile;
+                    var designation = details.designation;
+                    if (count == 0) {
+                        sportsInfo = "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                    } else {
+                        sportsInfo = sportsInfo + "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                    }
+                    count++;
+
+                    console.log("sportsInfo", sportsInfo);
+
+                });
+                obj.sportsDepartment = sportsInfo;
+                obj.state = n.state;
+                obj.district = n.district;
+                obj.city = n.city;
+                obj.locality = n.locality;
+                obj.pinCode = n.pinCode;
+                obj.contactPerson = n.contactPerson;
+                obj.landline = n.landline;
+                obj.email = n.email;
+                obj.website = n.website;
+                obj.mobile = n.mobile;
+                obj.enterOTP = n.enterOTP;
+                obj.schoolPrincipalName = n.schoolPrincipalName;
+                obj.schoolPrincipalMobile = n.schoolPrincipalMobile;
+                obj.schoolPrincipalLandline = n.schoolPrincipalLandline;
+                obj.schoolPrincipalEmail = n.schoolPrincipalEmail;
+                obj.status = n.status;
+                obj.password = n.password;
+                obj.year = n.year;
+                obj.registrationFee = n.registrationFee;
+                obj.paymentStatus = n.paymentStatus;
+                obj.transactionID = n.transactionID;
+                obj.remarks = n.remarks;
+                excelData.push(obj);
+
             });
             Config.generateExcel("Registration", excelData, res);
         });
@@ -1156,14 +1167,14 @@ var model = {
                 }
             }]
         };
-        if (data.filter.type == "Date") {
+        if (data.type == "Date") {
             matchObj.createdAt = {
-                $gt: data.filter.startDate,
-                $lt: data.filter.endDate,
+                $gt: data.startDate,
+                $lt: data.endDate,
             };
-        } else if (data.filter.type == "SFA-ID") {
+        } else if (data.type == "SFA-ID") {
             matchObj = {
-                sfaID: data.filter.input,
+                sfaID: data.input,
                 $or: [{
                     registrationFee: {
                         $ne: "online PAYU"
@@ -1174,10 +1185,10 @@ var model = {
                     }
                 }]
             }
-        } else if (data.filter.type == "School Name") {
+        } else if (data.type == "School Name") {
             matchObj = {
                 'schoolName': {
-                    $regex: data.filter.input,
+                    $regex: data.input,
                     $options: "i"
                 },
                 $or: [{
@@ -1191,12 +1202,12 @@ var model = {
                 }]
 
             }
-        } else if (data.filter.type == "Payment Mode") {
-            if (data.filter.input == "cash") {
+        } else if (data.type == "Payment Mode") {
+            if (data.input == "cash") {
                 matchObj = {
                     'registrationFee': "cash",
                 }
-            } else if (data.filter.input == "online" || data.filter.input == "Online") {
+            } else if (data.input == "online" || data.input == "Online") {
                 matchObj = {
                     'registrationFee': "online PAYU",
                     paymentStatus: {
@@ -1205,12 +1216,12 @@ var model = {
                 }
 
             }
-        } else if (data.filter.type == "Payment Status") {
-            if (data.filter.input == "Paid" || data.filter.input == "paid") {
+        } else if (data.type == "Payment Status") {
+            if (data.input == "Paid" || data.input == "paid") {
                 matchObj = {
                     'paymentStatus': "Paid",
                 }
-            } else if (data.filter.input == "Pending" || data.filter.input == "pending") {
+            } else if (data.input == "Pending" || data.input == "pending") {
                 matchObj = {
                     'paymentStatus': "Pending",
                     registrationFee: {
@@ -1219,10 +1230,10 @@ var model = {
                 }
             }
 
-        } else if (data.filter.type == "Verified Status") {
+        } else if (data.type == "Verified Status") {
             matchObj = {
                 'status': {
-                    $regex: data.filter.input,
+                    $regex: data.input,
                     $options: "i"
 
                 },
