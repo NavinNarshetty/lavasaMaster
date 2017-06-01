@@ -1150,18 +1150,18 @@ var model = {
 
                     smsData.content = "Congratulations! You are now a verified SFA Athlete. Kindly check your registered Email ID for your SFA ID and Password.";
                     console.log("smsdata", smsData);
-                    callback(null, smsData);
-                    // Config.sendSms(smsData, function (err, smsRespo) {
-                    //     if (err) {
-                    //         console.log(err);
-                    //         callback(err, null);
-                    //     } else if (smsRespo) {
-                    //         console.log(smsRespo, "sms sent");
-                    //         callback(null, smsRespo);
-                    //     } else {
-                    //         callback(null, "Invalid data");
-                    //     }
-                    // });
+                    // callback(null, smsData);
+                    Config.sendSms(smsData, function (err, smsRespo) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else if (smsRespo) {
+                            console.log(smsRespo, "sms sent");
+                            callback(null, smsRespo);
+                        } else {
+                            callback(null, "Invalid data");
+                        }
+                    });
                 }
             ],
             function (err, final) {
