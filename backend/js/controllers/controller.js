@@ -1,12 +1,35 @@
 var globalfunction = {};
 myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("dashboard");
+    $scope.menutitle = NavigationService.makeactive("Dashboard");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
+
+myApp.controller('viewSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("viewschool");
+    $scope.menutitle = NavigationService.makeactive("View School");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
+
+myApp.controller('viewAthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("viewathlete");
+    $scope.menutitle = NavigationService.makeactive("View Athlete");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
+
+myApp.controller('viewReplicaCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
         //Used to name the .html file
-        $scope.template = TemplateService.changecontent("dashboard");
-        $scope.menutitle = NavigationService.makeactive("Dashboard");
+        $scope.template = TemplateService.changecontent("viewoldschool");
+        $scope.menutitle = NavigationService.makeactive("View Old School");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
     })
-
 
     .controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {
         if ($.jStorage.get("accessToken")) {
@@ -399,6 +422,7 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
 
 
     })
+
 
     .controller('DetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, toastr) {
         $scope.json = JsonService;

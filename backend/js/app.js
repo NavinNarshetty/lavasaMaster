@@ -31,6 +31,23 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'DashboardCtrl',
         })
 
+        .state('viewSchool', {
+            url: "/viewSchool",
+            templateUrl: "views/template.html",
+            controller: 'viewSchoolCtrl'
+        })
+
+        .state('viewAthlete', {
+            url: "/viewAthlete",
+            templateUrl: "views/template.html",
+            controller: 'viewAthleteCtrl'
+        })
+        .state('viewReplica', {
+            url: "/viewReplica",
+            templateUrl: "views/template.html",
+            controller: 'viewReplicaCtrl'
+        })
+
         .state('login', {
             url: "/login",
             templateUrl: "views/login.html",

@@ -25,6 +25,24 @@ myApp.factory('NavigationService', function ($http) {
             icon: "phone"
         },
         {
+            name: "View School",
+            classis: "active",
+            sref: "#!/viewSchool",
+            icon: "phone"
+        },
+        {
+            name: "View Athlete",
+            classis: "active",
+            sref: "#!/viewAthlete",
+            icon: "phone"
+        },
+        {
+            name: "View Old School",
+            classis: "active",
+            sref: "#!/viewReplica",
+            icon: "phone"
+        },
+        {
             name: "Age Group",
             classis: "active",
             sref: "#!/page/viewAgeGroup//",
