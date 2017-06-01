@@ -20,8 +20,8 @@
                     <div class="widget-title ">
                         <div class="pull-right">
                             <form class="search-form mr-form ">
-                                <input type="text " ng-change="filterSchool(true) " placeholder="Search Here...
-                             " ng-model="search.keyword" />
+                                <input type="text " ng-change="searchInOldSchool(search) " placeholder="Search Here...
+                             " ng-model="search" />
                             </form>
                         </div>
                         <h3>List of Old School<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
@@ -43,10 +43,12 @@
                             </thead>
                             <tbody>
                                 <!--<tr ng-repeat="item in items">-->
-                                <tr>
-                                    <td>1</td>
-                                    <td>MS171</td>
-                                    <td>ABC</td>
+                                <tr ng-repeat="item in items">
+                                    <!--<tr>-->
+                                    <!--<td>{{$index + 1}}</td>-->
+                                    <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
+                                    <td>{{item.sfaID}}</td>
+                                    <td>{{item.schoolName}}</td>
                                     <td>
                                         <a class="btn btn-info">
                                             <i class="fa fa-eye"></i> View
@@ -67,10 +69,8 @@
                     <div class="tableData " ng-show="totalItems===undefined ">
                         <h5>Loading Data</h5>
                     </div>
-                    <ul ng-if="totalItems " ng-change="changePage(currentPage); " uib-pagination total-items="totalItems
-                                            " items-per-page="maxRow " ng-model="currentPage " max-size="template.pageMax "
-                        class="pagination-sm
-                                            " boundary-links="true " force-ellipses="true "></ul>
+                    <ul ng-if="totalItems" ng-change="filterOldSchool();" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
+                        max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
                 </div>
             </div>
         </div>

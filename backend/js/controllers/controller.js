@@ -32,7 +32,7 @@ myApp.controller('viewSchoolCtrl', function ($scope, TemplateService, Navigation
     $scope.formData = {};
     $scope.formData.page = 1;
     // $scope.selectedStatus = 'All';
-    $scope.searchInOrder = function (data) {
+    $scope.searchInSchool = function (data) {
         $scope.formData.page = 1;
         if (data.length >= 2) {
             $scope.formData.keyword = data;
@@ -81,6 +81,43 @@ myApp.controller('viewAthleteCtrl', function ($scope, TemplateService, Navigatio
     $scope.menutitle = NavigationService.makeactive("View Athlete");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    // $scope.selectedStatus = 'All';
+    $scope.searchInAthlete = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.filterAthlete();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.filterAthlete();
+        }
+    }
+    // $scope.filterDelivery = function (data) {
+    //     $scope.oConstraints.pagenumber = 1;
+    //     $scope.oConstraints.pagesize = 10;
+    //     $scope.oConstraints.deliveryStatus = data;
+    //     $scope.selectedStatus = data;
+    //     $scope.getMyOrders();
+    // }
+    $scope.filterAthlete = function () {
+
+        // $stateParams.filter = $scope.formData;
+
+        $scope.url = "Athelete/filterAthlete";
+        $scope.search = $scope.formData.keyword;
+        $scope.formData.page = $scope.formData.page++;
+
+
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
+        });
+
+    };
+    $scope.filterAthlete();
 })
 
 myApp.controller('viewReplicaCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
@@ -90,6 +127,49 @@ myApp.controller('viewReplicaCtrl', function ($scope, TemplateService, Navigatio
         $scope.menutitle = NavigationService.makeactive("View Old School");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        $scope.formData = {};
+        $scope.formData.page = 1;
+        // $scope.selectedStatus = 'All';
+        $scope.searchInOldSchool = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.filterSchool();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.filterSchool();
+            }
+        }
+        // $scope.filterDelivery = function (data) {
+        //     $scope.oConstraints.pagenumber = 1;
+        //     $scope.oConstraints.pagesize = 10;
+        //     $scope.oConstraints.deliveryStatus = data;
+        //     $scope.selectedStatus = data;
+        //     $scope.getMyOrders();
+        // }
+
+        $scope.getAllItems = function (keywordChange) {
+            $scope.search = $scope.formData.keyword;
+            $scope.formData.page = $scope.formData.page++;
+            // $scope.totalItems = undefined;
+            // if (keywordChange) {
+            //     $scope.currentPage = 1;
+            // }
+            NavigationService.search($scope.json.json.apiCall.url, {
+                    page: $scope.formData.page,
+                    keyword: $scope.formData.keyword
+                }, ++i,
+                function (data, ini) {
+                    if (ini == i) {
+                        $scope.items = data.data.results;
+                        $scope.totalItems = data.data.total;
+                        $scope.maxRow = data.data.options.count;
+                    }
+                });
+        };
+
+        JsonService.refreshView = $scope.getAllItems;
+        $scope.getAllItems();
     })
 
     .controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {
