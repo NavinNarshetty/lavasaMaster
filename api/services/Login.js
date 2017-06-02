@@ -163,7 +163,7 @@ var model = {
                         callback(null, data1);
                     } else {
                         callback(null, {
-                            error: "Invalid data"
+                            error: "Incorrect Old Password"
                         });
                     }
                 });

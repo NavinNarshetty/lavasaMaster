@@ -32,15 +32,6 @@
         "validation": ["", "trim", ""],
         "url": "DrawFormat/search"
     }, {
-        "name": "Table Header",
-        "type": "text",
-        "tableRef": "tableContent",
-        "option": "single",
-        "placeholder": "Enter tableContent",
-        "id": "tableContent",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
         "name": "Inactive Image",
         "type": "image",
         "tableRef": "inactiveimage",

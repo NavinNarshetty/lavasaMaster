@@ -144,7 +144,7 @@ var model = {
         function handleFile(err, data) {
             if (err) throw err
             obj = JSON.parse(data)
-            // console.log("obj", obj);
+            console.log("obj", obj);
             async.each(obj, function (data, callback) {
                 console.log("id", data._id);
                 Student.remove({ //finds one with refrence to id
@@ -155,14 +155,14 @@ var model = {
                     } else if (_.isEmpty(found)) {
                         callback(null, "Data is empty");
                     } else {
-                        console.log("found", found);
+                        // console.log("found", found);
                         callback(null, found);
                     }
 
                 });
             }, function (err, data4) {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     callback(err, null);
                 } else {
                     callback(null, "Successfully removed!");

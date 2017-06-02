@@ -108,6 +108,7 @@ var schema = new Schema({
     verifiedDate: Date,
 
     remarks: String,
+    accessToken: String,
 });
 
 schema.plugin(deepPopulate, {});
