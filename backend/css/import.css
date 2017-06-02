@@ -32052,12 +32052,6 @@ a,
   max-height: 100%;
   width: auto; }
 
-.menu-options {
-  margin-top: 15px; }
-
-.logo {
-  padding: 10px 0 10px 25px; }
-
 .account-form > form .feild > .login-w {
   background: #125daa none repeat scroll 0 0;
   border: medium none;
@@ -33139,8 +33133,26 @@ body {
 .mrtp {
   margin-top: 21px; }
 
+.school {
+  height: 34px; }
+
 .cur {
   cursor: pointer; }
+  .cur li {
+    padding: 2px; }
+    .cur li:hover {
+      background: #e6e6e6; }
+  .cur label {
+    width: 82%;
+    cursor: pointer; }
+
+.open > .dropdown-menu {
+  padding: 0;
+  margin: 0; }
+
+input[type=radio] {
+  cursor: pointer;
+  margin: 4px 6px 4px; }
 
 /* Start writing sass here */
 #fancybox-loading, .fancybox-close, .fancybox-next span, .fancybox-prev span {

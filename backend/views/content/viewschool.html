@@ -24,22 +24,36 @@
                                 <div class="form-group">
                                     <div class="mtp5">
                                         <div class="dropdown">
-                                            <button class="btn default btn-md dropdown-toggle mbt5" type="button" data-toggle="dropdown">Filter
+                                            <button class="btn default btn-md dropdown-toggle" type="button" data-toggle="dropdown">Filter
                                                 <span class="caret"></span></button>
                                             <ul class="dropdown-menu cur">
-                                                <li><input type="radio" ng-model="formData.type" value="Date"> Date</li>
-                                                <li><input type="radio" ng-model="formData.type" value="SFA-ID">SFA-ID</li>
-                                                <li><input type="radio" ng-model="formData.type" value="School Name"> School
-                                                    Name
+                                                <li><input type="radio" id="radio1" ng-model="formData.type" ng-change="changeAll()"
+                                                        value="">
+                                                    <label for="radio1">All</label>
                                                 </li>
-                                                <li><input type="radio" ng-model="formData.type" value="Payment Mode">Payment
-                                                    Mode
+                                                <li><input type="radio" id="radio7" ng-model="formData.type" value="Date">
+                                                    <label for="radio7">Date</label>
                                                 </li>
-                                                <li><input type="radio" ng-model="formData.type" value="Payment Status">Payment
-                                                    Status
+                                                <li><input type="radio" id="radio2" ng-model="formData.type" ng-change="changeInput()"
+                                                        value="SFA-ID">
+                                                    <label for="radio2">SFA-ID</label>
                                                 </li>
-                                                <li><input type="radio" ng-model="formData.type" value="Verified Status">Verified
-                                                    Status
+                                                <li><input type="radio" id="radio3" ng-model="formData.type" ng-change="changeInput()"
+                                                        value="School Name">
+                                                    <label for="radio3">School Name
+                                                        </label>
+                                                </li>
+                                                <li><input type="radio" id="radio4" ng-model="formData.type" ng-change="changeInput()"
+                                                        value="Payment Mode">
+                                                    <label for="radio4">Payment Mode</label>
+                                                </li>
+                                                <li><input type="radio" id="radio5" ng-model="formData.type" ng-change="changeInput()"
+                                                        value="Payment Status">
+                                                    <label for="radio5">Payment Status</label>
+                                                </li>
+                                                <li><input type="radio" id="radio6" ng-model="formData.type" ng-change="changeInput()"
+                                                        value="Verified Status">
+                                                    <label for="radio6">Verified Status</label>
                                                 </li>
                                             </ul>
                                         </div>
@@ -47,22 +61,21 @@
                                             <div class="col-md-4">
                                                 <span>From:</span>
                                                 <input-date ng-model="formData.startDate" placeholder="From"></input-date>
-
                                             </div>
                                             <div class="col-md-4">
                                                 <span>To:</span>
                                                 <input-date ng-model="formData.endDate" placeholder="To"></input-date>
                                             </div>
                                             <div class="col-md-4">
-                                                <button class="btn btn-sm mrtp" type="button" ng-click="filterSchool(formData)">Go</button>
+                                                <button class="btn btn-sm mrtp school" type="button" ng-click="filterSchool(formData)">Go</button>
                                             </div>
                                         </div>
                                         <div class="row" ng-if="formData.type != 'Date' && formData.type != ''">
                                             <div class="col-md-6 mtp5">
-                                                <input type="text" ng-model="formData.input" class="form-control">
+                                                <input type="text" ng-model="formData.input" class="form-control" placeholder="Enter {{formData.type}}">
                                             </div>
                                             <div class="col-md-4 mtp5">
-                                                <button class="btn btn-sm" type="button" ng-click="filterSchool(formData)">Go</button>
+                                                <button class="btn btn-sm school" type="button" ng-click="filterSchool(formData)">Go</button>
                                             </div>
                                         </div>
                                     </div>

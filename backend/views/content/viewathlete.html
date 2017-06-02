@@ -28,25 +28,40 @@
                                 <div class="form-group">
                                     <div class="mtp5">
                                         <div class="dropdown">
-                                            <button class="btn default btn-md dropdown-toggle mbt5" type="button" data-toggle="dropdown">Filter
+                                            <button class="btn default btn-md dropdown-toggle" type="button" data-toggle="dropdown">Filter
                                                 <span class="caret"></span></button>
                                             <ul class="dropdown-menu cur">
-                                                <li><input type="radio" ng-model="formData.type" value="Date"> Date</li>
-                                                <li><input type="radio" ng-model="formData.type" value="SFA-ID">SFA-ID</li>
-                                                <li><input type="radio" ng-model="formData.type" value="School Name"> School
-                                                    Name
+                                                <li><input type="radio" id="radio8" ng-model="formData.type" ng-change="changeAll()"
+                                                        value="">
+                                                    <label for="radio8">All</label>
                                                 </li>
-                                                <li><input type="radio" ng-model="formData.type" value="Athlete Name"> Athlete
-                                                    Name
+                                                <li><input type="radio" id="radio1" ng-model="formData.type" value="Date">
+                                                    <label for="radio1">Date</label>
                                                 </li>
-                                                <li><input type="radio" ng-model="formData.type" value="Payment Mode">Payment
-                                                    Mode
+                                                <li><input type="radio" id="radio2" ng-model="formData.type" value="SFA-ID" ng-change="changeInput()">
+                                                    <label for="radio2">SFA-ID</label>
                                                 </li>
-                                                <li><input type="radio" ng-model="formData.type" value="Payment Status">Payment
-                                                    Status
+                                                <li><input type="radio" id="radio3" ng-model="formData.type" value="School Name"
+                                                        ng-change="changeInput()">
+                                                    <label for="radio3">School Name
+                                                        </label>
                                                 </li>
-                                                <li><input type="radio" ng-model="formData.type" value="Verified Status">Verified
-                                                    Status
+                                                <li><input type="radio" id="radio7" ng-model="formData.type" value="Athlete Name"
+                                                        ng-change="changeInput()">
+                                                    <label for="radio7">Athlete Name
+                                                        </label>
+                                                </li>
+                                                <li><input type="radio" id="radio4" ng-model="formData.type" value="Payment Mode"
+                                                        ng-change="changeInput()">
+                                                    <label for="radio4">Payment Mode</label>
+                                                </li>
+                                                <li><input type="radio" id="radio5" ng-model="formData.type" value="Payment Status"
+                                                        ng-change="changeInput()">
+                                                    <label for="radio5">Payment Status</label>
+                                                </li>
+                                                <li><input type="radio" id="radio6" ng-model="formData.type" value="Verified Status"
+                                                        ng-change="changeInput()">
+                                                    <label for="radio6">Verified Status</label>
                                                 </li>
 
                                             </ul>
@@ -61,15 +76,15 @@
                                                 <input-date ng-model="formData.endDate" placeholder="To"></input-date>
                                             </div>
                                             <div class="col-md-4 ">
-                                                <button class="btn btn-sm mrtp" type="button" ng-click="filterAthlete(formData)">Go</button>
+                                                <button class="btn btn-sm mrtp school" type="button" ng-click="filterAthlete(formData)">Go</button>
                                             </div>
                                         </div>
                                         <div class="row" ng-if="formData.type != 'Date' && formData.type != ''">
                                             <div class="col-md-6 mtp5">
-                                                <input type="text" ng-model="formData.input" class="form-control">
+                                                <input type="text" ng-model="formData.input" class="form-control" placeholder="Enter {{formData.type}}">
                                             </div>
                                             <div class="col-md-4 mtp5">
-                                                <button class="btn btn-sm" type="button" ng-click="filterAthlete(formData)">Go</button>
+                                                <button class="btn btn-sm school" type="button" ng-click="filterAthlete(formData)">Go</button>
                                             </div>
                                         </div>
                                     </div>

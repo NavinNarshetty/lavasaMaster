@@ -14,6 +14,7 @@ myApp.controller('viewSchoolCtrl', function ($scope, TemplateService, Navigation
     $scope.menutitle = NavigationService.makeactive("View School");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+
     // if ($stateParams.page && !isNaN(parseInt($stateParams.page))) {
     //     $scope.currentPage = $stateParams.page;
     // } else {
@@ -31,6 +32,22 @@ myApp.controller('viewSchoolCtrl', function ($scope, TemplateService, Navigation
 
     $scope.formData = {};
     $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    $scope.changeInput = function () {
+        if ($scope.formData.input != '') {
+            $scope.formData.input = '';
+        } else {
+            $scope.formData.input = $scope.formData.input;
+        }
+    };
+    $scope.changeAll = function () {
+        $scope.formData = {};
+        $scope.formData.page = 1;
+        $scope.formData.type = '';
+        $scope.formData.keyword = '';
+        $scope.filterSchool();
+    };
     // $scope.selectedStatus = 'All';
     $scope.searchInSchool = function (data) {
         $scope.formData.page = 1;
@@ -81,6 +98,20 @@ myApp.controller('viewAthleteCtrl', function ($scope, TemplateService, Navigatio
     $scope.menutitle = NavigationService.makeactive("View Athlete");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.changeInput = function () {
+        if ($scope.formData.input != '') {
+            $scope.formData.input = '';
+        } else {
+            $scope.formData.input = $scope.formData.input;
+        }
+    };
+    $scope.changeAll = function () {
+        $scope.formData = {};
+        $scope.formData.page = 1;
+        $scope.formData.type = '';
+        $scope.formData.keyword = '';
+        $scope.filterSchool();
+    };
     $scope.formData = {};
     $scope.formData.page = 1;
     $scope.formData.type = '';
