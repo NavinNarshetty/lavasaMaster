@@ -18,11 +18,11 @@ var schema = new Schema({
         ref: 'SportsList',
         index: true
     },
-    ageGroup: [{
+    ageGroup: {
         type: Schema.Types.ObjectId,
         ref: 'AgeGroup',
         index: true
-    }],
+    },
     firstCategory: {
         type: Schema.Types.ObjectId,
         ref: 'FirstCategory',
@@ -37,20 +37,13 @@ var schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'ThirdCategory',
         index: true
-    },
-    drawFormat: {
-        type: Schema.Types.ObjectId,
-        ref: 'DrawFormat',
-        index: true
-
-    },
+    }
 });
 
-// schema.plugin(deepPopulate, {});
 schema.plugin(deepPopulate, {
     populate: {
         'sportslist': {
-            select: '_id name sporttype drawFormat inactiveimage image'
+            select: '_id name sporttype drawFormat rules inactiveimage image'
         },
         'ageGroup': {
             select: '_id name'
@@ -74,8 +67,8 @@ var model = {
 
     getOneSport: function (data, callback) {
         var deepSearch = "sportslist ageGroup firstCategory secondCategory thirdCategory";
-        Sport.findOne({
-            _id: data._id
+        Sport.find({
+            sportslist: data._id
         }).deepPopulate(deepSearch).lean().exec(
             function (err, found) {
                 if (err) {
@@ -103,6 +96,224 @@ var model = {
                 }
             });
     },
+
+    getAllAthletePerSchool: function (data, callback) {
+        var type = data.sfaid.charAt(1);
+        console.log(type);
+        if (type == 'A') {
+            console.log("inside athelete");
+            async.waterfall([
+                    function (callback) {
+                        Athelete.findOne({
+                            _id: data._id
+                        }).lean().exec(
+                            function (err, found) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (found) {
+                                    console.log("found", found);
+                                    if (found.atheleteSchoolName) {
+                                        var school = found.atheleteSchoolName;
+                                        callback(null, school);
+                                    } else {
+                                        console.log("school", found.school);
+                                        School.findOne({
+                                            _id: found.school
+                                        }).lean().exec(
+                                            function (err, foundSchool) {
+                                                if (err) {
+                                                    console.log(err);
+                                                    callback(err, null);
+                                                } else if (foundSchool) {
+                                                    var school = foundSchool.name;
+                                                    callback(null, school);
+                                                } else {
+                                                    callback("Invalid data", null);
+                                                }
+                                            });
+                                    }
+                                }
+                            });
+                    },
+
+                    function (school, callback) {
+                        Athelete.aggregate(
+                            [{
+                                    $lookup: {
+                                        "from": "schools",
+                                        "localField": "school",
+                                        "foreignField": "_id",
+                                        "as": "schoolData"
+                                    }
+                                },
+                                // Stage 2
+                                {
+                                    $unwind: {
+                                        path: "$schoolData",
+                                        preserveNullAndEmptyArrays: true // optional
+                                    }
+                                },
+                                // Stage 3
+                                {
+                                    $match: {
+
+                                        $or: [{
+                                                "schoolData.name": {
+                                                    $regex: school
+                                                }
+                                            },
+                                            {
+                                                "atheleteSchoolName": {
+                                                    $regex: school
+                                                }
+                                            }
+                                        ]
+
+                                    }
+                                },
+                                // Stage 4
+                                {
+                                    $match: {
+                                        $or: [{
+                                            registrationFee: {
+                                                $ne: "online PAYU"
+                                            }
+                                        }, {
+                                            paymentStatus: {
+                                                $ne: "Pending"
+                                            }
+                                        }]
+                                    }
+                                }
+                            ],
+                            function (err, returnReq) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, err);
+                                } else {
+                                    if (_.isEmpty(returnReq)) {
+                                        callback(null, "data is empty");
+                                    } else {
+                                        callback(null, returnReq);
+                                    }
+                                }
+                            });
+                    },
+                ],
+                function (err, data2) {
+                    if (err) {
+                        console.log(err);
+                        callback(null, []);
+                    } else if (data2) {
+                        if (_.isEmpty(data2)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, data2);
+                        }
+                    }
+                });
+        } else if (type == 'S') {
+            async.waterfall([
+                    function (callback) {
+                        School.findOne({
+                            _id: data.id
+                        }).lean().exec(
+                            function (err, found) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (found) {
+                                    var school = found.name;
+                                    callback(null, school);
+                                } else {
+                                    callback("Invalid data", null);
+                                }
+                            });
+                    },
+
+                    function (school, callback) {
+                        Athelete.aggregate(
+                            [{
+                                    $lookup: {
+                                        "from": "schools",
+                                        "localField": "school",
+                                        "foreignField": "_id",
+                                        "as": "schoolData"
+                                    }
+                                },
+                                // Stage 2
+                                {
+                                    $unwind: {
+                                        path: "$schoolData",
+                                        preserveNullAndEmptyArrays: true // optional
+                                    }
+                                },
+                                // Stage 3
+                                {
+                                    $match: {
+
+                                        $or: [{
+                                                "schoolData.name": {
+                                                    $regex: school
+                                                }
+                                            },
+                                            {
+                                                "atheleteSchoolName": {
+                                                    $regex: school
+                                                }
+                                            }
+                                        ]
+
+                                    }
+                                },
+                                // Stage 4
+                                {
+                                    $match: {
+                                        $or: [{
+                                            registrationFee: {
+                                                $ne: "online PAYU"
+                                            }
+                                        }, {
+                                            paymentStatus: {
+                                                $ne: "Pending"
+                                            }
+                                        }]
+                                    }
+                                }
+                            ],
+                            function (err, returnReq) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, err);
+                                } else {
+                                    if (_.isEmpty(returnReq)) {
+                                        callback(null, "data is empty");
+                                    } else {
+                                        callback(null, returnReq);
+                                    }
+                                }
+                            });
+                    },
+                ],
+                function (err, data2) {
+                    if (err) {
+                        console.log(err);
+                        callback(null, []);
+                    } else if (data2) {
+                        if (_.isEmpty(data2)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, data2);
+                        }
+                    }
+                });
+
+
+        }
+
+
+    }
 
 
 };

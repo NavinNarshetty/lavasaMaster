@@ -50,8 +50,9 @@
         "url": ""
     }, {
         "name": "Sports List",
-        "type": "selectFromTable",
+        "type": "tags",
         "dropDownType": "single",
+        "dropDownField": "name",
         "tableRef": "sportslist",
         "searchApi": "searchCall",
         "placeholder": "Enter sportslist",
@@ -61,7 +62,7 @@
     }, {
         "name": "Age Group",
         "type": "tags",
-        "dropDownType": "multiple",
+        "dropDownType": "single",
         "dropDownField": "name",
         "tableRef": "ageGroup",
         "searchApi": "searchCall",
@@ -99,16 +100,6 @@
         "id": "input1",
         "validation": ["", "trim", ""],
         "url": "ThirdCategory/search"
-    }, {
-        "name": "Draw Format",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "tableRef": "drawFormat",
-        "searchApi": "searchCall",
-        "placeholder": "Enter drawFormat",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "DrawFormat/search"
     }],
     "action": [{
         "name": "submit",

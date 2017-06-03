@@ -32,6 +32,17 @@
         "validation": ["", "trim", ""],
         "url": "DrawFormat/search"
     }, {
+        "name": "Rules and Regulation",
+        "type": "selectFromTable",
+        "tableRef": "rules",
+        "dropDownType": "single",
+        "dropDownField": "name",
+        "searchApi": "searchCall",
+        "placeholder": "Enter Draw Format",
+        "id": "input1",
+        "validation": ["", "trim", ""],
+        "url": "Rules/search"
+    }, {
         "name": "Table Header",
         "type": "tags",
         "tableRef": "tableContent",

@@ -314,18 +314,31 @@ var model = {
                     // Stage 2
                     {
                         $unwind: {
-                            path: "$schoolData"
-
+                            path: "$schoolData",
+                            preserveNullAndEmptyArrays: true // optional
                         }
-
                     },
                     // Stage 3
                     {
                         $match: {
-                            "schoolData.name": {
-                                $regex: data.input
-                            },
 
+                            $or: [{
+                                    "schoolData.name": {
+                                        $regex: data.input
+                                    }
+                                },
+                                {
+                                    "atheleteSchoolName": {
+                                        $regex: data.input
+                                    }
+                                }
+                            ]
+
+                        }
+                    },
+                    // Stage 4
+                    {
+                        $match: {
                             $or: [{
                                 registrationFee: {
                                     $ne: "online PAYU"
@@ -394,7 +407,6 @@ var model = {
 
         }
     },
-
     //on athelete save or submit press 
     saveAthelete: function (data, callback) {
         if (_.isEmpty(data.school)) {
@@ -1012,7 +1024,6 @@ var model = {
         }
 
     },
-
 
     registeredOnlinePaymentMailSms: function (data, callback) {
 

@@ -6,8 +6,14 @@
     "urlFields": ["_id"],
     "fields": [{
         "name": "Sports List",
+        "fieldToBeShown": "name",
+        "type": "fkListView",
         "isSort": "",
-        "tableRef": "sportslist.name"
+        "tableRef": "sportslist"
+    }, {
+        "name": "Gender",
+        "isSort": "",
+        "tableRef": "gender"
     }, {
         "name": "Year",
         "isSort": "",

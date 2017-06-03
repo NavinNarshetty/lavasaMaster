@@ -13,17 +13,6 @@
             "id": "name",
             "validation": ["required", "trim", "unique"],
             "url": ""
-        }, {
-            "name": "Sports",
-            "type": "tags",
-            "tableRef": "sport",
-            "dropDownType": "single",
-            "dropDownField": "name",
-            "searchApi": "searchCall",
-            "placeholder": "Enter Draw Format",
-            "id": "input1",
-            "validation": ["", "trim", ""],
-            "url": "SportsList/search"
         },
         {
             "name": "Rules and Regulations",

@@ -2,11 +2,6 @@ var schema = new Schema({
     name: {
         type: String,
     },
-    sport: {
-        type: Schema.Types.ObjectId,
-        ref: 'SportsList',
-        index: true
-    },
     rulesAndRegulation: String
 });
 
