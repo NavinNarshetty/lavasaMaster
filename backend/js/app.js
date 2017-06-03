@@ -31,21 +31,37 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'DashboardCtrl',
         })
 
-        .state('viewSchool', {
-            url: "/viewSchool",
+        .state('school', {
+            url: "/school",
             templateUrl: "views/template.html",
-            controller: 'viewSchoolCtrl'
+            controller: 'SchoolCtrl'
+        })
+
+        .state('athlete', {
+            url: "/athlete",
+            templateUrl: "views/template.html",
+            controller: 'AthleteCtrl'
+        })
+        .state('oldschool', {
+            url: "/oldschool",
+            templateUrl: "views/template.html",
+            controller: 'OldSchoolCtrl'
+        })
+        .state('viewSchool', {
+            url: "/viewSchool/:id",
+            templateUrl: "views/template.html",
+            controller: 'ViewSchoolCtrl'
         })
 
         .state('viewAthlete', {
-            url: "/viewAthlete",
+            url: "/viewAthlete/:id",
             templateUrl: "views/template.html",
-            controller: 'viewAthleteCtrl'
+            controller: 'ViewAthleteCtrl'
         })
-        .state('viewReplica', {
-            url: "/viewReplica",
+        .state('viewOldSchool', {
+            url: "/viewOldSchool/:id",
             templateUrl: "views/template.html",
-            controller: 'viewReplicaCtrl'
+            controller: 'ViewOldSchoolCtrl'
         })
 
         .state('login', {

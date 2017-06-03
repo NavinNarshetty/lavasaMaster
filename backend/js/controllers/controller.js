@@ -7,11 +7,11 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
     $scope.navigation = NavigationService.getnav();
 })
 
-myApp.controller('viewSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
     //registration filter view
     //Used to name the .html file
-    $scope.template = TemplateService.changecontent("viewschool");
-    $scope.menutitle = NavigationService.makeactive("View School");
+    $scope.template = TemplateService.changecontent("tableschool");
+    $scope.menutitle = NavigationService.makeactive("School");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 
@@ -91,11 +91,11 @@ myApp.controller('viewSchoolCtrl', function ($scope, TemplateService, Navigation
 
 })
 
-myApp.controller('viewAthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
     //athlete filter view
     //Used to name the .html file
-    $scope.template = TemplateService.changecontent("viewathlete");
-    $scope.menutitle = NavigationService.makeactive("View Athlete");
+    $scope.template = TemplateService.changecontent("tableathlete");
+    $scope.menutitle = NavigationService.makeactive("Athlete");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     $scope.changeInput = function () {
@@ -153,58 +153,115 @@ myApp.controller('viewAthleteCtrl', function ($scope, TemplateService, Navigatio
     $scope.filterAthlete();
 })
 
-myApp.controller('viewReplicaCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+    //old school filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tableoldschool");
+    $scope.menutitle = NavigationService.makeactive("Old School");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    var i = 0;
+    // $scope.selectedStatus = 'All';
+    $scope.searchInOldSchool = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.getAllItems();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.getAllItems();
+        }
+    }
+    // $scope.filterDelivery = function (data) {
+    //     $scope.oConstraints.pagenumber = 1;
+    //     $scope.oConstraints.pagesize = 10;
+    //     $scope.oConstraints.deliveryStatus = data;
+    //     $scope.selectedStatus = data;
+    //     $scope.getMyOrders();
+    // }
+
+    $scope.getAllItems = function (keywordChange) {
+        $scope.search = $scope.formData.keyword;
+        $scope.formData.page = $scope.formData.page++;
+        // $scope.totalItems = undefined;
+        // if (keywordChange) {
+        //     $scope.currentPage = 1;
+        // }
+        NavigationService.search('School/search', {
+                page: $scope.formData.page,
+                keyword: $scope.formData.keyword
+            }, ++i,
+            function (data, ini) {
+                if (ini == i) {
+                    $scope.items = data.data.results;
+                    $scope.totalItems = data.data.total;
+                    $scope.maxRow = data.data.options.count;
+                }
+            });
+    };
+
+    // JsonService.refreshView = $scope.getAllItems;
+    $scope.getAllItems();
+})
+
+myApp.controller('ViewAthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //old school filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("viewathlete");
+    $scope.menutitle = NavigationService.makeactive("View Athlete");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.getOneAthleteById = function () {
+        $scope.url = 'Athelete/getOne';
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.athlete = data.data;
+            console.log($scope.athlete);
+        });
+    };
+    $scope.getOneAthleteById();
+})
+
+myApp.controller('ViewSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //old school filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("viewschool");
+    $scope.menutitle = NavigationService.makeactive("View School");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.getOneSchoolById = function () {
+        $scope.url = 'Registration/getOne';
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.school = data.data;
+        });
+    };
+    $scope.getOneSchoolById();
+})
+
+
+myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams) {
         //old school filter view
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("viewoldschool");
         $scope.menutitle = NavigationService.makeactive("View Old School");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
-        $scope.formData = {};
-        $scope.formData.page = 1;
-        var i = 0;
-        // $scope.selectedStatus = 'All';
-        $scope.searchInOldSchool = function (data) {
-            $scope.formData.page = 1;
-            if (data.length >= 2) {
-                $scope.formData.keyword = data;
-                $scope.getAllItems();
-            } else if (data.length == '') {
-                $scope.formData.keyword = data;
-                $scope.getAllItems();
-            }
-        }
-        // $scope.filterDelivery = function (data) {
-        //     $scope.oConstraints.pagenumber = 1;
-        //     $scope.oConstraints.pagesize = 10;
-        //     $scope.oConstraints.deliveryStatus = data;
-        //     $scope.selectedStatus = data;
-        //     $scope.getMyOrders();
-        // }
-
-        $scope.getAllItems = function (keywordChange) {
-            $scope.search = $scope.formData.keyword;
-            $scope.formData.page = $scope.formData.page++;
-            // $scope.totalItems = undefined;
-            // if (keywordChange) {
-            //     $scope.currentPage = 1;
-            // }
-            NavigationService.search('School/search', {
-                    page: $scope.formData.page,
-                    keyword: $scope.formData.keyword
-                }, ++i,
-                function (data, ini) {
-                    if (ini == i) {
-                        $scope.items = data.data.results;
-                        $scope.totalItems = data.data.total;
-                        $scope.maxRow = data.data.options.count;
-                    }
-                });
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = 'School/getOne';
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.oldschool = data.data;
+            });
         };
-
-        // JsonService.refreshView = $scope.getAllItems;
-        $scope.getAllItems();
+        $scope.getOneOldSchoolById();
     })
+
 
     .controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {
         if ($.jStorage.get("accessToken")) {

@@ -27,19 +27,19 @@ myApp.factory('NavigationService', function ($http) {
         {
             name: "View School",
             classis: "active",
-            sref: "#!/viewSchool",
+            sref: "#!/school",
             icon: "phone"
         },
         {
             name: "View Athlete",
             classis: "active",
-            sref: "#!/viewAthlete",
+            sref: "#!/athlete",
             icon: "phone"
         },
         {
             name: "View Old School",
             classis: "active",
-            sref: "#!/viewReplica",
+            sref: "#!/oldschool",
             icon: "phone"
         },
         {
@@ -174,7 +174,12 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data, i);
             });
         },
-
+        getOneOldSchoolById: function (url, formData, callback) {
+            $http.post(adminurl + url, formData).then(function (data) {
+                data = data.data;
+                callback(data);
+            });
+        },
         getOneCountry: function (id, callback) {
             $http.post(adminurl + 'country/getOne', {
                 _id: id
