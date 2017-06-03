@@ -53,8 +53,9 @@
         "url": "SportsList/search"
     }, {
         "name": "Age Group",
-        "type": "selectFromTable",
-        "dropDownType": "single",
+        "type": "tags",
+        "dropDownType": "multiple",
+        "dropDownField": "name",
         "tableRef": "ageGroup",
         "searchApi": "searchCall",
         "placeholder": "Enter age group",
@@ -64,8 +65,8 @@
     }, {
         "name": "First Category",
         "type": "selectFromTable",
-        "tableRef": "firstCategory",
         "dropDownType": "single",
+        "tableRef": "firstCategory",
         "searchApi": "searchCall",
         "placeholder": "Enter first category",
         "id": "input1",
@@ -74,8 +75,8 @@
     }, {
         "name": "Second Category",
         "type": "selectFromTable",
-        "tableRef": "secondCategory",
         "dropDownType": "single",
+        "tableRef": "secondCategory",
         "searchApi": "searchCall",
         "placeholder": "Enter second category",
         "id": "input1",
@@ -84,8 +85,9 @@
     }, {
         "name": "Third Category",
         "type": "selectFromTable",
-        "tableRef": "thirdCategory",
         "dropDownType": "single",
+        "tableRef": "thirdCategory",
+        "dropDownField": "name",
         "searchApi": "searchCall",
         "placeholder": "Enter third category",
         "id": "input1",
@@ -94,8 +96,8 @@
     }, {
         "name": "Draw Format",
         "type": "selectFromTable",
-        "tableRef": "drawFormat",
         "dropDownType": "single",
+        "tableRef": "drawFormat",
         "searchApi": "searchCall",
         "placeholder": "Enter draw Format",
         "id": "input1",

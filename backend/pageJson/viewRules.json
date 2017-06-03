@@ -1,32 +1,20 @@
 {
-    "title": "Sport",
-    "description": "List of Sport",
+    "title": "Rules and Regulation",
+    "description": "List of Rules",
     "pageType": "view",
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
     "fields": [{
-        "name": "Sports List",
+        "name": "Name",
         "isSort": "",
-        "tableRef": "sportslist.name"
-    }, {
-        "name": "Year",
-        "isSort": "",
-        "tableRef": "year"
-    }, {
-        "name": "Min Player",
-        "isSort": "",
-        "tableRef": "minPlayers"
-    }, {
-        "name": "Max Player",
-        "isSort": "",
-        "tableRef": "maxPlayers"
+        "tableRef": "name"
     }],
     "action": [{
         "name": "edit",
         "icon": "fa-pencil",
         "buttonClass": "btn-primary",
         "type": "page",
-        "action": "editSport",
+        "action": "editRules",
         "fieldsToSend": {
             "_id": "_id"
         }
@@ -35,9 +23,9 @@
         "icon": "fa-trash",
         "buttonClass": "btn-danger",
         "type": "apiCallConfirm",
-        "title": "Delete Sport",
-        "content": "Are you sure you want to delete Sport?",
-        "api": "Sport/delete",
+        "title": "Delete Rules",
+        "content": "Are you sure you want to delete Rules?",
+        "api": "Rules/delete",
         "fieldsToSend": {
             "name": "_id",
             "value": "_id"
@@ -48,11 +36,11 @@
         "icon": "plus",
         "class": "btn-success",
         "type": "page",
-        "action": "createSport"
+        "action": "createRules"
     }],
 
     "apiCall": {
-        "url": "Sport/search",
+        "url": "Rules/search",
         "params": "_id"
     }
 }

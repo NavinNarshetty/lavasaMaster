@@ -18,11 +18,11 @@ var schema = new Schema({
         ref: 'SportsList',
         index: true
     },
-    ageGroup: {
+    ageGroup: [{
         type: Schema.Types.ObjectId,
         ref: 'AgeGroup',
         index: true
-    },
+    }],
     firstCategory: {
         type: Schema.Types.ObjectId,
         ref: 'FirstCategory',
@@ -39,11 +39,9 @@ var schema = new Schema({
         index: true
     },
     drawFormat: {
-        _id: {
-            type: Schema.Types.ObjectId,
-            ref: 'DrawFormat'
-        },
-        name: String
+        type: Schema.Types.ObjectId,
+        ref: 'DrawFormat',
+        index: true
 
     },
 });

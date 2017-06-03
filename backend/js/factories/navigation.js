@@ -47,6 +47,11 @@ myApp.factory('NavigationService', function ($http) {
             classis: "active",
             sref: "#!/page/viewAgeGroup//",
             icon: "phone"
+        }, {
+            name: "Rules",
+            classis: "active",
+            sref: "#!/page/viewRules//",
+            icon: "phone"
         },
         {
             name: "First Category",

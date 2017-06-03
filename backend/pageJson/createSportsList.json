@@ -23,14 +23,24 @@
         "url": ""
     }, {
         "name": "Draw Format",
-        "type": "selectFromTable",
+        "type": "tags",
         "tableRef": "drawFormat",
         "dropDownType": "single",
+        "dropDownField": "name",
         "searchApi": "searchCall",
         "placeholder": "Enter Draw Format",
         "id": "input1",
         "validation": ["", "trim", ""],
         "url": "DrawFormat/search"
+    }, {
+        "name": "Table Header",
+        "type": "tags",
+        "tableRef": "tableContent",
+        "dropDownType": "multiple",
+        "placeholder": "Enter table Content",
+        "id": "tableContent",
+        "validation": ["", "trim", ""],
+        "url": ""
     }, {
         "name": "Inactive Image",
         "type": "image",

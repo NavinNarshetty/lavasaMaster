@@ -3,13 +3,11 @@ var schema = new Schema({
     sporttype: String,
     tableContent: Schema.Types.Mixed,
     drawFormat: {
-
         _id: {
             type: Schema.Types.ObjectId,
             ref: 'DrawFormat'
         },
         name: String
-
     },
     inactiveimage: String,
     image: String
