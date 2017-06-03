@@ -220,6 +220,14 @@ myApp.controller('ViewAthleteCtrl', function ($scope, TemplateService, Navigatio
         NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
             $scope.athlete = data.data;
             console.log($scope.athlete);
+            if ($scope.athlete.school) {
+                $scope.url1 = 'School/getOne';
+                $scope.constraints = {};
+                $scope.constraints._id = $scope.athlete.school;
+                NavigationService.getOneOldSchoolById($scope.url1, $scope.constraints, function (data) {
+                    $scope.athlete.school = data.data.name;
+                });
+            }
         });
     };
     $scope.getOneAthleteById();
