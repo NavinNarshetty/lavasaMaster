@@ -18,7 +18,7 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Date of Registration</label>
-                                    <input type="text" ng-model="athlete.createdAt | date" class="form-control" readonly>
+                                    <input type="text" ng-model="athlete.createdAt | date:'dd/MM/yyyy'" class="form-control" readonly>
                                 </div>
                                 <div class="form-group" ng-if="athlete.school != null">
                                     <label class="">School</label>
@@ -98,7 +98,7 @@
 
                                         <div class="form-group">
                                             <label class="">DOB</label>
-                                            <input type="text" name="date" ng-model="athlete.dob | date" class="form-control" readonly>
+                                            <input type="text" name="date" ng-model="athlete.dob | date:'dd/MM/yyyy'" class="form-control" readonly>
                                             <!--<div class="error-msg  ng-hide" ng-show="detailForm[type.tableRef].$invalid &amp;&amp; detailForm[type.tableRef].$touched">Please enter valid DOB</div>-->
                                         </div>
 
