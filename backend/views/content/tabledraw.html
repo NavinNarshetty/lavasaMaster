@@ -1,0 +1,72 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>Draw Format</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!--Table-->
+<div class=" panel-content ">
+  <div class="row ">
+    <div class="col-md-12 ">
+      <div class="widget ">
+        <div class="table-area ">
+          <div class="widget-title ">
+            <div class="pull-right">
+              <a class="btn btn-success" ui-sref="detaildraw">
+                 Create
+              </a>
+            </div>
+            <h3>List of Draw Format <span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
+          </div>
+          <div class="table-responsive ">
+            <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>
+                    Name
+                  </th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!--<tr ng-repeat="item in items">-->
+                <tr>
+                  <!--<tr>-->
+                  <!--<td>{{$index + 1}} {{($index + 1)+((formData.page-1)*maxRow)}}</td>-->
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <a class="btn btn-primary" ui-sref="">
+                      <i class="fa fa-pencil"></i> Edit
+                    </a>
+                    <a class="btn btn-danger" ui-sref="">
+                      <i class="fa fa-trash"></i> Delete
+                    </a>
+                  </td>
+                  <!--<td ng-repeat="but in json.json.action">
+                                        <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
+                                            <i class="fa" ng-class="but.icon"></i>{{but.name}}
+                                        </a>
+                                    </td>-->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tableData " ng-show="totalItems===0 ">
+            <h5>No data found</h5>
+          </div>
+          <div class="tableData " ng-show="totalItems===undefined ">
+            <h5>Loading Data</h5>
+          </div>
+          <ul ng-if="totalItems" ng-change="getAllItems();" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
+            max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

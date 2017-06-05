@@ -63,7 +63,79 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'ViewOldSchoolCtrl'
         })
+        //age group
+        .state('agegroup', {
+            url: "/agegroup",
+            templateUrl: "views/template.html",
+            controller: 'AgeGroupCtrl'
+        })
+        //detail age group
+        .state('detailagegroup', {
+            url: "/detailagegroup/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailAgeGroupCtrl'
+        })
+        //rules
+        .state('rules', {
+            url: "/rules",
+            templateUrl: "views/template.html",
+            controller: 'RulesCtrl'
+        })
+        //detail rules
+        .state('detailrules', {
+            url: "/detailrules/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailRulesCtrl'
+        })
+        //first-category
+        .state('firstcategory', {
+            url: "/firstcategory",
+            templateUrl: "views/template.html",
+            controller: 'FirstCategoryCtrl'
+        })
+        //detail first
+        .state('detailfirstcategory', {
+            url: "/detailfirstcategory/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailFirstCategoryCtrl'
+        })
+        //second-category
+        .state('secondcategory', {
+            url: "/secondcategory",
+            templateUrl: "views/template.html",
+            controller: 'SecondCategoryCtrl'
+        })
+        //detail second
+        .state('detailsecondcategory', {
+            url: "/detailsecondcategory/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailSecondCategoryCtrl'
+        })
 
+        //third-category
+        .state('thirdcategory', {
+            url: "/thirdcategory",
+            templateUrl: "views/template.html",
+            controller: 'ThirdCategoryCtrl'
+        })
+        //detail third
+        .state('detailthirdcategory', {
+            url: "/detailthirdcategory/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailThirdCategoryCtrl'
+        })
+        //draw-format
+        .state('drawformat', {
+            url: "/drawformat",
+            templateUrl: "views/template.html",
+            controller: 'DrawFormatCtrl'
+        })
+        //detail draw
+        .state('detaildraw', {
+            url: "/detaildraw/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailDrawCtrl'
+        })
         .state('login', {
             url: "/login",
             templateUrl: "views/login.html",

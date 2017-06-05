@@ -1,0 +1,44 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>Create Rules and Regulation</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailForm" role="form" class="sec">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Name*</label>
+                  <input type="text" name="rulesname" ng-model="formData.rulesname" class="form-control" placeholder="Enter Name" required>
+                  <div class="error-msg" ng-if="detailForm.rulesname.$invalid && detailForm.rulesname.$touched">Please Enter Valid Name *</div>
+                </div>
+                <div class="form-group tinymce">
+                  <label>Rules and Regulations <span ng-show="type.required">*</span></label>
+                  <text-angular ng-model="formData.rulestext" name="rulestext" required></text-angular>
+                  <div class="error-msg" ng-if="detailForm.rulestext.$invalid && detailForm.rulestext.$touched">Please enter valid Text</div>
+                </div>
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                  <button class="btn btn-default" ng-click="onCancel('rules')">Cancel</button>
+                </div>
+              </div>
+            </div>
+            <!--<div class="text-center mt20 odd-even-button">
+                            <button class="btn btn-default" type="submit" ng-click="saveData(data)">Save</button>
+                            <button class="btn btn-default" ng-click="onCancel(json.json.action[1].stateName)">Cancel</button>
+                        </div>-->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

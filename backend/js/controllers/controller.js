@@ -7,6 +7,266 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
     $scope.navigation = NavigationService.getnav();
 })
 
+//Age Group
+myApp.controller('AgeGroupCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tableagegroup");
+    $scope.menutitle = NavigationService.makeactive("Age Group");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
+
+//detail Age Group
+
+myApp.controller('DetailAgeGroupCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailagegroup");
+    $scope.menutitle = NavigationService.makeactive("Deatil Age Group");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    //cancel
+    $scope.onCancel = function (sendTo) {
+
+        $state.go(sendTo);
+    };
+    //end cancel
+    $scope.saveData = function (data) {
+        if (data) {
+
+            $scope.url = "AgeGroup/save";
+            NavigationService.apiCall($scope.url, data, function (data) {
+                console.log("data.value", data);
+                if (data.value === true) {
+                    toastr.success(" Saved Successfully", "Success");
+                    $state.go('agegroup')
+
+                }
+
+            });
+        } else {
+            toastr.error("Invalid Data", "Error");
+        }
+    };
+})
+
+
+
+//Rules
+
+myApp.controller('RulesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tablerules");
+    $scope.menutitle = NavigationService.makeactive("Rules");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
+//Detail Rules
+myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailrules");
+    $scope.menutitle = NavigationService.makeactive("Deatil Rules");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    //cancel
+    $scope.onCancel = function (sendTo) {
+
+        $state.go(sendTo);
+    };
+    //end cancel
+
+    $scope.saveData = function (data) {
+        if (data) {
+            $scope.url = "Rules/save";
+            NavigationService.apiCall($scope.url, data, function (data) {
+                console.log("data.value", data);
+                if (data.value === true) {
+                    toastr.success(" Saved Successfully", "Success");
+                    $state.go('rules');
+
+                }
+
+            });
+        } else {
+            toastr.error("invalid data", "error");
+        }
+    };
+})
+//First Category
+myApp.controller('FirstCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tablefirst");
+    $scope.menutitle = NavigationService.makeactive("First Category");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
+
+//Detail First Category
+myApp.controller('DetailFirstCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailfirst");
+    $scope.menutitle = NavigationService.makeactive("Deatil First Category");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.onCancel = function (sendTo) {
+
+        $state.go(sendTo);
+    };
+    $scope.saveData = function (data) {
+        if (data) {
+
+            $scope.url = "FirstCategory/save";
+            NavigationService.apiCall($scope.url, data, function (data) {
+                console.log("data.value", data);
+                if (data.value) {
+                    toastr.success(" Saved Successfully", "Success");
+                    $state.go('firstcategory');
+
+                }
+
+            });
+        } else {
+            toastr.error("Inavalid Data", "Error");
+        }
+    };
+})
+
+//Second Category
+
+myApp.controller('SecondCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tablesecond");
+    $scope.menutitle = NavigationService.makeactive("Second Category");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
+
+//Detail Second Category
+myApp.controller('DetailSecondCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailsecond");
+    $scope.menutitle = NavigationService.makeactive("Deatil Second Category");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+    $scope.navigation = NavigationService.getnav();
+    //cancel
+    $scope.onCancel = function (sendTo) {
+
+        $state.go(sendTo);
+    };
+    //end cancel
+    $scope.saveData = function (data) {
+        if (data) {
+
+            $scope.url = "SecondCategory/save";
+            NavigationService.apiCall($scope.url, data, function (data) {
+                console.log("data.value", data);
+                if (data.value === true) {
+                    toastr.success(" Saved Successfully", "Success");
+                    $state.go('secondcategory');
+
+                }
+
+            });
+        } else {
+            toastr.error("Invalid Data", "Error");
+        }
+    };
+})
+
+//third Category
+
+myApp.controller('ThirdCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tablethird");
+    $scope.menutitle = NavigationService.makeactive("Third Category");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    //cancel
+
+})
+//detail third
+myApp.controller('DetailThirdCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailthird");
+    $scope.menutitle = NavigationService.makeactive("Deatil Third Category");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.onCancel = function (sendTo) {
+
+        $state.go(sendTo);
+    };
+    //end cancel
+    $scope.saveData = function (data) {
+        if (data) {
+
+            $scope.url = "ThirdCategory/save";
+            NavigationService.apiCall($scope.url, data, function (data) {
+                console.log("data.value", data);
+                if (data.value === true) {
+                    toastr.success(" Saved Successfully", "Success");
+                    $state.go('thirdcategory');
+
+                }
+
+            });
+        } else {
+            toastr.error("Invalid Data", "Error");
+        }
+    };
+})
+//Draw format
+
+myApp.controller('DrawFormatCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tabledraw");
+    $scope.menutitle = NavigationService.makeactive("Draw Format");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
+
+//Detail Draw
+myApp.controller('DetailDrawCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detaildraw");
+    $scope.menutitle = NavigationService.makeactive("Deatil Draw");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.onCancel = function (sendTo) {
+        $state.go(sendTo);
+    }
+
+    $scope.saveData = function (data) {
+        if (data) {
+
+            $scope.url = "DrawFormat/save";
+            NavigationService.apiCall($scope.url, data, function (data) {
+                console.log("data.value", data);
+                if (data.value === true) {
+                    toastr.success(" Saved Successfully", "Success");
+                    $state.go('drawformat');
+
+                }
+
+            });
+        } else {
+            toastr.error("Invalid Data", "Error");
+        }
+    };
+})
+
 myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
     //registration filter view
     //Used to name the .html file

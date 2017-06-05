@@ -42,35 +42,67 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#!/oldschool",
             icon: "phone"
         },
+        // {
+        //     name: "Age Group",
+        //     classis: "active",
+        //     sref: "#!/page/viewAgeGroup//",
+        //     icon: "phone"
+        // }
         {
             name: "Age Group",
             classis: "active",
-            sref: "#!/page/viewAgeGroup//",
-            icon: "phone"
-        }, {
-            name: "Rules",
-            classis: "active",
-            sref: "#!/page/viewRules//",
+            sref: "#!/agegroup",
             icon: "phone"
         },
+        // {
+        //     name: "Rules",
+        //     classis: "active",
+        //     sref: "#!/page/viewRules//",
+        //     icon: "phone"
+        // },
+        {
+            name: "Rules",
+            classis: "active",
+            sref: "#!/rules",
+            icon: "phone"
+        },
+        // {
+        //     name: "First Category",
+        //     classis: "active",
+        //     sref: "#!/page/viewFirstCategory//",
+        //     icon: "phone"
+        // },
         {
             name: "First Category",
             classis: "active",
-            sref: "#!/page/viewFirstCategory//",
+            sref: "#!/firstcategory",
             icon: "phone"
         },
+        // {
+        //     name: "Second Category",
+        //     classis: "active",
+        //     sref: "#!/page/viewSecondCategory//",
+        //     icon: "phone"
+        // },
         {
             name: "Second Category",
             classis: "active",
-            sref: "#!/page/viewSecondCategory//",
+            sref: "#!/secondcategory",
             icon: "phone"
         },
+        // {
+        //     name: "Third Category",
+        //     classis: "active",
+        //     sref: "#!/page/viewThirdCategory//",
+        //     icon: "phone"
+        // },
         {
             name: "Third Category",
             classis: "active",
-            sref: "#!/page/viewThirdCategory//",
+            sref: "#!/thirdcategory",
             icon: "phone"
         },
+
         {
             name: "Sport",
             classis: "active",
@@ -83,10 +115,16 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#!/page/viewSportsList//",
             icon: "phone"
         },
+        // {
+        //     name: "Draw Format",
+        //     classis: "active",
+        //     sref: "#!/page/viewDrawFormat//",
+        //     icon: "phone"
+        // },
         {
             name: "Draw Format",
             classis: "active",
-            sref: "#!/page/viewDrawFormat//",
+            sref: "#!/drawformat",
             icon: "phone"
         },
         //{
