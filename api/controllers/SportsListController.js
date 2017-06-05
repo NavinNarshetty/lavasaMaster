@@ -4,6 +4,7 @@ var controller = {
     getAllSportByType: function (req, res) {
         if (req.body) {
             if (req.session.user) {
+                req.body._id = req.session.user._id;
                 SportsList.getAllSportByType(req.body, res.callback);
             } else {
                 res.json({
@@ -21,6 +22,7 @@ var controller = {
     getSportsRule: function (req, res) {
         if (req.body) {
             if (req.session.user) {
+                req.body._id = req.session.user._id;
                 SportsList.getSportsRule(req.body, res.callback);
             } else {
                 res.json({

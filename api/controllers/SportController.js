@@ -4,6 +4,7 @@ var controller = {
     getOneSport: function (req, res) {
         if (req.body) {
             if (req.session.user) {
+                req.body._id = req.session.user._id;
                 Sport.getOneSport(req.body, res.callback);
             } else {
                 res.json({
@@ -22,6 +23,7 @@ var controller = {
     getAllSports: function (req, res) {
         if (req.body) {
             if (req.session.user) {
+                req.body._id = req.session.user._id;
                 Sport.getAllSports(req.body, res.callback);
             } else {
                 res.json({
@@ -40,6 +42,7 @@ var controller = {
     getAllAthletePerSchool: function (req, res) {
         if (req.body) {
             if (req.session.user) {
+                req.body._id = req.session.user._id;
                 Sport.getAllAthletePerSchool(req.body, res.callback);
             } else {
                 res.json({
