@@ -39,7 +39,14 @@ var controller = {
 
     getAllAthletePerSchool: function (req, res) {
         if (req.body) {
-            Sport.getAllAthletePerSchool(req.body, res.callback);
+            if (req.session.user) {
+                Sport.getAllAthletePerSchool(req.body, res.callback);
+            } else {
+                res.json({
+                    value: false,
+                    data: "User Not logged in"
+                });
+            }
         } else {
             res.json({
                 value: false,
