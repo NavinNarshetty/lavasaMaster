@@ -3,7 +3,14 @@ var controller = {
 
     getOneSport: function (req, res) {
         if (req.body) {
-            Sport.getOneSport(req.body, res.callback);
+            if (req.session.user) {
+                Sport.getOneSport(req.body, res.callback);
+            } else {
+                res.json({
+                    value: false,
+                    data: "User Not logged in"
+                });
+            }
         } else {
             res.json({
                 value: false,
@@ -14,7 +21,14 @@ var controller = {
 
     getAllSports: function (req, res) {
         if (req.body) {
-            Sport.getAllSports(req.body, res.callback);
+            if (req.session.user) {
+                Sport.getAllSports(req.body, res.callback);
+            } else {
+                res.json({
+                    value: false,
+                    data: "User Not logged in"
+                });
+            }
         } else {
             res.json({
                 value: false,

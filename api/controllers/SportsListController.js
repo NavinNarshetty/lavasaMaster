@@ -3,7 +3,14 @@ var controller = {
 
     getAllSportByType: function (req, res) {
         if (req.body) {
-            SportsList.getAllSportByType(req.body, res.callback);
+            if (req.session.user) {
+                SportsList.getAllSportByType(req.body, res.callback);
+            } else {
+                res.json({
+                    value: false,
+                    data: "User Not logged in"
+                });
+            }
         } else {
             res.json({
                 value: false,
@@ -11,9 +18,16 @@ var controller = {
             });
         }
     },
-    getRulesPerSports: function (req, res) {
+    getSportsRule: function (req, res) {
         if (req.body) {
-            SportsList.getRulesPerSports(req.body, res.callback);
+            if (req.session.user) {
+                SportsList.getSportsRule(req.body, res.callback);
+            } else {
+                res.json({
+                    value: false,
+                    data: "User Not logged in"
+                });
+            }
         } else {
             res.json({
                 value: false,

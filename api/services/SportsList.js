@@ -154,7 +154,7 @@ var model = {
 
     },
 
-    getRulesPerSports: function (data, callback) {
+    getSportsRule: function (data, callback) {
         SportsList.find({
             _id: data._id
         }).deepPopulate("rules").lean().exec(

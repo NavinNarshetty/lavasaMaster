@@ -114,6 +114,13 @@
             "placeholder": "Enter DOB",
             "id": "dob"
         }, {
+            "name": "Age",
+            "type": "text",
+            "tableRef": "age",
+            "placeholder": "Enter Age",
+            "id": "age"
+        },
+        {
             "name": "Photo ID",
             "type": "image",
             "size": "250 x 250",
