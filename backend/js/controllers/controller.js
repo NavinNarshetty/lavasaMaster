@@ -370,7 +370,7 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
         $scope.formData.page = 1;
         $scope.formData.type = '';
         $scope.formData.keyword = '';
-        $scope.filterSchool();
+        $scope.filterAthlete();
     };
     $scope.formData = {};
     $scope.formData.page = 1;
