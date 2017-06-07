@@ -6,7 +6,18 @@ var schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'SportsListCategory',
         index: true
-    }
+    },
+    isTeam: Boolean,
+    filter: [{
+        type: String
+    }],
+    rules: {
+        type: Schema.Types.ObjectId,
+        ref: 'Rules',
+        index: true
+    },
+
+
 });
 
 schema.plugin(deepPopulate, {});
@@ -18,6 +29,16 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     getAll: function (callback) {
+        SportsListSubCategory.find().exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "Data is empty");
+            } else {
+                callback(null, found);
+            }
+        });
+
         // Find data
         // var retVal = _.groupBy(data,"SportListCategory");
     },

@@ -10,38 +10,107 @@ var model = {
 
     login: function (data, callback) {
         if (data.type == "school") {
-            Registration.findOne({
-                sfaID: data.sfaid,
-                password: data.password
-            }).lean().exec(function (err, found) {
+            Login.SchoolToken(data, function (err, complete) {
                 if (err) {
                     callback(err, null);
-                } else if (_.isEmpty(found)) {
-                    callback("Incorrect Login Details", null);
                 } else {
-                    callback(null, found);
+                    if (_.isEmpty(complete)) {
+                        callback(null, "Data not found");
+                    } else {
+                        callback(null, complete);
+                    }
                 }
 
             });
 
         } else if (data.type == "athlete") {
-            Athelete.findOne({
-                sfaId: data.sfaid,
-                password: data.password
-            }).lean().exec(function (err, found) {
+            Login.AthleteToken(data, function (err, complete) {
                 if (err) {
                     callback(err, null);
-                } else if (_.isEmpty(found)) {
-                    callback("Incorrect Login Details", null);
                 } else {
-                    callback(null, found);
+                    if (_.isEmpty(complete)) {
+                        callback(null, "Data not found");
+                    } else {
+                        callback(null, complete);
+                    }
                 }
-
             });
 
         } else {
             callback("Incorrect Type", null);
         }
+
+    },
+
+    SchoolToken: function (data, callback) {
+        var token = generator.generate({
+            length: 16,
+            numbers: true
+        })
+        var matchToken = {
+            $set: {
+                accessToken: token
+            }
+        }
+        Registration.update({
+            sfaID: data.sfaid
+        }, matchToken).exec(
+            function (err, data3) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else if (data3) {
+                    Registration.findOne({
+                        sfaID: data.sfaid,
+                        password: data.password
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback("Incorrect Login Details", null);
+                        } else {
+                            callback(null, found);
+                        }
+
+                    });
+                }
+            });
+
+    },
+
+    AthleteToken: function (data, callback) {
+        var token = generator.generate({
+            length: 16,
+            numbers: true
+        })
+        var matchToken = {
+            $set: {
+                accessToken: token
+            }
+        }
+        Athelete.update({
+            sfaId: data.sfaid
+        }, matchToken).exec(
+            function (err, data3) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else if (data3) {
+                    Athelete.findOne({
+                        sfaId: data.sfaid,
+                        password: data.password
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback("Incorrect Login Details", null);
+                        } else {
+                            callback(null, found);
+                        }
+
+                    });
+                }
+            });
 
     },
 
@@ -60,9 +129,14 @@ var model = {
                         length: 8,
                         numbers: true
                     });
+                    var matchObj = {
+                        $set: {
+                            password: newPassword
+                        }
+                    }
                     Registration.update({
                         _id: found._id
-                    }, newPassword).exec(
+                    }, matchObj).exec(
                         function (err, data3) {
                             if (err) {
                                 console.log(err);

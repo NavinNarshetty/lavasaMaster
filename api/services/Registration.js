@@ -1177,7 +1177,10 @@ var model = {
             };
         } else if (data.type == "SFA-ID") {
             matchObj = {
-                sfaID: data.input,
+                sfaID: {
+                    $regex: data.input,
+                    $options: "i"
+                },
                 $or: [{
                     registrationFee: {
                         $ne: "online PAYU"
@@ -1206,7 +1209,7 @@ var model = {
 
             }
         } else if (data.type == "Payment Mode") {
-            if (data.input == "cash") {
+            if (data.input == "cash" || data.input == "Cash") {
                 matchObj = {
                     'registrationFee': "cash",
                 }
@@ -1251,21 +1254,6 @@ var model = {
                     }
                 }]
             }
-        } else if (data.keyword !== "") {
-            var matchObj = {
-                $or: [{
-                    schoolName: {
-                        $regex: data.keyword,
-                        $options: 'i'
-                    },
-                    sfaID: {
-                        $regex: data.keyword,
-                        $options: 'i'
-                    }
-                }],
-
-            }
-
         } else {
             var matchObj = {
                 $or: [{
@@ -1279,20 +1267,94 @@ var model = {
                 }]
             }
         }
-        Registration.find(matchObj)
-            .order(options)
-            .keyword(options)
-            .page(options, function (err, found) {
-                // console.log("found", found);
+        if (data.keyword !== "") {
+            Registration.aggregate(
+                [{
+                        $match: {
 
-                if (err) {
-                    callback(err, null);
-                } else if (_.isEmpty(found)) {
-                    callback(null, "Data is empty");
-                } else {
-                    callback(null, found);
-                }
-            });
+                            $or: [{
+                                    "schoolName": {
+                                        $regex: data.keyword,
+                                        $options: "i"
+                                    }
+                                },
+                                {
+                                    "sfaID": {
+                                        $regex: data.keyword,
+                                        $options: "i"
+                                    }
+                                }
+                            ]
+
+                        }
+                    },
+                    // Stage 4
+                    {
+                        $match: {
+                            $or: [{
+                                registrationFee: {
+                                    $ne: "online PAYU"
+                                }
+                            }, {
+                                paymentStatus: {
+                                    $ne: "Pending"
+                                }
+                            }]
+                        }
+                    },
+                    {
+                        $sort: {
+                            "createdAt": -1
+
+                        }
+                    },
+                ],
+                function (err, returnReq) {
+                    console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+                        } else {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+
+                        }
+                    }
+                });
+        } else {
+            Registration.find(matchObj)
+                .order(options)
+                .keyword(options)
+                .page(options, function (err, found) {
+                    // console.log("found", found);
+
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        callback(null, found);
+                    }
+                });
+        }
     },
 
     cronSchoolWithPaymentDue: function (data, callback) {
