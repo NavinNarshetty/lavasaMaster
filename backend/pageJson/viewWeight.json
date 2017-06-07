@@ -1,6 +1,6 @@
 {
-    "title": "First Category",
-    "description": "List of First Category",
+    "title": "Weight Category",
+    "description": "List of Weight Category",
     "pageType": "view",
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
@@ -14,7 +14,7 @@
         "icon": "fa-pencil",
         "buttonClass": "btn-primary",
         "type": "page",
-        "action": "editFirstCategory",
+        "action": "editWeight",
         "fieldsToSend": {
             "_id": "_id"
         }
@@ -23,9 +23,9 @@
         "icon": "fa-trash",
         "buttonClass": "btn-danger",
         "type": "apiCallConfirm",
-        "title": "Delete FirstCategory",
-        "content": "Are you sure you want to delete First Category?",
-        "api": "FirstCategory/delete",
+        "title": "Delete Weight",
+        "content": "Are you sure you want to delete Weight Category?",
+        "api": "Weight/delete",
         "fieldsToSend": {
             "name": "_id",
             "value": "_id"
@@ -36,11 +36,11 @@
         "icon": "plus",
         "class": "btn-success",
         "type": "page",
-        "action": "createFirstCategory"
+        "action": "createWeight"
     }],
 
     "apiCall": {
-        "url": "FirstCategory/search",
+        "url": "Weight/search",
         "params": "_id"
     }
 }

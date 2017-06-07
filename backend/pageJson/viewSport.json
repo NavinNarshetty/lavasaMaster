@@ -15,17 +15,13 @@
         "isSort": "",
         "tableRef": "gender"
     }, {
-        "name": "Year",
-        "isSort": "",
-        "tableRef": "year"
-    }, {
         "name": "Min Player",
         "isSort": "",
-        "tableRef": "minPlayers"
+        "tableRef": "minTeamPlayers"
     }, {
         "name": "Max Player",
         "isSort": "",
-        "tableRef": "maxPlayers"
+        "tableRef": "maxTeamPlayers"
     }],
     "action": [{
         "name": "edit",

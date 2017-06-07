@@ -1,26 +1,26 @@
 {
-    "title": "Create First Category",
-    "name": "FirstCategory",
-    "jsonPage": "viewFirstCategory",
+    "title": "Create Sports Type",
+    "name": "SportsListCategory",
+    "jsonPage": "viewSportsListCategory",
     "desciption": "",
     "pageType": "create",
-    "urlFields": ["FirstCategory"],
+    "urlFields": ["SportsListCategory"],
     "fields": [{
         "name": "Name",
         "type": "text",
         "tableRef": "name",
         "placeholder": "Enter Name",
         "id": "name",
-        "validation": ["required", "trim", "unique"],
+        "validation": ["", "trim", ""],
         "url": ""
     }],
     "action": [{
         "name": "submit",
-        "action": "submitFirstCategory",
+        "action": "submitSportsListCategory",
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewFirstCategory"
+                "id": "viewSportsListCategory"
             }
         }
     }, {
@@ -29,11 +29,11 @@
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewFirstCategory"
+                "id": "viewSportsListCategory"
             }
         }
     }],
     "apiCall": {
-        "url": "FirstCategory/save"
+        "url": "SportsListCategory/save"
     }
 }

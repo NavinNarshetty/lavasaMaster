@@ -1,7 +1,7 @@
 {
-    "title": "Edit First Category",
-    "name": "FirstCategory",
-    "jsonPage": "viewFirstCategory",
+    "title": "Edit Weight Category",
+    "name": "Weight",
+    "jsonPage": "viewWeight",
     "desciption": "",
     "pageType": "edit",
     "urlFields": ["_id"],
@@ -16,11 +16,11 @@
     }],
     "action": [{
         "name": "submit",
-        "action": "submitFirstCategory",
+        "action": "submitWeight",
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewFirstCategory"
+                "id": "viewWeight"
             }
         }
     }, {
@@ -29,16 +29,16 @@
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewFirstCategory"
+                "id": "viewWeight"
             }
         }
     }],
     "apiCall": {
-        "url": "FirstCategory/save",
+        "url": "Weight/save",
         "params": "_id"
     },
     "preApi": {
-        "url": "FirstCategory/getOne",
+        "url": "Weight/getOne",
         "params": "_id"
     }
 

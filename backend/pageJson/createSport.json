@@ -18,17 +18,9 @@
         "dropDownType": "single",
         "dropDown": ["Male", "Female"]
     }, {
-        "name": "Year",
-        "type": "text",
-        "tableRef": "year",
-        "placeholder": "Enter year",
-        "id": "year",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
         "name": "Min Players",
         "type": "text",
-        "tableRef": "minPlayers",
+        "tableRef": "minTeamPlayers",
         "placeholder": "Enter Min Players",
         "id": "minPlayers",
         "validation": ["", "trim", ""],
@@ -36,7 +28,7 @@
     }, {
         "name": "Max Players",
         "type": "text",
-        "tableRef": "maxPlayers",
+        "tableRef": "maxTeamPlayers",
         "placeholder": "Enter Max Players",
         "id": "maxPlayers",
         "validation": ["", "trim", ""],
@@ -64,36 +56,15 @@
         "validation": ["", "trim", ""],
         "url": "AgeGroup/search"
     }, {
-        "name": "First Category",
+        "name": "Weight",
         "type": "selectFromTable",
         "dropDownType": "single",
-        "tableRef": "firstCategory",
+        "tableRef": "Weight",
         "searchApi": "searchCall",
         "placeholder": "Enter first category",
         "id": "input1",
         "validation": ["", "trim", ""],
-        "url": "FirstCategory/search"
-    }, {
-        "name": "Second Category",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "tableRef": "secondCategory",
-        "searchApi": "searchCall",
-        "placeholder": "Enter second category",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "SecondCategory/search"
-    }, {
-        "name": "Third Category",
-        "type": "selectFromTable",
-        "dropDownType": "single",
-        "tableRef": "thirdCategory",
-        "dropDownField": "name",
-        "searchApi": "searchCall",
-        "placeholder": "Enter third category",
-        "id": "input1",
-        "validation": ["", "trim", ""],
-        "url": "ThirdCategory/search"
+        "url": "Weight/search"
     }],
     "action": [{
         "name": "submit",

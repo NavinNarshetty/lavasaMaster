@@ -1,10 +1,10 @@
 {
-    "title": "Edit Second Category",
-    "name": "SecondCategory",
-    "jsonPage": "viewSecondCategory",
+    "title": "Create Weight Category",
+    "name": "Weight",
+    "jsonPage": "viewWeight",
     "desciption": "",
-    "pageType": "edit",
-    "urlFields": ["_id"],
+    "pageType": "create",
+    "urlFields": ["Weight"],
     "fields": [{
         "name": "Name",
         "type": "text",
@@ -16,11 +16,11 @@
     }],
     "action": [{
         "name": "submit",
-        "action": "submitSecondCategory",
+        "action": "submitWeight",
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewSecondCategory"
+                "id": "viewWeight"
             }
         }
     }, {
@@ -29,17 +29,11 @@
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewSecondCategory"
+                "id": "viewWeight"
             }
         }
     }],
     "apiCall": {
-        "url": "SecondCategory/save",
-        "params": "_id"
-    },
-    "preApi": {
-        "url": "SecondCategory/getOne",
-        "params": "_id"
+        "url": "Weight/save"
     }
-
 }

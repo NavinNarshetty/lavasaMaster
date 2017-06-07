@@ -1,25 +1,17 @@
 var schema = new Schema({
     name: String,
-    sporttype: String,
-    isTeam: Boolean,
     sportsListSubCategory: {
         type: Schema.Types.ObjectId,
         ref: 'SportsListSubCategory',
         index: true
     },
-    tableContent: Schema.Types.Mixed,
     drawFormat: {
         type: Schema.Types.ObjectId,
         ref: 'DrawFormat',
         index: true
     },
-    rules: {
-        type: Schema.Types.ObjectId,
-        ref: 'Rules',
-        index: true
-    },
-    inactiveimage: String,
-    image: String
+    // inactiveimage: String,
+    // image: String
 });
 
 schema.plugin(deepPopulate, {

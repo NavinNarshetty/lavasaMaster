@@ -8,10 +8,6 @@
         "name": "Name",
         "isSort": "",
         "tableRef": "name"
-    }, {
-        "name": "Sport Type",
-        "isSort": "",
-        "tableRef": "sporttype"
     }],
     "action": [{
         "name": "edit",

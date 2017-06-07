@@ -10,9 +10,8 @@ var moment = require('moment');
 
 var schema = new Schema({
     gender: String,
-    year: String,
-    minPlayers: Number,
-    maxPlayers: Number,
+    minTeamPlayers: Number,
+    maxTeamPlayers: Number,
     sportslist: {
         type: Schema.Types.ObjectId,
         ref: 'SportsList',
@@ -23,19 +22,9 @@ var schema = new Schema({
         ref: 'AgeGroup',
         index: true
     },
-    firstCategory: {
+    Weight: {
         type: Schema.Types.ObjectId,
-        ref: 'FirstCategory',
-        index: true
-    },
-    secondCategory: {
-        type: Schema.Types.ObjectId,
-        ref: 'SecondCategory',
-        index: true
-    },
-    thirdCategory: {
-        type: Schema.Types.ObjectId,
-        ref: 'ThirdCategory',
+        ref: 'Weight',
         index: true
     }
 });

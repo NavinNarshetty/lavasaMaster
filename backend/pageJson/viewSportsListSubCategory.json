@@ -1,6 +1,6 @@
 {
-    "title": "Second Category",
-    "description": "List of Second Category",
+    "title": "Sports List",
+    "description": "List of Sports List",
     "pageType": "view",
     "sendIdWithCreate": true,
     "urlFields": ["_id"],
@@ -14,7 +14,7 @@
         "icon": "fa-pencil",
         "buttonClass": "btn-primary",
         "type": "page",
-        "action": "editSecondCategory",
+        "action": "editSportsList",
         "fieldsToSend": {
             "_id": "_id"
         }
@@ -23,9 +23,9 @@
         "icon": "fa-trash",
         "buttonClass": "btn-danger",
         "type": "apiCallConfirm",
-        "title": "Delete SecondCategory",
-        "content": "Are you sure you want to delete Second Category?",
-        "api": "SecondCategory/delete",
+        "title": "Delete SportsList",
+        "content": "Are you sure you want to delete SportsList?",
+        "api": "SportsList/delete",
         "fieldsToSend": {
             "name": "_id",
             "value": "_id"
@@ -36,11 +36,11 @@
         "icon": "plus",
         "class": "btn-success",
         "type": "page",
-        "action": "createSecondCategory"
+        "action": "createSportsList"
     }],
 
     "apiCall": {
-        "url": "SecondCategory/search",
+        "url": "SportsList/search",
         "params": "_id"
     }
 }

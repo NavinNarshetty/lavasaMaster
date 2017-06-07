@@ -2,34 +2,9 @@ module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
 
     login: function (req, res) {
-        // var callback = function (err, data) {
-        //     if (err || _.isEmpty(data)) {
-        //         res.json({
-        //             error: err,
-        //             value: false
-        //         });
-        //     } else {
-        //         if (data) {
-        //             req.session.user = data;
-        //             //req.session.save();
-        //             console.log("session", req.session.user);
-        //             res.json({
-        //                 data: data,
-        //                 value: true
-        //             });
-        //         } else {
-
-        //             req.session.user = {};
-        //             res.json({
-        //                 data: {},
-        //                 value: false
-        //             });
-        //         }
-        //     }
-        // };
         if (req.body) {
             if (req.body.sfaid && req.body.sfaid !== "" && req.body.password && req.body.password !== "" && req.body.type && req.body.type !== "") {
-                Login.login(req.body, callback);
+                Login.login(req.body, res.callback);
             } else {
                 res.json({
                     data: "Please provide params",
@@ -44,12 +19,21 @@ var controller = {
         }
     },
     logout: function (req, res) {
-        req.session.destroy(function (err) {
-            res.json({
-                data: "Logout Successful",
-                value: true
+        if (req.body) {
+            Login.tokenCheck(req.body, found, function (err, complete) {
+                if (err) {
+                    callback(err, null);
+                } else if (complete) {
+                    req.body._id = complete._id;
+                    Login.changePassword(req.body, res.callback);
+                }
             });
-        });
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
     },
 
     forgotPasswordSchool: function (req, res) {
@@ -104,64 +88,21 @@ var controller = {
 
     changePassword: function (req, res) {
         if (req.body) {
-            if (req.body.schoolToken) {
-                Registration.findOne({
-                    accessToken: req.body.schoolToken
-                }).exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback("Incorrect Login Details", null);
+            Login.tokenCheck(req.body, found, function (err, complete) {
+                if (err) {
+                    callback(err, null);
+                } else if (complete) {
+                    if (complete.school) {
+                        req.body._id = complete.school;
+                        Login.changeSchoolPassword(req.body, res.callback);
+                    } else if (complete.athlete) {
+                        req.body._id = complete.athlete;
+                        Login.changeAthletePassword(req.body, res.callback);
                     } else {
-                        req.body._id = found._id;
-                        Login.changePassword(req.body, function (err, data) {
-                            if (err) {
-                                res.json({
-                                    value: false,
-                                    data: err
-                                });
-                            } else {
-                                res.json({
-                                    value: true,
-                                    data: data
-                                });
-                            }
-                        });
+                        callback(err, "Access Token not identified");
                     }
-                });
-
-            } else if (req.body.athleteToken) {
-                Athelete.findOne({
-                    accessToken: req.body.athleteToken
-                }).exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback("Incorrect Login Details", null);
-                    } else {
-                        req.body._id = found._id;
-                        Login.changePassword(req.body, function (err, data) {
-                            if (err) {
-                                res.json({
-                                    value: false,
-                                    data: err
-                                });
-                            } else {
-                                res.json({
-                                    value: true,
-                                    data: data
-                                });
-                            }
-                        });
-                    }
-                });
-
-            } else {
-                res.json({
-                    value: false,
-                    data: "User Not logged in"
-                });
-            }
+                }
+            });
         } else {
             res.json({
                 value: false,

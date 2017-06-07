@@ -16,25 +16,57 @@
     }, {
         "name": "Sports Type",
         "type": "tags",
-        "tableRef": "SportsListSubCategory",
+        "tableRef": "SportsListCategory",
         "dropDownType": "single",
         "dropDownField": "name",
         "searchApi": "searchCall",
-        "placeholder": "Enter SportsListSubCategory",
+        "placeholder": "Enter SportsListCategory",
         "id": "input1",
         "validation": ["", "trim", ""],
-        "url": "SportsListSubCategory/search"
+        "url": "SportsListCategory/search"
     }, {
-        "name": "Draw Format",
+        "name": "isTeam",
         "type": "tags",
-        "tableRef": "drawFormat",
+        "tableRef": "isTeam",
+        "placeholder": "Select isTeam",
+        "id": "isTeam",
+        "validation": ["", "trim", ""],
+        "onView": true,
+        "url": "",
+        "dropDownField": "",
+        "dropDownType": "single",
+        "dropDown": ["True", "False"]
+    }, {
+        "name": "Filter",
+        "type": "tags",
+        "tableRef": "filter",
+        "placeholder": "Select filter",
+        "id": "filter",
+        "validation": ["", "trim", ""],
+        "onView": true,
+        "url": "",
+        "dropDownField": "",
+        "dropDownType": "multiple",
+        "dropDown": ["Gender", "AgeGroup", "Weight"]
+    }, {
+        "name": "RulesAndRegulation",
+        "type": "tags",
+        "tableRef": "rules",
         "dropDownType": "single",
         "dropDownField": "name",
         "searchApi": "searchCall",
-        "placeholder": "Enter Draw Format",
+        "placeholder": "Enter rules",
         "id": "input1",
         "validation": ["", "trim", ""],
-        "url": "DrawFormat/search"
+        "url": "Rules/search"
+    }, {
+        "name": "MaxTeam",
+        "type": "number",
+        "tableRef": "maxTeam",
+        "placeholder": "Enter maxTeam",
+        "id": "maxTeam",
+        "validation": ["", "trim", ""],
+        "url": ""
     }],
     "action": [{
         "name": "submit",

@@ -1,7 +1,7 @@
 {
-    "title": "Edit Third Category",
-    "name": "ThirdCategory",
-    "jsonPage": "viewThirdCategory",
+    "title": "Edit Sports List",
+    "name": "SportsListCategory",
+    "jsonPage": "viewSportsListCategory",
     "desciption": "",
     "pageType": "edit",
     "urlFields": ["_id"],
@@ -11,16 +11,16 @@
         "tableRef": "name",
         "placeholder": "Enter Name",
         "id": "name",
-        "validation": ["required", "trim", "unique"],
+        "validation": ["", "trim", ""],
         "url": ""
     }],
     "action": [{
         "name": "submit",
-        "action": "submitThirdCategory",
+        "action": "submitSportsListCategory",
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewThirdCategory"
+                "id": "viewSportsListCategory"
             }
         }
     }, {
@@ -29,16 +29,16 @@
         "stateName": {
             "page": "page",
             "json": {
-                "id": "viewThirdCategory"
+                "id": "viewSportsListCategory"
             }
         }
     }],
     "apiCall": {
-        "url": "ThirdCategory/save",
+        "url": "SportsListCategory/save",
         "params": "_id"
     },
     "preApi": {
-        "url": "ThirdCategory/getOne",
+        "url": "SportsListCategory/getOne",
         "params": "_id"
     }
 
