@@ -1,6 +1,12 @@
 var schema = new Schema({
     name: String,
     sporttype: String,
+    isTeam: Boolean,
+    sportsListSubCategory: {
+        type: Schema.Types.ObjectId,
+        ref: 'SportsListSubCategory',
+        index: true
+    },
     tableContent: Schema.Types.Mixed,
     drawFormat: {
         type: Schema.Types.ObjectId,

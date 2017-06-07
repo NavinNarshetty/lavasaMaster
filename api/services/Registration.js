@@ -994,7 +994,9 @@ var model = {
                 }
             }]
         }
-        Registration.find(matchObj).lean().exec(function (err, data) {
+        Registration.find(matchObj).sort({
+            createdAt: -1
+        }).lean().exec(function (err, data) {
             var excelData = [];
             _.each(data, function (n) {
 
@@ -1147,7 +1149,7 @@ var model = {
             field: data.field,
             filters: {
                 keyword: {
-                    fields: ['name', 'schoolName'],
+                    fields: ['schoolName', 'sfaID'],
                     term: data.keyword
                 }
             },
@@ -1249,6 +1251,21 @@ var model = {
                     }
                 }]
             }
+        } else if (data.keyword !== "") {
+            var matchObj = {
+                $or: [{
+                    schoolName: {
+                        $regex: data.keyword,
+                        $options: 'i'
+                    },
+                    sfaID: {
+                        $regex: data.keyword,
+                        $options: 'i'
+                    }
+                }],
+
+            }
+
         } else {
             var matchObj = {
                 $or: [{

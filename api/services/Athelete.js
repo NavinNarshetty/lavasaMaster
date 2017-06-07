@@ -167,7 +167,7 @@ var model = {
             field: data.field,
             filters: {
                 keyword: {
-                    fields: ['name'],
+                    fields: ['firstName', 'sfaId'],
                     term: data.keyword
                 }
             },
@@ -288,6 +288,21 @@ var model = {
                 }]
 
             }
+        } else if (data.keyword !== "") {
+            var matchObj = {
+                $or: [{
+                    firstName: {
+                        $regex: data.keyword,
+                        $options: 'i'
+                    },
+                    sfaId: {
+                        $regex: data.keyword,
+                        $options: 'i'
+                    }
+                }],
+
+            }
+
         } else {
             var matchObj = {
                 $or: [{
@@ -298,7 +313,8 @@ var model = {
                     paymentStatus: {
                         $ne: "Pending"
                     }
-                }]
+                }],
+
             }
         }
         if (data.type == "School Name") {
@@ -1356,10 +1372,12 @@ var model = {
                 }
             }]
         }
-        Athelete.find(matchObj).lean().exec(function (err, data) {
+        Athelete.find(matchObj).sort({
+            createdAt: -1
+        }).lean().exec(function (err, data) {
             var excelData = [];
             var schoolData;
-            async.each(data, function (n, callback) {
+            async.eachSeries(data, function (n, callback) {
                 var obj = {};
                 obj.sfaID = n.sfaId;
                 async.waterfall([

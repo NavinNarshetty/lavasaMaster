@@ -39,7 +39,7 @@ var controller = {
         }
     },
 
-    getAllAthletePerSchool: function (req, res) {
+    getAthletePerSchool: function (req, res) {
         if (req.body) {
             if (req.session.user) {
                 req.body._id = req.session.user._id;

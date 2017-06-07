@@ -311,6 +311,28 @@ var model = {
         }
 
 
+    },
+    getAthletePerSchool: function (SportID, teamId, callback) {
+
+        // findAll Athlete with filters school,Gender, AgeGroup, AtheleteId - > Pagination 20
+        //    asycn.eachLimit();
+        //        SportId -> Student -> Team Callback ->  
+        // if(teamID) -> CurrentTeam
+
+    },
+    isStudentInSport: function (studentID, SportId, callback) {
+        // count  TeamSport - > School ID-> StudentID - > SportId 
+        // if(count == 0) {}
+        // else { AlreadyInTeam }
+    },
+
+    // Team Confirm function
+    teamConfirm: function (data, callback) { // Data -> array of (StudentID, Sport,isCaptain,isGoalkeeper)
+        //      Waterfall
+        //          1. CreateTeamSportWithSchool 
+        //          2. async.each(data,fuction() { SaveInTeam })
+        //          3. FindAthelete $in ID
+        //          4. Send Emails          
     }
 
 
