@@ -8,136 +8,114 @@ var uploadurl = imgurl;
 myApp.factory('NavigationService', function ($http) {
     var navigation = [{
             name: "School",
-            classis: "active",
-            sref: "#!/page/viewRegistration//",
-            icon: "phone"
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Edit School",
+                classis: "",
+                sref: "#!/page/viewRegistration//",
+                icon: "phone"
+            }, {
+                name: "View School",
+                classis: "",
+                sref: "#!/school",
+                icon: "phone"
+            }]
         },
         {
-            name: "Athelete",
-            classis: "active",
-            sref: "#!/page/viewAthelete//",
-            icon: "phone"
+            name: "Athlete",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Edit Athlete",
+                classis: "",
+                sref: "#!/page/viewAthelete//",
+                icon: "phone"
+            }, {
+                name: "View Athlete",
+                classis: "",
+                sref: "#!/athlete",
+                icon: "phone"
+            }]
         },
         {
             name: "Old School",
-            classis: "active",
-            sref: "#!/page/viewOldSchool//",
-            icon: "phone"
-        },
-        {
-            name: "View School",
-            classis: "active",
-            sref: "#!/school",
-            icon: "phone"
-        },
-        {
-            name: "View Athlete",
-            classis: "active",
-            sref: "#!/athlete",
-            icon: "phone"
-        },
-        {
-            name: "View Old School",
-            classis: "active",
-            sref: "#!/oldschool",
-            icon: "phone"
-        },
-        // {
-        //     name: "Age Group",
-        //     classis: "active",
-        //     sref: "#!/page/viewAgeGroup//",
-        //     icon: "phone"
-        // }
-        {
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Edit Old School",
+                classis: "",
+                sref: "#!/page/viewOldSchool//",
+                icon: "phone"
+            }, {
+                name: "View Old School",
+                classis: "",
+                sref: "#!/oldschool",
+                icon: "phone"
+            }]
+        }, {
             name: "Age Group",
-            classis: "active",
+            classis: "activeColor",
             sref: "#!/agegroup",
             icon: "phone"
         },
-        // {
-        //     name: "Rules",
-        //     classis: "active",
-        //     sref: "#!/page/viewRules//",
-        //     icon: "phone"
-        // },
         {
             name: "Rules",
-            classis: "active",
+            classis: "activeColor",
             sref: "#!/rules",
             icon: "phone"
         },
-        // {
-        //     name: "First Category",
-        //     classis: "active",
-        //     sref: "#!/page/viewFirstCategory//",
-        //     icon: "phone"
-        // },
         {
-            name: "First Category",
-            classis: "active",
+            name: "Weight",
+            classis: "activeColor",
             sref: "#!/firstcategory",
             icon: "phone"
         },
         // {
         //     name: "Second Category",
-        //     classis: "active",
-        //     sref: "#!/page/viewSecondCategory//",
+        //     classis: "activeColor",
+        //     sref: "#!/secondcategory",
         //     icon: "phone"
         // },
-        {
-            name: "Second Category",
-            classis: "active",
-            sref: "#!/secondcategory",
-            icon: "phone"
-        },
         // {
         //     name: "Third Category",
-        //     classis: "active",
-        //     sref: "#!/page/viewThirdCategory//",
+        //     classis: "activeColor",
+        //     sref: "#!/thirdcategory",
         //     icon: "phone"
         // },
         {
-            name: "Third Category",
-            classis: "active",
-            sref: "#!/thirdcategory",
-            icon: "phone"
-        },
-
-        {
             name: "Sport",
-            classis: "active",
-            sref: "#!/page/viewSport//",
+            classis: "activeColor",
+            sref: "#!/sports",
             icon: "phone"
         },
         {
             name: "Sports List",
-            classis: "active",
-            sref: "#!/page/viewSportsList//",
+            classis: "activeColor",
+            sref: "#!/sports-list",
             icon: "phone"
         },
-        // {
-        //     name: "Draw Format",
-        //     classis: "active",
-        //     sref: "#!/page/viewDrawFormat//",
-        //     icon: "phone"
-        // },
         {
             name: "Draw Format",
-            classis: "active",
+            classis: "activeColor",
             sref: "#!/drawformat",
             icon: "phone"
         },
-        //{
-        //     name: "Users",
-        //     classis: "active",
-        //     sref: "#!/page/viewUser//",
-        //     icon: "phone"
-        // }, {
-        //     name: "Users",
-        //     classis: "active",
-        //     sref: "#!/page/viewUser//",
-        //     icon: "phone"
-        //}
+        {
+            name: "Sports List Sub Category",
+            classis: "activeColor",
+            sref: "#!/sports-list-subcat",
+            icon: "phone"
+        },
+        {
+            name: "Sports List  Category",
+            classis: "activeColor",
+            sref: "#!/sports-list-cat",
+            icon: "phone"
+        }
     ];
 
     return {
@@ -171,7 +149,7 @@ myApp.factory('NavigationService', function ($http) {
         makeactive: function (menuname) {
             for (var i = 0; i < navigation.length; i++) {
                 if (navigation[i].name == menuname) {
-                    navigation[i].classis = "active";
+                    navigation[i].classis = "activeColor";
                 } else {
                     navigation[i].classis = "";
                 }
@@ -210,6 +188,24 @@ myApp.factory('NavigationService', function ($http) {
             $http.post(adminurl + url, formData).then(function (data) {
                 data = data.data;
                 callback(data, i);
+            });
+        },
+        generateSchoolExcel: function (callback) {
+            $http.post(adminurl + 'Registration/generateExcel').then(function (data) {
+                // data = data.data;
+                callback(data);
+            });
+        },
+        generateAthleteExcel: function (callback) {
+            $http.post(adminurl + 'Athelete/generateExcel').then(function (data) {
+                // data = data.data;
+                callback(data);
+            });
+        },
+        generateOldSchoolExcel: function (callback) {
+            $http.post(adminurl + 'School/generateExcel').then(function (data) {
+                // data = data.data;
+                callback(data);
             });
         },
         getOneOldSchoolById: function (url, formData, callback) {

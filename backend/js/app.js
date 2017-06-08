@@ -136,6 +136,54 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailDrawCtrl'
         })
+        //sports list sub category
+        .state('sportslistsubcat', {
+            url: "/sports-list-subcat",
+            templateUrl: "views/template.html",
+            controller: 'SportsListSubCategoryCtrl'
+        })
+        //detail sports lis sub category
+        .state('detailsportslistsubcat', {
+            url: "/detail-sports-list-subcat",
+            templateUrl: "views/template.html",
+            controller: 'DetailSportsListSubCategoryCtrl'
+        })
+        //sports list category
+        .state('sportslistcat', {
+            url: "/sports-list-cat",
+            templateUrl: "views/template.html",
+            controller: 'SportsListCategoryCtrl'
+        })
+        //detail sport list category
+        .state('detailsportslistcat', {
+            url: "/detail-sports-list-cat",
+            templateUrl: "views/template.html",
+            controller: 'DetailSportsListCategoryCtrl'
+        })
+        // sports list
+        .state('sportslist', {
+            url: "/sports-list",
+            templateUrl: "views/template.html",
+            controller: 'SportsListCtrl'
+        })
+        //detail sports list
+        .state('detailsportslist', {
+            url: "/detail-sports-list",
+            templateUrl: "views/template.html",
+            controller: 'DetailSportsListCtrl'
+        })
+        //sports
+        .state('sports', {
+            url: "/sports",
+            templateUrl: "views/template.html",
+            controller: 'SportsCtrl'
+        })
+        //detailsports
+        .state('detailsports', {
+            url: "/detailsports/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailSportsCtrl'
+        })
         .state('login', {
             url: "/login",
             templateUrl: "views/login.html",

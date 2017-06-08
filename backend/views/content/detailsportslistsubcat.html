@@ -1,0 +1,87 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>Create Sports list Sub Category</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailForm" role="form" class="sec">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Name*</label>
+                  <input type="text" name="thirdcategory" ng-model="formData.thirdcategory" class="form-control" placeholder="Enter Name" required>
+                  <div class="error-msg" ng-if="detailForm.thirdcategory.$invalid && detailForm.thirdcategory.$touched">Please Enter Valid Name *</div>
+                </div>
+                <div class="form-group">
+                  <label>Sports Type</label>
+                  <ui-select name="selectsprttype" id="selectsprttype" theme="bootstrap" ng-model="formData.selectsprttype" required>
+                    <ui-select-match placeholder="Enter SportsListCategory">
+                      {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in genderList | filter:$select.search">
+                      <span ng-bind-html="item.name"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-msg" ng-if="detailForm.selectsprttype.$invalid && detailForm.selectsprttype.$touched">Please Enter Sports Type*</div>
+                </div>
+                <div class="form-group">
+                  <label>Team</label>
+                  <ui-select name="selectisteam" id="selectisteam" theme="bootstrap" ng-model="formData.selectisteam" required>
+                    <ui-select-match placeholder="Enter Team">
+                      {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in teamStatus | filter:$select.search">
+                      <span ng-bind-html="item.name"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-msg" ng-if="detailForm.selectisteam.$invalid && detailForm.selectisteam.$touched">Please Enter Team*</div>
+                </div>
+                <div class="form-group">
+                  <label>Filter</label>
+                  <ui-select name="selectfilter" id="selectfilter" theme="bootstrap" ng-model="formData.selectfilter" required>
+                    <ui-select-match placeholder="Enter Filter">
+                      {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in genderList | filter:$select.search">
+                      <span ng-bind-html="item.name"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-msg" ng-if="detailForm.selectfilter.$invalid && detailForm.selectfilter.$touched">Please Enter Filter*</div>
+                </div>
+                <div class="form-group">
+                  <label>RulesAndRegulation</label>
+                  <ui-select name="selectrulandreg" id="selectrulandreg" theme="bootstrap" ng-model="formData.selectrulandreg" required>
+                    <ui-select-match placeholder="Enter Rules And Regulation">
+                      {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in genderList | filter:$select.search">
+                      <span ng-bind-html="item.name"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-msg" ng-if="detailForm.selectrulandreg.$invalid && detailForm.selectrulandreg.$touched">Please Enter Rules And Regulation*</div>
+                </div>
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                  <button class="btn btn-default" ng-click="onCancel('sportslistsubcat')">Cancel</button>
+                </div>
+              </div>
+            </div>
+            <!--<div class="text-center mt20 odd-even-button">
+                            <button class="btn btn-default" type="submit" ng-click="saveData(data)">Save</button>
+                            <button class="btn btn-default" ng-click="onCancel(json.json.action[1].stateName)">Cancel</button>
+                        </div>-->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

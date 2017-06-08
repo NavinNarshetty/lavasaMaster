@@ -267,6 +267,189 @@ myApp.controller('DetailDrawCtrl', function ($scope, TemplateService, Navigation
     };
 })
 
+//Sports list sub Category
+myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tablesportslistsubcat");
+    $scope.menutitle = NavigationService.makeactive("Sports List Sub Category");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
+
+//Detail Sports list sub Category
+
+myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailsportslistsubcat");
+    $scope.menutitle = NavigationService.makeactive(" Detail Sports List Sub Category");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.teamStatus = [];
+    $scope.teamStatus = [{
+        name: 'True'
+    }, {
+        name: 'False'
+    }]
+
+    $scope.onCancel = function (sendTo) {
+        $state.go(sendTo);
+    }
+    $scope.saveData = function (data) {
+        if (data) {
+
+            $scope.url = "SportsList/save";
+            NavigationService.apiCall($scope.url, data, function (data) {
+                console.log("data.value", data);
+                if (data.value === true) {
+                    toastr.success(" Saved Successfully", "Success");
+                    $state.go('drawformat');
+
+                }
+
+            });
+        } else {
+            toastr.error("Invalid Data", "Error");
+        }
+    };
+})
+//sports list Category
+
+myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tablesportslistcat");
+    $scope.menutitle = NavigationService.makeactive("Sports List Category");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
+
+//Detail Sports list Category
+myApp.controller('DetailSportsListCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailsportslistcat");
+    $scope.menutitle = NavigationService.makeactive("Detail Sports List Category");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.onCancel = function (sendTo) {
+        $state.go(sendTo);
+    }
+    $scope.saveData = function (data) {
+        if (data) {
+
+            $scope.url = "SportsListCategory/save";
+            NavigationService.apiCall($scope.url, data, function (data) {
+                console.log("data.value", data);
+                if (data.value === true) {
+                    toastr.success(" Saved Successfully", "Success");
+                    $state.go('drawformat');
+
+                }
+
+            });
+        } else {
+            toastr.error("Invalid Data", "Error");
+        }
+    };
+
+})
+//sports list
+myApp.controller('SportsListCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tablesportslist");
+    $scope.menutitle = NavigationService.makeactive("Sports List ");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
+
+//detail sports list
+
+myApp.controller('DetailSportsListCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailsportslist");
+    $scope.menutitle = NavigationService.makeactive("Detail Sports List ");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.genderList = [];
+    $scope.genderList = [{
+        name: 'Male'
+    }, {
+        name: 'Female'
+    }]
+    $scope.onCancel = function (sendTo) {
+        $state.go(sendTo);
+    }
+    $scope.saveData = function (data) {
+        if (data) {
+
+            $scope.url = "SportsList/save";
+            NavigationService.apiCall($scope.url, data, function (data) {
+                console.log("data.value", data);
+                if (data.value === true) {
+                    toastr.success(" Saved Successfully", "Success");
+                    $state.go('drawformat');
+
+                }
+
+            });
+        } else {
+            toastr.error("Invalid Data", "Error");
+        }
+    };
+})
+
+//sports
+myApp.controller('SportsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tablesports");
+    $scope.menutitle = NavigationService.makeactive("Sports");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
+
+
+//Detail sports
+
+myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailsports");
+    $scope.menutitle = NavigationService.makeactive("Detail Sports");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.genderList = [];
+    $scope.genderList = [{
+        name: 'Male'
+    }, {
+        name: 'Female'
+    }]
+    $scope.onCancel = function (sendTo) {
+        $state.go(sendTo);
+    }
+    $scope.saveData = function (data) {
+        if (data) {
+
+            $scope.url = "Sports/save";
+            NavigationService.apiCall($scope.url, data, function (data) {
+                console.log("data.value", data);
+                if (data.value === true) {
+                    toastr.success(" Saved Successfully", "Success");
+                    $state.go('sports');
+
+                }
+
+            });
+        } else {
+            toastr.error("Invalid Data", "Error");
+        }
+    };
+})
+
 myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
     //registration filter view
     //Used to name the .html file
@@ -335,15 +518,8 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     $scope.filterSchool();
 
     $scope.generateExcel = function () {
-        console.log('Excel Data', $scope.items);
-        $scope.url = "Registration/generateExcel";
-        $scope.generateExcelData = $scope.items;
-
-
-        NavigationService.apiCall($scope.url, $scope.generateExcelData, function (data) {
-            // $scope.items = data.data.results;
-            // $scope.totalItems = data.data.total;
-            // $scope.maxRow = data.data.options.count;
+        NavigationService.generateSchoolExcel(function (data) {
+            window.location.href = adminurl + 'Registration/generateExcel';
         });
     }
 
@@ -410,6 +586,11 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
 
     };
     $scope.filterAthlete();
+    $scope.generateExcel = function () {
+        NavigationService.generateAthleteExcel(function (data) {
+            window.location.href = adminurl + 'Athelete/generateExcel';
+        });
+    }
 })
 
 myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
@@ -463,6 +644,11 @@ myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationS
 
     // JsonService.refreshView = $scope.getAllItems;
     $scope.getAllItems();
+    $scope.generateExcel = function () {
+        NavigationService.generateOldSchoolExcel(function (data) {
+            window.location.href = adminurl + 'School/generateExcel';
+        });
+    }
 })
 
 myApp.controller('ViewAthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {

@@ -1,0 +1,64 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>Create Sport List</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailForm" role="form" class="sec">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Name*</label>
+                  <input type="text" name="detailsportsname" ng-model="formData.detailsportsname" class="form-control" placeholder="Enter Name"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.detailsportsname.$invalid && detailForm.detailsportsname.$touched">Please Enter Valid Name *</div>
+                </div>
+                <div class="form-group">
+                  <label>Sports Type</label>
+                  <ui-select name="selectsporttype" id="selectsporttype" theme="bootstrap" ng-model="formData.selectsporttype" required>
+                    <ui-select-match placeholder="Enter Sports List Sub Category">
+                      {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in genderList | filter:$select.search">
+                      <span ng-bind-html="item.name"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-msg" ng-if="detailForm.selectsporttype.$invalid && detailForm.selectsporttype.$touched">Please Enter Sport Type*</div>
+                </div>
+                <div class="form-group">
+                  <label>Draw Format</label>
+                  <ui-select name="selectsdrawformat" id="selectsdrawformat" theme="bootstrap" ng-model="formData.selectsdrawformat" required>
+                    <ui-select-match placeholder="Enter Draw Format">
+                      {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in genderList | filter:$select.search">
+                      <span ng-bind-html="item.name"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-msg" ng-if="detailForm.selectsdrawformat.$invalid && detailForm.selectsdrawformat.$touched">Please Enter Draw Format*</div>
+                </div>
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                  <button class="btn btn-default" ng-click="onCancel('sportslist')">Cancel</button>
+                </div>
+              </div>
+            </div>
+            <!--<div class="text-center mt20 odd-even-button">
+                            <button class="btn btn-default" type="submit" ng-click="saveData(data)">Save</button>
+                            <button class="btn btn-default" ng-click="onCancel(json.json.action[1].stateName)">Cancel</button>
+                        </div>-->
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-4 column">
       <div class="heading-profile">
-        <h2>Weight</h2>
+        <h2>Sport</h2>
       </div>
     </div>
   </div>
@@ -15,11 +15,11 @@
         <div class="table-area ">
           <div class="widget-title ">
             <div class="pull-right">
-              <a class="btn btn-success" ui-sref="detailfirstcategory">
+              <a class="btn btn-success" ui-sref="detailsports">
                  Create
               </a>
             </div>
-            <h3>List of Weight<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
+            <h3>List of Sport<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
           </div>
           <div class="table-responsive ">
             <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
@@ -28,8 +28,12 @@
                 <tr>
                   <th>#</th>
                   <th>
-                    Name
+                    Sports List
                   </th>
+                  <th>Gender</th>
+                  <th>Year</th>
+                  <th>Min Player</th>
+                  <th>Max Player</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -38,8 +42,12 @@
                 <tr>
                   <!--<tr>-->
                   <!--<td>{{$index + 1}} {{($index + 1)+((formData.page-1)*maxRow)}}</td>-->
-                  <td></td>
-                  <td></td>
+                  <td> 1</td>
+                  <td> Football</td>
+                  <td>Male</td>
+                  <td>2017</td>
+                  <td>11</td>
+                  <td>16</td>
                   <td>
                     <a class="btn btn-primary" ui-sref="">
                       <i class="fa fa-pencil"></i> Edit
