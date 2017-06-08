@@ -193,21 +193,22 @@ var model = {
                     }]
                 }
 
-            }
-            matchObj = {
-                createdAt: {
-                    $gt: data.startDate,
-                    $lt: data.endDate,
-                },
-                $or: [{
-                    registrationFee: {
-                        $ne: "online PAYU"
-                    }
-                }, {
-                    paymentStatus: {
-                        $ne: "Pending"
-                    }
-                }]
+            } else {
+                matchObj = {
+                    createdAt: {
+                        $gt: data.startDate,
+                        $lt: data.endDate,
+                    },
+                    $or: [{
+                        registrationFee: {
+                            $ne: "online PAYU"
+                        }
+                    }, {
+                        paymentStatus: {
+                            $ne: "Pending"
+                        }
+                    }]
+                }
             }
         } else if (data.type == "SFA-ID") {
             matchObj = {
