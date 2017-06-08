@@ -2,11 +2,48 @@ module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
 
     getAll: function (req, res) {
-        SportsListSubCategory.getAll(res.callback);
+        if (req.body) {
+            SportsListSubCategory.getAll(res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+
     },
     getOne: function (req, res) {
-        SportsListSubCategory.getOne(req.body, res.callback);
+        if (req.body) {
+            SportsListSubCategory.getOne(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+    getSports: function (req, res) {
+        if (req.body) {
+            SportsListSubCategory.getSports(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
+    getRules: function (req, res) {
+        if (req.body) {
+            SportsListSubCategory.getRules(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
     }
+
 
 
 

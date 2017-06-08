@@ -421,7 +421,6 @@ var model = {
         });
     },
 
-
     saveVerify: function (data, schoolData, callback) {
         Registration.saveData(data, function (err, registerData) {
             console.log("Registration", registerData);
