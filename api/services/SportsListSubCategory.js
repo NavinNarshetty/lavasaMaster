@@ -155,7 +155,7 @@ var model = {
                     }
                 },
             ],
-            function (err, ) {
+            function (err, totals) {
                 if (err) {
                     console.log(err);
                     callback(err, "error in mongoose");

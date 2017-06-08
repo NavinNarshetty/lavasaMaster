@@ -308,7 +308,6 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
         $scope.formData.keyword = '';
         $scope.filterSchool();
     };
-    // $scope.selectedStatus = 'All';
     $scope.searchInSchool = function (data) {
         $scope.formData.page = 1;
         if (data.length >= 2) {
@@ -319,24 +318,10 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
             $scope.filterSchool();
         }
     }
-    // $scope.filterDelivery = function (data) {
-    //     $scope.oConstraints.pagenumber = 1;
-    //     $scope.oConstraints.pagesize = 10;
-    //     $scope.oConstraints.deliveryStatus = data;
-    //     $scope.selectedStatus = data;
-    //     $scope.getMyOrders();
-    // }
 
 
     $scope.filterSchool = function () {
         $scope.url = "Registration/filterSchool";
-        // $stateParams.filter = $scope.formData;
-        // $stateParams.keyword = $scope.search.keyword;
-        // $stateParams.page = $scope.currentPage;
-        //  console.log($scope.currentPage);
-        // $scope.formData.page = $scope.currentPage + 1;
-        // $scope.formData.keyword = $scope.search.keyword;
-        // $scope.items = undefined;
         $scope.search = $scope.formData.keyword;
         $scope.formData.page = $scope.formData.page++;
 
@@ -348,6 +333,20 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
         });
     };
     $scope.filterSchool();
+
+    $scope.generateExcel = function () {
+        console.log('Excel Data', $scope.items);
+        $scope.url = "Registration/generateExcel";
+        $scope.generateExcelData = $scope.items;
+
+
+        NavigationService.apiCall($scope.url, $scope.generateExcelData, function (data) {
+            // $scope.items = data.data.results;
+            // $scope.totalItems = data.data.total;
+            // $scope.maxRow = data.data.options.count;
+        });
+    }
+
 
 })
 
