@@ -471,6 +471,11 @@ var model = {
 
                                 }
                             },
+                            {
+                                $match: {
+                                    "gender": data.gender
+                                }
+                            },
                             // Stage 4
                             {
                                 $match: {
