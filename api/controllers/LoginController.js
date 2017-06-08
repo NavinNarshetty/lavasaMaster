@@ -8,7 +8,7 @@ var controller = {
             } else {
                 res.json({
                     data: "Please provide params",
-                    value: true
+                    value: false
                 });
             }
         } else {
@@ -20,14 +20,7 @@ var controller = {
     },
     logout: function (req, res) {
         if (req.body) {
-            Login.tokenCheck(req.body, found, function (err, complete) {
-                if (err) {
-                    callback(err, null);
-                } else if (complete) {
-                    req.body._id = complete._id;
-                    Login.changePassword(req.body, res.callback);
-                }
-            });
+            Login.tokenRemove(req.body, res.callback);
         } else {
             res.json({
                 value: false,
@@ -88,7 +81,7 @@ var controller = {
 
     changePassword: function (req, res) {
         if (req.body) {
-            Login.tokenCheck(req.body, found, function (err, complete) {
+            Login.tokenCheck(req.body, function (err, complete) {
                 if (err) {
                     callback(err, null);
                 } else if (complete) {
