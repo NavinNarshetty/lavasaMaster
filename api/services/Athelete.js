@@ -179,6 +179,21 @@ var model = {
         };
         var matchObj = {};
         if (data.type == "Date") {
+            if (data.endDate == data.startDate) {
+                matchObj = {
+                    createdAt: data.startDate,
+                    $or: [{
+                        registrationFee: {
+                            $ne: "online PAYU"
+                        }
+                    }, {
+                        paymentStatus: {
+                            $ne: "Pending"
+                        }
+                    }]
+                }
+
+            }
             matchObj = {
                 createdAt: {
                     $gt: data.startDate,
