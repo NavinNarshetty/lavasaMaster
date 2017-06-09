@@ -8,13 +8,53 @@ myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationS
 })
 
 //Age Group
-myApp.controller('AgeGroupCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+myApp.controller('AgeGroupCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableagegroup");
     $scope.menutitle = NavigationService.makeactive("Age Group");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.viewTable = function () {
+        $scope.formData = {};
+        $scope.url = "AgeGroup/search";
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+        });
+    }
+    $scope.viewTable();
+    $scope.confDel = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/views/modal/delete.html',
+            size: 'sm',
+            scope: $scope
+        });
+    };
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    }
+
+    $scope.delete = function (data) {
+        // console.log(data);
+        $scope.url = "AgeGroup/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            // console.log("data.value", data);
+            // $scope.items = data.data.results;
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'Age Group Message');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
+            }
+        });
+    }
 })
 
 //detail Age Group
@@ -34,16 +74,13 @@ myApp.controller('DetailAgeGroupCtrl', function ($scope, TemplateService, Naviga
     //end cancel
     $scope.saveData = function (data) {
         if (data) {
-
             $scope.url = "AgeGroup/save";
             NavigationService.apiCall($scope.url, data, function (data) {
                 console.log("data.value", data);
                 if (data.value === true) {
                     toastr.success(" Saved Successfully", "Success");
                     $state.go('agegroup')
-
                 }
-
             });
         } else {
             toastr.error("Invalid Data", "Error");
@@ -62,6 +99,17 @@ myApp.controller('RulesCtrl', function ($scope, TemplateService, NavigationServi
     $scope.menutitle = NavigationService.makeactive("Rules");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.viewTable = function () {
+        $scope.formData = {};
+        $scope.url = "Rules/search";
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+
+        });
+
+    }
+    $scope.viewTable();
 })
 //Detail Rules
 myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
@@ -103,6 +151,16 @@ myApp.controller('FirstCategoryCtrl', function ($scope, TemplateService, Navigat
     $scope.menutitle = NavigationService.makeactive("Weight");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.viewTable = function () {
+        $scope.formData = {};
+        $scope.url = "Weight/search";
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+
+        });
+    }
+    $scope.viewTable();
 })
 
 //Detail First Category
@@ -120,7 +178,7 @@ myApp.controller('DetailFirstCategoryCtrl', function ($scope, TemplateService, N
     $scope.saveData = function (data) {
         if (data) {
 
-            $scope.url = "FirstCategory/save";
+            $scope.url = "Weight/save";
             NavigationService.apiCall($scope.url, data, function (data) {
                 console.log("data.value", data);
                 if (data.value) {
@@ -234,6 +292,17 @@ myApp.controller('DrawFormatCtrl', function ($scope, TemplateService, Navigation
     $scope.menutitle = NavigationService.makeactive("Draw Format");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.viewTable = function () {
+        $scope.formData = {};
+        $scope.url = "DrawFormat/search";
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+
+        });
+
+    }
+    $scope.viewTable();
 })
 
 //Detail Draw
@@ -275,6 +344,17 @@ myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService,
     $scope.menutitle = NavigationService.makeactive("Sub Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.viewTable = function () {
+        $scope.formData = {};
+        $scope.url = "SportsList/search";
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+
+        });
+
+    }
+    $scope.viewTable();
 })
 
 //Detail Sports list sub Category
@@ -286,6 +366,28 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
     $scope.menutitle = NavigationService.makeactive(" Detail Sub Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.sporttypeList = [];
+    $scope.sporttypeList = [{
+        name: 'Team Sports'
+    }, {
+        name: 'Racquet Sports'
+    }, {
+        name: 'Combat Sports'
+    }]
+    $scope.filterList = [];
+    $scope.filterList = [{
+        name: 'Gender'
+    }, {
+        name: 'AgeGroup'
+    }, {
+        name: 'Weight'
+    }]
+    $scope.rulesList = [];
+    $scope.rulesList = [{
+        name: 'football'
+    }, {
+        name: 'hockey'
+    }]
     $scope.teamStatus = [];
     $scope.teamStatus = [{
         name: 'True'
@@ -304,7 +406,7 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
                 console.log("data.value", data);
                 if (data.value === true) {
                     toastr.success(" Saved Successfully", "Success");
-                    $state.go('drawformat');
+                    $state.go('sportslistsubcat');
 
                 }
 
@@ -323,6 +425,17 @@ myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, Na
     $scope.menutitle = NavigationService.makeactive("Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.viewTable = function () {
+        $scope.formData = {};
+        $scope.url = "SportsListCategory/search";
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+
+        });
+
+    }
+    $scope.viewTable();
 })
 
 //Detail Sports list Category
@@ -333,6 +446,8 @@ myApp.controller('DetailSportsListCategoryCtrl', function ($scope, TemplateServi
     $scope.menutitle = NavigationService.makeactive("Detail Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+
+
     $scope.onCancel = function (sendTo) {
         $state.go(sendTo);
     }
@@ -344,7 +459,7 @@ myApp.controller('DetailSportsListCategoryCtrl', function ($scope, TemplateServi
                 console.log("data.value", data);
                 if (data.value === true) {
                     toastr.success(" Saved Successfully", "Success");
-                    $state.go('drawformat');
+                    $state.go('sportslistcat');
 
                 }
 
@@ -363,6 +478,17 @@ myApp.controller('SportsListCtrl', function ($scope, TemplateService, Navigation
     $scope.menutitle = NavigationService.makeactive("Sports List");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.viewTable = function () {
+        $scope.formData = {};
+        $scope.url = "SportsList/search";
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+
+        });
+
+    }
+    $scope.viewTable();
 })
 
 //detail sports list
@@ -374,11 +500,19 @@ myApp.controller('DetailSportsListCtrl', function ($scope, TemplateService, Navi
     $scope.menutitle = NavigationService.makeactive("Detail Sports List");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-    $scope.genderList = [];
-    $scope.genderList = [{
-        name: 'Male'
+    $scope.sporttypeList = [];
+    $scope.sporttypeList = [{
+        name: 'Team Sports'
     }, {
-        name: 'Female'
+        name: 'Racquet Sports'
+    }, {
+        name: 'Combat Sports'
+    }]
+    $scope.drawList = [];
+    $scope.drawList = [{
+        name: 'water polo'
+    }, {
+        name: 'fencing'
     }]
     $scope.onCancel = function (sendTo) {
         $state.go(sendTo);
@@ -391,7 +525,7 @@ myApp.controller('DetailSportsListCtrl', function ($scope, TemplateService, Navi
                 console.log("data.value", data);
                 if (data.value === true) {
                     toastr.success(" Saved Successfully", "Success");
-                    $state.go('drawformat');
+                    $state.go('sportslist');
 
                 }
 
@@ -428,13 +562,38 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
     }, {
         name: 'Female'
     }]
+    $scope.sporttypeList = [];
+    $scope.sporttypeList = [{
+        name: 'Team Sports'
+    }, {
+        name: 'Racquet Sports'
+    }, {
+        name: 'Combat Sports'
+    }]
+    $scope.ageList = [];
+    $scope.ageList = [{
+        name: 'u-8'
+    }, {
+        name: 'u-10'
+    }, {
+        name: 'u-12'
+    }]
+
+    $scope.weightList = [];
+    $scope.weightList = [{
+        name: '50 kg'
+    }, {
+        name: '60 kg'
+    }, {
+        name: '70 kg'
+    }]
     $scope.onCancel = function (sendTo) {
         $state.go(sendTo);
     }
     $scope.saveData = function (data) {
         if (data) {
 
-            $scope.url = "Sports/save";
+            $scope.url = "Sport/save";
             NavigationService.apiCall($scope.url, data, function (data) {
                 console.log("data.value", data);
                 if (data.value === true) {
