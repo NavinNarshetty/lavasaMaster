@@ -45,11 +45,10 @@ var model = {
     },
 
     SchoolToken: function (data, callback) {
-        var token = generator.generate({
+       var token = generator.generate({
             length: 16,
             numbers: true
-        });
-        console.log(token);
+        })
         var matchToken = {
             $set: {
                 accessToken: token
@@ -91,7 +90,6 @@ var model = {
                 callback(null, found);
             }
         });
-
 
     },
 
@@ -266,18 +264,14 @@ var model = {
                     } else if (data1) {
                         callback(null, data1);
                     } else {
-                        callback(null, {
-                            error: "Incorrect Old Password"
-                        });
+                        callback("Incorrect Old Password",null);
                     }
                 });
             } else {
-                callback(null, {
-                    error: "Password match or Same password exist"
-                });
+                callback("Password match or Same password exist",null);
             }
         } else {
-            callback(null, "Invalid data");
+            callback("Invalid data",null);
         }
     },
 
