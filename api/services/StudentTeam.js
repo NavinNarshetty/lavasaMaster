@@ -3,7 +3,7 @@ var schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'TeamSport',
         index: true,
-        key: 'student'
+        key: 'studentTeam'
     },
     sport: {
         type: Schema.Types.ObjectId,
@@ -27,7 +27,21 @@ module.exports = mongoose.model('StudentTeam', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
-
+    saveInTeam: function (data, callback) {
+        StudentTeam.saveData(data, function (err, teamData) {
+            console.log("teamData", teamData);
+            if (err) {
+                console.log("err", err);
+                callback("There was an error ", null);
+            } else {
+                if (_.isEmpty(teamData)) {
+                    callback("No data found", null);
+                } else {
+                    callback(null, teamData);
+                }
+            }
+        });
+    },
 
 
 

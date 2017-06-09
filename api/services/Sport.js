@@ -280,7 +280,6 @@ var model = {
                                 callback(null, complete)
                             }
                         }
-
                     });
                 },
                 function (complete, callback) {
@@ -290,17 +289,32 @@ var model = {
                         if (found == data.maxTeam) {
                             callback("Max Team Created", null);
                         } else {
-                            Sport.allAthelete(data, function (err, complete) {
-                                if (err) {
-                                    callback(err, null);
-                                } else {
-                                    if (_.isEmpty(complete)) {
-                                        callback(null, []);
+                            if (data.sfaid != "") {
+                                Sport.matchingAthelete(data, function (err, complete) {
+                                    if (err) {
+                                        callback(err, null);
                                     } else {
-                                        callback(null, complete)
+                                        if (_.isEmpty(complete)) {
+                                            callback(null, []);
+                                        } else {
+                                            callback(null, complete)
+                                        }
                                     }
-                                }
-                            });
+                                });
+
+                            } else {
+                                Sport.allAthelete(data, function (err, complete) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        if (_.isEmpty(complete)) {
+                                            callback(null, []);
+                                        } else {
+                                            callback(null, complete)
+                                        }
+                                    }
+                                });
+                            }
                         }
                     });
 
@@ -325,6 +339,7 @@ var model = {
         // if(teamID) -> CurrentTeam
 
     },
+
     isStudentInSport: function (studentID, SportId, callback) {
         // count  TeamSport - > School ID-> StudentID - > SportId 
         // if(count == 0) {}
@@ -504,6 +519,20 @@ var model = {
                             }
                         });
                 },
+                function (returnReq, callback) {
+                    Sport.isStudentInSport(data, function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete)
+                            }
+                        }
+                    });
+                },
+
             ],
             function (err, data2) {
                 if (err) {
@@ -520,14 +549,111 @@ var model = {
 
     },
 
-    // Team Confirm function
-    teamConfirm: function (data, callback) { // Data -> array of (StudentID, Sport,isCaptain,isGoalkeeper)
-        //      Waterfall
-        //          1. CreateTeamSportWithSchool 
-        //          2. async.each(data,fuction() { SaveInTeam })
-        //          3. FindAthelete $in ID
-        //          4. Send Emails          
-    }
+    matchingAthelete: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    School.findOne({
+                        _id: data.school
+                    }).lean().exec(
+                        function (err, found) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (found) {
+                                var school = found.name;
+                                callback(null, school);
+                            } else {
+                                callback("Invalid data", null);
+                            }
+                        });
+                },
+
+                function (school, callback) {
+                    Athelete.aggregate(
+                        [{
+                                $lookup: {
+                                    "from": "schools",
+                                    "localField": "school",
+                                    "foreignField": "_id",
+                                    "as": "schoolData"
+                                }
+                            },
+                            // Stage 2
+                            {
+                                $unwind: {
+                                    path: "$schoolData",
+                                    preserveNullAndEmptyArrays: true // optional
+                                }
+                            },
+                            // Stage 3
+                            {
+                                $match: {
+
+                                    $or: [{
+                                            "schoolData.name": {
+                                                $regex: school
+                                            }
+                                        },
+                                        {
+                                            "atheleteSchoolName": {
+                                                $regex: school
+                                            }
+                                        }
+                                    ]
+
+                                }
+                            },
+                            {
+                                $match: {
+                                    "gender": data.gender,
+                                    "sfaId": data.sfaid
+                                }
+                            },
+                            // Stage 4
+                            {
+                                $match: {
+                                    $or: [{
+                                        registrationFee: {
+                                            $ne: "online PAYU"
+                                        }
+                                    }, {
+                                        paymentStatus: {
+                                            $ne: "Pending"
+                                        }
+                                    }]
+                                }
+                            }
+                        ],
+                        function (err, returnReq) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else {
+                                if (_.isEmpty(returnReq)) {
+                                    callback(null, "data is empty");
+                                } else {
+                                    callback(null, returnReq);
+                                }
+                            }
+                        });
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+
+    },
+
+
 
 
 };
