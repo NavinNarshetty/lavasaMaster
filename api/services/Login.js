@@ -88,6 +88,8 @@ var model = {
         ], function (err, found) {
             if (found) {
                 callback(null, found);
+            }else{
+                callback("Incorrect Login Details", null);
             }
         });
 
@@ -135,15 +137,19 @@ var model = {
                 });
             }
         ], function (err, found) {
-            if (found) {
+           if (found) {
                 callback(null, found);
+            }else{
+                callback("Incorrect Login Details", null);
             }
         });
 
     },
 
     forgotPassword: function (data, callback) {
-        if (data.type == "school") {
+        var sfatype=data.sfaid.charAt(1);
+        console.log(sfatype);
+        if (data.type == "school" && sfatype=='S') {
             Registration.findOne({
                 sfaID: data.sfaid,
                 email: data.email
@@ -195,7 +201,7 @@ var model = {
 
             });
 
-        } else if (data.type == "athlete") {
+        } else if (data.type == "athlete"&&sfatype=='A') {
             Athelete.findOne({
                 sfaId: data.sfaid,
                 email: data.email

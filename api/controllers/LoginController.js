@@ -55,9 +55,11 @@ var controller = {
     },
 
     forgotPasswordAthlete: function (req, res) {
+        console.log('enter');
         if (req.body) {
             if (req.body.email && req.body.email !== "" && req.body.sfaid && req.body.sfaid !== "" && req.body.type && req.body.type !== "") {
                 if (req.body.type == "athlete") {
+                    console.log('enter');
                     Login.forgotPassword(req.body, res.callback);
                 } else {
                     res.json({
@@ -66,17 +68,20 @@ var controller = {
                     });
                 }
             } else {
+                 console.log('enter');
                 res.json({
                     value: false,
                     data: "Please provide All Details"
                 });
             }
         } else {
+             console.log('enter');
             res.json({
                 value: false,
                 data: "Invalid Call"
             });
         }
+         console.log('enter');
     },
 
     changePassword: function (req, res) {
