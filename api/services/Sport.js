@@ -340,12 +340,6 @@ var model = {
 
     },
 
-    isStudentInSport: function (studentID, SportId, callback) {
-        // count  TeamSport - > School ID-> StudentID - > SportId 
-        // if(count == 0) {}
-        // else { AlreadyInTeam }
-    },
-
     getSportPerTeam: function (data, callback) {
         Sport.aggregate([
                 // Stage 1
@@ -450,7 +444,6 @@ var model = {
                             }
                         });
                 },
-
                 function (school, callback) {
                     Athelete.aggregate(
                         [{
@@ -518,21 +511,7 @@ var model = {
                                 }
                             }
                         });
-                },
-                function (returnReq, callback) {
-                    Sport.isStudentInSport(data, function (err, complete) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(complete)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, complete)
-                            }
-                        }
-                    });
-                },
-
+                }
             ],
             function (err, data2) {
                 if (err) {
@@ -652,6 +631,26 @@ var model = {
             });
 
     },
+
+    removeSelectedAthlete: function (data, callback) {
+        var matchToken = {
+            $set: {
+                isSelected: false
+            }
+        }
+        Athelete.update({
+            _id: saveData.studentId
+        }, matchToken).exec(function (err, found) { //finds all athelete
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "Data is empty");
+            } else {
+                callback(null, found);
+            }
+        });
+
+    }
 
 
 

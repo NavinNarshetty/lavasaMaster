@@ -214,6 +214,24 @@ var model = {
                         });
                     },
                     function (saveData, callback) {
+                        var matchToken = {
+                            $set: {
+                                isSelected: true
+                            }
+                        }
+                        Athelete.update({
+                            _id: saveData.studentId
+                        }, matchToken).exec(function (err, found) { //finds all athelete
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(found)) {
+                                callback(null, "Data is empty");
+                            } else {
+                                callback(null, found);
+                            }
+                        });
+                    },
+                    function (saveData, callback) {
                         Athelete.findOne({
                             _id: saveData.studentId
                         }).exec(function (err, found) { //finds all athelete

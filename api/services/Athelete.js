@@ -92,7 +92,8 @@ var schema = new Schema({
     },
     verifiedDate: Date,
     remarks: String,
-    accessToken: String
+    accessToken: String,
+    isSelected: Boolean,
 
 });
 
