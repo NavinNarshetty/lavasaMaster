@@ -100,7 +100,7 @@ myApp.controller('FirstCategoryCtrl', function ($scope, TemplateService, Navigat
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tablefirst");
-    $scope.menutitle = NavigationService.makeactive("First Category");
+    $scope.menutitle = NavigationService.makeactive("Weight");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 })
@@ -110,7 +110,7 @@ myApp.controller('DetailFirstCategoryCtrl', function ($scope, TemplateService, N
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("detailfirst");
-    $scope.menutitle = NavigationService.makeactive("Deatil First Category");
+    $scope.menutitle = NavigationService.makeactive("Detail First Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     $scope.onCancel = function (sendTo) {
@@ -272,7 +272,7 @@ myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService,
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tablesportslistsubcat");
-    $scope.menutitle = NavigationService.makeactive("Sports List Sub Category");
+    $scope.menutitle = NavigationService.makeactive("Sub Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 })
@@ -283,7 +283,7 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("detailsportslistsubcat");
-    $scope.menutitle = NavigationService.makeactive(" Detail Sports List Sub Category");
+    $scope.menutitle = NavigationService.makeactive(" Detail Sub Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     $scope.teamStatus = [];
@@ -320,7 +320,7 @@ myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, Na
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tablesportslistcat");
-    $scope.menutitle = NavigationService.makeactive("Sports List Category");
+    $scope.menutitle = NavigationService.makeactive("Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 })
@@ -330,7 +330,7 @@ myApp.controller('DetailSportsListCategoryCtrl', function ($scope, TemplateServi
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("detailsportslistcat");
-    $scope.menutitle = NavigationService.makeactive("Detail Sports List Category");
+    $scope.menutitle = NavigationService.makeactive("Detail Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     $scope.onCancel = function (sendTo) {
@@ -360,7 +360,7 @@ myApp.controller('SportsListCtrl', function ($scope, TemplateService, Navigation
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tablesportslist");
-    $scope.menutitle = NavigationService.makeactive("Sports List ");
+    $scope.menutitle = NavigationService.makeactive("Sports List");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 })
@@ -371,7 +371,7 @@ myApp.controller('DetailSportsListCtrl', function ($scope, TemplateService, Navi
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("detailsportslist");
-    $scope.menutitle = NavigationService.makeactive("Detail Sports List ");
+    $scope.menutitle = NavigationService.makeactive("Detail Sports List");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     $scope.genderList = [];

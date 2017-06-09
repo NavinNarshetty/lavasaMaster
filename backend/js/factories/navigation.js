@@ -74,6 +74,37 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#!/firstcategory",
             icon: "phone"
         },
+        {
+            name: "Draw Format",
+            classis: "activeColor",
+            sref: "#!/drawformat",
+            icon: "phone"
+        },
+        {
+            name: "Category",
+            classis: "activeColor",
+            sref: "#!/sports-list-cat",
+            icon: "phone"
+        },
+        {
+            name: "Sub Category",
+            classis: "activeColor",
+            sref: "#!/sports-list-subcat",
+            icon: "phone"
+        },
+        {
+            name: "Sports List",
+            classis: "activeColor",
+            sref: "#!/sports-list",
+            icon: "phone"
+        },
+        {
+            name: "Sports",
+            classis: "activeColor",
+            sref: "#!/sports",
+            icon: "phone"
+        }
+
         // {
         //     name: "Second Category",
         //     classis: "activeColor",
@@ -86,43 +117,12 @@ myApp.factory('NavigationService', function ($http) {
         //     sref: "#!/thirdcategory",
         //     icon: "phone"
         // },
-        {
-            name: "Sport",
-            classis: "activeColor",
-            sref: "#!/sports",
-            icon: "phone"
-        },
-        {
-            name: "Sports List",
-            classis: "activeColor",
-            sref: "#!/sports-list",
-            icon: "phone"
-        },
-        {
-            name: "Draw Format",
-            classis: "activeColor",
-            sref: "#!/drawformat",
-            icon: "phone"
-        },
-        {
-            name: "Sports List Sub Category",
-            classis: "activeColor",
-            sref: "#!/sports-list-subcat",
-            icon: "phone"
-        },
-        {
-            name: "Sports List  Category",
-            classis: "activeColor",
-            sref: "#!/sports-list-cat",
-            icon: "phone"
-        }
     ];
 
     return {
         getnav: function () {
             return navigation;
         },
-
         parseAccessToken: function (data, callback) {
             if (data) {
                 $.jStorage.set("accessToken", data);

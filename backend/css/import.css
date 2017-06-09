@@ -33154,6 +33154,15 @@ input[type=radio] {
   cursor: pointer;
   margin: 4px 6px 4px; }
 
+.activeColor {
+  color: #ea5249; }
+
+.activesColor {
+  color: #ea5249; }
+
+.activessColor {
+  color: #ea5249; }
+
 /* Start writing sass here */
 #fancybox-loading, .fancybox-close, .fancybox-next span, .fancybox-prev span {
   background-image: url(../img/fancybox_sprite.png); }
