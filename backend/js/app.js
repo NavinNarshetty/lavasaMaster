@@ -144,7 +144,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         //detail sports lis sub category
         .state('detailsportslistsubcat', {
-            url: "/detail-sports-list-subcat",
+            url: "/detail-sports-list-subcat/:id",
             templateUrl: "views/template.html",
             controller: 'DetailSportsListSubCategoryCtrl'
         })
@@ -156,7 +156,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         //detail sport list category
         .state('detailsportslistcat', {
-            url: "/detail-sports-list-cat",
+            url: "/detail-sports-list-cat/:id",
             templateUrl: "views/template.html",
             controller: 'DetailSportsListCategoryCtrl'
         })
@@ -168,7 +168,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         //detail sports list
         .state('detailsportslist', {
-            url: "/detail-sports-list",
+            url: "/detail-sports-list/:id",
             templateUrl: "views/template.html",
             controller: 'DetailSportsListCtrl'
         })

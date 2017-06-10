@@ -41,10 +41,10 @@
                   <td>{{$index + 1}}</td>
                   <td>{{item.name}}</td>
                   <td>
-                    <a class="btn btn-primary" ui-sref="#">
+                    <a class="btn btn-primary" ui-sref="detailsportslistsubcat({id:item._id})">
                       <i class="fa fa-pencil"></i> Edit
                     </a>
-                    <a class="btn btn-danger" ui-sref="#">
+                    <a class="btn btn-danger" ng-click="confDel(item._id)">
                       <i class="fa fa-trash"></i> Delete
                     </a>
                   </td>

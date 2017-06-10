@@ -24,15 +24,20 @@ myApp.controller('AgeGroupCtrl', function ($scope, TemplateService, NavigationSe
         });
     }
     $scope.viewTable();
+
+
     $scope.confDel = function (data) {
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
             templateUrl: '/views/modal/delete.html',
+            backdrop: 'static',
+            keyboard: false,
             size: 'sm',
             scope: $scope
         });
     };
+
 
     $scope.noDelete = function () {
         $scope.modalInstance.close();
@@ -66,6 +71,18 @@ myApp.controller('DetailAgeGroupCtrl', function ($scope, TemplateService, Naviga
     $scope.menutitle = NavigationService.makeactive("Deatil Age Group");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    //edit
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = "AgeGroup/getOne";
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.formData = data.data;
+        });
+
+    };
+    $scope.getOneOldSchoolById();
+    //end edit
     //cancel
     $scope.onCancel = function (sendTo) {
 
@@ -92,7 +109,7 @@ myApp.controller('DetailAgeGroupCtrl', function ($scope, TemplateService, Naviga
 
 //Rules
 
-myApp.controller('RulesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+myApp.controller('RulesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tablerules");
@@ -110,6 +127,40 @@ myApp.controller('RulesCtrl', function ($scope, TemplateService, NavigationServi
 
     }
     $scope.viewTable();
+    $scope.confDel = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'views/modal/delete.html',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+
+        });
+    };
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    }
+    $scope.delete = function (data) {
+        console.log(data);
+        $scope.url = "Rules/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            console.log("data.value", data);
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'Rules Meaasge');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something went wrong while Deleting', 'Rules Meaasge');
+            }
+
+        });
+    }
+
 })
 //Detail Rules
 myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
@@ -119,6 +170,17 @@ myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, Navigatio
     $scope.menutitle = NavigationService.makeactive("Deatil Rules");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = "Rules/getOne";
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.formData = data.data;
+        });
+
+    };
+    $scope.getOneOldSchoolById();
     //cancel
     $scope.onCancel = function (sendTo) {
 
@@ -144,7 +206,7 @@ myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, Navigatio
     };
 })
 //First Category
-myApp.controller('FirstCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+myApp.controller('FirstCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tablefirst");
@@ -161,6 +223,41 @@ myApp.controller('FirstCategoryCtrl', function ($scope, TemplateService, Navigat
         });
     }
     $scope.viewTable();
+
+    $scope.confDel = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/views/modal/delete.html',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+        });
+    }
+
+
+    $scope.noDelete = function (data) {
+        $scope.modalInstance.close();
+    }
+
+    $scope.delete = function (data) {
+        // console.log(data);
+        $scope.url = "Weight/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            // console.log("data.value", data);
+            // $scope.items = data.data.results;
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'Weight Message');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something Went Wrong while Deleting', 'Weight Message');
+            }
+        });
+    }
 })
 
 //Detail First Category
@@ -171,6 +268,18 @@ myApp.controller('DetailFirstCategoryCtrl', function ($scope, TemplateService, N
     $scope.menutitle = NavigationService.makeactive("Detail First Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    //edit
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = "Weight/getOne";
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.formData = data.data;
+        });
+    };
+    $scope.getOneOldSchoolById();
+    //end edit
+
     $scope.onCancel = function (sendTo) {
 
         $state.go(sendTo);
@@ -285,7 +394,7 @@ myApp.controller('DetailThirdCategoryCtrl', function ($scope, TemplateService, N
 })
 //Draw format
 
-myApp.controller('DrawFormatCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+myApp.controller('DrawFormatCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tabledraw");
@@ -303,6 +412,40 @@ myApp.controller('DrawFormatCtrl', function ($scope, TemplateService, Navigation
 
     }
     $scope.viewTable();
+
+    $scope.confDel = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: "/views/modal/delete.html",
+            backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+        });
+
+    };
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    }
+
+    $scope.delete = function (data) {
+        $scope.url = "DrawFormat/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            console.log(data.value);
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'DrawFormat Meaasge');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something went wrong', 'DrawFormat Message');
+            }
+        });
+    }
+
 })
 
 //Detail Draw
@@ -313,6 +456,18 @@ myApp.controller('DetailDrawCtrl', function ($scope, TemplateService, Navigation
     $scope.menutitle = NavigationService.makeactive("Deatil Draw");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = "DrawFormat/getOne";
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.formData = data.data;
+        });
+    };
+    $scope.getOneOldSchoolById();
+
+
     $scope.onCancel = function (sendTo) {
         $state.go(sendTo);
     }
@@ -337,7 +492,7 @@ myApp.controller('DetailDrawCtrl', function ($scope, TemplateService, Navigation
 })
 
 //Sports list sub Category
-myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tablesportslistsubcat");
@@ -355,6 +510,37 @@ myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService,
 
     }
     $scope.viewTable();
+
+    $scope.confDel = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/views/modal/delete.html',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+        });
+    };
+
+    $scope.noDelete = function (data) {
+        $scope.modalInstance.close();
+    }
+    $scope.delete = function (data) {
+        $scope.url = "SportsList/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'SportList message');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something went wrong while Deleting', 'SportList Message');
+            }
+        });
+
+    }
 })
 
 //Detail Sports list sub Category
@@ -366,6 +552,15 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
     $scope.menutitle = NavigationService.makeactive(" Detail Sub Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = "SportsList/getOne";
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.formData = data.data;
+        });
+    };
+    $scope.getOneOldSchoolById();
     $scope.sporttypeList = [];
     $scope.sporttypeList = [{
         name: 'Team Sports'
@@ -418,7 +613,7 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
 })
 //sports list Category
 
-myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tablesportslistcat");
@@ -436,6 +631,38 @@ myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, Na
 
     }
     $scope.viewTable();
+
+    $scope.confDel = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/views/modal/delete.html',
+            size: 'sm',
+            scope: $scope
+        });
+    };
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    }
+
+    $scope.delete = function (data) {
+        // console.log(data);
+        $scope.url = "SportsListCategory/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            // console.log("data.value", data);
+            // $scope.items = data.data.results;
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'Age Group Message');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
+            }
+        });
+    }
 })
 
 //Detail Sports list Category
@@ -446,6 +673,15 @@ myApp.controller('DetailSportsListCategoryCtrl', function ($scope, TemplateServi
     $scope.menutitle = NavigationService.makeactive("Detail Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = "SportsListCategory/getOne";
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.formData = data.data;
+        });
+    };
+    $scope.getOneOldSchoolById();
 
 
     $scope.onCancel = function (sendTo) {
@@ -471,7 +707,7 @@ myApp.controller('DetailSportsListCategoryCtrl', function ($scope, TemplateServi
 
 })
 //sports list
-myApp.controller('SportsListCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+myApp.controller('SportsListCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tablesportslist");
@@ -489,6 +725,40 @@ myApp.controller('SportsListCtrl', function ($scope, TemplateService, Navigation
 
     }
     $scope.viewTable();
+
+    $scope.confDel = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/views/modal/delete.html',
+            keyboard: false,
+            backdrop: 'static',
+            size: 'sm',
+            scope: $scope
+        });
+    };
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    }
+
+    $scope.delete = function (data) {
+        // console.log(data);
+        $scope.url = "SportsList/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            // console.log("data.value", data);
+            // $scope.items = data.data.results;
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'Age Group Message');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
+            }
+        });
+    }
 })
 
 //detail sports list
@@ -500,6 +770,15 @@ myApp.controller('DetailSportsListCtrl', function ($scope, TemplateService, Navi
     $scope.menutitle = NavigationService.makeactive("Detail Sports List");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = "SportsList/getOne";
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.formData = data.data;
+        });
+    };
+    $scope.getOneOldSchoolById();
     $scope.sporttypeList = [];
     $scope.sporttypeList = [{
         name: 'Team Sports'
@@ -544,6 +823,38 @@ myApp.controller('SportsCtrl', function ($scope, TemplateService, NavigationServ
     $scope.menutitle = NavigationService.makeactive("Sports");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+
+    $scope.confDel = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/views/modal/delete.html',
+            size: 'sm',
+            scope: $scope
+        });
+    };
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    }
+
+    $scope.delete = function (data) {
+        // console.log(data);
+        $scope.url = "Sport/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            // console.log("data.value", data);
+            // $scope.items = data.data.results;
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'Age Group Message');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
+            }
+        });
+    }
 })
 
 
@@ -556,6 +867,15 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
     $scope.menutitle = NavigationService.makeactive("Detail Sports");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = "Sport/getOne";
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.formData = data.data;
+        });
+    };
+    $scope.getOneOldSchoolById();
     $scope.genderList = [];
     $scope.genderList = [{
         name: 'Male'
