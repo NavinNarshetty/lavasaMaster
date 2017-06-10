@@ -45,7 +45,7 @@ var model = {
     },
 
     SchoolToken: function (data, callback) {
-       var token = generator.generate({
+        var token = generator.generate({
             length: 16,
             numbers: true
         })
@@ -88,7 +88,7 @@ var model = {
         ], function (err, found) {
             if (found) {
                 callback(null, found);
-            }else{
+            } else {
                 callback("Incorrect Login Details", null);
             }
         });
@@ -126,6 +126,7 @@ var model = {
                     sfaId: data.sfaid,
                     password: data.password
                 }).exec(function (err, found) {
+                    console.log('found', found);
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(found)) {
@@ -137,9 +138,9 @@ var model = {
                 });
             }
         ], function (err, found) {
-           if (found) {
+            if (found) {
                 callback(null, found);
-            }else{
+            } else {
                 callback("Incorrect Login Details", null);
             }
         });
@@ -147,9 +148,9 @@ var model = {
     },
 
     forgotPassword: function (data, callback) {
-        var sfatype=data.sfaid.charAt(1);
+        var sfatype = data.sfaid.charAt(1);
         console.log(sfatype);
-        if (data.type == "school" && sfatype=='S') {
+        if (data.type == "school" && sfatype == 'S') {
             Registration.findOne({
                 sfaID: data.sfaid,
                 email: data.email
@@ -201,7 +202,7 @@ var model = {
 
             });
 
-        } else if (data.type == "athlete"&&sfatype=='A') {
+        } else if (data.type == "athlete" && sfatype == 'A') {
             Athelete.findOne({
                 sfaId: data.sfaid,
                 email: data.email
@@ -215,9 +216,14 @@ var model = {
                         length: 8,
                         numbers: true
                     });
+                    var matchObj = {
+                        $set: {
+                            password: newPassword
+                        }
+                    }
                     Athelete.update({
                         _id: found._id
-                    }, newPassword).exec(
+                    }, matchObj).exec(
                         function (err, data3) {
                             if (err) {
                                 console.log(err);
@@ -270,14 +276,14 @@ var model = {
                     } else if (data1) {
                         callback(null, data1);
                     } else {
-                        callback("Incorrect Old Password",null);
+                        callback("Incorrect Old Password", null);
                     }
                 });
             } else {
-                callback("Password match or Same password exist",null);
+                callback("Password match or Same password exist", null);
             }
         } else {
-            callback("Invalid data",null);
+            callback("Invalid data", null);
         }
     },
 
@@ -297,18 +303,14 @@ var model = {
                     } else if (data1) {
                         callback(null, data1);
                     } else {
-                        callback(null, {
-                            error: "Incorrect Old Password"
-                        });
+                        callback("Incorrect Old Password", null);
                     }
                 });
             } else {
-                callback(null, {
-                    error: "Password match or Same password exist"
-                });
+                callback("Password match or Same password exist", null);
             }
         } else {
-            callback(null, "Invalid data");
+            callback("Invalid data", null);
         }
     },
 
@@ -343,7 +345,7 @@ var model = {
             });
 
         } else {
-            callback(err, "User not Logged In");
+            callback("User not Logged In", null);
         }
     },
 
@@ -370,7 +372,8 @@ var model = {
 
         } else if (data.athleteToken) {
             Athelete.update({
-                sfaId: data.sfaid
+                accessToken: data.athleteToken
+                // sfaId: data.sfaid
             }, matchToken).exec(
                 function (err, data3) {
                     if (err) {
@@ -383,7 +386,7 @@ var model = {
                 });
 
         } else {
-            callback(err, "User not Logged In");
+            callback("User not Logged In", null);
         }
     },
 
