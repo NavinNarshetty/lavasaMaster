@@ -91,7 +91,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <!--<div class="table-responsive ">-->
                     <div class="table-responsive " ng-show="totalItems>0 ">
@@ -126,12 +125,11 @@
                                     <td>{{item.schoolName}}</td>
                                     <td>{{item.status}}</td>
                                     <td>{{item.registrationFee}}</td>
-
                                     <td>
                                         {{item.paymentStatus}}
                                     </td>
                                     <td>
-                                        <a class="btn btn-info" ui-sref="viewSchool({id:item._id})">
+                                        <a class="btn btn-info" target="_blank" ui-sref="viewSchool({id:item._id})">
                                             <i class="fa fa-eye"></i> View
                                         </a>
                                     </td>

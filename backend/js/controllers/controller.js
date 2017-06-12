@@ -72,16 +72,49 @@ myApp.controller('DetailAgeGroupCtrl', function ($scope, TemplateService, Naviga
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     //edit
-    $scope.getOneOldSchoolById = function () {
-        $scope.url = "AgeGroup/getOne";
-        $scope.constraints = {};
-        $scope.constraints._id = $stateParams.id;
-        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-            $scope.formData = data.data;
-        });
+    if ($stateParams.id != '') {
+        $scope.title = 'Edit';
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = "AgeGroup/getOne";
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.formData = data.data;
+            });
+        };
+        $scope.getOneOldSchoolById();
+        $scope.saveData = function (data) {
+            if (data) {
+                $scope.url = "AgeGroup/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.data.nModified == '1') {
+                        toastr.success("Updated Successfully", "Age Group Message");
+                        $state.go('agegroup')
+                    }
+                });
+            } else {
+                toastr.error("Invalid Data", "Age Group Message");
+            }
+        };
+    } else {
+        $scope.title = 'Create';
+        $scope.saveData = function (data) {
+            if (data) {
+                $scope.url = "AgeGroup/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true) {
+                        toastr.success(" Saved Successfully", "Age Group Message");
+                        $state.go('agegroup')
+                    }
+                });
+            } else {
+                toastr.error("Invalid Data", "Age Group Message");
+            }
+        };
+    }
 
-    };
-    $scope.getOneOldSchoolById();
     //end edit
     //cancel
     $scope.onCancel = function (sendTo) {
@@ -89,20 +122,9 @@ myApp.controller('DetailAgeGroupCtrl', function ($scope, TemplateService, Naviga
         $state.go(sendTo);
     };
     //end cancel
-    $scope.saveData = function (data) {
-        if (data) {
-            $scope.url = "AgeGroup/save";
-            NavigationService.apiCall($scope.url, data, function (data) {
-                console.log("data.value", data);
-                if (data.value === true) {
-                    toastr.success(" Saved Successfully", "Success");
-                    $state.go('agegroup')
-                }
-            });
-        } else {
-            toastr.error("Invalid Data", "Error");
-        }
-    };
+    //create
+
+    //end create
 })
 
 
@@ -171,16 +193,58 @@ myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, Navigatio
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 
-    $scope.getOneOldSchoolById = function () {
-        $scope.url = "Rules/getOne";
-        $scope.constraints = {};
-        $scope.constraints._id = $stateParams.id;
-        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-            $scope.formData = data.data;
-        });
 
-    };
-    $scope.getOneOldSchoolById();
+    if ($stateParams.id != '') {
+        //edit
+        $scope.title = 'Edit';
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = "Rules/getOne";
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.formData = data.data;
+            });
+
+        };
+        $scope.getOneOldSchoolById();
+        $scope.saveData = function (data) {
+            if (data) {
+                $scope.url = "Rules/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.data.nModified == '1') {
+                        toastr.success(" Updated Successfully", "Rules Message");
+                        $state.go('rules');
+
+                    }
+
+                });
+            } else {
+                toastr.error("invalid data", "Rules Message");
+            }
+        };
+        //edit
+    } else {
+        $scope.title = "Create";
+        $scope.saveData = function (data) {
+            if (data) {
+                $scope.url = "Rules/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true) {
+                        toastr.success(" Saved Successfully", "Rules Message");
+                        $state.go('rules');
+
+                    }
+
+                });
+            } else {
+                toastr.error("invalid data", "Rules Message");
+            }
+        };
+
+    }
+
     //cancel
     $scope.onCancel = function (sendTo) {
 
@@ -188,22 +252,7 @@ myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, Navigatio
     };
     //end cancel
 
-    $scope.saveData = function (data) {
-        if (data) {
-            $scope.url = "Rules/save";
-            NavigationService.apiCall($scope.url, data, function (data) {
-                console.log("data.value", data);
-                if (data.value === true) {
-                    toastr.success(" Saved Successfully", "Success");
-                    $state.go('rules');
 
-                }
-
-            });
-        } else {
-            toastr.error("invalid data", "error");
-        }
-    };
 })
 //First Category
 myApp.controller('FirstCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
@@ -268,130 +317,72 @@ myApp.controller('DetailFirstCategoryCtrl', function ($scope, TemplateService, N
     $scope.menutitle = NavigationService.makeactive("Detail First Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-    //edit
-    $scope.getOneOldSchoolById = function () {
-        $scope.url = "Weight/getOne";
-        $scope.constraints = {};
-        $scope.constraints._id = $stateParams.id;
-        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-            $scope.formData = data.data;
-        });
-    };
-    $scope.getOneOldSchoolById();
-    //end edit
 
-    $scope.onCancel = function (sendTo) {
-
-        $state.go(sendTo);
-    };
-    $scope.saveData = function (data) {
-        if (data) {
-
-            $scope.url = "Weight/save";
-            NavigationService.apiCall($scope.url, data, function (data) {
-                console.log("data.value", data);
-                if (data.value) {
-                    toastr.success(" Saved Successfully", "Success");
-                    $state.go('firstcategory');
-
-                }
-
+    if ($stateParams.id != '') {
+        //edit
+        $scope.title = "Edit";
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = "Weight/getOne";
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.formData = data.data;
             });
-        } else {
-            toastr.error("Inavalid Data", "Error");
-        }
-    };
-})
+        };
+        $scope.getOneOldSchoolById();
+        //end edit
+        $scope.saveData = function (data) {
+            if (data) {
 
-//Second Category
+                $scope.url = "Weight/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.data.nModified == '1') {
+                        toastr.success(" Updated Successfully", "Weight Message");
+                        $state.go('firstcategory');
 
-myApp.controller('SecondCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
-    //registration filter view
-    //Used to name the .html file
-    $scope.template = TemplateService.changecontent("tablesecond");
-    $scope.menutitle = NavigationService.makeactive("Second Category");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
-})
+                    }
 
-//Detail Second Category
-myApp.controller('DetailSecondCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
-    //registration filter view
-    //Used to name the .html file
-    $scope.template = TemplateService.changecontent("detailsecond");
-    $scope.menutitle = NavigationService.makeactive("Deatil Second Category");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
+                });
+            } else {
+                toastr.error("Inavalid Data", "Weight Message");
+            }
+        };
 
-    $scope.navigation = NavigationService.getnav();
-    //cancel
-    $scope.onCancel = function (sendTo) {
+    } else {
+        $scope.title = "Create";
+        $scope.saveData = function (data) {
+            if (data) {
 
-        $state.go(sendTo);
-    };
-    //end cancel
-    $scope.saveData = function (data) {
-        if (data) {
+                $scope.url = "Weight/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value) {
+                        toastr.success(" Saved Successfully", "Weight Message");
+                        $state.go('firstcategory');
 
-            $scope.url = "SecondCategory/save";
-            NavigationService.apiCall($scope.url, data, function (data) {
-                console.log("data.value", data);
-                if (data.value === true) {
-                    toastr.success(" Saved Successfully", "Success");
-                    $state.go('secondcategory');
+                    }
 
-                }
+                });
+            } else {
+                toastr.error("Inavalid Data", "Weight Message");
+            }
+        };
+    }
 
-            });
-        } else {
-            toastr.error("Invalid Data", "Error");
-        }
-    };
-})
 
-//third Category
-
-myApp.controller('ThirdCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
-    //registration filter view
-    //Used to name the .html file
-    $scope.template = TemplateService.changecontent("tablethird");
-    $scope.menutitle = NavigationService.makeactive("Third Category");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
-    //cancel
-
-})
-//detail third
-myApp.controller('DetailThirdCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
-    //registration filter view
-    //Used to name the .html file
-    $scope.template = TemplateService.changecontent("detailthird");
-    $scope.menutitle = NavigationService.makeactive("Deatil Third Category");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
+    //start cancel
     $scope.onCancel = function (sendTo) {
 
         $state.go(sendTo);
     };
     //end cancel
-    $scope.saveData = function (data) {
-        if (data) {
 
-            $scope.url = "ThirdCategory/save";
-            NavigationService.apiCall($scope.url, data, function (data) {
-                console.log("data.value", data);
-                if (data.value === true) {
-                    toastr.success(" Saved Successfully", "Success");
-                    $state.go('thirdcategory');
 
-                }
 
-            });
-        } else {
-            toastr.error("Invalid Data", "Error");
-        }
-    };
 })
+
+
 //Draw format
 
 myApp.controller('DrawFormatCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
@@ -457,38 +448,67 @@ myApp.controller('DetailDrawCtrl', function ($scope, TemplateService, Navigation
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 
-    $scope.getOneOldSchoolById = function () {
-        $scope.url = "DrawFormat/getOne";
-        $scope.constraints = {};
-        $scope.constraints._id = $stateParams.id;
-        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-            $scope.formData = data.data;
-        });
-    };
-    $scope.getOneOldSchoolById();
+    if ($stateParams.id != '') {
+        $scope.title = "Edit";
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = "DrawFormat/getOne";
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.formData = data.data;
+            });
+        };
+        $scope.getOneOldSchoolById();
+        $scope.saveData = function (data) {
+            $scope.title = "Create";
+            if (data) {
+
+                $scope.url = "DrawFormat/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.data.nModified == '1') {
+                        toastr.success(" Updated Successfully", "DrawFormat Message");
+                        $state.go('drawformat');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "DrawFormat Message");
+            }
+        };
+
+
+    } else {
+        $scope.title = "Create";
+        $scope.saveData = function (data) {
+
+            if (data) {
+
+                $scope.url = "DrawFormat/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true) {
+                        toastr.success(" Saved Successfully", "DrawFormat Message");
+                        $state.go('drawformat');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "DrawFormat Message");
+            }
+        };
+
+    }
+
 
 
     $scope.onCancel = function (sendTo) {
         $state.go(sendTo);
     }
 
-    $scope.saveData = function (data) {
-        if (data) {
 
-            $scope.url = "DrawFormat/save";
-            NavigationService.apiCall($scope.url, data, function (data) {
-                console.log("data.value", data);
-                if (data.value === true) {
-                    toastr.success(" Saved Successfully", "Success");
-                    $state.go('drawformat');
-
-                }
-
-            });
-        } else {
-            toastr.error("Invalid Data", "Error");
-        }
-    };
 })
 
 //Sports list sub Category
@@ -552,15 +572,57 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
     $scope.menutitle = NavigationService.makeactive(" Detail Sub Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-    $scope.getOneOldSchoolById = function () {
-        $scope.url = "SportsList/getOne";
-        $scope.constraints = {};
-        $scope.constraints._id = $stateParams.id;
-        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-            $scope.formData = data.data;
-        });
-    };
-    $scope.getOneOldSchoolById();
+
+    if ($stateParams.id != '') {
+        $scope.title = "Edit";
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = "SportsList/getOne";
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.formData = data.data;
+            });
+        };
+        $scope.getOneOldSchoolById();
+        $scope.saveData = function (data) {
+            if (data) {
+
+                $scope.url = "SportsList/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.data.nModified == '1') {
+                        toastr.success(" Updated Successfully", "SportList Message");
+                        $state.go('sportslistsubcat');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "Error");
+            }
+        };
+
+    } else {
+        $scope.title = "Create";
+        $scope.saveData = function (data) {
+            if (data) {
+
+                $scope.url = "SportsList/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true) {
+                        toastr.success(" Saved Successfully", "SportList Message");
+                        $state.go('sportslistsubcat');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "SportList Message");
+            }
+        };
+
+    }
     $scope.sporttypeList = [];
     $scope.sporttypeList = [{
         name: 'Team Sports'
@@ -593,23 +655,7 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
     $scope.onCancel = function (sendTo) {
         $state.go(sendTo);
     }
-    $scope.saveData = function (data) {
-        if (data) {
 
-            $scope.url = "SportsList/save";
-            NavigationService.apiCall($scope.url, data, function (data) {
-                console.log("data.value", data);
-                if (data.value === true) {
-                    toastr.success(" Saved Successfully", "Success");
-                    $state.go('sportslistsubcat');
-
-                }
-
-            });
-        } else {
-            toastr.error("Invalid Data", "Error");
-        }
-    };
 })
 //sports list Category
 
@@ -655,11 +701,11 @@ myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, Na
             // console.log("data.value", data);
             // $scope.items = data.data.results;
             if (data.value) {
-                toastr.success('Successfully Deleted', 'Age Group Message');
+                toastr.success('Successfully Deleted', 'SportList Message');
                 $scope.modalInstance.close();
                 $scope.viewTable();
             } else {
-                toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
+                toastr.error('Something Went Wrong while Deleting', 'SportList Message');
             }
         });
     }
@@ -673,37 +719,63 @@ myApp.controller('DetailSportsListCategoryCtrl', function ($scope, TemplateServi
     $scope.menutitle = NavigationService.makeactive("Detail Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-    $scope.getOneOldSchoolById = function () {
-        $scope.url = "SportsListCategory/getOne";
-        $scope.constraints = {};
-        $scope.constraints._id = $stateParams.id;
-        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-            $scope.formData = data.data;
-        });
-    };
-    $scope.getOneOldSchoolById();
+    if ($stateParams.id != '') {
+        $scope.title = "Edit";
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = "SportsListCategory/getOne";
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.formData = data.data;
+            });
+        };
+        $scope.getOneOldSchoolById();
+        $scope.saveData = function (data) {
+            if (data) {
+
+                $scope.url = "SportsListCategory/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.data.nModified == '1') {
+                        toastr.success(" Updated Successfully", "SportList Message");
+                        $state.go('sportslistcat');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "SportList Message");
+            }
+        };
+    } else {
+        $scope.title = "Create";
+        $scope.saveData = function (data) {
+            if (data) {
+
+                $scope.url = "SportsListCategory/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true) {
+                        toastr.success(" Saved Successfully", "SportList Message");
+                        $state.go('sportslistcat');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "SportList Message");
+            }
+        };
+
+    }
+
+
 
 
     $scope.onCancel = function (sendTo) {
         $state.go(sendTo);
     }
-    $scope.saveData = function (data) {
-        if (data) {
 
-            $scope.url = "SportsListCategory/save";
-            NavigationService.apiCall($scope.url, data, function (data) {
-                console.log("data.value", data);
-                if (data.value === true) {
-                    toastr.success(" Saved Successfully", "Success");
-                    $state.go('sportslistcat');
-
-                }
-
-            });
-        } else {
-            toastr.error("Invalid Data", "Error");
-        }
-    };
 
 })
 //sports list
@@ -751,11 +823,11 @@ myApp.controller('SportsListCtrl', function ($scope, TemplateService, Navigation
             // console.log("data.value", data);
             // $scope.items = data.data.results;
             if (data.value) {
-                toastr.success('Successfully Deleted', 'Age Group Message');
+                toastr.success('Successfully Deleted', 'SportList Message');
                 $scope.modalInstance.close();
                 $scope.viewTable();
             } else {
-                toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
+                toastr.error('Something Went Wrong while Deleting', 'SportList Message');
             }
         });
     }
@@ -770,15 +842,59 @@ myApp.controller('DetailSportsListCtrl', function ($scope, TemplateService, Navi
     $scope.menutitle = NavigationService.makeactive("Detail Sports List");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-    $scope.getOneOldSchoolById = function () {
-        $scope.url = "SportsList/getOne";
-        $scope.constraints = {};
-        $scope.constraints._id = $stateParams.id;
-        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-            $scope.formData = data.data;
-        });
-    };
-    $scope.getOneOldSchoolById();
+
+    if ($stateParams.id != '') {
+        $scope.title = "Edit";
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = "SportsList/getOne";
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.formData = data.data;
+            });
+        };
+        $scope.getOneOldSchoolById();
+        $scope.saveData = function (data) {
+            if (data) {
+
+                $scope.url = "SportsList/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.data.nModified == '1') {
+                        toastr.success(" Updated Successfully", "SportList Message");
+                        $state.go('sportslist');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "SportList Message");
+            }
+        };
+    } else {
+        $scope.title = 'Create';
+        $scope.saveData = function (data) {
+            if (data) {
+
+                $scope.url = "SportsList/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true) {
+                        toastr.success(" Saved Successfully", "SportList Message");
+                        $state.go('sportslist');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "SportList Message");
+            }
+        };
+
+    }
+
+
+
     $scope.sporttypeList = [];
     $scope.sporttypeList = [{
         name: 'Team Sports'
@@ -796,23 +912,7 @@ myApp.controller('DetailSportsListCtrl', function ($scope, TemplateService, Navi
     $scope.onCancel = function (sendTo) {
         $state.go(sendTo);
     }
-    $scope.saveData = function (data) {
-        if (data) {
 
-            $scope.url = "SportsList/save";
-            NavigationService.apiCall($scope.url, data, function (data) {
-                console.log("data.value", data);
-                if (data.value === true) {
-                    toastr.success(" Saved Successfully", "Success");
-                    $state.go('sportslist');
-
-                }
-
-            });
-        } else {
-            toastr.error("Invalid Data", "Error");
-        }
-    };
 })
 
 //sports
@@ -867,15 +967,56 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
     $scope.menutitle = NavigationService.makeactive("Detail Sports");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
-    $scope.getOneOldSchoolById = function () {
-        $scope.url = "Sport/getOne";
-        $scope.constraints = {};
-        $scope.constraints._id = $stateParams.id;
-        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-            $scope.formData = data.data;
-        });
-    };
-    $scope.getOneOldSchoolById();
+    if ($stateParams.id != '') {
+        $scope.title = "Edit";
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = "Sport/getOne";
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.formData = data.data;
+            });
+        };
+        $scope.getOneOldSchoolById();
+        $scope.saveData = function (data) {
+            if (data) {
+
+                $scope.url = "Sport/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.data.nModified == '1') {
+                        toastr.success(" Saved Successfully", "Sport Message");
+                        $state.go('sports');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "Sport Message");
+            }
+        };
+    } else {
+        $scope.title = "Create";
+        $scope.saveData = function (data) {
+            if (data) {
+
+                $scope.url = "Sport/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true) {
+                        toastr.success(" Saved Successfully", "Sport Message");
+                        $state.go('sports');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "Sport Message");
+            }
+        };
+    }
+
+
     $scope.genderList = [];
     $scope.genderList = [{
         name: 'Male'
@@ -910,23 +1051,7 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
     $scope.onCancel = function (sendTo) {
         $state.go(sendTo);
     }
-    $scope.saveData = function (data) {
-        if (data) {
 
-            $scope.url = "Sport/save";
-            NavigationService.apiCall($scope.url, data, function (data) {
-                console.log("data.value", data);
-                if (data.value === true) {
-                    toastr.success(" Saved Successfully", "Success");
-                    $state.go('sports');
-
-                }
-
-            });
-        } else {
-            toastr.error("Invalid Data", "Error");
-        }
-    };
 })
 
 myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
@@ -1065,11 +1190,19 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
 
     };
     $scope.filterAthlete();
-    $scope.generateExcel = function () {
-        NavigationService.generateAthleteExcel(function (data) {
+    $scope.generateExcel = function (formdata) {
+        formdata.page = $scope.formData.page;
+        console.log(formdata);
+        NavigationService.generateAthleteExcel(formdata, function (data) {
+            console.log('controller', data);
             window.location.href = adminurl + 'Athelete/generateExcel';
         });
     }
+    // $scope.generateExcel = function () {
+    //     NavigationService.generateAthleteExcel(function (data) {
+    //         window.location.href = adminurl + 'Athelete/generateExcel';
+    //     });
+    // }
 })
 
 myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {

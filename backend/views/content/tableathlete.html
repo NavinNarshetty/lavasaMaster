@@ -63,7 +63,6 @@
                                                         ng-change="changeInput()">
                                                     <label for="radio6">Verified Status</label>
                                                 </li>
-
                                             </ul>
                                         </div>
                                         <div class="row" ng-if="formData.type == 'Date'">
@@ -96,11 +95,10 @@
                                         <input type="text " ng-change="searchInAthlete(search) " placeholder="Search Here...
                              " ng-model="search" />
                                     </form>
-                                    <a class="btn btn-success" ng-click="generateExcel()">Excel Export</a>
+                                    <a class="btn btn-success" ng-click="generateExcel(formData)">Excel Export</a>
                                 </div>
                             </div>
                         </div>
-
                     </div>
                     <div class="table-responsive ">
                         <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
@@ -140,7 +138,7 @@
                                         {{item.paymentStatus}}
                                     </td>
                                     <td>
-                                        <a class="btn btn-info" ui-sref="viewAthlete({id:item._id})">
+                                        <a class="btn btn-info" target="_blank" ui-sref="viewAthlete({id:item._id})">
                                             <i class="fa fa-eye"></i> View
                                         </a>
                                     </td>
