@@ -1435,138 +1435,304 @@ var model = {
             });
     },
 
-    generateExcel: function (res) {
-        console.log("dataIN");
-        var matchObj = {
-            $or: [{
-                registrationFee: {
-                    $ne: "online PAYU"
-                }
-            }, {
-                paymentStatus: {
-                    $ne: "Pending"
-                }
-            }]
-        }
-        Athelete.find(matchObj).sort({
-            createdAt: -1
-        }).lean().exec(function (err, data) {
-            var excelData = [];
-            var schoolData;
-            async.eachSeries(data, function (n, callback) {
-                var obj = {};
-                obj.sfaID = n.sfaId;
-                async.waterfall([
-                    function (callback) {
-                        if (_.isEmpty(n.school)) {
-                            schoolData = n.atheleteSchoolName;
-                            callback(null, schoolData);
+    // generateExcel: function (res) {
+    //     console.log("dataIN");
+    //     var matchObj = {
+    //         $or: [{
+    //             registrationFee: {
+    //                 $ne: "online PAYU"
+    //             }
+    //         }, {
+    //             paymentStatus: {
+    //                 $ne: "Pending"
+    //             }
+    //         }]
+    //     }
+    //     Athelete.find(matchObj).sort({
+    //         createdAt: -1
+    //     }).lean().exec(function (err, data) {
+    //         var excelData = [];
+    //         var schoolData;
+    //         async.eachSeries(data, function (n, callback) {
+    //             var obj = {};
+    //             obj.sfaID = n.sfaId;
+    //             async.waterfall([
+    //                 function (callback) {
+    //                     if (_.isEmpty(n.school)) {
+    //                         schoolData = n.atheleteSchoolName;
+    //                         callback(null, schoolData);
+    //                     } else {
+    //                         School.findOne({
+    //                             _id: n.school
+    //                         }).lean().exec(function (err, found) {
+    //                             if (_.isEmpty(found)) {
+    //                                 console.log("name is null");
+    //                                 schoolData = "";
+    //                                 callback(null, schoolData);
+    //                             } else {
+    //                                 schoolData = found.name;
+    //                                 // console.log("found", schoolData);
+    //                                 callback(null, schoolData);
+    //                             }
+
+    //                         });
+
+    //                     }
+    //                 },
+    //                 function (schoolData, callback) {
+    //                     obj.school = schoolData;
+    //                     // console.log("obj", obj.school);
+    //                     var parentInfo;
+    //                     var countParent = 0;
+    //                     var levelInfo;
+    //                     var countLevel = 0;
+    //                     _.each(n.parentDetails, function (details) {
+    //                         var name = details.name + details.surname;
+    //                         var email = details.email;
+    //                         var mobile = details.mobile;
+    //                         var relation = details.relation;
+    //                         if (countParent == 0) {
+    //                             parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+    //                         } else {
+    //                             parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+    //                         }
+    //                         countParent++;
+
+    //                         // console.log("parentDetails", parentInfo);
+
+    //                     });
+    //                     obj.parentDetails = parentInfo;
+    //                     _.each(n.sportLevel, function (details) {
+    //                         var level = details.level;
+    //                         var sport = details.sport;
+    //                         if (countLevel == 0) {
+    //                             levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
+    //                         } else {
+    //                             levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
+    //                         }
+    //                         countLevel++;
+
+    //                         // console.log("levelInfo", levelInfo);
+
+    //                     });
+    //                     obj.sportLevel = levelInfo;
+    //                     var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+    //                     obj.date = dateTime;
+    //                     obj.idProof = n.idProof;
+    //                     obj.surname = n.surname;
+    //                     obj.firstName = n.firstName;
+    //                     obj.middleName = n.middleName;
+    //                     obj.gender = n.gender;
+    //                     obj.standard = n.standard;
+    //                     obj.bloodGroup = n.bloodGroup;
+    //                     obj.photograph = n.photograph;
+    //                     obj.dob = n.dob;
+    //                     obj.age = n.age;
+    //                     obj.ageProof = n.ageProof;
+    //                     obj.photoImage = n.photoImage;
+    //                     obj.birthImage = n.birthImage;
+    //                     obj.playedTournaments = n.playedTournaments;
+    //                     obj.mobile = n.mobile;
+    //                     obj.email = n.email;
+    //                     obj.smsOTP = n.smsOTP;
+    //                     obj.emailOTP = n.emailOTP;
+    //                     obj.address = n.address;
+    //                     obj.addressLine2 = n.addressLine2;
+    //                     obj.state = n.state;
+    //                     obj.district = n.district;
+    //                     obj.city = n.city;
+    //                     obj.pinCode = n.pinCode;
+    //                     obj.status = n.status;
+    //                     obj.password = n.password;
+    //                     obj.year = n.year;
+    //                     obj.registrationFee = n.registrationFee;
+    //                     obj.paymentStatus = n.paymentStatus;
+    //                     obj.transactionID = n.transactionID;
+    //                     obj.remarks = n.remarks;
+    //                     // console.log("obj", obj);
+    //                     excelData.push(obj);
+    //                     callback(null, excelData);
+    //                 }
+    //             ], function (err, excelData) {
+    //                 console.log(excelData);
+    //                 console.log("End of excelData");
+    //                 if (err) {
+    //                     callback(err, null);
+    //                 } else {
+    //                     callback(null, excelData);
+    //                 }
+    //             });
+
+    //         }, function (err, data) {
+    //             Config.generateExcel("Athlete", excelData, res);
+    //         });
+    //     });
+    // },
+
+    generateExcel: function (data, res) {
+
+        async.waterfall([
+                function (callback) {
+                    Athelete.filterAthlete(data, function (err, complete) {
+                        if (err) {
+                            callback(err, null);
                         } else {
-                            School.findOne({
-                                _id: n.school
-                            }).lean().exec(function (err, found) {
-                                if (_.isEmpty(found)) {
-                                    console.log("name is null");
-                                    schoolData = "";
+                            if (_.isEmpty(complete)) {
+                                callback(null, complete);
+                            } else {
+                                callback(null, complete)
+                            }
+                        }
+                    });
+
+                },
+                function (complete, callback) {
+                    // var matchObj = {
+                    //     $or: [{
+                    //         registrationFee: {
+                    //             $ne: "online PAYU"
+                    //         }
+                    //     }, {
+                    //         paymentStatus: {
+                    //             $ne: "Pending"
+                    //         }
+                    //     }]
+                    // }
+                    // Athelete.find(matchObj).sort({
+                    //     createdAt: -1
+                    // }).lean().exec(function (err, data) {
+
+                    var excelData = [];
+                    var schoolData;
+                    async.eachSeries(complete, function (n, callback) {
+                        var obj = {};
+                        obj.sfaID = n.sfaId;
+                        async.waterfall([
+                            function (callback) {
+                                if (_.isEmpty(n.school)) {
+                                    schoolData = n.atheleteSchoolName;
                                     callback(null, schoolData);
                                 } else {
-                                    schoolData = found.name;
-                                    // console.log("found", schoolData);
-                                    callback(null, schoolData);
+                                    School.findOne({
+                                        _id: n.school
+                                    }).lean().exec(function (err, found) {
+                                        if (_.isEmpty(found)) {
+                                            console.log("name is null");
+                                            schoolData = "";
+                                            callback(null, schoolData);
+                                        } else {
+                                            schoolData = found.name;
+                                            // console.log("found", schoolData);
+                                            callback(null, schoolData);
+                                        }
+
+                                    });
+
                                 }
+                            },
+                            function (schoolData, callback) {
+                                obj.school = schoolData;
+                                // console.log("obj", obj.school);
+                                var parentInfo;
+                                var countParent = 0;
+                                var levelInfo;
+                                var countLevel = 0;
+                                _.each(n.parentDetails, function (details) {
+                                    var name = details.name + details.surname;
+                                    var email = details.email;
+                                    var mobile = details.mobile;
+                                    var relation = details.relation;
+                                    if (countParent == 0) {
+                                        parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                                    } else {
+                                        parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                                    }
+                                    countParent++;
 
-                            });
+                                    // console.log("parentDetails", parentInfo);
 
-                        }
-                    },
-                    function (schoolData, callback) {
-                        obj.school = schoolData;
-                        // console.log("obj", obj.school);
-                        var parentInfo;
-                        var countParent = 0;
-                        var levelInfo;
-                        var countLevel = 0;
-                        _.each(n.parentDetails, function (details) {
-                            var name = details.name + details.surname;
-                            var email = details.email;
-                            var mobile = details.mobile;
-                            var relation = details.relation;
-                            if (countParent == 0) {
-                                parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
-                            } else {
-                                parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                                });
+                                obj.parentDetails = parentInfo;
+                                _.each(n.sportLevel, function (details) {
+                                    var level = details.level;
+                                    var sport = details.sport;
+                                    if (countLevel == 0) {
+                                        levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
+                                    } else {
+                                        levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
+                                    }
+                                    countLevel++;
+
+                                    // console.log("levelInfo", levelInfo);
+
+                                });
+                                obj.sportLevel = levelInfo;
+                                var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                                obj.date = dateTime;
+                                obj.idProof = n.idProof;
+                                obj.surname = n.surname;
+                                obj.firstName = n.firstName;
+                                obj.middleName = n.middleName;
+                                obj.gender = n.gender;
+                                obj.standard = n.standard;
+                                obj.bloodGroup = n.bloodGroup;
+                                obj.photograph = n.photograph;
+                                obj.dob = n.dob;
+                                obj.age = n.age;
+                                obj.ageProof = n.ageProof;
+                                obj.photoImage = n.photoImage;
+                                obj.birthImage = n.birthImage;
+                                obj.playedTournaments = n.playedTournaments;
+                                obj.mobile = n.mobile;
+                                obj.email = n.email;
+                                obj.smsOTP = n.smsOTP;
+                                obj.emailOTP = n.emailOTP;
+                                obj.address = n.address;
+                                obj.addressLine2 = n.addressLine2;
+                                obj.state = n.state;
+                                obj.district = n.district;
+                                obj.city = n.city;
+                                obj.pinCode = n.pinCode;
+                                obj.status = n.status;
+                                obj.password = n.password;
+                                obj.year = n.year;
+                                obj.registrationFee = n.registrationFee;
+                                obj.paymentStatus = n.paymentStatus;
+                                obj.transactionID = n.transactionID;
+                                obj.remarks = n.remarks;
+                                // console.log("obj", obj);
+                                excelData.push(obj);
+                                callback(null, excelData);
                             }
-                            countParent++;
-
-                            // console.log("parentDetails", parentInfo);
-
-                        });
-                        obj.parentDetails = parentInfo;
-                        _.each(n.sportLevel, function (details) {
-                            var level = details.level;
-                            var sport = details.sport;
-                            if (countLevel == 0) {
-                                levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
+                        ], function (err, excelData) {
+                            console.log(excelData);
+                            console.log("End of excelData");
+                            if (err) {
+                                callback(err, null);
                             } else {
-                                levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
+                                callback(null, excelData);
                             }
-                            countLevel++;
-
-                            // console.log("levelInfo", levelInfo);
-
                         });
-                        obj.sportLevel = levelInfo;
-                        var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
-                        obj.date = dateTime;
-                        obj.idProof = n.idProof;
-                        obj.surname = n.surname;
-                        obj.firstName = n.firstName;
-                        obj.middleName = n.middleName;
-                        obj.gender = n.gender;
-                        obj.standard = n.standard;
-                        obj.bloodGroup = n.bloodGroup;
-                        obj.photograph = n.photograph;
-                        obj.dob = n.dob;
-                        obj.age = n.age;
-                        obj.ageProof = n.ageProof;
-                        obj.photoImage = n.photoImage;
-                        obj.birthImage = n.birthImage;
-                        obj.playedTournaments = n.playedTournaments;
-                        obj.mobile = n.mobile;
-                        obj.email = n.email;
-                        obj.smsOTP = n.smsOTP;
-                        obj.emailOTP = n.emailOTP;
-                        obj.address = n.address;
-                        obj.addressLine2 = n.addressLine2;
-                        obj.state = n.state;
-                        obj.district = n.district;
-                        obj.city = n.city;
-                        obj.pinCode = n.pinCode;
-                        obj.status = n.status;
-                        obj.password = n.password;
-                        obj.year = n.year;
-                        obj.registrationFee = n.registrationFee;
-                        obj.paymentStatus = n.paymentStatus;
-                        obj.transactionID = n.transactionID;
-                        obj.remarks = n.remarks;
-                        // console.log("obj", obj);
-                        excelData.push(obj);
-                        callback(null, excelData);
-                    }
-                ], function (err, excelData) {
-                    console.log(excelData);
-                    console.log("End of excelData");
-                    if (err) {
-                        callback(err, null);
+
+                    }, function (err, data) {
+                        Config.generateExcel("Athlete", excelData, res);
+                    });
+                    // });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
                     } else {
-                        callback(null, excelData);
+                        callback(null, data2);
                     }
-                });
-
-            }, function (err, data) {
-                Config.generateExcel("Athlete", excelData, res);
+                }
             });
-        });
+
     },
 
     cronAthleteWithPaymentDue: function (data, callback) {

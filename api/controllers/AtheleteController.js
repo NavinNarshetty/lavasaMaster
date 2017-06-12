@@ -34,7 +34,7 @@ var controller = {
 
     generateExcel: function (req, res) {
         console.log("inside controller");
-        Athelete.generateExcel(res);
+        Athelete.generateExcel(req, res);
     },
 
     filterAthlete: function (req, res) {
