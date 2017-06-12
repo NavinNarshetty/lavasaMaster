@@ -33,7 +33,6 @@ var controller = {
     },
 
     generateExcel: function (req, res) {
-        console.log("inside controller");
         Athelete.generateExcel(req, res);
     },
 

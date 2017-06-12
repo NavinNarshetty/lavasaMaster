@@ -1570,15 +1570,18 @@ var model = {
     // },
 
     generateExcel: function (data, res) {
+        // console.log('generate req', data.body);
+        console.log('generate req data', data.body);
         async.waterfall([
                 function (callback) {
-                    Athelete.filterAthlete(data, function (err, complete) {
+                    Athelete.filterAthlete(data.body, function (err, complete) {
                         if (err) {
                             callback(err, null);
                         } else {
                             if (_.isEmpty(complete)) {
                                 callback(null, complete);
                             } else {
+                                // console.log('logs', complete);
                                 callback(null, complete)
                             }
                         }
@@ -1586,7 +1589,7 @@ var model = {
 
                 },
                 function (complete, callback) {
-                    console.log("data from filter", complete);
+                    // console.log('logs for excel', complete);
                     var excelData = [];
                     var schoolData;
                     async.eachSeries(complete, function (n, callback) {
@@ -1690,7 +1693,7 @@ var model = {
                                 callback(null, excelData);
                             }
                         ], function (err, excelData) {
-                            console.log(excelData);
+                            // console.log(excelData);
                             console.log("End of excelData");
                             if (err) {
                                 callback(err, null);
