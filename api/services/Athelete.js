@@ -1586,21 +1586,7 @@ var model = {
 
                 },
                 function (complete, callback) {
-                    // var matchObj = {
-                    //     $or: [{
-                    //         registrationFee: {
-                    //             $ne: "online PAYU"
-                    //         }
-                    //     }, {
-                    //         paymentStatus: {
-                    //             $ne: "Pending"
-                    //         }
-                    //     }]
-                    // }
-                    // Athelete.find(matchObj).sort({
-                    //     createdAt: -1
-                    // }).lean().exec(function (err, data) {
-
+                    console.log("data from filter", complete);
                     var excelData = [];
                     var schoolData;
                     async.eachSeries(complete, function (n, callback) {
