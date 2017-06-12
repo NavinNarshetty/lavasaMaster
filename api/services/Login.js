@@ -121,21 +121,44 @@ var model = {
                     });
             },
             function (data3, callback) {
-                console.log(data);
-                Athelete.findOne({
-                    sfaId: data.sfaid,
-                    password: data.password
-                }).exec(function (err, found) {
-                    console.log('found', found);
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback("Incorrect Login Details", null);
-                    } else {
-                        console.log("found", found);
-                        callback(null, found);
-                    }
-                });
+                Athelete.aggregate([{
+                            // Stage 1
+
+                            $lookup: {
+                                "from": "schools",
+                                "localField": "school",
+                                "foreignField": "_id",
+                                "as": "school"
+                            }
+                        },
+
+                        // Stage 2
+                        {
+                            $unwind: {
+                                path: "$school",
+                                preserveNullAndEmptyArrays: true // optional
+                            }
+                        },
+
+                        // Stage 3
+                        {
+                            $match: {
+                                "sfaId": data.sfaid,
+                                "password": data.password
+                            }
+                        }
+                    ],
+                    function (err, found) {
+                        console.log('found', found);
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback("Incorrect Login Details", null);
+                        } else {
+                            console.log("found", found);
+                            callback(null, found);
+                        }
+                    });
             }
         ], function (err, found) {
             if (found) {
