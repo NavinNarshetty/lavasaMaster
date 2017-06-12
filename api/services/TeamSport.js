@@ -64,10 +64,12 @@ var model = {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(team)) {
-                            var teamid = "Empty17" + 1;
+                            var year = new Date().getFullYear().toString().substr(2, 2);
+                            var teamid = "M" + "T" + year + 1;
                             callback(null, teamid);
                         } else {
-                            var teamid = "Empty17" + ++team.autoID;
+                            var year = new Date().getFullYear().toString().substr(2, 2);
+                            var teamid = "M" + "T" + year + ++team.autoID;
                             callback(null, teamid);
 
                         }
