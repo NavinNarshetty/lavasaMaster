@@ -156,7 +156,7 @@ var model = {
                             callback("Incorrect Login Details", null);
                         } else {
                             console.log("found", found);
-                            callback(null, found);
+                            callback(null, found[0]);
                         }
                     });
             }

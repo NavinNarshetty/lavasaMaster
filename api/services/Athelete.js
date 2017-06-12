@@ -1570,7 +1570,6 @@ var model = {
     // },
 
     generateExcel: function (data, res) {
-
         async.waterfall([
                 function (callback) {
                     Athelete.filterAthlete(data, function (err, complete) {
