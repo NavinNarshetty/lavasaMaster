@@ -980,7 +980,396 @@ var model = {
         });
     },
 
-    generateExcel: function (res) {
+    excelFilterSchool: function (data, callback) {
+        var maxRow = Config.maxRow;
+        console.log(data);
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['schoolName', 'sfaID'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var matchObj = {
+            $or: [{
+                registrationFee: {
+                    $ne: "online PAYU"
+                }
+            }, {
+                paymentStatus: {
+                    $ne: "Pending"
+                }
+            }],
+        };
+        if (data.type == "Date") {
+            matchObj.createdAt = {
+                $gt: data.startDate,
+                $lt: data.endDate,
+            };
+        } else if (data.type == "SFA-ID") {
+            matchObj = {
+                sfaID: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
+        } else if (data.type == "School Name") {
+            matchObj = {
+                'schoolName': {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+
+            }
+        } else if (data.type == "Payment Mode") {
+            if (data.input == "cash" || data.input == "Cash") {
+                matchObj = {
+                    'registrationFee': "cash",
+                }
+            } else if (data.input == "online" || data.input == "Online") {
+                matchObj = {
+                    'registrationFee': "online PAYU",
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }
+
+            }
+        } else if (data.type == "Payment Status") {
+            if (data.input == "Paid" || data.input == "paid") {
+                matchObj = {
+                    'paymentStatus': "Paid",
+                }
+            } else if (data.input == "Pending" || data.input == "pending") {
+                matchObj = {
+                    'paymentStatus': "Pending",
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }
+            }
+
+        } else if (data.type == "Verified Status") {
+            matchObj = {
+                'status': {
+                    $regex: data.input,
+                    $options: "i"
+
+                },
+
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
+        } else {
+            var matchObj = {
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
+        }
+        if (data.keyword !== "") {
+            Registration.aggregate(
+                [{
+                        $match: {
+
+                            $or: [{
+                                    "schoolName": {
+                                        $regex: data.keyword,
+                                        $options: "i"
+                                    }
+                                },
+                                {
+                                    "sfaID": data.keyword
+                                }
+                            ]
+
+                        }
+                    },
+                    // Stage 4
+                    {
+                        $match: {
+                            $or: [{
+                                registrationFee: {
+                                    $ne: "online PAYU"
+                                }
+                            }, {
+                                paymentStatus: {
+                                    $ne: "Pending"
+                                }
+                            }]
+                        }
+                    },
+                    {
+                        $sort: {
+                            "createdAt": -1
+
+                        }
+                    },
+                ],
+                function (err, returnReq) {
+                    console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, returnReq);
+                        } else {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, returnReq);
+
+                        }
+                    }
+                });
+        } else {
+            Registration.find(matchObj).sort({
+                    createdAt: -1
+                })
+                // .order(options)
+                // .keyword(options)
+                .exec(function (err, found) {
+                    // console.log("found", found);
+
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        callback(null, found);
+                    }
+                });
+        }
+    },
+
+    generateExcel: function (data, res) {
+        async.waterfall([
+                function (callback) {
+                    Registration.excelFilterSchool(data.body, function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, complete);
+                            } else {
+                                // console.log('logs', complete);
+                                callback(null, complete)
+                            }
+                        }
+                    });
+
+                },
+                function (complete, callback) {
+                    var excelData = [];
+                    _.each(complete, function (n) {
+
+                        var obj = {};
+                        obj.sfaID = n.sfaID;
+                        obj.schoolName = n.schoolName;
+                        var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                        // console.log("dateTime", n.createdAt, dateTime);
+                        obj.date = dateTime;
+                        obj.schoolType = n.schoolType;
+                        obj.schoolCategory = n.schoolCategory;
+                        obj.affiliatedBoard = n.affiliatedBoard;
+                        obj.schoolLogo = n.schoolLogo;
+                        obj.schoolAddress = n.schoolAddress;
+                        obj.schoolAddressLine2 = n.schoolAddressLine2;
+                        var teamSports = '';
+                        var racquetSports = '';
+                        var targetSports = '';
+                        var aquaticsSports = '';
+                        var combatSports = '';
+                        var individualSports = '';
+
+                        //teamSports
+                        _.each(n.teamSports, function (details) {
+                            teamSports += "," + details.name;
+                        });
+                        console.log("name", teamSports);
+                        if (teamSports) {
+                            teamSports = teamSports.slice(1);
+                            obj.teamSports = teamSports;
+                        } else {
+                            obj.teamSports = "";
+                        }
+
+                        //racquetSports
+                        _.each(n.racquetSports, function (details) {
+                            racquetSports += "," + details.name;
+                        });
+                        console.log("name", racquetSports);
+                        if (racquetSports) {
+                            racquetSports = racquetSports.slice(1);
+                            obj.racquetSports = racquetSports;
+                        } else {
+                            obj.racquetSports = "";
+                        }
+                        //aquaticsSports
+                        _.each(n.aquaticsSports, function (details) {
+                            aquaticsSports += "," + details.name;
+                        });
+                        console.log("name", aquaticsSports);
+                        if (aquaticsSports) {
+                            aquaticsSports = aquaticsSports.slice(1);
+                            obj.aquaticsSports = aquaticsSports;
+                        } else {
+                            obj.aquaticsSports = "";
+                        }
+
+                        //combatSports
+                        _.each(n.combatSports, function (details) {
+                            combatSports += "," + details.name;
+                        });
+                        console.log("name", combatSports);
+                        if (combatSports) {
+                            combatSports = combatSports.slice(1);
+                            obj.combatSports = combatSports;
+                        } else {
+                            obj.combatSports = "";
+                        }
+
+                        //targetSports
+                        _.each(n.targetSports, function (details) {
+                            targetSports += "," + details.name;
+                        });
+                        console.log("name", targetSports);
+                        if (targetSports) {
+                            targetSports = targetSports.slice(1);
+                            obj.targetSports = targetSports;
+                        } else {
+                            obj.targetSports = "";
+                        }
+
+                        //individualSports
+                        _.each(n.individualSports, function (details) {
+                            individualSports += "," + details.name;
+                        });
+                        console.log("name", individualSports);
+                        if (individualSports) {
+                            individualSports = individualSports.slice(1);
+                            obj.individualSports = individualSports;
+                        } else {
+                            obj.individualSports = "";
+                        }
+                        var sportsInfo;
+                        var count = 0;
+                        _.each(n.sportsDepartment, function (details) {
+                            var name = details.name;
+                            var email = details.email;
+                            var mobile = details.mobile;
+                            var designation = details.designation;
+                            if (count == 0) {
+                                sportsInfo = "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                            } else {
+                                sportsInfo = sportsInfo + "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                            }
+                            count++;
+
+                            console.log("sportsInfo", sportsInfo);
+
+                        });
+                        obj.sportsDepartment = sportsInfo;
+                        obj.state = n.state;
+                        obj.district = n.district;
+                        obj.city = n.city;
+                        obj.locality = n.locality;
+                        obj.pinCode = n.pinCode;
+                        obj.contactPerson = n.contactPerson;
+                        obj.landline = n.landline;
+                        obj.email = n.email;
+                        obj.website = n.website;
+                        obj.mobile = n.mobile;
+                        obj.enterOTP = n.enterOTP;
+                        obj.schoolPrincipalName = n.schoolPrincipalName;
+                        obj.schoolPrincipalMobile = n.schoolPrincipalMobile;
+                        obj.schoolPrincipalLandline = n.schoolPrincipalLandline;
+                        obj.schoolPrincipalEmail = n.schoolPrincipalEmail;
+                        obj.status = n.status;
+                        obj.password = n.password;
+                        obj.year = n.year;
+                        obj.registrationFee = n.registrationFee;
+                        obj.paymentStatus = n.paymentStatus;
+                        obj.transactionID = n.transactionID;
+                        obj.remarks = n.remarks;
+                        excelData.push(obj);
+
+                    });
+                    Config.generateExcel("Registration", excelData, res);
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+
+    generateExcelOld: function (res) {
         console.log("dataIN");
         var matchObj = {
             $or: [{
@@ -1278,10 +1667,7 @@ var model = {
                                     }
                                 },
                                 {
-                                    "sfaID": {
-                                        $regex: data.keyword,
-                                        $options: "i"
-                                    }
+                                    "sfaID": data.keyword
                                 }
                             ]
 

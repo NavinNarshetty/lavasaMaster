@@ -47,7 +47,7 @@ var controller = {
 
     generateExcel: function (req, res) {
         console.log("inside controller");
-        Registration.generateExcel(res);
+        Registration.generateExcel(req, res);
     },
 
     getAllRegistrationDetails: function (req, res) {
