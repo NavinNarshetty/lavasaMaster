@@ -15,12 +15,32 @@ myApp.controller('AgeGroupCtrl', function ($scope, TemplateService, NavigationSe
     $scope.menutitle = NavigationService.makeactive("Age Group");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    // $scope.formData = {};
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    // $scope.selectedStatus = 'All';
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
     $scope.viewTable = function () {
-        $scope.formData = {};
+
         $scope.url = "AgeGroup/search";
+        // $scope.search = $scope.formData.keyword;
+        $scope.formData.page = $scope.formData.page++;
         NavigationService.apiCall($scope.url, $scope.formData, function (data) {
             console.log("data.value", data);
             $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
         });
     }
     $scope.viewTable();
@@ -138,12 +158,29 @@ myApp.controller('RulesCtrl', function ($scope, TemplateService, NavigationServi
     $scope.menutitle = NavigationService.makeactive("Rules");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    // $scope.selectedStatus = 'All';
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
     $scope.viewTable = function () {
-        $scope.formData = {};
         $scope.url = "Rules/search";
+        $scope.formData.page = $scope.formData.page++;
         NavigationService.apiCall($scope.url, $scope.formData, function (data) {
             console.log("data.value", data);
             $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
 
         });
 
@@ -262,12 +299,30 @@ myApp.controller('FirstCategoryCtrl', function ($scope, TemplateService, Navigat
     $scope.menutitle = NavigationService.makeactive("Weight");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    // $scope.selectedStatus = 'All';
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
+
     $scope.viewTable = function () {
-        $scope.formData = {};
         $scope.url = "Weight/search";
+        $scope.formData.page = $scope.formData.page++;
         NavigationService.apiCall($scope.url, $scope.formData, function (data) {
             console.log("data.value", data);
             $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
 
         });
     }
@@ -392,12 +447,29 @@ myApp.controller('DrawFormatCtrl', function ($scope, TemplateService, Navigation
     $scope.menutitle = NavigationService.makeactive("Draw Format");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    // $scope.selectedStatus = 'All';
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
     $scope.viewTable = function () {
-        $scope.formData = {};
         $scope.url = "DrawFormat/search";
+        $scope.formData.page = $scope.formData.page++;
         NavigationService.apiCall($scope.url, $scope.formData, function (data) {
             console.log("data.value", data);
             $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
 
         });
 
@@ -519,12 +591,29 @@ myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService,
     $scope.menutitle = NavigationService.makeactive("Sub Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    // $scope.selectedStatus = 'All';
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
     $scope.viewTable = function () {
-        $scope.formData = {};
-        $scope.url = "SportsList/search";
+        $scope.url = "SportsListSubCategory/search";
+        $scope.formData.page = $scope.formData.page++;
         NavigationService.apiCall($scope.url, $scope.formData, function (data) {
             console.log("data.value", data);
             $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
 
         });
 
@@ -547,7 +636,7 @@ myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService,
         $scope.modalInstance.close();
     }
     $scope.delete = function (data) {
-        $scope.url = "SportsList/delete";
+        $scope.url = "SportsLisSubCategoryt/delete";
         $scope.constraints = {};
         $scope.constraints._id = data;
         NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
@@ -576,7 +665,7 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
     if ($stateParams.id != '') {
         $scope.title = "Edit";
         $scope.getOneOldSchoolById = function () {
-            $scope.url = "SportsList/getOne";
+            $scope.url = "SportsListSubCategory/getOne";
             $scope.constraints = {};
             $scope.constraints._id = $stateParams.id;
             NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
@@ -587,7 +676,7 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
         $scope.saveData = function (data) {
             if (data) {
 
-                $scope.url = "SportsList/save";
+                $scope.url = "SportsListSubCategory/save";
                 NavigationService.apiCall($scope.url, data, function (data) {
                     console.log("data.value", data);
                     if (data.data.nModified == '1') {
@@ -607,7 +696,7 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
         $scope.saveData = function (data) {
             if (data) {
 
-                $scope.url = "SportsList/save";
+                $scope.url = "SportsListSubCategory/save";
                 NavigationService.apiCall($scope.url, data, function (data) {
                     console.log("data.value", data);
                     if (data.value === true) {
@@ -666,12 +755,30 @@ myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, Na
     $scope.menutitle = NavigationService.makeactive("Category");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    // $scope.selectedStatus = 'All';
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
     $scope.viewTable = function () {
-        $scope.formData = {};
         $scope.url = "SportsListCategory/search";
+        $scope.formData.page = $scope.formData.page++;
         NavigationService.apiCall($scope.url, $scope.formData, function (data) {
             console.log("data.value", data);
             $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
+
 
         });
 
@@ -786,12 +893,28 @@ myApp.controller('SportsListCtrl', function ($scope, TemplateService, Navigation
     $scope.menutitle = NavigationService.makeactive("Sports List");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    // $scope.selectedStatus = 'All';
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
     $scope.viewTable = function () {
-        $scope.formData = {};
         $scope.url = "SportsList/search";
         NavigationService.apiCall($scope.url, $scope.formData, function (data) {
             console.log("data.value", data);
             $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
 
         });
 
@@ -923,6 +1046,34 @@ myApp.controller('SportsCtrl', function ($scope, TemplateService, NavigationServ
     $scope.menutitle = NavigationService.makeactive("Sports");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    // $scope.selectedStatus = 'All';
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
+    $scope.viewTable = function () {
+        $scope.url = "Sport/search";
+        $scope.formData.page = $scope.formData.page++;
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
+
+        });
+
+    }
+    $scope.viewTable();
 
     $scope.confDel = function (data) {
         $scope.id = data;

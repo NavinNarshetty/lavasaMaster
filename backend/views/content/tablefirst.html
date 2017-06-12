@@ -15,6 +15,10 @@
         <div class="table-area ">
           <div class="widget-title ">
             <div class="pull-right">
+              <form class="search-form mr-form ">
+                <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
+                             " ng-model="search" />
+              </form>
               <a class="btn btn-success" ui-sref="detailfirstcategory">
                  Create
               </a>
@@ -37,8 +41,8 @@
                 <!--<tr ng-repeat="item in items">-->
                 <tr ng-repeat="item in items">
                   <!--<tr>-->
-                  <!--<td>{{$index + 1}} {{($index + 1)+((formData.page-1)*maxRow)}}</td>-->
-                  <td>{{$index + 1}}</td>
+                  <td> {{($index + 1)+((formData.page-1)*maxRow)}}</td>
+                  <!--<td>{{$index + 1}}</td>-->
                   <td>{{item.name}}</td>
                   <td>
                     <a class="btn btn-primary" target="_blank" ui-sref="detailfirstcategory({id:item._id})">
@@ -63,7 +67,7 @@
           <div class="tableData " ng-show="totalItems===undefined ">
             <h5>Loading Data</h5>
           </div>
-          <ul ng-if="totalItems" ng-change="getAllItems();" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
+          <ul ng-if="totalItems" ng-change="viewTable();" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
             max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
         </div>
       </div>
