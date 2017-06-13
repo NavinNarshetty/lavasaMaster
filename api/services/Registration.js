@@ -289,7 +289,6 @@ var model = {
                                 length: 8,
                                 numbers: true
                             });
-
                             if (_.isEmpty(data.sfaID)) {
                                 var year = new Date().getFullYear().toString().substr(2, 2);
 
@@ -315,7 +314,6 @@ var model = {
                                                 data.registerID = 1;
                                                 console.log("registerID", data.registerID);
                                                 data.sfaID = "M" + "S" + year + data.registerID;
-
                                             } else {
                                                 console.log("found", datafound[0].sfaID);
                                                 data.registerID = ++datafound[0].registerID;

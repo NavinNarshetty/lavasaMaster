@@ -430,7 +430,7 @@ var model = {
         async.waterfall([
                 function (callback) {
                     School.findOne({
-                        _id: data.school
+                        name: data.school
                     }).lean().exec(
                         function (err, found) {
                             if (err) {
@@ -532,7 +532,7 @@ var model = {
         async.waterfall([
                 function (callback) {
                     School.findOne({
-                        _id: data.school
+                        name: data.school
                     }).lean().exec(
                         function (err, found) {
                             if (err) {

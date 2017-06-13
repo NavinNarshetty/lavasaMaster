@@ -181,8 +181,13 @@ var model = {
         var matchObj = {};
         if (data.type == "Date") {
             if (data.endDate == data.startDate) {
+                var day = moment(data.startDate).format('YYYY-MM-DD');
+                console.log(day);
                 matchObj = {
-                    createdAt: data.startDate,
+                    createdAt: {
+                        $regex: day,
+                        $options: "i"
+                    },
                     $or: [{
                         registrationFee: {
                             $ne: "online PAYU"
@@ -193,7 +198,6 @@ var model = {
                         }
                     }]
                 }
-
             } else {
                 matchObj = {
                     createdAt: {
@@ -817,7 +821,6 @@ var model = {
             }
         });
     },
-
     saveVerify: function (data, found, callback) {
         Athelete.saveData(data, function (err, athleteData) { //saves data to database collection
             console.log("athleteData", athleteData);

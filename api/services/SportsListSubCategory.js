@@ -71,6 +71,7 @@ var model = {
         });
 
     },
+    //not working this getone
     getOne: function (data, callback) {
         async.waterfall([
             function (callback) {
