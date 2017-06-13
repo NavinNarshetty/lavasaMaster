@@ -277,7 +277,7 @@ var model = {
                             if (_.isEmpty(complete)) {
                                 callback(null, []);
                             } else {
-                                callback(null, complete)
+                                callback(null, complete);
                             }
                         }
                     });
@@ -289,7 +289,7 @@ var model = {
                         if (found == data.maxTeam) {
                             callback("Max Team Created", null);
                         } else {
-                            if (data.sfaid != "") {
+                            if (data.sfaid !== "") {
                                 Sport.matchingAthelete(data, function (err, complete) {
                                     if (err) {
                                         callback(err, null);
@@ -297,7 +297,7 @@ var model = {
                                         if (_.isEmpty(complete)) {
                                             callback(null, []);
                                         } else {
-                                            callback(null, complete)
+                                            callback(null, complete);
                                         }
                                     }
                                 });
@@ -310,7 +310,7 @@ var model = {
                                         if (_.isEmpty(complete)) {
                                             callback(null, []);
                                         } else {
-                                            callback(null, complete)
+                                            callback(null, complete);
                                         }
                                     }
                                 });
@@ -637,7 +637,7 @@ var model = {
             $set: {
                 isSelected: false
             }
-        }
+        };
         Athelete.update({
             _id: saveData.studentId
         }, matchToken).exec(function (err, found) { //finds all athelete
