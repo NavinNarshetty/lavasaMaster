@@ -37,7 +37,7 @@
     }],
 
     "button": [{
-        "name": "excelexport",
+        "name": "Excel Export",
         "icon": "print",
         "type": "redirect",
         "class": "btn-success",

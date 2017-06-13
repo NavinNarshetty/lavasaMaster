@@ -1803,51 +1803,33 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         // };
         $scope.formData.type = "";
         $scope.search.keyword = "";
+        $scope.search = "";
         console.log($stateParams.keyword);
         console.log($scope.search);
         console.log($scope.search.keyword);
-        $scope.filterSchool = function () {
-
-            // console.log($scope.formData);
-            // console.log($stateParams.keyword);
-            // console.log($scope.search);
-            // console.log($scope.search.keyword);
-            $scope.url = "Registration/filterSchool";
-            // $stateParams.filter = $scope.formData;
-            // $stateParams.keyword = $scope.search.keyword;
-            // $stateParams.page = $scope.currentPage;
-
-            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
-                $scope.items = data.data.results;
-                $scope.totalItems = data.data.total;
-                $scope.maxRow = data.data.options.count;
-            });
 
 
-        };
-
-        $scope.filterAthlete = function () {
-
-            // $stateParams.filter = $scope.formData;
-
-            $scope.url = "Athelete/filterAthlete";
-
-            NavigationService.apiCall($scope.url, $stateParams, function (data) {
-                $scope.items = data.data.results;
-                $scope.totalItems = data.data.total;
-                $scope.maxRow = data.data.options.count;
-            });
-
-        };
+        $scope.searchInOldSchool = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.getAllItems();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.getAllItems();
+            }
+        }
 
         $scope.getAllItems = function (keywordChange) {
-            $scope.totalItems = undefined;
-            if (keywordChange) {
-                $scope.currentPage = 1;
-            }
-            NavigationService.search($scope.json.json.apiCall.url, {
-                    page: $scope.currentPage,
-                    keyword: $scope.search.keyword
+            $scope.search = $scope.formData.keyword;
+            $scope.formData.page = $scope.formData.page++;
+            // $scope.totalItems = undefined;
+            // if (keywordChange) {
+            //     $scope.currentPage = 1;
+            // }
+            NavigationService.search('School/search', {
+                    page: $scope.formData.page,
+                    keyword: $scope.formData.keyword
                 }, ++i,
                 function (data, ini) {
                     if (ini == i) {
@@ -1857,6 +1839,102 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                     }
                 });
         };
+
+
+
+        $scope.searchInSchool = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.filterSchool();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.filterSchool();
+            }
+        }
+
+
+        $scope.filterSchool = function () {
+            $scope.url = "Registration/filterSchool";
+            $scope.search = $scope.formData.keyword;
+            $scope.formData.page = $scope.formData.page++;
+
+
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                $scope.items = data.data.results;
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
+            });
+        };
+
+        // $scope.filterAthlete = function () {
+
+        //     // $stateParams.filter = $scope.formData;
+
+        //     $scope.url = "Athelete/filterAthlete";
+
+        //     NavigationService.apiCall($scope.url, $stateParams, function (data) {
+        //         $scope.items = data.data.results;
+        //         $scope.totalItems = data.data.total;
+        //         $scope.maxRow = data.data.options.count;
+        //     });
+
+        // };
+
+        // $scope.getAllItems = function (keywordChange) {
+        //     $scope.totalItems = undefined;
+        //     if (keywordChange) {
+        //         $scope.currentPage = 1;
+        //     }
+        //     NavigationService.search($scope.json.json.apiCall.url, {
+        //             page: $scope.currentPage,
+        //             keyword: $scope.search.keyword
+        //         }, ++i,
+        //         function (data, ini) {
+        //             if (ini == i) {
+        //                 $scope.items = data.data.results;
+        //                 $scope.totalItems = data.data.total;
+        //                 $scope.maxRow = data.data.options.count;
+        //             }
+        //         });
+        // };
+
+        $scope.searchInAthlete = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.filterAthlete();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.filterAthlete();
+            }
+        }
+        // $scope.filterDelivery = function (data) {
+        //     $scope.oConstraints.pagenumber = 1;
+        //     $scope.oConstraints.pagesize = 10;
+        //     $scope.oConstraints.deliveryStatus = data;
+        //     $scope.selectedStatus = data;
+        //     $scope.getMyOrders();
+        // }
+        $scope.filterAthlete = function () {
+
+            // $stateParams.filter = $scope.formData;
+
+            $scope.url = "Athelete/filterAthlete";
+            $scope.search = $scope.formData.keyword;
+            $scope.formData.page = $scope.formData.page++;
+
+
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                $scope.items = data.data.results;
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
+            });
+
+        };
+
+
+
 
         JsonService.refreshView = $scope.getAllItems;
         $scope.getAllItems();

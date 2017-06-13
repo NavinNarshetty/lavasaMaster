@@ -19,10 +19,18 @@
                     <div class="table-area ">
                         <div class="widget-title ">
                             <div class="pull-right">
-                                <!--<form class="search-form mr-form ">
-                                    <input type="text " ng-change="getAllItems(true) " placeholder="Search Here...
-                             " ng-model="search.keyword" />
-                                </form>-->
+                                <form class="search-form mr-form" ng-if="json.json.title=='School Registration'">
+                                    <input type="text " touppercase ng-change="searchInSchool(search) " placeholder="Search Here...
+                             " ng-model="search" />
+                                </form>
+                                <form class="search-form mr-form" ng-if="json.json.title=='Athlete Registration'">
+                                    <input type="text " touppercase ng-change="searchInAthlete(search)" placeholder="Search Here...
+                             " ng-model="search" />
+                                </form>
+                                <form class="search-form mr-form" ng-if="json.json.title=='Old School'">
+                                    <input type="text " ng-change="searchInOldSchool(search) " placeholder="Search Here...
+                             " ng-model="search" />
+                                </form>
                                 <a ng-repeat="btn in json.json.button " class="btn " ng-class="btn.class " ng-click="json.eventAction(btn)">{{btn.name}}</a>
                             </div>
                             <h3>{{json.json.description}} <span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
