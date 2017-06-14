@@ -340,12 +340,7 @@ var model = {
                         if (_.isEmpty(found)) {
                             callback(null, []);
                         } else {
-                            var athlete = {};
-                            athlete = n
-                            athlete.isTeamSelected = true;
-                            console.log(athlete);
-                            finalData.push(athlete);
-                            callback(null, finalData);
+                            // var age=
                         }
                     });
                 },
