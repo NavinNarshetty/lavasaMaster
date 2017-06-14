@@ -23,11 +23,12 @@
                 </div>
                 <div class="form-group">
                   <label>Sports Type</label>
-                  <ui-select name="selectsprttype" id="selectsprttype" theme="bootstrap" ng-model="formData.SportsListCategory" required>
-                    <ui-select-match placeholder="Enter SportsListCategory">
+                  <ui-select name="selectsprttype" id="selectsprttype" theme="bootstrap" ng-model="formData.SportsListCategory" ng-change="searchsSportListCategory($select.selected._id)"
+                    required>
+                    <ui-select-match placeholder="Enter SportsListCategory" allow-clear="true">
                       {{$select.selected.name}}
                     </ui-select-match>
-                    <ui-select-choices repeat="item in sporttypeList | filter:$select.search">
+                    <ui-select-choices repeat="item in sportlistcatitems | filter:$select.search" refresh="getAllSportListCategory($select.search)">
                       <span ng-bind-html="item.name"></span>
                     </ui-select-choices>
                   </ui-select>
@@ -35,35 +36,53 @@
                 </div>
                 <div class="form-group">
                   <label>Isteam</label>
-                  <ui-select name="selectisteam" id="selectisteam" theme="bootstrap" ng-model="formData.isTeam" required>
+                  <select name="selectisteam" id="selectisteam" class="form-control" ng-model="formData.isTeam" placeholder="Enter IsTeam">
+                    <option value="">Enter isTeam</option>
+                    <option value="true">True</option>
+                    <option value="false">False</option>
+                  </select>
+                  <!--<ui-select name="selectisteam" id="selectisteam" theme="bootstrap" ng-model="formData.isTeam" required>
                     <ui-select-match placeholder="Enter Team">
                       {{$select.selected.name}}
                     </ui-select-match>
                     <ui-select-choices repeat="item in teamStatus | filter:$select.search">
                       <span ng-bind-html="item.name"></span>
                     </ui-select-choices>
-                  </ui-select>
+                  </ui-select>-->
                   <div class="error-msg" ng-if="detailForm.selectisteam.$invalid && detailForm.selectisteam.$touched">Please Enter Isteam*</div>
                 </div>
                 <div class="form-group">
                   <label>Filter</label>
-                  <ui-select name="selectfilter" id="selectfilter" theme="bootstrap" ng-model="formData.filter" required>
+
+                  <ui-select name="selectfilter" multiple="" id="selectfilter" theme="bootstrap" ng-model="item.selected" required>
                     <ui-select-match placeholder="Enter Filter">
-                      {{$select.selected.name}}
+                      {{$select.selected[$index].name}}
                     </ui-select-match>
-                    <ui-select-choices repeat="item in filterList | filter:$select.search">
+                    <ui-select-choices repeat="item in filterList | filter:{name:$select.search}">
                       <span ng-bind-html="item.name"></span>
                     </ui-select-choices>
                   </ui-select>
+                  <!--<ui-select name="selectfilter" id="selectfilter" ng-model="formData.filter" theme="bootstrap" ng-required="type.required"
+                    ng-if="type.dropDownType == 'single'" required>
+                    <ui-select-match placeholder="Enter Filter">
+                      <span ng-if="type.dropDownField==''">{{$select.selected}}</span>
+                      <span ng-if="type.dropDownField!=''">{{$select.selected[type.dropDownField]}}</span>
+                    </ui-select-match>
+                    <ui-select-choices repeat="item in filterList | filter:$select.search" refresh-delay="0" refresh="refreshTags($select.search)">
+                      <span ng-if="type.dropDownField==''">{{tag}}</span>
+                      <span ng-if="type.dropDownField!=''">{{tag[type.dropDownField]}}</span>
+                    </ui-select-choices>
+                  </ui-select>-->
                   <div class="error-msg" ng-if="detailForm.selectfilter.$invalid && detailForm.selectfilter.$touched">Please Enter Filter*</div>
                 </div>
                 <div class="form-group">
-                  <label>RulesAndRegulation</label>
-                  <ui-select name="selectrulandreg" id="selectrulandreg" theme="bootstrap" ng-model="formData.rules" required>
-                    <ui-select-match placeholder="Enter Rules And Regulation">
+                  <label>Rules and Regulation</label>
+                  <ui-select name="selectrulandreg" id="selectrulandreg" theme="bootstrap" ng-model="formData.rules" ng-change="searchRules($select.selected._id)"
+                    required>
+                    <ui-select-match placeholder="Enter Rules And Regulation" allow-clear="true">
                       {{$select.selected.name}}
                     </ui-select-match>
-                    <ui-select-choices repeat="item in rulesList | filter:$select.search">
+                    <ui-select-choices refresh.delay="0" repeat="item in rulesitems | filter:$select.search" refresh="getAllRules($select.search)">
                       <span ng-bind-html="item.name"></span>
                     </ui-select-choices>
                   </ui-select>

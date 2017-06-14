@@ -23,11 +23,12 @@
                 </div>
                 <div class="form-group">
                   <label>Sports Type</label>
-                  <ui-select name="selectsporttype" id="selectsporttype" theme="bootstrap" ng-model="formData.SportsListSubCategory" required>
-                    <ui-select-match placeholder="Enter Sports List Sub Category">
+                  <ui-select name="selectsporttype" id="selectsporttype" theme="bootstrap" ng-model="formData.SportsListSubCategory" ng-change="searchSportListSubCategory($select.selected._id)"
+                    required>
+                    <ui-select-match placeholder="Enter Sports List Sub Category" allow-clear="true">
                       {{$select.selected.name}}
                     </ui-select-match>
-                    <ui-select-choices repeat="item in sporttypeList | filter:$select.search">
+                    <ui-select-choices refresh.delay="0" repeat="item in sportstypeitems | filter:$select.search" refresh="getAllSportListSubCategory($select.search)">
                       <span ng-bind-html="item.name"></span>
                     </ui-select-choices>
                   </ui-select>
@@ -35,18 +36,19 @@
                 </div>
                 <div class="form-group">
                   <label>Draw Format</label>
-                  <ui-select name="selectsdrawformat" id="selectsdrawformat" theme="bootstrap" ng-model="formData.drawFormat" required>
-                    <ui-select-match placeholder="Enter Draw Format">
+                  <ui-select name="selectsdrawformat" id="selectsdrawformat" theme="bootstrap" ng-model="formData.drawFormat" ng-change="searchDrawFormat($select.selected._id)"
+                    required>
+                    <ui-select-match placeholder="Enter Draw Format" allow-clear="true">
                       {{$select.selected.name}}
                     </ui-select-match>
-                    <ui-select-choices repeat="item in drawList | filter:$select.search">
+                    <ui-select-choices refresh.delay="0" repeat="item in drawitems | filter:$select.search" refresh="getAllDrawformat($select.search)">
                       <span ng-bind-html="item.name"></span>
                     </ui-select-choices>
                   </ui-select>
                   <div class="error-msg" ng-if="detailForm.selectsdrawformat.$invalid && detailForm.selectsdrawformat.$touched">Please Enter Draw Format*</div>
                 </div>
                 <div class="text-center mt20 odd-even-button">
-                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData ,detailForm)">Save</button>
                   <button class="btn btn-default" ng-click="onCancel('sportslist')">Cancel</button>
                 </div>
               </div>

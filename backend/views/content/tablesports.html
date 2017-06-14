@@ -34,8 +34,8 @@
                   <th>
                     Sports List
                   </th>
+                  <th>Age Group</th>
                   <th>Gender</th>
-                  <th>Year</th>
                   <th>Min Player</th>
                   <th>Max Player</th>
                   <th>Actions</th>
@@ -47,11 +47,12 @@
                   <!--<tr>-->
                   <!--<td>{{$index + 1}} {{($index + 1)+((formData.page-1)*maxRow)}}</td>-->
                   <td> {{$index + 1}}</td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
-                  <td></td>
+                  <td>{{item.sportslist.name}}</td>
+                  <td>{{item.ageGroup.name}}</td>
+                  <td>{{item.gender}}</td>
+                  <td>{{item.minTeamPlayers}}</td>
+                  <td>{{item.maxTeamPlayers}}</td>
+                  <!--<td></td>-->
                   <td>
                     <a class="btn btn-primary" target="_blank" ui-sref="detailsports({id:item._id})">
                       <i class="fa fa-pencil"></i> Edit
