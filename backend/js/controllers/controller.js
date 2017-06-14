@@ -1341,74 +1341,74 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
 
     };
     $scope.filterAthlete();
-    $scope.generateExcel = function (formdata) {
-        formdata.page = $scope.formData.page;
-        console.log(formdata);
-        NavigationService.generateAthleteExcelWithExcel(formdata, function (data) {
-                // console.log('controller', data);
-                // // $scope.zipCreate = function (data) {
-                console.log('All', data);
-                console.log('excel', data.data);
-                console.log('info', data.config);
-                $scope.zConstraint = {};
-                // $scope.zConstraint.userName = data.firstName + '_' + data.lastName;
-                // $scope.zConstraint.userStringId = data.userStringId;
+    //     $scope.generateExcel = function (formdata) {
+    //         formdata.page = $scope.formData.page;
+    //         console.log(formdata);
+    //         NavigationService.generateAthleteExcelWithExcel(formdata, function (data) {
+    //                 // console.log('controller', data);
+    //                 // // $scope.zipCreate = function (data) {
+    //                 console.log('All', data);
+    //                 console.log('excel', data.data);
+    //                 console.log('info', data.config);
+    //                 $scope.zConstraint = {};
+    //                 // $scope.zConstraint.userName = data.firstName + '_' + data.lastName;
+    //                 // $scope.zConstraint.userStringId = data.userStringId;
 
-                $scope.excelData = data.data;
+    //                 $scope.excelData = data.data;
 
 
-                console.log($scope.zConstraint);  
-                var zip = new JSZip();  
-                var files = [];
+    //                 console.log($scope.zConstraint);  
+    //                 var zip = new JSZip();  
+    //                 var files = [];
 
-                files.push($scope.panImage);  
-                files.push($scope.importImage);  
-                files.push($scope.vatImage);  
-                files.push($scope.cstImage);  
-                files.push($scope.registerImage);  
-                files.push($scope.chequeImage);
-                // console.log("inside zip", $scope.zConstraint);
-                var img = zip.folder($scope.zConstraint.userName + "-" + $scope.zConstraint.userStringId);  
+    //                 files.push($scope.panImage);  
+    //                 files.push($scope.importImage);  
+    //                 files.push($scope.vatImage);  
+    //                 files.push($scope.cstImage);  
+    //                 files.push($scope.registerImage);  
+    //                 files.push($scope.chequeImage);
+    //                 // console.log("inside zip", $scope.zConstraint);
+    //                 var img = zip.folder($scope.zConstraint.userName + "-" + $scope.zConstraint.userStringId);  
 
-                async.each(files, function (values, callback) {   
+    //                 async.each(files, function (values, callback) {   
 
-                    if (values.Image) {
-                        var value = values.Image;
-                        var extension = value.split(".").pop();
-                        extension = extension.toLowerCase();   
-                        if (extension == "jpeg") {    
-                            extension = "jpg";   
-                        }   
-                        var i = value.indexOf(".");   
-                        i--;   
-                        var name = values.Name;
+    //                     if (values.Image) {
+    //                         var value = values.Image;
+    //                         var extension = value.split(".").pop();
+    //                         extension = extension.toLowerCase();   
+    //                         if (extension == "jpeg") {    
+    //                             extension = "jpg";   
+    //                         }   
+    //                         var i = value.indexOf(".");   
+    //                         i--;   
+    //                         var name = values.Name;
 
-                        getBase64FromImageUrl(adminURL + "upload/readFile?file=" + value, function (imageData) {
-                            img.file(name + "." + extension, imageData, {
-                                createFolders: false,
-                                base64: true
-                            });  
-                            callback();
-                        }); 
-                    } else {
-                        callback();
-                    }
-                }, function (err, data) {
-                    zip.generateAsync({    
-                        type: "blob",
-                    }).then(function (content) {     // see FileSaver.js
-                        saveAs(content, $scope.zConstraint.userName + "-" + $scope.zConstraint.userStringId + ".zip");
-                    });
-                }); 
-            }
-            // window.location.href = adminurl + 'Athelete/generateExcel';
+    //                         getBase64FromImageUrl(adminURL + "upload/readFile?file=" + value, function (imageData) {
+    //                             img.file(name + "." + extension, imageData, {
+    //                                 createFolders: false,
+    //                                 base64: true
+    //                             });  
+    //                             callback();
+    //                         }); 
+    //                     } else {
+    //                         callback();
+    //                     }
+    //                 }, function (err, data) {
+    //                     zip.generateAsync({    
+    //                         type: "blob",
+    //                     }).then(function (content) {     // see FileSaver.js
+    //                         saveAs(content, $scope.zConstraint.userName + "-" + $scope.zConstraint.userStringId + ".zip");
+    //                     });
+    //                 }); 
+    //             }
+    //             // window.location.href = adminurl + 'Athelete/generateExcel';
+    //         });
+    // }
+    $scope.generateExcel = function () {
+        NavigationService.generateAthleteExcel(function (data) {
+            window.location.href = adminurl + 'Athelete/generateExcel';
         });
-}
-// $scope.generateExcel = function () {
-//     NavigationService.generateAthleteExcel(function (data) {
-//         window.location.href = adminurl + 'Athelete/generateExcel';
-//     });
-// }
+    }
 })
 
 myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
