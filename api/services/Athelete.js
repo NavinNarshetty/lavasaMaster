@@ -37,7 +37,7 @@ var schema = new Schema({
     bloodGroup: String,
     photograph: String,
     dob: Date,
-    age: String,
+    age: Number,
     ageProof: String,
     photoImage: String,
     birthImage: String,
