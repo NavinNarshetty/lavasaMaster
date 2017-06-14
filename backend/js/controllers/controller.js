@@ -1868,14 +1868,14 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.formData.page = 1;
             if (data.length >= 2) {
                 $scope.formData.keyword = data;
-                $scope.getAllItems();
+                $scope.getAllItems1();
             } else if (data.length == '') {
                 $scope.formData.keyword = data;
-                $scope.getAllItems();
+                $scope.getAllItems1();
             }
         }
 
-        $scope.getAllItems = function (keywordChange) {
+        $scope.getAllItems1 = function (keywordChange) {
             $scope.search = $scope.formData.keyword;
             $scope.formData.page = $scope.formData.page++;
             // $scope.totalItems = undefined;
@@ -1936,23 +1936,23 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
         // };
 
-        // $scope.getAllItems = function (keywordChange) {
-        //     $scope.totalItems = undefined;
-        //     if (keywordChange) {
-        //         $scope.currentPage = 1;
-        //     }
-        //     NavigationService.search($scope.json.json.apiCall.url, {
-        //             page: $scope.currentPage,
-        //             keyword: $scope.search.keyword
-        //         }, ++i,
-        //         function (data, ini) {
-        //             if (ini == i) {
-        //                 $scope.items = data.data.results;
-        //                 $scope.totalItems = data.data.total;
-        //                 $scope.maxRow = data.data.options.count;
-        //             }
-        //         });
-        // };
+        $scope.getAllItems = function (keywordChange) {
+            $scope.totalItems = undefined;
+            if (keywordChange) {
+                $scope.currentPage = 1;
+            }
+            NavigationService.search($scope.json.json.apiCall.url, {
+                    page: $scope.currentPage,
+                    keyword: $scope.search.keyword
+                }, ++i,
+                function (data, ini) {
+                    if (ini == i) {
+                        $scope.items = data.data.results;
+                        $scope.totalItems = data.data.total;
+                        $scope.maxRow = data.data.options.count;
+                    }
+                });
+        };
 
         $scope.searchInAthlete = function (data) {
             $scope.formData.page = 1;
