@@ -2001,7 +2001,7 @@ var model = {
             createdAt: -1
         }).lean().exec(function (err, data) {
             var excelData = [];
-            async.eachSeries(complete, function (n, callback) {
+            async.eachSeries(data, function (n, callback) {
                 var obj = {};
                 obj.sfaID = n.sfaId;
                 async.waterfall([

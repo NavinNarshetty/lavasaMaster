@@ -51,10 +51,10 @@ var models = {
 
                 email: email,
                 phone: phone,
-                surl: 'http://sfa2.wohlig.co.in/api/payU/successErrorSchool',
-                furl: 'http://sfa2.wohlig.co.in/api/payU/successErrorSchool',
-                // surl: 'https://sfa.wohlig.co.in/api/payU/successErrorSchool',
-                // furl: 'https://sfa.wohlig.co.in/api/payU/successErrorSchool',
+                // surl: 'http://sfa2.wohlig.co.in/api/payU/successErrorSchool',
+                // furl: 'http://sfa2.wohlig.co.in/api/payU/successErrorSchool',
+                surl: 'https://sfa.wohlig.co.in/api/payU/successErrorSchool',
+                furl: 'https://sfa.wohlig.co.in/api/payU/successErrorSchool',
                 hash: hashtext
                 // pg: pg
             }
@@ -96,10 +96,10 @@ var models = {
                 lastname: lastname,
                 email: email,
                 phone: phone,
-                surl: 'http://sfa2.wohlig.co.in/api/payU/successErrorAthelete',
-                furl: 'http://sfa2.wohlig.co.in/api/payU/successErrorAthelete',
-                // surl: 'https://sfa.wohlig.co.in/api/payU/successErrorAthelete',
-                // furl: 'https://sfa.wohlig.co.in/api/payU/successErrorAthelete',
+                // surl: 'http://sfa2.wohlig.co.in/api/payU/successErrorAthelete',
+                // furl: 'http://sfa2.wohlig.co.in/api/payU/successErrorAthelete',
+                surl: 'https://sfa.wohlig.co.in/api/payU/successErrorAthelete',
+                furl: 'https://sfa.wohlig.co.in/api/payU/successErrorAthelete',
                 hash: hashtext,
                 address: address,
                 state: state,
