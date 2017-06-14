@@ -5,9 +5,9 @@
       <img ng-src="{{model|uploadpath}}" class="img-responsive uploadingImage img-thumbnail" ng-if="type=='image'" />
     </a>
     <!--<iframe src="{{model|uploadpath}}" style="width:400px; height:400px;" frameborder="0" ng-if="type=='pdf'"></iframe>-->
-    <!--<a href="{{model|uploadpath}}" target="_new">
+    <a href="{{model|uploadpath}}" target="_new">
       <img ng-src="../../img/pdf.png" class="img-responsive uploadingImage" ng-if="type=='pdf'" />
-    </a>-->
+    </a>
   </div>
   <div class="clearfix" ng-if="model && isMultiple" ng-hide="noShow">
     <div class="img-box" style="float:left;" ng-repeat="sImage in model track by $index">
