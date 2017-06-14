@@ -180,41 +180,44 @@ var model = {
         };
         var matchObj = {};
         if (data.type == "Date") {
-            if (data.endDate == data.startDate) {
-                // var day = moment(data.startDate).format('YYYY-MM-DD');
-                console.log("start", data.startDate, "end", data.endDate);
-                matchObj = {
-                    createdAt: {
-                        $regex: day,
-                        $options: "i"
-                    },
-                    $or: [{
-                        registrationFee: {
-                            $ne: "online PAYU"
-                        }
-                    }, {
-                        paymentStatus: {
-                            $ne: "Pending"
-                        }
-                    }]
-                }
-            } else {
-                matchObj = {
-                    createdAt: {
-                        $gt: data.startDate,
-                        $lt: data.endDate,
-                    },
-                    $or: [{
-                        registrationFee: {
-                            $ne: "online PAYU"
-                        }
-                    }, {
-                        paymentStatus: {
-                            $ne: "Pending"
-                        }
-                    }]
-                }
+            var endOfDay = moment(data.endDate).endOf("day").toDate();
+            // if (data.endDate == data.startDate) {
+
+            //    
+            //     // var day = moment(data.startDate).format('YYYY-MM-DD');
+            //     console.log("start", data.startDate, "end", endOfDay);
+            //     matchObj = {
+            //         createdAt: {
+            //             $regex: day,
+            //             $options: "i"
+            //         },
+            //         $or: [{
+            //             registrationFee: {
+            //                 $ne: "online PAYU"
+            //             }
+            //         }, {
+            //             paymentStatus: {
+            //                 $ne: "Pending"
+            //             }
+            //         }]
+            //     }
+            // } else {
+            matchObj = {
+                createdAt: {
+                    $gt: data.startDate,
+                    $lt: endOfDay,
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
             }
+
         } else if (data.type == "SFA-ID") {
             matchObj = {
                 sfaId: {
