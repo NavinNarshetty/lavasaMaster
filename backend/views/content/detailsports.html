@@ -26,6 +26,11 @@
                   <div class="error-msg" ng-if="detailForm.selectgender.$invalid && detailForm.selectgender.$touched">Please Enter Gender*</div>
                 </div>
                 <div class="form-group">
+                  <label>Max Team Allowed</label>
+                  <input type="text" name="maxTeam" ng-model="formData.maxTeam" class="form-control" placeholder="Enter Max Players" required>
+                  <div class="error-msg" ng-if="detailForm.maxTeam.$invalid && detailForm.maxTeam.$touched">Please Enter Valid Max Player *</div>
+                </div>
+                <div class="form-group">
                   <label>Min Players</label>
                   <input type="text" name="detailsportsmin" ng-model="formData.minTeamPlayers" class="form-control" placeholder="Enter Min Players"
                     required>

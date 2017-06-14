@@ -289,7 +289,6 @@ var model = {
                                 length: 8,
                                 numbers: true
                             });
-
                             if (_.isEmpty(data.sfaID)) {
                                 var year = new Date().getFullYear().toString().substr(2, 2);
 
@@ -315,7 +314,6 @@ var model = {
                                                 data.registerID = 1;
                                                 console.log("registerID", data.registerID);
                                                 data.sfaID = "M" + "S" + year + data.registerID;
-
                                             } else {
                                                 console.log("found", datafound[0].sfaID);
                                                 data.registerID = ++datafound[0].registerID;
@@ -1199,7 +1197,7 @@ var model = {
         }
     },
 
-    generateExcel: function (data, res) {
+    generateExcelNew: function (data, res) {
         async.waterfall([
                 function (callback) {
                     Registration.excelFilterSchool(data.body, function (err, complete) {
@@ -1369,7 +1367,7 @@ var model = {
             });
     },
 
-    generateExcelOld: function (res) {
+    generateExcel: function (res) {
         console.log("dataIN");
         var matchObj = {
             $or: [{
@@ -1559,9 +1557,10 @@ var model = {
             }],
         };
         if (data.type == "Date") {
+            var endOfDay = moment(data.endDate).endOf("day").toDate();
             matchObj.createdAt = {
                 $gt: data.startDate,
-                $lt: data.endDate,
+                $lt: endOfDay,
             };
         } else if (data.type == "SFA-ID") {
             matchObj = {

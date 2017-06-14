@@ -23,5 +23,10 @@ var controller = {
         }
 
     },
+    getAthletePerSchoolIndividual: function () {
+
+    }
+
+
 };
 module.exports = _.assign(module.exports, controller);

@@ -39,6 +39,74 @@ module.exports = mongoose.model('SportsListSubCategory', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "sportsListCategory rules", "sportsListCategory rules"));
 var model = {
 
+    getAggregatePipeLine: function (data) {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sportslist",
+                    "foreignField": "_id",
+                    "as": "sportsListData"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sportsListData",
+
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "ageGroup",
+                    "foreignField": "_id",
+                    "as": "ageData"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$ageData",
+
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sportsListData.sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sportsubData"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$sportsubData",
+
+                }
+            },
+
+            // Stage 5
+            {
+                $match: {
+                    "sportsubData._id": objectid(data._id)
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
     getAll: function (callback) {
         async.waterfall([
             function (callback) {
@@ -71,33 +139,65 @@ var model = {
         });
 
     },
-    getOne: function (data, callback) {
+    //not working this getone
+    getOneSport: function (data, callback) {
         async.waterfall([
             function (callback) {
-                // FindOne SportListSubCategory
-                SportsListSubCategory.findOne({
-                    _id: data._id
-                }).exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback(null, "Data is empty");
-                    } else {
-                        callback(null, found);
+                var pipeLine = SportsListSubCategory.getAggregatePipeLine(data);
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $match: {
+                        gender: data.gender,
+                        ageGroup: objectid(data.age)
                     }
                 });
 
+                Sport.aggregate(newPipeLine, function (err, totals) {
+                    if (err) {
+                        console.log(err);
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(totals)) {
+                            callback(null, []);
+                        } else {
+                            var results = {};
+                            // results.sport = totals[0]._id;
+                            callback(null, totals);
+                        }
+                    }
+
+                });
             },
-            function (found, callback) {
-                if (found.isTeam) {
-                    teamSport(found, callback);
+            function (totals, callback) {
+                if (totals[0].sportsubData.isTeam == true) {
+                    var results = {};
+                    results.sport = totals[0]._id;
+                    TeamSport.count({
+                        sport: results.sport
+                    }).exec(function (err, found) {
+                        if (found == totals[0].maxTeam) {
+                            callback("Max Team Created", null);
+                        } else {
+                            callback(null, results);
+                        }
+                    });
                 } else {
+                    callback(null, "this is individualSport");
                     // individualSport(callback);
                 }
                 // FindOne 
             }
-        ], function () {
-
+        ], function (err, data2) {
+            if (err) {
+                console.log(err);
+                callback(null, []);
+            } else if (data2) {
+                if (_.isEmpty(data2)) {
+                    callback(null, []);
+                } else {
+                    callback(null, data2);
+                }
+            }
         });
 
 
@@ -123,82 +223,21 @@ var model = {
         //      
     },
     getSports: function (data, callback) {
-        Sport.aggregate([
-                // Stage 1
-                {
-                    $lookup: {
-                        "from": "sportslists",
-                        "localField": "sportslist",
-                        "foreignField": "_id",
-                        "as": "sportsListData"
-                    }
-                },
-
-                // Stage 2
-                {
-                    $unwind: {
-                        path: "$sportsListData",
-
-                    }
-                },
-
-                // Stage 3
-                {
-                    $lookup: {
-                        "from": "agegroups",
-                        "localField": "ageGroup",
-                        "foreignField": "_id",
-                        "as": "ageData"
-                    }
-                },
-
-                // Stage 4
-                {
-                    $unwind: {
-                        path: "$ageData",
-
-                    }
-                },
-
-                // Stage 3
-                {
-                    $lookup: {
-                        "from": "sportslistsubcategories",
-                        "localField": "sportsListData.sportsListSubCategory",
-                        "foreignField": "_id",
-                        "as": "sportsubData"
-                    }
-                },
-
-                // Stage 4
-                {
-                    $unwind: {
-                        path: "$sportsubData",
-
-                    }
-                },
-
-                // Stage 5
-                {
-                    $match: {
-                        "sportsubData._id": objectid(data._id)
-                    }
-                },
-            ],
-            function (err, totals) {
-                if (err) {
-                    console.log(err);
-                    callback(err, "error in mongoose");
+        var pipeLine = SportsListSubCategory.getAggregatePipeLine(data);
+        Sport.aggregate(pipeLine, function (err, totals) {
+            if (err) {
+                console.log(err);
+                callback(err, "error in mongoose");
+            } else {
+                if (_.isEmpty(totals)) {
+                    callback(null, []);
                 } else {
-                    if (_.isEmpty(totals)) {
-                        callback(null, []);
-                    } else {
-                        var results = _.groupBy(totals, "gender");
-                        callback(null, results);
-                    }
+                    var results = _.groupBy(totals, "gender");
+                    callback(null, results);
                 }
-            });
+            }
 
+        });
 
         // Aggregate(Sport - > lookup SportList - > lookup sportListSubCategory, Match ID ) {
         //     Sports  callback(err,callback)
@@ -217,8 +256,7 @@ var model = {
                 callback(null, found);
             }
         });
-    }
-
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);

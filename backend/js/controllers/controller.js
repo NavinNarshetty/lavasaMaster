@@ -1341,19 +1341,74 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
 
     };
     $scope.filterAthlete();
-    $scope.generateExcel = function (formdata) {
-        formdata.page = $scope.formData.page;
-        console.log(formdata);
-        NavigationService.generateAthleteExcel(formdata, function (data) {
-            console.log('controller', data);
+    //     $scope.generateExcel = function (formdata) {
+    //         formdata.page = $scope.formData.page;
+    //         console.log(formdata);
+    //         NavigationService.generateAthleteExcelWithExcel(formdata, function (data) {
+    //                 // console.log('controller', data);
+    //                 // // $scope.zipCreate = function (data) {
+    //                 console.log('All', data);
+    //                 console.log('excel', data.data);
+    //                 console.log('info', data.config);
+    //                 $scope.zConstraint = {};
+    //                 // $scope.zConstraint.userName = data.firstName + '_' + data.lastName;
+    //                 // $scope.zConstraint.userStringId = data.userStringId;
+
+    //                 $scope.excelData = data.data;
+
+
+    //                 console.log($scope.zConstraint);  
+    //                 var zip = new JSZip();  
+    //                 var files = [];
+
+    //                 files.push($scope.panImage);  
+    //                 files.push($scope.importImage);  
+    //                 files.push($scope.vatImage);  
+    //                 files.push($scope.cstImage);  
+    //                 files.push($scope.registerImage);  
+    //                 files.push($scope.chequeImage);
+    //                 // console.log("inside zip", $scope.zConstraint);
+    //                 var img = zip.folder($scope.zConstraint.userName + "-" + $scope.zConstraint.userStringId);  
+
+    //                 async.each(files, function (values, callback) {   
+
+    //                     if (values.Image) {
+    //                         var value = values.Image;
+    //                         var extension = value.split(".").pop();
+    //                         extension = extension.toLowerCase();   
+    //                         if (extension == "jpeg") {    
+    //                             extension = "jpg";   
+    //                         }   
+    //                         var i = value.indexOf(".");   
+    //                         i--;   
+    //                         var name = values.Name;
+
+    //                         getBase64FromImageUrl(adminURL + "upload/readFile?file=" + value, function (imageData) {
+    //                             img.file(name + "." + extension, imageData, {
+    //                                 createFolders: false,
+    //                                 base64: true
+    //                             });  
+    //                             callback();
+    //                         }); 
+    //                     } else {
+    //                         callback();
+    //                     }
+    //                 }, function (err, data) {
+    //                     zip.generateAsync({    
+    //                         type: "blob",
+    //                     }).then(function (content) {     // see FileSaver.js
+    //                         saveAs(content, $scope.zConstraint.userName + "-" + $scope.zConstraint.userStringId + ".zip");
+    //                     });
+    //                 }); 
+    //             }
+    //             // window.location.href = adminurl + 'Athelete/generateExcel';
+    //         });
+    // }
+    $scope.generateExcel = function () {
+        NavigationService.generateAthleteExcel(function (data) {
             window.location.href = adminurl + 'Athelete/generateExcel';
         });
     }
-    // $scope.generateExcel = function () {
-    //     NavigationService.generateAthleteExcel(function (data) {
-    //         window.location.href = adminurl + 'Athelete/generateExcel';
-    //     });
-    // }
 })
 
 myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
@@ -1803,42 +1858,83 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         // };
         $scope.formData.type = "";
         $scope.search.keyword = "";
+        $scope.search = "";
         console.log($stateParams.keyword);
         console.log($scope.search);
         console.log($scope.search.keyword);
-        $scope.filterSchool = function () {
 
-            // console.log($scope.formData);
-            // console.log($stateParams.keyword);
-            // console.log($scope.search);
-            // console.log($scope.search.keyword);
+
+        $scope.searchInOldSchool = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.getAllItems1();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.getAllItems1();
+            }
+        }
+
+        $scope.getAllItems1 = function (keywordChange) {
+            $scope.search = $scope.formData.keyword;
+            $scope.formData.page = $scope.formData.page++;
+            // $scope.totalItems = undefined;
+            // if (keywordChange) {
+            //     $scope.currentPage = 1;
+            // }
+            NavigationService.search('School/search', {
+                    page: $scope.formData.page,
+                    keyword: $scope.formData.keyword
+                }, ++i,
+                function (data, ini) {
+                    if (ini == i) {
+                        $scope.items = data.data.results;
+                        $scope.totalItems = data.data.total;
+                        $scope.maxRow = data.data.options.count;
+                    }
+                });
+        };
+
+
+
+        $scope.searchInSchool = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.filterSchool();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.filterSchool();
+            }
+        }
+
+
+        $scope.filterSchool = function () {
             $scope.url = "Registration/filterSchool";
-            // $stateParams.filter = $scope.formData;
-            // $stateParams.keyword = $scope.search.keyword;
-            // $stateParams.page = $scope.currentPage;
+            $scope.search = $scope.formData.keyword;
+            $scope.formData.page = $scope.formData.page++;
+
 
             NavigationService.apiCall($scope.url, $scope.formData, function (data) {
                 $scope.items = data.data.results;
                 $scope.totalItems = data.data.total;
                 $scope.maxRow = data.data.options.count;
             });
-
-
         };
 
-        $scope.filterAthlete = function () {
+        // $scope.filterAthlete = function () {
 
-            // $stateParams.filter = $scope.formData;
+        //     // $stateParams.filter = $scope.formData;
 
-            $scope.url = "Athelete/filterAthlete";
+        //     $scope.url = "Athelete/filterAthlete";
 
-            NavigationService.apiCall($scope.url, $stateParams, function (data) {
-                $scope.items = data.data.results;
-                $scope.totalItems = data.data.total;
-                $scope.maxRow = data.data.options.count;
-            });
+        //     NavigationService.apiCall($scope.url, $stateParams, function (data) {
+        //         $scope.items = data.data.results;
+        //         $scope.totalItems = data.data.total;
+        //         $scope.maxRow = data.data.options.count;
+        //     });
 
-        };
+        // };
 
         $scope.getAllItems = function (keywordChange) {
             $scope.totalItems = undefined;
@@ -1857,6 +1953,43 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                     }
                 });
         };
+
+        $scope.searchInAthlete = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.filterAthlete();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.filterAthlete();
+            }
+        }
+        // $scope.filterDelivery = function (data) {
+        //     $scope.oConstraints.pagenumber = 1;
+        //     $scope.oConstraints.pagesize = 10;
+        //     $scope.oConstraints.deliveryStatus = data;
+        //     $scope.selectedStatus = data;
+        //     $scope.getMyOrders();
+        // }
+        $scope.filterAthlete = function () {
+
+            // $stateParams.filter = $scope.formData;
+
+            $scope.url = "Athelete/filterAthlete";
+            $scope.search = $scope.formData.keyword;
+            $scope.formData.page = $scope.formData.page++;
+
+
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                $scope.items = data.data.results;
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
+            });
+
+        };
+
+
+
 
         JsonService.refreshView = $scope.getAllItems;
         $scope.getAllItems();

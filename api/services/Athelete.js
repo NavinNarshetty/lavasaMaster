@@ -37,7 +37,7 @@ var schema = new Schema({
     bloodGroup: String,
     photograph: String,
     dob: Date,
-    age: String,
+    age: Number,
     ageProof: String,
     photoImage: String,
     birthImage: String,
@@ -180,37 +180,44 @@ var model = {
         };
         var matchObj = {};
         if (data.type == "Date") {
-            if (data.endDate == data.startDate) {
-                matchObj = {
-                    createdAt: data.startDate,
-                    $or: [{
-                        registrationFee: {
-                            $ne: "online PAYU"
-                        }
-                    }, {
-                        paymentStatus: {
-                            $ne: "Pending"
-                        }
-                    }]
-                }
+            var endOfDay = moment(data.endDate).endOf("day").toDate();
+            // if (data.endDate == data.startDate) {
 
-            } else {
-                matchObj = {
-                    createdAt: {
-                        $gt: data.startDate,
-                        $lt: data.endDate,
-                    },
-                    $or: [{
-                        registrationFee: {
-                            $ne: "online PAYU"
-                        }
-                    }, {
-                        paymentStatus: {
-                            $ne: "Pending"
-                        }
-                    }]
-                }
+            //    
+            //     // var day = moment(data.startDate).format('YYYY-MM-DD');
+            //     console.log("start", data.startDate, "end", endOfDay);
+            //     matchObj = {
+            //         createdAt: {
+            //             $regex: day,
+            //             $options: "i"
+            //         },
+            //         $or: [{
+            //             registrationFee: {
+            //                 $ne: "online PAYU"
+            //             }
+            //         }, {
+            //             paymentStatus: {
+            //                 $ne: "Pending"
+            //             }
+            //         }]
+            //     }
+            // } else {
+            matchObj = {
+                createdAt: {
+                    $gt: data.startDate,
+                    $lt: endOfDay,
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
             }
+
         } else if (data.type == "SFA-ID") {
             matchObj = {
                 sfaId: {
@@ -817,7 +824,6 @@ var model = {
             }
         });
     },
-
     saveVerify: function (data, found, callback) {
         Athelete.saveData(data, function (err, athleteData) { //saves data to database collection
             console.log("athleteData", athleteData);
@@ -1821,7 +1827,7 @@ var model = {
         }
     },
 
-    generateExcel: function (data, res) {
+    generateExcelNew: function (data, res) {
         // console.log('generate req', data.body);
         console.log('generate req data', data.body);
         async.waterfall([
@@ -1976,6 +1982,141 @@ var model = {
                 }
             });
 
+    },
+
+    generateExcel: function (res) {
+        console.log("dataIN");
+        var matchObj = {
+            $or: [{
+                registrationFee: {
+                    $ne: "online PAYU"
+                }
+            }, {
+                paymentStatus: {
+                    $ne: "Pending"
+                }
+            }]
+        }
+        Athelete.find(matchObj).sort({
+            createdAt: -1
+        }).lean().exec(function (err, data) {
+            var excelData = [];
+            async.eachSeries(data, function (n, callback) {
+                var obj = {};
+                obj.sfaID = n.sfaId;
+                async.waterfall([
+                    function (callback) {
+                        if (_.isEmpty(n.school)) {
+                            schoolData = n.atheleteSchoolName;
+                            callback(null, schoolData);
+                        } else {
+                            School.findOne({
+                                _id: n.school
+                            }).lean().exec(function (err, found) {
+                                if (_.isEmpty(found)) {
+                                    console.log("name is null");
+                                    schoolData = "";
+                                    callback(null, schoolData);
+                                } else {
+                                    schoolData = found.name;
+                                    // console.log("found", schoolData);
+                                    callback(null, schoolData);
+                                }
+
+                            });
+
+                        }
+                    },
+                    function (schoolData, callback) {
+                        obj.school = schoolData;
+                        // console.log("obj", obj.school);
+                        var parentInfo;
+                        var countParent = 0;
+                        var levelInfo;
+                        var countLevel = 0;
+                        _.each(n.parentDetails, function (details) {
+                            var name = details.name + details.surname;
+                            var email = details.email;
+                            var mobile = details.mobile;
+                            var relation = details.relation;
+                            if (countParent == 0) {
+                                parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                            } else {
+                                parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                            }
+                            countParent++;
+
+                            // console.log("parentDetails", parentInfo);
+
+                        });
+                        obj.parentDetails = parentInfo;
+                        _.each(n.sportLevel, function (details) {
+                            var level = details.level;
+                            var sport = details.sport;
+                            if (countLevel == 0) {
+                                levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
+                            } else {
+                                levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
+                            }
+                            countLevel++;
+
+                            // console.log("levelInfo", levelInfo);
+
+                        });
+                        obj.sportLevel = levelInfo;
+                        var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                        obj.date = dateTime;
+                        obj.idProof = n.idProof;
+                        obj.surname = n.surname;
+                        obj.firstName = n.firstName;
+                        obj.middleName = n.middleName;
+                        obj.gender = n.gender;
+                        obj.standard = n.standard;
+                        obj.bloodGroup = n.bloodGroup;
+                        obj.photograph = n.photograph;
+                        obj.dob = n.dob;
+                        obj.age = n.age;
+                        obj.ageProof = n.ageProof;
+                        obj.photoImage = n.photoImage;
+                        obj.birthImage = n.birthImage;
+                        obj.playedTournaments = n.playedTournaments;
+                        obj.mobile = n.mobile;
+                        obj.email = n.email;
+                        obj.smsOTP = n.smsOTP;
+                        obj.emailOTP = n.emailOTP;
+                        obj.address = n.address;
+                        obj.addressLine2 = n.addressLine2;
+                        obj.state = n.state;
+                        obj.district = n.district;
+                        obj.city = n.city;
+                        obj.pinCode = n.pinCode;
+                        obj.status = n.status;
+                        obj.password = n.password;
+                        obj.year = n.year;
+                        obj.registrationFee = n.registrationFee;
+                        obj.paymentStatus = n.paymentStatus;
+                        obj.transactionID = n.transactionID;
+                        obj.remarks = n.remarks;
+                        // console.log("obj", obj);
+                        excelData.push(obj);
+                        callback(null, excelData);
+                    }
+                ], function (err, excelData) {
+                    // console.log(excelData);
+                    // console.log("End of excelData");
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        console.log("length", excelData.length);
+                        callback(null, excelData);
+                    }
+                });
+
+            }, function (err, data) {
+                // callback(null, excelData);
+                Config.generateExcel("Athlete", excelData, res);
+            });
+        });
     },
 
     cronAthleteWithPaymentDue: function (data, callback) {
