@@ -340,11 +340,16 @@ var model = {
                         if (_.isEmpty(found)) {
                             callback(null, []);
                         } else {
-                            // var age=
+                            var age = found.name;
+                            var length = age.length;
+                            age = age.slice(2, length);
+                            data.age = parseInt(age);
+                            console.log("age", data.age);
+                            callback(null, data);
                         }
                     });
                 },
-                function (callback) {
+                function (data, callback) {
                     Sport.allAthelete(data, function (err, complete) {
                         if (err) {
                             callback(err, null);
@@ -382,13 +387,10 @@ var model = {
                         });
                     }, function (err) {
                         if (err) {
-                            // console.log("****** inside err ********");
                             callback(err, null);
                         } else if (_.isEmpty(finalData)) {
-                            // console.log("****** inside isEmpty  ********");
                             callback(null, []);
                         } else {
-                            // console.log("****** inside success ********", finalData);
                             callback(null, finalData);
                         }
                     });
@@ -584,28 +586,7 @@ var model = {
                 }
             });
 
-    },
-
-    removeSelectedAthlete: function (data, callback) {
-        var matchToken = {
-            $set: {
-                isSelected: false
-            }
-        };
-        Athelete.update({
-            _id: saveData.studentId
-        }, matchToken).exec(function (err, found) { //finds all athelete
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback(null, "Data is empty");
-            } else {
-                callback(null, found);
-            }
-        });
-
     }
-
 
 
 
