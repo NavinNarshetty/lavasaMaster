@@ -12,9 +12,9 @@ var controller = {
         }
 
     },
-    getOneone: function (req, res) {
+    getOneSport: function (req, res) {
         if (req.body) {
-            SportsListSubCategory.getOnenot(req.body, res.callback);
+            SportsListSubCategory.getOneSport(req.body, res.callback);
         } else {
             res.json({
                 value: false,

@@ -181,8 +181,8 @@ var model = {
         var matchObj = {};
         if (data.type == "Date") {
             if (data.endDate == data.startDate) {
-                var day = moment(data.startDate).format('YYYY-MM-DD');
-                console.log(day);
+                // var day = moment(data.startDate).format('YYYY-MM-DD');
+                console.log("start", data.startDate, "end", data.endDate);
                 matchObj = {
                     createdAt: {
                         $regex: day,

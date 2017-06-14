@@ -50,6 +50,67 @@ module.exports = mongoose.model('Sport', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "sportslist ageGroup weight", "sportslist ageGroup weight"));
 var model = {
 
+    getAggregatePipeLine: function (data) {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "school",
+                    "foreignField": "_id",
+                    "as": "schoolData"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$schoolData",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+            // Stage 3
+            {
+                $match: {
+
+                    $or: [{
+                            "schoolData.name": {
+                                $regex: data.school
+                            }
+                        },
+                        {
+                            "atheleteSchoolName": {
+                                $regex: data.school
+                            }
+                        }
+                    ]
+
+                }
+            },
+            {
+                $match: {
+                    "gender": data.gender
+                }
+            },
+            // Stage 4
+            {
+                $match: {
+                    $or: [{
+                        registrationFee: {
+                            $ne: "online PAYU"
+                        }
+                    }, {
+                        paymentStatus: {
+                            $ne: "Pending"
+                        }
+                    }]
+                }
+            }
+
+        ];
+        return pipeline;
+    },
+
 
     getAllAthletePerSchool: function (data, callback) {
         var type = data.sfaid.charAt(1);
