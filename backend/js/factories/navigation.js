@@ -197,9 +197,7 @@ myApp.factory('NavigationService', function ($http) {
             });
         },
         generateAthleteExcel: function (callback) {
-            console.log('from COntroller', data);
             $http.post(adminurl + 'Athelete/generateExcel').then(function (data) {
-                console.log('from navigation', data);
                 // data = data.data;
                 callback(data);
             });

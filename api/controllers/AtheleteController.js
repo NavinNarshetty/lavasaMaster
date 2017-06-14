@@ -33,7 +33,7 @@ var controller = {
     },
 
     generateExcel: function (req, res) {
-        Athelete.generateExcel(req, res);
+        Athelete.generateExcel(res);
     },
 
     filterAthlete: function (req, res) {
