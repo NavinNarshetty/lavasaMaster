@@ -1197,7 +1197,7 @@ var model = {
         }
     },
 
-    generateExcel: function (data, res) {
+    generateExcelNew: function (data, res) {
         async.waterfall([
                 function (callback) {
                     Registration.excelFilterSchool(data.body, function (err, complete) {
@@ -1367,7 +1367,7 @@ var model = {
             });
     },
 
-    generateExcelOld: function (res) {
+    generateExcel: function (res) {
         console.log("dataIN");
         var matchObj = {
             $or: [{
