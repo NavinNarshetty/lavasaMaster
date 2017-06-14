@@ -113,7 +113,6 @@ var model = {
         return pipeline;
     },
 
-
     getAllAthletePerSchool: function (data, callback) {
         var type = data.sfaid.charAt(1);
         console.log(type);
@@ -416,97 +415,11 @@ var model = {
 
     },
 
-    getSportPerTeam: function (data, callback) {
-        Sport.aggregate([
-                // Stage 1
-                {
-                    $lookup: {
-                        "from": "sportslists",
-                        "localField": "sportslist",
-                        "foreignField": "_id",
-                        "as": "sportsListData"
-                    }
-                },
-
-                // Stage 2
-                {
-                    $unwind: {
-                        path: "$sportsListData",
-
-                    }
-                },
-
-                // Stage 3
-                {
-                    $lookup: {
-                        "from": "agegroups",
-                        "localField": "ageGroup",
-                        "foreignField": "_id",
-                        "as": "ageData"
-                    }
-                },
-
-                // Stage 4
-                {
-                    $unwind: {
-                        path: "$ageData",
-
-                    }
-                },
-
-                // Stage 3
-                {
-                    $lookup: {
-                        "from": "sportslistsubcategories",
-                        "localField": "sportsListData.sportsListSubCategory",
-                        "foreignField": "_id",
-                        "as": "sportsubData"
-                    }
-                },
-
-                // Stage 4
-                {
-                    $unwind: {
-                        path: "$sportsubData",
-
-                    }
-                },
-
-                // Stage 5
-                {
-                    $match: {
-                        "sportsubData._id": objectid(data._id)
-                    }
-                },
-                // Stage 8
-                {
-                    $match: {
-                        "gender": data.gender,
-                        "ageData.name": data.age
-                    }
-                },
-            ],
-            function (err, totals) {
-                if (err) {
-                    console.log(err);
-                    callback(err, "error in mongoose");
-                } else {
-                    if (_.isEmpty(totals)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, totals);
-                    }
-                }
-            });
-
-
-    },
-
     allAthelete: function (data, callback) {
         async.waterfall([
                 function (callback) {
                     console.log("school", data.school);
-                    var maxRow = Config.maxRow;
+                    var maxRow = 9;
                     var page = 1;
                     if (data.page) {
                         page = data.page;
