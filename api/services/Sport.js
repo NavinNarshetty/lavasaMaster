@@ -362,7 +362,9 @@ var model = {
                     });
                 },
                 function (complete, callback) {
+                    var results = {};
                     var finalData = [];
+                    console.log("total", complete.total);
                     async.each(complete.results, function (n, callback) {
                         StudentTeam.find({
                             studentId: n._id,
@@ -373,37 +375,39 @@ var model = {
                                 athlete = n;
                                 athlete.isTeamSelected = false;
                                 finalData.push(athlete);
-                                console.log("data", finalData);
-                                callback(null, finalData);
+                                results.data = finalData;
+                                results.total = complete.total;
+                                console.log("data", results);
+                                callback(null, results);
                             } else {
                                 var athlete = {};
                                 athlete = n
                                 athlete.isTeamSelected = true;
                                 console.log(athlete);
-                                finalData.push(athlete);
-                                callback(null, finalData);
+                                results.push(athlete);
+                                callback(null, results);
                             }
                         });
                     }, function (err) {
                         if (err) {
                             callback(err, null);
-                        } else if (_.isEmpty(finalData)) {
+                        } else if (_.isEmpty(results)) {
                             callback(null, []);
                         } else {
-                            callback(null, finalData);
+                            callback(null, results);
                         }
                     });
                 }
             ],
-            function (err, finalData) {
+            function (err, results) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
-                } else if (finalData) {
-                    if (_.isEmpty(finalData)) {
+                } else if (results) {
+                    if (_.isEmpty(results)) {
                         callback(null, []);
                     } else {
-                        callback(null, finalData);
+                        callback(null, results);
                     }
                 }
             });
