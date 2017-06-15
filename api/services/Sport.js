@@ -23,7 +23,7 @@ var schema = new Schema({
         ref: 'AgeGroup',
         index: true
     },
-    Weight: {
+    weight: {
         type: Schema.Types.ObjectId,
         ref: 'Weight',
         index: true
@@ -40,7 +40,7 @@ schema.plugin(deepPopulate, {
         },
         'weight': {
             select: '_id name'
-        },
+        }
 
     }
 });
@@ -424,18 +424,28 @@ var model = {
                     if (data.page) {
                         page = data.page;
                     }
-                    var options = {
-                        sort: {
-                            asc: 'createdAt'
-                        },
-                        start: (page - 1) * maxRow,
-                        count: maxRow
-                    };
+                    // var options = {
+                    //     sort: {
+                    //         asc: 'createdAt'
+                    //     },
+                    //     start: (page - 1) * maxRow,
+                    //     count: maxRow
+                    // };
+                    var start = (page - 1) * maxRow;
+                    console.log("options", start);
                     if (data.sfaid != " ") {
                         console.log("inside");
+                        // var pipeLine = Sport.getAggregatePipeLine(data);
                         var pipeLine = Sport.getAggregatePipeLine(data);
-                        // console.log("pipeLine", pipeLine);
-                        Athelete.aggregate(pipeLine, function (err, totals) {
+                        var newPipeLine = _.cloneDeep(pipeLine);
+                        newPipeLine.push(
+                            // Stage 6
+                            {
+                                '$skip': parseInt(start)
+                            }, {
+                                '$limit': maxRow
+                            });
+                        Athelete.aggregate(newPipeLine, function (err, totals) {
                             if (err) {
                                 console.log(err);
                                 callback(err, "error in mongoose");
@@ -447,7 +457,7 @@ var model = {
                                     console.log("count", count);
 
                                     var data = {};
-                                    data.options = options;
+                                    // data.options = options;
                                     data.results = totals;
                                     data.total = count;
                                     // console.log("athelete", data.results);
@@ -460,9 +470,17 @@ var model = {
                         var newPipeLine = _.cloneDeep(pipeLine);
                         newPipeLine.push({
                             $match: {
-                                sfaId: data.sfaid
-                            }
+                                sfaId: data.sfaid,
+                            },
+                            // Stage 6
                         });
+                        newPipeLine.push(
+                            // Stage 6
+                            {
+                                '$skip': parseInt(start)
+                            }, {
+                                '$limit': maxRow
+                            });
                         Athelete.aggregate(newPipeLine, function (err, totals) {
                             if (err) {
                                 console.log(err);
