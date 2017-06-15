@@ -638,7 +638,7 @@ myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService,
         $scope.modalInstance.close();
     }
     $scope.delete = function (data) {
-        $scope.url = "SportsLisSubCategoryt/delete";
+        $scope.url = "SportsListSubCategory/delete";
         $scope.constraints = {};
         $scope.constraints._id = data;
         NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
@@ -1349,6 +1349,42 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
     $scope.onCancel = function (sendTo) {
         $state.go(sendTo);
     }
+
+})
+
+
+//team sport
+myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tableteamsport");
+    $scope.menutitle = NavigationService.makeactive("Team Sport");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+})
+
+//view-team sport
+
+myApp.controller('DetailTeamSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailteamsport");
+    $scope.menutitle = NavigationService.makeactive("Detail Team Sport");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+})
+
+//student team
+
+myApp.controller('StudentTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tablestudentteam");
+    $scope.menutitle = NavigationService.makeactive("Student Team");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
 
 })
 

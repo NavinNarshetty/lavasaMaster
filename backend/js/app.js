@@ -184,6 +184,24 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailSportsCtrl'
         })
+        //Team sport
+        .state('teamsport', {
+            url: "/teamsport",
+            templateUrl: "views/template.html",
+            controller: 'TeamSportCtrl'
+        })
+        //Detail team sport
+        .state('detail-teamsport', {
+            url: "/detail-teamsport/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailTeamSportCtrl'
+        })
+        //student team
+        .state('student-team', {
+            url: "/student-team",
+            templateUrl: "views/template.html",
+            controller: 'StudentTeamCtrl'
+        })
         .state('login', {
             url: "/login",
             templateUrl: "views/login.html",
