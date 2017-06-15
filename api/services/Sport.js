@@ -423,88 +423,129 @@ var model = {
         async.waterfall([
                 function (callback) {
                     console.log("school", data.school);
-                    var maxRow = 9;
+                    var maxRow = 1;
                     var page = 1;
                     if (data.page) {
                         page = data.page;
                     }
-                    // var options = {
-                    //     sort: {
-                    //         asc: 'createdAt'
-                    //     },
-                    //     start: (page - 1) * maxRow,
-                    //     count: maxRow
-                    // };
                     var start = (page - 1) * maxRow;
                     console.log("options", start);
-                    if (data.sfaid != " ") {
-                        console.log("inside");
-                        // var pipeLine = Sport.getAggregatePipeLine(data);
+                    if (_.isEmpty(data.sfaid)) {
                         var pipeLine = Sport.getAggregatePipeLine(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push(
-                            // Stage 6
-                            {
-                                '$skip': parseInt(start)
-                            }, {
-                                '$limit': maxRow
-                            });
-                        Athelete.aggregate(newPipeLine, function (err, totals) {
-                            if (err) {
-                                console.log(err);
-                                callback(err, "error in mongoose");
-                            } else {
-                                if (_.isEmpty(totals)) {
-                                    callback(null, []);
-                                } else {
-                                    var count = totals.length;
-                                    console.log("count", count);
+                        async.waterfall([
+                                function (callback) {
+                                    var dataFinal = {};
+                                    Sport.totalAthlete(data, function (err, complete1) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            dataFinal.total = complete1;
+                                            callback(null, dataFinal);
+                                        }
 
-                                    var data = {};
-                                    // data.options = options;
-                                    data.results = totals;
-                                    data.total = count;
-                                    // console.log("athelete", data.results);
-                                    callback(null, data);
+                                    });
+                                },
+                                function (dataFinal, callback) {
+                                    var newPipeLine = _.cloneDeep(pipeLine);
+                                    newPipeLine.push(
+                                        // Stage 6
+                                        {
+                                            '$skip': parseInt(start)
+                                        }, {
+                                            '$limit': maxRow
+                                        });
+                                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, "error in mongoose");
+                                        } else {
+                                            if (_.isEmpty(totals)) {
+                                                callback(null, []);
+                                            } else {
+                                                // data.options = options;
+                                                dataFinal.results = totals;
+                                                console.log("athelete", dataFinal);
+                                                callback(null, dataFinal);
+                                            }
+                                        }
+                                    });
                                 }
-                            }
-                        });
+
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, []);
+                                } else if (data2) {
+                                    if (_.isEmpty(data2)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, data2);
+                                    }
+                                }
+                            });
+
                     } else {
                         var pipeLine = Sport.getAggregatePipeLine(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push({
-                            $match: {
-                                sfaId: data.sfaid,
-                            },
-                            // Stage 6
-                        });
-                        newPipeLine.push(
-                            // Stage 6
-                            {
-                                '$skip': parseInt(start)
-                            }, {
-                                '$limit': maxRow
-                            });
-                        Athelete.aggregate(newPipeLine, function (err, totals) {
-                            if (err) {
-                                console.log(err);
-                                callback(err, "error in mongoose");
-                            } else {
-                                if (_.isEmpty(totals)) {
-                                    callback(null, []);
-                                } else {
-                                    var count = totals.length;
-                                    console.log("count", count);
+                        async.waterfall([
+                                function (callback) {
+                                    var dataFinal = {};
+                                    Sport.totalAthlete(data, function (err, complete1) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            dataFinal.total = complete1;
+                                            callback(null, dataFinal);
+                                        }
+                                    });
+                                },
+                                function (dataFinal, callback) {
+                                    var newPipeLine = _.cloneDeep(pipeLine);
+                                    newPipeLine.push({
+                                        $match: {
+                                            sfaId: data.sfaid,
+                                        },
+                                        // Stage 6
+                                    });
+                                    newPipeLine.push(
+                                        // Stage 6
+                                        {
+                                            '$skip': parseInt(start)
+                                        }, {
+                                            '$limit': maxRow
+                                        });
+                                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, "error in mongoose");
+                                        } else {
+                                            if (_.isEmpty(totals)) {
+                                                callback(null, []);
+                                            } else {
+                                                // var data = {};
+                                                // data.options = options;
+                                                dataFinal.results = totals;
+                                                // data.total = count;
+                                                callback(null, dataFinal);
+                                            }
+                                        }
 
-                                    var data = {};
-                                    data.options = options;
-                                    data.results = totals;
-                                    data.total = count;
-                                    callback(null, data);
+                                    });
                                 }
-                            }
 
-                        });
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, []);
+                                } else if (data2) {
+                                    if (_.isEmpty(data2)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, data2);
+                                    }
+                                }
+                            });
                     }
                 }
             ],
@@ -521,9 +562,50 @@ var model = {
                 }
             });
 
-    }
+    },
 
-
+    totalAthlete: function (data, callback) {
+        if (_.isEmpty(data.sfaid)) {
+            var pipeLine = Sport.getAggregatePipeLine(data);
+            Athelete.aggregate(pipeLine, function (err, totals) {
+                if (err) {
+                    console.log(err);
+                    callback(err, "error in mongoose");
+                } else {
+                    if (_.isEmpty(totals)) {
+                        callback(null, 0);
+                    } else {
+                        var count = totals.length;
+                        console.log("counttotal", count);
+                        callback(null, count);
+                    }
+                }
+            });
+        } else {
+            var pipeLine = Sport.getAggregatePipeLine(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            newPipeLine.push({
+                $match: {
+                    sfaId: data.sfaid,
+                },
+                // Stage 6
+            });
+            Athelete.aggregate(newPipeLine, function (err, totals) {
+                if (err) {
+                    console.log(err);
+                    callback(err, "error in mongoose");
+                } else {
+                    if (_.isEmpty(totals)) {
+                        callback(null, 0);
+                    } else {
+                        var count = totals.length;
+                        console.log("counttotal", count);
+                        callback(null, count);
+                    }
+                }
+            });
+        }
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);
