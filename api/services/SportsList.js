@@ -21,6 +21,9 @@ schema.plugin(deepPopulate, {
         },
         'drawFormat': {
             select: '_id name'
+        },
+        'sportsListSubCategory': {
+            select: '_id name'
         }
     }
 });
@@ -28,7 +31,7 @@ schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('SportsList', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "rules drawFormat", "rules drawFormat"));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "rules drawFormat sportsListSubCategory", "rules drawFormat sportsListSubCategory"));
 var model = {
 
     getAllSportByType: function (data, callback) {

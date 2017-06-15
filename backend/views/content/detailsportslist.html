@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                   <label>Sports Type</label>
-                  <ui-select name="selectsporttype" id="selectsporttype" theme="bootstrap" ng-model="formData.SportsListSubCategory" ng-change="searchSportListSubCategory($select.selected._id)"
+                  <ui-select name="selectsporttype" id="selectsporttype" theme="bootstrap" ng-model="formData.sportsListSubCategory" ng-change="searchSportListSubCategory($select.selected._id)"
                     required>
                     <ui-select-match placeholder="Enter Sports List Sub Category" allow-clear="true">
                       {{$select.selected.name}}

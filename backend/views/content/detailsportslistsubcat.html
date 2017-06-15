@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                   <label>Sports Type</label>
-                  <ui-select name="selectsprttype" id="selectsprttype" theme="bootstrap" ng-model="formData.SportsListCategory" ng-change="searchsSportListCategory($select.selected._id)"
+                  <ui-select name="selectsprttype" id="selectsprttype" theme="bootstrap" ng-model="formData.sportsListCategory" ng-change="searchsSportListCategory($select.selected._id)"
                     required>
                     <ui-select-match placeholder="Enter SportsListCategory" allow-clear="true">
                       {{$select.selected.name}}
@@ -35,13 +35,20 @@
                   <div class="error-msg" ng-if="detailForm.selectsprttype.$invalid && detailForm.selectsprttype.$touched">Please Enter Sports Type*</div>
                 </div>
                 <div class="form-group">
+
                   <label>Isteam</label>
-                  <select name="selectisteam" id="selectisteam" class="form-control" ng-model="formData.isTeam" placeholder="Enter IsTeam"
+
+                  <!--<select name="selectisteam" id="selectisteam" class="form-control" ng-model="formData.isTeam" placeholder="Enter IsTeam"
                     required>
-                    <option value="">Enter isTeam</option>
-                    <option value="true">True</option>
-                    <option value="false">False</option>
-                  </select>
+                    
+                    <option value=true>True</option>
+                    <option value=false>False</option>
+                  </select>-->
+
+                  <input type="radio" ng-model="formData.isTeam" id="radio02" name="radio2" ng-value="true" required>True
+                  </input>
+
+                  <input type="radio" ng-model="formData.isTeam" id="radio01" name="radio2" ng-value="false" required>False</input>
                   <!--<ui-select name="selectisteam" id="selectisteam" theme="bootstrap" ng-model="formData.isTeam" required>
                     <ui-select-match placeholder="Enter Team">
                       {{$select.selected.name}}
@@ -55,7 +62,7 @@
                 <div class="form-group">
                   <label>Filter</label>
 
-                  <ui-select name="selectfilter" multiple="" id="selectfilter" theme="bootstrap" ng-model="item.selected" required>
+                  <ui-select name="selectfilter" multiple="" id="selectfilter" theme="bootstrap" ng-model="formData.filter" required>
                     <ui-select-match placeholder="Enter Filter">
                       {{$select.selected[$index].name}}
                     </ui-select-match>

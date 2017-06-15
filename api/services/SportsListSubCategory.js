@@ -10,7 +10,7 @@ var schema = new Schema({
     },
     isTeam: Boolean,
     filter: [{
-        type: String
+        name: String
     }],
     rules: {
         type: Schema.Types.ObjectId,
