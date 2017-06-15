@@ -693,23 +693,64 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
 
     } else {
         $scope.title = "Create";
-        $scope.saveData = function (data) {
+        $scope.formData = {};
+        $scope.formData.filter = [];
+        $scope.saveData = function (data, formvalid) {
+
             if (data) {
+                if (formvalid.$valid) {
+                    data.rules = $scope.rules;
+                    console.log(data);
+                    // $scope.url = "SportsListSubCategory/save";
+                    // NavigationService.apiCall($scope.url, data, function (data) {
+                    //     console.log("data.value", data);
+                    //     if (data.value === true) {
+                    //         toastr.success(" Saved Successfully", "SportList Message");
+                    //         $state.go('sportslistsubcat');
 
-                $scope.url = "SportsListSubCategory/save";
-                NavigationService.apiCall($scope.url, data, function (data) {
-                    console.log("data.value", data);
-                    if (data.value === true) {
-                        toastr.success(" Saved Successfully", "SportList Message");
-                        $state.go('sportslistsubcat');
+                    //     }
 
-                    }
+                    // });
+                } else {
+                    toastr.error('Please enter alll fields', 'SportList Message')
+                }
 
-                });
             } else {
                 toastr.error("Invalid Data", "SportList Message");
             }
         };
+
+        $scope.getAllSportListCategory = function (data) {
+            console.log(data);
+            $scope.url = "SportsListCategory/search";
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log(data);
+                $scope.sportlistcatitems = data.data.results;
+            });
+        }
+
+        $scope.searchsSportListCategory = function (data) {
+            $scope.sportlistcat = data;
+        }
+
+
+
+        $scope.getAllRules = function (data) {
+            console.log(data);
+            $scope.url = "Rules/search";
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log(data);
+                $scope.rulesitems = data.data.results;
+            });
+        }
+
+        $scope.searchRules = function (data) {
+            $scope.rules = data;
+        }
 
     }
     $scope.sporttypeList = [];
@@ -817,7 +858,6 @@ myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, Na
         });
     }
 })
-
 //Detail Sports list Category
 myApp.controller('DetailSportsListCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
     //registration filter view
@@ -859,6 +899,7 @@ myApp.controller('DetailSportsListCategoryCtrl', function ($scope, TemplateServi
         $scope.saveData = function (data) {
             if (data) {
 
+
                 $scope.url = "SportsListCategory/save";
                 NavigationService.apiCall($scope.url, data, function (data) {
                     console.log("data.value", data);
@@ -869,6 +910,7 @@ myApp.controller('DetailSportsListCategoryCtrl', function ($scope, TemplateServi
                     }
 
                 });
+
             } else {
                 toastr.error("Invalid Data", "SportList Message");
             }
@@ -996,24 +1038,57 @@ myApp.controller('DetailSportsListCtrl', function ($scope, TemplateService, Navi
         };
     } else {
         $scope.title = 'Create';
-        $scope.saveData = function (data) {
+        $scope.saveData = function (data, formvalid) {
             if (data) {
+                if (formvalid.$valid) {
+                    $scope.url = "SportsList/save";
+                    NavigationService.apiCall($scope.url, data, function (data) {
+                        console.log("data.value", data);
+                        if (data.value === true) {
+                            toastr.success(" Saved Successfully", "SportList Message");
+                            $state.go('sportslist');
 
-                $scope.url = "SportsList/save";
-                NavigationService.apiCall($scope.url, data, function (data) {
-                    console.log("data.value", data);
-                    if (data.value === true) {
-                        toastr.success(" Saved Successfully", "SportList Message");
-                        $state.go('sportslist');
+                        } else {
+                            toastr.error("Please enter all fields", 'SportList Message')
+                        }
 
-                    }
-
-                });
+                    });
+                } else {
+                    toastr.error("Please enter all fields", 'SportList Message')
+                }
             } else {
                 toastr.error("Invalid Data", "SportList Message");
             }
         };
+        $scope.getAllDrawformat = function (data) {
+            $scope.url = "DrawFormat/search";
+            console.log(data);
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                $scope.drawitems = data.data.results;
 
+            });
+        }
+        $scope.searchDrawFormat = function (data) {
+            $scope.draw = data;
+        }
+
+
+        $scope.getAllSportListSubCategory = function (data) {
+            console.log(data);
+            $scope.url = "SportsListSubCategory/search";
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                $scope.sportstypeitems = data.data.results;
+            });
+        }
+        $scope.searchSportListSubCategory = function (data) {
+            $scope.sportlistsubcategory = data;
+        }
     }
 
 
@@ -1148,23 +1223,73 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
         };
     } else {
         $scope.title = "Create";
-        $scope.saveData = function (data) {
+        $scope.saveData = function (data, formvalid) {
             if (data) {
+                if (formvalid.$valid) {
 
-                $scope.url = "Sport/save";
-                NavigationService.apiCall($scope.url, data, function (data) {
-                    console.log("data.value", data);
-                    if (data.value === true) {
-                        toastr.success(" Saved Successfully", "Sport Message");
-                        $state.go('sports');
+                    $scope.url = "Sport/save";
+                    NavigationService.apiCall($scope.url, data, function (data) {
+                        console.log("data.value", data);
+                        if (data.value === true) {
+                            toastr.success(" Saved Successfully", "Sport Message");
+                            $state.go('sports');
 
-                    }
+                        }
 
-                });
+                    });
+                } else {
+                    toastr.error('Please enter all fields', 'Sport Message')
+                }
+
             } else {
                 toastr.error("Invalid Data", "Sport Message");
             }
         };
+
+        $scope.getAllSportList = function (data) {
+            $scope.url = "SportsList/search";
+            console.log(data);
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                $scope.sportitems = data.data.results;
+
+            });
+        }
+        $scope.searchSportList = function (data) {
+            $scope.draw = data;
+        }
+
+        $scope.getAllAge = function (data) {
+            $scope.url = "AgeGroup/search";
+            console.log(data);
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                $scope.ageitems = data.data.results;
+
+            });
+        }
+        $scope.searchAge = function (data) {
+            $scope.draw = data;
+        }
+
+        $scope.getAllWeight = function (data) {
+            $scope.url = "Weight/search";
+            console.log(data);
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                $scope.weightitems = data.data.results;
+
+            });
+        }
+        $scope.searchWeight = function (data) {
+            $scope.draw = data;
+        }
     }
 
 

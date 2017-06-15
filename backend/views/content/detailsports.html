@@ -18,8 +18,8 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Gender</label>
-                  <select name="selectgender" id="selectgender" class="form-control" ng-model="formData.gender" placeholder="Enter Gender">
-                   <option value="" >Enter Gender</option>
+                  <select name="selectgender" class="form-control" ng-model="formData.gender" placeholder="Enter Gender" required>
+                   <option style="display:none" >Enter Gender</option>
                     <option value="Male">Male</option>
                     <option value="Female">Female</option>
                   </select>
@@ -82,7 +82,7 @@
                   <div class="error-msg" ng-if="detailForm.selectweight.$invalid && detailForm.selectweight.$touched">Please Enter Valid Weight *</div>
                 </div>
                 <div class="text-center mt20 odd-even-button">
-                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData,detailForm)">Save</button>
                   <button class="btn btn-default" ng-click="onCancel('sports')">Cancel</button>
                 </div>
               </div>
