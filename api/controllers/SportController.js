@@ -23,9 +23,6 @@ var controller = {
         }
 
     },
-    getAthletePerSchoolIndividual: function () {
-
-    }
 
 
 };

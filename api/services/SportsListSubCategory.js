@@ -17,8 +17,8 @@ var schema = new Schema({
         ref: 'Rules',
         index: true
     },
-
-
+    type: String,
+    maxSelect: Number
 
 });
 
@@ -151,7 +151,6 @@ var model = {
                         ageGroup: objectid(data.age)
                     }
                 });
-
                 Sport.aggregate(newPipeLine, function (err, totals) {
                     if (err) {
                         console.log(err);
@@ -160,17 +159,16 @@ var model = {
                         if (_.isEmpty(totals)) {
                             callback(null, []);
                         } else {
-                            var results = {};
-                            // results.sport = totals[0]._id;
+                            // var results = {};
+                            console.log(totals);
                             callback(null, totals);
                         }
                     }
-
                 });
             },
             function (totals, callback) {
                 // sportsubData
-                if (totals[0].isTeam == true) {
+                if (totals[0].sportsubData.isTeam == true) {
                     var results = {};
                     results.sport = totals[0]._id;
                     TeamSport.count({
@@ -224,6 +222,7 @@ var model = {
         //      
     },
     getSports: function (data, callback) {
+        var finalData = {};
         var pipeLine = SportsListSubCategory.getAggregatePipeLine(data);
         Sport.aggregate(pipeLine, function (err, totals) {
             if (err) {
@@ -233,11 +232,12 @@ var model = {
                 if (_.isEmpty(totals)) {
                     callback(null, []);
                 } else {
+                    finalData.sportName = totals[0].sportsubData.name;
                     var results = _.groupBy(totals, "gender");
-                    callback(null, results);
+                    finalData.results = results;
+                    callback(null, finalData);
                 }
             }
-
         });
 
         // Aggregate(Sport - > lookup SportList - > lookup sportListSubCategory, Match ID ) {
