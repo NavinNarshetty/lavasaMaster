@@ -520,7 +520,7 @@ var model = {
                                             callback(err, "error in mongoose");
                                         } else {
                                             if (_.isEmpty(totals)) {
-                                                callback(null, []);
+                                                callback(null, "No Athlete with this SFA-ID found");
                                             } else {
                                                 // var data = {};
                                                 // data.options = options;
