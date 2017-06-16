@@ -1464,6 +1464,7 @@ var model = {
     },
 
     excelFilterAthlete: function (data, callback) {
+        console.log('insied filter', data);
         var maxRow = Config.maxRow;
 
         var page = 1;
@@ -1827,9 +1828,10 @@ var model = {
         }
     },
 
-    generateExcelNew: function (data, res) {
+    generateExcel: function (data, res) {
         // console.log('generate req', data.body);
         console.log('generate req data', data.body);
+        console.log('generate req data', data);
         async.waterfall([
                 function (callback) {
                     Athelete.excelFilterAthlete(data.body, function (err, complete) {
@@ -1984,7 +1986,7 @@ var model = {
 
     },
 
-    generateExcel: function (res) {
+    generateExcelOld: function (res) {
         console.log("dataIN");
         var matchObj = {
             $or: [{
@@ -2114,7 +2116,7 @@ var model = {
 
             }, function (err, data) {
                 // callback(null, excelData);
-                Config.generateExcel("Athlete", excelData, res);
+                Config.generateExcelOld("Athlete", excelData, res);
             });
         });
     },

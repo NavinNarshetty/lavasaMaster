@@ -36,7 +36,9 @@ module.exports = [
     'bower_components/textAngular/dist/textAngular-sanitize.min.js',
     'bower_components/textAngular/dist/textAngular.min.js',
     'bower_components/angular-ui-date/dist/date.js',
-
+    'bower_components/js-xlsx/xlsx.js',
+    'bower_components/FileSaver.js/FileSaver.min.js',
+    'bower_components/async/dist/async.js',
     //App.js
     'backend/js/app.js',
 

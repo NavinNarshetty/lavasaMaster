@@ -32,8 +32,12 @@ var controller = {
         }
     },
 
-    generateExcel: function (req, res) {
+    generateExcelOld: function (req, res) {
         Athelete.generateExcel(res);
+    },
+
+    generateExcel: function (req, res) {
+        Athelete.generateExcel(req, res);
     },
 
     filterAthlete: function (req, res) {

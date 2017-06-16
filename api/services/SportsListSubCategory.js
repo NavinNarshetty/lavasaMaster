@@ -169,7 +169,8 @@ var model = {
                 });
             },
             function (totals, callback) {
-                if (totals[0].sportsubData.isTeam == true) {
+                // sportsubData
+                if (totals[0].isTeam == true) {
                     var results = {};
                     results.sport = totals[0]._id;
                     TeamSport.count({
