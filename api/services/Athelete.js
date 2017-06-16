@@ -1464,7 +1464,7 @@ var model = {
     },
 
     excelFilterAthlete: function (data, callback) {
-        console.log('insied filter', data);
+        // console.log('insied filter', data);
         var maxRow = Config.maxRow;
 
         var page = 1;
@@ -1741,7 +1741,7 @@ var model = {
                         }
                     }
                 });
-        } else if (data.keyword != "") {
+        } else if (data.keyword != "" && data.type != "") {
             Athelete.aggregate(
                 [{
                         $match: {
@@ -1830,11 +1830,11 @@ var model = {
 
     generateExcel: function (data, res) {
         // console.log('generate req', data.body);
-        console.log('generate req data', data.body);
         console.log('generate req data', data);
+        // console.log('generate req data', data);
         async.waterfall([
                 function (callback) {
-                    Athelete.excelFilterAthlete(data.body, function (err, complete) {
+                    Athelete.excelFilterAthlete(data, function (err, complete) {
                         if (err) {
                             callback(err, null);
                         } else {

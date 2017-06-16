@@ -293,19 +293,21 @@ var model = {
         });
     },
     generateExcel: function (name, found, res) {
-        // name = _.kebabCase(name);
+        name = _.kebabCase(name);
         var excelData = [];
         _.each(found, function (singleData) {
             var singleExcel = {};
             _.each(singleData, function (n, key) {
                 if (key != "__v" && key != "createdAt" && key != "updatedAt") {
+                    // singleExcel[_.capitalize(key)] = n;
+                    // console.log("in excel", n);
                     singleExcel[key] = n;
                 }
             });
             excelData.push(singleExcel);
         });
         var xls = json2xls(excelData);
-        var folder = "./.tmp/";
+        var folder = "././.tmp/";
         var path = name + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
         var finalPath = folder + path;
         fs.writeFile(finalPath, xls, 'binary', function (err) {
@@ -326,6 +328,7 @@ var model = {
         });
 
     },
+
 
     excelDateToDate: function isDate(value) {
         value = (value - (25567 + 1)) * 86400 * 1000;

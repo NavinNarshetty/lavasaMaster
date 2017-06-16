@@ -32,12 +32,20 @@ var controller = {
         }
     },
 
-    generateExcelOld: function (req, res) {
-        Athelete.generateExcel(res);
-    },
+    // generateExcelOld: function (req, res) {
+    //     Athelete.generateExcel(res);
+    // },
 
     generateExcel: function (req, res) {
-        Athelete.generateExcel(req, res);
+        if (req.body) {
+            console.log(req.body);
+            Athelete.generateExcel(req.body, res);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
     },
 
     filterAthlete: function (req, res) {

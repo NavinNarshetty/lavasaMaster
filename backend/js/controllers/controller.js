@@ -1524,7 +1524,8 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
 
     };
     $scope.filterAthlete();
-    $scope.generateExcel = function (formdata) {
+    //raj function
+    $scope.generateExcelOLD = function (formdata) {
         formdata.page = $scope.formData.page;
         console.log(formdata);
         NavigationService.generateAthleteExcelWithData(formdata, function (data) {
@@ -1580,6 +1581,24 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
             }); 
             // window.location.href = adminurl + 'Athelete/generateExcel';
         });
+    }
+
+    $scope.generateExcel = function (formdata) {
+        if (_.isEmpty(formdata.type)) {
+            console.log("else");
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) {
+                window.location.href = adminurl + 'Athelete/generateExcel';
+            });
+
+
+        } else {
+            console.log(formdata);
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) {
+                window.location.href = adminurl + 'Athelete/generateExcel?type=' + formdata.type + '?input=' + formdata.input;
+
+            });
+
+        }
     }
     // $scope.generateExcel = function () {
     //     NavigationService.generateAthleteExcel(function (data) {
