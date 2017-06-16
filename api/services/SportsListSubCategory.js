@@ -114,7 +114,7 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(found)) {
-                        callback(null, "Data is empty");
+                        callback(null, []);
                     } else {
                         callback(null, found);
                     }

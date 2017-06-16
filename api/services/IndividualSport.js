@@ -14,6 +14,12 @@ var schema = new Schema({
         ref: 'SportsListSubCategory',
         index: true
     },
+    gender: String,
+    ageGroup: {
+        type: Schema.Types.ObjectId,
+        ref: 'Athelete',
+        index: true
+    },
     perSportUnique: String
 });
 
@@ -82,7 +88,6 @@ var model = {
     },
 
     getAthletePerSchool: function (data, callback) {
-
         async.waterfall([
                 function (callback) {
                     IndividualSport.allAthlete(data, function (err, complete) {
@@ -334,5 +339,176 @@ var model = {
             });
         }
     },
+
+    saveInIndividual: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var finalData = {};
+                    finalData.atheleteName = [];
+
+                    async.each(data, function (n, callback) {
+                        async.waterfall([
+                                function (callback) {
+                                    IndividualSport.saveData(n, function (err, saveData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(saveData)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, saveData)
+                                            }
+                                        }
+                                    });
+                                },
+                                function (saveData, callback) {
+                                    Athelete.findOne({
+                                        _id: saveData.athleteId
+                                    }).exec(function (err, found) { //finds all athelete
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (_.isEmpty(found)) {
+                                            callback(null, "Data is empty");
+                                        } else {
+                                            // finalData.school=data
+                                            callback(null, found);
+                                        }
+                                    });
+                                },
+                                function (found, callback) {
+                                    var emailData = {};
+                                    var name = found.firstName + found.middleName + found.surname;
+                                    atheleteName.push(name);
+                                    emailData.from = "info@sfanow.in";
+                                    emailData.email = found.email;
+                                    emailData.filename = "StudentTeam.ejs";
+                                    emailData.subject = "SFA: subject is missing";
+                                    console.log("emaildata", emailData);
+
+                                    Config.email(emailData, function (err, emailRespo) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(null, err);
+                                        } else if (emailRespo) {
+                                            callback(null, emailRespo);
+                                        } else {
+                                            callback(null, atheleteName);
+                                        }
+                                    });
+                                }
+
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, []);
+                                } else if (data2) {
+                                    if (_.isEmpty(data2)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, atheleteName);
+                                    }
+                                }
+                            });
+                    }, function (err) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else {
+                            callback(null, atheleteName);
+                        }
+                    });
+
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+
+    // individual Confirm function
+    individualConfirm: function (data, callback) { // Data -> array of (StudentID, Sport,isCaptain,isGoalkeeper)
+        async.waterfall([
+            function (callback) {
+                IndividualSport.saveInIndividual(data, function (err, complete) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, complete);
+                        }
+                    }
+                });
+            },
+            function (complete, callback) {
+                TeamSport.createStudentTeam(complete, data, function (err, complete1) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(complete1)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, complete1)
+                        }
+                    }
+                });
+
+            },
+            function (complete1, callback) {
+                Registration.findOne({
+                    _id: data.school
+                }).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        var emailData = {};
+                        emailData.from = "info@sfanow.in";
+                        emailData.email = found.email;
+                        emailData.filename = "teamSport.ejs";
+                        emailData.student = complete1.atheleteName;
+                        emailData.subject = "SFA: subject is missing";
+                        console.log("emaildata", emailData);
+
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    }
+                });
+
+            }
+        ], function (err, data2) {
+            if (err) {
+                console.log(err);
+                callback(null, []);
+            } else if (data2) {
+                if (_.isEmpty(data2)) {
+                    callback(null, []);
+                } else {
+                    callback(null, data2);
+                }
+            }
+        });
+    },
+
 };
 module.exports = _.assign(module.exports, exports, model);

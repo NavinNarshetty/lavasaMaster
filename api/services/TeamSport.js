@@ -146,7 +146,7 @@ var model = {
                 });
 
             },
-            function (complete1, callback) {
+            function (complete, complete1, callback) {
                 Registration.findOne({
                     _id: data.school
                 }).exec(function (err, found) {
@@ -159,10 +159,10 @@ var model = {
                         emailData.from = "info@sfanow.in";
                         emailData.email = found.email;
                         emailData.filename = "teamSport.ejs";
+                        emailData.teamId = complete.teamId;
                         emailData.student = complete1.atheleteName;
                         emailData.subject = "SFA: subject is missing";
                         console.log("emaildata", emailData);
-
                         Config.email(emailData, function (err, emailRespo) {
                             if (err) {
                                 console.log(err);
@@ -192,6 +192,7 @@ var model = {
     },
 
     createStudentTeam: function (team, data, callback) {
+        var atheleteName = [];
         async.each(data.athleteTeam, function (n, callback) {
             async.waterfall([
                     function (callback) {
@@ -210,7 +211,7 @@ var model = {
                                 if (_.isEmpty(saveData)) {
                                     callback(null, []);
                                 } else {
-                                    callback(null, saveData)
+                                    callback(null, saveData);
                                 }
                             }
                         });
@@ -230,7 +231,6 @@ var model = {
                     },
                     function (found, callback) {
                         var emailData = {};
-                        var atheleteName = [];
                         var name = found.firstName + found.middleName + found.surname;
                         atheleteName.push(name);
                         emailData.from = "info@sfanow.in";
