@@ -343,9 +343,8 @@ var model = {
     saveInIndividual: function (data, callback) {
         async.waterfall([
                 function (callback) {
-                    var finalData = {};
-                    finalData.atheleteName = [];
 
+                    var atheleteName = [];
                     async.each(data, function (n, callback) {
                         async.waterfall([
                                 function (callback) {
@@ -370,7 +369,6 @@ var model = {
                                         } else if (_.isEmpty(found)) {
                                             callback(null, "Data is empty");
                                         } else {
-                                            // finalData.school=data
                                             callback(null, found);
                                         }
                                     });
@@ -435,8 +433,7 @@ var model = {
             });
     },
 
-    // individual Confirm function
-    individualConfirm: function (data, callback) { // Data -> array of (StudentID, Sport,isCaptain,isGoalkeeper)
+    individualConfirm: function (data, callback) {
         async.waterfall([
             function (callback) {
                 IndividualSport.saveInIndividual(data, function (err, complete) {
@@ -452,20 +449,6 @@ var model = {
                 });
             },
             function (complete, callback) {
-                TeamSport.createStudentTeam(complete, data, function (err, complete1) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(complete1)) {
-                            callback(null, []);
-                        } else {
-                            callback(null, complete1)
-                        }
-                    }
-                });
-
-            },
-            function (complete1, callback) {
                 Registration.findOne({
                     _id: data.school
                 }).exec(function (err, found) {
@@ -478,7 +461,7 @@ var model = {
                         emailData.from = "info@sfanow.in";
                         emailData.email = found.email;
                         emailData.filename = "teamSport.ejs";
-                        emailData.student = complete1.atheleteName;
+                        emailData.student = complete.atheleteName;
                         emailData.subject = "SFA: subject is missing";
                         console.log("emaildata", emailData);
 
