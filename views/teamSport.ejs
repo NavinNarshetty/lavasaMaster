@@ -56,7 +56,6 @@
 
 
         }
-        
         h2:before {
             content: '';
             width: 100px;
@@ -182,16 +181,18 @@
                             <% _.each(students,function(student){%>
                                <tr style="text-align: center;background: #e1e1e1;">
                                 <td><%=student.srno%></td>
-                                <%if(student.isCaptain==true){%>
+                                <%if(student.isCaptain=='true'){%>
                                     <td>Captian <%=student.name%></td>
-                               <%}else if(student.isGoalKeeper==true){%>
-                                    <td>Goalkeeper<%=student.name%></td>
+                               <%}else if(student.isGoalKeeper=='true'){%>
+                                    <td>Goalkeeper <%=student.name%></td>
+                               <%}else if(student.isGoalKeeper=='true' && student.isCaptain=='true'){%>
+                                    <td>Captain, Goalkeeper <%=student.name%></td>
                                 <%}else{%>
                                  <td><%=student.name%></td>
-                               %<}%>
+                               <%}%>
                                 <td><%=student.sfaid%></td>
                                 </tr>
-                        <%})%> 
+                        <%})%>  
                         </tbody>
                     </table>
                     </div>

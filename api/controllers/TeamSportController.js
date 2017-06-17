@@ -17,7 +17,7 @@ var controller = {
         if (req.body) {
             if (req.body.schoolToken) {
                 Registration.findOne({
-                    accessToken: data.schoolToken
+                    accessToken: req.body.schoolToken
                 }).exec(function (err, found) {
                     if (err) {
                         callback(err, null);
