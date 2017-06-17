@@ -1589,15 +1589,11 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
             NavigationService.generateAthleteExcelWithData(formdata, function (data) {
                 window.location.href = adminurl + 'Athelete/generateExcel';
             });
-
-
         } else {
             console.log(formdata);
             NavigationService.generateAthleteExcelWithData(formdata, function (data) {
                 window.location.href = adminurl + 'Athelete/generateExcel?type=' + formdata.type + '?input=' + formdata.input;
-
             });
-
         }
     }
     // $scope.generateExcel = function () {

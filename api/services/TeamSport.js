@@ -119,80 +119,156 @@ var model = {
         team.studentTeam = [];
         team.school = data.school;
         async.waterfall([
-            function (callback) {
-                TeamSport.saveInTeam(team, function (err, complete) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(complete)) {
-                            callback(null, []);
+                function (callback) {
+                    TeamSport.saveInTeam(team, function (err, complete) {
+                        if (err) {
+                            callback(err, null);
                         } else {
-                            callback(null, complete)
-                        }
-                    }
-                });
-            },
-            function (complete, callback) {
-                TeamSport.createStudentTeam(complete, data, function (err, complete1) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(complete1)) {
-                            callback(null, []);
-                        } else {
-                            callback(null, complete1)
-                        }
-                    }
-                });
-
-            },
-            function (complete, complete1, callback) {
-                Registration.findOne({
-                    _id: data.school
-                }).exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback(null, "Data is empty");
-                    } else {
-                        var emailData = {};
-                        emailData.from = "info@sfanow.in";
-                        emailData.email = found.email;
-                        emailData.filename = "teamSport.ejs";
-                        emailData.teamId = complete.teamId;
-                        emailData.student = complete1.atheleteName;
-                        emailData.subject = "SFA: subject is missing";
-                        console.log("emaildata", emailData);
-                        Config.email(emailData, function (err, emailRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
-                                callback(null, emailRespo);
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
                             } else {
-                                callback(null, "Invalid data");
+                                callback(null, complete)
                             }
-                        });
-                    }
-                });
+                        }
+                    });
+                },
+                function (complete, callback) {
+                    TeamSport.createStudentTeam(complete, data, function (err, complete1) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete1)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete1)
+                            }
+                        }
+                    });
+                },
+                function (complete, complete1, callback) {
+                    Registration.findOne({
+                        sfaID: data.schoolSFA,
+                        _id: data.school
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, "Data is empty");
+                        } else {
+                            async.parallel([
+                                //school email
+                                function (callback) {
+                                    var emailData = {};
+                                    emailData.schoolName = found.schoolName;
+                                    var sport = data.name;
+                                    var index = sport.indexOf("-");
+                                    sport = sport.slice(++index, sport.length);
+                                    emailData.sportName = sport;
+                                    emailData.schoolSFA = found.sfaID;
+                                    emailData.from = "info@sfanow.in";
+                                    emailData.email = found.email;
+                                    emailData.filename = "teamSport.ejs";
+                                    emailData.teamId = complete.teamId;
+                                    emailData.students = complete1.atheleteName;
+                                    emailData.subject = "SFA: subject is missing";
+                                    console.log("emaildata", emailData);
+                                    Config.email(emailData, function (err, emailRespo) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(null, err);
+                                        } else if (emailRespo) {
+                                            callback(null, emailRespo);
+                                        } else {
+                                            callback(null, "Invalid data");
+                                        }
+                                    });
+                                },
+                                //athlete email
+                                function (callback) {
+                                    TeamSport.athleteMailers(found, data, complete, complete1, function (err, mailData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(mailData)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, mailData)
+                                            }
+                                        }
+                                    });
 
-            }
-        ], function (err, data2) {
+                                }
+                            ], function (err, data3) {
+                                console.log("data3 : ", data3);
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else {
+                                    if (_.isEmpty(data3)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, data3);
+                                    }
+                                }
+                            });
+                        }
+                    });
+
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+
+    athleteMailers: function (found, data, complete, complete1, callback) {
+        async.each(complete1.atheleteName, function (n, callback) {
+            var emailData = {};
+            var sport = data.name;
+            var index = sport.indexOf("-");
+            sport = sport.slice(++index, sport.length);
+            emailData.sportName = sport;
+            emailData.schoolName = found.schoolName;
+            emailData.schoolSFA = found.sfaID;
+            emailData.from = "info@sfanow.in";
+            emailData.email = n.email;
+            emailData.filename = "teamSport.ejs";
+            emailData.teamId = complete.teamId;
+            emailData.students = complete1.atheleteName;
+            emailData.subject = "SFA: subject is missing";
+            console.log("emaildata", emailData);
+            Config.email(emailData, function (err, emailRespo) {
+                if (err) {
+                    console.log(err);
+                    callback(null, err);
+                } else if (emailRespo) {
+                    callback(null, emailRespo);
+                } else {
+                    callback(null, "Invalid data");
+                }
+            });
+        }, function (err) {
             if (err) {
                 console.log(err);
-                callback(null, []);
-            } else if (data2) {
-                if (_.isEmpty(data2)) {
-                    callback(null, []);
-                } else {
-                    callback(null, data2);
-                }
+                callback(err, null);
+            } else {
+                callback(null, atheleteName);
             }
         });
     },
 
     createStudentTeam: function (team, data, callback) {
         var atheleteName = [];
+        var i = 0;
         async.each(data.athleteTeam, function (n, callback) {
             async.waterfall([
                     function (callback) {
@@ -204,7 +280,7 @@ var model = {
                         teamStudent.isGoalKeeper = n.isGoalKeeper;
                         teamStudent.perSportUniqueId = team._id + data.sport;
 
-                        StudentTeam.saveInTeam(team, function (err, saveData) {
+                        StudentTeam.saveInTeam(teamStudent, function (err, saveData) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -225,32 +301,22 @@ var model = {
                             } else if (_.isEmpty(found)) {
                                 callback(null, "Data is empty");
                             } else {
-                                callback(null, found);
-                            }
-                        });
-                    },
-                    function (found, callback) {
-                        var emailData = {};
-                        var name = found.firstName + found.middleName + found.surname;
-                        atheleteName.push(name);
-                        emailData.from = "info@sfanow.in";
-                        emailData.email = found.email;
-                        emailData.filename = "StudentTeam.ejs";
-                        emailData.subject = "SFA: subject is missing";
-                        console.log("emaildata", emailData);
-
-                        Config.email(emailData, function (err, emailRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
-                                callback(null, emailRespo);
-                            } else {
+                                var athleteInfo = {};
+                                athleteInfo.srno = ++i;
+                                if (found.middleName) {
+                                    athleteInfo.name = found.firstName + found.middleName + found.surname;
+                                } else {
+                                    athleteInfo.name = found.firstName + found.surname;
+                                }
+                                athleteInfo.email = found.email;
+                                athleteInfo.sfaid = found.sfaId;
+                                athleteInfo.isCaptain = n.isCaptain;
+                                athleteInfo.isGoalKeeper = n.isGoalKeeper;
+                                atheleteName.push(athleteInfo);
                                 callback(null, atheleteName);
                             }
                         });
-                    }
-
+                    },
                 ],
                 function (err, data2) {
                     if (err) {
