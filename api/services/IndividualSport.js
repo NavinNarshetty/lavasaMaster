@@ -1,9 +1,9 @@
 var schema = new Schema({
-    sport: {
+    sport: [{
         type: Schema.Types.ObjectId,
         ref: 'Sport',
         index: true
-    },
+    }],
     athleteId: {
         type: Schema.Types.ObjectId,
         ref: 'Athelete',
@@ -12,12 +12,6 @@ var schema = new Schema({
     sportsListSubCategory: {
         type: Schema.Types.ObjectId,
         ref: 'SportsListSubCategory',
-        index: true
-    },
-    gender: String,
-    ageGroup: {
-        type: Schema.Types.ObjectId,
-        ref: 'Athelete',
         index: true
     },
     perSportUnique: String
@@ -340,12 +334,138 @@ var model = {
         }
     },
 
+    getAggregatePipeLineSport: function (data) {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "athleteId",
+                    "foreignField": "_id",
+                    "as": "athleteId"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athleteId",
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "sports",
+                    "localField": "sport",
+                    "foreignField": "_id",
+                    "as": "sport"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$sport",
+
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
+
+                }
+            },
+
+            // Stage 7
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
+
+            // Stage 8
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+                }
+            },
+
+            // Stage 9
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sportsListSubCategory"
+                }
+            },
+
+            // Stage 10
+            {
+                $unwind: {
+                    path: "$sportsListSubCategory",
+
+                }
+            },
+
+            // Stage 11
+            {
+                $match: {
+                    "createdAt": new Date(data.createdAt)
+                }
+            },
+
+
+            // Stage 12
+            {
+                $group: {
+                    _id: "$sport.sportslist.name",
+                    info: {
+                        $push: {
+                            firstname: "$athleteId.firstName",
+                            lastname: "$athleteId.surname",
+                            middlename: "$athleteId.middleName",
+                            sfaid: "$athleteId.sfaId",
+                            email: "$athleteId.email",
+                            age: "$athleteId.age",
+                            gender: "$sport.gender",
+                            eventName: "$sport.sportslist.name",
+                            ageGroup: "$sport.ageGroup.name",
+                            sportName: "$sportsListSubCategory.name"
+                        }
+                    }
+                }
+            },
+
+
+        ];
+        return pipeline;
+    },
+
     saveInIndividual: function (data, callback) {
+        var sportData = {};
         async.waterfall([
                 function (callback) {
-
                     var atheleteName = [];
-                    async.each(data, function (n, callback) {
+                    var results = [];
+                    async.eachSeries(data.individual, function (n, callback) {
                         async.waterfall([
                                 function (callback) {
                                     IndividualSport.saveData(n, function (err, saveData) {
@@ -355,46 +475,32 @@ var model = {
                                             if (_.isEmpty(saveData)) {
                                                 callback(null, []);
                                             } else {
-                                                callback(null, saveData)
+                                                sportData.createdAt = saveData.createdAt;
+                                                callback(null, sportData);
                                             }
                                         }
                                     });
                                 },
-                                function (saveData, callback) {
-                                    Athelete.findOne({
-                                        _id: saveData.athleteId
-                                    }).exec(function (err, found) { //finds all athelete
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (_.isEmpty(found)) {
-                                            callback(null, "Data is empty");
-                                        } else {
-                                            callback(null, found);
-                                        }
-                                    });
-                                },
-                                function (found, callback) {
-                                    var emailData = {};
-                                    var name = found.firstName + found.middleName + found.surname;
-                                    atheleteName.push(name);
-                                    emailData.from = "info@sfanow.in";
-                                    emailData.email = found.email;
-                                    emailData.filename = "StudentTeam.ejs";
-                                    emailData.subject = "SFA: subject is missing";
-                                    console.log("emaildata", emailData);
-
-                                    Config.email(emailData, function (err, emailRespo) {
+                                function (sportData, callback) {
+                                    var pipeLine = IndividualSport.getAggregatePipeLineSport(sportData);
+                                    IndividualSport.aggregate(pipeLine, function (err, totals) {
+                                        // console.log("inside aggregate");
                                         if (err) {
                                             console.log(err);
-                                            callback(null, err);
-                                        } else if (emailRespo) {
-                                            callback(null, emailRespo);
+                                            callback(err, "error in mongoose");
                                         } else {
-                                            callback(null, atheleteName);
+                                            if (_.isEmpty(totals)) {
+                                                callback(null, []);
+                                            } else {
+                                                _.each(totals, function (total) {
+                                                    atheleteName.push(total);
+                                                });
+                                                // atheleteName = _.groupBy(results, "_id");
+                                                callback(null, atheleteName);
+                                            }
                                         }
                                     });
                                 }
-
                             ],
                             function (err, data2) {
                                 if (err) {
@@ -408,29 +514,129 @@ var model = {
                                     }
                                 }
                             });
-                    }, function (err) {
+                    }, function (err, data2) {
                         if (err) {
                             console.log(err);
                             callback(err, null);
                         } else {
+                            // console.log("each", atheleteName);
                             callback(null, atheleteName);
                         }
                     });
 
+                },
+                function (atheleteName, callback) {
+                    IndividualSport.mailers(atheleteName, data, function (err, mailData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(mailData)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, mailData)
+                            }
+                        }
+                    });
                 }
             ],
-            function (err, data2) {
+            function (err, data3) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
-                } else if (data2) {
-                    if (_.isEmpty(data2)) {
+                } else if (data3) {
+                    if (_.isEmpty(data3)) {
                         callback(null, []);
                     } else {
-                        callback(null, data2);
+                        callback(null, data3);
                     }
                 }
             });
+    },
+
+    mailers: function (atheleteName, data, callback) {
+        async.parallel([
+                //Athlete email
+                function (callback) {
+                    async.each(atheleteName, function (n, callback) {
+                        var emailData = {};
+                        emailData.schoolSFA = data.sfaid;
+                        emailData.schoolName = data.school;
+                        var sport = n.info[0].eventName + " " + n.info[0].gender + " " + n.info[0].ageGroup;
+                        emailData.eventName = n.info[0].eventName;
+                        emailData.gender = n.info[0].gender;
+                        emailData.ageGroup = n.info[0].ageGroup;
+                        emailData.sportName = n.info[0].sportName;
+                        emailData.completeSport = sport;
+                        emailData.atheleteSFA = n.info[0].sfaid;
+                        if (n.info[0].middlename) {
+                            var name = n.info[0].firstname + " " + n.info[0].middlename + " " + n.info[0].lastname;
+                        } else {
+                            var name = n.info[0].firstname + " " + n.info[0].lastname;
+                        }
+                        emailData.atheleteName = name;
+                        emailData.from = "info@sfanow.in";
+                        emailData.email = n.info[0].email;
+                        emailData.filename = "athleteindividual.ejs";
+                        emailData.subject = "SFA: Individual Sport Selection";
+                        console.log("emaildata", emailData);
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    }, function (err, emailRespo) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, emailRespo);
+                        }
+                    });
+                },
+                //athlete email
+                function (callback) {
+                    var totalAthlete = atheleteName.length;
+                    var results = _.groupBy(atheleteName, "_id");
+                    var emailData = {};
+                    emailData.schoolSFA = data.sfaid;
+                    emailData.schoolName = data.school;
+                    emailData.totalAthlete = totalAthlete;
+                    emailData.completeSportInfo = results;
+                    emailData.from = "info@sfanow.in";
+                    emailData.email = data.email;
+                    emailData.filename = "schoolindividual.ejs";
+                    emailData.subject = "SFA: Individual Sport Selection List";
+                    console.log("emaildata", emailData);
+                    Config.email(emailData, function (err, emailRespo) {
+                        if (err) {
+                            console.log(err);
+                            callback(null, err);
+                        } else if (emailRespo) {
+                            callback(null, emailRespo);
+                        } else {
+                            callback(null, "Invalid data");
+                        }
+                    });
+                }
+            ],
+            function (err, data3) {
+                // console.log("data3 : ", data3);
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(data3)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data3);
+                    }
+                }
+            });
+
     },
 
     individualConfirm: function (data, callback) {
