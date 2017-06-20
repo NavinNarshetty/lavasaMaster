@@ -171,6 +171,8 @@ var model = {
                 if (totals[0].sportsubData.isTeam == true) {
                     var results = {};
                     results.sport = totals[0]._id;
+                    results.minplayer = totals[0].minTeamPlayers;
+                    results.maxPlayer = totals[0].maxTeamPlayers;
                     TeamSport.count({
                         sport: results.sport
                     }).exec(function (err, found) {
