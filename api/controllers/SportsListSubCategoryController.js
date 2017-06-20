@@ -42,6 +42,17 @@ var controller = {
                 data: "Invalid Request"
             });
         }
+    },
+
+    getEvents: function (req, res) {
+        if (req.body) {
+            SportsListSubCategory.getEvents(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
     }
 
 

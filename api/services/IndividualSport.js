@@ -92,7 +92,7 @@ var model = {
                     }
                     var start = (page - 1) * maxRow;
                     console.log("options", start);
-                    if (_.isEmpty(data.sfaid)) {
+                    if (_.isEmpty(data.sfaid) && _.isEmpty(data.age) && _.isEmpty(data.gender)) {
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -146,7 +146,361 @@ var model = {
                                 }
                             });
 
-                    } else {
+                    } else if (data.sfaid && data.age && data.gender) {
+                        var pipeLine = IndividualSport.getAggregatePipeLine(data);
+                        async.waterfall([
+                                function (callback) {
+                                    var dataFinal = {};
+                                    IndividualSport.totalAthlete(data, function (err, complete1) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            dataFinal.total = complete1;
+                                            callback(null, dataFinal);
+                                        }
+                                    });
+                                },
+                                function (dataFinal, callback) {
+
+                                    var newPipeLine = _.cloneDeep(pipeLine);
+                                    newPipeLine.push({
+                                        $match: {
+                                            sfaId: data.sfaid,
+                                            age: data.age,
+                                            gender: data.gender
+                                        },
+                                        // Stage 6
+                                    });
+                                    newPipeLine.push(
+                                        // Stage 6
+                                        {
+                                            '$skip': parseInt(start)
+                                        }, {
+                                            '$limit': maxRow
+                                        });
+                                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, "error in mongoose");
+                                        } else {
+                                            if (_.isEmpty(totals)) {
+                                                callback(null, "No Athlete with this SFA-ID found");
+                                            } else {
+                                                dataFinal.results = totals;
+                                                callback(null, dataFinal);
+                                            }
+                                        }
+
+                                    });
+                                }
+
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, []);
+                                } else if (data2) {
+                                    if (_.isEmpty(data2)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, data2);
+                                    }
+                                }
+                            });
+                    } else if (data.sfaid && data.age) {
+                        var pipeLine = IndividualSport.getAggregatePipeLine(data);
+                        async.waterfall([
+                                function (callback) {
+                                    var dataFinal = {};
+                                    IndividualSport.totalAthlete(data, function (err, complete1) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            dataFinal.total = complete1;
+                                            callback(null, dataFinal);
+                                        }
+                                    });
+                                },
+                                function (dataFinal, callback) {
+                                    var newPipeLine = _.cloneDeep(pipeLine);
+                                    newPipeLine.push({
+                                        $match: {
+                                            sfaId: data.sfaid,
+                                            age: data.age
+                                        },
+                                        // Stage 6
+                                    });
+                                    newPipeLine.push(
+                                        // Stage 6
+                                        {
+                                            '$skip': parseInt(start)
+                                        }, {
+                                            '$limit': maxRow
+                                        });
+                                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, "error in mongoose");
+                                        } else {
+                                            if (_.isEmpty(totals)) {
+                                                callback(null, "No Athlete with this SFA-ID found");
+                                            } else {
+                                                dataFinal.results = totals;
+                                                callback(null, dataFinal);
+                                            }
+                                        }
+
+                                    });
+                                }
+
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, []);
+                                } else if (data2) {
+                                    if (_.isEmpty(data2)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, data2);
+                                    }
+                                }
+                            });
+                    } else if (data.sfaid && data.gender) {
+                        var pipeLine = IndividualSport.getAggregatePipeLine(data);
+                        async.waterfall([
+                                function (callback) {
+                                    var dataFinal = {};
+                                    IndividualSport.totalAthlete(data, function (err, complete1) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            dataFinal.total = complete1;
+                                            callback(null, dataFinal);
+                                        }
+                                    });
+                                },
+                                function (dataFinal, callback) {
+                                    var newPipeLine = _.cloneDeep(pipeLine);
+                                    newPipeLine.push({
+                                        $match: {
+                                            sfaId: data.sfaid,
+                                            gender: data.gender
+                                        },
+                                        // Stage 6
+                                    });
+                                    newPipeLine.push(
+                                        // Stage 6
+                                        {
+                                            '$skip': parseInt(start)
+                                        }, {
+                                            '$limit': maxRow
+                                        });
+                                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, "error in mongoose");
+                                        } else {
+                                            if (_.isEmpty(totals)) {
+                                                callback(null, "No Athlete with this SFA-ID found");
+                                            } else {
+                                                dataFinal.results = totals;
+                                                callback(null, dataFinal);
+                                            }
+                                        }
+
+                                    });
+                                }
+
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, []);
+                                } else if (data2) {
+                                    if (_.isEmpty(data2)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, data2);
+                                    }
+                                }
+                            });
+                    } else if (data.age && data.gender) {
+                        var pipeLine = IndividualSport.getAggregatePipeLine(data);
+                        async.waterfall([
+                                function (callback) {
+                                    var dataFinal = {};
+                                    IndividualSport.totalAthlete(data, function (err, complete1) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            dataFinal.total = complete1;
+                                            callback(null, dataFinal);
+                                        }
+                                    });
+                                },
+                                function (dataFinal, callback) {
+                                    var newPipeLine = _.cloneDeep(pipeLine);
+                                    newPipeLine.push({
+                                        $match: {
+                                            gender: data.gender,
+                                            age: data.age
+                                        },
+                                        // Stage 6
+                                    });
+                                    newPipeLine.push(
+                                        // Stage 6
+                                        {
+                                            '$skip': parseInt(start)
+                                        }, {
+                                            '$limit': maxRow
+                                        });
+                                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, "error in mongoose");
+                                        } else {
+                                            if (_.isEmpty(totals)) {
+                                                callback(null, "No Athlete with this SFA-ID found");
+                                            } else {
+                                                dataFinal.results = totals;
+                                                callback(null, dataFinal);
+                                            }
+                                        }
+
+                                    });
+                                }
+
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, []);
+                                } else if (data2) {
+                                    if (_.isEmpty(data2)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, data2);
+                                    }
+                                }
+                            });
+                    } else if (data.age) {
+                        var pipeLine = IndividualSport.getAggregatePipeLine(data);
+                        async.waterfall([
+                                function (callback) {
+                                    var dataFinal = {};
+                                    IndividualSport.totalAthlete(data, function (err, complete1) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            dataFinal.total = complete1;
+                                            callback(null, dataFinal);
+                                        }
+                                    });
+                                },
+                                function (dataFinal, callback) {
+                                    var newPipeLine = _.cloneDeep(pipeLine);
+                                    newPipeLine.push({
+                                        $match: {
+                                            age: data.age,
+                                        },
+                                        // Stage 6
+                                    });
+                                    newPipeLine.push(
+                                        // Stage 6
+                                        {
+                                            '$skip': parseInt(start)
+                                        }, {
+                                            '$limit': maxRow
+                                        });
+                                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, "error in mongoose");
+                                        } else {
+                                            if (_.isEmpty(totals)) {
+                                                callback(null, "No Athlete with this SFA-ID found");
+                                            } else {
+                                                dataFinal.results = totals;
+                                                callback(null, dataFinal);
+                                            }
+                                        }
+
+                                    });
+                                }
+
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, []);
+                                } else if (data2) {
+                                    if (_.isEmpty(data2)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, data2);
+                                    }
+                                }
+                            });
+                    } else if (data.gender) {
+                        var pipeLine = IndividualSport.getAggregatePipeLine(data);
+                        async.waterfall([
+                                function (callback) {
+                                    var dataFinal = {};
+                                    IndividualSport.totalAthlete(data, function (err, complete1) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            dataFinal.total = complete1;
+                                            callback(null, dataFinal);
+                                        }
+                                    });
+                                },
+                                function (dataFinal, callback) {
+                                    var newPipeLine = _.cloneDeep(pipeLine);
+                                    newPipeLine.push({
+                                        $match: {
+                                            gender: data.gender,
+                                        },
+                                        // Stage 6
+                                    });
+                                    newPipeLine.push(
+                                        // Stage 6
+                                        {
+                                            '$skip': parseInt(start)
+                                        }, {
+                                            '$limit': maxRow
+                                        });
+                                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, "error in mongoose");
+                                        } else {
+                                            if (_.isEmpty(totals)) {
+                                                callback(null, "No Athlete with this SFA-ID found");
+                                            } else {
+                                                dataFinal.results = totals;
+                                                callback(null, dataFinal);
+                                            }
+                                        }
+
+                                    });
+                                }
+
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, []);
+                                } else if (data2) {
+                                    if (_.isEmpty(data2)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, data2);
+                                    }
+                                }
+                            });
+                    } else if (data.sfaid) {
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -223,7 +577,7 @@ var model = {
     },
 
     totalAthlete: function (data, callback) {
-        if (_.isEmpty(data.sfaid)) {
+        if (_.isEmpty(data.sfaid) && _.isEmpty(data.age) && _.isEmpty(data.gender)) {
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             Athelete.aggregate(pipeLine, function (err, totals) {
                 if (err) {
@@ -239,7 +593,150 @@ var model = {
                     }
                 }
             });
-        } else {
+        } else if (data.sfaid && data.age && data.gender) {
+            var pipeLine = IndividualSport.getAggregatePipeLine(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            newPipeLine.push({
+                $match: {
+                    sfaId: data.sfaid,
+                    age: data.age,
+                    gender: data.gender
+                },
+                // Stage 6
+            });
+            Athelete.aggregate(newPipeLine, function (err, totals) {
+                if (err) {
+                    console.log(err);
+                    callback(err, "error in mongoose");
+                } else {
+                    if (_.isEmpty(totals)) {
+                        callback(null, 0);
+                    } else {
+                        var count = totals.length;
+                        console.log("counttotal", count);
+                        callback(null, count);
+                    }
+                }
+            });
+        } else if (data.sfaid && data.age) {
+            var pipeLine = IndividualSport.getAggregatePipeLine(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            newPipeLine.push({
+                $match: {
+                    sfaId: data.sfaid,
+                    age: data.age
+                },
+                // Stage 6
+            });
+            Athelete.aggregate(newPipeLine, function (err, totals) {
+                if (err) {
+                    console.log(err);
+                    callback(err, "error in mongoose");
+                } else {
+                    if (_.isEmpty(totals)) {
+                        callback(null, 0);
+                    } else {
+                        var count = totals.length;
+                        console.log("counttotal", count);
+                        callback(null, count);
+                    }
+                }
+            });
+        } else if (data.sfaid && data.gender) {
+            var pipeLine = IndividualSport.getAggregatePipeLine(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            newPipeLine.push({
+                $match: {
+                    sfaId: data.sfaid,
+                    gender: data.gender
+                },
+                // Stage 6
+            });
+            Athelete.aggregate(newPipeLine, function (err, totals) {
+                if (err) {
+                    console.log(err);
+                    callback(err, "error in mongoose");
+                } else {
+                    if (_.isEmpty(totals)) {
+                        callback(null, 0);
+                    } else {
+                        var count = totals.length;
+                        console.log("counttotal", count);
+                        callback(null, count);
+                    }
+                }
+            });
+        } else if (data.age && data.gender) {
+            var pipeLine = IndividualSport.getAggregatePipeLine(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            newPipeLine.push({
+                $match: {
+                    age: data.age,
+                    gender: data.gender
+                },
+                // Stage 6
+            });
+            Athelete.aggregate(newPipeLine, function (err, totals) {
+                if (err) {
+                    console.log(err);
+                    callback(err, "error in mongoose");
+                } else {
+                    if (_.isEmpty(totals)) {
+                        callback(null, 0);
+                    } else {
+                        var count = totals.length;
+                        console.log("counttotal", count);
+                        callback(null, count);
+                    }
+                }
+            });
+        } else if (data.gender) {
+            var pipeLine = IndividualSport.getAggregatePipeLine(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            newPipeLine.push({
+                $match: {
+                    gender: data.gender,
+                },
+                // Stage 6
+            });
+            Athelete.aggregate(newPipeLine, function (err, totals) {
+                if (err) {
+                    console.log(err);
+                    callback(err, "error in mongoose");
+                } else {
+                    if (_.isEmpty(totals)) {
+                        callback(null, 0);
+                    } else {
+                        var count = totals.length;
+                        console.log("counttotal", count);
+                        callback(null, count);
+                    }
+                }
+            });
+        } else if (data.age) {
+            var pipeLine = IndividualSport.getAggregatePipeLine(data);
+            var newPipeLine = _.cloneDeep(pipeLine);
+            newPipeLine.push({
+                $match: {
+                    age: data.age,
+                },
+                // Stage 6
+            });
+            Athelete.aggregate(newPipeLine, function (err, totals) {
+                if (err) {
+                    console.log(err);
+                    callback(err, "error in mongoose");
+                } else {
+                    if (_.isEmpty(totals)) {
+                        callback(null, 0);
+                    } else {
+                        var count = totals.length;
+                        console.log("counttotal", count);
+                        callback(null, count);
+                    }
+                }
+            });
+        } else if (data.sfaid) {
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
@@ -268,6 +765,22 @@ var model = {
     getAthletePerSchool: function (data, callback) {
         async.waterfall([
                 function (callback) {
+                    AgeGroup.findOne({
+                        _id: data.age
+                    }).exec(function (err, found) {
+                        if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            var age = found.name;
+                            var length = age.length;
+                            age = age.slice(2, length);
+                            data.age = parseInt(age);
+                            console.log("age", data.age);
+                            callback(null, data);
+                        }
+                    });
+                },
+                function (data, callback) {
                     IndividualSport.allAthlete(data, function (err, complete) {
                         if (err) {
                             callback(err, null);
@@ -484,7 +997,6 @@ var model = {
                                 function (sportData, callback) {
                                     var pipeLine = IndividualSport.getAggregatePipeLineSport(sportData);
                                     IndividualSport.aggregate(pipeLine, function (err, totals) {
-                                        // console.log("inside aggregate");
                                         if (err) {
                                             console.log(err);
                                             callback(err, "error in mongoose");
@@ -495,7 +1007,6 @@ var model = {
                                                 _.each(totals, function (total) {
                                                     atheleteName.push(total);
                                                 });
-                                                // atheleteName = _.groupBy(results, "_id");
                                                 callback(null, atheleteName);
                                             }
                                         }
@@ -519,7 +1030,6 @@ var model = {
                             console.log(err);
                             callback(err, null);
                         } else {
-                            // console.log("each", atheleteName);
                             callback(null, atheleteName);
                         }
                     });

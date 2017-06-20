@@ -261,5 +261,123 @@ var model = {
         });
     },
 
+    getAggregatePipeLineSport: function (data) {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sportslist",
+                    "foreignField": "_id",
+                    "as": "sportsListData"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sportsListData"
+                }
+
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "ageGroup",
+                    "foreignField": "_id",
+                    "as": "ageData"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$ageData",
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sportsListData.sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sportsubData"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$sportsubData",
+                }
+            },
+
+            // Stage 7
+            {
+                $lookup: {
+                    "from": "weights",
+                    "localField": "weight",
+                    "foreignField": "_id",
+                    "as": "weight"
+                }
+            },
+
+            // Stage 8
+            {
+                $unwind: {
+                    path: "$weight",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 9
+            {
+                $match: {
+                    "sportsubData._id": objectid(data._id)
+                }
+            },
+
+            // Stage 10
+            {
+                $group: {
+                    _id: "$ageData.name",
+                    data: {
+                        $push: {
+                            sport: "$_id",
+                            sportName: "$sportsubData.name",
+                            eventName: "$sportsListData.name",
+                            weight: "$weight.name"
+                        }
+                    }
+                }
+            },
+
+
+
+        ];
+        return pipeline;
+    },
+
+    getEvents: function (data, callback) {
+        var pipeLine = SportsListSubCategory.getAggregatePipeLineSport(data);
+        Sport.aggregate(pipeLine, function (err, totals) {
+            if (err) {
+                console.log(err);
+                callback(err, "error in mongoose");
+            } else {
+                if (_.isEmpty(totals)) {
+                    callback(null, []);
+                } else {
+                    // var results = _.groupBy(totals, "data[0].eventName");
+                    callback(null, totals);
+                }
+            }
+        });
+    }
+
 };
 module.exports = _.assign(module.exports, exports, model);
