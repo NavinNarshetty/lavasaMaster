@@ -81,75 +81,6 @@ var model = {
         return pipeline;
     },
 
-    getAthletePerSchool: function (data, callback) {
-        async.waterfall([
-                function (callback) {
-                    IndividualSport.allAthlete(data, function (err, complete) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(complete)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, complete);
-                            }
-                        }
-                    });
-                },
-                function (complete, callback) {
-                    var results = {};
-                    var finalData = [];
-                    console.log("total", complete.total);
-                    async.each(complete.results, function (n, callback) {
-                        IndividualSport.find({
-                            athleteId: n._id,
-                            sportsListSubCategory: data._id
-                        }).lean().exec(function (err, found) {
-                            if (_.isEmpty(found)) {
-                                var athlete = {};
-                                athlete = n;
-                                athlete.isIndividualSelected = false;
-                                finalData.push(athlete);
-                                results.data = finalData;
-                                results.total = complete.total;
-                                console.log("data", results);
-                                callback(null, results);
-                            } else {
-                                var athlete = {};
-                                athlete = n
-                                athlete.isIndividualSelected = true;
-                                finalData.push(athlete);
-                                results.data = finalData;
-                                results.total = complete.total;
-                                console.log("data", results);
-                                callback(null, results);
-                            }
-                        });
-                    }, function (err) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(results)) {
-                            callback(null, []);
-                        } else {
-                            callback(null, results);
-                        }
-                    });
-                }
-            ],
-            function (err, results) {
-                if (err) {
-                    console.log(err);
-                    callback(null, []);
-                } else if (results) {
-                    if (_.isEmpty(results)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, results);
-                    }
-                }
-            });
-    },
-
     allAthlete: function (data, callback) {
         async.waterfall([
                 function (callback) {
@@ -332,6 +263,75 @@ var model = {
                 }
             });
         }
+    },
+
+    getAthletePerSchool: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    IndividualSport.allAthlete(data, function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete);
+                            }
+                        }
+                    });
+                },
+                function (complete, callback) {
+                    var results = {};
+                    var finalData = [];
+                    console.log("total", complete.total);
+                    async.each(complete.results, function (n, callback) {
+                        IndividualSport.find({
+                            athleteId: n._id,
+                            sportsListSubCategory: data._id
+                        }).lean().exec(function (err, found) {
+                            if (_.isEmpty(found)) {
+                                var athlete = {};
+                                athlete = n;
+                                athlete.isIndividualSelected = false;
+                                finalData.push(athlete);
+                                results.data = finalData;
+                                results.total = complete.total;
+                                console.log("data", results);
+                                callback(null, results);
+                            } else {
+                                var athlete = {};
+                                athlete = n
+                                athlete.isIndividualSelected = true;
+                                finalData.push(athlete);
+                                results.data = finalData;
+                                results.total = complete.total;
+                                console.log("data", results);
+                                callback(null, results);
+                            }
+                        });
+                    }, function (err) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(results)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, results);
+                        }
+                    });
+                }
+            ],
+            function (err, results) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (results) {
+                    if (_.isEmpty(results)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, results);
+                    }
+                }
+            });
     },
 
     getAggregatePipeLineSport: function (data) {
@@ -578,7 +578,6 @@ var model = {
                         emailData.email = n.info[0].email;
                         emailData.filename = "athleteindividual.ejs";
                         emailData.subject = "SFA: Individual Sport Selection";
-                        console.log("emaildata", emailData);
                         Config.email(emailData, function (err, emailRespo) {
                             if (err) {
                                 console.log(err);
@@ -601,16 +600,41 @@ var model = {
                 function (callback) {
                     var totalAthlete = atheleteName.length;
                     var results = _.groupBy(atheleteName, "_id");
+                    var collectedSport = [];
+                    _.each(results, function (mainData) {
+                        var sportInfo = {};
+                        sportInfo.eventName = mainData[0].info[0].eventName;
+                        sportInfo.gender = mainData[0].info[0].gender;
+                        sportInfo.ageGroup = mainData[0].info[0].ageGroup;
+                        sportInfo.sportName = mainData[0].info[0].sportName;
+                        var srno = 1;
+                        sportInfo.athleteData = [];
+                        _.each(mainData, function (data) {
+                            // console.log("data", data);
+                            var athelete = {};
+                            athelete.srno = srno;
+                            if (data.info[0].middlename) {
+                                var name = data.info[0].firstname + " " + data.info[0].middlename + " " + data.info[0].lastname;
+                            } else {
+                                var name = data.info[0].firstname + " " + data.info[0].lastname;
+                            }
+                            athelete.name = name;
+                            athelete.sfaid = data.info[0].sfaid;
+                            sportInfo.athleteData.push(athelete);
+                            srno++;
+                        });
+                        collectedSport.push(sportInfo);
+                    });
+                    console.log("sport Details for school", collectedSport);
                     var emailData = {};
                     emailData.schoolSFA = data.sfaid;
                     emailData.schoolName = data.school;
                     emailData.totalAthlete = totalAthlete;
-                    emailData.completeSportInfo = results;
+                    emailData.completeSportInfo = collectedSport;
                     emailData.from = "info@sfanow.in";
                     emailData.email = data.email;
                     emailData.filename = "schoolindividual.ejs";
                     emailData.subject = "SFA: Individual Sport Selection List";
-                    console.log("emaildata", emailData);
                     Config.email(emailData, function (err, emailRespo) {
                         if (err) {
                             console.log(err);
@@ -624,7 +648,6 @@ var model = {
                 }
             ],
             function (err, data3) {
-                // console.log("data3 : ", data3);
                 if (err) {
                     console.log(err);
                     callback(err, null);
@@ -638,66 +661,5 @@ var model = {
             });
 
     },
-
-    individualConfirm: function (data, callback) {
-        async.waterfall([
-            function (callback) {
-                IndividualSport.saveInIndividual(data, function (err, complete) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(complete)) {
-                            callback(null, []);
-                        } else {
-                            callback(null, complete);
-                        }
-                    }
-                });
-            },
-            function (complete, callback) {
-                Registration.findOne({
-                    _id: data.school
-                }).exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback(null, "Data is empty");
-                    } else {
-                        var emailData = {};
-                        emailData.from = "info@sfanow.in";
-                        emailData.email = found.email;
-                        emailData.filename = "teamSport.ejs";
-                        emailData.student = complete.atheleteName;
-                        emailData.subject = "SFA: subject is missing";
-                        console.log("emaildata", emailData);
-
-                        Config.email(emailData, function (err, emailRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
-                                callback(null, emailRespo);
-                            } else {
-                                callback(null, "Invalid data");
-                            }
-                        });
-                    }
-                });
-
-            }
-        ], function (err, data2) {
-            if (err) {
-                console.log(err);
-                callback(null, []);
-            } else if (data2) {
-                if (_.isEmpty(data2)) {
-                    callback(null, []);
-                } else {
-                    callback(null, data2);
-                }
-            }
-        });
-    },
-
 };
 module.exports = _.assign(module.exports, exports, model);

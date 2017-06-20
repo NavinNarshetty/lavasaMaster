@@ -135,7 +135,7 @@
         <td>
           <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
 
-            <p style="margin-bottom: 0px;">Congratulations! You have successfully registered a <span style="font-weight: bold;"><%=totalAthlete%> Athletes for <%=completeSportInfo[0].info[0].sportName%></span>              Team at SFA Mumbai 2017. Please find details for the same below:
+            <p style="margin-bottom: 0px;">Congratulations! You have successfully registered a <span style="font-weight: bold;"><%=totalAthlete%> Athletes for <%=completeSportInfo[0].sportName%></span>  Team at SFA Mumbai 2017. Please find details for the same below:
             </p>
             <!--                         <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA Mumbai 2017, by following our Facebook event page:</p>
                         <a style="   color: #0a1a72;"  href="https://www.facebook.com/pg/sportsforallnow/events/" target="_blank">https://www.facebook.com/pg/sportsforallnow/events/</a>
@@ -173,10 +173,9 @@
           <div style="padding: 0px 54px;">
             <table class="table">
               <thead style="text-align: center; background: #c4c4c4; ">
-                <th>SR.NO</th>
+                <th>Sr.No.</th>
                 <th>Athlete Name</th>
                 <th>Athlete SFA ID </th>
-
               </thead>
               <tbody>
               <%_.each(completeSportInfo,function(mainData){%>
@@ -184,115 +183,22 @@
                   <td colspan="3">
                     <div style="margin-top:-15px;">
                       <ul style="border: 1px solid #091a71;padding: 8px; color: white;background: #091a71; margin-bottom: 0px;">
-                        <li style="display: inline-block; color: #00aaff;"><%mainData[0].info[0].eventName%> <%mainData[0].info[0].gender%> <%mainData[0].info[0].ageGroup%></li>
+                        <li style="display: inline-block; color: #00aaff;"><%=mainData.eventName%> <%=mainData.gender%> <%=mainData.ageGroup%></li>
                       </ul>
                     </div>
 
                   </td>
                 </tr>
-                 <% _.each(mainData,function(data){%>
-                 <%var srno=1;%>
-                 <%if(data.info[0].middlename){%>
-                 <% var name = data.info[0].firstname+" "+data.info[0].middlename+" "+ data.info[0].lastname;%>
-                 <%}else{%<
-                 <% var name = data.info[0].firstname+" "+data.info[0].lastname;%>
-                 <%}%>
+                 <% _.each(mainData.athleteData,function(data){%>
                   <tr style="text-align: center;background: #e1e1e1;">
-                  <td>srno</td>
-                  <td><%name%></td>
-                  <td><%=data.info[0].sfaid%></td>
+                  <td><%=data.srno%></td>
+                  <td><%=data.name%></td>
+                  <td><%=data.sfaid%></td>
                 </tr>
-                <%srno++;%>
-              });
-              });
+              <%})%>
+              <%})%>
               </tbody>
-              <tbody>
-                <tr>
-                  <td colspan="3">
-                    <div style="margin-top:-15px;">
-                      <ul style="border: 1px solid #091a71;padding: 8px; color: white;background: #091a71; margin-bottom: 0px;">
-                        <li style="display: inline-block; color: #00aaff;">Basketball Boys U-14</li>
-                        <li style="display: inline-block; padding-left: 25px;">Team SFA ID: *Will be given after verification</li>
-                      </ul>
-                    </div>
-
-                  </td>
-                </tr>
-                <tr style="text-align: center;background: #e1e1e1;">
-                  <td>1.</td>
-                  <td>Captian Name1</td>
-                  <td>MA-17-1234</td>
-                </tr>
-                <tr style="text-align: center;background: #e1e1e1;">
-                  <td>2.</td>
-                  <td> Goalkeeper</td>
-                  <td>MA-17-1234</td>
-                </tr>
-                <tr style="text-align: center;background: #e1e1e1;">
-                  <td>3.</td>
-                  <td> Name1</td>
-                  <td>MA-17-1234</td>
-                </tr>
-                <tr style="text-align: center;background: #e1e1e1;">
-                  <td>4.</td>
-                  <td> Name1</td>
-                  <td>MA-17-1234</td>
-                </tr>
-              </tbody>
-              <tbody>
-                <tr>
-                  <td colspan="3">
-                    <div style="margin-top:-15px;">
-                      <ul style="border: 1px solid #091a71;padding: 8px; color: white;background: #091a71; margin-bottom: 0px;">
-                        <li style="display: inline-block; color: #00aaff;">Basketball Boys U-12</li>
-                        <li style="display: inline-block; padding-left: 25px;">Team SFA ID: *Will be given after verification</li>
-                      </ul>
-                    </div>
-
-                  </td>
-                </tr>
-                <tr style="text-align: center;background: #e1e1e1;">
-                  <td>1.</td>
-                  <td>Captian Name1</td>
-                  <td>MA-17-1234</td>
-                </tr>
-                <tr style="text-align: center;background: #e1e1e1;">
-                  <td>2.</td>
-                  <td> Goalkeeper</td>
-                  <td>MA-17-1234</td>
-                </tr>
-                <tr style="text-align: center;background: #e1e1e1;">
-                  <td>3.</td>
-                  <td> Name1</td>
-                  <td>MA-17-1234</td>
-                </tr>
-                <tr style="text-align: center;background: #e1e1e1;">
-                  <td>4.</td>
-                  <td> Name1</td>
-                  <td>MA-17-1234</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </td>
-      </tr>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+              <tbody>              
       <tr>
         <td>
           <div style="padding: 0px 54px; color: #091a71; text-align: justify; font-weight: 600;">
