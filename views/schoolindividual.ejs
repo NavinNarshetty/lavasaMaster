@@ -135,7 +135,7 @@
         <td>
           <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
 
-            <p style="margin-bottom: 0px;">Congratulations! You have successfully registered a <span style="font-weight: bold;"><%=totalAthlete%> Athletes for <%=completeSportInfo[0].sportName%></span>  Team at SFA Mumbai 2017. Please find details for the same below:
+            <p style="margin-bottom: 0px;">Congratulations! You have successfully registered a <span style="font-weight: bold;"><%=totalAthlete%> Athletes for <%=completeSportInfo[0].sportName%></span>              Team at SFA Mumbai 2017. Please find details for the same below:
             </p>
             <!--                         <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA Mumbai 2017, by following our Facebook event page:</p>
                         <a style="   color: #0a1a72;"  href="https://www.facebook.com/pg/sportsforallnow/events/" target="_blank">https://www.facebook.com/pg/sportsforallnow/events/</a>
@@ -151,7 +151,9 @@
         <td>
           <div style="padding: 0px 54px;">
             <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
-    color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 5px">School Name: <%=schoolName%> </p>
+        color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 5px">School Name:
+              <%=schoolName%>
+            </p>
           </div>
 
         </td>
@@ -160,7 +162,9 @@
         <td>
           <div style="padding: 0px 54px;">
             <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
-    color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 0px;">School SFA ID: <%=schoolSFA%> </p>
+        color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 0px;">School SFA ID:
+              <%=schoolSFA%>
+            </p>
           </div>
 
         </td>
@@ -178,124 +182,136 @@
                 <th>Athlete SFA ID </th>
               </thead>
               <tbody>
-              <%_.each(completeSportInfo,function(mainData){%>
-              <tr>
-                  <td colspan="3">
-                    <div style="margin-top:-15px;">
-                      <ul style="border: 1px solid #091a71;padding: 8px; color: white;background: #091a71; margin-bottom: 0px;">
-                        <li style="display: inline-block; color: #00aaff;"><%=mainData.eventName%> <%=mainData.gender%> <%=mainData.ageGroup%></li>
-                      </ul>
-                    </div>
+                <%_.each(completeSportInfo,function(mainData){%>
+                  <tr>
+                    <td colspan="3">
+                      <div style="margin-top:-15px;">
+                        <ul style="border: 1px solid #091a71;padding: 8px; color: white;background: #091a71; margin-bottom: 0px;">
+                          <li style="display: inline-block; color: #00aaff;">
+                            <%=mainData.eventName%>
+                              <%=mainData.gender%>
+                                <%=mainData.ageGroup%>
+                          </li>
+                        </ul>
+                      </div>
 
+                    </td>
+                  </tr>
+                  <% _.each(mainData.athleteData,function(data){%>
+                    <tr style="text-align: center;background: #e1e1e1;">
+                      <td>
+                        <%=data.srno%>
+                      </td>
+                      <td>
+                        <%=data.name%>
+                      </td>
+                      <td>
+                        <%=data.sfaid%>
+                      </td>
+                    </tr>
+                    <%})%>
+                      <%})%>
+              </tbody>
+              <tbody>
+                <tr>
+                  <td colspan="3">
+                    <div style="padding: 0px 54px; color: #091a71; text-align: justify; font-weight: 600;">
+                      <p style="margin-bottom: 0px;">We wish to see you with a strong contingent,</p>
+                      <p style="margin-top: 5px;">such that your school is up there on the ranking table!</p>
+                    </div>
                   </td>
                 </tr>
-                 <% _.each(mainData.athleteData,function(data){%>
-                  <tr style="text-align: center;background: #e1e1e1;">
-                  <td><%=data.srno%></td>
-                  <td><%=data.name%></td>
-                  <td><%=data.sfaid%></td>
+
+                <tr>
+                  <td colspan="3">
+                    <div style="padding: 0px 54px; font-weight: bold;">
+                      <p style="margin-bottom: 0px"> Kindly Note:</p>
+                    </div>
+                  </td>
                 </tr>
-              <%})%>
-              <%})%>
-              </tbody>
-              <tbody>              
-      <tr>
-        <td>
-          <div style="padding: 0px 54px; color: #091a71; text-align: justify; font-weight: 600;">
-            <p style="margin-bottom: 0px;">We wish to see you with a strong contingent,</p>
-            <p style="margin-top: 5px;">such that your school is up there on the ranking table!</p>
-          </div>
-        </td>
-      </tr>
-
-      <tr>
-        <td>
-          <div style="padding: 0px 54px; font-weight: bold;">
-            <p style="margin-bottom: 0px"> Kindly Note:</p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div style="padding: 0px 54px; text-align: justify;">
-            <p style="margin-bottom: 0px;"> 1) To make any changes regarding the above information email us at <a style="font-family:TitilliumWeb-Bold; color: black;"
-                href="mailto:info@sfanow.in ">info@sfanow.in</a>. No changes can be made after 30th September 2017</p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div style="padding: 0px 54px; text-align: justify; ">
-            <p style="margin-bottom: 0px; "> 2) Registrations for SFA Mumbai 2017 will close on 30th September 2017.</p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div style="padding: 0px 54px; text-align: justify; ">
-            <p style="margin-bottom: 0px; "> 3) Draws & Schedules will be published on our website by 30th October 2017.</p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div style="padding: 0px 54px; text-align: justify; ">
-            <p style="margin-bottom: 0px; "> 4) Click on the following link to view Basketball Rules and Regulations: link to be fetched depending upon the
-              sport
-            </p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div style="padding: 0px 54px; text-align: justify; ">
-            <p style="margin-bottom: 0px;
-                "> 5) Stay updated with details such as championship draws & schedules, workshops, exhibition matches, special days
-              and all other announcements with regards to SFA Mumbai 2017, by follow our Facebook event page: <a style=" color: #0a1a72; font-style: italic; font-weight: 600; "
-                href="https://www.facebook.com/pg/sportsforallnow/events/
+                <tr>
+                  <td colspan="3">
+                    <div style="padding: 0px 54px; text-align: justify;">
+                      <p style="margin-bottom: 0px;"> 1) To make any changes regarding the above information email us at <a style="font-family:TitilliumWeb-Bold; color: black;"
+                          href="mailto:info@sfanow.in ">info@sfanow.in</a>. No changes can be made after 30th September 2017</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <div style="padding: 0px 54px; text-align: justify; ">
+                      <p style="margin-bottom: 0px; "> 2) Registrations for SFA Mumbai 2017 will close on 30th September 2017.</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <div style="padding: 0px 54px; text-align: justify; ">
+                      <p style="margin-bottom: 0px; "> 3) Draws & Schedules will be published on our website by 30th October 2017.</p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <div style="padding: 0px 54px; text-align: justify; ">
+                      <p style="margin-bottom: 0px; "> 4) Click on the following link to view Basketball Rules and Regulations: link to be fetched depending
+                        upon the sport
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <div style="padding: 0px 54px; text-align: justify; ">
+                      <p style="margin-bottom: 0px;
+                "> 5) Stay updated with details such as championship draws & schedules, workshops, exhibition matches,
+                        special days and all other announcements with regards to SFA Mumbai 2017, by follow our Facebook
+                        event page: <a style=" color: #0a1a72; font-style: italic; font-weight: 600; " href="https://www.facebook.com/pg/sportsforallnow/events/
                 " target="_blank ">https://www.facebook.com/pg/sportsforallnow/events/</a></p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div style="padding: 0px 54px; text-align: justify; ">
-            <p style="margin-bottom: 0px;
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <div style="padding: 0px 54px; text-align: justify; ">
+                      <p style="margin-bottom: 0px;
                 "> 6) For further details please contact us on: 704568365/66/67 or email us at
-              <a style="font-family:TitilliumWeb-Bold; color: black; " " href="mailto:info@sfanow.in ">info@sfanow.in</a>
-            </p>
-          </div>
-        </td>
-      </tr>
-      <tr>
-        <td>
-          <div style="padding: 0px 54px; ">
-            <p style="margin-top: 20px; font-weight: bold; "> Ab Jeetega India! </p>
-            <p style="font-family:TitilliumWeb-Bold; font-weight: bold; ">Regards,<br>Team SFA</p>
-          </div>
-        </td>
-      </tr>
+                        <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">info@sfanow.in</a>
+                      </p>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="3">
+                    <div style="padding: 0px 54px; ">
+                      <p style="margin-top: 20px; font-weight: bold; "> Ab Jeetega India! </p>
+                      <p style="font-family:TitilliumWeb-Bold; font-weight: bold; ">Regards,<br>Team SFA</p>
+                    </div>
+                  </td>
+                </tr>
 
-    </tbody>
-    <tfoot>
-      <tr>
-        <td>
-          <div class="blue-footer " style="background:#0a1a72;font-family: TitilliumWeb-Regular; ">
-            <ul class="list-inline " style="padding: 8px 35px;font-size: 16px;font-weight: bold ">
-              <li><img src="../img/g1.png " alt=" "></li>
-              <li style="vertical-align: top;padding-left: 0; "><a href=" " style="color:#fff;text-decoration: none; ">www.sfanow.in</a></li>
-              <li><img src="../img/g2.png " alt=" "></li>
-              <li style="vertical-align: top;padding-left: 0; "><a href=" " style="color:#fff;text-decoration: none; ">/sportsforallnow</a></li>
-              <li><img src="../img/g3.png " alt=" "></li>
-              <li style="vertical-align: top;padding-left: 0; "><a href=" " style="color:#fff;text-decoration: none; ">/sfanow</a></li>
-              <li><img src="../img/g4.png " alt=" "></li>
-              <li style="vertical-align: top;padding-left: 0; "><a href=" " style="color:#fff;text-decoration: none; ">/sfanow </a></li>
-            </ul>
-          </div>
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td colspan="3">
+                    <div class="blue-footer " style="background:#0a1a72;font-family: TitilliumWeb-Regular; ">
+                      <ul class="list-inline " style="padding: 8px 35px;font-size: 16px;font-weight: bold ">
+                        <li><img src="../img/g1.png " alt=" "></li>
+                        <li style="vertical-align: top;padding-left: 0; "><a href=" " style="color:#fff;text-decoration: none; ">www.sfanow.in</a></li>
+                        <li><img src="../img/g2.png " alt=" "></li>
+                        <li style="vertical-align: top;padding-left: 0; "><a href=" " style="color:#fff;text-decoration: none; ">/sportsforallnow</a></li>
+                        <li><img src="../img/g3.png " alt=" "></li>
+                        <li style="vertical-align: top;padding-left: 0; "><a href=" " style="color:#fff;text-decoration: none; ">/sfanow</a></li>
+                        <li><img src="../img/g4.png " alt=" "></li>
+                        <li style="vertical-align: top;padding-left: 0; "><a href=" " style="color:#fff;text-decoration: none; ">/sfanow </a></li>
+                      </ul>
+                    </div>
+                  </td>
+                </tr>
+              </tfoot>
+            </table>
         </td>
       </tr>
-    </tfoot>
-  </table>
 </body>
 
 </html>
