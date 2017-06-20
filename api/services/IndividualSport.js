@@ -578,6 +578,7 @@ var model = {
                         emailData.email = n.info[0].email;
                         emailData.filename = "athleteindividual.ejs";
                         emailData.subject = "SFA: Individual Sport Selection";
+                        // callback(null, emailData);
                         Config.email(emailData, function (err, emailRespo) {
                             if (err) {
                                 console.log(err);

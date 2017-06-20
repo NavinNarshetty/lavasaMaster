@@ -203,6 +203,7 @@ var model = {
                                 console.log("New password generated");
                                 var emailData = {};
                                 emailData.from = "info@sfanow.in";
+                                emailData.sfaid = found.sfaID;
                                 emailData.email = found.email;
                                 emailData.password = newPassword;
                                 emailData.filename = "forgotPassword.ejs";
@@ -255,6 +256,7 @@ var model = {
                                 console.log("New password generated");
                                 var emailData = {};
                                 emailData.from = "info@sfanow.in";
+                                emailData.sfaid = found.sfaId;
                                 emailData.email = found.email;
                                 emailData.password = newPassword;
                                 emailData.filename = "forgotPassword.ejs";

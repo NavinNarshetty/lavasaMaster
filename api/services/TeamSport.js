@@ -280,7 +280,6 @@ var model = {
 
                                 }
                             ], function (err, data3) {
-                                // console.log("data3 : ", data3);
                                 if (err) {
                                     console.log(err);
                                     callback(err, null);

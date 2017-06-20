@@ -13,7 +13,7 @@ var controller = {
     },
 
     getSportPerTeam: function (req, res) {
-        if (req) {
+        if (req.body) {
             Sport.getSportPerTeam(req.body, res.callback);
         } else {
             res.json({
