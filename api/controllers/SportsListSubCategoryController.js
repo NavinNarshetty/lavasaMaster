@@ -32,7 +32,6 @@ var controller = {
             });
         }
     },
-
     getRules: function (req, res) {
         if (req.body) {
             SportsListSubCategory.getRules(req.body, res.callback);
@@ -43,7 +42,6 @@ var controller = {
             });
         }
     },
-
     getEvents: function (req, res) {
         if (req.body) {
             SportsListSubCategory.getEvents(req.body, res.callback);

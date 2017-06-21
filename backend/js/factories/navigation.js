@@ -213,14 +213,57 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data);
             });
         },
+        // generateAthleteExcelWithData: function (data, callback) {
+        //     console.log('from Controller', data);
+        //     $http.get(adminurl + 'Athelete/generateExcel', data).then(function (data) {
+        //         console.log('from navigation', data);
+        //         // data = data.data;
+        //         callback(data);
+        //     });
+        // },
+
         generateAthleteExcelWithData: function (data, callback) {
             console.log('from Controller', data);
-            $http.get(adminurl + 'Athelete/generateExcel', data).then(function (data) {
-                console.log('from navigation', data);
-                // data = data.data;
-                callback(data);
-            });
+            $http.post(adminurl + 'Athelete/generateExcel', data, {
+                responseType: 'arraybuffer'
+            }).then(function (response) {
+                var header = response.headers('Content-Disposition')
+                var fileName = "Athlete" + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
+                console.log(fileName);
+
+                var blob = new Blob([response.data], {
+                    type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation;charset=UTF-8'
+                });
+                var objectUrl = (window.URL || window.webkitURL).createObjectURL(blob);
+                var link = angular.element('<a/>');
+                link.attr({
+                    href: objectUrl,
+                    download: fileName
+                })[0].click();
+            })
         },
+
+        generateSchoolExcelWithData: function (data, callback) {
+            console.log('from Controller', data);
+            $http.post(adminurl + 'Registration/generateExcel', data, {
+                responseType: 'arraybuffer'
+            }).then(function (response) {
+                var header = response.headers('Content-Disposition')
+                var fileName = "Registration" + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
+                console.log(fileName);
+
+                var blob = new Blob([response.data], {
+                    type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation;charset=UTF-8'
+                });
+                var objectUrl = (window.URL || window.webkitURL).createObjectURL(blob);
+                var link = angular.element('<a/>');
+                link.attr({
+                    href: objectUrl,
+                    download: fileName
+                })[0].click();
+            })
+        },
+
         generateOldSchoolExcel: function (callback) {
             $http.post(adminurl + 'School/generateExcel').then(function (data) {
                 // data = data.data;

@@ -17,7 +17,7 @@ var schema = new Schema({
         ref: 'Rules',
         index: true
     },
-    type: String,
+    sportType: String,
     maxSelect: Number
 
 });
@@ -139,7 +139,7 @@ var model = {
         });
 
     },
-    //not working this getone
+
     getOneSport: function (data, callback) {
         async.waterfall([
             function (callback) {
@@ -184,9 +184,7 @@ var model = {
                     });
                 } else {
                     callback(null, "this is individualSport");
-                    // individualSport(callback);
                 }
-                // FindOne 
             }
         ], function (err, data2) {
             if (err) {
@@ -200,21 +198,9 @@ var model = {
                 }
             }
         });
-
-
-
-        function teamSport(val, callback) {
-
-            if (Team >= val.maxTeam) {
-                callback(err);
-            } else {
-                // 1. GetSportOfSportCategory
-                // 2. groupBy
-                // callback(GroupByResults);
-            }
-        }
-
-
+        // 1. GetSportOfSportCategory
+        // 2. groupBy
+        // callback(GroupByResults);
         // waterfall: {}
         //      FindOne
         //      if(isTeam)
@@ -223,6 +209,7 @@ var model = {
         //              else GoAhead
         //      
     },
+
     getSports: function (data, callback) {
         var finalData = {};
         var pipeLine = SportsListSubCategory.getAggregatePipeLine(data);
@@ -247,6 +234,7 @@ var model = {
         // }
 
     },
+
     getRules: function (data, callback) {
         SportsListSubCategory.findOne({
             _id: data._id

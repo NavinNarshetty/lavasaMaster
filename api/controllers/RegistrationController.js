@@ -47,7 +47,15 @@ var controller = {
 
     generateExcel: function (req, res) {
         console.log("inside controller");
-        Registration.generateExcel(res);
+        if (req.body) {
+            console.log(req.body);
+            Registration.generateExcel(req.body, res);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
     },
 
     getAllRegistrationDetails: function (req, res) {
