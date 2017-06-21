@@ -1197,17 +1197,17 @@ var model = {
         }
     },
 
-    generateExcelNew: function (data, res) {
+    generateExcel: function (data, res) {
         async.waterfall([
                 function (callback) {
-                    Registration.excelFilterSchool(data.body, function (err, complete) {
+                    Registration.excelFilterSchool(data, function (err, complete) {
                         if (err) {
                             callback(err, null);
                         } else {
                             if (_.isEmpty(complete)) {
                                 callback(null, complete);
                             } else {
-                                // console.log('logs', complete);
+                                console.log('logs', complete);
                                 callback(null, complete)
                             }
                         }
@@ -1367,7 +1367,7 @@ var model = {
             });
     },
 
-    generateExcel: function (res) {
+    generateExcelNew: function (res) {
         console.log("dataIN");
         var matchObj = {
             $or: [{

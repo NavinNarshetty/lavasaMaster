@@ -1455,10 +1455,15 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     };
     $scope.filterSchool();
 
-    $scope.generateExcel = function () {
-        NavigationService.generateSchoolExcel(function (data) {
-            window.location.href = adminurl + 'Registration/generateExcel';
-        });
+    // $scope.generateExcel = function () {
+    //     NavigationService.generateSchoolExcel(function (data) {
+    //         window.location.href = adminurl + 'Registration/generateExcel';
+    //     });
+    // }
+
+    $scope.generateExcel = function (formData) {
+        console.log("formdata", formData);
+        NavigationService.generateSchoolExcelWithData(formData, function (data) {});
     }
 
 
@@ -1586,21 +1591,12 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
     $scope.generateExcel = function (formdata) {
         if (_.isEmpty(formdata.type)) {
             console.log("else");
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) {
-                window.location.href = adminurl + 'Athelete/generateExcel';
-            });
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
         } else {
             console.log(formdata);
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) {
-                window.location.href = adminurl + 'Athelete/generateExcel?type=' + formdata.type + '?input=' + formdata.input;
-            });
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
         }
     }
-    // $scope.generateExcel = function () {
-    //     NavigationService.generateAthleteExcel(function (data) {
-    //         window.location.href = adminurl + 'Athelete/generateExcel';
-    //     });
-    // }
 })
 
 myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
