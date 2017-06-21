@@ -80,6 +80,16 @@
                   </ui-select>
                   <div class="error-msg" ng-if="detailForm.selectweight.$invalid && detailForm.selectweight.$touched">Please Enter Valid Weight *</div>
                 </div>
+                <div class="form-group">
+                  <label>From Cutoff Date</label>
+                  <input-date name="fromdate" ng-model="formData.fromDate" placeholder="Enter From Cutoff Date"></input-date>
+                  <div class="error-msg" ng-if="detailForm.fromdate.$invalid && detailForm.fromdate.$touched">Please Enter From Cutoff date *</div>
+                </div>
+                <div class="form-group">
+                  <label>To Cutoff Date</label>
+                  <input-date name="todate" ng-model="formData.toDate"></input-date>
+                  <div class="error-msg" ng-if="detailForm.todate.$invalid && detailForm.todate.$touched">Please Enter To Cutoff Date*</div>
+                </div>
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-default" type="submit" ng-click="saveData(formData,detailForm)">Save</button>
                   <button class="btn btn-default" ng-click="onCancel('sports')">Cancel</button>
