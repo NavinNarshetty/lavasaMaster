@@ -96,6 +96,16 @@
                   </ui-select>
                   <div class="error-msg" ng-if="detailForm.selectrulandreg.$invalid && detailForm.selectrulandreg.$touched">Please Enter Rules And Regulation*</div>
                 </div>
+                <div class="form-group">
+                  <label>Sport select type</label>
+                  <input type="text" name="spttype" ng-model="formData.sportType" class="form-control" placeholder="Enter Sport Type">
+                  <div class="error-msg" ng-if="detailForm.spttype.$invalid && detailForm.spttype.$touched">Please Enter Valid Name *</div>
+                </div>
+                <div class="form-group">
+                  <label>Max select</label>
+                  <input type="text" name="maxslt" ng-model="formData.maxSelect" only-Digits class="form-control" placeholder="Enter Max Select">
+                  <div class="error-msg" ng-if="detailForm.maxslt.$invalid && detailForm.maxslt.$touched">Please Enter Valid Name *</div>
+                </div>
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-default" type="submit" ng-click="saveData(formData,detailForm)">Save</button>
                   <button class="btn btn-default" ng-click="onCancel('sportslistsubcat')">Cancel</button>

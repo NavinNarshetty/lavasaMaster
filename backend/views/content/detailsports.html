@@ -27,18 +27,18 @@
                 </div>
                 <div class="form-group">
                   <label>Max Team Allowed</label>
-                  <input type="text" name="maxTeam" ng-model="formData.maxTeam" class="form-control" placeholder="Enter Max Players" required>
+                  <input type="text" name="maxTeam" ng-model="formData.maxTeam" only-Digits class="form-control" placeholder="Enter Max Players">
                   <div class="error-msg" ng-if="detailForm.maxTeam.$invalid && detailForm.maxTeam.$touched">Please Enter Valid Max Player *</div>
                 </div>
                 <div class="form-group">
                   <label>Min Players</label>
-                  <input type="text" name="detailsportsmin" ng-model="formData.minTeamPlayers" class="form-control" placeholder="Enter Min Players"
+                  <input type="text" name="detailsportsmin" ng-model="formData.minTeamPlayers" only-Digits class="form-control" placeholder="Enter Min Players"
                     required>
                   <div class="error-msg" ng-if="detailForm.detailsportsmin.$invalid && detailForm.detailsportsmin.$touched">Please Enter Valid Min Player *</div>
                 </div>
                 <div class="form-group">
                   <label>Max Players</label>
-                  <input type="text" name="detailsportsmax" ng-model="formData.maxTeamPlayers" class="form-control" placeholder="Enter Max Players"
+                  <input type="text" name="detailsportsmax" ng-model="formData.maxTeamPlayers" only-Digits class="form-control" placeholder="Enter Max Players"
                     required>
                   <div class="error-msg" ng-if="detailForm.detailsportsmax.$invalid && detailForm.detailsportsmax.$touched">Please Enter Valid Max Player *</div>
                 </div>
