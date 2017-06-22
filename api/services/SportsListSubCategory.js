@@ -189,10 +189,10 @@ var model = {
         ], function (err, data2) {
             if (err) {
                 console.log(err);
-                callback(null, []);
+                callback(err, null);
             } else if (data2) {
                 if (_.isEmpty(data2)) {
-                    callback(null, []);
+                    callback("Max Team Created", null);
                 } else {
                     callback(null, data2);
                 }
