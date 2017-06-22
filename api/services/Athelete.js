@@ -157,6 +157,7 @@ var model = {
     },
 
     filterAthlete: function (data, callback) {
+        console.log("date", data.startDate);
         var maxRow = Config.maxRow;
 
         var page = 1;

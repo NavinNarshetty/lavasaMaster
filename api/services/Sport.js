@@ -27,7 +27,9 @@ var schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'Weight',
         index: true
-    }
+    },
+    fromDate: Date,
+    toDate: Date
 });
 
 schema.plugin(deepPopulate, {
@@ -103,8 +105,9 @@ var model = {
             }, {
                 $match: {
                     "gender": data.gender,
-                    "age": {
-                        $lte: data.age
+                    "dob": {
+                        $gte: new Date(data.fromDate),
+                        $lte: new Date(data.toDate),
                     }
                 }
             },
@@ -117,17 +120,16 @@ var model = {
 
         async.waterfall([
                 function (callback) {
-                    AgeGroup.findOne({
-                        _id: data.age
+                    Sport.findOne({
+                        _id: data.sport
                     }).exec(function (err, found) {
                         if (_.isEmpty(found)) {
                             callback(null, []);
                         } else {
-                            var age = found.name;
-                            var length = age.length;
-                            age = age.slice(2, length);
-                            data.age = parseInt(age);
-                            console.log("age", data.age);
+                            data.fromDate = found.fromDate;
+                            data.toDate = found.toDate;
+                            console.log("fromDate", data.fromDate);
+                            console.log("toDate", data.toDate);
                             callback(null, data);
                         }
                     });
@@ -140,6 +142,7 @@ var model = {
                             if (_.isEmpty(complete)) {
                                 callback(null, []);
                             } else {
+                                console.log("complete", complete);
                                 callback(null, complete);
                             }
                         }
@@ -218,6 +221,7 @@ var model = {
                     console.log("options", start);
                     if (_.isEmpty(data.sfaid)) {
                         var pipeLine = Sport.getAggregatePipeLine(data);
+                        console.log("pipeLine", pipeLine);
                         async.waterfall([
                                 function (callback) {
                                     var dataFinal = {};
@@ -225,6 +229,7 @@ var model = {
                                         if (err) {
                                             callback(err, null);
                                         } else {
+                                            console.log("complete1", complete1);
                                             dataFinal.total = complete1;
                                             callback(null, dataFinal);
                                         }

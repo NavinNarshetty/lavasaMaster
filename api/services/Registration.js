@@ -1557,6 +1557,7 @@ var model = {
             }],
         };
         if (data.type == "Date") {
+
             var endOfDay = moment(data.endDate).endOf("day").toDate();
             matchObj.createdAt = {
                 $gt: data.startDate,
