@@ -223,16 +223,18 @@ myApp.controller('RulesCtrl', function ($scope, TemplateService, NavigationServi
 
 })
 //Detail Rules
-myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("detailrules");
     $scope.menutitle = NavigationService.makeactive("Deatil Rules");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.deleteVal = "";
+    console.log('enter');
 
-
-    if ($stateParams.id != '') {
+    if ($stateParams.id !== '') {
         //edit
         $scope.title = 'Edit';
         $scope.getOneOldSchoolById = function () {
@@ -268,15 +270,15 @@ myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, Navigatio
             if (data) {
                 console.log(data);
                 $scope.url = "Rules/save";
-                NavigationService.apiCall($scope.url, data, function (data) {
-                    console.log("data.value", data);
-                    if (data.value === true) {
-                        toastr.success(" Saved Successfully", "Rules Message");
-                        $state.go('rules');
+                // NavigationService.apiCall($scope.url, data, function (data) {
+                //     console.log("data.value", data);
+                //     if (data.value === true) {
+                //         toastr.success(" Saved Successfully", "Rules Message");
+                //         $state.go('rules');
 
-                    }
+                //     }
 
-                });
+                // });
             } else {
                 toastr.error("invalid data", "Rules Message");
             }
@@ -288,6 +290,91 @@ myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, Navigatio
     $scope.onCancel = function (sendTo) {
 
         $state.go(sendTo);
+    };
+    $scope.addCont = function (crdv) {
+        console.log('enter', crdv)
+        if (!crdv.eligibilityTable) {
+            crdv.eligibilityTable = [{
+                "agegroup": "",
+                "date": ""
+            }];
+        } else {
+            crdv.eligibilityTable.push({
+                "agegroup": "",
+                "date": ""
+            });
+        }
+    };
+    $scope.addAge = function (crdv) {
+        if (!crdv.ageGroupTable) {
+            crdv.ageGroupTable = [{
+                "agegroup": "",
+                "weight": ""
+            }];
+        } else {
+            crdv.ageGroupTable.push({
+                "agegroup": "",
+                "weight": ""
+            });
+        }
+    };
+
+    $scope.confDelete = function (val) {
+        if ($scope.deleteVal === 1) {
+            $scope.formData.eligibilityTable.splice($.jStorage.get("deleteEligibilityTable"), 1);
+        }
+        // else if ($scope.deleteVal === 2) {
+        //     $scope.formData.winnerTable.splice($.jStorage.get("deleteWinnerTable"), 1);
+        // } else if ($scope.deleteVal === 3) {
+        //     $scope.formData.teamTable.splice($.jStorage.get("deleteTeamTable"), 1);
+        // }
+        else if ($scope.deleteVal === 4) {
+            $scope.formData.ageGroupTable.splice($.jStorage.get("deleteAgeGroupTable"), 1);
+        }
+    };
+
+    $scope.deleteFunc = function (id, value) {
+        if (value === 1) {
+            $scope.deleteVal = 1;
+            $.jStorage.set("deleteEligibilityTable", id);
+            // $scope.confDel($.jStorage.set("deleteEligibilityTable", id));
+        }
+        //  else if (value === 2) {
+        //     $scope.deleteVal = 2;
+        //     $.jStorage.set("deleteWinnerTable", id);
+        // } else if (value === 3) {
+        //     $scope.deleteVal = 3;
+        //     $.jStorage.set("deleteTeamTable", id);
+        // }
+        else if (value === 4) {
+            $scope.deleteVal = 4;
+            $.jStorage.set("deleteAgeGroupTable", id);
+        }
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'views/modal/deleterule.html',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+
+        });
+    };
+    // $scope.confDel = function (data) {
+    //     console.log(data);
+    //     $scope.id = data;
+    //     $scope.modalInstance = $uibModal.open({
+    //         animation: $scope.animationsEnabled,
+    //         templateUrl: 'views/modal/delete.html',
+    //         backdrop: 'static',
+    //         keyboard: false,
+    //         size: 'sm',
+    //         scope: $scope
+
+    //     });
+    // };
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
     };
     //end cancel
 

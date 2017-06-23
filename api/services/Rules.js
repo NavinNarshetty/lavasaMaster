@@ -2,7 +2,13 @@ var schema = new Schema({
     name: {
         type: String,
     },
-    rulesAndRegulation: String
+    tournamentFormat: String,
+    rulesAndRegulation: String,
+    ageGroupContent: String,
+    ageGroupTable: Schema.Types.Mixed,
+    eligibilityContent: String,
+    eligibilityTable: Schema.Types.Mixed,
+    tournamentCommittee: String
 });
 
 schema.plugin(deepPopulate, {});

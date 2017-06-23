@@ -21,10 +21,111 @@
                   <input type="text" name="rulesname" ng-model="formData.name" class="form-control" placeholder="Enter Name" required>
                   <div class="error-msg" ng-if="detailForm.rulesname.$invalid && detailForm.rulesname.$touched">Please Enter Valid Name *</div>
                 </div>
+                <!--ageGroupTable: Schema.Types.Mixed,
+    eligibilityContent: String,
+    eligibilityTable: Schema.Types.Mixed,-->
                 <div class="form-group tinymce">
-                  <label>Rules and Regulations <span ng-show="type.required">*</span></label>
+                  <label>Tournament Format*</label>
+                  <text-angular ng-model="formData.tournamentFormat" name="tournamentFormat" required></text-angular>
+                  <div class="error-msg" ng-if="detailForm.tournamentFormat.$invalid && detailForm.tournamentFormat.$touched">Please enter valid Text</div>
+                </div>
+                <div class="form-group tinymce">
+                  <label>Rules and Regulations*</label>
                   <text-angular ng-model="formData.rulesAndRegulation" name="rulestext" required></text-angular>
                   <div class="error-msg" ng-if="detailForm.rulestext.$invalid && detailForm.rulestext.$touched">Please enter valid Text</div>
+                </div>
+                <div class="form-group tinymce">
+                  <label>Age Group Content</label>
+                  <text-angular ng-model="formData.ageGroupContent" name="ageGroupContent"></text-angular>
+                  <div class="error-msg" ng-if="detailForm.ageGroupContent.$invalid && detailForm.ageGroupContent.$touched">Please enter valid Text</div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="widget">
+                  <div class="">
+                    <div class="form-group">
+                      <label>Age Group Table</label>
+                    </div>
+                    <div class="form-group">
+                      <a ng-click="addAge(formData);" class="btn btn-success pull-right">Add Content</a>
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <td>Age Group & Event</td>
+                            <td>Weight Categories (Kg)</td>
+                            <td>Operation</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="contents in formData.ageGroupTable">
+                            <td style="width:40%">
+                              <div class="form-group">
+                                <input type="text" class="form-control" ng-model="contents.agegroup">
+                              </div>
+                            </td>
+                            <td>
+                              <input type="text" class="form-control" ng-model="contents.weight">
+                            </td>
+                            <td>
+                              <input class="btn btn-danger" type="button" ng-click="deleteFunc(formData.ageGroupTable.indexOf(contents),4);" value="Delete">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group tinymce">
+                  <label>Eligibility Content</label>
+                  <text-angular ng-model="formData.eligibilityContent" name="eligibletext"></text-angular>
+                  <div class="error-msg" ng-if="detailForm.eligibletext.$invalid && detailForm.eligibletext.$touched">Please enter valid Text</div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="widget">
+                  <div class="">
+                    <div class="form-group">
+                      <label>Eligibility Table</label>
+                    </div>
+                    <div class="form-group">
+                      <a ng-click="addCont(formData);" class="btn btn-success pull-right">Add Content</a>
+                      <table class="table table-bordered">
+                        <thead>
+                          <tr>
+                            <td>Age Group</td>
+                            <td>Cut Off Date</td>
+                            <td>Operation</td>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr ng-repeat="content in formData.eligibilityTable">
+                            <td style="width:40%">
+                              <div class="form-group">
+                                <input type="text" class="form-control" ng-model="content.agegroup">
+                                <!--<ui-select ng-model="content.agegroup" title="Select Age Group">
+                                  <ui-select-match placeholder="Select Age Group">{{$select.selected.name}}</ui-select-match>
+                                  <ui-select-choices repeat="age in agegroup | filter: $select.search">
+                                    <div ng-bind-html="age.name | highlight: $select.search"></div>
+                                  </ui-select-choices>
+                                </ui-select>-->
+                              </div>
+                            </td>
+                            <td>
+                              <input type="date" class="form-control" ng-model="content.date">
+                            </td>
+                            <td>
+                              <input class="btn btn-danger" type="button" ng-click="deleteFunc(formData.eligibilityTable.indexOf(content),1);" value="Delete">
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="form-group tinymce">
+                  <label>Tournament Organizing Committee</label>
+                  <text-angular ng-model="formData.tournamentCommittee" name="tournamentCommittee"></text-angular>
+                  <div class="error-msg" ng-if="detailForm.tournamentCommittee.$invalid && detailForm.tournamentCommittee.$touched">Please enter valid Text</div>
                 </div>
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
