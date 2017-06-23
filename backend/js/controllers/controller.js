@@ -1214,7 +1214,7 @@ myApp.controller('DetailSportsListCtrl', function ($scope, TemplateService, Navi
 })
 
 //sports
-myApp.controller('SportsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+myApp.controller('SportsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tablesports");
