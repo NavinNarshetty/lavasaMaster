@@ -270,25 +270,20 @@ myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, Navigatio
             if (data) {
                 console.log(data);
                 $scope.url = "Rules/save";
-                // NavigationService.apiCall($scope.url, data, function (data) {
-                //     console.log("data.value", data);
-                //     if (data.value === true) {
-                //         toastr.success(" Saved Successfully", "Rules Message");
-                //         $state.go('rules');
-
-                //     }
-
-                // });
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true) {
+                        toastr.success(" Saved Successfully", "Rules Message");
+                        $state.go('rules');
+                    }
+                });
             } else {
                 toastr.error("invalid data", "Rules Message");
             }
         };
-
     }
-
     //cancel
     $scope.onCancel = function (sendTo) {
-
         $state.go(sendTo);
     };
     $scope.addCont = function (crdv) {
