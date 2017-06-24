@@ -55,7 +55,7 @@
         "type": "redirect",
         "text": "export",
         "linkType": "admin",
-        "action": "Registration/generateExcel"
+        "action": "Registration/generateExcelOld"
     }],
 
 

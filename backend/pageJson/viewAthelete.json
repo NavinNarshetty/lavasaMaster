@@ -55,7 +55,7 @@
         "type": "redirect",
         "text": "export",
         "linkType": "admin",
-        "action": "Athelete/generateExcel"
+        "action": "Athelete/generateExcelOld"
     }],
 
 

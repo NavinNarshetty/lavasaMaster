@@ -328,6 +328,42 @@ var model = {
         });
 
     },
+    generateExcelOld: function (name, found, res) {
+        name = _.kebabCase(name);
+        var excelData = [];
+        _.each(found, function (singleData) {
+            var singleExcel = {};
+            _.each(singleData, function (n, key) {
+                if (key != "__v" && key != "createdAt" && key != "updatedAt") {
+                    // singleExcel[_.capitalize(key)] = n;
+                    // console.log("in excel", n);
+                    singleExcel[key] = n;
+                }
+            });
+            excelData.push(singleExcel);
+        });
+        var xls = json2xls(excelData);
+        var folder = "././.tmp/";
+        var path = name + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
+        var finalPath = folder + path;
+        fs.writeFile(finalPath, xls, 'binary', function (err) {
+            if (err) {
+                res.callback(err, null);
+            } else {
+                fs.readFile(finalPath, function (err, excel) {
+                    if (err) {
+                        res.callback(err, null);
+                    } else {
+                        res.set('Content-Type', "application/octet-stream");
+                        res.set('Content-Disposition', "attachment;filename=" + path);
+                        res.send(excel);
+                        fs.unlink(finalPath);
+                    }
+                });
+            }
+        });
+
+    },
 
 
     excelDateToDate: function isDate(value) {

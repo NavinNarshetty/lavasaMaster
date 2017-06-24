@@ -1367,7 +1367,7 @@ var model = {
             });
     },
 
-    generateExcelNew: function (res) {
+    generateExcelOld: function (res) {
         console.log("dataIN");
         var matchObj = {
             $or: [{
@@ -1518,7 +1518,7 @@ var model = {
                 excelData.push(obj);
 
             });
-            Config.generateExcel("Registration", excelData, res);
+            Config.generateExcelOld("Registration", excelData, res);
         });
     },
 

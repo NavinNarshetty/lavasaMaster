@@ -58,6 +58,10 @@ var controller = {
         }
     },
 
+    generateExcelOld: function (req, res) {
+        Registration.generateExcelOld(res);
+    },
+
     getAllRegistrationDetails: function (req, res) {
         if (req.body) {
             Registration.getAllRegistrationDetails(req.body, res.callback);

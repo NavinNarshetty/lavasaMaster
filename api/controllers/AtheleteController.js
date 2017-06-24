@@ -32,9 +32,9 @@ var controller = {
         }
     },
 
-    // generateExcelOld: function (req, res) {
-    //     Athelete.generateExcel(res);
-    // },
+    generateExcelOld: function (req, res) {
+        Athelete.generateExcelOld(res);
+    },
 
     generateExcel: function (req, res) {
         if (req.body) {
