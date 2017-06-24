@@ -42,6 +42,16 @@ var controller = {
             });
         }
     },
+    getOneRuleBySportsName: function (req, res) {
+        if (req.body) {
+            SportsListSubCategory.getOneRuleBySportsName(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
     getEvents: function (req, res) {
         if (req.body) {
             SportsListSubCategory.getEvents(req.body, res.callback);

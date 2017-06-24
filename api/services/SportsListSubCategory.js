@@ -28,7 +28,7 @@ schema.plugin(deepPopulate, {
             select: '_id name'
         },
         'rules': {
-            select: '_id name rulesAndRegulation'
+            select: '_id name tournamentFormat rulesAndRegulation ageGroupContent ageGroupTable eligibilityContent eligibilityTable tournamentCommittee'
         }
     }
 });
@@ -243,6 +243,22 @@ var model = {
                 callback(err, null);
             } else if (_.isEmpty(found)) {
                 callback(null, "Data is empty");
+            } else {
+                callback(null, found);
+            }
+        });
+    },
+    getOneRuleBySportsName: function (data, callback) {
+        SportsListSubCategory.findOne({
+            name: {
+                $regex: data.sportName,
+                $options: 'i'
+            }
+        }).deepPopulate("rules").exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback("Data is empty", null);
             } else {
                 callback(null, found);
             }

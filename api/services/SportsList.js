@@ -17,7 +17,7 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         'rules': {
-            select: '_id name rulesAndRegulation'
+            select: '_id name tournamentFormat rulesAndRegulation ageGroupContent ageGroupTable eligibilityContent eligibilityTable tournamentCommittee'
         },
         'drawFormat': {
             select: '_id name'
