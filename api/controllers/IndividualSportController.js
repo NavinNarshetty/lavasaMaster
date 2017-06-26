@@ -3,7 +3,9 @@ var controller = {
 
     getAthletePerSchool: function (req, res) {
         if (req.body) {
+            console.log("inside");
             if (req.body.schoolToken) {
+                console.log("inside");
                 Registration.findOne({
                     accessToken: req.body.schoolToken
                 }).exec(function (err, found) {
@@ -12,6 +14,7 @@ var controller = {
                     } else if (_.isEmpty(found)) {
                         callback("Incorrect Login Details", null);
                     } else {
+                        console.log("inside");
                         IndividualSport.getAthletePerSchool(req.body, res.callback);
                     }
                 });

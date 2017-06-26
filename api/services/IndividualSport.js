@@ -92,7 +92,7 @@ var model = {
                     }
                     var start = (page - 1) * maxRow;
                     console.log("options", start);
-                    if (_.isEmpty(data.sfaid) && _.isEmpty(data.fromDate) && _.isEmpty(data.toDate) && _.isEmpty(data.gender)) {
+                    if (_.isEmpty(data.sfaid) && _.isEmpty(data.age) && _.isEmpty(data.gender)) {
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -146,7 +146,12 @@ var model = {
                                 }
                             });
 
-                    } else if (data.sfaid && data.fromDate && data.toDate && data.gender) {
+                    } else if (data.sfaid && data.age && data.gender) {
+                        var age = data.age;
+                        var length = age.length;
+                        age = age.slice(2, length);
+                        data.age = parseInt(age);
+                        console.log("age", data.age);
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -166,10 +171,7 @@ var model = {
                                     newPipeLine.push({
                                         $match: {
                                             sfaId: data.sfaid,
-                                            "dob": {
-                                                $gte: new Date(data.fromDate),
-                                                $lte: new Date(data.toDate),
-                                            },
+                                            age: data.age,
                                             gender: data.gender
                                         },
                                         // Stage 6
@@ -210,7 +212,12 @@ var model = {
                                     }
                                 }
                             });
-                    } else if (data.sfaid && data.fromDate && data.toDate) {
+                    } else if (data.sfaid && data.age) {
+                        var age = data.age;
+                        var length = age.length;
+                        age = age.slice(2, length);
+                        data.age = parseInt(age);
+                        console.log("age", data.age);
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -229,10 +236,7 @@ var model = {
                                     newPipeLine.push({
                                         $match: {
                                             sfaId: data.sfaid,
-                                            "dob": {
-                                                $gte: new Date(data.fromDate),
-                                                $lte: new Date(data.toDate),
-                                            }
+                                            age: data.age
                                         },
                                         // Stage 6
                                     });
@@ -331,7 +335,12 @@ var model = {
                                     }
                                 }
                             });
-                    } else if (data.fromDate && data.toDate && data.gender) {
+                    } else if (data.age && data.gender) {
+                        var age = data.age;
+                        var length = age.length;
+                        age = age.slice(2, length);
+                        data.age = parseInt(age);
+                        console.log("age", data.age);
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -350,10 +359,7 @@ var model = {
                                     newPipeLine.push({
                                         $match: {
                                             gender: data.gender,
-                                            "dob": {
-                                                $gte: new Date(data.fromDate),
-                                                $lte: new Date(data.toDate),
-                                            }
+                                            age: data.age
                                         },
                                         // Stage 6
                                     });
@@ -393,7 +399,12 @@ var model = {
                                     }
                                 }
                             });
-                    } else if (data.fromDate && data.toDate) {
+                    } else if (data.age) {
+                        var age = data.age;
+                        var length = age.length;
+                        age = age.slice(2, length);
+                        data.age = parseInt(age);
+                        console.log("age", data.age);
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -411,10 +422,7 @@ var model = {
                                     var newPipeLine = _.cloneDeep(pipeLine);
                                     newPipeLine.push({
                                         $match: {
-                                            "dob": {
-                                                $gte: new Date(data.fromDate),
-                                                $lte: new Date(data.toDate),
-                                            }
+                                            age: data.age,
                                         },
                                         // Stage 6
                                     });
@@ -589,7 +597,7 @@ var model = {
     },
 
     totalAthlete: function (data, callback) {
-        if (_.isEmpty(data.sfaid) && _.isEmpty(data.fromDate) && _.isEmpty(data.toDate) && _.isEmpty(data.gender)) {
+        if (_.isEmpty(data.sfaid) && _.isEmpty(data.age) && _.isEmpty(data.gender)) {
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             Athelete.aggregate(pipeLine, function (err, totals) {
                 if (err) {
@@ -605,16 +613,18 @@ var model = {
                     }
                 }
             });
-        } else if (data.sfaid && data.fromDate && data.toDate && data.gender) {
+        } else if (data.sfaid && data.age && data.gender) {
+            var age = data.age;
+            var length = age.length;
+            age = age.slice(2, length);
+            data.age = parseInt(age);
+            console.log("age", data.age);
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
                 $match: {
                     sfaId: data.sfaid,
-                    "dob": {
-                        $gte: new Date(data.fromDate),
-                        $lte: new Date(data.toDate),
-                    },
+                    age: data.age,
                     gender: data.gender
                 },
                 // Stage 6
@@ -633,16 +643,18 @@ var model = {
                     }
                 }
             });
-        } else if (data.sfaid && data.fromDate && data.toDate) {
+        } else if (data.sfaid && data.age) {
+            var age = data.age;
+            var length = age.length;
+            age = age.slice(2, length);
+            data.age = parseInt(age);
+            console.log("age", data.age);
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
                 $match: {
                     sfaId: data.sfaid,
-                    "dob": {
-                        $gte: new Date(data.fromDate),
-                        $lte: new Date(data.toDate),
-                    }
+                    age: data.age
                 },
                 // Stage 6
             });
@@ -684,15 +696,17 @@ var model = {
                     }
                 }
             });
-        } else if (data.fromDate && data.toDate && data.gender) {
+        } else if (data.age && data.gender) {
+            var age = data.age;
+            var length = age.length;
+            age = age.slice(2, length);
+            data.age = parseInt(age);
+            console.log("age", data.age);
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
                 $match: {
-                    "dob": {
-                        $gte: new Date(data.fromDate),
-                        $lte: new Date(data.toDate),
-                    },
+                    age: data.age,
                     gender: data.gender
                 },
                 // Stage 6
@@ -734,15 +748,17 @@ var model = {
                     }
                 }
             });
-        } else if (data.fromDate && data.toDate) {
+        } else if (data.age) {
+            var age = data.age;
+            var length = age.length;
+            age = age.slice(2, length);
+            data.age = parseInt(age);
+            console.log("age", data.age);
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
                 $match: {
-                    "dob": {
-                        $gte: new Date(data.fromDate),
-                        $lte: new Date(data.toDate),
-                    }
+                    age: data.age,
                 },
                 // Stage 6
             });
@@ -788,22 +804,24 @@ var model = {
 
     getAthletePerSchool: function (data, callback) {
         async.waterfall([
+                // function (callback) {
+                //     // AgeGroup.findOne({
+                //     //     _id: data.age
+                //     // }).exec(function (err, found) {
+                //     //     if (_.isEmpty(found)) {
+                //     //         callback(null, []);
+                //     //     } else {
+                //     // var age = data.age;
+                //     // var length = age.length;
+                //     // age = age.slice(2, length);
+                //     // data.age = parseInt(age);
+                //     // console.log("age", data.age);
+                //     // callback(null, data);
+                //     //     }
+                //     // });
+                // },
                 function (callback) {
-                    Sport.findOne({
-                        _id: data.sport
-                    }).exec(function (err, found) {
-                        if (_.isEmpty(found)) {
-                            callback(null, []);
-                        } else {
-                            data.fromDate = found.fromDate;
-                            data.toDate = found.toDate;
-                            console.log("fromDate", data.fromDate);
-                            console.log("toDate", data.toDate);
-                            callback(null, data);
-                        }
-                    });
-                },
-                function (data, callback) {
+                    console.log("inside first");
                     IndividualSport.allAthlete(data, function (err, complete) {
                         if (err) {
                             callback(err, null);
