@@ -11,52 +11,49 @@
             font-family: 'TitilliumWeb-Bold';
             src: url("../font/TitilliumWeb-Bold.ttf");
         }
-        
+
         @font-face {
             font-family: 'TitilliumWeb-Regular';
             src: url("../font/TitilliumWeb-Regular.ttf");
         }
-        
+
         .body {
             font-family: TitilliumWeb-Regular;
         }
-        
+
         .img-responsive {
             max-width: 100%;
             height: auto;
             display: block;
         }
-        
+
         .inline-block {
             display: inline-block;
         }
-        
+
         .text-center {
             text-align: center;
         }
-        
+
         .list-inline>li {
             display: inline-block;
             padding-left: 5px;
             padding-right: 5px;
         }
-        
-       a{
-        text-decoration: none;
-         
-       }
 
-       a:hover{
-        text-decoration: underline !important; 
-       }
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline !important;
+        }
 
         table {
             width: 600px;
             margin: 0 auto;
-
-
         }
-        
+
         h2:before {
             content: '';
             width: 100px;
@@ -72,7 +69,7 @@
             -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
         }
-        
+
         h2:after {
             content: '';
             width: 100px;
@@ -89,31 +86,35 @@
             transform: translate(-50%, -50%);
         }
 
-        .table>thead>tr>th,.table>tbody>tr>td{
+        .table>thead>tr>th,
+        .table>tbody>tr>td {
             padding: 8px;
             font-weight: 400;
         }
-        .table>tbody>tr>td:nth-child(2),.table>thead>tr>th:nth-child(2){
+
+        .table>tbody>tr>td:nth-child(2),
+        .table>thead>tr>th:nth-child(2) {
             text-align: left;
         }
-        a{
+
+        a {
             cursor: pointer;
         }
     </style>
 </head>
 
-<body >
-    <table >
+<body>
+    <table>
         <thead>
             <tr>
                 <td>
-                    <div class="logo text-center" style="margin-top: 30px;"><img src="../img/logo.png" class="img-responsive" style="margin: 0 auto;"><br></div>
+                    <div class="logo text-center" style="margin-top: 30px;"><img src="https://sfa.wohlig.co.in/img/img/logo.png" class="img-responsive" style="margin: 0 auto;"><br></div>
                 </td>
             </tr>
             <tr>
                 <td class="text-center">
                     <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">SPORTS REGISTRATIONS </span>
-                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA MUMBAI 2017  </h2>
+                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA MUMBAI 2017 </h2>
                 </td>
 
             </tr>
@@ -125,9 +126,12 @@
                     <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
                         <p> Dear Athlete,</p>
 
-                        <p style="margin-bottom: 0px;">Your application to register your <%=sportName%> Team at SFA Mumbai 2017 is now being processed. All athletes mentioned below will receive a verification phone call from SFA. On successful verification, the team will be considered registered and receive a Team ID.
+                        <p style="margin-bottom: 0px;">Your application to register your
+                            <%=sportName%> Team at SFA Mumbai 2017 is now being processed. All athletes mentioned below will receive a verification
+                                phone call from SFA. On successful verification, the team will be considered registered and
+                                receive a Team ID.
                         </p>
-<!--                         <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA Mumbai 2017, by following our Facebook event page:</p>
+                        <!--                         <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA Mumbai 2017, by following our Facebook event page:</p>
                         <a style="   color: #0a1a72;"  href="https://www.facebook.com/pg/sportsforallnow/events/" target="_blank">https://www.facebook.com/pg/sportsforallnow/events/</a>
                         <p>For further details about your application or any other information you may require please contact us on <span style="font-family:TitilliumWeb-Bold;">7045684365 /66 /67 </span>                            or<br> email us at 
                         <a style="font-family:TitilliumWeb-Bold; color: black;"" href="mailto:info@sfanow.in">info@sfanow.in</a>
@@ -140,71 +144,91 @@
 
             <tr>
                 <td>
-                <div style="padding: 0px 54px;">
-                   <!--  <p style="text-align: center;border: 1px solid #091a71;padding: 8px;
-    color: white;background: #091a71; margin-bottom: 0px;"><span>Basketball Boys U-16</span> <span>Team SFA ID: *Will be given after verification</span> </p> -->
-    <ul style="border: 1px solid #091a71;padding: 8px;
+                    <div style="padding: 0px 54px;">
+                        <!--  <p style="text-align: center;border: 1px solid #091a71;padding: 8px;
+    color: white;background: #091a71; margin-bottom: 0px;"><span>Basketball Boys U-16</span> <span>Team SFA ID: *</span> </p> -->
+                        <ul style="border: 1px solid #091a71;padding: 8px;
     color: white;background: #091a71; margin-bottom: 0px;">
-        <li style="display: inline-block;"><%=sportName%></li>
-        <li style="display: inline-block; padding-left: 25px;">Team SFA ID: *Will be given after verification<%=teamId%></li>
-    </ul>
-    </div>
+                            <li style="display: inline-block;">
+                                <%=sportName%>
+                            </li>
+                            <li style="display: inline-block; padding-left: 25px;">Team SFA ID:
+                                <%=teamId%>
+                            </li>
+                        </ul>
+                    </div>
 
                 </td>
             </tr>
 
             <tr>
                 <td>
-                <div style="padding: 0px 54px;">
-                    <table class="table">
-                        <thead style="text-align: center; background: #c4c4c4; ">
-                            <th>SR.NO</th>
-                            <th>Athlete Name</th>
-                            <th>Athlete SFA ID </th>
-                        </thead>
-                        <tbody>
-                       <% _.each(students,function(student){%>
-                               <tr style="text-align: center;background: #e1e1e1;">
-                                <td><%=student.srno%></td>
-                                <%if(student.isCaptain=='true'){%>
-                                    <td>Captian <%=student.name%></td>
-                               <%}else if(student.isGoalKeeper=='true'){%>
-                                    <td>Goalkeeper <%=student.name%></td>
-                               <%}else if(student.isGoalKeeper=='true' && student.isCaptain=='true'){%>
-                                    <td>Captain, Goalkeeper <%=student.name%></td>
-                                <%}else{%>
-                                 <td><%=student.name%></td>
-                               <%}%>
-                                <td><%=student.sfaid%></td>
-                                </tr>
-                        <%})%>                     
-                        </tbody>
-                    </table>
+                    <div style="padding: 0px 54px;">
+                        <table class="table">
+                            <thead style="text-align: center; background: #c4c4c4; ">
+                                <th>SR.NO</th>
+                                <th>Athlete Name</th>
+                                <th>Athlete SFA ID </th>
+                            </thead>
+                            <tbody>
+                                <% _.each(students,function(student){%>
+                                    <tr style="text-align: center;background: #e1e1e1;">
+                                        <td>
+                                            <%=student.srno%>
+                                        </td>
+                                        <%if(student.isCaptain=='true'){%>
+                                            <td>Captian
+                                                <%=student.name%>
+                                            </td>
+                                            <%}else if(student.isGoalKeeper=='true'){%>
+                                                <td>Goalkeeper
+                                                    <%=student.name%>
+                                                </td>
+                                                <%}else if(student.isGoalKeeper=='true' && student.isCaptain=='true'){%>
+                                                    <td>Captain, Goalkeeper
+                                                        <%=student.name%>
+                                                    </td>
+                                                    <%}else{%>
+                                                        <td>
+                                                            <%=student.name%>
+                                                        </td>
+                                                        <%}%>
+                                                            <td>
+                                                                <%=student.sfaid%>
+                                                            </td>
+                                    </tr>
+                                    <%})%>
+                            </tbody>
+                        </table>
                     </div>
                 </td>
             </tr>
-                        <tr>
+            <tr>
                 <td>
-                <div style="padding: 0px 54px;">
-                    <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
-    color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 5px">School Name: <%=schoolName%></p>
-    </div>
+                    <div style="padding: 0px 54px;">
+                        <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
+    color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 5px">School Name:
+                            <%=schoolName%>
+                        </p>
+                    </div>
 
                 </td>
             </tr>
-                                    <tr>
+            <tr>
                 <td>
-                <div style="padding: 0px 54px;">
-                    <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
-    color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 0px;">School SFA ID: <%=schoolSFA%> </p>
-    </div>
+                    <div style="padding: 0px 54px;">
+                        <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
+    color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 0px;">School SFA ID:
+                            <%=schoolSFA%>
+                        </p>
+                    </div>
 
                 </td>
             </tr>
 
             <tr>
                 <td>
-                    <div style="padding: 0px 54px; color: #091a71; font-weight: 600" >
+                    <div style="padding: 0px 54px; color: #091a71; font-weight: 600">
                         <p style="margin-bottom: 0px;">We wish to see you with a strong contingent,</p>
                         <p style="margin-top: 5px;">such that your school is up there on the ranking table!</p>
                     </div>
@@ -213,51 +237,62 @@
 
             <tr>
                 <td>
-                    <div style="padding: 0px 54px; font-weight: bold;" >
+                    <div style="padding: 0px 54px; font-weight: bold;">
                         <p style="margin-bottom: 0px"> Kindly Note:</p>
                     </div>
                 </td>
             </tr>
-                        <tr>
+            <tr>
                 <td>
-                    <div style="padding: 0px 54px; " >
-                        <p style="margin-bottom: 0px;"> 1) To make any changes regarding the above information email us at <a style="font-family:TitilliumWeb-Bold; color: black;"" href="mailto:info@sfanow.in">info@sfanow.in</a>. No changes can be made after 30th November 2017 (Changes to a Football Team can be made only up to 30th October 2017)</p>
+                    <div style="padding: 0px 54px; ">
+                        <p style="margin-bottom: 0px;"> 1) To make any changes regarding the above information email us at <a style="font-family:TitilliumWeb-Bold; color: black;"
+                                href="mailto:info@sfanow.in ">info@sfanow.in</a>. No changes can be made after 30th November
+                            2017 (Changes to a Football Team can be made only up to 30th October 2017)</p>
                     </div>
                 </td>
             </tr>
-                                    <tr>
+            <tr>
                 <td>
-                    <div style="padding: 0px 54px; " >
-                        <p style="margin-bottom: 0px;"> 2) Draws and Schedules will be published on our website by 30th October 2017 (Draws and Schedules for Football will be published by 30th September 2017)</p>
+                    <div style="padding: 0px 54px; ">
+                        <p style="margin-bottom: 0px; "> 2) Draws and Schedules will be published on our website by 30th October 2017 (Draws and Schedules
+                            for Football will be published by 30th September 2017)</p>
                     </div>
                 </td>
             </tr>
-                                    <tr>
+            <tr>
                 <td>
-                    <div style="padding: 0px 54px; " >
-                        <p style="margin-bottom: 0px;"> 3) Click on the following link to view Basketball Rules and Regulations: link to be fetched depending upon the sport</p>
+                    <div style="padding: 0px 54px; ">
+                        <p style="margin-bottom: 0px; "> 3) Click on the following link to view Basketball Rules and Regulations: link to be fetched depending
+                            upon the sport</p>
                     </div>
                 </td>
             </tr>
-                                                <tr>
+            <tr>
                 <td>
-                    <div style="padding: 0px 54px; " >
-                        <p style="margin-bottom: 0px;"> 4) Stay updated with details such as championship draws & schedules, workshops, exhibition matches, special days and all other announcements with regards to SFA Mumbai 2017, by follow our Facebook event page: <a style="   color: #0a1a72; font-style: italic; font-weight: 600;"  href="https://www.facebook.com/pg/sportsforallnow/events/" target="_blank">https://www.facebook.com/pg/sportsforallnow/events/</a></p>
+                    <div style="padding: 0px 54px; ">
+                        <p style="margin-bottom: 0px;
+                                "> 4) Stay updated with details such as championship draws & schedules, workshops, exhibition matches,
+                            special days and all other announcements with regards to SFA Mumbai 2017, by follow our Facebook
+                            event page: <a style=" color: #0a1a72; font-style: italic; font-weight: 600; " href="https://www.facebook.com/pg/sportsforallnow/events/
+                                " target="_blank ">https://www.facebook.com/pg/sportsforallnow/events/</a></p>
                     </div>
                 </td>
             </tr>
-                                                            <tr>
+            <tr>
                 <td>
-                    <div style="padding: 0px 54px; " >
-                        <p style="margin-bottom: 0px;"> 5) For further details please contact us on: 704568365/66/67 or email us at <a style="font-family:TitilliumWeb-Bold; color: black;"" href="mailto:info@sfanow.in">info@sfanow.in</a> </p>
+                    <div style="padding: 0px 54px; ">
+                        <p style="margin-bottom: 0px;
+                                "> 5) For further details please contact us on: 704568365/66/67 or email us at
+                            <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">info@sfanow.in</a>
+                        </p>
                     </div>
                 </td>
             </tr>
-                                                                        <tr>
+            <tr>
                 <td>
-                    <div style="padding: 0px 54px; " >
-                        <p style="margin-top: 20px;"> Ab Jeetega India! </p>
-                        <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>
+                    <div style="padding: 0px 54px; ">
+                        <p style="margin-top: 20px; "> Ab Jeetega India! </p>
+                        <p style="font-family:TitilliumWeb-Bold; ">Regards,<br>Team SFA</p>
                     </div>
                 </td>
             </tr>
@@ -266,16 +301,20 @@
         <tfoot>
             <tr>
                 <td>
-                    <div class="blue-footer" style="background:#0a1a72;font-family: TitilliumWeb-Regular;">
-                        <ul class="list-inline" style="padding: 8px 35px;font-size: 16px;font-weight: bold">
-                            <li><img src="../img/g1.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="" style="color:#fff;text-decoration: none;">www.sfanow.in</a></li>
-                            <li><img src="../img/g2.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="" style="color:#fff;text-decoration: none;">/sportsforallnow</a></li>
-                            <li><img src="../img/g3.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="" style="color:#fff;text-decoration: none;">/sfanow</a></li>
-                            <li><img src="../img/g4.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="" style="color:#fff;text-decoration: none;">/sfanow </a></li>
+                    <div class="blue-footer " style="background:#0a1a72;font-family: TitilliumWeb-Regular; ">
+                        <ul class="list-inline " style="padding: 8px 35px;font-size: 16px;font-weight: bold ">
+                            <li><img src="https://sfa.wohlig.co.in/img/img/1.png " alt=" "></li>
+                            <li style="vertical-align: top;padding-left: 0; "><a href=" " style="color:#fff;text-decoration:
+                                none; ">www.sfanow.in</a></li>
+                            <li><img src="https://sfa.wohlig.co.in/img/img/2.png " alt=" "></li>
+                            <li style="vertical-align: top;padding-left: 0; "><a href=" " style="color:#fff;text-decoration:
+                                none; ">/sportsforallnow</a></li>
+                            <li><img src="https://sfa.wohlig.co.in/img/img/3.png " alt=" "></li>
+                            <li style="vertical-align: top;padding-left: 0; "><a href=" " style="color:#fff;text-decoration:
+                                none; ">/sfanow</a></li>
+                            <li><img src="https://sfa.wohlig.co.in/img/img/4.png " alt=" "></li>
+                            <li style="vertical-align: top;padding-left: 0; "><a href=" " style="color:#fff;text-decoration:
+                                none; ">/sfanow </a></li>
                         </ul>
                     </div>
                 </td>
