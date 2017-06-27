@@ -118,29 +118,48 @@ var model = {
 
     getSearchPipeLine: function (data) {
 
-        var pipeline = [{
+        var pipeline = [
+            // Stage 1
+            {
                 $lookup: {
-                    "from": "sportlists",
-                    "localField": "sportlist",
+                    "from": "sportslists",
+                    "localField": "sportslist",
                     "foreignField": "_id",
-                    "as": "sportlist"
+                    "as": "sportslist"
                 }
             },
             // Stage 2
             {
                 $unwind: {
-                    path: "$sportlist",
+                    path: "$sportslist",
                     // preserveNullAndEmptyArrays: true // optional
                 }
             },
             // Stage 3
             {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "ageGroup",
+                    "foreignField": "_id",
+                    "as": "ageGroup"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$ageGroup",
+
+                }
+            },
+            // Stage 5
+            {
                 $match: {
-                    "sportlist.name": {
-                        $regex: data.input
+                    "sportslist.name": {
+                        $regex: data.keyword,
+                        $options: "i"
+
                     }
-
-
                 }
             },
             {
@@ -435,18 +454,6 @@ var model = {
     },
 
     search: function (data, callback) {
-        // var matchObj = {
-        //     $or: [{
-        //         registrationFee: {
-        //             $ne: "online PAYU"
-        //         }
-        //     }, {
-        //         paymentStatus: {
-        //             $ne: "Pending"
-        //         }
-        //     }]
-        // }
-        var deepSearch = "sportslist ageGroup weight";
         var Model = this;
         var Const = this(data);
         var maxRow = Config.maxRow;
@@ -470,75 +477,78 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
+        if (data.keyword == "") {
+            var deepSearch = "sportslist ageGroup weight";
+            var Search = Model.find(data.keyword)
 
-        Sport.aggregate(
-            [{
-                    $lookup: {
-                        "from": "sportlists",
-                        "localField": "sportlist",
-                        "foreignField": "_id",
-                        "as": "sportlist"
+                .order(options)
+                .deepPopulate(deepSearch)
+                .keyword(options)
+                .page(options, callback);
+
+        } else {
+            async.waterfall([
+                    function (callback) {
+                        var dataFinal = {};
+                        var pipeLine = Sport.getSearchPipeLine(data);
+                        Sport.aggregate(pipeLine, function (err, totals) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, "error in mongoose");
+                            } else {
+                                if (_.isEmpty(totals)) {
+                                    callback(null, 0);
+                                } else {
+                                    dataFinal.total = totals.length;
+                                    // console.log("counttotal", dataFinal.count);
+                                    callback(null, dataFinal);
+                                }
+                            }
+                        });
+
+                    },
+                    function (dataFinal, callback) {
+                        var pipeLine = Sport.getSearchPipeLine(data);
+                        var newPipeLine = _.cloneDeep(pipeLine);
+                        newPipeLine.push(
+                            // Stage 6
+                            {
+                                '$skip': parseInt(options.start)
+                            }, {
+                                '$limit': maxRow
+                            });
+                        Sport.aggregate(newPipeLine, function (err, totals) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, "error in mongoose");
+                            } else {
+                                if (_.isEmpty(totals)) {
+                                    callback(null, []);
+                                } else {
+                                    dataFinal.options = options;
+                                    dataFinal.results = totals;
+                                    console.log("athelete", dataFinal);
+                                    callback(null, dataFinal);
+                                }
+                            }
+                        });
                     }
-                },
-                // Stage 2
-                {
-                    $unwind: {
-                        path: "$sportlist",
-                        // preserveNullAndEmptyArrays: true // optional
-                    }
-                },
-                // Stage 3
-                {
-                    $match: {
-                        "sportlist.name": {
-                            $regex: data.input
+
+                ],
+                function (err, data2) {
+                    if (err) {
+                        console.log(err);
+                        callback(null, []);
+                    } else if (data2) {
+                        if (_.isEmpty(data2)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, data2);
                         }
-
-
                     }
-                },
-                {
-                    $sort: {
-                        "createdAt": -1
-                    }
-                },
-                // Stage 6
-                {
-                    '$skip': parseInt(options.start)
-                }, {
-                    '$limit': maxRow
-                },
-            ],
-            function (err, returnReq) {
-                console.log("returnReq : ", returnReq);
-                if (err) {
-                    console.log(err);
-                    callback(null, err);
-                } else {
-                    if (_.isEmpty(returnReq)) {
-                        var count = returnReq.length;
-                        console.log("count", count);
+                });
 
-                        var data = {};
-                        data.options = options;
-
-                        data.results = returnReq;
-                        data.total = count;
-                        callback(null, data);
-                    } else {
-                        var count = returnReq.length;
-                        console.log("count", count);
-
-                        var data = {};
-                        data.options = options;
-
-                        data.results = returnReq;
-                        data.total = count;
-                        callback(null, data);
-
-                    }
-                }
-            });
+        }
 
     },
 
