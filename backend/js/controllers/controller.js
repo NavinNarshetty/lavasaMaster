@@ -1300,19 +1300,21 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
         };
         $scope.getOneOldSchoolById();
         $scope.saveData = function (data) {
+            console.log(data);
             if (data) {
                 if (data.maxTeamPlayers >= data.minTeamPlayers) {
-
-                    $scope.url = "Sport/save";
-                    NavigationService.apiCall($scope.url, data, function (data) {
-                        console.log("data.value", data);
-                        if (data.data.nModified == '1') {
-                            toastr.success(" Saved Successfully", "Sport Message");
-                            $state.go('sports');
-
-                        }
-
-                    });
+                    if (data.fromDate && data.toDate) {
+                        $scope.url = "Sport/save";
+                        NavigationService.apiCall($scope.url, data, function (data) {
+                            console.log("data.value", data);
+                            if (data.data.nModified == '1') {
+                                toastr.success(" Saved Successfully", "Sport Message");
+                                $state.go('sports');
+                            }
+                        });
+                    } else {
+                        toastr.error('Please enter cut off dates', 'Sport Message')
+                    }
                 } else {
                     toastr.error('Please enter a Max Team player value greater then Min Team Player value', 'Sport Message')
                 }
