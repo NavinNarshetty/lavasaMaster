@@ -84,7 +84,7 @@ var model = {
     allAthlete: function (data, callback) {
         async.waterfall([
                 function (callback) {
-                    console.log("school", data.school);
+                    console.log("age111", data.age);
                     var maxRow = 9;
                     var page = 1;
                     if (data.page) {
@@ -92,7 +92,8 @@ var model = {
                     }
                     var start = (page - 1) * maxRow;
                     console.log("options", start);
-                    if (_.isEmpty(data.sfaid) && _.isEmpty(data.age) && _.isEmpty(data.gender)) {
+                    if (data.sfaid == "" && data.age == "" && data.gender == "") {
+                        console.log("inside empty all");
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -147,11 +148,7 @@ var model = {
                             });
 
                     } else if (data.sfaid && data.age && data.gender) {
-                        var age = data.age;
-                        var length = age.length;
-                        age = age.slice(2, length);
-                        data.age = parseInt(age);
-                        console.log("age", data.age);
+                        console.log("inside all data");
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -213,11 +210,7 @@ var model = {
                                 }
                             });
                     } else if (data.sfaid && data.age) {
-                        var age = data.age;
-                        var length = age.length;
-                        age = age.slice(2, length);
-                        data.age = parseInt(age);
-                        console.log("age", data.age);
+                        console.log("inside age and sfa");
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -277,6 +270,7 @@ var model = {
                                 }
                             });
                     } else if (data.sfaid && data.gender) {
+                        console.log("inside gender and sfa");
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -336,11 +330,7 @@ var model = {
                                 }
                             });
                     } else if (data.age && data.gender) {
-                        var age = data.age;
-                        var length = age.length;
-                        age = age.slice(2, length);
-                        data.age = parseInt(age);
-                        console.log("age", data.age);
+                        console.log("inside age and gender");
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -400,11 +390,7 @@ var model = {
                                 }
                             });
                     } else if (data.age) {
-                        var age = data.age;
-                        var length = age.length;
-                        age = age.slice(2, length);
-                        data.age = parseInt(age);
-                        console.log("age", data.age);
+                        console.log("inside age");
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -463,6 +449,7 @@ var model = {
                                 }
                             });
                     } else if (data.gender) {
+                        console.log("inside gender");
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -521,6 +508,7 @@ var model = {
                                 }
                             });
                     } else if (data.sfaid) {
+                        console.log("inside sfa");
                         var pipeLine = IndividualSport.getAggregatePipeLine(data);
                         async.waterfall([
                                 function (callback) {
@@ -597,7 +585,9 @@ var model = {
     },
 
     totalAthlete: function (data, callback) {
-        if (_.isEmpty(data.sfaid) && _.isEmpty(data.age) && _.isEmpty(data.gender)) {
+        console.log("data.age", data.age);
+        if (data.sfaid == "" && data.age == "" && data.gender == "") {
+            console.log("inside empties");
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             Athelete.aggregate(pipeLine, function (err, totals) {
                 if (err) {
@@ -614,11 +604,7 @@ var model = {
                 }
             });
         } else if (data.sfaid && data.age && data.gender) {
-            var age = data.age;
-            var length = age.length;
-            age = age.slice(2, length);
-            data.age = parseInt(age);
-            console.log("age", data.age);
+            console.log("inside all");
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
@@ -644,11 +630,7 @@ var model = {
                 }
             });
         } else if (data.sfaid && data.age) {
-            var age = data.age;
-            var length = age.length;
-            age = age.slice(2, length);
-            data.age = parseInt(age);
-            console.log("age", data.age);
+            console.log("inside age and sfa");
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
@@ -673,6 +655,7 @@ var model = {
                 }
             });
         } else if (data.sfaid && data.gender) {
+            console.log("inside gender and sfa");
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
@@ -697,11 +680,7 @@ var model = {
                 }
             });
         } else if (data.age && data.gender) {
-            var age = data.age;
-            var length = age.length;
-            age = age.slice(2, length);
-            data.age = parseInt(age);
-            console.log("age", data.age);
+            console.log("inside age and gender");
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
@@ -726,6 +705,7 @@ var model = {
                 }
             });
         } else if (data.gender) {
+            console.log("inside gender");
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
@@ -749,11 +729,7 @@ var model = {
                 }
             });
         } else if (data.age) {
-            var age = data.age;
-            var length = age.length;
-            age = age.slice(2, length);
-            data.age = parseInt(age);
-            console.log("age", data.age);
+            console.log("inside age");
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
@@ -777,6 +753,7 @@ var model = {
                 }
             });
         } else if (data.sfaid) {
+            console.log("inside sfa");
             var pipeLine = IndividualSport.getAggregatePipeLine(data);
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
@@ -804,23 +781,19 @@ var model = {
 
     getAthletePerSchool: function (data, callback) {
         async.waterfall([
-                // function (callback) {
-                //     // AgeGroup.findOne({
-                //     //     _id: data.age
-                //     // }).exec(function (err, found) {
-                //     //     if (_.isEmpty(found)) {
-                //     //         callback(null, []);
-                //     //     } else {
-                //     // var age = data.age;
-                //     // var length = age.length;
-                //     // age = age.slice(2, length);
-                //     // data.age = parseInt(age);
-                //     // console.log("age", data.age);
-                //     // callback(null, data);
-                //     //     }
-                //     // });
-                // },
                 function (callback) {
+                    if (data.age == "") {
+                        callback(null, data);
+                    } else {
+                        var age = data.age;
+                        var length = age.length;
+                        age = age.slice(2, length);
+                        data.age = parseInt(age);
+                        console.log("age***", data.age);
+                        callback(null, data);
+                    }
+                },
+                function (data, callback) {
                     console.log("inside first");
                     IndividualSport.allAthlete(data, function (err, complete) {
                         if (err) {
@@ -837,7 +810,7 @@ var model = {
                 function (complete, callback) {
                     var results = {};
                     var finalData = [];
-                    console.log("total", complete.total);
+                    // console.log("total", complete.total);
                     async.each(complete.results, function (n, callback) {
                         IndividualSport.find({
                             athleteId: n._id,
@@ -850,7 +823,7 @@ var model = {
                                 finalData.push(athlete);
                                 results.data = finalData;
                                 results.total = complete.total;
-                                console.log("data", results);
+                                // console.log("data", results);
                                 callback(null, results);
                             } else {
                                 var athlete = {};
@@ -859,7 +832,7 @@ var model = {
                                 finalData.push(athlete);
                                 results.data = finalData;
                                 results.total = complete.total;
-                                console.log("data", results);
+                                // console.log("data", results);
                                 callback(null, results);
                             }
                         });

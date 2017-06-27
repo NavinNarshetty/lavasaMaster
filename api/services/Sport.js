@@ -116,6 +116,42 @@ var model = {
         return pipeline;
     },
 
+    getSearchPipeLine: function (data) {
+
+        var pipeline = [{
+                $lookup: {
+                    "from": "sportlists",
+                    "localField": "sportlist",
+                    "foreignField": "_id",
+                    "as": "sportlist"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sportlist",
+                    // preserveNullAndEmptyArrays: true // optional
+                }
+            },
+            // Stage 3
+            {
+                $match: {
+                    "sportlist.name": {
+                        $regex: data.input
+                    }
+
+
+                }
+            },
+            {
+                $sort: {
+                    "createdAt": -1
+                }
+            },
+        ];
+        return pipeline;
+    },
+
     getAthletePerSchool: function (data, callback) {
 
         async.waterfall([
@@ -396,6 +432,114 @@ var model = {
                 }
             });
         }
+    },
+
+    search: function (data, callback) {
+        // var matchObj = {
+        //     $or: [{
+        //         registrationFee: {
+        //             $ne: "online PAYU"
+        //         }
+        //     }, {
+        //         paymentStatus: {
+        //             $ne: "Pending"
+        //         }
+        //     }]
+        // }
+        var deepSearch = "sportslist ageGroup weight";
+        var Model = this;
+        var Const = this(data);
+        var maxRow = Config.maxRow;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['name'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+
+        Sport.aggregate(
+            [{
+                    $lookup: {
+                        "from": "sportlists",
+                        "localField": "sportlist",
+                        "foreignField": "_id",
+                        "as": "sportlist"
+                    }
+                },
+                // Stage 2
+                {
+                    $unwind: {
+                        path: "$sportlist",
+                        // preserveNullAndEmptyArrays: true // optional
+                    }
+                },
+                // Stage 3
+                {
+                    $match: {
+                        "sportlist.name": {
+                            $regex: data.input
+                        }
+
+
+                    }
+                },
+                {
+                    $sort: {
+                        "createdAt": -1
+                    }
+                },
+                // Stage 6
+                {
+                    '$skip': parseInt(options.start)
+                }, {
+                    '$limit': maxRow
+                },
+            ],
+            function (err, returnReq) {
+                console.log("returnReq : ", returnReq);
+                if (err) {
+                    console.log(err);
+                    callback(null, err);
+                } else {
+                    if (_.isEmpty(returnReq)) {
+                        var count = returnReq.length;
+                        console.log("count", count);
+
+                        var data = {};
+                        data.options = options;
+
+                        data.results = returnReq;
+                        data.total = count;
+                        callback(null, data);
+                    } else {
+                        var count = returnReq.length;
+                        console.log("count", count);
+
+                        var data = {};
+                        data.options = options;
+
+                        data.results = returnReq;
+                        data.total = count;
+                        callback(null, data);
+
+                    }
+                }
+            });
+
     },
 
 
