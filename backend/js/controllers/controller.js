@@ -1304,7 +1304,7 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
             if (data) {
                 if (data.maxTeamPlayers >= data.minTeamPlayers) {
                     if (data.fromDate && data.toDate) {
-                        $scope.url = "Sport/save";
+                        $scope.url = "Sport/saveSport";
                         NavigationService.apiCall($scope.url, data, function (data) {
                             console.log("data.value", data);
                             if (data.data.nModified == '1') {
@@ -1330,7 +1330,7 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
 
                     if (formvalid.$valid) {
 
-                        $scope.url = "Sport/save";
+                        $scope.url = "Sport/saveSport";
                         NavigationService.apiCall($scope.url, data, function (data) {
                             console.log("data.value", data);
                             if (data.value === true) {
@@ -1406,30 +1406,12 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
         name: 'Female'
     }]
     $scope.sporttypeList = [];
-    $scope.sporttypeList = [{
-        name: 'Team Sports'
-    }, {
-        name: 'Racquet Sports'
-    }, {
-        name: 'Combat Sports'
-    }]
+
     $scope.ageList = [];
-    $scope.ageList = [{
-        name: 'u-8'
-    }, {
-        name: 'u-10'
-    }, {
-        name: 'u-12'
-    }]
+
 
     $scope.weightList = [];
-    $scope.weightList = [{
-        name: '50 kg'
-    }, {
-        name: '60 kg'
-    }, {
-        name: '70 kg'
-    }]
+
     $scope.onCancel = function (sendTo) {
         $state.go(sendTo);
     }
@@ -1446,6 +1428,33 @@ myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationS
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
 
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    // $scope.selectedStatus = 'All';
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
+    $scope.viewTable = function () {
+        $scope.url = "TeamSport/search";
+        $scope.formData.page = $scope.formData.page++;
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
+
+        });
+    }
+    $scope.viewTable();
 })
 
 //view-team sport
@@ -1457,6 +1466,24 @@ myApp.controller('DetailTeamSportCtrl', function ($scope, TemplateService, Navig
     $scope.menutitle = NavigationService.makeactive("Detail Team Sport");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.getOneTeamSportById = function () {
+        $scope.url = 'TeamSport/getOne';
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.formData = data.data;
+            console.log($scope.formData);
+            // if ($scope.team.school) {
+            //     $scope.url1 = 'School/getOne';
+            //     $scope.constraints = {};
+            //     $scope.constraints._id = $scope.athlete.school;
+            //     NavigationService.getOneOldSchoolById($scope.url1, $scope.constraints, function (data) {
+            //         $scope.athlete.school = data.data.name;
+            //     });
+            // }
+        });
+    };
+    $scope.getOneTeamSportById();
 
 })
 

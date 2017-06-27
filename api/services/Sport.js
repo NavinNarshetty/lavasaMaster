@@ -552,6 +552,30 @@ var model = {
 
     },
 
+    saveSport: function (data, callback) {
+        if (_.isEmpty(data.weight)) {
+            data.weight = undefined;
+        }
+        if (_.isEmpty(data.ageGroup)) {
+            data.ageGroup = undefined;
+        }
+        if (_.isEmpty(data.sportslist)) {
+            data.sportslist = undefined;
+        }
+        Sport.saveData(data, function (err, sportData) {
+            if (err) {
+                console.log("err", err);
+                callback("There was an error while saving", null);
+            } else {
+                if (_.isEmpty(sportData)) {
+                    callback("No order data found", null);
+                } else {
+                    callback(null, sportData);
+                }
+            }
+        });
+    },
+
 
 };
 module.exports = _.assign(module.exports, exports, model);

@@ -44,13 +44,15 @@ var controller = {
     saveInIndividual: function (req, res) {
         if (req.body) {
             if (req.body.schoolToken) {
+                // console.log("token", req.body.schoolToken);
                 Registration.findOne({
                     accessToken: req.body.schoolToken
                 }).exec(function (err, found) {
                     if (err) {
-                        callback(err, null);
+                        res.callback(err, null);
                     } else if (_.isEmpty(found)) {
-                        callback("Incorrect Login Details", null);
+                        // console.log("found", found);
+                        res.callback(null, "data not found");
                     } else {
                         req.body.school = found.schoolName;
                         req.body.sfaid = found.sfaID;

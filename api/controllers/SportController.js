@@ -36,6 +36,17 @@ var controller = {
 
     },
 
+    saveSport: function (req, res) {
+        if (req.body) {
+            Sport.saveSport(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "User Not logged in"
+            });
+        }
+    },
+
 
 };
 module.exports = _.assign(module.exports, controller);
