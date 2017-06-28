@@ -267,7 +267,7 @@ var model = {
         async.waterfall([
                 function (callback) {
                     console.log("school", data.school);
-                    var maxRow = 1;
+                    var maxRow = 9;
                     var page = 1;
                     if (data.page) {
                         page = data.page;

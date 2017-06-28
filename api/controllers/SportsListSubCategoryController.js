@@ -12,9 +12,23 @@ var controller = {
         }
 
     },
+
     getOneSport: function (req, res) {
         if (req.body) {
-            SportsListSubCategory.getOneSport(req.body, res.callback);
+            if (req.body.schoolToken) {
+                Registration.findOne({
+                    accessToken: req.body.schoolToken
+                }).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback("Incorrect Login Details", null);
+                    } else {
+                        req.body.school = found._id;
+                        SportsListSubCategory.getOneSport(req.body, res.callback);
+                    }
+                });
+            }
         } else {
             res.json({
                 value: false,
@@ -22,6 +36,7 @@ var controller = {
             });
         }
     },
+
     getSports: function (req, res) {
         if (req.body) {
             SportsListSubCategory.getSports(req.body, res.callback);
@@ -32,6 +47,7 @@ var controller = {
             });
         }
     },
+
     getRules: function (req, res) {
         if (req.body) {
             SportsListSubCategory.getRules(req.body, res.callback);
@@ -42,6 +58,7 @@ var controller = {
             });
         }
     },
+
     getOneRuleBySportsName: function (req, res) {
         if (req.body) {
             SportsListSubCategory.getOneRuleBySportsName(req.body, res.callback);
@@ -52,6 +69,7 @@ var controller = {
             });
         }
     },
+
     getEvents: function (req, res) {
         if (req.body) {
             SportsListSubCategory.getEvents(req.body, res.callback);
@@ -62,9 +80,5 @@ var controller = {
             });
         }
     }
-
-
-
-
 };
 module.exports = _.assign(module.exports, controller);

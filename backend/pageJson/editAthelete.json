@@ -75,7 +75,7 @@
             "dropDownField": "",
             "dropDownType": "single",
             "onView": true,
-            "dropDown": ["Male", "Female"]
+            "dropDown": ["male", "female"]
         }, {
             "name": "Standard",
             "type": "tags",

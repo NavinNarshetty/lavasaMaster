@@ -174,7 +174,8 @@ var model = {
                     results.minplayer = totals[0].minTeamPlayers;
                     results.maxPlayer = totals[0].maxTeamPlayers;
                     TeamSport.count({
-                        sport: results.sport
+                        sport: results.sport,
+                        school: data.school
                     }).exec(function (err, found) {
                         if (found == totals[0].maxTeam) {
                             callback("Max Team Created", null);
@@ -376,7 +377,6 @@ var model = {
                 if (_.isEmpty(totals)) {
                     callback(null, []);
                 } else {
-                    // var results = _.groupBy(totals, "data[0].eventName");
                     callback(null, totals);
                 }
             }

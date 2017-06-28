@@ -1466,21 +1466,62 @@ myApp.controller('DetailTeamSportCtrl', function ($scope, TemplateService, Navig
     $scope.menutitle = NavigationService.makeactive("Detail Team Sport");
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
+    $scope.athlete = {};
+    $scope.studentTeam = [];
     $scope.getOneTeamSportById = function () {
         $scope.url = 'TeamSport/getOne';
         $scope.constraints = {};
         $scope.constraints._id = $stateParams.id;
         NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+
             $scope.formData = data.data;
-            console.log($scope.formData);
-            // if ($scope.team.school) {
-            //     $scope.url1 = 'School/getOne';
-            //     $scope.constraints = {};
-            //     $scope.constraints._id = $scope.athlete.school;
-            //     NavigationService.getOneOldSchoolById($scope.url1, $scope.constraints, function (data) {
-            //         $scope.athlete.school = data.data.name;
-            //     });
-            // }
+            console.log("data team", $scope.formData);
+            if ($scope.formData.school) {
+                $scope.url1 = 'Registration/getOne';
+                $scope.request = {};
+                $scope.request._id = $scope.formData.school;
+                NavigationService.getOneOldSchoolById($scope.url1, $scope.request, function (data) {
+                    $scope.formData.school = data.data.schoolName;
+                });
+            }
+            if ($scope.formData.sport) {
+                $scope.url2 = 'Sport/getOne';
+                $scope.request1 = {};
+                $scope.request1._id = $scope.formData.sport;
+                NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
+                    console.log("data sport", data);
+                    $scope.formData.sport = data.data.sportslist.name + " " + data.data.gender + " " + data.data.ageGroup.name;
+                });
+            }
+            if ($scope.formData.studentTeam) {
+                $scope.i = 0;
+                _.each($scope.formData.studentTeam, function (n) {
+                    $scope.url2 = 'StudentTeam/getOne';
+                    $scope.request1 = {};
+                    $scope.request1._id = n;
+                    NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
+                        // console.log("data student", data);
+                        if (data.data.studentId) {
+                            $scope.url2 = 'Athelete/getOne';
+                            $scope.request1 = {};
+                            $scope.request1._id = data.data.studentId;
+                            NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
+                                // console.log("data athlete", data);
+                                if (data.data.middleName) {
+                                    $scope.athlete = data.data.firstName + " " + data.data.middleName + " " + data.data.surname;
+                                } else {
+                                    $scope.athlete = data.data.firstName + " " + data.data.surname;
+                                }
+                            });
+                        }
+                        $scope.studentTeam[$scope.i] = $scope.athlete;
+                        console.log("student", $scope.studentTeam);
+                    });
+                    $scope.i++;
+                });
+                $scope.formData.studentTeam = $scope.studentTeam;
+                console.log("studentTeam", $scope.formData.studentTeam);
+            }
         });
     };
     $scope.getOneTeamSportById();
