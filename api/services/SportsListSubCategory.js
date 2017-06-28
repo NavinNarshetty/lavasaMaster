@@ -352,6 +352,8 @@ var model = {
                     data: {
                         $push: {
                             sport: "$_id",
+                            fromAge: "$fromDate",
+                            toAge: "$toDate",
                             sportName: "$sportsubData.name",
                             eventName: "$sportsListData.name",
                             weight: "$weight.name"
