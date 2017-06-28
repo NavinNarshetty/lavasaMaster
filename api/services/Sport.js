@@ -204,7 +204,10 @@ var model = {
                             callback(err, null);
                         } else {
                             if (_.isEmpty(complete)) {
-                                callback(null, []);
+                                var results = {};
+                                results.data = [];
+                                results.total = 0;
+                                callback(null, results);
                             } else {
                                 console.log("complete", complete);
                                 callback(null, complete);
@@ -258,7 +261,7 @@ var model = {
                     callback(null, []);
                 } else if (results) {
                     if (_.isEmpty(results)) {
-                        callback(null, []);
+                        callback(null, results);
                     } else {
                         callback(null, results);
                     }

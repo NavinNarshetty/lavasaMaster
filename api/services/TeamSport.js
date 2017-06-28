@@ -250,7 +250,7 @@ var model = {
                                     emailData.filename = "teamSport.ejs";
                                     emailData.teamId = total.teamSport.teamId;
                                     emailData.students = total.studentTeam;
-                                    emailData.subject = "SFA: subject is missing";
+                                    emailData.subject = "SFA: Successful Team Sport Registered";
                                     console.log("emaildata", emailData);
 
                                     Config.email(emailData, function (err, emailRespo) {
@@ -323,7 +323,7 @@ var model = {
             emailData.filename = "studentTeam.ejs";
             emailData.teamId = total.teamSport.teamId;
             emailData.students = total.studentTeam;
-            emailData.subject = "SFA: subject is missing";
+            emailData.subject = "SFA: Successful Team Sport Registered";
             console.log("emaildata", emailData);
             Config.email(emailData, function (err, emailRespo) {
                 if (err) {
