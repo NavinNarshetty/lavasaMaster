@@ -29,30 +29,39 @@
                   <input type="text" name="name" ng-model="formData.sport" class="form-control" readonly>
                 </div>
                 <div class="form-group">
-                  <label>Student Team</label>
-                  <input type="text" name="name" ng-model="formData.studentTeam" class="form-control" readonly>
+                  <div class="viewStudent">
+                    <label>Student Team</label>
+                    <ui-select disabled multiple ng-model="formData.studentTeam" class="form-control">
+                      <ui-select-match>
+                        <span ng-bind="$item.name"></span>
+                      </ui-select-match>
+                      <ui-select-choices repeat="item in formData.studentTeam">
+                      </ui-select-choices>
+                    </ui-select>
+                    <div class="overlay"></div>
+                  </div>
                 </div>
                 <div class="form-group">
                   <label>School </label>
                   <input type="text" name="name" ng-model="formData.school" class="form-control" readonly>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-if="formData.nominatedName">
                   <label>Nominated Name</label>
                   <input type="text" name="name" ng-model="formData.nominatedName" class="form-control" readonly>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-if="formData.nominatedSchoolName">
                   <label>Nominated School Name</label>
                   <input type="text" name="name" ng-model="formData.nominatedSchoolName" class="form-control" readonly>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-if="formData.nominatedContactDetails">
                   <label>Nominated Contact Details</label>
                   <input type="text" name="name" ng-model="formData.nominatedContactDetails" class="form-control" readonly>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-if="formData.nominatedEmailId">
                   <label>Nominated Email ID</label>
                   <input type="text" name="name" ng-model="formData.nominatedEmailId" class="form-control" readonly>
                 </div>
-                <div class="form-group">
+                <div class="form-group" ng-if="formData.isVideoAnalysis">
                   <label>Is Video Analysis</label>
                   <input type="text" name="name" ng-model="formData.isVideoAnalysis" class="form-control" readonly>
                 </div>

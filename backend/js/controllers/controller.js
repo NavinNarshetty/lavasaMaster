@@ -1434,7 +1434,7 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
 
 
 //team sport
-myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableteamsport");
@@ -1469,6 +1469,42 @@ myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationS
         });
     }
     $scope.viewTable();
+    $scope.removeTeam = function (teamId) {
+        teamId
+
+    }
+    $scope.removeTeam = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/views/modal/delete.html',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+        });
+    };
+
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    }
+
+    $scope.delete = function (data) {
+        // console.log(data);
+        $scope.url = "TeamSport/rejectionTeam";
+        $scope.constraints = {};
+        $scope.constraints.teamId = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'Team Sport Message');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something Went Wrong while Deleting', 'Team Sport Message');
+            }
+        });
+    }
 })
 
 //view-team sport
@@ -1509,37 +1545,44 @@ myApp.controller('DetailTeamSportCtrl', function ($scope, TemplateService, Navig
             }
             if ($scope.formData.studentTeam) {
                 $scope.i = 0;
-                _.each($scope.formData.studentTeam, function (n) {
+                $scope.teamStudent = $scope.formData.studentTeam;
+                $scope.formData.studentTeam = [];
+                _.each($scope.teamStudent, function (n) {
                     $scope.url2 = 'StudentTeam/getOne';
                     $scope.request1 = {};
                     $scope.request1._id = n;
+                    console.log('value', $scope.i);
                     NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
                         // console.log("data student", data);
+                        console.log('value', $scope.i);
                         if (data.data.studentId) {
                             $scope.url2 = 'Athelete/getOne';
                             $scope.request1 = {};
                             $scope.request1._id = data.data.studentId;
                             NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
-                                // console.log("data athlete", data);
                                 if (data.data.middleName) {
                                     $scope.athlete = data.data.firstName + " " + data.data.middleName + " " + data.data.surname;
+                                    $scope.studentTeam[$scope.i] = $scope.athlete;
+                                    console.log("students", $scope.studentTeam[$scope.i]);
+                                    $scope.formData.studentTeam.push({
+                                        name: $scope.athlete
+                                    });
                                 } else {
                                     $scope.athlete = data.data.firstName + " " + data.data.surname;
+                                    $scope.studentTeam[$scope.i] = $scope.athlete;
+                                    $scope.formData.studentTeam.push({
+                                        name: $scope.athlete
+                                    });
                                 }
                             });
                         }
-                        $scope.studentTeam[$scope.i] = $scope.athlete;
-                        console.log("student", $scope.studentTeam);
+                        $scope.i++;
                     });
-                    $scope.i++;
                 });
-                $scope.formData.studentTeam = $scope.studentTeam;
-                console.log("studentTeam", $scope.formData.studentTeam);
             }
         });
     };
     $scope.getOneTeamSportById();
-
 })
 
 //student team
