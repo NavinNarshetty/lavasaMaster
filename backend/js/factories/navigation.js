@@ -264,6 +264,13 @@ myApp.factory('NavigationService', function ($http) {
             })
         },
 
+        generateExcel: function (url, callback) {
+            $http.post(adminurl + url).then(function (data) {
+                // data = data.data;
+                callback(data);
+            });
+        },
+
         generateOldSchoolExcel: function (callback) {
             $http.post(adminurl + 'School/generateExcel').then(function (data) {
                 // data = data.data;

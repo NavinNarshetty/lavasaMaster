@@ -1084,6 +1084,13 @@ myApp.controller('SportsListCtrl', function ($scope, TemplateService, Navigation
             }
         });
     }
+
+    $scope.generateExcel = function () {
+        $scope.url = "sportslist/generateExcel";
+        NavigationService.generateExcel($scope.url, function (data) {
+            window.location.href = adminurl + $scope.url;
+        });
+    }
 })
 
 //detail sports list
@@ -1274,6 +1281,13 @@ myApp.controller('SportsCtrl', function ($scope, TemplateService, NavigationServ
             } else {
                 toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
             }
+        });
+    }
+
+    $scope.generateExcel = function () {
+        $scope.url = "sport/generateExcel";
+        NavigationService.generateExcel($scope.url, function (data) {
+            window.location.href = adminurl + $scope.url;
         });
     }
 })

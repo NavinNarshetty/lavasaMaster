@@ -38,5 +38,9 @@ var controller = {
         }
     },
 
+    generateExcel: function (req, res) {
+        SportsList.generateExcel(res);
+    },
+
 };
 module.exports = _.assign(module.exports, controller);

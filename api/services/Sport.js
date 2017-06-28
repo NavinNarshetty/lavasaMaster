@@ -673,18 +673,20 @@ var model = {
                         obj.sportsList = n.sportslist.name;
                         obj.ageGroup = n.ageGroup.name;
                         var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
-                        obj.createdAt = dateTime;
+                        obj.date = dateTime;
                         obj.gender = n.gender;
                         obj.maxTeamPlayers = n.maxTeamPlayers;
                         obj.minTeamPlayers = n.minTeamPlayers;
                         obj.maxTeam = n.maxTeam;
                         if (n.weight) {
-                            obj.weight = n.weight;
+                            obj.weight = n.weight.name;
                         } else {
                             obj.weight = " ";
                         }
-                        obj.fromDate = n.fromDate;
-                        obj.toDate = n.toDate;
+                        var from = moment.utc(n.fromDate).utcOffset("+05:30").format('YYYY-MM-DD');
+                        obj.fromDate = from;
+                        var todate = moment.utc(n.toDate).utcOffset("+05:30").format('YYYY-MM-DD');
+                        obj.toDate = todate;
                         excelData.push(obj);
                     });
                     console.log("excel:", excelData);
