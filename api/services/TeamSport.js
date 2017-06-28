@@ -193,9 +193,9 @@ var model = {
         team.sport = data.sport;
         team.studentTeam = [];
         team.school = data.school;
-        // var sport = data.name;
-        // var index = sport.indexOf("-");
-        // data.name = sport.slice(++index, sport.length);
+        var sport = data.name;
+        var index = sport.indexOf("-");
+        data.name = sport.slice(++index, sport.length);
         async.waterfall([
                 function (callback) {
                     TeamSport.saveInTeam(team, function (err, complete) {
