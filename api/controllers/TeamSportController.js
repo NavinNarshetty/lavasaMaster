@@ -39,6 +39,18 @@ var controller = {
 
     },
 
+    rejectionTeam: function (req, res) {
+        if (req.body) {
+            TeamSport.rejectionTeam(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "User Not logged in"
+            });
+        }
+
+    },
+
 
 };
 module.exports = _.assign(module.exports, controller);

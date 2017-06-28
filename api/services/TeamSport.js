@@ -347,5 +347,95 @@ var model = {
         });
     },
 
+    rejectionTeam: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    TeamSport.findOne({
+                        teamId: data.teamId
+                    }).exec(function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete)
+                            }
+                        }
+                    });
+                },
+                function (complete, callback) {
+                    TeamSport.athleteRelease(complete, function (err, complete1) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete1)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete1);
+                            }
+                        }
+                    });
+                },
+                function (complete1, callback) {
+                    if (complete1 == "deleted") {
+                        TeamSport.remove({
+                            teamId: data.teamId
+                        }).exec(function (err, complete2) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(complete2)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, complete2)
+                                }
+                            }
+                        });
+                    }
+
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+
+    },
+
+    athleteRelease: function (data, callback) {
+        async.each(data.studentTeam, function (n, callback) {
+            StudentTeam.remove({
+                _id: n
+            }).exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(found)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, found)
+                    }
+                }
+            });
+
+        }, function (err) {
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else {
+                callback(null, "deleted");
+            }
+        });
+    },
+
 };
 module.exports = _.assign(module.exports, exports, model);

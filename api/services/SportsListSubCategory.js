@@ -102,7 +102,11 @@ var model = {
                     "sportsubData._id": objectid(data._id)
                 }
             },
-
+            {
+                $sort: {
+                    "ageData.name": -1
+                }
+            },
         ];
         return pipeline;
     },
