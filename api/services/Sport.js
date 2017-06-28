@@ -89,6 +89,15 @@ var model = {
 
                 }
             },
+            {
+                $match: {
+
+                    $or: [{
+                        "status": "Verified"
+                    }, ]
+
+                }
+            },
             // Stage 4
             {
                 $match: {
