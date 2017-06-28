@@ -16,12 +16,12 @@
           <div class="widget-title ">
             <div class="pull-right">
               <form class="search-form mr-form ">
-                <input type="text " ng-change="searchInOldSchool(search) " placeholder="Search Here...
+                <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
                              " ng-model="search" />
               </form>
-              <a class="btn btn-success" ng-click="generateExcel()">Excel Export</a>
+              <!--<a class="btn btn-success" ng-click="generateExcel()">Excel Export</a>-->
             </div>
-            <h3>List of Old School<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
+            <h3>List of Athlete in Team Sport<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
           </div>
           <div class="table-responsive ">
             <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
@@ -39,13 +39,12 @@
                 </tr>
               </thead>
               <tbody>
-                <!--<tr ng-repeat="item in items">-->
-                <tr>
+                <tr ng-repeat="item in items">
                   <!--<tr>-->
-                  <!--<td>{{$index + 1}}</td>-->
-                  <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
-                  <td>{{item.teamId}}</td>
-                  <td>{{item.name}}</td>
+                  <!--<tr>-->
+                  <td>{{$index + 1}}</td>
+                  <td>{{item.teamId.teamId}}</td>
+                  <td>{{item.studentId.firstName}} {{item.studentId.middleName}} {{item.studentId.surname}}</td>
                   <td>
                     <a class="btn btn-info" target="_blank" ui-sref="detail-teamsport">
                                             <i class="fa fa-eye"></i> View

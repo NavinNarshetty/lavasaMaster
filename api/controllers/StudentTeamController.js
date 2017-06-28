@@ -12,6 +12,17 @@ var controller = {
         }
 
     },
+    search: function (req, res) {
+        if (req) {
+            StudentTeam.search(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "User Not logged in"
+            });
+        }
+
+    },
 
 
 };
