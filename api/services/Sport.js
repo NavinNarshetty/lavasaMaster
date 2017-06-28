@@ -248,7 +248,7 @@ var model = {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(results)) {
-                            callback(null, []);
+                            callback(null, results);
                         } else {
                             callback(null, results);
                         }
@@ -258,7 +258,7 @@ var model = {
             function (err, results) {
                 if (err) {
                     console.log(err);
-                    callback(null, []);
+                    callback(null, results);
                 } else if (results) {
                     if (_.isEmpty(results)) {
                         callback(null, results);
