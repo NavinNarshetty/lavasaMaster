@@ -16,9 +16,6 @@ var schema = new Schema({
 
 schema.plugin(deepPopulate, {
     populate: {
-        'rules': {
-            select: '_id name tournamentFormat rulesAndRegulation ageGroupContent ageGroupTable eligibilityContent eligibilityTable tournamentCommittee'
-        },
         'drawFormat': {
             select: '_id name'
         },
@@ -155,21 +152,61 @@ var model = {
 
     },
 
-    getSportsRule: function (data, callback) {
-        SportsList.find({
-            _id: data._id
-        }).deepPopulate("rules").lean().exec(
-            function (err, found) {
+    generateExcel: function (res) {
+        async.waterfall([
+                function (callback) {
+                    SportsList.find().deepPopulate("sportsListSubCategory drawFormat").lean().sort({
+                        createdAt: -1
+                    }).exec(
+                        function (err, complete) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (complete) {
+                                callback(null, complete);
+                            } else {
+                                callback("Invalid data", null);
+                            }
+                        });
+                },
+                function (complete, callback) {
+                    var excelData = [];
+                    _.each(complete, function (n) {
+                        var obj = {};
+                        var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                        obj.createdAt = dateTime;
+                        obj.sportsList = n.sportslist.name;
+                        obj.ageGroup = n.ageGroup.name;
+
+                        obj.gender = n.gender;
+                        obj.maxTeamPlayers = n.maxTeamPlayers;
+                        obj.minTeamPlayers = n.minTeamPlayers;
+                        obj.maxTeam = n.maxTeam;
+                        if (n.weight) {
+                            obj.weight = n.weight;
+                        } else {
+                            obj.weight = " ";
+                        }
+                        obj.fromDate = n.fromDate;
+                        obj.toDate = n.toDate;
+                        excelData.push(obj);
+                    });
+                    console.log("excel:", excelData);
+                    Config.generateExcelOld("Sport", excelData, res);
+                }
+            ],
+            function (err, data2) {
                 if (err) {
                     console.log(err);
-                    callback(err, null);
-                } else if (found) {
-                    callback(null, found);
-                } else {
-                    callback("Invalid data", null);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
                 }
             });
-
     },
 
 };

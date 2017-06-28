@@ -364,8 +364,6 @@ var model = {
         });
 
     },
-
-
     excelDateToDate: function isDate(value) {
         value = (value - (25567 + 1)) * 86400 * 1000;
         var mom = moment(value);

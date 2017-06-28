@@ -47,6 +47,10 @@ var controller = {
         }
     },
 
+    generateExcel: function (req, res) {
+        Sport.generateExcel(res);
+    },
+
 
 };
 module.exports = _.assign(module.exports, controller);
