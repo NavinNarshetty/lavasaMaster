@@ -101,12 +101,7 @@ var model = {
                 $match: {
                     "sportsubData._id": objectid(data._id)
                 }
-            },
-            {
-                $sort: {
-                    "asc": ageData.name
-                }
-            },
+            }
         ];
         return pipeline;
     },

@@ -193,6 +193,9 @@ var model = {
         team.sport = data.sport;
         team.studentTeam = [];
         team.school = data.school;
+        // var sport = data.name;
+        // var index = sport.indexOf("-");
+        // data.name = sport.slice(++index, sport.length);
         async.waterfall([
                 function (callback) {
                     TeamSport.saveInTeam(team, function (err, complete) {
@@ -233,16 +236,14 @@ var model = {
                         } else if (_.isEmpty(found)) {
                             callback(null, "Data is empty");
                         } else {
+
                             async.parallel([
                                 //school email
                                 function (callback) {
                                     console.log("total", total);
                                     var emailData = {};
                                     emailData.schoolName = found.schoolName;
-                                    var sport = data.name;
-                                    var index = sport.indexOf("-");
-                                    sport = sport.slice(++index, sport.length);
-                                    emailData.sportName = sport;
+                                    emailData.sportName = data.name;
                                     emailData.schoolSFA = found.sfaID;
                                     emailData.from = "info@sfanow.in";
                                     emailData.email = found.email;
@@ -250,7 +251,7 @@ var model = {
                                     emailData.teamId = total.teamSport.teamId;
                                     emailData.students = total.studentTeam;
                                     emailData.subject = "SFA: subject is missing";
-                                    // console.log("emaildata", emailData);
+                                    console.log("emaildata", emailData);
 
                                     Config.email(emailData, function (err, emailRespo) {
                                         if (err) {
@@ -312,12 +313,9 @@ var model = {
 
     athleteMailers: function (found, data, total, callback) {
         async.each(total.studentTeam, function (n, callback) {
-            // console.log("n----", n);
+
             var emailData = {};
-            var sport = data.name;
-            var index = sport.indexOf("-");
-            sport = sport.slice(++index, sport.length);
-            emailData.sportName = sport;
+            emailData.sportName = data.name;
             emailData.schoolName = found.schoolName;
             emailData.schoolSFA = found.sfaID;
             emailData.from = "info@sfanow.in";
@@ -326,7 +324,7 @@ var model = {
             emailData.teamId = total.teamSport.teamId;
             emailData.students = total.studentTeam;
             emailData.subject = "SFA: subject is missing";
-            // console.log("emaildata", emailData);
+            console.log("emaildata", emailData);
             Config.email(emailData, function (err, emailRespo) {
                 if (err) {
                     console.log(err);
