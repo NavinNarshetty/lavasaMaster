@@ -104,7 +104,7 @@ var model = {
             },
             {
                 $sort: {
-                    "ageData.name": -1
+                    "asc": ageData.name
                 }
             },
         ];
