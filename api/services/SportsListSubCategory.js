@@ -352,6 +352,7 @@ var model = {
                             sport: "$_id",
                             fromAge: "$fromDate",
                             toAge: "$toDate",
+                            gender: "$gender",
                             sportName: "$sportsubData.name",
                             eventName: "$sportsListData.name",
                             weight: "$weight.name"
