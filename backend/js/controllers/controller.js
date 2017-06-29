@@ -1505,6 +1505,13 @@ myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationS
             }
         });
     }
+
+    $scope.generateExcel = function () {
+        $scope.url = "teamSport/generateExcel";
+        NavigationService.generateExcel($scope.url, function (data) {
+            window.location.href = adminurl + $scope.url;
+        });
+    }
 })
 
 //view-team sport

@@ -79,6 +79,11 @@ var controller = {
         }
 
     },
+    generateExcel: function (req, res) {
+        TeamSport.generateExcel(res);
+    },
+
+
 
 
 };

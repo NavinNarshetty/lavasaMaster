@@ -474,7 +474,7 @@ var model = {
     generateExcel: function (res) {
         async.waterfall([
                 function (callback) {
-                    var pipeLine = Sport.getTeamPipeLine();
+                    var pipeLine = TeamSport.getTeamPipeLine();
                     TeamSport.aggregate(pipeLine, function (err, complete) {
                         if (err) {
                             callback(err, "error in mongoose");
@@ -488,82 +488,64 @@ var model = {
                     });
                 },
                 function (complete, callback) {
-                    async.each(complete, function (mainData, callback) {
-                        var total = {};
-                        total.teamsport = mainData;
-                        total.studentTeam = [];
-                        async.each(mainData.studentTeam, function (n, callback) {
-                            TeamSport.athleteTeam(n, function (err, complete1) {
-                                if (err) {
-                                    callback(err, null);
+                    console.log(complete);
+                    var excelData = [];
+                    _.each(complete, function (mainData) {
+                        var obj = {};
+                        obj.Teamid = mainData.teamId;
+                        obj.Name = mainData.name;
+                        obj.School = mainData.school.schoolName;
+                        obj.Sport = mainData.sport.sportslist.name;
+                        var StudentTeam;
+
+                        var count = 0;
+                        _.each(mainData.studentTeam, function (n) {
+                            Athelete.findOne({
+                                _id: n.studentId
+                            }).exec(function (err, found) {
+
+                                if (found.middleName) {
+                                    var name = found.firstName + " " + found.middleName + " " + found.surname;
                                 } else {
-                                    if (_.isEmpty(complete1)) {
-                                        callback(null, []);
-                                    } else {
-                                        total.studentTeam.push(complete1);
-                                        callback(null, total);
-                                    }
+                                    var name = found.firstName + " " + found.surname;
                                 }
+                                if (n.isCaptain) {
+                                    var isCaptain = n.isCaptain;
+                                } else {
+                                    var isCaptain = "";
+                                }
+
+                                if (n.isGoalKeeper) {
+                                    var isGoalKeeper = n.isGoalKeeper;
+                                } else {
+                                    var isGoalKeeper = "";
+                                }
+                                if (count == 0) {
+                                    StudentTeam = "{ Name:" + name + "," + "isCaptain:" + isCaptain + "," + "isGoalKeeper:" + isGoalKeeper + "}";
+                                } else {
+                                    StudentTeam = StudentTeam + "{ Name:" + name + "," + "isCaptain:" + isCaptain + "," + "isGoalKeeper:" + isGoalKeeper + "}";
+                                }
+                                count++;
+                                obj.Students = StudentTeam;
+                                // console.log("obj", obj);
                             });
-
-                        }, function (err) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (_.isEmpty(results)) {
-                                callback(null, results);
-                            } else {
-                                callback(null, results);
-                            }
                         });
-                        callback(null, total);
-
-                    }, function (err) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(results)) {
-                            callback(null, results);
-                        } else {
-                            callback(null, results);
-                        }
+                        excelData.push(obj);
                     });
+                    console.log("excelData", excelData);
+                    Config.generateExcelOld("TeamSport", excelData, res);
                 },
-                // function (complete, callback) {
-                //     var excelData = [];
-                //     _.each(complete, function (n) {
-                //         var obj = {};
-                //         obj.sportsList = n.sportslist.name;
-                //         obj.ageGroup = n.ageGroup.name;
-                //         var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
-                //         obj.date = dateTime;
-                //         obj.gender = n.gender;
-                //         obj.maxTeamPlayers = n.maxTeamPlayers;
-                //         obj.minTeamPlayers = n.minTeamPlayers;
-                //         obj.maxTeam = n.maxTeam;
-                //         if (n.weight) {
-                //             obj.weight = n.weight.name;
-                //         } else {
-                //             obj.weight = " ";
-                //         }
-                //         var from = moment.utc(n.fromDate).utcOffset("+05:30").format('YYYY-MM-DD');
-                //         obj.fromDate = from;
-                //         var todate = moment.utc(n.toDate).utcOffset("+05:30").format('YYYY-MM-DD');
-                //         obj.toDate = todate;
-                //         excelData.push(obj);
-                //     });
-                //     console.log("excel:", excelData);
-                //     Config.generateExcelOld("Sport", excelData, res);
-                // }
             ],
-            function (err, data2) {
+            function (err, excelData) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
-                } else if (data2) {
-                    if (_.isEmpty(data2)) {
+                } else if (excelData) {
+                    if (_.isEmpty(excelData)) {
                         callback(null, []);
                     } else {
-                        console.log("excelData", data2);
-                        callback(null, data2);
+                        console.log("excelData", excelData);
+                        callback(null, excelData);
                     }
                 }
             });
@@ -586,6 +568,21 @@ var model = {
             {
                 $unwind: {
                     path: "$sport",
+                }
+            },
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
                 }
             },
 
@@ -623,41 +620,6 @@ var model = {
             },
         ];
         return pipeline;
-    },
-
-    athleteTeam: function (data, callback) {
-        studentTeam.findOne({
-            _id: n._id
-        }).exec(function (err, found) {
-            if (err) {
-                callback(err, null);
-            } else {
-                if (_.isEmpty(found)) {
-                    callback(null, []);
-                } else {
-                    Athelete.findOne({
-                        _id: found.studentId
-                    }).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(found)) {
-                                callback(null, []);
-                            } else {
-                                var athlete = {};
-                                if (found.middleName) {
-                                    athlete.name = found.firstName + " " + found.middleName + " " + found.surname;
-                                } else {
-                                    athlete.name = found.firstName + " " + found.surname;
-                                }
-                                callback(null, athlete)
-                            }
-                        }
-                    });
-                }
-            }
-        });
-
     },
 
 };
