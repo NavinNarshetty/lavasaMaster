@@ -101,7 +101,7 @@ var model = {
                 $match: {
                     "sportsubData._id": objectid(data._id)
                 }
-            }
+            },
         ];
         return pipeline;
     },
@@ -228,11 +228,9 @@ var model = {
                 }
             }
         });
-
         // Aggregate(Sport - > lookup SportList - > lookup sportListSubCategory, Match ID ) {
         //     Sports  callback(err,callback)
         // }
-
     },
 
     getRules: function (data, callback) {
@@ -382,7 +380,23 @@ var model = {
                 }
             }
         });
-    }
+    },
+
+    getSportType: function (data, callback) {
+        SportsListSubCategory.findOne({
+            _id: data._id
+        }).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, []);
+            } else {
+                var type = {};
+                type.sportType = found.sportType;
+                callback(null, type);
+            }
+        });
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);

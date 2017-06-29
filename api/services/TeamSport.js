@@ -34,6 +34,7 @@ var schema = new Schema({
         ref: 'School',
         index: true
     },
+    createdBy: String,
     nominatedName: String,
     nominatedSchoolName: String,
     nominatedContactDetails: String,
@@ -467,6 +468,125 @@ var model = {
             .keyword(options)
             .page(options, callback);
 
+    },
+
+    generateExcel: function (res) {
+        async.waterfall([
+                function (callback) {
+                    var pipeLine = Sport.getSportPipeLine();
+                    Sport.aggregate(pipeLine, function (err, complete) {
+                        if (err) {
+                            callback(err, "error in mongoose");
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete);
+                            }
+                        }
+                    });
+
+                },
+                function (complete, callback) {
+                    var excelData = [];
+                    _.each(complete, function (n) {
+                        var obj = {};
+                        obj.sportsList = n.sportslist.name;
+                        obj.ageGroup = n.ageGroup.name;
+                        var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
+                        obj.date = dateTime;
+                        obj.gender = n.gender;
+                        obj.maxTeamPlayers = n.maxTeamPlayers;
+                        obj.minTeamPlayers = n.minTeamPlayers;
+                        obj.maxTeam = n.maxTeam;
+                        if (n.weight) {
+                            obj.weight = n.weight.name;
+                        } else {
+                            obj.weight = " ";
+                        }
+                        var from = moment.utc(n.fromDate).utcOffset("+05:30").format('YYYY-MM-DD');
+                        obj.fromDate = from;
+                        var todate = moment.utc(n.toDate).utcOffset("+05:30").format('YYYY-MM-DD');
+                        obj.toDate = todate;
+                        excelData.push(obj);
+                    });
+                    console.log("excel:", excelData);
+                    Config.generateExcelOld("Sport", excelData, res);
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+
+    getTeamPipeLine: function () {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sportslist",
+                    "foreignField": "_id",
+                    "as": "sportslist"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sportslist",
+                    // preserveNullAndEmptyArrays: true // optional
+                }
+            },
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "ageGroup",
+                    "foreignField": "_id",
+                    "as": "ageGroup"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$ageGroup",
+
+                }
+            },
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "weights",
+                    "localField": "weight",
+                    "foreignField": "_id",
+                    "as": "weight"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$weight",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+            {
+                $sort: {
+                    "createdAt": -1
+                }
+            },
+        ];
+        return pipeline;
     },
 
 };
