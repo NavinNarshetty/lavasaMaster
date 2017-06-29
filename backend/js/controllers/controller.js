@@ -1517,15 +1517,15 @@ myApp.controller('DetailTeamSportCtrl', function ($scope, TemplateService, Navig
     TemplateService.title = $scope.menutitle;
     $scope.navigation = NavigationService.getnav();
     $scope.athlete = {};
+    $scope.formData = {};
     $scope.studentTeam = [];
     $scope.getOneTeamSportById = function () {
         $scope.url = 'TeamSport/getOne';
         $scope.constraints = {};
         $scope.constraints._id = $stateParams.id;
         NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-
             $scope.formData = data.data;
-            console.log("data team", $scope.formData);
+            $scope.formData.createdBy = data.data.createdBy;
             if ($scope.formData.school) {
                 $scope.url1 = 'Registration/getOne';
                 $scope.request = {};
@@ -1553,13 +1553,14 @@ myApp.controller('DetailTeamSportCtrl', function ($scope, TemplateService, Navig
                     $scope.request1._id = n;
                     console.log('value', $scope.i);
                     NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
-                        // console.log("data student", data);
+                        console.log("data student", data);
                         console.log('value', $scope.i);
                         if (data.data.studentId) {
                             $scope.url2 = 'Athelete/getOne';
                             $scope.request1 = {};
                             $scope.request1._id = data.data.studentId;
                             NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
+                                console.log("data student detaail", data);
                                 if (data.data.middleName) {
                                     $scope.athlete = data.data.firstName + " " + data.data.middleName + " " + data.data.surname;
                                     $scope.studentTeam[$scope.i] = $scope.athlete;
@@ -1573,6 +1574,37 @@ myApp.controller('DetailTeamSportCtrl', function ($scope, TemplateService, Navig
                                     $scope.formData.studentTeam.push({
                                         name: $scope.athlete
                                     });
+                                }
+                            });
+                        }
+                        if (data.data.isCaptain) {
+                            $scope.request1 = {};
+                            $scope.url2 = 'Athelete/getOne';
+                            $scope.request1._id = data.data.studentId;
+                            NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
+                                if (data.value) {
+                                    if (data.data.middleName) {
+                                        $scope.formData.captain = data.data.firstName + " " + data.data.middleName + " " + data.data.surname;
+                                    } else {
+                                        $scope.formData.captain = data.data.firstName + " " + data.data.surname;
+                                    }
+
+                                }
+                            });
+
+                        }
+                        if (data.data.isGoalKeeper) {
+                            $scope.request1 = {};
+                            $scope.url2 = 'Athelete/getOne';
+                            $scope.request1._id = data.data.studentId;
+                            NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
+                                if (data.value) {
+                                    if (data.data.middleName) {
+                                        $scope.formData.goalKeeper = data.data.firstName + " " + data.data.middleName + " " + data.data.surname;
+                                    } else {
+                                        $scope.formData.goalKeeper = data.data.firstName + " " + data.data.surname;
+                                    }
+
                                 }
                             });
                         }
