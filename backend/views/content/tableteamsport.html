@@ -43,7 +43,7 @@
                   <!--<tr>-->
                   <!--<tr>-->
                   <!--<td>{{$index + 1}}</td>-->
-                  <td> {{$index + 1}}</td>
+                  <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                   <td>{{item.teamId}}</td>
                   <td>{{item.name}}</td>
                   <td>

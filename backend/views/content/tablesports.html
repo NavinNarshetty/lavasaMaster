@@ -47,7 +47,7 @@
                 <tr ng-repeat="item in items">
                   <!--<tr>-->
                   <!--<td>{{$index + 1}} {{($index + 1)+((formData.page-1)*maxRow)}}</td>-->
-                  <td> {{$index + 1}}</td>
+                  <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                   <td>{{item.sportslist.name}}</td>
                   <td>{{item.ageGroup.name}}</td>
                   <td>{{item.gender}}</td>

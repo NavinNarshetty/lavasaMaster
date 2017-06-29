@@ -42,8 +42,8 @@
                 <!--<tr ng-repeat="item in items">-->
                 <tr ng-repeat="item in items">
                   <!--<tr>-->
-                  <!--<td>{{$index + 1}} {{($index + 1)+((formData.page-1)*maxRow)}}</td>-->
-                  <td>{{$index + 1}}</td>
+                  <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
+                  <!--<td>{{$index + 1}}</td>-->
                   <td>{{item.name}}</td>
                   <td>
                     <a class="btn btn-primary" target="_blank" ui-sref="detailsportslist({id:item._id})">
