@@ -213,6 +213,9 @@ var model = {
         var sport = data.name;
         var index = sport.indexOf("-");
         data.name = sport.slice(++index, sport.length);
+        var indexNext = data.name.indexOf("-");
+        data.linkSportName = data.name.slice(0, indexNext);
+        console.log("data", data);
         async.waterfall([
                 function (callback) {
                     TeamSport.saveInTeam(team, function (err, complete) {
@@ -494,7 +497,8 @@ var model = {
                     function (totals, callback) {
                         console.log("totals", totals);
                         var emailData = {};
-                        emailData.sportName = totals[0].teamId.name;
+                        var index = totals[0].teamId.name.indexOf("-");
+                        emailData.sportName = totals[0].teamId.name.slice(++index, totals[0].teamId.name.length);
                         emailData.from = "info@sfanow.in";
                         emailData.email = totals[0].studentId.email;
                         emailData.filename = "rejectionTeam.ejs";
@@ -506,6 +510,7 @@ var model = {
                                 console.log(err);
                                 callback(null, err);
                             } else if (emailRespo) {
+
                                 callback(null, emailRespo);
                             } else {
                                 callback(null, emailRespo);

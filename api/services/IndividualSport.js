@@ -26,7 +26,7 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         'athleteId': {
-            select: '_id firstName middleName surname school atheleteSchoolName sfaId'
+            select: '_id firstName middleName surname school atheleteSchoolName sfaId gender age dob'
         },
         'sportsListSubCategory': {
             select: '_id name'
