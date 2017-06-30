@@ -195,6 +195,21 @@ var model = {
         team.studentTeam = [];
         team.school = data.school;
         team.createdBy = data.createdBy;
+        if (data.nominatedName) {
+            team.nominatedName = data.nominatedName;
+        }
+        if (data.nominatedSchoolName) {
+            team.nominatedSchoolName = data.nominatedSchoolName;
+        }
+        if (data.nominatedContactDetails) {
+            team.nominatedContactDetails = data.nominatedContactDetails;
+        }
+        if (data.nominatedEmailId) {
+            team.nominatedEmailId = data.nominatedEmailId;
+        }
+        if (data.isVideoAnalysis) {
+            team.isVideoAnalysis = data.isVideoAnalysis;
+        }
         var sport = data.name;
         var index = sport.indexOf("-");
         data.name = sport.slice(++index, sport.length);

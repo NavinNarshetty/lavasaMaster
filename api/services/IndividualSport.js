@@ -14,7 +14,13 @@ var schema = new Schema({
         ref: 'SportsListSubCategory',
         index: true
     },
-    perSportUnique: String
+    perSportUnique: String,
+    createdBy: String,
+    nominatedName: String,
+    nominatedSchoolName: String,
+    nominatedContactDetails: String,
+    nominatedEmailId: String,
+    isVideoAnalysis: Boolean
 });
 
 schema.plugin(deepPopulate, {
