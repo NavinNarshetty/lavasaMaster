@@ -11,58 +11,58 @@
             font-family: 'TitilliumWeb-Bold';
             src: url("../views/font/TitilliumWeb-Bold.ttf");
         }
-        
+
         @font-face {
             font-family: 'TitilliumWeb-LightItalic';
             src: url("../views/font/TitilliumWeb-LightItalic.ttf");
         }
-        
+
         @font-face {
             font-family: 'TitilliumWeb-Regular';
             src: url("../views/font/TitilliumWeb-Regular.ttf");
         }
-        
+
         TitilliumWeb-ExtraLightItalic.ttf .body {
             font-family: TitilliumWeb-Regular;
         }
-        
+
         .img-responsive {
             max-width: 100%;
             height: auto;
             display: block;
         }
-        
+
         .inline-block {
             display: inline-block;
         }
-        
+
         .text-center {
             text-align: center;
         }
-        
+
         .list-inline>li {
             display: inline-block;
             padding-left: 5px;
             padding-right: 5px;
         }
-        
+
         table {
             width: 600px;
             margin: 0 auto;
         }
-        
+
         .emailer-table table {
             width: 100%;
             border-collapse: collapse;
             border: 1px solid #000;
         }
-        
+
         .emailer-table th {
             border: 1px solid #000;
             text-align: left;
             padding: 3px 10px;
         }
-        
+
         .emailer-table td {
             border-left: 1px solid black;
             text-align: left;
@@ -90,11 +90,17 @@
                 <td>
                     <ul style="font-family: TitilliumWeb-Regular;font-size:14px;padding-right: 40px;">
                         <li class="inline-block" style="padding-bottom: 5px;"><b>CIN :</b> U74999MH2015PTC268781</li>
-                        <li class="inline-block" style="float:right;padding-bottom: 5px;"><b>SERVICE TAX NO :</b> AAWC52792150001</li>
-                        <li class="inline-block" style="padding-right: 93px;padding-bottom: 5px;"><b> RECIEPT NO. :</b> <%=receiptNo%></li>
-                        <li class="inline-block" style="padding-bottom: 5px;"><b>SERVICE TAX CATEGORY :</b> EVENT MANAGEMENT</li><br>
-                        <li class="inline-block"><b>SFA ID :</b> <%=sfaId%> </li>
-                        <li class="inline-block" style="float:right"><b>DATED :</b> <%=Date%></li>
+                        <li class="inline-block" style="float:right;padding-bottom: 5px;"><b>GST IN :</b> 27AAWCS2792J1ZG</li>
+                        <li class="inline-block" style="padding-right: 93px;padding-bottom: 5px;"><b> RECIEPT NO. :</b>
+                            <%=receiptNo%>
+                        </li>
+                        <li class="inline-block" style="padding-bottom: 5px;"><b>SAC: </b> 00440197</li><br>
+                        <li class="inline-block"><b>SFA ID :</b>
+                            <%=sfaId%>
+                        </li>
+                        <li class="inline-block" style="float:right"><b>DATED :</b>
+                            <%=Date%>
+                        </li>
                     </ul>
 
                 </td>
@@ -115,24 +121,21 @@
                             </tr>
                             <tr>
                                 <td>SFA Championship Registration Fees</td>
-                                <td>174.00</td>
-
+                                <td>170.00</td>
                             </tr>
                             <tr>
-                                <td style="padding: 5px 10px 0;">Service Tax Payable (14%)</td>
-                                <td style="padding: 5px 10px 0;">24.00</td>
-
+                                <td style="padding: 0 10px;">CGST @ 9%</td>
+                                <td style="padding: 0 10px;"> 15.00</td>
                             </tr>
                             <tr>
-                                <td style="padding: 0 10px;">Swachh Bharat Cess (0.5%) </td>
-                                <td style="padding: 0 10px;"> 1.00</td>
+                                <td style="padding: 0 10px 60px;">SGST @ 9% </td>
+                                <td style="padding: 0 10px 60px;"> 15.00</td>
                             </tr>
                             <tr>
-                                <td style="padding: 0 10px 60px;">Krishi Kalyan Cess (0.5%) </td>
-                                <td style="padding: 0 10px 60px;"> 1.00</td>
-                            </tr>
-                            <tr>
-                                <td><b> On Account Of :</b><br> Being registration fees received from<br> <%=firstName%> <%=surname%></td>
+                                <td><b> On Account Of :</b><br> Being registration fees received from<br>
+                                    <%=firstName%>
+                                        <%=surname%>
+                                </td>
                                 <td></td>
                             </tr>
                             <tr>
@@ -140,7 +143,7 @@
                                 <td style="padding:5px 10px 15px 10px;"></td>
                             </tr>
                             <tr>
-                                <td style="padding:0 10px 15px 10px;"><b>Amount (In Words) :</b> <br>INR <span> Two Hundred Only </span>                                    </td>
+                                <td style="padding:0 10px 15px 10px;"><b>Amount (In Words) :</b> <br>INR <span> Two Hundred Only </span> </td>
                                 <td style="padding: 0 10px 0px 10px;border-top: 1px solid black;"><i class="fa fa-inr" aria-hidden="true"></i> 200.00</td>
                             </tr>
                         </table>
