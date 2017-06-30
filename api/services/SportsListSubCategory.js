@@ -399,5 +399,22 @@ var model = {
         });
     },
 
+    getSportsDeails: function (data, callback) {
+        SportsListSubCategory.findOne({
+            _id: data._id
+        }).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, []);
+            } else {
+                var type = {};
+                type.sportType = found.sportType;
+                type.sportName = found.name;
+                callback(null, type);
+            }
+        });
+    },
+
 };
 module.exports = _.assign(module.exports, exports, model);
