@@ -477,7 +477,7 @@ var model = {
         async.each(data.studentTeam, function (n, callback) {
             async.waterfall([
                     function (callback) {
-                        var pipeLine = TeamSport.getSearchPipeLine(n);
+                        var pipeLine = TeamSport.getAggregatePipeLine(n);
                         StudentTeam.aggregate(pipeLine, function (err, totals) {
                             if (err) {
                                 console.log(err);
@@ -492,12 +492,13 @@ var model = {
                         });
                     },
                     function (totals, callback) {
+                        console.log("totals", totals);
                         var emailData = {};
-                        emailData.sportName = totals.teamId.name;
+                        emailData.sportName = totals[0].teamId.name;
                         emailData.from = "info@sfanow.in";
-                        emailData.email = totals.studentId.email;
+                        emailData.email = totals[0].studentId.email;
                         emailData.filename = "rejectionTeam.ejs";
-                        emailData.teamId = totals.teamId.teamId;
+                        emailData.teamId = totals[0].teamId.teamId;
                         emailData.subject = "SFA: Team Rejected";
                         console.log("emaildata", emailData);
                         Config.email(emailData, function (err, emailRespo) {

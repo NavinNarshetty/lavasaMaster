@@ -1245,5 +1245,18 @@ var model = {
             .page(options, callback);
 
     },
+
+    getOne: function (data, callback) {
+        var deepSearch = "athleteId sportsListSubCategory";
+        IndividualSport.findOne({
+            _id: data._id
+        }).deepPopulate(deepSearch).exec(function (err, found) {
+            if (_.isEmpty(found)) {
+                callback(null, []);
+            } else {
+                callback(null, found);
+            }
+        });
+    }
 };
 module.exports = _.assign(module.exports, exports, model);
