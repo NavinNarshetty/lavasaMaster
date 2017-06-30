@@ -425,23 +425,120 @@ var model = {
             });
 
     },
+    getAggregatePipeLine: function (data) {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $match: {
+                    "_id": objectid(data)
+                }
+            },
+
+            // Stage 2
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "studentId",
+                    "foreignField": "_id",
+                    "as": "studentId"
+                }
+            },
+
+            // Stage 3
+            {
+                $unwind: {
+                    path: "$studentId",
+                }
+            },
+
+            // Stage 4
+            {
+                $lookup: {
+                    "from": "teamsports",
+                    "localField": "teamId",
+                    "foreignField": "_id",
+                    "as": "teamId"
+                }
+            },
+
+            // Stage 5
+            {
+                $unwind: {
+                    path: "$teamId",
+                }
+            },
+
+        ];
+        return pipeline;
+    },
 
     athleteRelease: function (data, callback) {
         async.each(data.studentTeam, function (n, callback) {
-            StudentTeam.remove({
-                _id: n
-            }).exec(function (err, found) {
-                if (err) {
-                    callback(err, null);
-                } else {
-                    if (_.isEmpty(found)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, found)
+            async.waterfall([
+                    function (callback) {
+                        var pipeLine = TeamSport.getSearchPipeLine(n);
+                        StudentTeam.aggregate(pipeLine, function (err, totals) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, "error in mongoose");
+                            } else {
+                                if (_.isEmpty(totals)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, totals);
+                                }
+                            }
+                        });
+                    },
+                    function (totals, callback) {
+                        var emailData = {};
+                        emailData.sportName = totals.teamId.name;
+                        emailData.from = "info@sfanow.in";
+                        emailData.email = totals.studentId.email;
+                        emailData.filename = "rejectionTeam.ejs";
+                        emailData.teamId = totals.teamId.teamId;
+                        emailData.subject = "SFA: Team Rejected";
+                        console.log("emaildata", emailData);
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, emailRespo);
+                            }
+                        });
+                    },
+                    function (emailRespo, callback) {
+                        StudentTeam.remove({
+                            _id: n
+                        }).exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(found)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, found)
+                                }
+                            }
+                        });
                     }
-                }
-            });
-
+                ],
+                function (err, data2) {
+                    if (err) {
+                        console.log(err);
+                        callback(null, []);
+                    } else if (data2) {
+                        if (_.isEmpty(data2)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, data2);
+                        }
+                    }
+                });
         }, function (err) {
             if (err) {
                 console.log(err);
