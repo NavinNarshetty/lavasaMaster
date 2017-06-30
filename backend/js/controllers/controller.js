@@ -1663,6 +1663,163 @@ myApp.controller('StudentTeamCtrl', function ($scope, TemplateService, Navigatio
 
 })
 
+
+//table-individualteamsport
+
+myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tableindividualsport");
+    $scope.menutitle = NavigationService.makeactive("Individual  Sport");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.items = [{
+        name: 'Navin',
+        sname: 'Football',
+    }, {
+        name: 'Navin',
+        sname: 'Football',
+    }, {
+        name: 'Navin',
+        sname: 'Football',
+    }]
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
+    $scope.viewTable = function () {
+        $scope.url = "individualSport/search";
+        $scope.formData.page = $scope.formData.page++;
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
+        });
+    }
+    $scope.viewTable();
+
+    $scope.removeTeam = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: '/views/modal/delete.html',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+        });
+    };
+
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    }
+
+    $scope.delete = function (data) {
+        // console.log(data);
+        $scope.url = "individualSport/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'Team Sport Message');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something Went Wrong while Deleting', 'Team Sport Message');
+            }
+        });
+
+
+    }
+
+
+});
+//viewindividualteamsport
+myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("viewindividualsport");
+    $scope.menutitle = NavigationService.makeactive("View Individual  Sport");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.athlete = {};
+    $scope.eventName = [];
+
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = "individualSport/getOne";
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        $scope.i = 0;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            console.log("newdata", data);
+            // $scope.viewathlete = data;
+            $scope.athlete = data.data;
+            if (data.data.athleteId.middleName) {
+
+                $scope.athlete.name = data.data.athleteId.firstName + "" + data.data.athleteId.middleName + "" + data.data.athleteId.surname
+            } else {
+                $scope.athlete.name = data.data.athleteId.firstName + " " + data.data.athleteId.surname
+            }
+            if (data.data.athleteId.school) {
+                $scope.url3 = 'school/getOne';
+                $scope.sconstraints = {};
+                $scope.sconstraints._id = data.data.athleteId.school;
+                NavigationService.getOneOldSchoolById($scope.url3, $scope.sconstraints, function (data) {
+                    console.log("data schools", data);
+                    $scope.schoolName = data.data.name;
+                })
+            }
+            if (data.data.athleteId.athleteSchoolName) {
+                // $scope.url3 = 'school/getOne';
+                // $scope.sconstraints = {};
+                // $scope.sconstraints._id = data.data.athleteId.school;
+                // NavigationService.getOneOldSchoolById($scope.url3, $scope.sconstraints, function (data) {
+                //     console.log("data schools", data);
+                //     $scope.schoolName = data.data.name;
+                // })
+                $scope.schoolName = data.data.athleteId.athleteSchoolName;
+            }
+
+            _.each($scope.athlete.sport, function (n) {
+                $scope.url2 = 'sport/getOne';
+                $scope.request1 = {};
+                $scope.request1._id = n;
+                console.log('value', $scope.i);
+                NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
+                    $scope.vathlete = data.data;
+                    console.log("students", $scope.vathlete);
+                    $scope.eventName.push({
+                        name: $scope.vathlete.sportslist.name
+                    });
+                });
+                $scope.i++;
+            });
+            // if (data.data.athleteId) {
+            //     $scope.url2 = 'Athelete/getOne';
+            //     $scope.request1 = {};
+            //     $scope.request1._id = data.data.athleteId;
+            //     NavigationService.getOneOldSchoolById($scope.url, $scope.request1, function (data) {
+            //         console.log("navin", data);
+            //     });
+            // }
+        });
+    }
+    $scope.getOneOldSchoolById();
+});
+
 myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
     //registration filter view
     //Used to name the .html file

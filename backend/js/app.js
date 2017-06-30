@@ -202,6 +202,18 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'StudentTeamCtrl'
         })
+        //individual-sport
+        .state('individual-sport', {
+            url: "/individual-sport",
+            templateUrl: "views/template.html",
+            controller: 'IndividualTeamCtrl'
+        })
+        //view individual-sport
+        .state('view-individualsport', {
+            url: "/view-individualsport/:id",
+            templateUrl: "views/template.html",
+            controller: 'ViewIndividualSportCtrl'
+        })
         .state('login', {
             url: "/login",
             templateUrl: "views/login.html",
