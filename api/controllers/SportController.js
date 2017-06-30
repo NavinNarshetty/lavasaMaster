@@ -3,7 +3,16 @@ var controller = {
 
     getAthletePerSchool: function (req, res) {
         if (req.body) {
-            Sport.getAthletePerSchool(req.body, res.callback);
+            if (req.body.schoolToken) {
+                Sport.getAthletePerSchool(req.body, res.callback);
+            } else if (req.body.athleteToken) {
+                Sport.getAthlete(req.body, res.callback);
+            } else {
+                res.json({
+                    value: false,
+                    data: "Invalid User"
+                });
+            }
         } else {
             res.json({
                 value: false,

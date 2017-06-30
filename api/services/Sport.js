@@ -448,6 +448,86 @@ var model = {
 
     },
 
+    getAthlete: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Athelete.findOne({
+                        accessToken: data.athleteToken
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.atheleteSchoolName) {
+                        console.log("name school", found.atheleteSchoolName);
+                        Registration.findOne({
+                            schoolName: found.atheleteSchoolName
+                        }).exec(function (err, complete) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                data.school = complete.schoolName;
+                                data.isRegisted = false;
+                                callback(null, data);
+                            }
+                        });
+                    } else {
+                        console.log("school", found.school);
+                        School.findOne({
+                            _id: found.school
+                        }).exec(function (err, complete) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                // console.log("complete", complete);
+                                data.school = complete.name;
+                                data.isRegisted = true;
+                                console.log(data);
+                                callback(null, data);
+                            }
+                        });
+                    }
+                },
+                function (data, callback) {
+                    Sport.getAthletePerSchool(data, function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, complete);
+                            } else {
+                                console.log("complete", complete);
+                                callback(null, complete);
+                            }
+                        }
+                    });
+                },
+            ],
+            function (err, complete) {
+                if (err) {
+                    console.log(err);
+                    callback(null, err);
+                } else if (complete) {
+                    if (_.isEmpty(complete)) {
+                        callback(null, complete);
+                    } else {
+                        callback(null, complete);
+                    }
+                }
+            });
+    },
+
+
     allAthelete: function (data, callback) {
         async.waterfall([
                 function (callback) {

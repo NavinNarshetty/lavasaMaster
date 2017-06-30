@@ -45,21 +45,41 @@ var model = {
     },
 
     SchoolToken: function (data, callback) {
-        var token = generator.generate({
-            length: 16,
-            numbers: true
-        })
-        var matchToken = {
-            $set: {
-                accessToken: token
-            }
-        }
         async.waterfall([
             function (callback) {
-                Registration.update({
+                Registration.findOne({
                     sfaID: data.sfaid
-                }, matchToken).exec(
-                    function (err, data3) {
+                }).exec(function (err, found) {
+                    if (err) {
+                        console.log(err);
+                        callback(err, null);
+                    } else if (found) {
+                        console.log("found", found);
+                        if (_.isEmpty(found.accessToken)) {
+                            data.tokenExist = false;
+                            callback(null, data);
+                        } else {
+                            data.tokenExist = true;
+                            callback(null, data);
+                        }
+
+                    }
+                });
+            },
+            function (data, callback) {
+                if (data.tokenExist == false) {
+                    var token = generator.generate({
+                        length: 16,
+                        numbers: true
+                    })
+                    var matchToken = {
+                        $set: {
+                            accessToken: token
+                        }
+                    }
+                    Registration.update({
+                        sfaID: data.sfaid
+                    }, matchToken).exec(function (err, data3) {
                         if (err) {
                             console.log(err);
                             callback(err, null);
@@ -68,6 +88,10 @@ var model = {
                             callback(null, data3);
                         }
                     });
+                } else {
+                    var data3 = data;
+                    callback(null, data3);
+                }
             },
             function (data3, callback) {
                 console.log(data);
@@ -96,29 +120,55 @@ var model = {
     },
 
     AthleteToken: function (data, callback) {
-        var token = generator.generate({
-            length: 16,
-            numbers: true
-        })
-        var matchToken = {
-            $set: {
-                accessToken: token
-            }
-        }
+
         async.waterfall([
             function (callback) {
-                Athelete.update({
+                Athelete.findOne({
                     sfaId: data.sfaid
-                }, matchToken).exec(
-                    function (err, data3) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (data3) {
-                            console.log("value :", data3);
-                            callback(null, data3);
+                }).exec(function (err, found) {
+                    if (err) {
+                        console.log(err);
+                        callback(err, null);
+                    } else if (found) {
+                        console.log("found", found);
+                        if (_.isEmpty(found.accessToken)) {
+                            data.tokenExist = false;
+                            callback(null, data);
+                        } else {
+                            data.tokenExist = true;
+                            callback(null, data);
                         }
-                    });
+
+                    }
+                });
+            },
+            function (data, callback) {
+                if (data.tokenExist == false) {
+                    var token = generator.generate({
+                        length: 16,
+                        numbers: true
+                    })
+                    var matchToken = {
+                        $set: {
+                            accessToken: token
+                        }
+                    }
+                    Athelete.update({
+                        sfaId: data.sfaid
+                    }, matchToken).exec(
+                        function (err, data3) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (data3) {
+                                console.log("value :", data3);
+                                callback(null, data3);
+                            }
+                        });
+                } else {
+                    var data3 = data;
+                    callback(null, data3);
+                }
             },
             function (data3, callback) {
                 Athelete.aggregate([{
@@ -414,7 +464,5 @@ var model = {
             callback("User not Logged In", null);
         }
     },
-
-
 };
 module.exports = _.assign(module.exports, exports, model);
