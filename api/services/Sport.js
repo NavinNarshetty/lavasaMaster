@@ -527,7 +527,6 @@ var model = {
             });
     },
 
-
     allAthelete: function (data, callback) {
         async.waterfall([
                 function (callback) {

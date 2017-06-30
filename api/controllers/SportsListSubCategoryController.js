@@ -24,7 +24,20 @@ var controller = {
                     } else if (_.isEmpty(found)) {
                         callback("Incorrect Login Details", null);
                     } else {
-                        req.body.school = found._id;
+                        // req.body.school = found._id;
+                        SportsListSubCategory.getOneSport(req.body, res.callback);
+                    }
+                });
+            } else if (req.body.athleteToken) {
+                Athelete.findOne({
+                    accessToken: req.body.athleteToken
+                }).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback("Incorrect Login Details", null);
+                    } else {
+                        // req.body.school = found._id;
                         SportsListSubCategory.getOneSport(req.body, res.callback);
                     }
                 });
