@@ -55,7 +55,7 @@ var model = {
                         callback(err, null);
                     } else if (found) {
                         console.log("found", found);
-                        if (_.isEmpty(found.accessToken)) {
+                        if (_.isEmpty(found.accessToken) || found.accessToken == " ") {
                             data.tokenExist = false;
                             callback(null, data);
                         } else {
@@ -131,7 +131,7 @@ var model = {
                         callback(err, null);
                     } else if (found) {
                         console.log("found", found);
-                        if (_.isEmpty(found.accessToken)) {
+                        if (_.isEmpty(found.accessToken) || found.accessToken == " ") {
                             data.tokenExist = false;
                             callback(null, data);
                         } else {

@@ -55,6 +55,116 @@ module.exports = mongoose.model('TeamSport', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
+    // Team Confirm function (save in teamSport,StudentTeam and triggers email to all)
+    teamConfirm: function (data, callback) { // Data -> array of (StudentID, Sport,isCaptain,isGoalkeeper)
+
+        //      Waterfall
+        //          1. CreateTeamSportWithSchool 
+        //          2. async.each(data,fuction() { SaveInTeam })
+        //          3. FindAthelete $in ID
+        //          4. Send Emails  
+        var sport = data.name;
+        var index = sport.indexOf("-");
+        data.name = sport.slice(++index, sport.length);
+        var indexNext = data.name.indexOf("-");
+        data.linkSportName = data.name.slice(0, indexNext);
+        console.log("data", data);
+        async.waterfall([
+                function (callback) {
+                    var team = {};
+                    team.name = data.name;
+                    team.sport = data.sport;
+                    team.studentTeam = [];
+                    team.school = data.school;
+                    team.createdBy = data.createdBy;
+                    if (data.nominatedName) {
+                        team.nominatedName = data.nominatedName;
+                    }
+                    if (data.nominatedSchoolName) {
+                        team.nominatedSchoolName = data.nominatedSchoolName;
+                    }
+                    if (data.nominatedContactDetails) {
+                        team.nominatedContactDetails = data.nominatedContactDetails;
+                    }
+                    if (data.nominatedEmailId) {
+                        team.nominatedEmailId = data.nominatedEmailId;
+                    }
+                    if (data.isVideoAnalysis) {
+                        team.isVideoAnalysis = data.isVideoAnalysis;
+                    }
+                    callback(null, team);
+                },
+                function (team, callback) {
+                    TeamSport.saveInTeam(team, function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete)
+                            }
+                        }
+                    });
+                },
+                function (complete, callback) {
+                    TeamSport.createStudentTeam(complete, data, function (err, complete1) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete1)) {
+                                callback(null, []);
+                            } else {
+                                var total = {};
+                                total.teamSport = complete;
+                                total.studentTeam = complete1;
+                                callback(null, total);
+                            }
+                        }
+                    });
+                },
+                function (total, callback) {
+                    if (data.schoolToken) {
+                        TeamSport.schoolTeamMailers(data, total, function (err, final) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(final)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, final);
+                                }
+                            }
+                        });
+                    } else if (data.athleteToken) {
+                        TeamSport.atheleteTeamMailers(data, total, function (err, final) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(final)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, final);
+                                }
+                            }
+                        });
+
+                    }
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
 
     saveInTeam: function (data, callback) {
         async.waterfall([
@@ -182,136 +292,155 @@ var model = {
         });
     },
 
-    // Team Confirm function
-    teamConfirm: function (data, callback) { // Data -> array of (StudentID, Sport,isCaptain,isGoalkeeper)
-        //      Waterfall
-        //          1. CreateTeamSportWithSchool 
-        //          2. async.each(data,fuction() { SaveInTeam })
-        //          3. FindAthelete $in ID
-        //          4. Send Emails     
-        var team = {};
-        team.name = data.name;
-        team.sport = data.sport;
-        team.studentTeam = [];
-        team.school = data.school;
-        team.createdBy = data.createdBy;
-        if (data.nominatedName) {
-            team.nominatedName = data.nominatedName;
-        }
-        if (data.nominatedSchoolName) {
-            team.nominatedSchoolName = data.nominatedSchoolName;
-        }
-        if (data.nominatedContactDetails) {
-            team.nominatedContactDetails = data.nominatedContactDetails;
-        }
-        if (data.nominatedEmailId) {
-            team.nominatedEmailId = data.nominatedEmailId;
-        }
-        if (data.isVideoAnalysis) {
-            team.isVideoAnalysis = data.isVideoAnalysis;
-        }
-        var sport = data.name;
-        var index = sport.indexOf("-");
-        data.name = sport.slice(++index, sport.length);
-        var indexNext = data.name.indexOf("-");
-        data.linkSportName = data.name.slice(0, indexNext);
-        console.log("data", data);
+    schoolTeamMailers: function (data, total, callback) {
+        Registration.findOne({
+            sfaID: data.schoolSFA,
+            _id: data.school
+        }).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "Data is empty");
+            } else {
+                async.parallel([
+                    //school email
+                    function (callback) {
+                        console.log("total", total);
+                        var emailData = {};
+                        emailData.schoolName = found.schoolName;
+                        emailData.sportName = data.name;
+                        emailData.schoolSFA = found.sfaID;
+                        emailData.from = "info@sfanow.in";
+                        emailData.email = found.email;
+                        emailData.filename = "teamSport.ejs";
+                        emailData.teamId = total.teamSport.teamId;
+                        emailData.students = total.studentTeam;
+                        emailData.linkSportName = data.linkSportName;
+                        emailData.subject = "SFA: Successful Team Sport Registered";
+                        console.log("emaildata", emailData);
+
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+
+                    },
+                    //athlete email
+                    function (callback) {
+                        data.emailfile = "studentTeam.ejs";
+                        data.schoolSFA = found.sfaID;
+                        data.schoolName = found.schoolName;
+                        TeamSport.athleteMailers(data, total, function (err, mailData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(mailData)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, mailData)
+                                }
+                            }
+                        });
+
+                    }
+                ], function (err, data3) {
+                    if (err) {
+                        console.log(err);
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(data3)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, data3);
+                        }
+                    }
+                });
+            }
+        });
+    },
+
+    atheleteTeamMailers: function (data, total, callback) {
         async.waterfall([
                 function (callback) {
-                    TeamSport.saveInTeam(team, function (err, complete) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(complete)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, complete)
-                            }
-                        }
-                    });
-                },
-                function (complete, callback) {
-                    TeamSport.createStudentTeam(complete, data, function (err, complete1) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(complete1)) {
-                                callback(null, []);
-                            } else {
-                                var total = {};
-                                total.teamSport = complete;
-                                total.studentTeam = complete1;
-                                callback(null, total);
-                            }
-                        }
-                    });
-                },
-                function (total, callback) {
-                    Registration.findOne({
-                        sfaID: data.schoolSFA,
-                        _id: data.school
+                    Athelete.findOne({
+                        sfaId: data.athleteSFA,
                     }).exec(function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(found)) {
                             callback(null, "Data is empty");
                         } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.atheleteSchoolName) {
+                        Registration.findOne({
+                            schoolName: found.atheleteSchoolName
+                        }).exec(function (err, schoolData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(schoolData)) {
+                                data.schoolName = found.atheleteSchoolName;
+                                data.schoolSFA = "Unregistered";
+                                data.emailfile = "studentTeamUnregister.ejs";
+                                callback(null, data);
 
-                            async.parallel([
-                                //school email
-                                function (callback) {
-                                    console.log("total", total);
-                                    var emailData = {};
-                                    emailData.schoolName = found.schoolName;
-                                    emailData.sportName = data.name;
-                                    emailData.schoolSFA = found.sfaID;
-                                    emailData.from = "info@sfanow.in";
-                                    emailData.email = found.email;
-                                    emailData.filename = "teamSport.ejs";
-                                    emailData.teamId = total.teamSport.teamId;
-                                    emailData.students = total.studentTeam;
-                                    emailData.subject = "SFA: Successful Team Sport Registered";
-                                    console.log("emaildata", emailData);
+                            } else {
+                                data.schoolName = schoolData.schoolName;
+                                data.schoolSFA = schoolData.sfaID;
+                                data.emailfile = "studentTeam.ejs";
+                                callback(null, data);
+                            }
+                        });
+                    } else {
+                        School.findOne({
+                            _id: found.school,
+                        }).exec(function (err, schoolData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(schoolData)) {
+                                callback(null, "Data is empty");
+                            } else {
+                                Registration.findOne({
+                                    schoolName: schoolData.name
+                                }).exec(function (err, schoolData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (_.isEmpty(schoolData)) {
+                                        data.schoolName = found.atheleteSchoolName;
+                                        data.schoolSFA = "Unregistered";
+                                        data.emailfile = "studentTeamUnregister.ejs";
+                                        callback(null, data);
 
-                                    Config.email(emailData, function (err, emailRespo) {
-                                        if (err) {
-                                            console.log(err);
-                                            callback(null, err);
-                                        } else if (emailRespo) {
-                                            callback(null, emailRespo);
-                                        } else {
-                                            callback(null, "Invalid data");
-                                        }
-                                    });
-
-                                },
-                                //athlete email
-                                function (callback) {
-                                    TeamSport.athleteMailers(found, data, total, function (err, mailData) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else {
-                                            if (_.isEmpty(mailData)) {
-                                                callback(null, []);
-                                            } else {
-                                                callback(null, mailData)
-                                            }
-                                        }
-                                    });
-
-                                }
-                            ], function (err, data3) {
-                                if (err) {
-                                    console.log(err);
-                                    callback(err, null);
-                                } else {
-                                    if (_.isEmpty(data3)) {
-                                        callback(null, []);
                                     } else {
-                                        callback(null, data3);
+                                        data.schoolName = schoolData.schoolName;
+                                        data.schoolSFA = schoolData.sfaID;
+                                        data.emailfile = "studentTeam.ejs";
+                                        callback(null, data);
                                     }
-                                }
-                            });
+                                });
+                            }
+                        });
+                    }
+                },
+                function (data, callback) {
+                    TeamSport.athleteMailers(data, total, function (err, mailData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(mailData)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, mailData)
+                            }
                         }
                     });
 
@@ -331,18 +460,19 @@ var model = {
             });
     },
 
-    athleteMailers: function (found, data, total, callback) {
+    athleteMailers: function (data, total, callback) {
         async.each(total.studentTeam, function (n, callback) {
 
             var emailData = {};
             emailData.sportName = data.name;
-            emailData.schoolName = found.schoolName;
-            emailData.schoolSFA = found.sfaID;
+            emailData.schoolName = data.schoolName;
+            emailData.schoolSFA = data.schoolSFA;
             emailData.from = "info@sfanow.in";
             emailData.email = n.email;
-            emailData.filename = "studentTeam.ejs";
+            emailData.filename = data.emailfile;
             emailData.teamId = total.teamSport.teamId;
             emailData.students = total.studentTeam;
+            emailData.linkSportName = data.linkSportName;
             emailData.subject = "SFA: Successful Team Sport Registered";
             console.log("emaildata", emailData);
             Config.email(emailData, function (err, emailRespo) {
@@ -615,9 +745,8 @@ var model = {
                         obj.School = mainData.school.schoolName;
                         obj.Sport = mainData.sport.sportslist.name;
                         var StudentTeam;
-
                         var count = 0;
-                        _.each(mainData.studentTeam, function (n) {
+                        async.each(mainData.studentTeam, function (n, callback) {
                             Athelete.findOne({
                                 _id: n.studentId
                             }).exec(function (err, found) {
@@ -645,11 +774,19 @@ var model = {
                                 }
                                 count++;
                                 obj.Students = StudentTeam;
-                                // console.log("obj", obj);
+                                callback(null, obj);
+                            }, function (err, obj) {
+                                console.log("obj", obj);
+                                callback(null, obj);
                             });
+                            console.log("obj", obj);
                         });
                         excelData.push(obj);
                     });
+                    // callback(null, excelData);
+
+
+
                     console.log("excelData", excelData);
                     Config.generateExcelOld("TeamSport", excelData, res);
                 },

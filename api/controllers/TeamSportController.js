@@ -43,7 +43,7 @@ var controller = {
                     } else if (_.isEmpty(found)) {
                         callback("Incorrect Login Details", null);
                     } else {
-                        // req.body.schoolSFA = found.sfaId; need to check
+                        req.body.athleteSFA = found.sfaId;
                         TeamSport.teamConfirm(req.body, res.callback);
                     }
                 });
