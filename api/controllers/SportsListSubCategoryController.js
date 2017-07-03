@@ -14,34 +14,27 @@ var controller = {
     },
 
     getOneSport: function (req, res) {
-        if (req.body) {
-            if (req.body.schoolToken) {
-                Registration.findOne({
-                    accessToken: req.body.schoolToken
-                }).exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback("Incorrect Login Details", null);
-                    } else {
-                        // req.body.school = found._id;
-                        SportsListSubCategory.getOneSport(req.body, res.callback);
-                    }
-                });
-            } else if (req.body.athleteToken) {
-                Athelete.findOne({
-                    accessToken: req.body.athleteToken
-                }).exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback("Incorrect Login Details", null);
-                    } else {
-                        // req.body.school = found._id;
-                        SportsListSubCategory.getOneSport(req.body, res.callback);
-                    }
-                });
-            }
+        if (req.body.schoolToken) {
+            Registration.findOne({
+                accessToken: req.body.schoolToken
+            }).exec(function (err, found) {
+                if (err) {
+                    res.json({
+                        value: false,
+                        data: "Something went wrong !"
+                    });
+                } else if (_.isEmpty(found)) {
+                    res.json({
+                        value: false,
+                        data: "Incorrect Login"
+                    });
+                } else {
+                    req.body.school = found._id;
+                    SportsListSubCategory.getOneSport(req.body, res.callback);
+                }
+            });
+        } else if (req.body.athleteToken) {
+            SportsListSubCategory.getSchoolPerAthlete(req.body, res.callback);
         } else {
             res.json({
                 value: false,

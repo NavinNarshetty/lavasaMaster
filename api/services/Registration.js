@@ -939,43 +939,99 @@ var model = {
     },
 
     receiptMail: function (data, callback) {
-        Registration.findOne({ //finds one with refrence to id
-            _id: data._id
-        }).exec(function (err, found) {
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback(null, "Data is empty");
-            } else {
-                var emailData = {};
-                if (data.sfaID) {
-                    emailData.sfaID = found.sfaID;
-                } else {
-                    emailData.sfaID = "";
-                }
-                emailData.schoolName = found.schoolName;
-                emailData.transactionID = found.transactionID;
-                emailData.Date = moment().format("DD-MM-YYYY");
-                var receipt = "SFA" + found.registerID;
-                emailData.receiptNo = receipt;
-                emailData.from = "info@sfanow.in";
-                emailData.email = found.email;
-                emailData.filename = "receipt.ejs";
-                emailData.subject = "SFA: Your Payment Receipt as School for SFA Mumbai 2017";
-                console.log("emaildata", emailData);
+        async.parallel([
+                //Athlete email
+                function (callback) {
+                    Registration.findOne({ //finds one with refrence to id
+                        _id: data._id
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, "Data is empty");
+                        } else {
+                            var emailData = {};
+                            if (data.sfaID) {
+                                emailData.sfaID = found.sfaID;
+                            } else {
+                                emailData.sfaID = "";
+                            }
+                            emailData.schoolName = found.schoolName;
+                            emailData.transactionID = found.transactionID;
+                            emailData.Date = moment().format("DD-MM-YYYY");
+                            var receipt = "SFA" + found.registerID;
+                            emailData.receiptNo = receipt;
+                            emailData.from = "info@sfanow.in";
+                            emailData.email = found.email;
+                            emailData.filename = "receipt.ejs";
+                            emailData.subject = "SFA: Your Payment Receipt as School for SFA Mumbai 2017";
+                            console.log("emaildata", emailData);
 
-                Config.email(emailData, function (err, emailRespo) {
-                    if (err) {
-                        console.log(err);
-                        callback(null, err);
-                    } else if (emailRespo) {
-                        callback(null, emailRespo);
+                            Config.email(emailData, function (err, emailRespo) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, err);
+                                } else if (emailRespo) {
+                                    callback(null, emailRespo);
+                                } else {
+                                    callback(null, "Invalid data");
+                                }
+                            });
+                        }
+                    });
+                },
+                function (callback) {
+                    Registration.findOne({ //finds one with refrence to id
+                        _id: data._id
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, "Data is empty");
+                        } else {
+                            var emailData = {};
+                            if (data.sfaID) {
+                                emailData.sfaID = found.sfaID;
+                            } else {
+                                emailData.sfaID = "";
+                            }
+                            emailData.schoolName = found.schoolName;
+                            emailData.transactionID = found.transactionID;
+                            emailData.Date = moment().format("DD-MM-YYYY");
+                            var receipt = "SFA" + found.registerID;
+                            emailData.receiptNo = receipt;
+                            emailData.from = "info@sfanow.in";
+                            emailData.email = found.email;
+                            emailData.filename = "envoice.ejs";
+                            emailData.subject = "SFA: Your Payment Invoice as School for SFA Mumbai 2017";
+                            console.log("emaildata", emailData);
+
+                            Config.email(emailData, function (err, emailRespo) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, err);
+                                } else if (emailRespo) {
+                                    callback(null, emailRespo);
+                                } else {
+                                    callback(null, "Invalid data");
+                                }
+                            });
+                        }
+                    });
+                },
+            ],
+            function (err, data3) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(data3)) {
+                        callback(null, []);
                     } else {
-                        callback(null, "Invalid data");
+                        callback(null, data3);
                     }
-                });
-            }
-        });
+                }
+            });
     },
 
     excelFilterSchool: function (data, callback) {

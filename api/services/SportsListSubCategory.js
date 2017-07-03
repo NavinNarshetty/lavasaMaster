@@ -139,6 +139,73 @@ var model = {
 
     },
 
+    getSchoolPerAthlete: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Athelete.findOne({
+                        accessToken: data.athleteToken
+                    }).exec(function (err, found) {
+                        if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.atheleteSchoolName) {
+                        var schoolName = {};
+                        schoolName.name = found.atheleteSchoolName;
+                        callback(null, schoolName);
+                    } else {
+                        School.findOne({
+                            _id: found.school
+                        }).exec(function (err, schoolData) {
+                            if (_.isEmpty(schoolData)) {
+                                callback(null, []);
+                            } else {
+                                var schoolName = {};
+                                schoolName.name = schoolData.name;
+                                callback(null, schoolName);
+                            }
+                        });
+                    }
+
+                },
+                function (schoolName, callback) {
+                    Registration.findOne({
+                        schoolName: schoolName.name
+                    }).exec(function (err, schoolData) {
+                        if (_.isEmpty(complete)) {
+                            callback(null, []);
+                        } else {
+                            data.school = complete._id;
+                            SportsListSubCategory.getOneSport(data, function (err, complete1) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete1);
+                                }
+
+                            });
+                        }
+                    });
+                },
+
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback("Max Team Created", null);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
     getOneSport: function (data, callback) {
         async.waterfall([
             function (callback) {
@@ -442,22 +509,6 @@ var model = {
                 } else {
                     callback(null, totals);
                 }
-            }
-        });
-    },
-
-    getSportType: function (data, callback) {
-        SportsListSubCategory.findOne({
-            _id: data._id
-        }).exec(function (err, found) {
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback(null, []);
-            } else {
-                var type = {};
-                type.sportType = found.sportType;
-                callback(null, type);
             }
         });
     },
