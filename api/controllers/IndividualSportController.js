@@ -22,9 +22,15 @@ var controller = {
                 accessToken: req.body.athleteToken
             }).exec(function (err, found) {
                 if (err) {
-                    callback(err, null);
+                    res.json({
+                        value: false,
+                        data: "err"
+                    });
                 } else if (_.isEmpty(found)) {
-                    callback("Incorrect Login Details", null);
+                    res.json({
+                        value: false,
+                        data: "User Not logged in"
+                    });
                 } else {
                     IndividualSport.getAthlete(req.body, res.callback);
                 }
@@ -66,10 +72,7 @@ var controller = {
                     } else if (_.isEmpty(found)) {
                         callback("Incorrect Login Details", null);
                     } else {
-                        req.body.school = found.schoolName;
-                        req.body.sfaid = found.sfaID;
-                        req.body.email = found.email;
-                        IndividualSport.saveInIndividual(req.body, res.callback);
+                        IndividualSport.saveInIndividualAthlete(req.body, res.callback);
                     }
                 });
             }

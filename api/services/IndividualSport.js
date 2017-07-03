@@ -817,7 +817,7 @@ var model = {
                         callback(null, data);
                     }
                 },
-                function (callback) {
+                function (data, callback) {
                     console.log("inside first");
                     IndividualSport.allAthlete(data, function (err, complete) {
                         if (err) {
@@ -1101,6 +1101,128 @@ var model = {
             });
     },
 
+    saveInIndividualAthlete: function (data, callback) {
+        var sportData = {};
+        async.waterfall([
+                function (callback) {
+                    Athelete.findOne({
+                        accessToken: req.body.athleteToken
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback("Incorrect Login Details", null);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+
+                },
+                function (found, callback) {
+                    if (found.atheleteSchoolName) {
+                        // data.school =
+                    }
+                    School.findOne({
+                        accessToken: req.body.athleteToken
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback("Incorrect Login Details", null);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+
+                },
+                function (callback) {
+                    var atheleteName = [];
+                    var results = [];
+                    async.eachSeries(data.individual, function (n, callback) {
+                        async.waterfall([
+                                function (callback) {
+                                    IndividualSport.saveData(n, function (err, saveData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(saveData)) {
+                                                callback(null, []);
+                                            } else {
+                                                sportData.createdAt = saveData.createdAt;
+                                                callback(null, sportData);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (sportData, callback) {
+                                    var pipeLine = IndividualSport.getAggregatePipeLineSport(sportData);
+                                    IndividualSport.aggregate(pipeLine, function (err, totals) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(err, "error in mongoose");
+                                        } else {
+                                            if (_.isEmpty(totals)) {
+                                                callback(null, []);
+                                            } else {
+                                                _.each(totals, function (total) {
+                                                    atheleteName.push(total);
+                                                });
+                                                callback(null, atheleteName);
+                                            }
+                                        }
+                                    });
+                                }
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, []);
+                                } else if (data2) {
+                                    if (_.isEmpty(data2)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, atheleteName);
+                                    }
+                                }
+                            });
+                    }, function (err, data2) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else {
+                            callback(null, atheleteName);
+                        }
+                    });
+
+                },
+                function (atheleteName, callback) {
+                    IndividualSport.mailers(atheleteName, data, function (err, mailData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(mailData)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, mailData)
+                            }
+                        }
+                    });
+                }
+            ],
+            function (err, data3) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data3) {
+                    if (_.isEmpty(data3)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data3);
+                    }
+                }
+            });
+    },
+
     mailers: function (atheleteName, data, callback) {
         async.parallel([
                 //Athlete email
@@ -1275,7 +1397,6 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    console.log("found", found);
                     if (found.atheleteSchoolName) {
                         callback(null, found);
                     } else {
@@ -1294,30 +1415,21 @@ var model = {
                     }
                 },
                 function (found, callback) {
-                    console.log("found1", found);
                     var results = {};
                     var finalData = [];
                     IndividualSport.find({
                         athleteId: found._id,
                         sportsListSubCategory: data._id
-                    }).exec(function (err, complete) {
-                        if (_.isEmpty(complete)) {
+                    }).lean().exec(function (err, matchData) {
+                        if (_.isEmpty(matchData)) {
                             var athlete = {};
-                            athlete = found;
-                            athlete.isIndividualSelected = false;
-                            finalData.push(athlete);
-                            results.data = finalData;
-                            results.total = 1;
-                            // console.log("data", results);
-                            callback(null, results);
+                            callback(null, found);
                         } else {
                             var athlete = {};
-                            athlete = found;
-                            athlete.isIndividualSelected = true;
+                            athlete.msg = "Athlete Already Selected for this Sport";
                             finalData.push(athlete);
-                            results.data = finalData;
+                            results.data = athlete;
                             results.total = 1;
-                            // console.log("data", results);
                             callback(null, results);
                         }
                     });
