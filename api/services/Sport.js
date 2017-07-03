@@ -558,28 +558,29 @@ var model = {
                         var results = {};
                         var finalData = [];
                         console.log("total", complete.total);
-                        async.each(complete.results, function (n, callback) {
+                        async.eachSeries(complete.results, function (n, callback) {
+                            console.log("n", n);
                             StudentTeam.find({
                                 studentId: n._id,
                                 sport: data.sport
                             }).lean().exec(function (err, found) {
                                 if (_.isEmpty(found)) {
                                     var athlete = {};
-                                    athlete = n.athleteId;
-                                    athlete.isTeamSelected = false;
+                                    athlete = n;
+                                    athlete.isTeamSelected = "false";
                                     finalData.push(athlete);
                                     results.data = finalData;
                                     results.total = complete.total;
-                                    console.log("data", results);
+                                    // console.log("data", results);
                                     callback(null, results);
                                 } else {
                                     var athlete = {};
-                                    athlete = n
-                                    athlete.isTeamSelected = true;
+                                    athlete = n;
+                                    athlete.isTeamSelected = "true";
                                     finalData.push(athlete);
                                     results.data = finalData;
                                     results.total = complete.total;
-                                    console.log("data", results);
+                                    // console.log("data", results);
                                     callback(null, results);
                                 }
                             });
