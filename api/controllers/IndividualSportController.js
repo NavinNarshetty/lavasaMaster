@@ -2,36 +2,33 @@ module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
 
     getAthletePerSchool: function (req, res) {
-        if (req.body) {
-            console.log("inside");
-            if (req.body.schoolToken) {
-                console.log("inside");
-                Registration.findOne({
-                    accessToken: req.body.schoolToken
-                }).exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback("Incorrect Login Details", null);
-                    } else {
-                        console.log("inside");
-                        IndividualSport.getAthletePerSchool(req.body, res.callback);
-                    }
-                });
-            } else if (req.body.athleteToken) {
-                Athelete.findOne({
-                    accessToken: req.body.athleteToken
-                }).exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback("Incorrect Login Details", null);
-                    } else {
-                        IndividualSport.getAthletePerSchool(req.body, res.callback);
-                    }
-                });
-            }
 
+        if (req.body.schoolToken) {
+            console.log("inside");
+            Registration.findOne({
+                accessToken: req.body.schoolToken
+            }).exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback("Incorrect Login Details", null);
+                } else {
+                    console.log("inside");
+                    IndividualSport.getAthletePerSchool(req.body, res.callback);
+                }
+            });
+        } else if (req.body.athleteToken) {
+            Athelete.findOne({
+                accessToken: req.body.athleteToken
+            }).exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback("Incorrect Login Details", null);
+                } else {
+                    IndividualSport.getAthlete(req.body, res.callback);
+                }
+            });
         } else {
             res.json({
                 value: false,

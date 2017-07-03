@@ -295,7 +295,7 @@ var model = {
     schoolTeamMailers: function (data, total, callback) {
         Registration.findOne({
             sfaID: data.schoolSFA,
-            _id: data.school
+            // _id: data.school
         }).exec(function (err, found) {
             if (err) {
                 callback(err, null);

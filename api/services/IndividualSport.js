@@ -817,7 +817,7 @@ var model = {
                         callback(null, data);
                     }
                 },
-                function (data, callback) {
+                function (callback) {
                     console.log("inside first");
                     IndividualSport.allAthlete(data, function (err, complete) {
                         if (err) {
@@ -1257,6 +1257,85 @@ var model = {
                 callback(null, found);
             }
         });
+    },
+
+    getAthlete: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Athelete.findOne({
+                        accessToken: data.athleteToken
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback("Incorrect Login Details", null);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    console.log("found", found);
+                    if (found.atheleteSchoolName) {
+                        callback(null, found);
+                    } else {
+                        School.findOne({
+                            _id: found.school
+                        }).exec(function (err, schoolData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(schoolData)) {
+                                callback("Incorrect Login Details", null);
+                            } else {
+                                found.school = schoolData;
+                                callback(null, found);
+                            }
+                        });
+                    }
+                },
+                function (found, callback) {
+                    console.log("found1", found);
+                    var results = {};
+                    var finalData = [];
+                    IndividualSport.find({
+                        athleteId: found._id,
+                        sportsListSubCategory: data._id
+                    }).exec(function (err, complete) {
+                        if (_.isEmpty(complete)) {
+                            var athlete = {};
+                            athlete = found;
+                            athlete.isIndividualSelected = false;
+                            finalData.push(athlete);
+                            results.data = finalData;
+                            results.total = 1;
+                            // console.log("data", results);
+                            callback(null, results);
+                        } else {
+                            var athlete = {};
+                            athlete = found;
+                            athlete.isIndividualSelected = true;
+                            finalData.push(athlete);
+                            results.data = finalData;
+                            results.total = 1;
+                            // console.log("data", results);
+                            callback(null, results);
+                        }
+                    });
+                }
+            ],
+            function (err, results) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (results) {
+                    if (_.isEmpty(results)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, results);
+                    }
+                }
+            });
+
     }
 };
 module.exports = _.assign(module.exports, exports, model);

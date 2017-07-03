@@ -233,6 +233,68 @@ var model = {
         // }
     },
 
+    getSportsAthlete: function (data, callback) {
+        var finalData = {};
+        async.waterfall([
+            function (callback) {
+                Athelete.findOne({
+                    accessToken: data.athleteToken
+                }).exec(function (err, found) {
+                    if (_.isEmpty(found)) {
+                        callback(null, []);
+                    } else {
+                        data.dob = found.dob;
+                        data.gender = found.gender;
+                        callback(null, data);
+                    }
+                });
+            },
+            function (data, callback) {
+                var pipeLine = SportsListSubCategory.getAggregatePipeLine(data);
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $match: {
+                        "fromDate": {
+                            $lte: data.dob
+                        },
+                        "toDate": {
+                            $gte: data.dob
+                        },
+                        "gender": data.gender
+                    }
+                });
+                Sport.aggregate(newPipeLine, function (err, totals) {
+                    if (err) {
+                        console.log(err);
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(totals)) {
+                            callback(null, []);
+                        } else {
+                            console.log(totals)
+                            finalData.sportName = totals[0].sportsubData.name;
+                            var results = _.groupBy(totals, "gender");
+                            finalData.results = results;
+                            callback(null, finalData);
+                        }
+                    }
+                });
+            }
+        ], function (err, data2) {
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else if (data2) {
+                if (_.isEmpty(data2)) {
+                    callback("Max Team Created", null);
+                } else {
+                    callback(null, data2);
+                }
+            }
+        });
+
+    },
+
     getRules: function (data, callback) {
         SportsListSubCategory.findOne({
             _id: data._id
@@ -246,6 +308,7 @@ var model = {
             }
         });
     },
+
     getOneRuleBySportsName: function (data, callback) {
         SportsListSubCategory.findOne({
             name: {

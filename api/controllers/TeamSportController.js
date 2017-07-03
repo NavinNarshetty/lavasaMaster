@@ -21,13 +21,16 @@ var controller = {
                     accessToken: req.body.schoolToken
                 }).exec(function (err, found) {
                     if (err) {
-                        callback(err, null);
+                        res.json({
+                            value: false,
+                            data: "Incorrect Login Details"
+                        });
                     } else if (_.isEmpty(found)) {
-                        callback("Incorrect Login Details", null);
-                        // res.json({
-                        //     value: false,
-                        //     data: "Incorrect Login Details"
-                        // });
+                        // callback("Incorrect Login Details", null);
+                        res.json({
+                            value: false,
+                            data: "Incorrect Login Details"
+                        });
                     } else {
                         req.body.schoolSFA = found.sfaID;
                         TeamSport.teamConfirm(req.body, res.callback);
@@ -68,6 +71,7 @@ var controller = {
         }
 
     },
+
     search: function (req, res) {
         if (req.body) {
             TeamSport.search(req.body, res.callback);
@@ -79,6 +83,7 @@ var controller = {
         }
 
     },
+
     generateExcel: function (req, res) {
         TeamSport.generateExcel(res);
     },

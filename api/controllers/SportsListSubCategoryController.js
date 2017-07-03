@@ -51,8 +51,10 @@ var controller = {
     },
 
     getSports: function (req, res) {
-        if (req.body) {
+        if (req.body.schoolToken) {
             SportsListSubCategory.getSports(req.body, res.callback);
+        } else if (req.body.athleteToken) {
+            SportsListSubCategory.getSportsAthlete(req.body, res.callback);
         } else {
             res.json({
                 value: false,
