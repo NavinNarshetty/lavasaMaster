@@ -567,7 +567,7 @@ var model = {
                                 if (_.isEmpty(found)) {
                                     var athlete = {};
                                     athlete = n;
-                                    athlete.isTeamSelected = "false";
+                                    athlete.isTeamSelected = false;
                                     finalData.push(athlete);
                                     results.data = finalData;
                                     results.total = complete.total;
@@ -576,7 +576,7 @@ var model = {
                                 } else {
                                     var athlete = {};
                                     athlete = n;
-                                    athlete.isTeamSelected = "true";
+                                    athlete.isTeamSelected = true;
                                     finalData.push(athlete);
                                     results.data = finalData;
                                     results.total = complete.total;

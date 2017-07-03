@@ -1074,6 +1074,7 @@ var model = {
 
                 },
                 function (atheleteName, callback) {
+                    console.log(atheleteName);
                     IndividualSport.mailers(atheleteName, data, function (err, mailData) {
                         if (err) {
                             callback(err, null);
@@ -1146,7 +1147,7 @@ var model = {
                 function (data, callback) {
                     var atheleteName = [];
                     var results = [];
-                    async.eachSeries(data.individual, function (n, callback) {
+                    async.each(data.individual, function (n, callback) {
                         async.waterfall([
                                 function (callback) {
                                     IndividualSport.saveData(n, function (err, saveData) {
@@ -1171,6 +1172,7 @@ var model = {
                                             callback(err, "error in mongoose");
                                         } else {
                                             if (_.isEmpty(totals)) {
+                                                console.log("inside empty");
                                                 callback(null, []);
                                             } else {
                                                 console.log("totals", totals);
@@ -1259,17 +1261,18 @@ var model = {
                         emailData.email = n.info[0].email;
                         emailData.filename = "athleteindividual.ejs";
                         emailData.subject = "SFA: Individual Sport Selection";
+                        console.log("emailData", emailData);
                         callback(null, emailData);
-                        Config.email(emailData, function (err, emailRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
-                                callback(null, emailRespo);
-                            } else {
-                                callback(null, "Invalid data");
-                            }
-                        });
+                        // Config.email(emailData, function (err, emailRespo) {
+                        //     if (err) {
+                        //         console.log(err);
+                        //         callback(null, err);
+                        //     } else if (emailRespo) {
+                        //         callback(null, emailRespo);
+                        //     } else {
+                        //         callback(null, "Invalid data");
+                        //     }
+                        // });
                     }, function (err, emailRespo) {
                         if (err) {
                             callback(err, null);
@@ -1283,7 +1286,7 @@ var model = {
                     var totalAthlete = atheleteName.length;
                     var results = _.groupBy(atheleteName, "_id");
                     var collectedSport = [];
-                    _.each(results, function (mainData) {
+                    async.each(results, function (mainData, callback) {
                         var sportInfo = {};
                         sportInfo.eventName = mainData[0].info[0].eventName;
                         sportInfo.gender = mainData[0].info[0].gender;
@@ -1291,8 +1294,8 @@ var model = {
                         sportInfo.sportName = mainData[0].info[0].sportName;
                         var srno = 1;
                         sportInfo.athleteData = [];
-                        _.each(mainData, function (data) {
-                            // console.log("data", data);
+                        async.each(mainData, function (data, callback) {
+                            console.log("data", data);
                             var athelete = {};
                             athelete.srno = srno;
                             if (data.info[0].middlename) {
@@ -1304,8 +1307,23 @@ var model = {
                             athelete.sfaid = data.info[0].sfaid;
                             sportInfo.athleteData.push(athelete);
                             srno++;
+                            callback(null, sportInfo);
+                        }, function (err, sportInfo) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, sportInfo);
+                            }
                         });
                         collectedSport.push(sportInfo);
+                        console.log("collectedSport", collectedSport);
+                        callback(null, collectedSport);
+                    }, function (err, collectedSport) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, collectedSport);
+                        }
                     });
                     console.log("sport Details for school", collectedSport);
                     var emailData = {};
@@ -1317,16 +1335,18 @@ var model = {
                     emailData.email = data.email;
                     emailData.filename = "schoolindividual.ejs";
                     emailData.subject = "SFA: Individual Sport Selection List";
-                    Config.email(emailData, function (err, emailRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else if (emailRespo) {
-                            callback(null, emailRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
+                    console.log("emailData", emailData);
+                    callback(null, emailData)
+                    // Config.email(emailData, function (err, emailRespo) {
+                    //     if (err) {
+                    //         console.log(err);
+                    //         callback(null, err);
+                    //     } else if (emailRespo) {
+                    //         callback(null, emailRespo);
+                    //     } else {
+                    //         callback(null, "Invalid data");
+                    //     }
+                    // });
                 }
             ],
             function (err, data3) {
