@@ -1349,7 +1349,6 @@ var model = {
                     }
                 }
             });
-
     },
     mailersAthleteIndividual: function (atheleteName, data, callback) {
         async.each(atheleteName, function (n, callback) {

@@ -139,6 +139,7 @@ var model = {
 
     },
 
+    //get one sport when Athelete login
     getSchoolPerAthlete: function (data, callback) {
         async.waterfall([
                 function (callback) {
@@ -175,7 +176,7 @@ var model = {
                 function (schoolName, callback) {
                     Registration.findOne({
                         schoolName: schoolName.name
-                    }).exec(function (err, schoolData) {
+                    }).exec(function (err, complete) {
                         if (_.isEmpty(complete)) {
                             callback(null, []);
                         } else {
@@ -206,6 +207,8 @@ var model = {
                 }
             });
     },
+
+    //get one sport
     getOneSport: function (data, callback) {
         async.waterfall([
             function (callback) {
@@ -277,6 +280,8 @@ var model = {
         //      
     },
 
+    //get all sport with age category when Athelete login
+
     getSports: function (data, callback) {
         var finalData = {};
         var pipeLine = SportsListSubCategory.getAggregatePipeLine(data);
@@ -300,6 +305,7 @@ var model = {
         // }
     },
 
+    //get sport with age category when Athelete login
     getSportsAthlete: function (data, callback) {
         var finalData = {};
         async.waterfall([
