@@ -33,6 +33,7 @@ var controller = {
                         });
                     } else {
                         req.body.schoolSFA = found.sfaID;
+                        req.body.school = found._id;
                         TeamSport.teamConfirm(req.body, res.callback);
                     }
                 });

@@ -192,7 +192,6 @@ var model = {
                         }
                     });
                 },
-
             ],
             function (err, data2) {
                 if (err) {
