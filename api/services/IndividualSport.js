@@ -836,10 +836,12 @@ var model = {
                     var finalData = [];
                     // console.log("total", complete.total);
                     async.each(complete.results, function (n, callback) {
+                        console.log('n', n);
                         IndividualSport.find({
                             athleteId: n._id,
                             sportsListSubCategory: data._id
                         }).lean().exec(function (err, found) {
+                            console.log('found', [index] + found);
                             if (_.isEmpty(found)) {
                                 var athlete = {};
                                 athlete = n;
