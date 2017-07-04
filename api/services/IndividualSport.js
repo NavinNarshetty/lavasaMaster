@@ -1027,6 +1027,7 @@ var model = {
                                                 callback(null, []);
                                             } else {
                                                 sportData.createdAt = saveData.createdAt;
+                                                console.log("sportData.createdAt", sportData.createdAt);
                                                 callback(null, sportData);
                                             }
                                         }
