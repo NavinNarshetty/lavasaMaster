@@ -1042,9 +1042,11 @@ var model = {
                                             if (_.isEmpty(totals)) {
                                                 callback(null, []);
                                             } else {
+                                                console.log("totals", totals);
                                                 _.each(totals, function (total) {
                                                     atheleteName.push(total);
                                                 });
+                                                console.log("atheleteName", atheleteName);
                                                 callback(null, atheleteName);
                                             }
                                         }
