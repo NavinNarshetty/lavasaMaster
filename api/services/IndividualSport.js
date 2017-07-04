@@ -886,7 +886,7 @@ var model = {
     },
 
     getAggregatePipeLineSport: function (data) {
-
+        console.log('inAggre', data);
         var pipeline = [
             // Stage 1
             {
