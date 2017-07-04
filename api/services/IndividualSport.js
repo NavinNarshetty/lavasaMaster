@@ -841,7 +841,7 @@ var model = {
                             athleteId: n._id,
                             sportsListSubCategory: data._id
                         }).lean().exec(function (err, found) {
-                            console.log('found', [index] + found);
+                            console.log('found', found);
                             if (_.isEmpty(found)) {
                                 var athlete = {};
                                 athlete = n;
