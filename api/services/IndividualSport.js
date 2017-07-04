@@ -1001,7 +1001,7 @@ var model = {
                         }
                     }
                 }
-            },
+            }
 
 
         ];
@@ -1036,12 +1036,14 @@ var model = {
                                 function (sportData, callback) {
                                     console.log("sportData", sportData);
                                     var pipeLine = IndividualSport.getAggregatePipeLineSport(sportData);
+                                    console.log('aggre returned value', pipeLine);
                                     IndividualSport.aggregate(pipeLine, function (err, totals) {
                                         if (err) {
                                             console.log(err);
                                             callback(err, "error in mongoose");
                                         } else {
                                             if (_.isEmpty(totals)) {
+                                                console.log('totals null');
                                                 callback(null, []);
                                             } else {
                                                 console.log("totals", totals);
