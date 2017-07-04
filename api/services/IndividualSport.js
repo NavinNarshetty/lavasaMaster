@@ -1032,6 +1032,7 @@ var model = {
                                     });
                                 },
                                 function (sportData, callback) {
+                                    console.log("sportData", sportData);
                                     var pipeLine = IndividualSport.getAggregatePipeLineSport(sportData);
                                     IndividualSport.aggregate(pipeLine, function (err, totals) {
                                         if (err) {
