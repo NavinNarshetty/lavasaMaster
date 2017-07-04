@@ -890,6 +890,12 @@ var model = {
         var pipeline = [
             // Stage 1
             {
+                $match: {
+                    "createdAt": new Date(data.createdAt)
+                }
+            },
+
+            {
                 $lookup: {
                     "from": "atheletes",
                     "localField": "athleteId",
@@ -975,14 +981,6 @@ var model = {
 
                 }
             },
-
-            // Stage 11
-            {
-                $match: {
-                    "createdAt": new Date(data.createdAt)
-                }
-            },
-
 
             // Stage 12
             {
