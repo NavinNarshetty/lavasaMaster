@@ -54,6 +54,7 @@ module.exports = [
     // Services
     'backend/js/services/template.js',
     'backend/js/services/jsonService.js',
+    'backend/js/services/base64Service.js',
 
     //Factories
     'backend/js/factories/navigation.js',

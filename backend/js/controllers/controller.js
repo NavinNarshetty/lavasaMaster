@@ -1570,16 +1570,17 @@ myApp.controller('DetailTeamSportCtrl', function ($scope, TemplateService, Navig
                                 console.log("data student detaail", data);
                                 if (data.data.middleName) {
                                     $scope.athlete = data.data.firstName + " " + data.data.middleName + " " + data.data.surname;
-                                    $scope.studentTeam[$scope.i] = $scope.athlete;
-                                    console.log("students", $scope.studentTeam[$scope.i]);
+                                    $scope.athleteId = data.data.sfaId;
                                     $scope.formData.studentTeam.push({
-                                        name: $scope.athlete
+                                        name: $scope.athlete,
+                                        sfaId: $scope.athleteId
                                     });
                                 } else {
                                     $scope.athlete = data.data.firstName + " " + data.data.surname;
-                                    $scope.studentTeam[$scope.i] = $scope.athlete;
+                                    $scope.athleteId = data.data.sfaId;
                                     $scope.formData.studentTeam.push({
-                                        name: $scope.athlete
+                                        name: $scope.athlete,
+                                        sfaId: $scope.athleteId
                                     });
                                 }
                             });
@@ -1591,9 +1592,9 @@ myApp.controller('DetailTeamSportCtrl', function ($scope, TemplateService, Navig
                             NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
                                 if (data.value) {
                                     if (data.data.middleName) {
-                                        $scope.formData.captain = data.data.firstName + " " + data.data.middleName + " " + data.data.surname;
+                                        $scope.formData.captain = data.data.sfaId + " - " + data.data.firstName + " " + data.data.middleName + " " + data.data.surname;
                                     } else {
-                                        $scope.formData.captain = data.data.firstName + " " + data.data.surname;
+                                        $scope.formData.captain = data.data.sfaId + " - " + data.data.firstName + " " + data.data.surname;
                                     }
 
                                 }
@@ -1607,9 +1608,9 @@ myApp.controller('DetailTeamSportCtrl', function ($scope, TemplateService, Navig
                             NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
                                 if (data.value) {
                                     if (data.data.middleName) {
-                                        $scope.formData.goalKeeper = data.data.firstName + " " + data.data.middleName + " " + data.data.surname;
+                                        $scope.formData.goalKeeper = data.data.sfaId + " - " + data.data.firstName + " " + data.data.middleName + " " + data.data.surname;
                                     } else {
-                                        $scope.formData.goalKeeper = data.data.firstName + " " + data.data.surname;
+                                        $scope.formData.goalKeeper = data.data.sfaId + " - " + data.data.firstName + " " + data.data.surname;
                                     }
 
                                 }
@@ -1666,7 +1667,7 @@ myApp.controller('StudentTeamCtrl', function ($scope, TemplateService, Navigatio
 
 //table-individualteamsport
 
-myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
+myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal, base64Service) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableindividualsport");
@@ -1741,10 +1742,24 @@ myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, Naviga
                 toastr.error('Something Went Wrong while Deleting', 'Team Sport Message');
             }
         });
-
-
     }
 
+    // $scope.transferToWebsite = function (id) {
+    //     $scope.constraints = {};
+    //     $scope.constraints._id = base64Service.encode(id);
+    //     $scope.url = "Login/access"
+    //     NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+    //         console.log(data);
+    //     });
+
+    //     // For decode at frontend level
+    //     // console.log(id);
+    //     // console.log($scope.constraints);
+    //     // $scope.constraintis = {};
+    //     // $scope.constraintis._id = base64Service.decode($scope.constraints._id);
+    //     // console.log($scope.constraintis);
+
+    // }
 
 });
 //viewindividualteamsport
@@ -1820,7 +1835,7 @@ myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, N
     $scope.getOneOldSchoolById();
 });
 
-myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
+myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, base64Service) {
     //registration filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableschool");
@@ -1898,7 +1913,22 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
         NavigationService.generateSchoolExcelWithData(formData, function (data) {});
     }
 
+    // $scope.transferToWebsite = function (id) {
+    //     $scope.constraints = {};
+    //     $scope.constraints._id = base64Service.encode(id);
+    //     $scope.url = "Login/access"
+    //     NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+    //         console.log(data);
+    //     });
 
+    //     // For decode at frontend level
+    //     // console.log(id);
+    //     // console.log($scope.constraints);
+    //     // $scope.constraintis = {};
+    //     // $scope.constraintis._id = base64Service.decode($scope.constraints._id);
+    //     // console.log($scope.constraintis);
+
+    // }
 })
 
 myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {

@@ -33,7 +33,7 @@
                     <label>Student Team</label>
                     <ui-select disabled multiple ng-model="formData.studentTeam" class="form-control">
                       <ui-select-match>
-                        <span ng-bind="$item.name"></span>
+                        <span ng-bind="$item.sfaId+' - '+$item.name"></span>
                       </ui-select-match>
                       <ui-select-choices repeat="item in formData.studentTeam">
                       </ui-select-choices>
