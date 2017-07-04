@@ -1005,6 +1005,8 @@ var model = {
 
 
         ];
+        console.log('L', pipeLine);
+        console.log('l', pipeline);
         return pipeline;
     },
 
