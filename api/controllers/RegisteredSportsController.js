@@ -18,6 +18,7 @@ var controller = {
                     });
                 } else {
                     req.body.school = found._id;
+                    req.body.schoolName = found.schoolName;
                     RegisteredSports.getAllRegisteredSport(req.body, res.callback);
                 }
             });
@@ -40,6 +41,19 @@ var controller = {
                     RegisteredSports.getAllRegisteredSportAthlete(req.body, res.callback);
                 }
             });
+        } else {
+            res.json({
+                value: false,
+                data: "User Not logged in"
+            });
+        }
+    },
+
+    getDetailRegisteredAthlete: function (req, res) {
+        if (req.body.type == "Team") {
+            RegisteredSports.getDetails(req.body, res.callback);
+        } else if (req.body.type == "Individual") {
+            RegisteredSports.getDetails(req.body, res.callback);
         } else {
             res.json({
                 value: false,

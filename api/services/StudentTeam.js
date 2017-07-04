@@ -36,20 +36,15 @@ module.exports = mongoose.model('StudentTeam', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
+
     saveInTeam: function (data, callback) {
-
-        console.log("** inside saveInTeam of studentTeam  **", data);
-
         StudentTeam.saveData(data, function (err, teamData) {
-            // console.log("teamData", teamData);
             if (err) {
-                console.log("err", err);
                 callback("There was an error ", null);
             } else {
                 if (_.isEmpty(teamData)) {
                     callback("No data found", null);
                 } else {
-                    console.log("** inside saveInTeam success response**", teamData);
                     callback(null, teamData);
                 }
             }

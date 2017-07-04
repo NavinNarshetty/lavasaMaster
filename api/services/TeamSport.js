@@ -102,7 +102,7 @@ var model = {
                             if (_.isEmpty(complete)) {
                                 callback(null, []);
                             } else {
-                                callback(null, complete)
+                                callback(null, complete);
                             }
                         }
                     });
@@ -400,7 +400,7 @@ var model = {
                     },
                     //athlete email
                     function (callback) {
-                        data.emailfile = "studentTeam.ejs";
+                        data.emailfile = "studentmailTeam.ejs";
                         data.schoolSFA = found.sfaID;
                         data.schoolName = found.schoolName;
                         TeamSport.athleteMailers(data, total, function (err, mailData) {
@@ -410,7 +410,7 @@ var model = {
                                 if (_.isEmpty(mailData)) {
                                     callback(null, []);
                                 } else {
-                                    callback(null, mailData)
+                                    callback(null, mailData);
                                 }
                             }
                         });
@@ -506,7 +506,7 @@ var model = {
                             if (_.isEmpty(mailData)) {
                                 callback(null, []);
                             } else {
-                                callback(null, mailData)
+                                callback(null, mailData);
                             }
                         }
                     });
@@ -574,7 +574,7 @@ var model = {
                             if (_.isEmpty(complete)) {
                                 callback(null, []);
                             } else {
-                                callback(null, complete)
+                                callback(null, complete);
                             }
                         }
                     });
@@ -603,7 +603,7 @@ var model = {
                                 if (_.isEmpty(complete2)) {
                                     callback(null, []);
                                 } else {
-                                    callback(null, complete2)
+                                    callback(null, complete2);
                                 }
                             }
                         });
@@ -724,7 +724,7 @@ var model = {
                                 if (_.isEmpty(found)) {
                                     callback(null, []);
                                 } else {
-                                    callback(null, found)
+                                    callback(null, found);
                                 }
                             }
                         });

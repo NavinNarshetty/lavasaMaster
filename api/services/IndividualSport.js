@@ -1013,7 +1013,7 @@ var model = {
 
         ];
         // console.log('L', pipeLine);
-        console.log('l', pipeline);
+        // console.log('l', pipeline);
         return pipeline;
     },
 
@@ -1034,30 +1034,24 @@ var model = {
                                                 callback(null, []);
                                             } else {
                                                 sportData.createdAt = saveData.createdAt;
-                                                console.log("sportData.createdAt", sportData.createdAt);
                                                 callback(null, sportData);
                                             }
                                         }
                                     });
                                 },
                                 function (sportData, callback) {
-                                    console.log("sportData", sportData);
                                     var pipeLine = IndividualSport.getAggregatePipeLineSport(sportData);
-                                    console.log('aggre returned value', pipeLine);
                                     IndividualSport.aggregate(pipeLine, function (err, totals) {
                                         if (err) {
                                             console.log(err);
                                             callback(err, "error in mongoose");
                                         } else {
                                             if (_.isEmpty(totals)) {
-                                                console.log('totals null');
                                                 callback(null, []);
                                             } else {
-                                                console.log("totals", totals);
                                                 _.each(totals, function (total) {
                                                     atheleteName.push(total);
                                                 });
-                                                console.log("atheleteName", atheleteName);
                                                 callback(null, atheleteName);
                                             }
                                         }
@@ -1078,7 +1072,6 @@ var model = {
                             });
                     }, function (err, data2) {
                         if (err) {
-                            console.log(err);
                             callback(err, null);
                         } else {
                             callback(null, atheleteName);
@@ -1103,7 +1096,6 @@ var model = {
             ],
             function (err, data3) {
                 if (err) {
-                    console.log(err);
                     callback(null, []);
                 } else if (data3) {
                     if (_.isEmpty(data3)) {
