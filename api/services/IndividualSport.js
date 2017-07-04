@@ -910,6 +910,13 @@ var model = {
                     path: "$athleteId",
                 }
             },
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$sport",
+
+                }
+            },
 
             // Stage 3
             {
