@@ -1287,8 +1287,10 @@ var model = {
                     console.log("inside mailers");
                     var totalAthlete = atheleteName.length;
                     var results = _.groupBy(atheleteName, "_id");
+                    console.log("reults", results);
                     var collectedSport = [];
                     _.each(results, function (mainData) {
+                        console.log("mainData", mainData);
                         var sportInfo = {};
                         sportInfo.eventName = mainData[0].info[0].eventName;
                         sportInfo.gender = mainData[0].info[0].gender;

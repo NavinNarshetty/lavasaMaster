@@ -208,7 +208,7 @@ var model = {
                             callback(null, []);
                         } else {
                             data.school = complete._id;
-                            SportsListSubCategory.getOneSport(data, function (err, complete1) {
+                            TeamSport.teamConfirm(data, function (err, complete1) {
                                 if (err) {
                                     callback(err, null);
                                 } else {
