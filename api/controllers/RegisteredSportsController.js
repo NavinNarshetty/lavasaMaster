@@ -49,11 +49,11 @@ var controller = {
         }
     },
 
-    getDetailRegisteredAthlete: function (req, res) {
+    getDetailRegisteredSport: function (req, res) {
         if (req.body.type == "Team") {
             RegisteredSports.getDetails(req.body, res.callback);
         } else if (req.body.type == "Individual") {
-            RegisteredSports.getDetails(req.body, res.callback);
+            RegisteredSports.getDetailsIndividual(req.body, res.callback);
         } else {
             res.json({
                 value: false,

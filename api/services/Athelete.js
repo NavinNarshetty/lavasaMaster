@@ -984,14 +984,21 @@ var model = {
                 emailData.Date = moment().format("DD-MM-YYYY");
                 emailData.receiptNo = "SFA" + found.atheleteID;
                 emailData.from = "info@sfanow.in";
-                emailData.email = found.email;
+                emailData.email1 = [{
+                    email: found.email
+                }]
+                emailData.cc1 = [{
+                    email: "payments@sfanow.in",
+                    email: "venkatesh.rathod@sfanow.in"
+                }]
+                // emailData.email = found.email;
                 // emailData.sfaID = data.sfaID;
                 // emailData.password = data.password;
                 emailData.filename = "receiptAthelete.ejs";
                 emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA Mumbai 2017";
                 console.log("emaildata", emailData);
 
-                Config.email(emailData, function (err, emailRespo) {
+                Config.emailTo(emailData, function (err, emailRespo) {
                     if (err) {
                         console.log(err);
                         callback(null, err);
@@ -1881,8 +1888,16 @@ var model = {
                                 }
                             },
                             function (schoolData, callback) {
+                                if (n.atheleteID) {
+                                    if (n.registrationFee == "online PAYU") {
+                                        obj.receiptNo = "SFA" + n.atheleteID;
+                                    } else {
+                                        obj.receiptNo = "";
+                                    }
+                                } else {
+                                    obj.receiptNo = "";
+                                }
                                 obj.school = schoolData;
-                                // console.log("obj", obj.school);
                                 var parentInfo;
                                 var countParent = 0;
                                 var levelInfo;

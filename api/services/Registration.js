@@ -962,12 +962,19 @@ var model = {
                             var receipt = "SFA" + found.registerID;
                             emailData.receiptNo = receipt;
                             emailData.from = "info@sfanow.in";
-                            emailData.email = found.email;
+                            emailData.email1 = [{
+                                email: found.email
+                            }]
+                            emailData.cc1 = [{
+                                email: "payments@sfanow.in",
+                                email: "venkatesh.rathod@sfanow.in"
+                            }]
+                            // emailData.email = found.email;
                             emailData.filename = "receipt.ejs";
                             emailData.subject = "SFA: Your Payment Receipt as School for SFA Mumbai 2017";
                             console.log("emaildata", emailData);
 
-                            Config.email(emailData, function (err, emailRespo) {
+                            Config.emailTo(emailData, function (err, emailRespo) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, err);
@@ -1001,12 +1008,19 @@ var model = {
                             var receipt = "SFA" + found.registerID;
                             emailData.receiptNo = receipt;
                             emailData.from = "info@sfanow.in";
-                            emailData.email = found.email;
+                            emailData.email1 = [{
+                                email: found.email
+                            }]
+                            emailData.cc1 = [{
+                                email: "payments@sfanow.in",
+                                email: "venkatesh.rathod@sfanow.in"
+                            }]
+                            // emailData.email = found.email;
                             emailData.filename = "envoice.ejs";
                             emailData.subject = "SFA: Your Payment Invoice as School for SFA Mumbai 2017";
                             console.log("emaildata", emailData);
 
-                            Config.email(emailData, function (err, emailRespo) {
+                            Config.emailTo(emailData, function (err, emailRespo) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, err);
@@ -1280,6 +1294,15 @@ var model = {
                         var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
                         // console.log("dateTime", n.createdAt, dateTime);
                         obj.date = dateTime;
+                        if (n.registerID) {
+                            if (n.registrationFee == "online PAYU") {
+                                obj.receiptNo = "SFA" + n.registerID;
+                            } else {
+                                obj.receiptNo = "";
+                            }
+                        } else {
+                            obj.receiptNo = "";
+                        }
                         obj.schoolType = n.schoolType;
                         obj.schoolCategory = n.schoolCategory;
                         obj.affiliatedBoard = n.affiliatedBoard;
