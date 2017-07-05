@@ -65,9 +65,9 @@ var model = {
         //          4. Send Emails  
         var sport = data.name;
         var index = sport.indexOf("-");
-        // data.name = sport.slice(++index, sport.length);
-        var indexNext = data.name.indexOf("-");
-        data.linkSportName = data.name.slice(1, indexNext);
+        var tempName = sport.slice(++index, sport.length);
+        var indexNext = tempName.indexOf("-");
+        data.linkSportName = tempName.slice(0, indexNext);
         console.log("data", data);
         async.waterfall([
                 function (callback) {
