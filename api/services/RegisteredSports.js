@@ -670,7 +670,11 @@ var model = {
                         if (_.isEmpty(complete)) {
                             callback(null, []);
                         } else {
-                            callback(null, complete);
+                            // callback(null, complete);
+                            _.each(complete, function (n) {
+                                finalData.push(n);
+                            });
+                            callback(null, finalData);
                         }
                     }
                 });
@@ -687,7 +691,11 @@ var model = {
                         if (_.isEmpty(complete)) {
                             callback(null, []);
                         } else {
-                            callback(null, complete);
+                            // callback(null, complete);
+                            _.each(complete, function (n) {
+                                finalData.push(n);
+                            });
+                            callback(null, finalData);
                         }
                     }
                 });
@@ -701,7 +709,7 @@ var model = {
                 if (_.isEmpty(data3)) {
                     callback(null, []);
                 } else {
-                    callback(null, data3);
+                    callback(null, finalData);
                 }
             }
         });
