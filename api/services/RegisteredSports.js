@@ -136,6 +136,13 @@ var model = {
                 }
             },
 
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport",
+                }
+            },
+
             // Stage 1
             {
                 $lookup: {
