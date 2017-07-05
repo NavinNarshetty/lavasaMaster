@@ -323,6 +323,12 @@ var model = {
                     "studentId": objectid(data.athleteid)
                 }
             },
+            // Stage 3
+            {
+                $unwind: {
+                    path: "$sport"
+                }
+            },
 
             // Stage 2
             {
@@ -380,6 +386,14 @@ var model = {
             {
                 $match: {
                     "athleteId": objectid(data.athleteid)
+                }
+            },
+
+            // Stage 3
+            {
+                $unwind: {
+                    path: "$sport",
+
                 }
             },
 
