@@ -252,7 +252,12 @@ var model = {
                     ]
                 }
             },
-
+            // Stage 7
+            {
+                $unwind: {
+                    path: "$sport",
+                }
+            },
             // Stage 6
             {
                 $lookup: {
