@@ -658,7 +658,8 @@ var model = {
     //--------------------- End of Pipeline Section ---------------
 
     getAllRegisteredSport: function (data, callback) {
-        async.parallel([
+        var finalData = [];
+        async.waterfall([
             //team sport
             function (callback) {
                 var pipeLine = RegisteredSports.getTeamSportAggregatePipeLine(data);
@@ -681,18 +682,18 @@ var model = {
 
             },
             //IndividualSport
-            function (callback) {
+            function (finalData, callback) {
                 var pipeLine = RegisteredSports.getIndividualSchoolAggregatePipeLine(data);
-                IndividualSport.aggregate(pipeLine, function (err, complete) {
+                IndividualSport.aggregate(pipeLine, function (err, complete1) {
                     if (err) {
                         console.log(err);
                         callback(err, "error in mongoose");
                     } else {
-                        if (_.isEmpty(complete)) {
+                        if (_.isEmpty(complete1)) {
                             callback(null, []);
                         } else {
                             // callback(null, complete);
-                            _.each(complete, function (n) {
+                            _.each(complete1, function (n) {
                                 finalData.push(n);
                             });
                             callback(null, finalData);
