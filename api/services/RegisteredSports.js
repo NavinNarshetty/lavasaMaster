@@ -231,10 +231,11 @@ var model = {
                             email: "$studentId.email",
                             age: "$studentId.age",
                             gender: "$sport.gender",
-                            sportName: "$teamId.name",
+                            name: "$teamId.name",
                             createdBy: "$createdBy",
                             isCaptain: "$isCaptain",
-                            isGoalKeeper: "$isGoalKeeper"
+                            isGoalKeeper: "$isGoalKeeper",
+                            sportName: "sport.sportslist.name",
                         }
                     }
                 }
@@ -705,6 +706,22 @@ var model = {
                     path: "$sport",
                 }
             },
+            // Stage 4
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
+
+            // Stage 5
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+                }
+            },
 
             // Stage 9
             {
@@ -722,6 +739,21 @@ var model = {
                     path: "$sport.sportslist",
                 }
             },
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sport.sportslist.sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist.sportsListSubCategory"
+                }
+            },
+
+            // Stage 10
+            {
+                $unwind: {
+                    path: "$sport.sportslist.sportsListSubCategory",
+                }
+            },
 
             // Stage 11
             {
@@ -734,9 +766,10 @@ var model = {
                             middlename: "$athleteId.middleName",
                             sfaid: "$athleteId.sfaId",
                             email: "$athleteId.email",
-                            age: "$athleteId.age",
+                            age: "$sport.ageGroup.name",
                             gender: "$sport.gender",
-                            sportName: "$name",
+                            sportName: "$sport.sportslist.sportsListSubCategory.name",
+                            name: "sport.sportslist.name",
                             createdBy: "$createdBy"
                         }
                     }
