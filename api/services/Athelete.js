@@ -2030,6 +2030,8 @@ var model = {
                                 obj.paymentStatus = n.paymentStatus;
                                 obj.transactionID = n.transactionID;
                                 obj.remarks = n.remarks;
+                                obj.utm_medium = n.utm_medium;
+                                obj.utm_source = n.utm_source;
                                 // console.log("obj", obj);
                                 excelData.push(obj);
                                 callback(null, excelData);
