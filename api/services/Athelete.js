@@ -236,6 +236,38 @@ var model = {
                     }
                 }]
             }
+        } else if (data.type == "UTM_Source") {
+            matchObj = {
+                sfaId: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
+        } else if (data.type == "UTM_Medium") {
+            matchObj = {
+                sfaId: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
         } else if (data.type == "Athlete Name") {
             matchObj = {
                 // $or: [{

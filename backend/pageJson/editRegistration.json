@@ -13,6 +13,20 @@
             "id": "createdAt"
         },
         {
+            "name": "UTM Source",
+            "type": "text",
+            "tableRef": "utm_source",
+            "placeholder": "Enter utm source",
+            "id": "utm_source"
+        },
+        {
+            "name": "UTM Medium",
+            "type": "text",
+            "tableRef": "utm_medium",
+            "placeholder": "Enter utm Medium",
+            "id": "utm_medium"
+        },
+        {
             "name": "School Name",
             "type": "text",
             "tableRef": "schoolName",
