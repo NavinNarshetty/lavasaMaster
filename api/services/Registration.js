@@ -1104,6 +1104,38 @@ var model = {
                     }
                 }]
             }
+        } else if (data.type == "UTM_Source") {
+            matchObj = {
+                utm_source: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
+        } else if (data.type == "UTM_Medium") {
+            matchObj = {
+                utm_medium: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
         } else if (data.type == "School Name") {
             matchObj = {
                 'schoolName': {
@@ -1428,6 +1460,8 @@ var model = {
                         obj.paymentStatus = n.paymentStatus;
                         obj.transactionID = n.transactionID;
                         obj.remarks = n.remarks;
+                        obj.utm_medium = n.utm_medium;
+                        obj.utm_source = n.utm_source;
                         excelData.push(obj);
 
                     });
@@ -1596,6 +1630,8 @@ var model = {
                 obj.paymentStatus = n.paymentStatus;
                 obj.transactionID = n.transactionID;
                 obj.remarks = n.remarks;
+                obj.utm_medium = n.utm_medium;
+                obj.utm_source = n.utm_source;
                 excelData.push(obj);
 
             });
@@ -1647,6 +1683,38 @@ var model = {
         } else if (data.type == "SFA-ID") {
             matchObj = {
                 sfaID: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
+        } else if (data.type == "UTM_Source") {
+            matchObj = {
+                utm_source: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
+        } else if (data.type == "UTM_Medium") {
+            matchObj = {
+                utm_medium: {
                     $regex: data.input,
                     $options: "i"
                 },
