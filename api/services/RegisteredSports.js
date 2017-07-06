@@ -621,6 +621,7 @@ var model = {
                             age: "$athleteId.age",
                             gender: "$sport.gender",
                             sportName: "$sport.sportslist.name",
+                            createdBy: "$createdBy"
                         }
                     }
                 }
@@ -711,6 +712,7 @@ var model = {
                             age: "$athleteId.age",
                             gender: "$sport.gender",
                             sportName: "$name",
+                            createdBy: "$createdBy"
                         }
                     }
                 }
@@ -855,7 +857,7 @@ var model = {
                         age: "$studentId.age",
                         gender: "$sport.gender",
                         sportName: "$teamId.name",
-                        createdBy: "$sport.createdBy",
+                        createdBy: "$createdBy",
                         isCaptain: "$isCaptain",
                         isGoalKeeper: "$isGoalKeeper"
 
@@ -898,7 +900,7 @@ var model = {
                         age: "$studentId.age",
                         gender: "$sport.gender",
                         sportName: "$teamId.name",
-                        createdBy: "$sport.createdBy",
+                        createdBy: "$createdBy",
                         isCaptain: "$isCaptain",
                         isGoalKeeper: "$isGoalKeeper"
                     }
