@@ -1576,6 +1576,38 @@ var model = {
                     }
                 }]
             }
+        } else if (data.type == "UTM_Source") {
+            matchObj = {
+                utm_source: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
+        } else if (data.type == "UTM_Medium") {
+            matchObj = {
+                utm_medium: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
         } else if (data.type == "Athlete Name") {
             matchObj = {
                 // $or: [{
@@ -2148,6 +2180,8 @@ var model = {
                         obj.paymentStatus = n.paymentStatus;
                         obj.transactionID = n.transactionID;
                         obj.remarks = n.remarks;
+                        obj.utm_medium = n.utm_medium;
+                        obj.utm_source = n.utm_source;
                         // console.log("obj", obj);
                         excelData.push(obj);
                         callback(null, excelData);
