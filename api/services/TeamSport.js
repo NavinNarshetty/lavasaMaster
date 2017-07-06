@@ -811,6 +811,22 @@ var model = {
                         obj.Name = mainData.name;
                         obj.School = mainData.school.schoolName;
                         obj.Sport = mainData.sport.sportslist.name;
+                        if (mainData.nominatedSchoolName) {
+                            obj.nominatedSchoolName = mainData.nominatedSchoolName;
+                        } else {
+                            obj.nominatedSchoolName = "";
+                        }
+                        if (mainData.nominatedContactDetails) {
+                            obj.nominatedContactDetails = mainData.nominatedContactDetails;
+                        } else {
+                            obj.nominatedContactDetails = "";
+                        }
+                        if (mainData.nominatedEmailId) {
+                            obj.nominatedEmailId = mainData.nominatedEmailId;
+                        } else {
+                            obj.nominatedEmailId = "";
+                        }
+                        obj.createdBy = mainData.createdBy;
                         var StudentTeam;
                         var count = 0;
                         async.each(mainData.studentTeam, function (n, innerEachCallback) {

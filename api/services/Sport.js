@@ -113,11 +113,14 @@ var model = {
                 }
             }, {
                 $match: {
-                    "gender": data.gender,
-                    "dob": {
-                        $gte: new Date(data.fromDate),
-                        $lte: new Date(data.toDate),
-                    }
+                    $and: [{
+                        "gender": data.gender,
+                    }, {
+                        "dob": {
+                            $gte: new Date(data.fromDate),
+                            $lte: new Date(data.toDate),
+                        }
+                    }]
                 }
             },
 

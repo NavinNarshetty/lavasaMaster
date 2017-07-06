@@ -14,7 +14,6 @@ var schema = new Schema({
         ref: 'SportsListSubCategory',
         index: true
     },
-    name: String,
     perSportUnique: String,
     createdBy: String,
     nominatedName: String,
@@ -1520,6 +1519,153 @@ var model = {
                 }
             });
 
-    }
+    },
+
+    generateExcel: function (res) {
+        async.waterfall([
+                function (callback) {
+                    IndividualSport.findOne().deepPopulate(deepSearch).exec(function (err, found) {
+                        if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    console.log(found);
+                    var excelData = [];
+                    async.each(found, function (mainData, callback) {
+                        var obj = {};
+                        if (n.athleteId.middleName) {
+                            obj.AthleteName = n.athleteId.firstName + " " + n.athleteId.middleName + " " + n.athleteId.surname;
+                        } else {
+                            obj.AthleteName = n.athleteId.firstName + " " + n.athleteId.surname;
+                        }
+                        obj.sportName = n.sportsListSubCategory.name;
+                        if (mainData.nominatedSchoolName) {
+                            obj.nominatedSchoolName = mainData.nominatedSchoolName;
+                        } else {
+                            obj.nominatedSchoolName = "";
+                        }
+                        if (mainData.nominatedContactDetails) {
+                            obj.nominatedContactDetails = mainData.nominatedContactDetails;
+                        } else {
+                            obj.nominatedContactDetails = "";
+                        }
+                        if (mainData.nominatedEmailId) {
+                            obj.nominatedEmailId = mainData.nominatedEmailId;
+                        } else {
+                            obj.nominatedEmailId = "";
+                        }
+                        if (mainData.nominatedName) {
+                            obj.nominatedName = mainData.nominatedName;
+                        } else {
+                            obj.nominatedName = "";
+                        }
+                        obj.createdBy = mainData.createdBy;
+                        var sport;
+                        var sports = {};
+                        var count = 0;
+                        async.each(mainData.sport, function (n, innerEachCallback) {
+                                async.waterfall([
+                                        function (callback) {
+                                            Sport.findOne({
+                                                _id: n
+                                            }).exec(function (err, found) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else {
+                                                    if (_.isElement(found)) {
+                                                        callback(null, []);
+                                                    } else {
+                                                        callback(null, found);
+                                                    }
+                                                }
+                                            });
+                                        },
+                                        function (found, callback) {
+                                            AgeGroup.findOne({
+                                                _id: found.ageGroup
+                                            }).exec(function (err, ageData) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else {
+                                                    if (_.isElement(ageData)) {
+                                                        callback(null, []);
+                                                    } else {
+                                                        sports.sport = found;
+                                                        sports.gender = found.gender;
+                                                        sports.age = ageData.name;
+                                                        callback(null, sports);
+                                                    }
+                                                }
+                                            });
+                                        },
+                                        function (sports, callback) {
+                                            SportsList.findOne({
+                                                _id: sports.sport.sportsList
+                                            }).exec(function (err, sportlistData) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else {
+                                                    if (_.isElement(sportlistData)) {
+                                                        callback(null, []);
+                                                    } else {
+                                                        sports.sportName = sportlistData.name;
+                                                        // sports.gender = found.gender;
+                                                        // sports.age = ageData.name;
+                                                        // callback(null, sports);
+                                                        if (count == 0) {
+                                                            sport = "{ EventName:" + sports.sportName + "," + "gender:" + sports.gender + "," + "AgeGroup:" + sports.age + "}";
+                                                        } else {
+                                                            sport = sport + "{ EventName:" + sports.sportName + "," + "gender:" + sports.gender + "," + "AgeGroup:" + sports.age + "}";
+                                                        }
+                                                        count++;
+                                                        obj.Sports = sport;
+                                                        console.log("obj****", obj);
+                                                        console.log("obj-----", obj);
+                                                        excelData.push(obj);
+                                                        innerEachCallback(null, excelData);
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    ],
+                                    function (err, excelData) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(null, []);
+                                        } else if (excelData) {
+                                            if (_.isEmpty(excelData)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, excelData);
+                                            }
+                                        }
+                                    });
+                            },
+                            function (err) {
+                                callback(null, excelData);
+                            });
+                    }, function (err) {
+                        Config.generateExcelOld("IndividualSport", excelData, res);
+                    });
+
+                },
+            ],
+            function (err, excelData) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (excelData) {
+                    if (_.isEmpty(excelData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, excelData);
+                    }
+                }
+            });
+    },
 };
 module.exports = _.assign(module.exports, exports, model);
