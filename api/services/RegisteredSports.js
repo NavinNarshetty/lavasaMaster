@@ -684,7 +684,11 @@ var model = {
                     "athleteId._id": objectid(data.athleteId)
                 }
             },
-
+            {
+                $unwind: {
+                    path: "$sport",
+                }
+            },
             // Stage 7
             {
                 $lookup: {
