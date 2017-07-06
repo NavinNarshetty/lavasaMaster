@@ -94,7 +94,8 @@ var schema = new Schema({
     remarks: String,
     accessToken: String,
     isSelected: Boolean,
-
+    utm_medium: String,
+    utm_source: String
 });
 
 schema.plugin(deepPopulate, {});
