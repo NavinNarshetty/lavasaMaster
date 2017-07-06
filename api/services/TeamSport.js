@@ -805,7 +805,7 @@ var model = {
                 function (complete, callback) {
                     console.log(complete);
                     var excelData = [];
-                    _.each(complete, function (mainData) {
+                    async.each(complete, function (mainData, callback) {
                         var obj = {};
                         obj.Teamid = mainData.teamId;
                         obj.Name = mainData.name;
@@ -813,26 +813,27 @@ var model = {
                         obj.Sport = mainData.sport.sportslist.name;
                         var StudentTeam;
                         var count = 0;
-                        async.each(mainData.studentTeam, function (n, callback) {
+                        async.each(mainData.studentTeam, function (n, innerEachCallback) {
+                            var name;
                             Athelete.findOne({
                                 _id: n.studentId
                             }).exec(function (err, found) {
 
                                 if (found.middleName) {
-                                    var name = found.firstName + " " + found.middleName + " " + found.surname;
+                                    name = found.firstName + " " + found.middleName + " " + found.surname;
                                 } else {
-                                    var name = found.firstName + " " + found.surname;
+                                    name = found.firstName + " " + found.surname;
                                 }
                                 if (n.isCaptain) {
                                     var isCaptain = n.isCaptain;
                                 } else {
-                                    var isCaptain = "";
+                                    var isCaptain = "false";
                                 }
 
                                 if (n.isGoalKeeper) {
                                     var isGoalKeeper = n.isGoalKeeper;
                                 } else {
-                                    var isGoalKeeper = "";
+                                    var isGoalKeeper = "false";
                                 }
                                 if (count == 0) {
                                     StudentTeam = "{ Name:" + name + "," + "isCaptain:" + isCaptain + "," + "isGoalKeeper:" + isGoalKeeper + "}";
@@ -841,21 +842,18 @@ var model = {
                                 }
                                 count++;
                                 obj.Students = StudentTeam;
-                                callback(null, obj);
-                            }, function (err, obj) {
-                                console.log("obj", obj);
-                                callback(null, obj);
+                                console.log("obj****", obj);
+                                console.log("obj-----", obj);
+                                excelData.push(obj);
+                                innerEachCallback(null, excelData);
                             });
-                            console.log("obj", obj);
+                        }, function (err) {
+                            callback(null, excelData);
                         });
-                        excelData.push(obj);
+                    }, function (err) {
+                        Config.generateExcelOld("TeamSport", excelData, res);
                     });
-                    // callback(null, excelData);
 
-
-
-                    console.log("excelData", excelData);
-                    Config.generateExcelOld("TeamSport", excelData, res);
                 },
             ],
             function (err, excelData) {
@@ -866,7 +864,6 @@ var model = {
                     if (_.isEmpty(excelData)) {
                         callback(null, []);
                     } else {
-                        console.log("excelData", excelData);
                         callback(null, excelData);
                     }
                 }
