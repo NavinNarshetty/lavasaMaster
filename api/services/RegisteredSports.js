@@ -235,7 +235,7 @@ var model = {
                             createdBy: "$createdBy",
                             isCaptain: "$isCaptain",
                             isGoalKeeper: "$isGoalKeeper",
-                            sportName: "sport.sportslist.name",
+                            sportName: "$sport.sportslist.name",
                         }
                     }
                 }
@@ -769,7 +769,7 @@ var model = {
                             age: "$sport.ageGroup.name",
                             gender: "$sport.gender",
                             sportName: "$sport.sportslist.sportsListSubCategory.name",
-                            name: "sport.sportslist.name",
+                            name: "$sport.sportslist.name",
                             createdBy: "$createdBy"
                         }
                     }
