@@ -595,6 +595,11 @@ var model = {
                 }
             },
 
+            {
+                $unwind: {
+                    path: "$sport",
+                }
+            },
             // Stage 7
             {
                 $lookup: {
@@ -611,7 +616,22 @@ var model = {
                     path: "$sport",
                 }
             },
+            // Stage 4
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
 
+            // Stage 5
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+                }
+            },
             // Stage 9
             {
                 $lookup: {
@@ -640,9 +660,10 @@ var model = {
                             middlename: "$athleteId.middleName",
                             sfaid: "$athleteId.sfaId",
                             email: "$athleteId.email",
-                            age: "$athleteId.age",
+                            age: "$sport.ageGroup.name",
                             gender: "$sport.gender",
-                            sportName: "$sport.sportslist.name",
+                            sportName: "$sport.sportslist.sportsListSubCategory.name",
+                            name: "$sport.sportslist.name",
                             createdBy: "$createdBy"
                         }
                     }
@@ -1072,7 +1093,7 @@ var model = {
     },
 
     getDetailIndividualSportSchool: function (data, callback) {
-        var pipeLine = RegisteredSports.getDetailIndividualAggregatePipeLine2(data);
+        var pipeLine = RegisteredSports.getDetailIndividualAggregatePipeLine(data);
         IndividualSport.aggregate(pipeLine, function (err, complete) {
             if (err) {
                 console.log(err);

@@ -1029,6 +1029,7 @@ var model = {
                     async.eachSeries(data.individual, function (n, callback) {
                         async.waterfall([
                                 function (callback) {
+                                    n.createdBy = "School";
                                     IndividualSport.saveData(n, function (err, saveData) {
                                         if (err) {
                                             callback(err, null);
@@ -1158,6 +1159,7 @@ var model = {
                     async.each(data.individual, function (n, callback) {
                         async.waterfall([
                                 function (callback) {
+                                    n.createdBy = "Athlete";
                                     IndividualSport.saveData(n, function (err, saveData) {
                                         if (err) {
                                             callback(err, null);
