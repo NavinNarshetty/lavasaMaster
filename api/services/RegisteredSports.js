@@ -648,6 +648,21 @@ var model = {
                     path: "$sport.sportslist",
                 }
             },
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sport.sportslist.sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist.sportsListSubCategory"
+                }
+            },
+
+            // Stage 10
+            {
+                $unwind: {
+                    path: "$sport.sportslist.sportsListSubCategory",
+                }
+            },
 
             // Stage 11
             {
