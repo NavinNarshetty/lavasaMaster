@@ -232,7 +232,7 @@ var model = {
                             age: "$studentId.age",
                             gender: "$sport.gender",
                             name: "$teamId.name",
-                            createdBy: "$createdBy",
+                            createdBy: "$teamId.createdBy",
                             isCaptain: "$isCaptain",
                             isGoalKeeper: "$isGoalKeeper",
                             sportName: "$sport.sportslist.name",
