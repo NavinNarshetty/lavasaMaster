@@ -66,12 +66,29 @@ var model = {
                 }
             },
 
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sport.sportslist.sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist.sportsListSubCategory"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$sport.sportslist.sportsListSubCategory",
+                }
+            },
+
             // Stage 6
             {
                 $group: {
                     "_id": {
-                        "sportName": "$sport.sportslist.name",
-                        "sportsListSubCategory": "$sport.sportslist.sportsListSubCategory",
+                        "sportName": "$sport.sportslist.sportsListSubCategory.name",
+                        "sportsListSubCategory": "$sport.sportslist.sportsListSubCategory._id",
                         "type": "Team"
                     }
                 }
@@ -298,13 +315,28 @@ var model = {
                     path: "$sport.sportslist",
                 }
             },
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sport.sportslist.sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist.sportsListSubCategory"
+                }
+            },
 
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$sport.sportslist.sportsListSubCategory",
+                }
+            },
             // Stage 10
             {
                 $group: {
                     "_id": {
-                        "sportName": "$sport.sportslist.name",
-                        "sportsListSubCategory": "$sport.sportslist.sportsListSubCategory",
+                        "sportName": "$sport.sportslist.sportsListSubCategory.name",
+                        "sportsListSubCategory": "$sport.sportslist.sportsListSubCategory._id",
                         "type": "Individual"
                     }
                 }
@@ -363,13 +395,28 @@ var model = {
                     path: "$sport.sportslist",
                 }
             },
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sport.sportslist.sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist.sportsListSubCategory"
+                }
+            },
 
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$sport.sportslist.sportsListSubCategory",
+                }
+            },
             // Stage 6
             {
                 $group: {
                     "_id": {
-                        "sportName": "$sport.sportslist.name",
-                        "sportsListSubCategory": "$sport.sportslist.sportsListSubCategory",
+                        "sportName": "$sport.sportslist.sportsListSubCategory.name",
+                        "sportsListSubCategory": "$sport.sportslist.sportsListSubCategory._id",
                         "type": "Team"
                     }
 
@@ -433,12 +480,29 @@ var model = {
                 }
             },
 
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sport.sportslist.sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist.sportsListSubCategory"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$sport.sportslist.sportsListSubCategory",
+                }
+            },
+
             // Stage 6
             {
                 $group: {
                     "_id": {
-                        "sportName": "$sport.sportslist.name",
-                        "sportsListSubCategory": "$sport.sportslist.sportsListSubCategory",
+                        "sportName": "$sport.sportslist.sportsListSubCategory.name",
+                        "sportsListSubCategory": "$sport.sportslist.sportsListSubCategory._id",
                         "type": "Individual"
                     }
                 }
@@ -646,7 +710,7 @@ var model = {
                             email: "$athleteId.email",
                             age: "$athleteId.age",
                             gender: "$sport.gender",
-                            sportName: "$sport.sportslist.name",
+                            sportName: "$name",
                         }
                     }
                 }
@@ -790,7 +854,11 @@ var model = {
                         email: "$studentId.email",
                         age: "$studentId.age",
                         gender: "$sport.gender",
-                        sportName: "$sport.sportslist.name",
+                        sportName: "$teamId.name",
+                        createdBy: "$sport.createdBy",
+                        isCaptain: "$isCaptain",
+                        isGoalKeeper: "$isGoalKeeper"
+
                     }
                 }
             }
@@ -829,7 +897,10 @@ var model = {
                         email: "$studentId.email",
                         age: "$studentId.age",
                         gender: "$sport.gender",
-                        sportName: "$sport.sportslist.name",
+                        sportName: "$teamId.name",
+                        createdBy: "$sport.createdBy",
+                        isCaptain: "$isCaptain",
+                        isGoalKeeper: "$isGoalKeeper"
                     }
                 }
             }

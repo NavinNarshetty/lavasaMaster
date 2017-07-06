@@ -416,7 +416,8 @@ var model = {
             // Stage 5
             {
                 $match: {
-                    "studentId": objectid(data.sport)
+                    "studentId": objectid(data.athlete),
+                    "sport": objectid(data.sport)
                 }
             },
         ];
@@ -504,11 +505,14 @@ var model = {
                 },
                 function (complete, callback) {
                     if (data.sportName.includes("Doubles") || data.sportName.includes("doubles")) {
+                        console.log("doubles");
                         var results = {};
                         var finalData = [];
                         console.log("total", complete.total);
                         async.each(complete.results, function (n, callback) {
-                            var pipeLine = Sport.getStudentTeamPipeline();
+                            data.athlete = n._id;
+                            console.log("data", data);
+                            var pipeLine = Sport.getStudentTeamPipeline(data);
                             StudentTeam.aggregate(pipeLine, function (err, found) {
                                 if (err) {
                                     callback(err, "error in mongoose");

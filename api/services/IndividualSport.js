@@ -14,6 +14,7 @@ var schema = new Schema({
         ref: 'SportsListSubCategory',
         index: true
     },
+    name: String,
     perSportUnique: String,
     createdBy: String,
     nominatedName: String,
