@@ -238,7 +238,7 @@ var model = {
             }
         } else if (data.type == "UTM_Source") {
             matchObj = {
-                sfaId: {
+                utm_source: {
                     $regex: data.input,
                     $options: "i"
                 },
@@ -254,7 +254,7 @@ var model = {
             }
         } else if (data.type == "UTM_Medium") {
             matchObj = {
-                sfaId: {
+                utm_medium: {
                     $regex: data.input,
                     $options: "i"
                 },
