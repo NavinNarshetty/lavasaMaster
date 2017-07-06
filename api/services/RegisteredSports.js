@@ -218,6 +218,27 @@ var model = {
 
                 }
             },
+            {
+                $group: {
+
+                    "_id": "$teamId.teamId",
+                    "info": {
+                        $push: {
+                            firstname: "$studentId.firstName",
+                            lastname: "$studentId.surname",
+                            middlename: "$studentId.middleName",
+                            sfaid: "$studentId.sfaId",
+                            email: "$studentId.email",
+                            age: "$studentId.age",
+                            gender: "$sport.gender",
+                            sportName: "$teamId.name",
+                            createdBy: "$createdBy",
+                            isCaptain: "$isCaptain",
+                            isGoalKeeper: "$isGoalKeeper"
+                        }
+                    }
+                }
+            }
         ];
         return pipeline;
     },
@@ -842,30 +863,7 @@ var model = {
 
     getDetailRegisteredSchoolSports: function (data, callback) {
         var pipeLine = RegisteredSports.getTeamDetailAggregatePipeLine(data);
-        var newPipeLine = _.cloneDeep(pipeLine);
-        newPipeLine.push({
-            $group: {
-
-                "_id": "$teamId.teamId",
-                "info": {
-                    $push: {
-                        firstname: "$studentId.firstName",
-                        lastname: "$studentId.surname",
-                        middlename: "$studentId.middleName",
-                        sfaid: "$studentId.sfaId",
-                        email: "$studentId.email",
-                        age: "$studentId.age",
-                        gender: "$sport.gender",
-                        sportName: "$teamId.name",
-                        createdBy: "$createdBy",
-                        isCaptain: "$isCaptain",
-                        isGoalKeeper: "$isGoalKeeper"
-
-                    }
-                }
-            }
-        });
-        StudentTeam.aggregate(newPipeLine, function (err, complete) {
+        StudentTeam.aggregate(pipeLine, function (err, complete) {
             if (err) {
                 console.log(err);
                 callback(err, "error in mongoose");
@@ -881,44 +879,45 @@ var model = {
 
     getDetailRegisteredAthleteSports: function (data, callback) {
         var pipeLine = RegisteredSports.getTeamDetailAggregatePipeLine(data);
-        var newPipeLine = _.cloneDeep(pipeLine);
-        newPipeLine.push({
-            $match: {
-                "studentId._id": objectid(data.athleteId)
-            }
-        }, {
-            $group: {
-
-                "_id": "$teamId.teamId",
-                "info": {
-                    $push: {
-                        firstname: "$studentId.firstName",
-                        lastname: "$studentId.surname",
-                        middlename: "$studentId.middleName",
-                        sfaid: "$studentId.sfaId",
-                        email: "$studentId.email",
-                        age: "$studentId.age",
-                        gender: "$sport.gender",
-                        sportName: "$teamId.name",
-                        createdBy: "$createdBy",
-                        isCaptain: "$isCaptain",
-                        isGoalKeeper: "$isGoalKeeper"
+        async.waterfall([
+                function (callback) {
+                    StudentTeam.aggregate(pipeLine, function (err, complete) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, "error in mongoose");
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete);
+                            }
+                        }
+                    });
+                },
+                function (complete, callback) {
+                    var atheleteSports = [];
+                    _.each(complete, function (n) {
+                        _.each(n.info, function (m) {
+                            if (m.sfaid == data.athleteSFA) {
+                                atheleteSports.push(n);
+                            }
+                        });
+                    });
+                    callback(null, atheleteSports);
+                }
+            ],
+            function (err, atheleteSports) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (atheleteSports) {
+                    if (_.isEmpty(atheleteSports)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, atheleteSports);
                     }
                 }
-            }
-        });
-        StudentTeam.aggregate(newPipeLine, function (err, complete) {
-            if (err) {
-                console.log(err);
-                callback(err, "error in mongoose");
-            } else {
-                if (_.isEmpty(complete)) {
-                    callback(null, []);
-                } else {
-                    callback(null, complete);
-                }
-            }
-        });
+            });
     },
 
     getDetails: function (data, callback) {
@@ -983,6 +982,7 @@ var model = {
                     function (found, callback) {
                         if (found.atheleteSchoolName) {
                             data.athleteId = found._id;
+                            data.athleteSFA = found.sfaId;
                             data.schoolName = found.atheleteSchoolName;
                             callback(null, data);
                         } else {
@@ -996,20 +996,21 @@ var model = {
                                 } else {
                                     data.athleteId = found._id;
                                     data.schoolName = schoolData.name;
+                                    data.athleteSFA = found.sfaId;
                                     callback(null, data);
                                 }
                             });
                         }
                     },
                     function (data, callback) {
-                        RegisteredSports.getDetailRegisteredSchoolSports(data, function (err, complete) {
+                        RegisteredSports.getDetailRegisteredAthleteSports(data, function (err, complete) {
                             if (err) {
                                 callback(err, null);
                             } else {
                                 if (_.isEmpty(complete)) {
                                     callback(null, complete);
                                 } else {
-                                    console.log("complete", complete);
+                                    // console.log("complete", complete);
                                     callback(null, complete);
                                 }
                             }
@@ -1176,7 +1177,7 @@ var model = {
         } else {
             callback(null, "Invalid Data");
         }
-    }
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);
