@@ -185,27 +185,6 @@ var model = {
         var matchObj = {};
         if (data.type == "Date") {
             var endOfDay = moment(data.endDate).endOf("day").toDate();
-            // if (data.endDate == data.startDate) {
-
-            //    
-            //     // var day = moment(data.startDate).format('YYYY-MM-DD');
-            //     console.log("start", data.startDate, "end", endOfDay);
-            //     matchObj = {
-            //         createdAt: {
-            //             $regex: day,
-            //             $options: "i"
-            //         },
-            //         $or: [{
-            //             registrationFee: {
-            //                 $ne: "online PAYU"
-            //             }
-            //         }, {
-            //             paymentStatus: {
-            //                 $ne: "Pending"
-            //             }
-            //         }]
-            //     }
-            // } else {
             matchObj = {
                 createdAt: {
                     $gt: data.startDate,
@@ -272,22 +251,6 @@ var model = {
             }
         } else if (data.type == "Athlete Name") {
             matchObj = {
-                // $or: [{
-                //     firstName: {
-                //         $regex: data.input,
-                //         $options: "i"
-                //     }
-                // }, {
-                //     surname: {
-                //         $regex: data.input,
-                //         $options: "i"
-                //     }
-                // }, {
-                //     middleName: {
-                //         $regex: data.input,
-                //         $options: "i"
-                //     }
-                // }],
                 firstName: {
                     $regex: data.input,
                     $options: "i"
@@ -1022,7 +985,7 @@ var model = {
                 emailData.email1 = [{
                     email: found.email
                 }]
-                emailData.cc1 = [{
+                emailData.bcc1 = [{
                     email: "payments@sfanow.in",
                     email: "venkatesh.rathod@sfanow.in"
                 }]

@@ -95,6 +95,10 @@ var controller = {
 
     },
 
+    generateExcel: function (req, res) {
+        IndividualSport.generateExcel(res);
+    },
+
 
 
 };

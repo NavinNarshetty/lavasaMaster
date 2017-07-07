@@ -1744,6 +1744,13 @@ myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, Naviga
         });
     }
 
+    $scope.generateExcel = function () {
+        $scope.url = "individualSport/generateExcel";
+        NavigationService.generateExcel($scope.url, function (data) {
+            window.location.href = adminurl + $scope.url;
+        });
+    }
+
     // $scope.transferToWebsite = function (id) {
     //     $scope.constraints = {};
     //     $scope.constraints._id = base64Service.encode(id);

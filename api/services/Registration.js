@@ -962,7 +962,7 @@ var model = {
                             emailData.email1 = [{
                                 email: found.email
                             }]
-                            emailData.cc1 = [{
+                            emailData.bcc1 = [{
                                 email: "payments@sfanow.in",
                                 email: "venkatesh.rathod@sfanow.in"
                             }]
@@ -1008,7 +1008,7 @@ var model = {
                             emailData.email1 = [{
                                 email: found.email
                             }]
-                            emailData.cc1 = [{
+                            emailData.bcc1 = [{
                                 email: "payments@sfanow.in",
                                 email: "venkatesh.rathod@sfanow.in"
                             }]
@@ -1633,7 +1633,6 @@ var model = {
             Config.generateExcelOld("Registration", excelData, res);
         });
     },
-
 
     filterSchool: function (data, callback) {
         var maxRow = Config.maxRow;
