@@ -806,69 +806,76 @@ var model = {
                     console.log(complete);
                     var excelData = [];
                     async.each(complete, function (mainData, callback) {
-                        var obj = {};
-                        obj.Teamid = mainData.teamId;
-                        obj.Name = mainData.name;
-                        obj.School = mainData.school.schoolName;
-                        obj.Sport = mainData.sport.sportslist.name;
-                        if (mainData.nominatedSchoolName) {
-                            obj.nominatedSchoolName = mainData.nominatedSchoolName;
-                        } else {
-                            obj.nominatedSchoolName = "";
-                        }
-                        if (mainData.nominatedContactDetails) {
-                            obj.nominatedContactDetails = mainData.nominatedContactDetails;
-                        } else {
-                            obj.nominatedContactDetails = "";
-                        }
-                        if (mainData.nominatedEmailId) {
-                            obj.nominatedEmailId = mainData.nominatedEmailId;
-                        } else {
-                            obj.nominatedEmailId = "";
-                        }
-                        obj.createdBy = mainData.createdBy;
-                        var StudentTeam;
-                        var count = 0;
-                        async.each(mainData.studentTeam, function (n, innerEachCallback) {
-                            var name;
-                            Athelete.findOne({
-                                _id: n.studentId
-                            }).exec(function (err, found) {
+                            var obj = {};
+                            obj.Teamid = mainData.teamId;
+                            obj.Name = mainData.name;
+                            obj.School = mainData.school.schoolName;
+                            obj.Sport = mainData.sport.sportslist.name;
+                            if (mainData.nominatedSchoolName) {
+                                obj.nominatedSchoolName = mainData.nominatedSchoolName;
+                            } else {
+                                obj.nominatedSchoolName = "";
+                            }
+                            if (mainData.nominatedContactDetails) {
+                                obj.nominatedContactDetails = mainData.nominatedContactDetails;
+                            } else {
+                                obj.nominatedContactDetails = "";
+                            }
+                            if (mainData.nominatedEmailId) {
+                                obj.nominatedEmailId = mainData.nominatedEmailId;
+                            } else {
+                                obj.nominatedEmailId = "";
+                            }
+                            obj.createdBy = mainData.createdBy;
+                            var StudentTeam;
+                            var count = 0;
+                            async.each(mainData.studentTeam, function (n, innerEachCallback) {
+                                    var name;
+                                    StudentTeam.findOne({
+                                        _id: n
+                                    }).exec(function (err, studentTeamData) {
+                                        Athelete.findOne({
+                                            _id: studentTeamData.studentId
+                                        }).exec(function (err, found) {
 
-                                if (found.middleName) {
-                                    name = found.firstName + " " + found.middleName + " " + found.surname;
-                                } else {
-                                    name = found.firstName + " " + found.surname;
-                                }
-                                if (n.isCaptain) {
-                                    var isCaptain = n.isCaptain;
-                                } else {
-                                    var isCaptain = "false";
-                                }
+                                            if (found.middleName) {
+                                                name = found.firstName + " " + found.middleName + " " + found.surname;
+                                            } else {
+                                                name = found.firstName + " " + found.surname;
+                                            }
+                                            if (n.isCaptain) {
+                                                var isCaptain = n.isCaptain;
+                                            } else {
+                                                var isCaptain = "false";
+                                            }
 
-                                if (n.isGoalKeeper) {
-                                    var isGoalKeeper = n.isGoalKeeper;
-                                } else {
-                                    var isGoalKeeper = "false";
-                                }
-                                if (count == 0) {
-                                    StudentTeam = "{ Name:" + name + "," + "isCaptain:" + isCaptain + "," + "isGoalKeeper:" + isGoalKeeper + "}";
-                                } else {
-                                    StudentTeam = StudentTeam + "{ Name:" + name + "," + "isCaptain:" + isCaptain + "," + "isGoalKeeper:" + isGoalKeeper + "}";
-                                }
-                                count++;
-                                obj.Students = StudentTeam;
-                                console.log("obj****", obj);
-                                console.log("obj-----", obj);
-                                excelData.push(obj);
-                                innerEachCallback(null, excelData);
-                            });
-                        }, function (err) {
-                            callback(null, excelData);
+                                            if (n.isGoalKeeper) {
+                                                var isGoalKeeper = n.isGoalKeeper;
+                                            } else {
+                                                var isGoalKeeper = "false";
+                                            }
+                                            if (count == 0) {
+                                                StudentTeam = "{ Name:" + name + "," + "isCaptain:" + isCaptain + "," + "isGoalKeeper:" + isGoalKeeper + "}";
+                                            } else {
+                                                StudentTeam = StudentTeam + "{ Name:" + name + "," + "isCaptain:" + isCaptain + "," + "isGoalKeeper:" + isGoalKeeper + "}";
+                                            }
+                                            count++;
+                                            obj.Students = StudentTeam;
+                                            console.log("obj****", obj);
+                                            console.log("obj-----", obj);
+                                            excelData.push(obj);
+                                            innerEachCallback(null, excelData);
+                                        });
+                                    });
+
+                                },
+                                function (err) {
+                                    callback(null, excelData);
+                                });
+                        },
+                        function (err) {
+                            Config.generateExcelOld("TeamSport", excelData, res);
                         });
-                    }, function (err) {
-                        Config.generateExcelOld("TeamSport", excelData, res);
-                    });
 
                 },
             ],
@@ -941,22 +948,6 @@ var model = {
                 $unwind: {
                     path: "$school",
 
-                }
-            },
-
-            // Stage 5
-            {
-                $unwind: {
-                    path: "$studentTeam",
-
-                }
-            },
-            {
-                $lookup: {
-                    "from": "studentteams",
-                    "localField": "studentTeam",
-                    "foreignField": "_id",
-                    "as": "studentTeam"
                 }
             },
             {
