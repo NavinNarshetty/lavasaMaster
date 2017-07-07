@@ -1000,6 +1000,9 @@ var model = {
                                 emailData.sfaID = "";
                             }
                             emailData.schoolName = found.schoolName;
+                            emailData.schoolAddress = found.schoolAddress;
+                            emailData.panNo = found.panNo;
+                            emailData.gstNo = found.gstNo;
                             emailData.transactionID = found.transactionID;
                             emailData.Date = moment().format("DD-MM-YYYY");
                             var receipt = "SFA" + found.registerID;
