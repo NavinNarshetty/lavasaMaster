@@ -110,18 +110,13 @@ var schema = new Schema({
     remarks: String,
     accessToken: String,
     utm_medium: String,
-    utm_source: String
+    utm_source: String,
+    panNo: String,
+    gstNo: String
 });
 
 schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
-
-// schema.plugin(autoIncrement.plugin, {
-//     model: 'Registration',
-//     field: 'registerID',
-//     startAt: 1,
-//     incrementBy: 1
-// });
 schema.plugin(timestamps);
 module.exports = mongoose.model('Registration', schema);
 

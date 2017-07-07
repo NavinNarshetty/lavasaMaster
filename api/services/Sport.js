@@ -125,6 +125,78 @@ var model = {
         return pipeline;
     },
 
+    getMixAggregatePipeLine: function (data) {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "school",
+                    "foreignField": "_id",
+                    "as": "school"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$school",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+            // Stage 3
+            {
+                $match: {
+
+                    $or: [{
+                            "school.name": {
+                                $regex: data.school
+                            }
+                        },
+                        {
+                            "atheleteSchoolName": {
+                                $regex: data.school
+                            }
+                        }
+                    ]
+
+                }
+            },
+            {
+                $match: {
+
+                    $or: [{
+                        "status": "Verified"
+                    }, ]
+
+                }
+            },
+            // Stage 4
+            {
+                $match: {
+                    $or: [{
+                        registrationFee: {
+                            $ne: "online PAYU"
+                        }
+                    }, {
+                        paymentStatus: {
+                            $ne: "Pending"
+                        }
+                    }]
+                }
+            }, {
+                $match: {
+                    "dob": {
+                        $gte: new Date(data.fromDate),
+                        $lte: new Date(data.toDate),
+                    }
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
     getSearchPipeLine: function (data) {
 
         var pipeline = [
@@ -713,7 +785,11 @@ var model = {
                     var start = (page - 1) * maxRow;
                     console.log("options", start);
                     if (_.isEmpty(data.sfaid)) {
-                        var pipeLine = Sport.getAggregatePipeLine(data);
+                        if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
+                            var pipeLine = Sport.getMixAggregatePipeLine(data);
+                        } else {
+                            var pipeLine = Sport.getAggregatePipeLine(data);
+                        }
                         console.log("pipeLine", pipeLine);
                         async.waterfall([
                                 function (callback) {
@@ -770,7 +846,11 @@ var model = {
                             });
 
                     } else {
-                        var pipeLine = Sport.getAggregatePipeLine(data);
+                        if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
+                            var pipeLine = Sport.getMixAggregatePipeLine(data);
+                        } else {
+                            var pipeLine = Sport.getAggregatePipeLine(data);
+                        }
                         async.waterfall([
                                 function (callback) {
                                     var dataFinal = {};
@@ -787,7 +867,19 @@ var model = {
                                     var newPipeLine = _.cloneDeep(pipeLine);
                                     newPipeLine.push({
                                         $match: {
-                                            sfaId: data.sfaid,
+                                            $or: [{
+                                                    "sfaId": {
+                                                        $regex: data.sfaid,
+                                                        $options: "i"
+                                                    }
+                                                },
+                                                {
+                                                    "firstName": {
+                                                        $regex: data.sfaid,
+                                                        $options: "i"
+                                                    }
+                                                }
+                                            ]
                                         },
                                         // Stage 6
                                     });
@@ -850,7 +942,11 @@ var model = {
 
     totalAthlete: function (data, callback) {
         if (_.isEmpty(data.sfaid)) {
-            var pipeLine = Sport.getAggregatePipeLine(data);
+            if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
+                var pipeLine = Sport.getMixAggregatePipeLine(data);
+            } else {
+                var pipeLine = Sport.getAggregatePipeLine(data);
+            }
             Athelete.aggregate(pipeLine, function (err, totals) {
                 if (err) {
                     console.log(err);
@@ -866,7 +962,11 @@ var model = {
                 }
             });
         } else {
-            var pipeLine = Sport.getAggregatePipeLine(data);
+            if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
+                var pipeLine = Sport.getMixAggregatePipeLine(data);
+            } else {
+                var pipeLine = Sport.getAggregatePipeLine(data);
+            }
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
                 $match: {

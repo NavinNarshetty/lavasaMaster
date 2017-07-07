@@ -191,19 +191,32 @@ var model = {
                                     var newPipeLine = _.cloneDeep(pipeLine);
                                     newPipeLine.push({
                                         $match: {
-                                            sfaId: data.sfaid,
+                                            $or: [{
+                                                    "sfaId": {
+                                                        $regex: data.sfaid,
+                                                        $options: "i"
+                                                    }
+                                                },
+                                                {
+                                                    "firstName": {
+                                                        $regex: data.sfaid,
+                                                        $options: "i"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                    });
+                                    newPipeLine.push({
+                                        $match: {
                                             age: data.age,
                                             gender: data.gender
                                         },
-                                        // Stage 6
                                     });
-                                    newPipeLine.push(
-                                        // Stage 6
-                                        {
-                                            '$skip': parseInt(start)
-                                        }, {
-                                            '$limit': maxRow
-                                        });
+                                    newPipeLine.push({
+                                        '$skip': parseInt(start)
+                                    }, {
+                                        '$limit': maxRow
+                                    });
                                     Athelete.aggregate(newPipeLine, function (err, totals) {
                                         if (err) {
                                             console.log(err);
@@ -252,7 +265,24 @@ var model = {
                                     var newPipeLine = _.cloneDeep(pipeLine);
                                     newPipeLine.push({
                                         $match: {
-                                            sfaId: data.sfaid,
+                                            $or: [{
+                                                    "sfaId": {
+                                                        $regex: data.sfaid,
+                                                        $options: "i"
+                                                    }
+                                                },
+                                                {
+                                                    "firstName": {
+                                                        $regex: data.sfaid,
+                                                        $options: "i"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                    });
+
+                                    newPipeLine.push({
+                                        $match: {
                                             age: data.age
                                         },
                                         // Stage 6
@@ -312,7 +342,23 @@ var model = {
                                     var newPipeLine = _.cloneDeep(pipeLine);
                                     newPipeLine.push({
                                         $match: {
-                                            sfaId: data.sfaid,
+                                            $or: [{
+                                                    "sfaId": {
+                                                        $regex: data.sfaid,
+                                                        $options: "i"
+                                                    }
+                                                },
+                                                {
+                                                    "firstName": {
+                                                        $regex: data.sfaid,
+                                                        $options: "i"
+                                                    }
+                                                }
+                                            ]
+                                        },
+                                    });
+                                    newPipeLine.push({
+                                        $match: {
                                             gender: data.gender
                                         },
                                         // Stage 6
@@ -550,9 +596,20 @@ var model = {
                                     var newPipeLine = _.cloneDeep(pipeLine);
                                     newPipeLine.push({
                                         $match: {
-                                            sfaId: data.sfaid,
+                                            $or: [{
+                                                    "sfaId": {
+                                                        $regex: data.sfaid,
+                                                        $options: "i"
+                                                    }
+                                                },
+                                                {
+                                                    "firstName": {
+                                                        $regex: data.sfaid,
+                                                        $options: "i"
+                                                    }
+                                                }
+                                            ]
                                         },
-                                        // Stage 6
                                     });
                                     newPipeLine.push(
                                         // Stage 6
@@ -633,7 +690,23 @@ var model = {
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
                 $match: {
-                    sfaId: data.sfaid,
+                    $or: [{
+                            "sfaId": {
+                                $regex: data.sfaid,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "firstName": {
+                                $regex: data.sfaid,
+                                $options: "i"
+                            }
+                        }
+                    ]
+                },
+            });
+            newPipeLine.push({
+                $match: {
                     age: data.age,
                     gender: data.gender
                 },
@@ -659,7 +732,23 @@ var model = {
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
                 $match: {
-                    sfaId: data.sfaid,
+                    $or: [{
+                            "sfaId": {
+                                $regex: data.sfaid,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "firstName": {
+                                $regex: data.sfaid,
+                                $options: "i"
+                            }
+                        }
+                    ]
+                },
+            });
+            newPipeLine.push({
+                $match: {
                     age: data.age
                 },
                 // Stage 6
@@ -684,7 +773,23 @@ var model = {
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
                 $match: {
-                    sfaId: data.sfaid,
+                    $or: [{
+                            "sfaId": {
+                                $regex: data.sfaid,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "firstName": {
+                                $regex: data.sfaid,
+                                $options: "i"
+                            }
+                        }
+                    ]
+                },
+            });
+            newPipeLine.push({
+                $match: {
                     gender: data.gender
                 },
                 // Stage 6
@@ -782,9 +887,20 @@ var model = {
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
                 $match: {
-                    sfaId: data.sfaid,
+                    $or: [{
+                            "sfaId": {
+                                $regex: data.sfaid,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "firstName": {
+                                $regex: data.sfaid,
+                                $options: "i"
+                            }
+                        }
+                    ]
                 },
-                // Stage 6
             });
             Athelete.aggregate(newPipeLine, function (err, totals) {
                 if (err) {
@@ -1361,6 +1477,7 @@ var model = {
                 }
             });
     },
+
     mailersAthleteIndividual: function (atheleteName, data, callback) {
         async.each(atheleteName, function (n, callback) {
             var emailData = {};
