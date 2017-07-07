@@ -945,14 +945,14 @@ var model = {
             },
 
             // Stage 5
-            {
-                $lookup: {
-                    "from": "studentteams",
-                    "localField": "studentTeam",
-                    "foreignField": "_id",
-                    "as": "studentTeam"
-                }
-            },
+            // {
+            //     $lookup: {
+            //         "from": "studentteams",
+            //         "localField": "studentTeam",
+            //         "foreignField": "_id",
+            //         "as": "studentTeam"
+            //     }
+            // },
             {
                 $sort: {
                     "createdAt": -1
