@@ -891,6 +891,11 @@ var model = {
         var pipeline = [
             // Stage 1
             {
+                $unwind: {
+                    path: "$sport",
+                }
+            },
+            {
                 $lookup: {
                     "from": "sports",
                     "localField": "sport",
