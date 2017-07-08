@@ -350,13 +350,8 @@
             "tableRef": "password",
             "placeholder": "Enter password",
             "id": "password"
-        }, {
-            "name": "PAN No",
-            "type": "text",
-            "tableRef": "panNo",
-            "placeholder": "Enter panNo",
-            "id": "panNo"
-        }, {
+        },
+        {
             "name": "GST No",
             "type": "text",
             "tableRef": "gstNo",

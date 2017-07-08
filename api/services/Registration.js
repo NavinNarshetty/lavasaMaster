@@ -1458,6 +1458,8 @@ var model = {
                         obj.paymentStatus = n.paymentStatus;
                         obj.transactionID = n.transactionID;
                         obj.remarks = n.remarks;
+                        obj.panNo = n.panNo;
+                        obj.gstNo = n.gstNo;
                         obj.utm_medium = n.utm_medium;
                         obj.utm_source = n.utm_source;
                         excelData.push(obj);
@@ -1628,6 +1630,8 @@ var model = {
                 obj.paymentStatus = n.paymentStatus;
                 obj.transactionID = n.transactionID;
                 obj.remarks = n.remarks;
+                obj.panNo = n.panNo;
+                obj.gstNo = n.gstNo;
                 obj.utm_medium = n.utm_medium;
                 obj.utm_source = n.utm_source;
                 excelData.push(obj);
