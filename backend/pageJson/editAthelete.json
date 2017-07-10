@@ -356,13 +356,6 @@
             "tableRef": "password",
             "placeholder": "Enter password",
             "id": "password"
-        },
-        {
-            "name": "GST No",
-            "type": "text",
-            "tableRef": "gstNo",
-            "placeholder": "Enter gstNo",
-            "id": "gstNo"
         }, {
             "name": "Remarks",
             "type": "text",

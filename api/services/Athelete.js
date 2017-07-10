@@ -96,8 +96,7 @@ var schema = new Schema({
     isSelected: Boolean,
     utm_medium: String,
     utm_source: String,
-    utm_campaign: String,
-    gstNo: String
+    utm_campaign: String
 });
 
 schema.plugin(deepPopulate, {});
@@ -2024,7 +2023,6 @@ var model = {
                                 obj.paymentStatus = n.paymentStatus;
                                 obj.transactionID = n.transactionID;
                                 obj.remarks = n.remarks;
-                                obj.gstNo = n.gstNo;
                                 obj.utm_medium = n.utm_medium;
                                 obj.utm_source = n.utm_source;
                                 obj.utm_campaign = n.utm_campaign;
@@ -2178,7 +2176,6 @@ var model = {
                         obj.paymentStatus = n.paymentStatus;
                         obj.transactionID = n.transactionID;
                         obj.remarks = n.remarks;
-                        obj.gstNo = n.gstNo;
                         obj.utm_medium = n.utm_medium;
                         obj.utm_source = n.utm_source;
                         obj.utm_campaign = n.utm_campaign;
