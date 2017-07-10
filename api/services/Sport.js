@@ -981,7 +981,6 @@ var model = {
                         }
                     ]
                 },
-                // Stage 6
             });
             Athelete.aggregate(newPipeLine, function (err, totals) {
                 if (err) {

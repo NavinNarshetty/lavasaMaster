@@ -950,7 +950,6 @@ var model = {
                 function (complete, callback) {
                     var results = {};
                     var finalData = [];
-                    // console.log("total", complete.total);
                     async.each(complete.results, function (n, callback) {
                         console.log('n', n);
                         IndividualSport.find({
@@ -965,7 +964,6 @@ var model = {
                                 finalData.push(athlete);
                                 results.data = finalData;
                                 results.total = complete.total;
-                                // console.log("data", results);
                                 callback(null, results);
                             } else {
                                 var athlete = {};
@@ -974,7 +972,6 @@ var model = {
                                 finalData.push(athlete);
                                 results.data = finalData;
                                 results.total = complete.total;
-                                // console.log("data", results);
                                 callback(null, results);
                             }
                         });
@@ -1004,7 +1001,6 @@ var model = {
     },
 
     getAggregatePipeLineSport: function (data) {
-        console.log('inAggre', data);
         var pipeline = [
             // Stage 1
             {
@@ -1127,11 +1123,7 @@ var model = {
                     }
                 }
             }
-
-
         ];
-        // console.log('L', pipeLine);
-        // console.log('l', pipeline);
         return pipeline;
     },
 
@@ -1302,7 +1294,6 @@ var model = {
                                             } else {
                                                 console.log("totals", totals);
                                                 _.each(totals, function (total) {
-
                                                     atheleteName.push(total);
                                                 });
                                                 callback(null, atheleteName);
@@ -1387,8 +1378,6 @@ var model = {
                         emailData.email = n.info[0].email;
                         emailData.filename = "athleteindividual.ejs";
                         emailData.subject = "SFA: Individual Sport Selection";
-                        console.log("emailData", emailData);
-                        // callback(null, emailData);
                         Config.email(emailData, function (err, emailRespo) {
                             if (err) {
                                 console.log(err);
@@ -1409,13 +1398,15 @@ var model = {
                 },
                 //athlete email
                 function (callback) {
-                    console.log("inside mailers");
-                    var totalAthlete = atheleteName.length;
+                    // console.log("atheleteName", atheleteName);
+                    var atheleteUniq = atheleteName;
+                    var results1 = atheleteUniq.reduce((arr, ele) => ([].push.apply(arr, ele.info.filter((v) => arr.indexOf(v) == -1)), arr), []);
+                    var unique = _.uniqBy(results1, 'sfaid');
+                    var totalAthlete = unique.length;
                     var results = _.groupBy(atheleteName, "_id");
-                    console.log("reults", results);
+
                     var collectedSport = [];
                     _.each(results, function (mainData) {
-                        console.log("mainData", mainData);
                         var sportInfo = {};
                         sportInfo.eventName = mainData[0].info[0].eventName;
                         sportInfo.gender = mainData[0].info[0].gender;
@@ -1424,7 +1415,6 @@ var model = {
                         var srno = 1;
                         sportInfo.athleteData = [];
                         _.each(mainData, function (data) {
-                            console.log("data", data);
                             var athelete = {};
                             athelete.srno = srno;
                             if (data.info[0].middlename) {
@@ -1438,9 +1428,9 @@ var model = {
                             srno++;
                         });
                         collectedSport.push(sportInfo);
-                        console.log("collectedSport", collectedSport);
+                        // console.log("collectedSport", collectedSport);
                     });
-                    console.log("sport Details for school", collectedSport);
+                    // console.log("sport Details for school", collectedSport);
                     var emailData = {};
                     emailData.schoolSFA = data.sfaid;
                     emailData.schoolName = data.school;
@@ -1450,8 +1440,8 @@ var model = {
                     emailData.email = data.email;
                     emailData.filename = "schoolindividual.ejs";
                     emailData.subject = "SFA: Individual Sport Selection List";
-                    console.log("emailData", emailData);
-                    // callback(null, emailData)
+                    // console.log("emailData", atheleteName);
+                    // callback(null, unique);
                     Config.email(emailData, function (err, emailRespo) {
                         if (err) {
                             console.log(err);
