@@ -18,6 +18,12 @@
             "tableRef": "utm_source",
             "placeholder": "Enter utm source",
             "id": "utm_source"
+        }, {
+            "name": "UTM Campaign",
+            "type": "text",
+            "tableRef": "utm_campaign",
+            "placeholder": "Enter utm campaign",
+            "id": "utm_campaign"
         },
         {
             "name": "UTM Medium",

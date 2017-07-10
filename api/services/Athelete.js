@@ -96,6 +96,7 @@ var schema = new Schema({
     isSelected: Boolean,
     utm_medium: String,
     utm_source: String,
+    utm_campaign: String,
     gstNo: String
 });
 
@@ -231,7 +232,23 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
+        } else if (data.type == "UTM_Campaign") {
+            matchObj = {
+                utm_campaign: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            };
         } else if (data.type == "UTM_Medium") {
             matchObj = {
                 utm_medium: {
@@ -1556,6 +1573,22 @@ var model = {
                     }
                 }]
             }
+        } else if (data.type == "UTM_Campaign") {
+            matchObj = {
+                utm_campaign: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            };
         } else if (data.type == "UTM_Medium") {
             matchObj = {
                 utm_medium: {
@@ -1997,6 +2030,7 @@ var model = {
                                 obj.gstNo = n.gstNo;
                                 obj.utm_medium = n.utm_medium;
                                 obj.utm_source = n.utm_source;
+                                obj.utm_campaign = n.utm_campaign;
                                 // console.log("obj", obj);
                                 excelData.push(obj);
                                 callback(null, excelData);
@@ -2150,6 +2184,7 @@ var model = {
                         obj.gstNo = n.gstNo;
                         obj.utm_medium = n.utm_medium;
                         obj.utm_source = n.utm_source;
+                        obj.utm_campaign = n.utm_campaign;
                         // console.log("obj", obj);
                         excelData.push(obj);
                         callback(null, excelData);

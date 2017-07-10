@@ -111,6 +111,7 @@ var schema = new Schema({
     accessToken: String,
     utm_medium: String,
     utm_source: String,
+    utm_campaign: String,
     panNo: String,
     gstNo: String
 });
@@ -1118,6 +1119,22 @@ var model = {
                     }
                 }]
             }
+        } else if (data.type == "UTM_Campaign") {
+            matchObj = {
+                utm_campaign: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
         } else if (data.type == "UTM_Medium") {
             matchObj = {
                 utm_medium: {
@@ -1462,6 +1479,7 @@ var model = {
                         obj.gstNo = n.gstNo;
                         obj.utm_medium = n.utm_medium;
                         obj.utm_source = n.utm_source;
+                        obj.utm_campaign = n.utm_campaign;
                         excelData.push(obj);
 
                     });
@@ -1634,6 +1652,7 @@ var model = {
                 obj.gstNo = n.gstNo;
                 obj.utm_medium = n.utm_medium;
                 obj.utm_source = n.utm_source;
+                obj.utm_campaign = n.utm_campaign;
                 excelData.push(obj);
 
             });
@@ -1700,6 +1719,22 @@ var model = {
         } else if (data.type == "UTM_Source") {
             matchObj = {
                 utm_source: {
+                    $regex: data.input,
+                    $options: "i"
+                },
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            }
+        } else if (data.type == "UTM_Campaign") {
+            matchObj = {
+                utm_campaign: {
                     $regex: data.input,
                     $options: "i"
                 },
