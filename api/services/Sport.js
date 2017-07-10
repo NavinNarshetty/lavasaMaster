@@ -881,10 +881,10 @@ var model = {
                                                 }
                                             ]
                                         },
-                                        // Stage 6
+
                                     });
                                     newPipeLine.push(
-                                        // Stage 6
+
                                         {
                                             '$skip': parseInt(start)
                                         }, {
@@ -898,10 +898,7 @@ var model = {
                                             if (_.isEmpty(totals)) {
                                                 callback(null, "No Athlete with this SFA-ID found");
                                             } else {
-                                                // var data = {};
-                                                // data.options = options;
                                                 dataFinal.results = totals;
-                                                // data.total = count;
                                                 callback(null, dataFinal);
                                             }
                                         }
@@ -970,7 +967,19 @@ var model = {
             var newPipeLine = _.cloneDeep(pipeLine);
             newPipeLine.push({
                 $match: {
-                    sfaId: data.sfaid,
+                    $or: [{
+                            "sfaId": {
+                                $regex: data.sfaid,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "firstName": {
+                                $regex: data.sfaid,
+                                $options: "i"
+                            }
+                        }
+                    ]
                 },
                 // Stage 6
             });
