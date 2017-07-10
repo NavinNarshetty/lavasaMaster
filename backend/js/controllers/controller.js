@@ -1920,22 +1920,24 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
         NavigationService.generateSchoolExcelWithData(formData, function (data) {});
     }
 
-    // $scope.transferToWebsite = function (id) {
-    //     $scope.constraints = {};
-    //     $scope.constraints._id = base64Service.encode(id);
-    //     $scope.url = "Login/access"
-    //     NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-    //         console.log(data);
-    //     });
+    $scope.transferToWebsite = function (id) {
+        console.log(id);
+        $scope.constraints = {};
+        $scope.constraints.schoolId = base64Service.encode(id);
+        console.log($scope.constraints);
+        $scope.url = "Login/editAccess"
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            console.log("dataaaaa", data);
+        });
 
-    //     // For decode at frontend level
-    //     // console.log(id);
-    //     // console.log($scope.constraints);
-    //     // $scope.constraintis = {};
-    //     // $scope.constraintis._id = base64Service.decode($scope.constraints._id);
-    //     // console.log($scope.constraintis);
+        // For decode at frontend level
+        // console.log(id);
+        // console.log($scope.constraints);
+        // $scope.constraintis = {};
+        // $scope.constraintis._id = base64Service.decode($scope.constraints._id);
+        // console.log($scope.constraintis);
 
-    // }
+    }
 })
 
 myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {

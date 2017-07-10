@@ -68,20 +68,20 @@ var controller = {
                     });
                 }
             } else {
-                 console.log('enter');
+                console.log('enter');
                 res.json({
                     value: false,
                     data: "Please provide All Details"
                 });
             }
         } else {
-             console.log('enter');
+            console.log('enter');
             res.json({
                 value: false,
                 data: "Invalid Call"
             });
         }
-         console.log('enter');
+        console.log('enter');
     },
 
     changePassword: function (req, res) {
@@ -101,6 +101,17 @@ var controller = {
                     }
                 }
             });
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
+    editAccess: function (req, res) {
+        if (req.body) {
+            Login.editAccess(req.body, res.callback);
         } else {
             res.json({
                 value: false,

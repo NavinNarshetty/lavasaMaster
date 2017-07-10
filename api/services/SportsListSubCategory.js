@@ -243,7 +243,7 @@ var model = {
                     results.maxPlayer = totals[0].maxTeamPlayers;
                     TeamSport.count({
                         sport: results.sport,
-                        school: data.school
+                        schoolName: data.schoolName
                     }).exec(function (err, found) {
                         if (found == totals[0].maxTeam) {
                             callback("Max Team Created", null);

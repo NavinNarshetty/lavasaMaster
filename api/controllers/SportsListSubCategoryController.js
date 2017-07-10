@@ -29,7 +29,7 @@ var controller = {
                         data: "Incorrect Login"
                     });
                 } else {
-                    req.body.school = found._id;
+                    req.body.school = found.schoolName;
                     SportsListSubCategory.getOneSport(req.body, res.callback);
                 }
             });

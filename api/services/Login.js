@@ -464,5 +464,66 @@ var model = {
             callback("User not Logged In", null);
         }
     },
+
+    editAccess: function (data, callback) {
+        if (data.athleteId) {
+            async.waterfall([
+                function (callback) {
+                    var buf = Buffer.from(data.athleteId, 'base64').toString("ascii");
+                    console.log("base64", buf);
+                    callback(null, buf);
+                },
+                function (buf, callback) {
+                    Athelete.findOne({
+                        _id: buf
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                }
+            ], function (err, found) {
+                if (found) {
+                    callback(null, found);
+                } else {
+                    callback("Incorrect Login Details", null);
+                }
+            });
+        } else if (data.schoolId) {
+            async.waterfall([
+                function (callback) {
+                    var buf = Buffer.from(data.schoolId, 'base64').toString("ascii");
+                    console.log("base64", buf);
+                    callback(null, buf);
+                },
+                function (buf, callback) {
+                    Registration.findOne({
+                        _id: buf
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                }
+            ], function (err, found) {
+                if (found) {
+                    callback(null, found);
+                } else {
+                    callback("Incorrect Login Details", null);
+                }
+            });
+
+        } else {
+            callback("Incorrect User Details", null);
+        }
+    }
 };
 module.exports = _.assign(module.exports, exports, model);

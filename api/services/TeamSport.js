@@ -31,9 +31,10 @@ var schema = new Schema({
     }],
     school: {
         type: Schema.Types.ObjectId,
-        ref: 'School',
+        ref: 'Registration',
         index: true
     },
+    schoolName: String,
     createdBy: String,
     nominatedName: String,
     nominatedSchoolName: String,
@@ -57,7 +58,6 @@ var model = {
 
     // Team Confirm function (save in teamSport,StudentTeam and triggers email to all)
     teamConfirm: function (data, callback) { // Data -> array of (StudentID, Sport,isCaptain,isGoalkeeper)
-
         //      Waterfall
         //          1. CreateTeamSportWithSchool 
         //          2. async.each(data,fuction() { SaveInTeam })
@@ -76,6 +76,7 @@ var model = {
                     team.sport = data.sport;
                     team.studentTeam = [];
                     team.school = data.school;
+                    team.schoolName = data.schoolName;
                     team.createdBy = data.createdBy;
                     if (data.nominatedName) {
                         team.nominatedName = data.nominatedName;
@@ -184,6 +185,7 @@ var model = {
                     if (found.atheleteSchoolName) {
                         var schoolName = {};
                         schoolName.name = found.atheleteSchoolName;
+                        data.schoolName = found.atheleteSchoolName;
                         callback(null, schoolName);
                     } else {
                         School.findOne({
@@ -194,6 +196,7 @@ var model = {
                             } else {
                                 var schoolName = {};
                                 schoolName.name = schoolData.name;
+                                data.schoolName = schoolData.name;
                                 callback(null, schoolName);
                             }
                         });
@@ -205,6 +208,7 @@ var model = {
                         schoolName: schoolName.name
                     }).exec(function (err, complete) {
                         if (_.isEmpty(complete)) {
+                            data.school = undefined;
                             callback(null, []);
                         } else {
                             data.school = complete._id;
