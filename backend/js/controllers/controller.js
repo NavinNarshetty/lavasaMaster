@@ -1571,16 +1571,20 @@ myApp.controller('DetailTeamSportCtrl', function ($scope, TemplateService, Navig
                                 if (data.data.middleName) {
                                     $scope.athlete = data.data.firstName + " " + data.data.middleName + " " + data.data.surname;
                                     $scope.athleteId = data.data.sfaId;
+                                    $scope.city = data.data.city;
                                     $scope.formData.studentTeam.push({
                                         name: $scope.athlete,
-                                        sfaId: $scope.athleteId
+                                        sfaId: $scope.athleteId,
+                                        city: $scope.city
                                     });
                                 } else {
                                     $scope.athlete = data.data.firstName + " " + data.data.surname;
                                     $scope.athleteId = data.data.sfaId;
+                                    $scope.city = data.data.city;
                                     $scope.formData.studentTeam.push({
                                         name: $scope.athlete,
-                                        sfaId: $scope.athleteId
+                                        sfaId: $scope.athleteId,
+                                        city: $scope.city
                                     });
                                 }
                             });
