@@ -1005,9 +1005,6 @@ var model = {
                     email: "payments@sfanow.in",
                     email: "venkatesh.rathod@sfanow.in"
                 }]
-                // emailData.email = found.email;
-                // emailData.sfaID = data.sfaID;
-                // emailData.password = data.password;
                 emailData.filename = "receiptAthelete.ejs";
                 emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA Mumbai 2017";
                 console.log("emaildata", emailData);

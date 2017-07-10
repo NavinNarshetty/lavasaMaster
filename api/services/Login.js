@@ -482,7 +482,10 @@ var model = {
                         } else if (_.isEmpty(found)) {
                             callback(null, []);
                         } else {
-                            callback(null, found);
+                            var finalData = {};
+                            finalData.data = found;
+                            finalData.userType = "Athlete";
+                            callback(null, finalData);
                         }
                     });
                 }
@@ -509,7 +512,10 @@ var model = {
                         } else if (_.isEmpty(found)) {
                             callback(null, []);
                         } else {
-                            callback(null, found);
+                            var finalData = {};
+                            finalData.data = found;
+                            finalData.userType = "School";
+                            callback(null, finalData);
                         }
                     });
                 }

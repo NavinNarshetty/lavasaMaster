@@ -813,7 +813,12 @@ var model = {
                         var obj = {};
                         obj.Teamid = mainData.teamId;
                         obj.Name = mainData.name;
-                        obj.School = mainData.school.schoolName;
+                        obj.School = mainData.schoolName;
+                        // if (_.isEmpty(mainData.school)) {
+
+                        // } else {
+                        //     obj.School = mainData.school.schoolName;
+                        // }
                         obj.Sport = mainData.sport.sportslist.name;
                         if (mainData.nominatedSchoolName) {
                             obj.nominatedSchoolName = mainData.nominatedSchoolName;
@@ -930,23 +935,24 @@ var model = {
                 }
             },
 
-            // Stage 3
-            {
-                $lookup: {
-                    "from": "registrations",
-                    "localField": "school",
-                    "foreignField": "_id",
-                    "as": "school"
-                }
-            },
+            // // Stage 3
+            // {
+            //     $lookup: {
+            //         "from": "registrations",
+            //         "localField": "school",
+            //         "foreignField": "_id",
+            //         "as": "school"
+            //     }
+            // },
 
-            // Stage 4
-            {
-                $unwind: {
-                    path: "$school",
+            // // Stage 4
+            // {
+            //     $unwind: {
+            //         path: "$school",
+            //         preserveNullAndEmptyArrays: true // optional
 
-                }
-            },
+            //     }
+            // },
 
             // Stage 5
             {
