@@ -514,6 +514,7 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
+                                console.log("found", found);
                                 data.gender = found[0].gender;
                                 data.fromDate = found[0].fromDate;
                                 data.toDate = found[0].toDate;
@@ -544,16 +545,16 @@ var model = {
                                     results.total = 0;
                                     callback(null, results);
                                 } else {
-                                    // var final = {};
-                                    // final.data = [];
-                                    // console.log("complete", complete);
-                                    // _.each(complete.results, function (n) {
-                                    //     console.log("n", n);
-                                    //     final.data.push(n.athleteId);
-                                    // })
-                                    // final.total = complete.total;
-                                    // console.log("final", final);
-                                    callback(null, complete);
+                                    var final = {};
+                                    final.data = [];
+                                    console.log("complete", complete);
+                                    _.each(complete.results, function (n) {
+                                        console.log("n", n);
+                                        final.data.push(n.athleteId);
+                                    })
+                                    final.total = complete.total;
+                                    console.log("final", final);
+                                    callback(null, final);
                                 }
                             }
                         });
@@ -1019,7 +1020,7 @@ var model = {
                                         if (err) {
                                             callback(err, null);
                                         } else {
-                                            // console.log("complete1", complete1);
+                                            console.log("complete1", complete1);
                                             dataFinal.total = complete1;
                                             callback(null, dataFinal);
                                         }
@@ -1153,6 +1154,7 @@ var model = {
                         callback(null, 0);
                     } else {
                         var count = totals.length;
+                        console.log("counttotal", count);
                         callback(null, count);
                     }
                 }
