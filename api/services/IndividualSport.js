@@ -1801,11 +1801,13 @@ var model = {
                     console.log(found);
                     var excelData = [];
                     async.each(found, function (mainData, callback) {
-                        // console.log("mainData", mainData);
+                        console.log("mainData", mainData);
                         var obj = {};
-
-                        obj.AthleteName = mainData.athleteId.firstName + " " + mainData.athleteId.surname;
-
+                        if (mainData.athleteId) {
+                            obj.AthleteName = mainData.athleteId.firstName + " " + mainData.athleteId.surname;
+                        } else {
+                            obj.AthleteName = "";
+                        }
                         obj.sportName = mainData.sportsListSubCategory.name;
                         if (mainData.nominatedSchoolName) {
                             obj.nominatedSchoolName = mainData.nominatedSchoolName;
@@ -1832,7 +1834,6 @@ var model = {
                         var sports = {};
                         var count = 0;
                         async.each(mainData.sport, function (n, innerEachCallback) {
-                                // console.log("n", n);
                                 async.waterfall([
                                         function (callback) {
                                             Sport.findOne({

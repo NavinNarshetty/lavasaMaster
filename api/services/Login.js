@@ -485,6 +485,7 @@ var model = {
                             var finalData = {};
                             finalData.data = found;
                             finalData.userType = "Athlete";
+                            finalData.mixAccess = true;
                             callback(null, finalData);
                         }
                     });
@@ -515,6 +516,7 @@ var model = {
                             var finalData = {};
                             finalData.data = found;
                             finalData.userType = "School";
+                            finalData.mixAccess = true;
                             callback(null, finalData);
                         }
                     });
