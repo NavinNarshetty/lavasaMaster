@@ -591,8 +591,16 @@ var model = {
                                                     schoolData.locality = data.atheleteSchoolLocality;
                                                     schoolData.schoolLogo = data.atheleteSchoolIdImage;
                                                     schoolData.landline = data.atheleteSchoolContact;
+                                                    if (data.utm_source) {
+                                                        schoolData.utm_source = data.utm_source;
+                                                    }
+                                                    if (data.utm_medium) {
+                                                        schoolData.utm_medium = data.utm_medium;
+                                                    }
+                                                    if (data.utm_campaign) {
+                                                        schoolData.utm_campaign = data.utm_campaign;
+                                                    }
                                                     console.log("need to save");
-
                                                     Registration.saveData(schoolData, function (err, registerData) {
                                                         console.log("registerData", registerData);
                                                         if (err) {

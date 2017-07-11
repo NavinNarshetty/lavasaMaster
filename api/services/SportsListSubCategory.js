@@ -178,7 +178,14 @@ var model = {
                         schoolName: schoolName.name
                     }).exec(function (err, complete) {
                         if (_.isEmpty(complete)) {
-                            callback(null, []);
+                            SportsListSubCategory.getOneSport(data, function (err, complete1) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete1);
+                                }
+
+                            });
                         } else {
                             data.school = complete._id;
                             SportsListSubCategory.getOneSport(data, function (err, complete1) {
