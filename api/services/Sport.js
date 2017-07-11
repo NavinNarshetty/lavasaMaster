@@ -526,7 +526,7 @@ var model = {
                                 } else if (data.sportName.toLowerCase() == "shooting air rifle peep team") {
                                     data.sportIndividual = "Peep";
                                 }
-                                console.log("data", data);
+                                // console.log("data", data);
                                 // console.log("toDate", data.toDate);
                                 callback(null, data);
                             }
@@ -535,6 +535,7 @@ var model = {
                 },
                 function (data, callback) {
                     if ((data.sportName.toLowerCase() == "shooting air pistol team") || (data.sportName.toLowerCase() == "shooting air rifle open team") || (data.sportName.toLowerCase() == "shooting air rifle peep team")) {
+                        console.log("sports IndividualSport check");
                         Sport.allShootingAthelete(data, function (err, complete) {
                             if (err) {
                                 callback(err, null);
@@ -577,6 +578,7 @@ var model = {
                     }
                 },
                 function (complete, callback) {
+                    console.log("complete next", complete);
                     if (data.sportName.includes("Doubles") || data.sportName.includes("doubles")) {
                         console.log("doubles");
                         var results = {};
@@ -618,6 +620,58 @@ var model = {
                                                 results.data = finalData;
                                                 results.total = complete.total;
                                                 // console.log("data", results);
+                                                callback(null, results);
+                                            }
+                                        }
+                                    }
+                                });
+                            },
+                            function (err) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (_.isEmpty(results)) {
+                                    callback(null, results);
+                                } else {
+                                    callback(null, results);
+                                }
+                            });
+                    } else if (data.sportName.includes("Shooting") || data.sportName.includes("shooting")) {
+                        var results = {};
+                        var finalData = [];
+                        async.each(complete.data, function (n, callback) {
+                                data.athlete = n._id;
+                                var pipeLine = Sport.getStudentTeamPipeline(data);
+                                StudentTeam.aggregate(pipeLine, function (err, found) {
+                                    if (err) {
+                                        callback(err, "error in mongoose");
+                                    } else {
+                                        // console.log("found", found[0].sport.sportslist.name);
+                                        if (_.isEmpty(found)) {
+                                            var athlete = {};
+                                            athlete = n;
+                                            athlete.isTeamSelected = false;
+                                            finalData.push(athlete);
+                                            results.data = finalData;
+                                            results.total = complete.total;
+                                            // console.log("data", results);
+                                            callback(null, results);
+                                        } else {
+                                            if (found[0].sport.sportslist.name == data.sportName) {
+                                                var athlete = {};
+                                                athlete = n
+                                                athlete.isTeamSelected = true;
+                                                finalData.push(athlete);
+                                                results.data = finalData;
+                                                results.total = complete.total;
+                                                // console.log("data", results);
+                                                callback(null, results);
+                                            } else {
+                                                var athlete = {};
+                                                athlete = n;
+                                                athlete.isTeamSelected = false;
+                                                finalData.push(athlete);
+                                                results.data = finalData;
+                                                results.total = complete.total;
                                                 callback(null, results);
                                             }
                                         }
@@ -1046,7 +1100,7 @@ var model = {
                                             } else {
                                                 // data.options = options;
                                                 dataFinal.results = totals;
-                                                // console.log("athelete", dataFinal);
+                                                console.log("athelete", dataFinal);
                                                 callback(null, dataFinal);
                                             }
                                         }
