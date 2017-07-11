@@ -526,8 +526,6 @@ var model = {
                                 } else if (data.sportName.toLowerCase() == "shooting air rifle peep team") {
                                     data.sportIndividual = "Peep";
                                 }
-                                // console.log("data", data);
-                                // console.log("toDate", data.toDate);
                                 callback(null, data);
                             }
                         }
@@ -782,21 +780,50 @@ var model = {
                         });
                     } else {
                         console.log("school", found.school);
-                        School.findOne({
-                            _id: found.school
-                        }).exec(function (err, complete) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (_.isEmpty(complete)) {
-                                callback(null, []);
-                            } else {
-                                // console.log("complete", complete);
-                                data.school = complete.name;
-                                data.isRegisted = true;
-                                console.log(data);
-                                callback(null, data);
-                            }
-                        });
+                        async.waterfall([
+                                function (callback) {
+                                    School.findOne({
+                                        _id: found.school
+                                    }).exec(function (err, complete) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (_.isEmpty(complete)) {
+                                            callback(null, []);
+                                        } else {
+                                            data.school = complete.name;
+                                            callback(null, data);
+                                        }
+                                    });
+                                },
+                                function (data, callback) {
+                                    Registration.findOne({
+                                        schoolName: data.school
+                                    }).exec(function (err, complete) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (_.isEmpty(complete)) {
+                                            callback(null, []);
+                                        } else {
+                                            // data.school = complete.name;
+                                            data.isRegisted = true;
+                                            console.log(data);
+                                            callback(null, data);
+                                        }
+                                    });
+                                }
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, []);
+                                } else if (data2) {
+                                    if (_.isEmpty(data2)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, data2);
+                                    }
+                                }
+                            });
                     }
                 },
                 function (data, callback) {
@@ -1419,6 +1446,55 @@ var model = {
                 }
             });
     },
+
+    athleteRegistedCheck: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    School.findOne({
+                        _id: found.school
+                    }).exec(function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(complete)) {
+                            callback(null, []);
+                        } else {
+                            data.school = complete.name;
+                            // data.isRegisted = true;
+                            // console.log(data);
+                            callback(null, data);
+                        }
+                    });
+                },
+                function (data, callback) {
+                    Registration.findOne({
+                        schoolName: data.school
+                    }).exec(function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(complete)) {
+                            callback(null, []);
+                        } else {
+                            // data.school = complete.name;
+                            data.isRegisted = true;
+                            console.log(data);
+                            callback(null, data);
+                        }
+                    });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    }
 
 
 };

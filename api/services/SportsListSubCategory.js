@@ -316,6 +316,17 @@ var model = {
         var finalData = {};
         async.waterfall([
             function (callback) {
+                SportsListSubCategory.findOne({
+                    _id: data._id
+                }).exec(function (err, sportsData) {
+                    if (_.isEmpty(sportsData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, sportsData);
+                    }
+                });
+            },
+            function (sportsData, callback) {
                 Athelete.findOne({
                     accessToken: data.athleteToken
                 }).exec(function (err, found) {
@@ -324,6 +335,7 @@ var model = {
                     } else {
                         data.dob = found.dob;
                         data.gender = found.gender;
+                        data.sportsName = sportsData.name;
                         callback(null, data);
                     }
                 });
@@ -331,17 +343,31 @@ var model = {
             function (data, callback) {
                 var pipeLine = SportsListSubCategory.getAggregatePipeLine(data);
                 var newPipeLine = _.cloneDeep(pipeLine);
-                newPipeLine.push({
-                    $match: {
-                        "fromDate": {
-                            $lte: data.dob
-                        },
-                        "toDate": {
-                            $gte: data.dob
-                        },
-                        "gender": data.gender
-                    }
-                });
+                if (sportsName.includes("Air") || sportsName.includes("air")) {
+                    newPipeLine.push({
+                        $match: {
+                            "fromDate": {
+                                $lte: data.dob
+                            },
+                            "toDate": {
+                                $gte: data.dob
+                            }
+                        }
+                    });
+                } else {
+                    newPipeLine.push({
+                        $match: {
+                            "fromDate": {
+                                $lte: data.dob
+                            },
+                            "toDate": {
+                                $gte: data.dob
+                            },
+                            "gender": data.gender
+                        }
+                    });
+                }
+
                 Sport.aggregate(newPipeLine, function (err, totals) {
                     if (err) {
                         console.log(err);
@@ -365,7 +391,7 @@ var model = {
                 callback(err, null);
             } else if (data2) {
                 if (_.isEmpty(data2)) {
-                    callback("Max Team Created", null);
+                    callback("Sports Category Not Found", null);
                 } else {
                     callback(null, data2);
                 }
