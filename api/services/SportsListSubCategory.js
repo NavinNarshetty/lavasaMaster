@@ -344,7 +344,7 @@ var model = {
             function (data, callback) {
                 var pipeLine = SportsListSubCategory.getAggregatePipeLine(data);
                 var newPipeLine = _.cloneDeep(pipeLine);
-                if (sportsName.includes("Air") || sportsName.includes("air")) {
+                if (data.sportsName.includes("Mix") || data.sportsName.includes("mix")) {
                     newPipeLine.push({
                         $match: {
                             "fromDate": {
