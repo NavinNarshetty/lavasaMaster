@@ -327,6 +327,7 @@ var model = {
                 });
             },
             function (sportsData, callback) {
+                console.log("sportsData", sportsData);
                 Athelete.findOne({
                     accessToken: data.athleteToken
                 }).exec(function (err, found) {
