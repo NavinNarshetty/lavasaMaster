@@ -177,6 +177,22 @@ var model = {
                     path: "$sport",
                 }
             },
+            {
+                $lookup: {
+
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+                }
+            },
 
             // Stage 3
             {
@@ -229,7 +245,7 @@ var model = {
                             middlename: "$studentId.middleName",
                             sfaid: "$studentId.sfaId",
                             email: "$studentId.email",
-                            age: "$studentId.age",
+                            age: "$$sport.ageGroup.name",
                             gender: "$sport.gender",
                             name: "$teamId.name",
                             createdBy: "$teamId.createdBy",
