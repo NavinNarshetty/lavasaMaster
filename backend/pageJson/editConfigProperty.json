@@ -1,0 +1,174 @@
+{
+    "title": "Edit Config Property",
+    "name": "ConfigProperty",
+    "jsonPage": "viewConfigProperty",
+    "desciption": "",
+    "pageType": "edit",
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Year",
+        "type": "text",
+        "tableRef": "year",
+        "placeholder": "Enter Year",
+        "id": "year",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Institution Type",
+        "type": "text",
+        "tableRef": "institutionType",
+        "placeholder": "Enter institutionType",
+        "id": "institutionType",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "City",
+        "type": "text",
+        "tableRef": "city",
+        "placeholder": "Enter city",
+        "id": "city",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Country",
+        "type": "text",
+        "tableRef": "country",
+        "placeholder": "Enter Country",
+        "id": "country",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Area/Locality",
+        "type": "text",
+        "tableRef": "area",
+        "placeholder": "Select Area",
+        "id": "area",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Amount",
+        "type": "Number",
+        "tableRef": "totalPayAmount",
+        "placeholder": "Select Amount",
+        "id": "amount",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Amount In Words",
+        "type": "text",
+        "tableRef": "totalPayAmountInWords",
+        "placeholder": "Select Amount In Words",
+        "id": "totalPayAmountInWords",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Tax Amount",
+        "type": "text",
+        "tableRef": "taxAmount",
+        "placeholder": "Select Tax Amount",
+        "id": "taxAmount",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Tax Type",
+        "type": "text",
+        "tableRef": "taxType",
+        "placeholder": "Select Tax Type",
+        "id": "taxType",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Tax In Percent",
+        "type": "text",
+        "tableRef": "percentTax",
+        "placeholder": "Select Percent Tax",
+        "id": "percentTax",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Request URL",
+        "type": "text",
+        "tableRef": "reqUrl",
+        "placeholder": "Select reqUrl",
+        "id": "reqUrl",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Domain URL",
+        "type": "text",
+        "tableRef": "domainUrl",
+        "placeholder": "Select domainUrl",
+        "id": "domainUrl",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Backend URL",
+        "type": "text",
+        "tableRef": "backendUrl",
+        "placeholder": "Select backendUrl",
+        "id": "backendUrl",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "DB name",
+        "type": "text",
+        "tableRef": "dbName",
+        "placeholder": "Select dbName",
+        "id": "dbName",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Standards",
+        "type": "mix",
+        "tableRef": "athleteStandards",
+        "dropDownType": "multiple",
+        "placeholder": "Select athleteStandards",
+        "id": "athleteStandards",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "TermsAndCondition",
+        "type": "text",
+        "tableRef": "termsAndCondition",
+        "placeholder": "Enter termsAndCondition",
+        "id": "termsAndCondition",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "University",
+        "type": "text",
+        "tableRef": "university",
+        "placeholder": "Enter university",
+        "id": "university",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }],
+    "action": [{
+        "name": "submit",
+        "action": "submitConfigProperty",
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewConfigProperty"
+            }
+        }
+    }, {
+        "name": "cancel",
+        "sideMenuRedirect": true,
+        "stateName": {
+            "page": "page",
+            "json": {
+                "id": "viewConfigProperty"
+            }
+        }
+    }],
+    "apiCall": {
+        "url": "ConfigProperty/save",
+        "params": "_id"
+    },
+    "preApi": {
+        "url": "ConfigProperty/getOne",
+        "params": "_id"
+    }
+
+}

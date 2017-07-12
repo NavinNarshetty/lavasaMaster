@@ -1,0 +1,54 @@
+{
+    "title": "Config Property",
+    "description": "List of Configuration",
+    "pageType": "view",
+    "sendIdWithCreate": true,
+    "urlFields": ["_id"],
+    "fields": [{
+        "name": "Type",
+        "isSort": "",
+        "tableRef": "institutionType"
+    }, {
+        "name": "City",
+        "isSort": "",
+        "tableRef": "city"
+    }, {
+        "name": "Area",
+        "isSort": "",
+        "tableRef": "area"
+    }],
+    "action": [{
+        "name": "edit",
+        "icon": "fa-pencil",
+        "buttonClass": "btn-primary",
+        "type": "page",
+        "action": "editSportsList",
+        "fieldsToSend": {
+            "_id": "_id"
+        }
+    }, {
+        "name": "delete",
+        "icon": "fa-trash",
+        "buttonClass": "btn-danger",
+        "type": "apiCallConfirm",
+        "title": "Delete SportsList",
+        "content": "Are you sure you want to delete SportsList?",
+        "api": "SportsList/delete",
+        "fieldsToSend": {
+            "name": "_id",
+            "value": "_id"
+        }
+    }],
+    "button": [{
+        "name": "Create",
+        "icon": "plus",
+        "class": "btn-success",
+        "type": "page",
+        "action": "createSportsList"
+    }],
+
+    "apiCall": {
+        "url": "SportsList/search",
+        "params": "_id"
+    }
+}
