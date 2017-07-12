@@ -564,6 +564,7 @@ var model = {
                 var type = {};
                 type.sportType = found.sportType;
                 type.sportName = found.name;
+                type.isTeam = found.isTeam;
                 callback(null, type);
             }
         });
