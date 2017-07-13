@@ -633,7 +633,7 @@ var model = {
         return pipeline;
     },
     //For team
-    getAthletePerSchool: function (data, found, callback) {
+    getAthletePerSchool: function (data, callback) {
         // console.log("foundfront", found);
         async.waterfall([
                 function (callback) {
@@ -696,7 +696,7 @@ var model = {
                             }
                         });
                     } else {
-                        Sport.allAthelete(data, found, function (err, complete) {
+                        Sport.allAthelete(data, function (err, complete) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -714,7 +714,7 @@ var model = {
                     }
                 },
                 function (complete, callback) {
-                    console.log("complete next", complete);
+                    // console.log("complete next", complete);
                     if (data.sportName.includes("Doubles") || data.sportName.includes("doubles")) {
                         console.log("doubles");
                         var results = {};
@@ -827,7 +827,8 @@ var model = {
                     } else {
                         var results = {};
                         var finalData = [];
-                        console.log("total.....", complete.total);
+                        // console.log("total.....", complete.total);
+                        // console.log("complete......", complete.results);
                         async.eachSeries(complete.results, function (n, callback) {
                             console.log("n", n);
                             StudentTeam.find({
@@ -860,6 +861,7 @@ var model = {
                             } else if (_.isEmpty(results)) {
                                 callback(null, results);
                             } else {
+                                // console.log("data", results);
                                 callback(null, results);
                             }
                         });
@@ -874,6 +876,7 @@ var model = {
                     if (_.isEmpty(results)) {
                         callback(null, results);
                     } else {
+                        console.log("data", results);
                         callback(null, results);
                     }
                 }
@@ -897,6 +900,7 @@ var model = {
                         } else if (_.isEmpty(found)) {
                             callback(null, []);
                         } else {
+                            data.found = found;
                             callback(null, found);
                         }
                     });
@@ -945,12 +949,12 @@ var model = {
                                         } else {
                                             data.isRegisted = true;
                                             console.log(data);
-                                            callback(null, data, found);
+                                            callback(null, data);
                                         }
                                     });
                                 }
                             ],
-                            function (err, data2, data3) {
+                            function (err, data2) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, []);
@@ -958,14 +962,14 @@ var model = {
                                     if (_.isEmpty(data2)) {
                                         callback(null, []);
                                     } else {
-                                        callback(null, data2, data3);
+                                        callback(null, data2);
                                     }
                                 }
                             });
                     }
                 },
-                function (data, found, callback) {
-                    Sport.getAthletePerSchool(data, found, function (err, complete) {
+                function (data, callback) {
+                    Sport.getAthletePerSchool(data, function (err, complete) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -993,7 +997,7 @@ var model = {
             });
     },
 
-    allAthelete: function (data, found, callback) {
+    allAthelete: function (data, callback) {
         async.waterfall([
                 function (callback) {
                     console.log("school", data.school);
@@ -1004,8 +1008,16 @@ var model = {
                     }
                     var start = (page - 1) * maxRow;
                     console.log("options", start);
-                    if (data.page == 1 && _.isEmpty(data.sfaid)) {
-                        Sport.athleteData(data, found, start, maxRow, function (err, complete1) {
+                    if (data.page == 1 && _.isEmpty(data.sfaid) && data.athleteToken) {
+                        Sport.athleteData(data, start, maxRow, function (err, complete1) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, complete1);
+                            }
+                        });
+                    } else if (data.page == 1 && _.isEmpty(data.sfaid) && data.schoolToken) {
+                        Sport.athleteData1(data, start, maxRow, function (err, complete1) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -1111,7 +1123,7 @@ var model = {
     },
 
     //page1 without sfa
-    athleteData: function (data, found, start, maxRow, callback) {
+    athleteData: function (data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
             var pipeLine = Sport.getMixAggregatePipeLine(data);
         } else {
@@ -1150,7 +1162,7 @@ var model = {
                                 callback(null, []);
                             } else {
                                 dataFinal.results = totals;
-                                dataFinal.results.push(found);
+                                dataFinal.results.push(data.found);
                                 console.log("athelete", dataFinal);
                                 callback(null, dataFinal);
                             }
@@ -1380,7 +1392,6 @@ var model = {
                                                 if (_.isEmpty(totals)) {
                                                     callback(null, []);
                                                 } else {
-
                                                     dataFinal.results.push(athleteData);
                                                     dataFinal.results = totals;
                                                     callback(null, dataFinal);
