@@ -1615,6 +1615,7 @@ var model = {
     smsMailIndividual: function (data, n, callback) {
         async.parallel([
                 function (callback) {
+                    var emailData = {};
                     emailData.schoolSFA = data.sfaid;
                     emailData.schoolName = data.school;
                     var sport = n.sportName + " " + n.gender + " " + n.ageGroup;
