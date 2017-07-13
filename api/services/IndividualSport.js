@@ -1660,7 +1660,7 @@ var model = {
                 },
                 function (callback) {
                     var smsData = {};
-                    smsData.mobile = n.mobile;
+                    smsData.mobile = data.mobile;
                     smsData.content = "SFA: Thank you for registering for Individual Sports at SFA 2017. For Further details Please check your registered email ID.";
                     console.log("smsdata", smsData);
                     Config.sendSms(smsData, function (err, smsRespo) {
