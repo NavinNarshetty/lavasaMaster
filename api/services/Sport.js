@@ -688,7 +688,7 @@ var model = {
                                     _.each(complete.results, function (n) {
                                         console.log("n", n);
                                         final.data.push(n.athleteId);
-                                    })
+                                    });
                                     final.total = complete.total;
                                     console.log("final", final);
                                     callback(null, final);
@@ -775,6 +775,7 @@ var model = {
                         var results = {};
                         var finalData = [];
                         async.each(complete.data, function (n, callback) {
+                                console.log("n------", n);
                                 data.athlete = n._id;
                                 var pipeLine = Sport.getStudentTeamPipeline(data);
                                 StudentTeam.aggregate(pipeLine, function (err, found) {
@@ -1004,7 +1005,7 @@ var model = {
                     var start = (page - 1) * maxRow;
                     console.log("options", start);
                     if (data.page == 1 && _.isEmpty(data.sfaid)) {
-                        Sport.athleteData(data, found, function (err, complete1) {
+                        Sport.athleteData(data, found, start, maxRow, function (err, complete1) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -1012,7 +1013,7 @@ var model = {
                             }
                         });
                     } else if (_.isEmpty(data.sfaid) && data.page != 1) {
-                        Sport.athleteData1(data, function (err, complete1) {
+                        Sport.athleteData1(data, start, maxRow, function (err, complete1) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -1021,7 +1022,7 @@ var model = {
                         });
 
                     } else {
-                        Sport.atheleteDataIncludingSfa(data, function (err, complete1) {
+                        Sport.atheleteDataIncludingSfa(data, start, maxRow, function (err, complete1) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -1110,7 +1111,7 @@ var model = {
     },
 
     //page1 without sfa
-    athleteData: function (data, found, callback) {
+    athleteData: function (data, found, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
             var pipeLine = Sport.getMixAggregatePipeLine(data);
         } else {
@@ -1172,7 +1173,7 @@ var model = {
             });
     },
     //except page1 without sfa
-    athleteData1: function (data, callback) {
+    athleteData1: function (data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
             var pipeLine = Sport.getMixAggregatePipeLine(data);
         } else {
@@ -1234,7 +1235,7 @@ var model = {
             });
     },
     //with sfa
-    atheleteDataIncludingSfa: function (data, callback) {
+    atheleteDataIncludingSfa: function (data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
             var pipeLine = Sport.getMixAggregatePipeLine(data);
         } else {
@@ -1379,8 +1380,9 @@ var model = {
                                                 if (_.isEmpty(totals)) {
                                                     callback(null, []);
                                                 } else {
-                                                    dataFinal.results = totals;
+
                                                     dataFinal.results.push(athleteData);
+                                                    dataFinal.results = totals;
                                                     callback(null, dataFinal);
                                                 }
                                             }
