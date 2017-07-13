@@ -524,7 +524,7 @@ var model = {
                 },
                 function (data3, callback) {
                     Athelete.findOne({
-                        _id: data.bud
+                        _id: data.buf
                     }).exec(function (err, found) {
                         if (err) {
                             callback(err, null);
