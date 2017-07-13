@@ -610,13 +610,13 @@ var model = {
                     ]
                 }
             },
-
+            // Stage 7
             {
                 $unwind: {
                     path: "$sport",
                 }
             },
-            // Stage 7
+            // Stage 8
             {
                 $lookup: {
                     "from": "sports",
@@ -626,13 +626,13 @@ var model = {
                 }
             },
 
-            // Stage 8
+            // Stage 9
             {
                 $unwind: {
                     path: "$sport",
                 }
             },
-            // Stage 4
+            // Stage 10
             {
                 $lookup: {
                     "from": "agegroups",
@@ -642,13 +642,29 @@ var model = {
                 }
             },
 
-            // Stage 5
+            // Stage 11
             {
                 $unwind: {
                     path: "$sport.ageGroup",
                 }
             },
-            // Stage 9
+            // Stage 12
+            {
+                $lookup: {
+                    "from": "weights",
+                    "localField": "sport.weight",
+                    "foreignField": "_id",
+                    "as": "sport.weight"
+                }
+            },
+            // Stage 13
+            {
+                $unwind: {
+                    path: "$sport.weight",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+            // Stage 14
             {
                 $lookup: {
                     "from": "sportslists",
@@ -658,12 +674,13 @@ var model = {
                 }
             },
 
-            // Stage 10
+            // Stage 15
             {
                 $unwind: {
                     path: "$sport.sportslist",
                 }
             },
+            // Stage 16
             {
                 $lookup: {
                     "from": "sportslistsubcategories",
@@ -672,15 +689,13 @@ var model = {
                     "as": "sport.sportslist.sportsListSubCategory"
                 }
             },
-
-            // Stage 10
+            // Stage 17
             {
                 $unwind: {
                     path: "$sport.sportslist.sportsListSubCategory",
                 }
             },
-
-            // Stage 11
+            // Stage 18
             {
                 $group: {
                     "_id": "$sport.sportslist.name",
@@ -692,6 +707,7 @@ var model = {
                             sfaid: "$athleteId.sfaId",
                             email: "$athleteId.email",
                             age: "$sport.ageGroup.name",
+                            weight: "$sport.weight.name",
                             gender: "$sport.gender",
                             sportName: "$sport.sportslist.sportsListSubCategory.name",
                             name: "$sport.sportslist.name",
@@ -731,7 +747,7 @@ var model = {
                 }
             },
 
-            // Stage 6
+            // Stage 4
             {
                 $match: {
                     "athleteId._id": objectid(data.athleteId)
@@ -742,7 +758,7 @@ var model = {
                     path: "$sport",
                 }
             },
-            // Stage 7
+            // Stage 5
             {
                 $lookup: {
                     "from": "sports",
@@ -752,13 +768,13 @@ var model = {
                 }
             },
 
-            // Stage 8
+            // Stage 6
             {
                 $unwind: {
                     path: "$sport",
                 }
             },
-            // Stage 4
+            // Stage 7
             {
                 $lookup: {
                     "from": "agegroups",
@@ -768,14 +784,30 @@ var model = {
                 }
             },
 
-            // Stage 5
+            // Stage 8
             {
                 $unwind: {
                     path: "$sport.ageGroup",
                 }
             },
+            //stage 9
+            {
+                $lookup: {
+                    "from": "weights",
+                    "localField": "sport.weight",
+                    "foreignField": "_id",
+                    "as": "sport.weight"
+                }
+            },
+            // Stage 10
+            {
+                $unwind: {
+                    path: "$sport.weight",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
 
-            // Stage 9
+            // Stage 11
             {
                 $lookup: {
                     "from": "sportslists",
@@ -785,12 +817,13 @@ var model = {
                 }
             },
 
-            // Stage 10
+            // Stage 12
             {
                 $unwind: {
                     path: "$sport.sportslist",
                 }
             },
+            //stage 13
             {
                 $lookup: {
                     "from": "sportslistsubcategories",
@@ -800,14 +833,14 @@ var model = {
                 }
             },
 
-            // Stage 10
+            // Stage 14
             {
                 $unwind: {
                     path: "$sport.sportslist.sportsListSubCategory",
                 }
             },
 
-            // Stage 11
+            // Stage 15
             {
                 $group: {
                     "_id": "$sport.sportslist.name",
@@ -818,6 +851,7 @@ var model = {
                             middlename: "$athleteId.middleName",
                             sfaid: "$athleteId.sfaId",
                             email: "$athleteId.email",
+                            weight: '$sport.weight.name',
                             age: "$sport.ageGroup.name",
                             gender: "$sport.gender",
                             sportName: "$sport.sportslist.sportsListSubCategory.name",
