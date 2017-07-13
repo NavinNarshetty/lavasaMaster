@@ -188,7 +188,9 @@ var model = {
                     callback(err, null);
                 } else if (found) {
                     if (_.isEmpty(found)) {
-                        Registration.find().sort({
+                        Registration.find({
+                            verifyCount: 0
+                        }).sort({
                             receiptId: -1
                         }).limit(1).lean().exec(
                             function (err, datafound) {
