@@ -245,7 +245,7 @@ var model = {
                             middlename: "$studentId.middleName",
                             sfaid: "$studentId.sfaId",
                             email: "$studentId.email",
-                            age: "$$sport.ageGroup.name",
+                            age: "$sport.ageGroup.name",
                             gender: "$sport.gender",
                             name: "$teamId.name",
                             createdBy: "$teamId.createdBy",
