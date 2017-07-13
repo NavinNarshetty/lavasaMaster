@@ -1755,23 +1755,6 @@ myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, Naviga
         });
     }
 
-    // $scope.transferToWebsite = function (id) {
-    //     $scope.constraints = {};
-    //     $scope.constraints._id = base64Service.encode(id);
-    //     $scope.url = "Login/access"
-    //     NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-    //         console.log(data);
-    //     });
-
-    //     // For decode at frontend level
-    //     // console.log(id);
-    //     // console.log($scope.constraints);
-    //     // $scope.constraintis = {};
-    //     // $scope.constraintis._id = base64Service.decode($scope.constraints._id);
-    //     // console.log($scope.constraintis);
-
-    // }
-
 });
 //viewindividualteamsport
 myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
@@ -2071,6 +2054,22 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
             console.log(formdata);
             NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
         }
+    }
+    $scope.transferToWebsite = function (id) {
+        $scope.constraints = {};
+        $scope.constraints._id = base64Service.encode(id);
+        $scope.url = "Login/editAccess"
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            console.log(data);
+        });
+
+        // For decode at frontend level
+        // console.log(id);
+        // console.log($scope.constraints);
+        // $scope.constraintis = {};
+        // $scope.constraintis._id = base64Service.decode($scope.constraints._id);
+        // console.log($scope.constraintis);
+
     }
 })
 
