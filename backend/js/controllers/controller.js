@@ -1911,11 +1911,14 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
         console.log(id);
         $scope.constraints = {};
         $scope.constraints.schoolId = base64Service.encode(id);
-        console.log($scope.constraints);
-        $scope.url = "Login/editAccess"
-        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-            console.log("dataaaaa", data);
-        });
+        window.location = 'http://localhost:8080/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+
+
+        // console.log($scope.constraints);
+        // $scope.url = "Login/editAccess"
+        // NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+        //     console.log("dataaaaa", data);
+        // });
 
         // For decode at frontend level
         // console.log(id);
