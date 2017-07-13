@@ -476,12 +476,14 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(schoolData)) {
+                                data.mobile = found.mobile;
                                 data.schoolName = found.atheleteSchoolName;
                                 data.schoolSFA = "Unregistered";
                                 data.emailfile = "studentTeamUnregister.ejs";
                                 callback(null, data);
 
                             } else {
+                                data.mobile = found.mobile;
                                 data.schoolName = schoolData.schoolName;
                                 data.schoolSFA = schoolData.sfaID;
                                 data.emailfile = "studentTeam.ejs";
@@ -503,12 +505,14 @@ var model = {
                                     if (err) {
                                         callback(err, null);
                                     } else if (_.isEmpty(schoolData)) {
+                                        data.mobile = found.mobile;
                                         data.schoolName = found.atheleteSchoolName;
                                         data.schoolSFA = "Unregistered";
                                         data.emailfile = "studentTeamUnregister.ejs";
                                         callback(null, data);
 
                                     } else {
+                                        data.mobile = found.mobile;
                                         data.schoolName = schoolData.schoolName;
                                         data.schoolSFA = schoolData.sfaID;
                                         data.emailfile = "studentTeam.ejs";
@@ -549,7 +553,9 @@ var model = {
     },
 
     athleteMailers: function (data, total, callback) {
+        console.log("data", data);
         async.each(total.studentTeam, function (n, callback) {
+            console.log("n", n);
             async.parallel([
                 function (callback) {
                     var emailData = {};
@@ -563,7 +569,7 @@ var model = {
                     emailData.students = total.studentTeam;
                     emailData.linkSportName = data.linkSportName;
                     emailData.subject = "SFA: Successful Team Sport Registered";
-                    console.log("emaildata", emailData);
+                    // console.log("emaildata", emailData);
                     Config.email(emailData, function (err, emailRespo) {
                         if (err) {
                             console.log(err);
@@ -578,9 +584,10 @@ var model = {
                 //school sms
                 function (callback) {
                     var smsData = {};
-                    smsData.mobile = n.mobile;
+                    smsData.mobile = data.mobile;
                     smsData.content = "SFA: Thank you for registering for Team Sports at SFA 2017. For Further details Please check your rehistered email ID.";
                     console.log("smsdata", smsData);
+                    // callback(null, smsData);
                     Config.sendSms(smsData, function (err, smsRespo) {
                         if (err) {
                             console.log(err);
