@@ -580,8 +580,10 @@ var model = {
                                 } else {
                                     if (_.isEmpty(datafound)) {
                                         data.receiptId = 1;
+                                        console.log("receiptId", receiptId);
                                     } else {
                                         data.receiptId = ++datafound[0].receiptId;
+                                        console.log("receiptId", receiptId);
                                     }
                                     data.year = new Date().getFullYear();
                                     data.verifyCount = 0;

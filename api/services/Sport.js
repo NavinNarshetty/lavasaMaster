@@ -669,6 +669,7 @@ var model = {
                     });
                 },
                 function (data, callback) {
+                    console.log("data", data);
                     if ((data.sportName.toLowerCase() == "shooting air pistol team") || (data.sportName.toLowerCase() == "shooting air rifle open team") || (data.sportName.toLowerCase() == "shooting air rifle peep team")) {
                         console.log("sports IndividualSport check");
                         data.athlete = found._id;
@@ -1131,6 +1132,19 @@ var model = {
         }
         console.log("pipeLine", pipeLine);
         async.waterfall([
+                function (callback) {
+                    var dataFinal = {};
+                    Sport.totalAthlete(data, function (err, complete1) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            console.log("complete1", complete1);
+                            dataFinal.total = complete1;
+                            callback(null, dataFinal);
+                        }
+
+                    });
+                },
                 function (callback) {
                     var dataFinal = {};
                     Sport.totalAthlete(data, function (err, complete1) {
