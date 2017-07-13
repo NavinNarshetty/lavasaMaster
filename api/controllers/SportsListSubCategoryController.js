@@ -26,7 +26,7 @@ var controller = {
                 } else if (_.isEmpty(found)) {
                     res.json({
                         value: false,
-                        data: "Incorrect Login"
+                        data: "No User Found"
                     });
                 } else {
                     req.body.school = found.schoolName;

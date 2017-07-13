@@ -11,7 +11,7 @@ var request = require("request");
 var generator = require('generate-password');
 // autoIncrement.initialize(mongoose);
 var schema = new Schema({
-
+    receiptId: Number,
     atheleteID: {
         type: Number
     },
@@ -568,86 +568,103 @@ var model = {
                     console.log(err);
                     callback(err, null);
                 } else if (found) {
-                    // data.order.bills = null;
                     if (_.isEmpty(found)) {
-                        // console.log("data", data);
-                        data.year = new Date().getFullYear();
-                        data.verifyCount = 0;
-                        data.atheleteID = 0;
-                        Athelete.saveData(data, function (err, athleteData) {
-                            if (err) {
-                                console.log("err", err);
-                                callback("There was an error while saving", null);
-                            } else {
-                                if (_.isEmpty(athleteData)) {
-                                    callback("No order data found", null);
+                        Athelete.find().sort({
+                            receiptId: -1
+                        }).limit(1).lean().exec(
+                            function (err, datafound) {
+                                console.log("found1***", datafound);
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
                                 } else {
-                                    async.parallel([
-                                            function (callback) {
-                                                console.log("inside school save")
-                                                if (data.atheleteSchoolName) {
-                                                    var schoolData = {};
-                                                    schoolData.schoolName = data.atheleteSchoolName;
-                                                    schoolData.locality = data.atheleteSchoolLocality;
-                                                    schoolData.schoolLogo = data.atheleteSchoolIdImage;
-                                                    schoolData.landline = data.atheleteSchoolContact;
-                                                    if (data.utm_source) {
-                                                        schoolData.utm_source = data.utm_source;
-                                                    }
-                                                    if (data.utm_medium) {
-                                                        schoolData.utm_medium = data.utm_medium;
-                                                    }
-                                                    if (data.utm_campaign) {
-                                                        schoolData.utm_campaign = data.utm_campaign;
-                                                    }
-                                                    console.log("need to save");
-                                                    Registration.saveData(schoolData, function (err, registerData) {
-                                                        console.log("registerData", registerData);
-                                                        if (err) {
-                                                            console.log("err", err);
-                                                            callback("There was an error while saving school", null);
-                                                        } else {
-                                                            if (_.isEmpty(registerData)) {
-                                                                callback("No register data found", null);
+                                    if (_.isEmpty(datafound)) {
+                                        data.receiptId = 1;
+                                    } else {
+                                        data.receiptId = ++datafound[0].receiptId;
+                                    }
+                                    data.year = new Date().getFullYear();
+                                    data.verifyCount = 0;
+                                    data.atheleteID = 0;
+
+                                    Athelete.saveData(data, function (err, athleteData) {
+                                        if (err) {
+                                            console.log("err", err);
+                                            callback("There was an error while saving", null);
+                                        } else {
+                                            if (_.isEmpty(athleteData)) {
+                                                callback("No order data found", null);
+                                            } else {
+                                                async.parallel([
+                                                        function (callback) {
+                                                            console.log("inside school save")
+                                                            if (data.atheleteSchoolName) {
+                                                                var schoolData = {};
+                                                                schoolData.schoolName = data.atheleteSchoolName;
+                                                                schoolData.locality = data.atheleteSchoolLocality;
+                                                                schoolData.schoolLogo = data.atheleteSchoolIdImage;
+                                                                schoolData.landline = data.atheleteSchoolContact;
+                                                                if (data.utm_source) {
+                                                                    schoolData.utm_source = data.utm_source;
+                                                                }
+                                                                if (data.utm_medium) {
+                                                                    schoolData.utm_medium = data.utm_medium;
+                                                                }
+                                                                if (data.utm_campaign) {
+                                                                    schoolData.utm_campaign = data.utm_campaign;
+                                                                }
+                                                                console.log("need to save");
+                                                                Registration.saveData(schoolData, function (err, registerData) {
+                                                                    console.log("registerData", registerData);
+                                                                    if (err) {
+                                                                        console.log("err", err);
+                                                                        callback("There was an error while saving school", null);
+                                                                    } else {
+                                                                        if (_.isEmpty(registerData)) {
+                                                                            callback("No register data found", null);
+                                                                        } else {
+                                                                            callback(null, athleteData);
+                                                                        }
+                                                                    }
+                                                                });
+                                                            } else {
+                                                                callback(null, athleteData);
+                                                            }
+                                                        },
+                                                        function (callback) {
+                                                            console.log("inside payment check");
+                                                            if (athleteData.registrationFee == "cash") {
+                                                                Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                                    if (err) {
+                                                                        callback(err, null);
+                                                                    } else if (vData) {
+                                                                        callback(null, vData);
+                                                                    }
+                                                                });
                                                             } else {
                                                                 callback(null, athleteData);
                                                             }
                                                         }
-                                                    });
-                                                } else {
-                                                    callback(null, athleteData);
-                                                }
-                                            },
-                                            function (callback) {
-                                                console.log("inside payment check");
-                                                if (athleteData.registrationFee == "cash") {
-                                                    Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                    ],
+                                                    function (err, data2) {
                                                         if (err) {
-                                                            callback(err, null);
-                                                        } else if (vData) {
-                                                            callback(null, vData);
+                                                            console.log(err);
+                                                            callback(null, []);
+                                                        } else if (data2) {
+                                                            if (_.isEmpty(data2)) {
+                                                                callback(null, []);
+                                                            } else {
+                                                                callback(null, data2);
+                                                            }
                                                         }
                                                     });
-                                                } else {
-                                                    callback(null, athleteData);
-                                                }
                                             }
-                                        ],
-                                        function (err, data2) {
-                                            if (err) {
-                                                console.log(err);
-                                                callback(null, []);
-                                            } else if (data2) {
-                                                if (_.isEmpty(data2)) {
-                                                    callback(null, []);
-                                                } else {
-                                                    callback(null, data2);
-                                                }
-                                            }
-                                        });
+                                        }
+                                    });
                                 }
-                            }
-                        });
+
+                            });
+
 
                     } else {
                         if (found[0].registrationFee == 'online PAYU' && found[0].paymentStatus == 'Pending') {
@@ -1003,7 +1020,7 @@ var model = {
                 emailData.surname = found.surname;
                 emailData.transactionID = found.transactionID;
                 emailData.Date = moment().format("DD-MM-YYYY");
-                emailData.receiptNo = "SFA" + found.atheleteID;
+                emailData.receiptNo = "SFA" + found.receiptId;
                 emailData.from = "info@sfanow.in";
                 emailData.email1 = [{
                     email: found.email

@@ -15,6 +15,7 @@ require('mongoose-middleware').initialize(mongoose);
 
 var schema = new Schema({
     registerID: Number,
+    receiptId: Number,
     sfaID: {
         type: String,
         default: ""
@@ -31,8 +32,6 @@ var schema = new Schema({
     schoolCategory: String,
     affiliatedBoard: String,
     schoolLogo: String,
-
-
     schoolAddress: String,
     schoolAddressLine2: String,
     state: String,
@@ -40,8 +39,6 @@ var schema = new Schema({
     city: String,
     locality: String,
     pinCode: String,
-
-
     contactPerson: String,
     lorline: String,
     email: String,
@@ -191,13 +188,32 @@ var model = {
                     callback(err, null);
                 } else if (found) {
                     if (_.isEmpty(found)) {
-                        Registration.saveRegistration(data, function (err, vData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (vData) {
-                                callback(null, vData);
-                            }
-                        });
+                        Registration.find().sort({
+                            receiptId: -1
+                        }).limit(1).lean().exec(
+                            function (err, datafound) {
+                                console.log("found1***", datafound);
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else {
+                                    if (_.isEmpty(datafound)) {
+                                        data.receiptId = 1;
+                                    } else {
+                                        data.receiptId = ++datafound[0].receiptId;
+                                    }
+                                    Registration.saveRegistration(data, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+                                }
+
+                            });
+
+
                     } else {
                         if (found.registrationFee == 'online PAYU' && found.paymentStatus == 'Pending') {
                             Registration.remove({ //finds one with refrence to id
@@ -957,7 +973,7 @@ var model = {
                             emailData.schoolName = found.schoolName;
                             emailData.transactionID = found.transactionID;
                             emailData.Date = moment().format("DD-MM-YYYY");
-                            var receipt = "SFA" + found.registerID;
+                            var receipt = "SFA" + found.receiptId;
                             emailData.receiptNo = receipt;
                             emailData.from = "info@sfanow.in";
                             emailData.email1 = [{
