@@ -478,13 +478,62 @@ var model = {
                         _id: buf
                     }).exec(function (err, found) {
                         if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else if (found) {
+                            console.log("found", found);
+                            if (_.isEmpty(found.accessToken) || found.accessToken == " ") {
+                                data.tokenExist = false;
+                                data.buf = buf;
+                                callback(null, data);
+                            } else {
+                                data.tokenExist = true;
+                                data.buf = buf;
+                                callback(null, data);
+                            }
+                        }
+                    });
+                },
+                function (data, callback) {
+                    if (data.tokenExist == false) {
+                        var token = generator.generate({
+                            length: 16,
+                            numbers: true
+                        })
+                        var matchToken = {
+                            $set: {
+                                accessToken: token
+                            }
+                        }
+                        Athelete.update({
+                            _id: data.buf
+                        }, matchToken).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    console.log("value :", data3);
+                                    callback(null, data3);
+                                }
+                            });
+                    } else {
+                        var data3 = data;
+                        callback(null, data3);
+                    }
+                },
+                function (data3, callback) {
+                    Athelete.findOne({
+                        _id: data.bud
+                    }).exec(function (err, found) {
+                        if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(found)) {
                             callback(null, []);
                         } else {
                             var finalData = {};
                             finalData.data = found;
-                            finalData.userType = "Athlete";
+                            finalData.userType = "athlete";
                             finalData.mixAccess = true;
                             callback(null, finalData);
                         }
@@ -509,13 +558,63 @@ var model = {
                         _id: buf
                     }).exec(function (err, found) {
                         if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else if (found) {
+                            console.log("found", found);
+                            if (_.isEmpty(found.accessToken) || found.accessToken == " ") {
+                                data.tokenExist = false;
+                                data.buf = buf;
+                                callback(null, data);
+                            } else {
+                                data.tokenExist = true;
+                                data.buf = buf;
+                                callback(null, data);
+                            }
+                        }
+                    });
+                },
+                function (data, callback) {
+                    if (data.tokenExist == false) {
+                        var token = generator.generate({
+                            length: 16,
+                            numbers: true
+                        })
+                        var matchToken = {
+                            $set: {
+                                accessToken: token
+                            }
+                        }
+                        Registration.update({
+                            _id: data.buf
+                        }, matchToken).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    console.log("value :", data3);
+                                    callback(null, data3);
+                                }
+                            });
+                    } else {
+                        var data3 = data;
+                        callback(null, data3);
+                    }
+                },
+
+                function (data3, callback) {
+                    Registration.findOne({
+                        _id: data.buf
+                    }).exec(function (err, found) {
+                        if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(found)) {
                             callback(null, []);
                         } else {
                             var finalData = {};
                             finalData.data = found;
-                            finalData.userType = "School";
+                            finalData.userType = "school";
                             finalData.mixAccess = true;
                             callback(null, finalData);
                         }
