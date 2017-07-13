@@ -569,24 +569,6 @@ var model = {
                     callback(err, null);
                 } else if (found) {
                     if (_.isEmpty(found)) {
-                        // Athelete.find({
-                        //     receiptId: 0
-                        // }).sort({
-                        //     receiptId: -1
-                        // }).limit(1).lean().exec(
-                        //     function (err, datafound) {
-                        //         console.log("found1***", datafound);
-                        //         if (err) {
-                        //             console.log(err);
-                        //             callback(err, null);
-                        //         } else {
-                        //             if (_.isEmpty(datafound)) {
-                        //                 data.receiptId = 1;
-                        //                 console.log("receiptId", data.receiptId);
-                        //             } else {
-                        //                 data.receiptId = ++datafound[0].receiptId;
-                        //                 console.log("receiptId", data.receiptId);
-                        //             }
                         data.year = new Date().getFullYear();
                         data.verifyCount = 0;
                         data.atheleteID = 0;
@@ -664,11 +646,6 @@ var model = {
                                 }
                             }
                         });
-                        // }
-
-                        // });
-
-
                     } else {
                         if (found[0].registrationFee == 'online PAYU' && found[0].paymentStatus == 'Pending') {
                             Athelete.remove({ //finds one with refrence to id

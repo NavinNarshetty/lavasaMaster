@@ -116,6 +116,12 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
+schema.plugin(autoIncrement.plugin, {
+    model: 'Registration',
+    field: 'receiptId',
+    startAt: 1,
+    incrementBy: 1
+});
 module.exports = mongoose.model('Registration', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
@@ -188,34 +194,14 @@ var model = {
                     callback(err, null);
                 } else if (found) {
                     if (_.isEmpty(found)) {
-                        Registration.find({
-                            verifyCount: 0
-                        }).sort({
-                            receiptId: -1
-                        }).limit(1).lean().exec(
-                            function (err, datafound) {
-                                console.log("found1***", datafound);
-                                if (err) {
-                                    console.log(err);
-                                    callback(err, null);
-                                } else {
-                                    if (_.isEmpty(datafound)) {
-                                        data.receiptId = 1;
-                                    } else {
-                                        data.receiptId = ++datafound[0].receiptId;
-                                    }
-                                    Registration.saveRegistration(data, function (err, vData) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (vData) {
-                                            callback(null, vData);
-                                        }
-                                    });
-                                }
 
-                            });
-
-
+                        Registration.saveRegistration(data, function (err, vData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (vData) {
+                                callback(null, vData);
+                            }
+                        });
                     } else {
                         if (found.registrationFee == 'online PAYU' && found.paymentStatus == 'Pending') {
                             Registration.remove({ //finds one with refrence to id
