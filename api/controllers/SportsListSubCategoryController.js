@@ -29,7 +29,8 @@ var controller = {
                         data: "No User Found"
                     });
                 } else {
-                    req.body.school = found.schoolName;
+                    req.body.school = found._id;
+                    req.body.schoolName = found.schoolName;
                     SportsListSubCategory.getOneSport(req.body, res.callback);
                 }
             });

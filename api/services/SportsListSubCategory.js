@@ -157,6 +157,7 @@ var model = {
                     if (found.atheleteSchoolName) {
                         var schoolName = {};
                         schoolName.name = found.atheleteSchoolName;
+                        data.schoolName = found.atheleteSchoolName;
                         callback(null, schoolName);
                     } else {
                         School.findOne({
@@ -167,6 +168,7 @@ var model = {
                             } else {
                                 var schoolName = {};
                                 schoolName.name = schoolData.name;
+                                data.schoolName = found.name;
                                 callback(null, schoolName);
                             }
                         });
@@ -188,6 +190,7 @@ var model = {
                             });
                         } else {
                             data.school = complete._id;
+                            data.schoolName = complete.schoolName;
                             SportsListSubCategory.getOneSport(data, function (err, complete1) {
                                 if (err) {
                                     callback(err, null);
