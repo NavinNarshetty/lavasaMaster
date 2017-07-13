@@ -580,15 +580,14 @@ var model = {
                                 } else {
                                     if (_.isEmpty(datafound)) {
                                         data.receiptId = 1;
-                                        console.log("receiptId", receiptId);
+                                        console.log("receiptId", data.receiptId);
                                     } else {
                                         data.receiptId = ++datafound[0].receiptId;
-                                        console.log("receiptId", receiptId);
+                                        console.log("receiptId", data.receiptId);
                                     }
                                     data.year = new Date().getFullYear();
                                     data.verifyCount = 0;
                                     data.atheleteID = 0;
-
                                     Athelete.saveData(data, function (err, athleteData) {
                                         if (err) {
                                             console.log("err", err);
