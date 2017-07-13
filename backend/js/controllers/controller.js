@@ -1931,7 +1931,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     }
 })
 
-myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, base64Service) {
     //athlete filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableathlete");
@@ -2072,7 +2072,7 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
         // console.log(id);
         // console.log($scope.constraints);
         // $scope.constraintis = {};
-        // $scope.constraintis._id = base64Service.decode($scope.constraints._id);
+        // $scope.constraintis._id =  .decode($scope.constraints._id);
         // console.log($scope.constraintis);
 
     }
