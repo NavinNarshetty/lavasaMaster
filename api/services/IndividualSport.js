@@ -1613,6 +1613,7 @@ var model = {
             });
     },
     smsMailIndividual: function (data, n, callback) {
+        console.log(data, n);
         async.parallel([
                 function (callback) {
                     var emailData = {};
