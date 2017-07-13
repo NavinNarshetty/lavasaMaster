@@ -9,7 +9,7 @@ var objectid = require("mongodb").ObjectID;
 var moment = require('moment');
 var request = require("request");
 var generator = require('generate-password');
-// autoIncrement.initialize(mongoose);
+autoIncrement.initialize(mongoose);
 var schema = new Schema({
     receiptId: Number,
     atheleteID: {
@@ -101,12 +101,12 @@ var schema = new Schema({
 
 schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
-// schema.plugin(autoIncrement.plugin, {
-//     model: 'Athelete',
-//     field: 'atheleteID',
-//     startAt: 1,
-//     incrementBy: 1
-// });
+schema.plugin(autoIncrement.plugin, {
+    model: 'Athelete',
+    field: 'receiptId',
+    startAt: 1,
+    incrementBy: 1
+});
 schema.plugin(timestamps);
 module.exports = mongoose.model('Athelete', schema);
 
@@ -569,104 +569,104 @@ var model = {
                     callback(err, null);
                 } else if (found) {
                     if (_.isEmpty(found)) {
-                        Athelete.find({
-                            verifyCount: 0
-                        }).sort({
-                            receiptId: -1
-                        }).limit(1).lean().exec(
-                            function (err, datafound) {
-                                console.log("found1***", datafound);
-                                if (err) {
-                                    console.log(err);
-                                    callback(err, null);
+                        // Athelete.find({
+                        //     receiptId: 0
+                        // }).sort({
+                        //     receiptId: -1
+                        // }).limit(1).lean().exec(
+                        //     function (err, datafound) {
+                        //         console.log("found1***", datafound);
+                        //         if (err) {
+                        //             console.log(err);
+                        //             callback(err, null);
+                        //         } else {
+                        //             if (_.isEmpty(datafound)) {
+                        //                 data.receiptId = 1;
+                        //                 console.log("receiptId", data.receiptId);
+                        //             } else {
+                        //                 data.receiptId = ++datafound[0].receiptId;
+                        //                 console.log("receiptId", data.receiptId);
+                        //             }
+                        data.year = new Date().getFullYear();
+                        data.verifyCount = 0;
+                        data.atheleteID = 0;
+                        Athelete.saveData(data, function (err, athleteData) {
+                            if (err) {
+                                console.log("err", err);
+                                callback("There was an error while saving", null);
+                            } else {
+                                if (_.isEmpty(athleteData)) {
+                                    callback("No order data found", null);
                                 } else {
-                                    if (_.isEmpty(datafound)) {
-                                        data.receiptId = 1;
-                                        console.log("receiptId", data.receiptId);
-                                    } else {
-                                        data.receiptId = ++datafound[0].receiptId;
-                                        console.log("receiptId", data.receiptId);
-                                    }
-                                    data.year = new Date().getFullYear();
-                                    data.verifyCount = 0;
-                                    data.atheleteID = 0;
-                                    Athelete.saveData(data, function (err, athleteData) {
-                                        if (err) {
-                                            console.log("err", err);
-                                            callback("There was an error while saving", null);
-                                        } else {
-                                            if (_.isEmpty(athleteData)) {
-                                                callback("No order data found", null);
-                                            } else {
-                                                async.parallel([
-                                                        function (callback) {
-                                                            console.log("inside school save")
-                                                            if (data.atheleteSchoolName) {
-                                                                var schoolData = {};
-                                                                schoolData.schoolName = data.atheleteSchoolName;
-                                                                schoolData.locality = data.atheleteSchoolLocality;
-                                                                schoolData.schoolLogo = data.atheleteSchoolIdImage;
-                                                                schoolData.landline = data.atheleteSchoolContact;
-                                                                if (data.utm_source) {
-                                                                    schoolData.utm_source = data.utm_source;
-                                                                }
-                                                                if (data.utm_medium) {
-                                                                    schoolData.utm_medium = data.utm_medium;
-                                                                }
-                                                                if (data.utm_campaign) {
-                                                                    schoolData.utm_campaign = data.utm_campaign;
-                                                                }
-                                                                console.log("need to save");
-                                                                Registration.saveData(schoolData, function (err, registerData) {
-                                                                    console.log("registerData", registerData);
-                                                                    if (err) {
-                                                                        console.log("err", err);
-                                                                        callback("There was an error while saving school", null);
-                                                                    } else {
-                                                                        if (_.isEmpty(registerData)) {
-                                                                            callback("No register data found", null);
-                                                                        } else {
-                                                                            callback(null, athleteData);
-                                                                        }
-                                                                    }
-                                                                });
-                                                            } else {
-                                                                callback(null, athleteData);
-                                                            }
-                                                        },
-                                                        function (callback) {
-                                                            console.log("inside payment check");
-                                                            if (athleteData.registrationFee == "cash") {
-                                                                Athelete.atheletePaymentMail(athleteData, function (err, vData) {
-                                                                    if (err) {
-                                                                        callback(err, null);
-                                                                    } else if (vData) {
-                                                                        callback(null, vData);
-                                                                    }
-                                                                });
-                                                            } else {
-                                                                callback(null, athleteData);
-                                                            }
-                                                        }
-                                                    ],
-                                                    function (err, data2) {
+                                    async.parallel([
+                                            function (callback) {
+                                                console.log("inside school save")
+                                                if (data.atheleteSchoolName) {
+                                                    var schoolData = {};
+                                                    schoolData.schoolName = data.atheleteSchoolName;
+                                                    schoolData.locality = data.atheleteSchoolLocality;
+                                                    schoolData.schoolLogo = data.atheleteSchoolIdImage;
+                                                    schoolData.landline = data.atheleteSchoolContact;
+                                                    if (data.utm_source) {
+                                                        schoolData.utm_source = data.utm_source;
+                                                    }
+                                                    if (data.utm_medium) {
+                                                        schoolData.utm_medium = data.utm_medium;
+                                                    }
+                                                    if (data.utm_campaign) {
+                                                        schoolData.utm_campaign = data.utm_campaign;
+                                                    }
+                                                    console.log("need to save");
+                                                    Registration.saveData(schoolData, function (err, registerData) {
+                                                        console.log("registerData", registerData);
                                                         if (err) {
-                                                            console.log(err);
-                                                            callback(null, []);
-                                                        } else if (data2) {
-                                                            if (_.isEmpty(data2)) {
-                                                                callback(null, []);
+                                                            console.log("err", err);
+                                                            callback("There was an error while saving school", null);
+                                                        } else {
+                                                            if (_.isEmpty(registerData)) {
+                                                                callback("No register data found", null);
                                                             } else {
-                                                                callback(null, data2);
+                                                                callback(null, athleteData);
                                                             }
                                                         }
                                                     });
+                                                } else {
+                                                    callback(null, athleteData);
+                                                }
+                                            },
+                                            function (callback) {
+                                                console.log("inside payment check");
+                                                if (athleteData.registrationFee == "cash") {
+                                                    Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                        if (err) {
+                                                            callback(err, null);
+                                                        } else if (vData) {
+                                                            callback(null, vData);
+                                                        }
+                                                    });
+                                                } else {
+                                                    callback(null, athleteData);
+                                                }
                                             }
-                                        }
-                                    });
+                                        ],
+                                        function (err, data2) {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(null, []);
+                                            } else if (data2) {
+                                                if (_.isEmpty(data2)) {
+                                                    callback(null, []);
+                                                } else {
+                                                    callback(null, data2);
+                                                }
+                                            }
+                                        });
                                 }
+                            }
+                        });
+                        // }
 
-                            });
+                        // });
 
 
                     } else {
