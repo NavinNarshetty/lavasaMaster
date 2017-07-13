@@ -881,7 +881,6 @@ var model = {
                         if (_.isEmpty(complete)) {
                             callback(null, []);
                         } else {
-                            // callback(null, complete);
                             _.each(complete, function (n) {
                                 finalData.push(n);
                             });
@@ -900,9 +899,8 @@ var model = {
                         callback(err, "error in mongoose");
                     } else {
                         if (_.isEmpty(complete1)) {
-                            callback(null, []);
+                            callback(null, finalData);
                         } else {
-                            // callback(null, complete);
                             _.each(complete1, function (n) {
                                 finalData.push(n);
                             });
@@ -918,7 +916,7 @@ var model = {
                 callback(err, null);
             } else {
                 if (_.isEmpty(data3)) {
-                    callback(null, []);
+                    callback(null, finalData);
                 } else {
                     callback(null, finalData);
                 }
