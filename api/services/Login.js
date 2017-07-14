@@ -464,6 +464,36 @@ var model = {
             callback("User not Logged In", null);
         }
     },
+    getSchoolPipeLine: function (data) {
+
+        var pipeline = [{
+                $match: {
+                    "_id": data.buf
+                }
+            },
+
+
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "school",
+                    "foreignField": "_id",
+                    "as": "school"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$school",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+        ];
+        return pipeline;
+    },
 
     editAccess: function (data, callback) {
         if (data.athleteId) {
@@ -523,19 +553,21 @@ var model = {
                     }
                 },
                 function (data3, callback) {
-                    Athelete.findOne({
-                        _id: data.buf
-                    }).exec(function (err, found) {
+                    var pipeLine = Login.getSchoolPipeLine(data);
+                    Athelete.aggregate(pipeLine, function (err, found) {
                         if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            callback(null, []);
+                            console.log(err);
+                            callback(err, "error in mongoose");
                         } else {
-                            var finalData = {};
-                            finalData.data = found;
-                            finalData.userType = "athlete";
-                            finalData.mixAccess = true;
-                            callback(null, finalData);
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                var finalData = {};
+                                finalData.data = found;
+                                finalData.userType = "athlete";
+                                finalData.mixAccess = true;
+                                callback(null, finalData);
+                            }
                         }
                     });
                 }
