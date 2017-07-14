@@ -1347,15 +1347,16 @@ var model = {
                         var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
                         // console.log("dateTime", n.createdAt, dateTime);
                         obj.date = dateTime;
-                        if (n.registerID) {
-                            if (n.registrationFee == "online PAYU") {
-                                obj.receiptNo = "SFA" + n.registerID;
-                            } else {
-                                obj.receiptNo = "";
-                            }
-                        } else {
-                            obj.receiptNo = "";
-                        }
+                        // if (n.registerID) {
+                        //     if (n.registrationFee == "online PAYU") {
+                        //         obj.receiptNo = "SFA" + n.registerID;
+                        //     } else {
+                        //         obj.receiptNo = "";
+                        //     }
+                        // } else {
+                        //     obj.receiptNo = "";
+                        // }
+                        obj.receiptNo = "SFA" + n.receiptId;
                         obj.schoolType = n.schoolType;
                         obj.schoolCategory = n.schoolCategory;
                         obj.affiliatedBoard = n.affiliatedBoard;

@@ -1951,15 +1951,16 @@ var model = {
                                 }
                             },
                             function (schoolData, callback) {
-                                if (n.atheleteID) {
-                                    if (n.registrationFee == "online PAYU") {
-                                        obj.receiptNo = "SFA" + n.atheleteID;
-                                    } else {
-                                        obj.receiptNo = "";
-                                    }
-                                } else {
-                                    obj.receiptNo = "";
-                                }
+                                // if (n.receiptId) {
+                                //     if (n.registrationFee == "online PAYU") {
+                                //         obj.receiptNo = "SFA" + n.receiptId;
+                                //     } else {
+                                //         obj.receiptNo = "";
+                                //     }
+                                // } else {
+                                //     obj.receiptNo = "";
+                                // }
+                                obj.receiptNo = "SFA" + n.receiptId;
                                 obj.school = schoolData;
                                 var parentInfo;
                                 var countParent = 0;
