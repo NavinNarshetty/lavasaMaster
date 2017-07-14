@@ -921,7 +921,7 @@ var model = {
                         callback(err, "error in mongoose");
                     } else {
                         if (_.isEmpty(complete)) {
-                            callback(null, []);
+                            callback(null, finalData);
                         } else {
                             _.each(complete, function (n) {
                                 finalData.push(n);
