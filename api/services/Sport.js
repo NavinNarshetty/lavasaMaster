@@ -942,22 +942,22 @@ var model = {
                                             callback(null, data);
                                         }
                                     });
-                                },
-                                function (data, callback) {
-                                    Registration.findOne({
-                                        schoolName: data.school
-                                    }).exec(function (err, complete) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (_.isEmpty(complete)) {
-                                            callback(null, []);
-                                        } else {
-                                            data.isRegisted = true;
-                                            console.log(data);
-                                            callback(null, data);
-                                        }
-                                    });
                                 }
+                                // function (data, callback) {
+                                //     Registration.findOne({
+                                //         schoolName: data.school
+                                //     }).exec(function (err, complete) {
+                                //         if (err) {
+                                //             callback(err, null);
+                                //         } else if (_.isEmpty(complete)) {
+                                //             callback(null, []);
+                                //         } else {
+                                //             data.isRegisted = true;
+                                //             console.log(data);
+                                //             callback(null, data);
+                                //         }
+                                //     });
+                                // }
                             ],
                             function (err, data2) {
                                 if (err) {

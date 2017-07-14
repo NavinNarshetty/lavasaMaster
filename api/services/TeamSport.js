@@ -1102,20 +1102,134 @@ var model = {
         ];
         return pipeline;
     },
+    getIndividualPipeLine: function (data) {
+
+        var pipeline = [
+
+            {
+                $match: {
+                    "_id": data.studentId
+                }
+            },
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "athleteId",
+                    "foreignField": "_id",
+                    "as": "athleteId"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athleteId",
+
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "athleteId.school",
+                    "foreignField": "_id",
+                    "as": "athleteId.school"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$athleteId.school",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sportsListSubCategory"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$sportsListSubCategory",
+
+                }
+            },
+        ];
+        return pipeline;
+    },
 
     editTeam: function (data, callback) {
-        var pipeLine = TeamSport.getTeamPipeLine1(data);
-        TeamSport.aggregate(pipeLine, function (err, complete) {
-            if (err) {
-                callback(err, "error in mongoose");
-            } else {
-                if (_.isEmpty(complete)) {
-                    callback(null, []);
-                } else {
-                    callback(null, complete);
+        var final = {};
+        final.students = [];
+        async.waterfall([
+                function (callback) {
+                    var pipeLine = TeamSport.getTeamPipeLine1(data);
+                    TeamSport.aggregate(pipeLine, function (err, complete) {
+                        if (err) {
+                            callback(err, "error in mongoose");
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete);
+                            }
+                        }
+                    });
+                    // },
+                    // function (complete, callback) {
+                    //     console.log("complete", complete);
+                    //     async.each(complete[0].studentTeam, function (n, callback) {
+                    //         console.log("n", n);
+                    //         data.studentId = n.studentId;
+                    //         var pipeLine = TeamSport.getIndividualPipeLine(data);
+                    //         Athelete.aggregate(pipeLine, function (err, atheleteData) {
+                    //             if (err) {
+                    //                 callback(err, "error in mongoose");
+                    //             } else {
+                    //                 if (_.isEmpty(atheleteData)) {
+                    //                     callback(null, []);
+                    //                 } else {
+                    //                     final.team = complete;
+                    //                     final.students.push(atheleteData[0]);
+                    //                     console.log("final", final);
+                    //                     callback(null, final);
+                    //                 }
+                    //             }
+                    //         });
+                    //     }, function (err) {
+                    //         if (err) {
+                    //             callback(err, null);
+                    //         } else {
+                    //             console.log("complete1", final);
+                    //             callback(null, final);
+                    //         }
+
+                    //     });
                 }
-            }
-        });
+            ],
+            function (err, complete1) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (complete1) {
+                    if (_.isEmpty(complete1)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, complete1);
+                    }
+                }
+            });
+
     }
 
 
