@@ -2029,15 +2029,79 @@ var model = {
 
     },
 
+    getIndividualPipeLine: function () {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "athleteId",
+                    "foreignField": "_id",
+                    "as": "athleteId"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athleteId",
+
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "athleteId.school",
+                    "foreignField": "_id",
+                    "as": "athleteId.school"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$athleteId.school",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sportsListSubCategory"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$sportsListSubCategory",
+
+                }
+            },
+        ];
+        return pipeline;
+    },
     generateExcel: function (res) {
         var deepSearch = "athleteId sportsListSubCategory";
         async.waterfall([
                 function (callback) {
-                    IndividualSport.find().deepPopulate(deepSearch).exec(function (err, found) {
-                        if (_.isEmpty(found)) {
-                            callback(null, []);
+                    var pipeLine = IndividualSport.getIndividualPipeLine();
+                    IndividualSport.aggregate(pipeLine, function (err, found) {
+                        if (err) {
+                            callback(err, "error in mongoose");
                         } else {
-                            callback(null, found);
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, found);
+                            }
                         }
                     });
                 },
@@ -2047,13 +2111,20 @@ var model = {
                     async.each(found, function (mainData, callback) {
                         console.log("mainData", mainData);
                         var obj = {};
-                        if (mainData.athleteId) {
-                            obj.AthleteName = mainData.athleteId.firstName + " " + mainData.athleteId.surname;
+                        obj.year = new Date().getFullYear();
+                        obj.SFAID = mainData.athleteId.sfaId;
+                        if (mainData.athleteId.middleName) {
+                            obj.Athlete_Full_Name = mainData.athleteId.firstName + " " + mainData.athleteId.middleName + " " + mainData.athleteId.surname;
                         } else {
-                            obj.AthleteName = "";
+                            obj.Athlete_Full_Name = mainData.athleteId.firstName + " " + mainData.athleteId.surname;
                         }
-                        obj.sportName = mainData.sportsListSubCategory.name;
-                        obj.createdBy = mainData.createdBy;
+                        if (mainData.athleteId.atheleteSchoolName) {
+                            obj.SchoolName = mainData.athleteId.atheleteSchoolName;
+                        } else {
+                            obj.SchoolName = mainData.athleteId.school.name;
+                        }
+                        obj.Sport = mainData.sportsListSubCategory.name;
+                        var sportData = {};
                         var sport;
                         var sports = {};
                         var count = 0;
@@ -2076,8 +2147,26 @@ var model = {
                                             });
                                         },
                                         function (found, callback) {
+                                            Weight.findOne({
+                                                _id: found.weight
+                                            }).exec(function (err, found1) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else {
+                                                    if (_.isElement(found1)) {
+                                                        sportData.found = found;
+                                                        callback(null, sportData);
+                                                    } else {
+                                                        sportData.found = found;
+                                                        sportData.weight = found1;
+                                                        callback(null, sportData);
+                                                    }
+                                                }
+                                            });
+                                        },
+                                        function (sportData, callback) {
                                             AgeGroup.findOne({
-                                                _id: found.ageGroup
+                                                _id: sportData.found.ageGroup
                                             }).exec(function (err, ageData) {
                                                 if (err) {
                                                     callback(err, null);
@@ -2085,9 +2174,14 @@ var model = {
                                                     if (_.isElement(ageData)) {
                                                         callback(null, []);
                                                     } else {
-                                                        sports.sport = found;
-                                                        sports.gender = found.gender;
+                                                        sports.sport = sportData.found;
+                                                        sports.gender = sportData.found.gender;
                                                         sports.age = ageData.name;
+                                                        if (sportData.weight) {
+                                                            sports.weight = sportData.weight.name;
+                                                        } else {
+                                                            sports.weight = " ";
+                                                        }
                                                         callback(null, sports);
                                                     }
                                                 }
@@ -2107,12 +2201,17 @@ var model = {
                                                         console.log("sportlistData", sportlistData);
                                                         sports.sportName = sportlistData.name;
                                                         if (count == 0) {
-                                                            sport = "{ EventName:" + sports.sportName + "," + "gender:" + sports.gender + "," + "AgeGroup:" + sports.age + "}";
+                                                            sport = sports.sportName;
                                                         } else {
-                                                            sport = sport + "{ EventName:" + sports.sportName + "," + "gender:" + sports.gender + "," + "AgeGroup:" + sports.age + "}";
+                                                            sport = sport + " , " + sports.sportName;
                                                         }
                                                         count++;
-                                                        obj.Sports = sport;
+                                                        obj.Gender = sports.gender;
+                                                        obj.AgeGroup = sports.age;
+                                                        obj.Event_Category = sport;
+                                                        obj.Weight_Category = sports.weight;
+
+                                                        obj.createdBy = mainData.createdBy;
                                                         if (mainData.nominatedSchoolName) {
                                                             obj.nominatedSchoolName = mainData.nominatedSchoolName;
                                                         } else {
@@ -2132,6 +2231,11 @@ var model = {
                                                             obj.nominatedName = mainData.nominatedName;
                                                         } else {
                                                             obj.nominatedName = "";
+                                                        }
+                                                        if (mainData.isVideoAnalysis) {
+                                                            obj.isVideoAnalysis = mainData.isVideoAnalysis;
+                                                        } else {
+                                                            obj.isVideoAnalysis = "";
                                                         }
                                                         excelData.push(obj);
                                                         innerEachCallback(null, excelData);

@@ -868,18 +868,18 @@ var model = {
                     var excelData = [];
                     async.each(complete, function (mainData, callback) {
                         var obj = {};
+                        obj.year = new Date().getFullYear();
                         obj.Teamid = mainData.teamId;
-                        obj.Name = mainData.name;
-                        obj.School = mainData.schoolName;
-                        // if (_.isEmpty(mainData.school)) {
-
-                        // } else {
-                        //     obj.School = mainData.school.schoolName;
-                        // }
+                        obj.SchoolName = mainData.schoolName;
+                        obj.TeamName = mainData.name;
                         obj.Sport = mainData.sport.sportslist.name;
-                        obj.createdBy = mainData.createdBy;
+                        obj.Gender = mainData.sport.gender;
+                        obj.AgeGroup = mainData.sport.ageGroup.name;
+
                         var StudentTeam;
                         var count = 0;
+                        var Captain;
+                        var GoalKeeper;
                         async.each(mainData.studentTeam, function (n, innerEachCallback) {
                             var name;
                             Athelete.findOne({
@@ -891,24 +891,25 @@ var model = {
                                 } else {
                                     name = found.firstName + " " + found.surname;
                                 }
-                                if (n.isCaptain) {
-                                    var isCaptain = n.isCaptain;
-                                } else {
-                                    var isCaptain = "false";
+                                name = found.sfaId + " - " + name;
+                                if (n.isCaptain == true) {
+                                    Captain = name;
                                 }
 
-                                if (n.isGoalKeeper) {
-                                    var isGoalKeeper = n.isGoalKeeper;
-                                } else {
-                                    var isGoalKeeper = "false";
+                                if (n.isGoalKeeper == true) {
+                                    GoalKeeper = name;
                                 }
                                 if (count == 0) {
-                                    StudentTeam = "{ Name:" + name + "," + "isCaptain:" + isCaptain + "," + "isGoalKeeper:" + isGoalKeeper + "}";
+                                    StudentTeam = name;
                                 } else {
-                                    StudentTeam = StudentTeam + "{ Name:" + name + "," + "isCaptain:" + isCaptain + "," + "isGoalKeeper:" + isGoalKeeper + "}";
+                                    StudentTeam = StudentTeam + " , " + name;
                                 }
                                 count++;
-                                obj.Students = StudentTeam;
+                                obj.Captain = Captain;
+                                obj.GoalKeeper = GoalKeeper;
+                                obj.All_Players = StudentTeam;
+                                obj.createdBy = mainData.createdBy;
+
                                 if (mainData.nominatedSchoolName) {
                                     obj.nominatedSchoolName = mainData.nominatedSchoolName;
                                 } else {
@@ -924,7 +925,11 @@ var model = {
                                 } else {
                                     obj.nominatedEmailId = "";
                                 }
-                                console.log("obj****", obj);
+                                if (mainData.isVideoAnalysis) {
+                                    obj.isVideoAnalysis = mainData.isVideoAnalysis;
+                                } else {
+                                    obj.isVideoAnalysis = "";
+                                }
                                 console.log("obj-----", obj);
                                 excelData.push(obj);
                                 innerEachCallback(null, excelData);
@@ -991,25 +996,21 @@ var model = {
                     path: "$sport.sportslist",
                 }
             },
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
 
-            // // Stage 3
-            // {
-            //     $lookup: {
-            //         "from": "registrations",
-            //         "localField": "school",
-            //         "foreignField": "_id",
-            //         "as": "school"
-            //     }
-            // },
-
-            // // Stage 4
-            // {
-            //     $unwind: {
-            //         path: "$school",
-            //         preserveNullAndEmptyArrays: true // optional
-
-            //     }
-            // },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+                }
+            },
 
             // Stage 5
             {
