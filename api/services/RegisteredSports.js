@@ -393,12 +393,6 @@ var model = {
                     "studentId": objectid(data.athleteid)
                 }
             },
-            // Stage 3
-            {
-                $unwind: {
-                    path: "$sport"
-                }
-            },
 
             // Stage 2
             {
@@ -471,14 +465,6 @@ var model = {
             {
                 $match: {
                     "athleteId": objectid(data.athleteid)
-                }
-            },
-
-            // Stage 3
-            {
-                $unwind: {
-                    path: "$sport",
-
                 }
             },
 
@@ -954,7 +940,7 @@ var model = {
                         callback(err, "error in mongoose");
                     } else {
                         if (_.isEmpty(complete1)) {
-                            callback(null, []);
+                            callback(null, finalData);
                         } else {
                             _.each(complete1, function (m) {
                                 finalData.push(m);
@@ -973,7 +959,7 @@ var model = {
                 callback(err, null);
             } else {
                 if (_.isEmpty(data3)) {
-                    callback(null, []);
+                    callback(null, finalData);
                 } else {
                     callback(null, finalData);
                 }
