@@ -1030,5 +1030,94 @@ var model = {
         return pipeline;
     },
 
+    getTeamPipeLine1: function (data) {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $match: {
+                    "teamId": data.teamid
+                }
+            },
+            {
+                $lookup: {
+                    "from": "sports",
+                    "localField": "sport",
+                    "foreignField": "_id",
+                    "as": "sport"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport",
+                }
+            },
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
+                }
+            },
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "studentteams",
+                    "localField": "studentTeam",
+                    "foreignField": "_id",
+                    "as": "studentTeam"
+                }
+            },
+            {
+                $sort: {
+                    "createdAt": -1
+                }
+            },
+        ];
+        return pipeline;
+    },
+
+    editTeam: function (data, callback) {
+        var pipeLine = TeamSport.getTeamPipeLine1(data);
+        TeamSport.aggregate(pipeLine, function (err, complete) {
+            if (err) {
+                callback(err, "error in mongoose");
+            } else {
+                if (_.isEmpty(complete)) {
+                    callback(null, []);
+                } else {
+                    callback(null, complete);
+                }
+            }
+        });
+    }
+
+
 };
 module.exports = _.assign(module.exports, exports, model);

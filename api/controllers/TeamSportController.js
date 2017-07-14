@@ -76,6 +76,18 @@ var controller = {
         TeamSport.generateExcel(res);
     },
 
+    editTeam: function (req, res) {
+        if (req.body) {
+            TeamSport.editTeam(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "User Not logged in"
+            });
+        }
+
+    },
+
 
 
 
