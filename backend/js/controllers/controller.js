@@ -1778,7 +1778,7 @@ myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, N
             $scope.athlete = data.data;
             if (data.data.athleteId.middleName) {
 
-                $scope.athlete.name = data.data.athleteId.firstName + "" + data.data.athleteId.middleName + "" + data.data.athleteId.surname
+                $scope.athlete.name = data.data.athleteId.firstName + " " + data.data.athleteId.middleName + " " + data.data.athleteId.surname
             } else {
                 $scope.athlete.name = data.data.athleteId.firstName + " " + data.data.athleteId.surname
             }
