@@ -1228,28 +1228,30 @@ var model = {
                 },
                 function (found, callback) {
                     async.each(found, function (n, callback) {
-                        console.log("n", n);
-                        callback(null, n);
-                        // StudentTeam.remove({
-                        //     _id: n._id
-                        // }).exec(function (err, found) {
-                        //     if (err) {
-                        //         callback(err, null);
-                        //     } else {
-                        //         if (_.isEmpty(found)) {
-                        //             callback(null, []);
-                        //         } else {
-                        //             callback(null, found);
-                        //         }
-                        //     }
-                        // });
-                    }, function (err, n) {
+                        StudentTeam.remove({
+                            _id: n._id
+                        }).exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(found)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, found);
+                                }
+                            }
+                        });
+                    }, function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else {
-                            callback(null, n);
+                            callback(null, found);
                         }
                     });
+                },
+                function (found, callback) {
+                    console.log("n", found);
+                    callback(null, found);
                 }
             ],
             function (err, complete1) {

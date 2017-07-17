@@ -434,6 +434,7 @@ var model = {
         ];
         return pipeline;
     },
+
     getShootingPipeLine1: function (data) {
 
         var pipeline = [{
@@ -1190,7 +1191,7 @@ var model = {
                         } else {
                             if (_.isEmpty(complete1)) {
                                 data.dataFinal = 0;
-                                callback(null, dataFinal);
+                                callback(null, []);
                             } else {
                                 console.log("complete1", complete1);
                                 dataFinal.total = complete1;
