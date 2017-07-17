@@ -387,14 +387,10 @@ var model = {
                 $match: {
 
                     $or: [{
-                            "athleteId.school.name": {
-                                $regex: data.school
-                            }
+                            "athleteId.school.name": data.school
                         },
                         {
-                            "athleteId.atheleteSchoolName": {
-                                $regex: data.school
-                            }
+                            "athleteId.atheleteSchoolName": data.school
                         }
                     ]
 
@@ -524,14 +520,10 @@ var model = {
                 $match: {
 
                     $or: [{
-                            "athleteId.school.name": {
-                                $regex: data.school
-                            }
+                            "athleteId.school.name": data.school
                         },
                         {
-                            "athleteId.atheleteSchoolName": {
-                                $regex: data.school
-                            }
+                            "athleteId.atheleteSchoolName": data.school
                         }
                     ]
 
@@ -1196,9 +1188,15 @@ var model = {
                         if (err) {
                             callback(err, null);
                         } else {
-                            console.log("complete1", complete1);
-                            dataFinal.total = complete1;
-                            callback(null, dataFinal);
+                            if (_.isEmpty(complete1)) {
+                                data.dataFinal = 0;
+                                callback(null, dataFinal);
+                            } else {
+                                console.log("complete1", complete1);
+                                dataFinal.total = complete1;
+                                callback(null, dataFinal);
+                            }
+
                         }
 
                     });

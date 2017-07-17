@@ -209,7 +209,14 @@ var model = {
                     }).exec(function (err, complete) {
                         if (_.isEmpty(complete)) {
                             data.school = undefined;
-                            callback(null, []);
+                            // callback(null, []);
+                            TeamSport.teamConfirm(data, function (err, complete1) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete1);
+                                }
+                            });
                         } else {
                             data.school = complete._id;
                             TeamSport.teamConfirm(data, function (err, complete1) {

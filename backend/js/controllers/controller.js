@@ -1810,8 +1810,9 @@ myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, N
                 NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
                     $scope.vathlete = data.data;
                     console.log("students", $scope.vathlete);
+                    $scope.eventNameWithAgeGroup = $scope.vathlete.ageGroup.name + ' - ' + $scope.vathlete.sportslist.name;
                     $scope.eventName.push({
-                        name: $scope.vathlete.sportslist.name
+                        name: $scope.eventNameWithAgeGroup
                     });
                 });
                 $scope.i++;
