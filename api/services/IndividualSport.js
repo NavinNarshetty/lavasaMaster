@@ -1608,6 +1608,7 @@ var model = {
                 }
             });
     },
+
     smsMailIndividual: function (data, n, callback) {
         console.log('data', data);
         console.log('N', n);
@@ -2050,7 +2051,6 @@ var model = {
             {
                 $unwind: {
                     path: "$athleteId",
-
                 }
             },
 
@@ -2089,9 +2089,109 @@ var model = {
 
                 }
             },
+
+            // Stage 7
+            {
+                $lookup: {
+                    "from": "sports",
+                    "localField": "sport",
+                    "foreignField": "_id",
+                    "as": "sport"
+                }
+            },
+
+            // Stage 8
+            {
+                $unwind: {
+                    path: "$sport",
+
+                }
+            },
+
+            // Stage 9
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+
+            // Stage 10
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
+                }
+            },
+
+            // Stage 11
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
+
+            // Stage 12
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+                }
+            },
+
+            // Stage 13
+            {
+                $lookup: {
+                    "from": "weights",
+                    "localField": "sport.weight",
+                    "foreignField": "_id",
+                    "as": "sport.weight"
+                }
+            },
+
+            // Stage 14
+            {
+                $unwind: {
+                    path: "$sport.weight",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 15
+            {
+                $group: {
+                    _id: "$_id",
+                    info: {
+                        $push: {
+                            athleteId: "$athleteId._id",
+                            firstname: "$athleteId.firstName",
+                            middlename: "$athleteId.middleName",
+                            surname: "$athleteId.surname",
+                            school: "$athleteId.school.name",
+                            athleteSchoolName: "$athleteId.atheleteSchoolName",
+                            sfaid: "$athleteId.sfaId",
+                            createdby: "$createdBy",
+                            nominatedSchoolName: "$nominatedSchoolName",
+                            nominatedContactDetails: "$nominatedContactDetails",
+                            nominatedEmailId: "$nominatedEmailId",
+                            nominatedName: "$nominatedName",
+                            isVideoAnalysis: "$isVideoAnalysis",
+                            sportName: "$sportsListSubCategory.name",
+                            eventname: "$sport.sportslist.name",
+                            agegroup: "$sport.ageGroup.name",
+                            weight: "$sport.weight.name",
+                            gender: "$sport.gender",
+                        }
+                    }
+                }
+            },
         ];
         return pipeline;
     },
+
     generateExcel: function (res) {
         var deepSearch = "athleteId sportsListSubCategory";
         async.waterfall([
@@ -2112,161 +2212,101 @@ var model = {
                 function (found, callback) {
                     console.log(found);
                     var excelData = [];
-                    async.each(found, function (mainData, callback) {
-                        console.log("mainData", mainData);
-                        var obj = {};
-                        obj.year = new Date().getFullYear();
-                        obj.SFAID = mainData.athleteId.sfaId;
-                        if (mainData.athleteId.middleName) {
-                            obj.Athlete_Full_Name = mainData.athleteId.firstName + " " + mainData.athleteId.middleName + " " + mainData.athleteId.surname;
-                        } else {
-                            obj.Athlete_Full_Name = mainData.athleteId.firstName + " " + mainData.athleteId.surname;
-                        }
-                        if (mainData.athleteId.atheleteSchoolName) {
-                            obj.SchoolName = mainData.athleteId.atheleteSchoolName;
-                        } else {
-                            obj.SchoolName = mainData.athleteId.school.name;
-                        }
-                        obj.Sport = mainData.sportsListSubCategory.name;
-                        var sportData = {};
-                        var sport;
-                        var sports = {};
-                        var count = 0;
-                        async.each(mainData.sport, function (n, innerEachCallback) {
-                                async.waterfall([
-                                        function (callback) {
-                                            Sport.findOne({
-                                                _id: n
-                                            }).exec(function (err, found) {
-                                                if (err) {
-                                                    callback(err, null);
-                                                } else {
-                                                    if (_.isElement(found)) {
-                                                        callback(null, []);
-                                                    } else {
-                                                        console.log("found", found);
-                                                        callback(null, found);
-                                                    }
-                                                }
-                                            });
-                                        },
-                                        function (found, callback) {
-                                            Weight.findOne({
-                                                _id: found.weight
-                                            }).exec(function (err, found1) {
-                                                if (err) {
-                                                    callback(err, null);
-                                                } else {
-                                                    if (_.isElement(found1)) {
-                                                        sportData.found = found;
-                                                        callback(null, sportData);
-                                                    } else {
-                                                        sportData.found = found;
-                                                        sportData.weight = found1;
-                                                        callback(null, sportData);
-                                                    }
-                                                }
-                                            });
-                                        },
-                                        function (sportData, callback) {
-                                            AgeGroup.findOne({
-                                                _id: sportData.found.ageGroup
-                                            }).exec(function (err, ageData) {
-                                                if (err) {
-                                                    callback(err, null);
-                                                } else {
-                                                    if (_.isElement(ageData)) {
-                                                        callback(null, []);
-                                                    } else {
-                                                        sports.sport = sportData.found;
-                                                        sports.gender = sportData.found.gender;
-                                                        sports.age = ageData.name;
-                                                        if (sportData.weight) {
-                                                            sports.weight = sportData.weight.name;
-                                                        } else {
-                                                            sports.weight = " ";
-                                                        }
-                                                        callback(null, sports);
-                                                    }
-                                                }
-                                            });
-                                        },
-                                        function (sports, callback) {
-                                            console.log("sports", sports);
-                                            SportsList.findOne({
-                                                _id: sports.sport.sportslist
-                                            }).exec(function (err, sportlistData) {
-                                                if (err) {
-                                                    callback(err, null);
-                                                } else {
-                                                    if (_.isElement(sportlistData)) {
-                                                        callback(null, []);
-                                                    } else {
-                                                        console.log("sportlistData", sportlistData);
-                                                        sports.sportName = sportlistData.name;
-                                                        if (count == 0) {
-                                                            sport = sports.sportName;
-                                                        } else {
-                                                            sport = sport + " , " + sports.sportName;
-                                                        }
-                                                        count++;
-                                                        obj.Gender = sports.gender;
-                                                        obj.AgeGroup = sports.age;
-                                                        obj.Event_Category = sport;
-                                                        obj.Weight_Category = sports.weight;
+                    async.eachSeries(found, function (mainData, callback) {
+                            var obj = {};
+                            obj.year = new Date().getFullYear();
+                            var basicInfo = {};
+                            var event;
+                            var age;
+                            basicInfo.sport = [];
+                            var count = 0;
+                            async.each(mainData.info, function (n, callback) {
+                                console.log("info", n);
+                                console.log("count", count);
+                                if (n.middlename) {
+                                    basicInfo.name = n.firstname + " " + n.middlename + " " + n.surname;
+                                } else {
+                                    basicInfo.name = n.firstname + " " + n.surname;
+                                }
+                                if (n.athleteSchoolName) {
+                                    basicInfo.school = n.athleteSchoolName;
+                                } else {
+                                    basicInfo.school = n.school;
+                                }
+                                basicInfo.sfaid = n.sfaid;
+                                basicInfo.sportName = n.sportName;
+                                basicInfo.createdBy = n.createdby;
+                                if (n.nominatedSchoolName) {
+                                    basicInfo.nominatedSchoolName = n.nominatedSchoolName;
+                                } else {
+                                    basicInfo.nominatedSchoolName = "";
+                                }
+                                if (n.nominatedContactDetails) {
+                                    basicInfo.nominatedContactDetails = n.nominatedContactDetails;
+                                } else {
+                                    basicInfo.nominatedContactDetails = "";
+                                }
+                                if (n.nominatedEmailId) {
+                                    basicInfo.nominatedEmailId = n.nominatedEmailId;
+                                } else {
+                                    basicInfo.nominatedEmailId = "";
+                                }
+                                if (n.nominatedName) {
+                                    basicInfo.nominatedName = n.nominatedName;
+                                } else {
+                                    basicInfo.nominatedName = "";
+                                }
+                                if (n.isVideoAnalysis) {
+                                    basicInfo.isVideoAnalysis = n.isVideoAnalysis;
+                                } else {
+                                    basicInfo.isVideoAnalysis = "";
+                                }
+                                basicInfo.gender = n.gender;
+                                if (count == 0) {
+                                    age = n.agegroup;
+                                    event = age + " - " + n.eventname;
+                                    if (n.weight) {
+                                        basicInfo.weight = n.weight;
+                                    }
+                                    count++;
+                                } else {
+                                    age = n.agegroup;
+                                    event = event + " , " + age + " - " + n.eventname;
+                                    if (n.weight) {
+                                        basicInfo.weight = n.weight;
+                                    }
+                                }
+                                basicInfo.event = event;
 
-                                                        obj.createdBy = mainData.createdBy;
-                                                        if (mainData.nominatedSchoolName) {
-                                                            obj.nominatedSchoolName = mainData.nominatedSchoolName;
-                                                        } else {
-                                                            obj.nominatedSchoolName = "";
-                                                        }
-                                                        if (mainData.nominatedContactDetails) {
-                                                            obj.nominatedContactDetails = mainData.nominatedContactDetails;
-                                                        } else {
-                                                            obj.nominatedContactDetails = "";
-                                                        }
-                                                        if (mainData.nominatedEmailId) {
-                                                            obj.nominatedEmailId = mainData.nominatedEmailId;
-                                                        } else {
-                                                            obj.nominatedEmailId = "";
-                                                        }
-                                                        if (mainData.nominatedName) {
-                                                            obj.nominatedName = mainData.nominatedName;
-                                                        } else {
-                                                            obj.nominatedName = "";
-                                                        }
-                                                        if (mainData.isVideoAnalysis) {
-                                                            obj.isVideoAnalysis = mainData.isVideoAnalysis;
-                                                        } else {
-                                                            obj.isVideoAnalysis = "";
-                                                        }
-                                                        excelData.push(obj);
-                                                        innerEachCallback(null, excelData);
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    ],
-                                    function (err, excelData) {
-                                        if (err) {
-                                            console.log(err);
-                                            callback(null, []);
-                                        } else if (excelData) {
-                                            if (_.isEmpty(excelData)) {
-                                                callback(null, []);
-                                            } else {
-                                                callback(null, excelData);
-                                            }
-                                        }
-                                    });
-                            },
-                            function (err) {
-                                callback(null, excelData);
+                                callback(null, basicInfo);
                             });
-                    }, function (err) {
-                        Config.generateExcelOld("IndividualSport", excelData, res);
-                    });
+                            // console.log("basicInfo", basicInfo);
+                            obj.SFAID = basicInfo.sfaid;
+                            obj.Athlete_Full_Name = basicInfo.name;
+                            obj.SchoolName = basicInfo.school;
+                            obj.Sport = basicInfo.sportName;
+                            obj.Gender = basicInfo.gender;
+                            obj.Event_Category = basicInfo.event;
+                            obj.Weight_Category = basicInfo.weight;
+                            if (basicInfo.createdBy) {
+                                obj.CreatedBy = basicInfo.createdBy;
+                            } else {
+                                obj.Createdby = " ";
+                            }
+
+                            obj.nominatedSchoolName = basicInfo.nominatedSchoolName;
+                            obj.nominatedContactDetails = basicInfo.nominatedContactDetails;
+                            obj.nominatedEmailId = basicInfo.nominatedEmailId;
+                            obj.nominatedName = basicInfo.nominatedName;
+                            obj.isVideoAnalysis = basicInfo.isVideoAnalysis;
+                            excelData.push(obj);
+                            console.log("obj", obj);
+                            callback(null, excelData);
+                        },
+                        function (err) {
+                            Config.generateExcelOld("IndividualSport", excelData, res);
+                        });
+
 
                 },
             ],
