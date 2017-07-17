@@ -88,6 +88,18 @@ var controller = {
 
     },
 
+    editSaveTeam: function (req, res) {
+        if (req.body) {
+            TeamSport.editSaveTeam(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "User Not logged in"
+            });
+        }
+
+    },
+
 
 
 

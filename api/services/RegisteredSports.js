@@ -140,14 +140,10 @@ var model = {
             {
                 $match: {
                     $or: [{
-                            "studentId.school.name": {
-                                $regex: data.schoolName
-                            }
+                            "studentId.school.name": data.schoolName
                         },
                         {
-                            "studentId.atheleteSchoolName": {
-                                $regex: data.schoolName
-                            }
+                            "studentId.atheleteSchoolName": data.schoolName
                         }
                     ]
                 }
@@ -302,14 +298,10 @@ var model = {
             {
                 $match: {
                     $or: [{
-                            "athleteId.school.name": {
-                                $regex: data.schoolName
-                            }
+                            "athleteId.school.name": data.schoolName
                         },
                         {
-                            "athleteId.atheleteSchoolName": {
-                                $regex: data.schoolName
-                            }
+                            "athleteId.atheleteSchoolName": data.schoolName
                         }
                     ]
                 }
@@ -584,14 +576,10 @@ var model = {
             {
                 $match: {
                     $or: [{
-                            "athleteId.school.name": {
-                                $regex: data.schoolName
-                            }
+                            "athleteId.school.name": data.schoolName
                         },
                         {
-                            "athleteId.atheleteSchoolName": {
-                                $regex: data.schoolName
-                            }
+                            "athleteId.atheleteSchoolName": data.schoolName
                         }
                     ]
                 }

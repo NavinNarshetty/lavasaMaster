@@ -1192,36 +1192,6 @@ var model = {
                             }
                         }
                     });
-                    // },
-                    // function (complete, callback) {
-                    //     console.log("complete", complete);
-                    //     async.each(complete[0].studentTeam, function (n, callback) {
-                    //         console.log("n", n);
-                    //         data.studentId = n.studentId;
-                    //         var pipeLine = TeamSport.getIndividualPipeLine(data);
-                    //         Athelete.aggregate(pipeLine, function (err, atheleteData) {
-                    //             if (err) {
-                    //                 callback(err, "error in mongoose");
-                    //             } else {
-                    //                 if (_.isEmpty(atheleteData)) {
-                    //                     callback(null, []);
-                    //                 } else {
-                    //                     final.team = complete;
-                    //                     final.students.push(atheleteData[0]);
-                    //                     console.log("final", final);
-                    //                     callback(null, final);
-                    //                 }
-                    //             }
-                    //         });
-                    //     }, function (err) {
-                    //         if (err) {
-                    //             callback(err, null);
-                    //         } else {
-                    //             console.log("complete1", final);
-                    //             callback(null, final);
-                    //         }
-
-                    //     });
                 }
             ],
             function (err, complete1) {
@@ -1237,7 +1207,65 @@ var model = {
                 }
             });
 
+    },
+
+    editSaveTeam: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    StudentTeam.find({
+                        teamId: data.teamid
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+                function (found, callback) {
+                    async.each(found, function (n, callback) {
+                        console.log("n", n);
+                        callback(null, n);
+                        // StudentTeam.remove({
+                        //     _id: n._id
+                        // }).exec(function (err, found) {
+                        //     if (err) {
+                        //         callback(err, null);
+                        //     } else {
+                        //         if (_.isEmpty(found)) {
+                        //             callback(null, []);
+                        //         } else {
+                        //             callback(null, found);
+                        //         }
+                        //     }
+                        // });
+                    }, function (err, n) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, n);
+                        }
+                    });
+                }
+            ],
+            function (err, complete1) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (complete1) {
+                    if (_.isEmpty(complete1)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, complete1);
+                    }
+                }
+            });
     }
+
 
 
 };
