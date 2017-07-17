@@ -1189,14 +1189,14 @@ var model = {
                         if (err) {
                             callback(err, null);
                         } else {
-                            if (_.isEmpty(complete1)) {
-                                data.dataFinal = 0;
-                                callback(null, []);
-                            } else {
-                                console.log("complete1", complete1);
-                                dataFinal.total = complete1;
-                                callback(null, dataFinal);
-                            }
+                            // if (_.isEmpty(complete1)) {
+                            //     // data.dataFinal = 0;
+                            //     callback(null, []);
+                            // } else {
+                            console.log("complete1", complete1);
+                            dataFinal.total = complete1;
+                            callback(null, dataFinal);
+
 
                         }
 
