@@ -64,14 +64,10 @@ var model = {
                 $match: {
 
                     $or: [{
-                            "school.name": {
-                                $regex: data.school
-                            }
+                            "school.name": data.school
                         },
                         {
-                            "atheleteSchoolName": {
-                                $regex: data.school
-                            }
+                            "atheleteSchoolName": data.school
                         }
                     ]
 
