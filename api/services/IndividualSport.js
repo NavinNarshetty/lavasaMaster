@@ -1776,25 +1776,25 @@ var model = {
                     "as": "sport"
                 }
             },
-            {
-                $unwind: {
-                    path: "$sport",
-                }
-            },
-            {
-                $lookup: {
-                    "from": "sportslists",
-                    "localField": "sport.sportslist",
-                    "foreignField": "_id",
-                    "as": "sport.sportslist"
-                }
-            },
-            // Stage 2
-            {
-                $unwind: {
-                    path: "$sport.sportslist",
-                }
-            },
+            // {
+            //     $unwind: {
+            //         path: "$sport",
+            //     }
+            // },
+            // {
+            //     $lookup: {
+            //         "from": "sportslists",
+            //         "localField": "sport.sportslist",
+            //         "foreignField": "_id",
+            //         "as": "sport.sportslist"
+            //     }
+            // },
+            // // Stage 2
+            // {
+            //     $unwind: {
+            //         path: "$sport.sportslist",
+            //     }
+            // },
             // Stage 3
             {
                 $lookup: {
@@ -1815,22 +1815,31 @@ var model = {
             // Stage 5
             {
                 $match: {
-                    $or: [{
-                        "sport.sportslist.name": {
-                            $regex: data.keyword,
-                            $options: "i"
+                    $or: [
+                        // {
+                        //     "sport.sportslist.name": {
+                        //         $regex: data.keyword,
+                        //         $options: "i"
+                        //     }
+                        // }, 
+                        {
+                            "sportsListSubCategory.name": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        }, {
+                            "athleteId.firstName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "athleteId.sfaId": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
                         }
-                    }, {
-                        "sportsListSubCategory.name": {
-                            $regex: data.keyword,
-                            $options: "i"
-                        }
-                    }, {
-                        "athleteId.firstName": {
-                            $regex: data.keyword,
-                            $options: "i"
-                        }
-                    }],
+                    ],
 
                 }
             },
@@ -1890,7 +1899,6 @@ var model = {
                                     callback(null, 0);
                                 } else {
                                     dataFinal.total = totals.length;
-                                    // console.log("counttotal", dataFinal.count);
                                     callback(null, dataFinal);
                                 }
                             }
