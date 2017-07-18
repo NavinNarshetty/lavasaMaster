@@ -1330,9 +1330,10 @@ var model = {
                     var start = (page - 1) * maxRow;
                     if (data.page == 1 && _.isEmpty(data.sfaid) && data.athleteToken) {
                         console.log("inside shooting");
-                        var pipeLine = Sport.getShootingPipeLine1(data);
+                        var pipeLine = Sport.getShootingPipeLine(data);
                         async.waterfall([
                                 function (callback) {
+                                    var pipeLine = Sport.getShootingPipeLine1(data);
                                     IndividualSport.aggregate(pipeLine, function (err, athleteData) {
                                         if (err) {
                                             callback(err, "error in mongoose");
