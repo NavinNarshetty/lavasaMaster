@@ -22,7 +22,7 @@
         "icon": "fa-pencil",
         "buttonClass": "btn-primary",
         "type": "page",
-        "action": "editSportsList",
+        "action": "editConfigProperty",
         "fieldsToSend": {
             "_id": "_id"
         }
@@ -31,9 +31,9 @@
         "icon": "fa-trash",
         "buttonClass": "btn-danger",
         "type": "apiCallConfirm",
-        "title": "Delete SportsList",
-        "content": "Are you sure you want to delete SportsList?",
-        "api": "SportsList/delete",
+        "title": "Delete ConfigProperty",
+        "content": "Are you sure you want to delete ConfigProperty?",
+        "api": "ConfigProperty/delete",
         "fieldsToSend": {
             "name": "_id",
             "value": "_id"
@@ -44,11 +44,11 @@
         "icon": "plus",
         "class": "btn-success",
         "type": "page",
-        "action": "createSportsList"
+        "action": "createConfigProperty"
     }],
 
     "apiCall": {
-        "url": "SportsList/search",
+        "url": "ConfigProperty/search",
         "params": "_id"
     }
 }

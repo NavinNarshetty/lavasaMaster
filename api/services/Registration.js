@@ -15,6 +15,9 @@ require('mongoose-middleware').initialize(mongoose);
 
 var schema = new Schema({
     registerID: Number,
+    institutionType: {
+        type: String,
+    },
     sfaID: {
         type: String,
         default: ""
@@ -289,7 +292,6 @@ var model = {
                             });
                             if (_.isEmpty(data.sfaID)) {
                                 var year = new Date().getFullYear().toString().substr(2, 2);
-
                                 console.log("City", city);
                                 if (_.isEmpty(schoolData.city)) {
                                     schoolData.city = "Mumbai"
@@ -357,8 +359,6 @@ var model = {
                                                     });
                                                 },
                                                 function (callback) {
-
-
                                                     Registration.saveVerify(data, schoolData, function (err, vData) {
                                                         if (err) {
                                                             callback(err, null);

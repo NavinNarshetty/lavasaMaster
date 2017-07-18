@@ -5,11 +5,15 @@ var schema = new Schema({
     },
     city: String,
     country: String,
-    area: String,
+    area: [{
+        name: String,
+    }],
     totalPayAmount: Number,
     totalPayAmountInWords: String,
     taxAmount: String,
-    taxType: String,
+    taxType: [{
+        name: String,
+    }],
     percentTax: Number,
     reqUrl: String,
     domainUrl: String,
