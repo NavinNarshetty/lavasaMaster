@@ -703,21 +703,20 @@ var model = {
                     }
                 },
                 function (complete, callback) {
-                    // console.log("complete next", complete);
+                    // console.log("complete next", complete.results);
                     if (data.sportName.includes("Doubles") || data.sportName.includes("doubles")) {
                         console.log("doubles");
                         var results = {};
                         var finalData = [];
                         console.log("total", complete.total);
-                        async.each(complete.results, function (n, callback) {
+                        async.eachSeries(complete.results, function (n, callback) {
                                 data.athlete = n._id;
-                                console.log("n", n._id);
+                                console.log("n", data.athlete);
                                 var pipeLine = Sport.getStudentTeamPipeline(data);
                                 StudentTeam.aggregate(pipeLine, function (err, found) {
                                     if (err) {
                                         callback(err, "error in mongoose");
                                     } else {
-                                        // console.log("found", found[0].sport.sportslist.name);
                                         if (_.isEmpty(found)) {
                                             var athlete = {};
                                             athlete = n;
@@ -725,7 +724,6 @@ var model = {
                                             finalData.push(athlete);
                                             results.data = finalData;
                                             results.total = complete.total;
-                                            // console.log("data", results);
                                             callback(null, results);
                                         } else {
                                             if (found[0].sport.sportslist.name == data.sportName) {
@@ -735,7 +733,6 @@ var model = {
                                                 finalData.push(athlete);
                                                 results.data = finalData;
                                                 results.total = complete.total;
-                                                // console.log("data", results);
                                                 callback(null, results);
                                             } else {
                                                 var athlete = {};
@@ -744,7 +741,6 @@ var model = {
                                                 finalData.push(athlete);
                                                 results.data = finalData;
                                                 results.total = complete.total;
-                                                // console.log("data", results);
                                                 callback(null, results);
                                             }
                                         }
@@ -820,7 +816,7 @@ var model = {
                         // console.log("total.....", complete.total);
                         // console.log("complete......", complete.results);
                         async.eachSeries(complete.results, function (n, callback) {
-                            console.log("n", n);
+                            // console.log("n", n);
                             StudentTeam.find({
                                 studentId: n._id,
                                 sport: data.sport
@@ -866,7 +862,7 @@ var model = {
                     if (_.isEmpty(results)) {
                         callback(null, results);
                     } else {
-                        console.log("data", results);
+                        // console.log("data", results);
                         callback(null, results);
                     }
                 }
@@ -928,17 +924,24 @@ var model = {
                                         }
                                     });
                                 }
+
                                 // function (data, callback) {
-                                //     Registration.findOne({
-                                //         schoolName: data.school
-                                //     }).exec(function (err, complete) {
-                                //         if (err) {
-                                //             callback(err, null);
-                                //         } else if (_.isEmpty(complete)) {
-                                //             callback(null, []);
+                                //     StudentTeam.findOne({
+                                //         studentId: data.found._id,
+                                //         sport: data.sport
+                                //     }).lean().exec(function (err, studentData) {
+                                //         if (_.isEmpty(studentData)) {
+                                //             var athlete = {};
+                                //             athlete = data.found;
+                                //             athlete.isTeamSelected = false;
+                                //             data.found = athlete;
+                                //             callback(null, data);
                                 //         } else {
-                                //             data.isRegisted = true;
-                                //             console.log(data);
+                                //             var athlete = {};
+                                //             athlete = data.found;
+                                //             athlete.isTeamSelected = true;
+                                //             data.found = athlete;
+                                //             console.log("data", data.found);
                                 //             callback(null, data);
                                 //         }
                                 //     });
@@ -1123,6 +1126,7 @@ var model = {
         async.waterfall([
                 function (callback) {
                     var dataFinal = {};
+                    dataFinal.results = [];
                     Sport.totalAthlete(data, function (err, complete1) {
                         if (err) {
                             callback(err, null);
@@ -1152,13 +1156,36 @@ var model = {
                                 callback(null, []);
                             } else {
                                 dataFinal.results = totals;
-                                dataFinal.results.push(data.found);
+                                // dataFinal.results.push(data.found);
                                 console.log("athelete", dataFinal);
                                 callback(null, dataFinal);
                             }
                         }
                     });
-                }
+                },
+                function (dataFinal, callback) {
+                    // var dataFinal = {};
+                    var newPipeLine = _.cloneDeep(pipeLine);
+                    newPipeLine.push({
+                        $match: {
+                            accessToken: data.athleteToken
+                        }
+                    });
+                    Athelete.aggregate(newPipeLine, function (err, totals1) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, "error in mongoose");
+                        } else {
+                            if (_.isEmpty(totals1)) {
+                                callback(null, []);
+                            } else {
+                                console.log("dataa...", totals1);
+                                dataFinal.results.push(totals1[0]);
+                                callback(null, dataFinal);
+                            }
+                        }
+                    });
+                },
 
             ],
             function (err, data2) {
