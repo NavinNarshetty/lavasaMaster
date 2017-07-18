@@ -1212,6 +1212,25 @@ var model = {
     editSaveTeam: function (data, callback) {
         async.waterfall([
                 function (callback) {
+                    var matchToken = {
+                        $set: {
+                            studentTeam: []
+                        }
+                    }
+                    TeamSport.update({
+                        _id: data.teamid
+                    }, matchToken).exec(
+                        function (err, data3) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else if (data3) {
+                                console.log("value :", data3);
+                                callback(null, data3);
+                            }
+                        });
+                },
+                function (data3, callback) {
                     StudentTeam.find({
                         teamId: data.teamid
                     }).exec(function (err, found) {
@@ -1227,6 +1246,7 @@ var model = {
                     });
                 },
                 function (found, callback) {
+                    console.log("found", found);
                     async.each(found, function (n, callback) {
                         StudentTeam.remove({
                             _id: n._id
@@ -1250,9 +1270,37 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    console.log("n", found);
-                    callback(null, found);
-                }
+                    TeamSport.findOne({
+                        _id: data.teamid
+                    }).exec(function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete);
+                            }
+                        }
+                    });
+                },
+                function (complete, callback) {
+                    TeamSport.createStudentTeam(complete, data, function (err, complete1) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete1)) {
+                                callback(null, []);
+                            } else {
+                                var total = {};
+                                total.teamSport = complete;
+                                total.studentTeam = complete1;
+                                callback(null, total);
+                            }
+                        }
+                    });
+                },
+
             ],
             function (err, complete1) {
                 if (err) {
