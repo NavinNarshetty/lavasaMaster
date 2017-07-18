@@ -1791,7 +1791,7 @@ myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, N
                     $scope.schoolName = data.data.name;
                 })
             }
-            if (data.data.athleteId.athleteSchoolName) {
+            if (data.data.athleteId.atheleteSchoolName) {
                 // $scope.url3 = 'school/getOne';
                 // $scope.sconstraints = {};
                 // $scope.sconstraints._id = data.data.athleteId.school;
@@ -1799,7 +1799,7 @@ myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, N
                 //     console.log("data schools", data);
                 //     $scope.schoolName = data.data.name;
                 // })
-                $scope.schoolName = data.data.athleteId.athleteSchoolName;
+                $scope.schoolName = data.data.athleteId.atheleteSchoolName;
             }
 
             _.each($scope.athlete.sport, function (n) {
