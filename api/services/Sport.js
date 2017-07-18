@@ -724,6 +724,7 @@ var model = {
                                             finalData.push(athlete);
                                             results.data = finalData;
                                             results.total = complete.total;
+                                            results.totalpages = complete.totalPage;
                                             callback(null, results);
                                         } else {
                                             if (found[0].sport.sportslist.name == data.sportName) {
@@ -733,6 +734,7 @@ var model = {
                                                 finalData.push(athlete);
                                                 results.data = finalData;
                                                 results.total = complete.total;
+                                                results.totalpages = complete.totalPage;
                                                 callback(null, results);
                                             } else {
                                                 var athlete = {};
@@ -741,6 +743,7 @@ var model = {
                                                 finalData.push(athlete);
                                                 results.data = finalData;
                                                 results.total = complete.total;
+                                                results.totalpages = complete.totalPage;
                                                 callback(null, results);
                                             }
                                         }
@@ -776,6 +779,7 @@ var model = {
                                             finalData.push(athlete);
                                             results.data = finalData;
                                             results.total = complete.total;
+                                            results.totalpages = complete.totalPage;
                                             // console.log("data", results);
                                             callback(null, results);
                                         } else {
@@ -786,6 +790,7 @@ var model = {
                                                 finalData.push(athlete);
                                                 results.data = finalData;
                                                 results.total = complete.total;
+                                                results.totalpages = complete.totalPage;
                                                 // console.log("data", results);
                                                 callback(null, results);
                                             } else {
@@ -795,6 +800,7 @@ var model = {
                                                 finalData.push(athlete);
                                                 results.data = finalData;
                                                 results.total = complete.total;
+                                                results.totalpages = complete.totalPage;
                                                 callback(null, results);
                                             }
                                         }
@@ -828,6 +834,7 @@ var model = {
                                     finalData.push(athlete);
                                     results.data = finalData;
                                     results.total = complete.total;
+                                    results.totalpages = complete.totalPage;
                                     // console.log("data", results);
                                     callback(null, results);
                                 } else {
@@ -837,6 +844,7 @@ var model = {
                                     finalData.push(athlete);
                                     results.data = finalData;
                                     results.total = complete.total;
+                                    results.totalpages = complete.totalPage;
                                     // console.log("data", results);
                                     callback(null, results);
                                 }
@@ -1133,6 +1141,13 @@ var model = {
                         } else {
                             console.log("complete1", complete1);
                             dataFinal.total = complete1;
+                            if (complete1 % maxRow == 0) {
+                                dataFinal.totalPage = (complete1 / maxRow);
+                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                            } else {
+                                dataFinal.totalPage = Math.ceil(complete1 / maxRow);
+                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                            }
                             callback(null, dataFinal);
                         }
 
@@ -1222,6 +1237,13 @@ var model = {
                             // } else {
                             console.log("complete1", complete1);
                             dataFinal.total = complete1;
+                            if (complete1 % maxRow == 0) {
+                                dataFinal.totalPage = (complete1 / maxRow);
+                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                            } else {
+                                dataFinal.totalPage = Math.ceil(complete1 / maxRow);
+                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                            }
                             callback(null, dataFinal);
 
 
@@ -1284,6 +1306,13 @@ var model = {
                             callback(err, null);
                         } else {
                             dataFinal.total = complete1;
+                            if (complete1 % maxRow == 0) {
+                                dataFinal.totalPage = (complete1 / maxRow);
+                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                            } else {
+                                dataFinal.totalPage = Math.ceil(complete1 / maxRow);
+                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                            }
                             callback(null, dataFinal);
                         }
                     });
@@ -1382,6 +1411,7 @@ var model = {
                                                 dataFinal.results = [];
                                                 if (_.isEmpty(athleteData)) {
                                                     dataFinal.total = 0;
+                                                    dataFinal.totalPage = 0;
                                                     dataFinal.results = [];
                                                     console.log("athleteData*****", athleteData);
                                                     callback(null, dataFinal);
@@ -1422,6 +1452,13 @@ var model = {
                                                             callback(err, null);
                                                         } else {
                                                             dataFinal.total = complete1;
+                                                            if (complete1 % maxRow == 0) {
+                                                                dataFinal.totalPage = (complete1 / maxRow);
+                                                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                                                            } else {
+                                                                dataFinal.totalPage = Math.ceil(complete1 / maxRow);
+                                                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                                                            }
                                                             callback(null, dataFinal);
                                                         }
                                                     }
@@ -1434,10 +1471,10 @@ var model = {
                                                 callback(null, []);
                                             } else if (data2) {
                                                 if (_.isEmpty(data2)) {
-                                                    console.log("data2", data2);
+                                                    // console.log("data2", data2);
                                                     callback(null, data2);
                                                 } else {
-                                                    console.log("data2", data2);
+                                                    // console.log("data2", data2);
                                                     callback(null, data2);
                                                 }
                                             }
@@ -1451,10 +1488,10 @@ var model = {
                                     callback(null, []);
                                 } else if (data2) {
                                     if (_.isEmpty(data2)) {
-                                        console.log("data2", data2);
+                                        // console.log("data2", data2);
                                         callback(null, data2);
                                     } else {
-                                        console.log("data2", data2);
+                                        // console.log("data2", data2);
                                         callback(null, data2);
                                     }
                                 }
@@ -1471,6 +1508,13 @@ var model = {
                                         } else {
                                             console.log("complete1", complete1);
                                             dataFinal.total = complete1;
+                                            if (complete1 % maxRow == 0) {
+                                                dataFinal.totalPage = (complete1 / maxRow);
+                                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                                            } else {
+                                                dataFinal.totalPage = Math.ceil(complete1 / maxRow);
+                                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                                            }
                                             callback(null, dataFinal);
                                         }
 
@@ -1527,6 +1571,13 @@ var model = {
                                         } else {
                                             console.log("complete1", complete1);
                                             dataFinal.total = complete1;
+                                            if (complete1 % maxRow == 0) {
+                                                dataFinal.totalPage = (complete1 / maxRow);
+                                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                                            } else {
+                                                dataFinal.totalPage = Math.ceil(complete1 / maxRow);
+                                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                                            }
                                             callback(null, dataFinal);
                                         }
 
@@ -1582,6 +1633,13 @@ var model = {
                                             callback(err, null);
                                         } else {
                                             dataFinal.total = complete1;
+                                            if (complete1 % maxRow == 0) {
+                                                dataFinal.totalPage = (complete1 / maxRow);
+                                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                                            } else {
+                                                dataFinal.totalPage = Math.ceil(complete1 / maxRow);
+                                                console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
+                                            }
                                             callback(null, dataFinal);
                                         }
                                     });
