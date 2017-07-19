@@ -2702,7 +2702,14 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         };
 
         $scope.saveData = function (formData) {
+            // console.log('outside', formData);
+            // if (formData.atheleteSchoolName) {
+            //     delete formData.school;
+            //     formData.school = undefined;
+            // }
+            // console.log('after change', formData);
             NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+                // console.log('inside', data);
                 if (data.value === true) {
                     $scope.json.json.action[0].stateName.json.keyword = "";
                     $scope.json.json.action[0].stateName.json.page = "";

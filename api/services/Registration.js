@@ -1006,8 +1006,12 @@ var model = {
                             }
                             emailData.schoolName = found.schoolName;
                             emailData.schoolAddress = found.schoolAddress;
-                            emailData.panNo = found.panNo;
-                            emailData.gstNo = found.gstNo;
+                            if (found.panNo) {
+                                emailData.panNo = found.panNo;
+                            }
+                            if (found.gstNo) {
+                                emailData.gstNo = found.gstNo;
+                            }
                             emailData.transactionID = found.transactionID;
                             emailData.Date = moment().format("DD-MM-YYYY");
                             var receipt = "SFA" + found.registerID;
@@ -1480,8 +1484,12 @@ var model = {
                         obj.paymentStatus = n.paymentStatus;
                         obj.transactionID = n.transactionID;
                         obj.remarks = n.remarks;
-                        obj.panNo = n.panNo;
-                        obj.gstNo = n.gstNo;
+                        if (n.panNo) {
+                            obj.panNo = n.panNo;
+                        }
+                        if (n.gstNo) {
+                            obj.gstNo = n.gstNo;
+                        }
                         obj.utm_medium = n.utm_medium;
                         obj.utm_source = n.utm_source;
                         obj.utm_campaign = n.utm_campaign;
@@ -1653,8 +1661,12 @@ var model = {
                 obj.paymentStatus = n.paymentStatus;
                 obj.transactionID = n.transactionID;
                 obj.remarks = n.remarks;
-                obj.panNo = n.panNo;
-                obj.gstNo = n.gstNo;
+                if (n.panNo) {
+                    obj.panNo = n.panNo;
+                }
+                if (n.gstNo) {
+                    obj.gstNo = n.gstNo;
+                }
                 obj.utm_medium = n.utm_medium;
                 obj.utm_source = n.utm_source;
                 obj.utm_campaign = n.utm_campaign;
