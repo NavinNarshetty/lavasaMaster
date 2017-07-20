@@ -2073,6 +2073,98 @@ var model = {
         return pipeline;
     },
 
+    getEditMixAggregatePipeLine: function (data) {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $match: {
+                    "teamId": objectid(data.teamid)
+                }
+            },
+
+            // Stage 2
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "studentId",
+                    "foreignField": "_id",
+                    "as": "studentId"
+                }
+            },
+
+            // Stage 3
+            {
+                $unwind: {
+                    path: "$studentId",
+                }
+            },
+
+            // Stage 4
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "studentId.school",
+                    "foreignField": "_id",
+                    "as": "studentId.school"
+                }
+            },
+
+            // Stage 5
+            {
+                $unwind: {
+                    path: "$studentId.school",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 6
+            {
+                $match: {
+                    $or: [{
+                            "studentId.school.name": data.school
+                        },
+                        {
+                            "studentId.atheleteSchoolName": data.school
+                        }
+                    ]
+                }
+            },
+            {
+                $match: {
+
+                    $or: [{
+                        "studentId.status": "Verified"
+                    }]
+
+                }
+            },
+            // Stage 4
+            {
+                $match: {
+                    $or: [{
+                        "studentId.registrationFee": {
+                            $ne: "online PAYU"
+                        }
+                    }, {
+                        "studentId.paymentStatus": {
+                            $ne: "Pending"
+                        }
+                    }]
+                }
+            }, {
+                $match: {
+                    "studentId.dob": {
+                        $gte: new Date(data.fromDate),
+                        $lte: new Date(data.toDate),
+                    }
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
     editAthletePerSchool: function (data, callback) {
         async.waterfall([
                 function (callback) {
@@ -2625,8 +2717,12 @@ var model = {
                     });
                 },
                 function (dataFinal, callback) {
-                    // console.log("dataFinal last", dataFinal);
-                    var pipeLine = Sport.getEditAggregatePipeLine(data);
+                    if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
+                        var pipeLine = Sport.getEditMixAggregatePipeLine(data);
+                    } else {
+                        var pipeLine = Sport.getEditAggregatePipeLine(data);
+                    }
+
                     StudentTeam.aggregate(pipeLine, function (err, totals1) {
                         if (err) {
                             console.log(err);
