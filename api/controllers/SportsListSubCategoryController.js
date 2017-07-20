@@ -44,6 +44,37 @@ var controller = {
         }
     },
 
+    editOneSport: function (req, res) {
+        if (req.body.schoolToken) {
+            Registration.findOne({
+                accessToken: req.body.schoolToken
+            }).exec(function (err, found) {
+                if (err) {
+                    res.json({
+                        value: false,
+                        data: "Something went wrong !"
+                    });
+                } else if (_.isEmpty(found)) {
+                    res.json({
+                        value: false,
+                        data: "No User Found"
+                    });
+                } else {
+                    req.body.school = found._id;
+                    req.body.schoolName = found.schoolName;
+                    SportsListSubCategory.editOneSport(req.body, res.callback);
+                }
+            });
+        } else if (req.body.athleteToken) {
+            SportsListSubCategory.editSchoolPerAthlete(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     getSports: function (req, res) {
         if (req.body.schoolToken) {
             SportsListSubCategory.getSports(req.body, res.callback);
