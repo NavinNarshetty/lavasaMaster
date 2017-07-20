@@ -964,7 +964,7 @@ var model = {
                 callback(err, "error in mongoose");
             } else {
                 if (_.isEmpty(complete)) {
-                    callback(null, []);
+                    callback(null, complete);
                 } else {
                     callback(null, complete);
                 }
@@ -982,7 +982,7 @@ var model = {
                             callback(err, "error in mongoose");
                         } else {
                             if (_.isEmpty(complete)) {
-                                callback(null, []);
+                                callback(null, complete);
                             } else {
                                 callback(null, complete);
                             }
@@ -1007,7 +1007,7 @@ var model = {
                     callback(null, []);
                 } else if (atheleteSports) {
                     if (_.isEmpty(atheleteSports)) {
-                        callback(null, []);
+                        callback(null, atheleteSports);
                     } else {
                         callback(null, atheleteSports);
                     }

@@ -1486,13 +1486,30 @@ var model = {
                         obj.remarks = n.remarks;
                         if (n.panNo) {
                             obj.panNo = n.panNo;
+                        } else {
+                            obj.panNo = "";
                         }
                         if (n.gstNo) {
                             obj.gstNo = n.gstNo;
+                        } else {
+                            obj.gstNo = "";
                         }
-                        obj.utm_medium = n.utm_medium;
-                        obj.utm_source = n.utm_source;
-                        obj.utm_campaign = n.utm_campaign;
+                        if (n.utm_medium) {
+                            obj.utm_medium = n.utm_medium;
+                        } else {
+                            obj.utm_medium = "";
+                        }
+
+                        if (n.utm_campaign) {
+                            obj.utm_campaign = n.utm_campaign;
+                        } else {
+                            obj.utm_campaign = "";
+                        }
+                        if (n.utm_source) {
+                            obj.utm_source = n.utm_source;
+                        } else {
+                            obj.utm_source = "";
+                        }
                         excelData.push(obj);
 
                     });
@@ -1663,13 +1680,30 @@ var model = {
                 obj.remarks = n.remarks;
                 if (n.panNo) {
                     obj.panNo = n.panNo;
+                } else {
+                    obj.panNo = "";
                 }
                 if (n.gstNo) {
                     obj.gstNo = n.gstNo;
+                } else {
+                    obj.gstNo = "";
                 }
-                obj.utm_medium = n.utm_medium;
-                obj.utm_source = n.utm_source;
-                obj.utm_campaign = n.utm_campaign;
+                if (n.utm_medium) {
+                    obj.utm_medium = n.utm_medium;
+                } else {
+                    obj.utm_medium = "";
+                }
+
+                if (n.utm_campaign) {
+                    obj.utm_campaign = n.utm_campaign;
+                } else {
+                    obj.utm_campaign = "";
+                }
+                if (n.utm_source) {
+                    obj.utm_source = n.utm_source;
+                } else {
+                    obj.utm_source = "";
+                }
                 excelData.push(obj);
 
             });

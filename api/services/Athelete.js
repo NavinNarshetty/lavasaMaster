@@ -653,6 +653,7 @@ var model = {
                             }).exec(function (err, removed) {
                                 if (removed) {
                                     console.log("data removed");
+                                    data.year = new Date().getFullYear();
                                     Athelete.saveData(data, function (err, athleteData) {
                                         if (err) {
                                             console.log("err", err);
@@ -843,6 +844,7 @@ var model = {
             }
         });
     },
+
     saveVerify: function (data, found, callback) {
         Athelete.saveData(data, function (err, athleteData) { //saves data to database collection
             console.log("athleteData", athleteData);
@@ -880,6 +882,7 @@ var model = {
             }
         });
     },
+
     getAllAtheleteDetails: function (data, callback) {
         Athelete.find().exec(function (err, found) { //finds all athelete
             if (err) {
@@ -2029,9 +2032,25 @@ var model = {
                                 obj.paymentStatus = n.paymentStatus;
                                 obj.transactionID = n.transactionID;
                                 obj.remarks = n.remarks;
-                                obj.utm_medium = n.utm_medium;
-                                obj.utm_source = n.utm_source;
-                                obj.utm_campaign = n.utm_campaign;
+                                // obj.utm_medium = n.utm_medium;
+                                // obj.utm_source = n.utm_source;
+                                // obj.utm_campaign = n.utm_campaign;
+                                if (n.utm_medium) {
+                                    obj.utm_medium = n.utm_medium;
+                                } else {
+                                    obj.utm_medium = "";
+                                }
+
+                                if (n.utm_campaign) {
+                                    obj.utm_campaign = n.utm_campaign;
+                                } else {
+                                    obj.utm_campaign = "";
+                                }
+                                if (n.utm_source) {
+                                    obj.utm_source = n.utm_source;
+                                } else {
+                                    obj.utm_source = "";
+                                }
                                 // console.log("obj", obj);
                                 excelData.push(obj);
                                 callback(null, excelData);
@@ -2182,9 +2201,25 @@ var model = {
                         obj.paymentStatus = n.paymentStatus;
                         obj.transactionID = n.transactionID;
                         obj.remarks = n.remarks;
-                        obj.utm_medium = n.utm_medium;
-                        obj.utm_source = n.utm_source;
-                        obj.utm_campaign = n.utm_campaign;
+                        // obj.utm_medium = n.utm_medium;
+                        // obj.utm_source = n.utm_source;
+                        // obj.utm_campaign = n.utm_campaign;
+                        if (n.utm_medium) {
+                            obj.utm_medium = n.utm_medium;
+                        } else {
+                            obj.utm_medium = "";
+                        }
+
+                        if (n.utm_campaign) {
+                            obj.utm_campaign = n.utm_campaign;
+                        } else {
+                            obj.utm_campaign = "";
+                        }
+                        if (n.utm_source) {
+                            obj.utm_source = n.utm_source;
+                        } else {
+                            obj.utm_source = "";
+                        }
                         // console.log("obj", obj);
                         excelData.push(obj);
                         callback(null, excelData);
