@@ -1,4 +1,13 @@
 var generator = require('generate-password');
+var mongoose = require('mongoose');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+var uniqueValidator = require('mongoose-unique-validator');
+var timestamps = require('mongoose-timestamp');
+var validators = require('mongoose-validators');
+var monguurl = require('monguurl');
+var objectid = require("mongodb").ObjectID;
+var lodash = require('lodash');
+var moment = require('moment');
 
 var schema = new Schema({});
 
@@ -468,7 +477,7 @@ var model = {
 
         var pipeline = [{
                 $match: {
-                    "_id": data.buf
+                    "_id": objectid(data.buf)
                 }
             },
 
@@ -549,23 +558,27 @@ var model = {
                             });
                     } else {
                         var data3 = data;
+                        console.log("data3", data3);
                         callback(null, data3);
                     }
                 },
                 function (data3, callback) {
-                    var pipeLine = Login.getSchoolPipeLine(data);
+                    // console.log("data", data);
+                    var pipeLine = Login.getSchoolPipeLine(data3);
                     Athelete.aggregate(pipeLine, function (err, found) {
                         if (err) {
                             console.log(err);
                             callback(err, "error in mongoose");
                         } else {
                             if (_.isEmpty(found)) {
+                                callback("inside empty");
                                 callback(null, []);
                             } else {
                                 var finalData = {};
                                 finalData.data = found;
                                 finalData.userType = "athlete";
                                 finalData.mixAccess = true;
+                                console.log("finalData", finalData);
                                 callback(null, finalData);
                             }
                         }
@@ -648,6 +661,7 @@ var model = {
                             finalData.data = found;
                             finalData.userType = "school";
                             finalData.mixAccess = true;
+                            console.log("finalData", finalData);
                             callback(null, finalData);
                         }
                     });
