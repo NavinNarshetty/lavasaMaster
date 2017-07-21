@@ -1755,23 +1755,6 @@ myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, Naviga
         });
     }
 
-    // $scope.transferToWebsite = function (id) {
-    //     $scope.constraints = {};
-    //     $scope.constraints._id = base64Service.encode(id);
-    //     $scope.url = "Login/access"
-    //     NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-    //         console.log(data);
-    //     });
-
-    //     // For decode at frontend level
-    //     // console.log(id);
-    //     // console.log($scope.constraints);
-    //     // $scope.constraintis = {};
-    //     // $scope.constraintis._id = base64Service.decode($scope.constraints._id);
-    //     // console.log($scope.constraintis);
-
-    // }
-
 });
 //viewindividualteamsport
 myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
@@ -1795,7 +1778,7 @@ myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, N
             $scope.athlete = data.data;
             if (data.data.athleteId.middleName) {
 
-                $scope.athlete.name = data.data.athleteId.firstName + "" + data.data.athleteId.middleName + "" + data.data.athleteId.surname
+                $scope.athlete.name = data.data.athleteId.firstName + " " + data.data.athleteId.middleName + " " + data.data.athleteId.surname
             } else {
                 $scope.athlete.name = data.data.athleteId.firstName + " " + data.data.athleteId.surname
             }
@@ -1808,7 +1791,7 @@ myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, N
                     $scope.schoolName = data.data.name;
                 })
             }
-            if (data.data.athleteId.athleteSchoolName) {
+            if (data.data.athleteId.atheleteSchoolName) {
                 // $scope.url3 = 'school/getOne';
                 // $scope.sconstraints = {};
                 // $scope.sconstraints._id = data.data.athleteId.school;
@@ -1816,7 +1799,7 @@ myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, N
                 //     console.log("data schools", data);
                 //     $scope.schoolName = data.data.name;
                 // })
-                $scope.schoolName = data.data.athleteId.athleteSchoolName;
+                $scope.schoolName = data.data.athleteId.atheleteSchoolName;
             }
 
             _.each($scope.athlete.sport, function (n) {
@@ -1827,8 +1810,9 @@ myApp.controller('ViewIndividualSportCtrl', function ($scope, TemplateService, N
                 NavigationService.getOneOldSchoolById($scope.url2, $scope.request1, function (data) {
                     $scope.vathlete = data.data;
                     console.log("students", $scope.vathlete);
+                    $scope.eventNameWithAgeGroup = $scope.vathlete.ageGroup.name + ' - ' + $scope.vathlete.sportslist.name;
                     $scope.eventName.push({
-                        name: $scope.vathlete.sportslist.name
+                        name: $scope.eventNameWithAgeGroup
                     });
                 });
                 $scope.i++;
@@ -1928,11 +1912,15 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
         console.log(id);
         $scope.constraints = {};
         $scope.constraints.schoolId = base64Service.encode(id);
-        console.log($scope.constraints);
-        $scope.url = "Login/editAccess"
-        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-            console.log("dataaaaa", data);
-        });
+        window.location = 'http://localhost:8080/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        // window.location = 'http://localhost:8080/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+
+
+        // console.log($scope.constraints);
+        // $scope.url = "Login/editAccess"
+        // NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+        //     console.log("dataaaaa", data);
+        // });
 
         // For decode at frontend level
         // console.log(id);
@@ -1944,7 +1932,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     }
 })
 
-myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, base64Service) {
     //athlete filter view
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("tableathlete");
@@ -2071,6 +2059,23 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
             console.log(formdata);
             NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
         }
+    }
+    $scope.transferToWebsite = function (id) {
+        $scope.constraints = {};
+        $scope.constraints.athleteId = base64Service.encode(id);
+        window.location = 'http://localhost:8080/#/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
+        // $scope.url = "Login/editAccess"
+        // NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+        //     console.log(data);
+        // });
+
+        // For decode at frontend level
+        // console.log(id);
+        // console.log($scope.constraints);
+        // $scope.constraintis = {};
+        // $scope.constraintis._id =  .decode($scope.constraints._id);
+        // console.log($scope.constraintis);
+
     }
 })
 
@@ -2697,7 +2702,14 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         };
 
         $scope.saveData = function (formData) {
+            // console.log('outside', formData);
+            // if (formData.atheleteSchoolName) {
+            //     delete formData.school;
+            //     formData.school = undefined;
+            // }
+            // console.log('after change', formData);
             NavigationService.apiCall($scope.json.json.apiCall.url, formData, function (data) {
+                // console.log('inside', data);
                 if (data.value === true) {
                     $scope.json.json.action[0].stateName.json.keyword = "";
                     $scope.json.json.action[0].stateName.json.page = "";

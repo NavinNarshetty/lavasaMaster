@@ -64,14 +64,10 @@ var model = {
                 $match: {
 
                     $or: [{
-                            "school.name": {
-                                $regex: data.school
-                            }
+                            "school.name": data.school
                         },
                         {
-                            "atheleteSchoolName": {
-                                $regex: data.school
-                            }
+                            "atheleteSchoolName": data.school
                         }
                     ]
 
@@ -1114,6 +1110,7 @@ var model = {
                             middlename: "$athleteId.middleName",
                             sfaid: "$athleteId.sfaId",
                             email: "$athleteId.email",
+                            mobile: "$athleteId.mobile",
                             age: "$athleteId.age",
                             gender: "$sport.gender",
                             eventName: "$sport.sportslist.name",
@@ -1131,6 +1128,7 @@ var model = {
         var sportData = {};
         async.waterfall([
                 function (callback) {
+                    var uniqAthlete;
                     var atheleteName = [];
                     var results = [];
                     async.eachSeries(data.individual, function (n, callback) {
@@ -1191,7 +1189,7 @@ var model = {
 
                 },
                 function (atheleteName, callback) {
-                    console.log(atheleteName);
+                    // console.log(arrayAth);
                     IndividualSport.mailers(atheleteName, data, function (err, mailData) {
                         if (err) {
                             callback(err, null);
@@ -1241,6 +1239,7 @@ var model = {
                         data.school = found.atheleteSchoolName;
                         data.sfaid = found.sfaId;
                         data.email = found.email;
+                        data.mobile = found.mobile;
                         callback(null, data);
 
                     } else {
@@ -1255,6 +1254,7 @@ var model = {
                                 data.school = schoolData.name;
                                 data.sfaid = found.sfaId;
                                 data.email = found.email;
+                                data.mobile = found.mobile;
                                 callback(null, data);
                             }
                         });
@@ -1333,7 +1333,7 @@ var model = {
                             if (_.isEmpty(mailData)) {
                                 callback(null, []);
                             } else {
-                                callback(null, mailData)
+                                callback(null, mailData);
                             }
                         }
                     });
@@ -1355,50 +1355,177 @@ var model = {
 
     mailers: function (atheleteName, data, callback) {
         async.parallel([
-                //Athlete email
+                //athlete email and sms
                 function (callback) {
-                    async.each(atheleteName, function (n, callback) {
-                        var emailData = {};
-                        emailData.schoolSFA = data.sfaid;
-                        emailData.schoolName = data.school;
-                        var sport = n.info[0].eventName + " " + n.info[0].gender + " " + n.info[0].ageGroup;
-                        emailData.eventName = n.info[0].eventName;
-                        emailData.gender = n.info[0].gender;
-                        emailData.ageGroup = n.info[0].ageGroup;
-                        emailData.sportName = n.info[0].sportName;
-                        emailData.completeSport = sport;
-                        emailData.atheleteSFA = n.info[0].sfaid;
-                        if (n.info[0].middlename) {
-                            var name = n.info[0].firstname + " " + n.info[0].middlename + " " + n.info[0].lastname;
-                        } else {
-                            var name = n.info[0].firstname + " " + n.info[0].lastname;
-                        }
-                        emailData.atheleteName = name;
-                        emailData.from = "info@sfanow.in";
-                        emailData.email = n.info[0].email;
-                        emailData.filename = "athleteindividual.ejs";
-                        emailData.subject = "SFA: Individual Sport Selection";
-                        Config.email(emailData, function (err, emailRespo) {
+                    async.waterfall([
+                            function (callback) {
+                                var atheleteUniq = atheleteName;
+                                var results1 = atheleteUniq.reduce((arr, ele) => ([].push.apply(arr, ele.info.filter((v) => arr.indexOf(v) == -1)), arr), []);
+                                var results = _.groupBy(results1, "sfaid");
+                                var arrayAth = [];
+                                _.each(results, function (atheletes) {
+                                    var athelete = {};
+                                    athelete.eventName = [];
+                                    _.each(atheletes, function (n) {
+                                        athelete.firstname = n.firstname;
+                                        athelete.middlename = n.middlename;
+                                        athelete.lastname = n.lastname;
+                                        athelete.sfaid = n.sfaid;
+                                        athelete.email = n.email;
+                                        athelete.age = n.age;
+                                        athelete.gender = n.gender;
+                                        athelete.eventName.push(n.eventName);
+                                        athelete.ageGroup = n.ageGroup;
+                                        athelete.sportName = n.sportName;
+                                    });
+                                    arrayAth.push(athelete);
+                                });
+                                callback(null, arrayAth);
+                            },
+                            function (arrayAth, callback) {
+                                async.each(arrayAth, function (n, callback) {
+                                    IndividualSport.smsMailsAthlete(data, n, function (err, mailData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(mailData)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, mailData)
+                                            }
+                                        }
+                                    });
+
+                                }, function (err, emailRespo) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, emailRespo);
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, data3) {
                             if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
-                                callback(null, emailRespo);
+                                callback(err, null);
                             } else {
-                                callback(null, "Invalid data");
+                                callback(null, data3);
                             }
                         });
-                    }, function (err, emailRespo) {
+
+                },
+                //school email and sms
+                function (callback) {
+                    IndividualSport.smsMailsSchool(data, atheleteName, function (err, mailData) {
                         if (err) {
                             callback(err, null);
                         } else {
+                            if (_.isEmpty(mailData)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, mailData)
+                            }
+                        }
+                    });
+                }
+            ],
+            function (err, data3) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(data3)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data3);
+                    }
+                }
+            });
+    },
+
+    smsMailsAthlete: function (data, n, callback) {
+        async.parallel([
+                //email
+                function (callback) {
+                    console.log("event", n);
+                    var emailData = {};
+                    emailData.schoolSFA = data.sfaid;
+                    emailData.schoolName = data.school;
+                    var sport = n.sportName + " " + n.gender + " " + n.ageGroup;
+                    emailData.gender = n.gender;
+                    emailData.ageGroup = n.ageGroup;
+                    var count = 0;
+                    var eventgroup;
+                    _.each(n.eventName, function (event) {
+                        if (count == 0) {
+                            eventgroup = event;
+                            count++;
+                        } else {
+                            eventgroup = eventgroup + ", " + event;
+                        }
+                    });
+                    emailData.eventName = eventgroup;
+                    emailData.sportName = n.sportName;
+                    emailData.completeSport = sport;
+                    emailData.atheleteSFA = n.sfaid;
+                    if (n.middlename) {
+                        var name = n.firstname + " " + n.middlename + " " + n.lastname;
+                    } else {
+                        var name = n.firstname + " " + n.lastname;
+                    }
+                    emailData.atheleteName = name;
+                    emailData.from = "info@sfanow.in";
+                    emailData.email = n.email;
+                    emailData.filename = "athleteindividual.ejs";
+                    emailData.subject = "SFA: Individual Sport Selection";
+                    // callback(null, emailData);
+                    Config.email(emailData, function (err, emailRespo) {
+                        if (err) {
+                            console.log(err);
+                            callback(null, err);
+                        } else if (emailRespo) {
                             callback(null, emailRespo);
+                        } else {
+                            callback(null, "Invalid data");
                         }
                     });
                 },
-                //athlete email
                 function (callback) {
-                    // console.log("atheleteName", atheleteName);
+                    var smsData = {};
+                    smsData.mobile = n.mobile;
+                    smsData.content = "SFA: Thank you for registering for Individual Sports at SFA 2017. For Further details Please check your registered email ID.";
+                    console.log("smsdata", smsData);
+                    Config.sendSms(smsData, function (err, smsRespo) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else if (smsRespo) {
+                            console.log(smsRespo, "sms sent");
+                            callback(null, smsRespo);
+                        } else {
+                            callback(null, "Invalid data");
+                        }
+                    });
+                }
+            ],
+            function (err, data3) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(data3)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data3);
+                    }
+                }
+            });
+    },
+
+    smsMailsSchool: function (data, atheleteName, callback) {
+        async.parallel([
+                //email
+                function (callback) {
                     var atheleteUniq = atheleteName;
                     var results1 = atheleteUniq.reduce((arr, ele) => ([].push.apply(arr, ele.info.filter((v) => arr.indexOf(v) == -1)), arr), []);
                     var unique = _.uniqBy(results1, 'sfaid');
@@ -1422,15 +1549,16 @@ var model = {
                             } else {
                                 var name = data.info[0].firstname + " " + data.info[0].lastname;
                             }
+                            athelete.gender = data.info[0].gender;
+                            athelete.ageGroup = data.info[0].ageGroup;
                             athelete.name = name;
                             athelete.sfaid = data.info[0].sfaid;
                             sportInfo.athleteData.push(athelete);
                             srno++;
                         });
                         collectedSport.push(sportInfo);
-                        // console.log("collectedSport", collectedSport);
+
                     });
-                    // console.log("sport Details for school", collectedSport);
                     var emailData = {};
                     emailData.schoolSFA = data.sfaid;
                     emailData.schoolName = data.school;
@@ -1440,14 +1568,29 @@ var model = {
                     emailData.email = data.email;
                     emailData.filename = "schoolindividual.ejs";
                     emailData.subject = "SFA: Individual Sport Selection List";
-                    // console.log("emailData", atheleteName);
-                    // callback(null, unique);
                     Config.email(emailData, function (err, emailRespo) {
                         if (err) {
                             console.log(err);
                             callback(null, err);
                         } else if (emailRespo) {
                             callback(null, emailRespo);
+                        } else {
+                            callback(null, "Invalid data");
+                        }
+                    });
+                },
+                function (callback) {
+                    var smsData = {};
+                    smsData.mobile = data.mobile;
+                    smsData.content = "SFA: Thank you for registering for Individual Sports at SFA 2017. For Further details Please check your registered email ID.";
+                    console.log("smsdata", smsData);
+                    Config.sendSms(smsData, function (err, smsRespo) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else if (smsRespo) {
+                            console.log(smsRespo, "sms sent");
+                            callback(null, smsRespo);
                         } else {
                             callback(null, "Invalid data");
                         }
@@ -1468,46 +1611,146 @@ var model = {
             });
     },
 
-    mailersAthleteIndividual: function (atheleteName, data, callback) {
-        async.each(atheleteName, function (n, callback) {
-            var emailData = {};
-            emailData.schoolSFA = data.sfaid;
-            emailData.schoolName = data.school;
-            var sport = n.info[0].eventName + " " + n.info[0].gender + " " + n.info[0].ageGroup;
-            emailData.eventName = n.info[0].eventName;
-            emailData.gender = n.info[0].gender;
-            emailData.ageGroup = n.info[0].ageGroup;
-            emailData.sportName = n.info[0].sportName;
-            emailData.completeSport = sport;
-            emailData.atheleteSFA = n.info[0].sfaid;
-            if (n.info[0].middlename) {
-                var name = n.info[0].firstname + " " + n.info[0].middlename + " " + n.info[0].lastname;
-            } else {
-                var name = n.info[0].firstname + " " + n.info[0].lastname;
-            }
-            emailData.atheleteName = name;
-            emailData.from = "info@sfanow.in";
-            emailData.email = n.info[0].email;
-            emailData.filename = "athleteindividual.ejs";
-            emailData.subject = "SFA: Individual Sport Selection";
-            // callback(null, emailData);
-            Config.email(emailData, function (err, emailRespo) {
+    smsMailIndividual: function (data, n, callback) {
+        console.log('data', data);
+        console.log('N', n);
+        async.parallel([
+                function (callback) {
+                    var emailData = {};
+                    emailData.schoolSFA = data.sfaid;
+                    emailData.schoolName = data.school;
+                    var sport = n.sportName + " " + n.gender + " " + n.ageGroup;
+                    emailData.gender = n.gender;
+                    emailData.ageGroup = n.ageGroup;
+                    var count = 0;
+                    var eventgroup;
+                    _.each(n.eventName, function (event) {
+                        if (count == 0) {
+                            eventgroup = event;
+                            count++;
+                        } else {
+                            eventgroup = eventgroup + ", " + event;
+                        }
+                    });
+                    emailData.eventName = eventgroup;
+                    emailData.sportName = n.sportName;
+                    emailData.completeSport = sport;
+                    emailData.atheleteSFA = n.sfaid;
+                    if (n.middlename) {
+                        var name = n.firstname + " " + n.middlename + " " + n.lastname;
+                    } else {
+                        var name = n.firstname + " " + n.lastname;
+                    }
+                    emailData.atheleteName = name;
+                    emailData.from = "info@sfanow.in";
+                    emailData.email = n.email;
+                    emailData.filename = "athleteindividual.ejs";
+                    emailData.subject = "SFA: Individual Sport Selection";
+                    Config.email(emailData, function (err, emailRespo) {
+                        if (err) {
+                            console.log(err);
+                            callback(null, err);
+                        } else if (emailRespo) {
+                            callback(null, emailRespo);
+                        } else {
+                            callback(null, "Invalid data");
+                        }
+                    });
+                },
+                function (callback) {
+                    var smsData = {};
+                    smsData.mobile = data.mobile;
+                    smsData.content = "SFA: Thank you for registering for Individual Sports at SFA 2017. For Further details Please check your registered email ID.";
+                    console.log("smsdata", smsData);
+                    Config.sendSms(smsData, function (err, smsRespo) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else if (smsRespo) {
+                            console.log(smsRespo, "sms sent");
+                            callback(null, smsRespo);
+                        } else {
+                            callback(null, "Invalid data");
+                        }
+                    });
+                }
+            ],
+            function (err, data3) {
                 if (err) {
                     console.log(err);
-                    callback(null, err);
-                } else if (emailRespo) {
-                    callback(null, emailRespo);
+                    callback(err, null);
                 } else {
-                    callback(null, "Invalid data");
+                    if (_.isEmpty(data3)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data3);
+                    }
                 }
             });
-        }, function (err, emailRespo) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, emailRespo);
-            }
-        });
+
+    },
+
+    mailersAthleteIndividual: function (atheleteName, data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var atheleteUniq = atheleteName;
+                    var results1 = atheleteUniq.reduce((arr, ele) => ([].push.apply(arr, ele.info.filter((v) => arr.indexOf(v) == -1)), arr), []);
+                    var results = _.groupBy(results1, "sfaid");
+                    var arrayAth = [];
+                    _.each(results, function (atheletes) {
+                        var athelete = {};
+                        athelete.eventName = [];
+                        _.each(atheletes, function (n) {
+                            athelete.firstname = n.firstname;
+                            athelete.middlename = n.middlename;
+                            athelete.lastname = n.lastname;
+                            athelete.sfaid = n.sfaid;
+                            athelete.email = n.email;
+                            athelete.age = n.age;
+                            athelete.gender = n.gender;
+                            athelete.eventName.push(n.eventName);
+                            athelete.ageGroup = n.ageGroup;
+                            athelete.sportName = n.sportName;
+                        });
+                        arrayAth.push(athelete);
+                    });
+                    callback(null, arrayAth);
+                },
+                function (arrayAth, callback) {
+                    async.each(arrayAth, function (n, callback) {
+                        IndividualSport.smsMailIndividual(data, n, function (err, mailData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(mailData)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, mailData)
+                                }
+                            }
+                        });
+                    }, function (err, emailRespo) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, emailRespo);
+                        }
+                    });
+                }
+            ],
+            function (err, data3) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(data3)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data3);
+                    }
+                }
+            });
+
 
     },
 
@@ -1536,25 +1779,25 @@ var model = {
                     "as": "sport"
                 }
             },
-            {
-                $unwind: {
-                    path: "$sport",
-                }
-            },
-            {
-                $lookup: {
-                    "from": "sportslists",
-                    "localField": "sport.sportslist",
-                    "foreignField": "_id",
-                    "as": "sport.sportslist"
-                }
-            },
-            // Stage 2
-            {
-                $unwind: {
-                    path: "$sport.sportslist",
-                }
-            },
+            // {
+            //     $unwind: {
+            //         path: "$sport",
+            //     }
+            // },
+            // {
+            //     $lookup: {
+            //         "from": "sportslists",
+            //         "localField": "sport.sportslist",
+            //         "foreignField": "_id",
+            //         "as": "sport.sportslist"
+            //     }
+            // },
+            // // Stage 2
+            // {
+            //     $unwind: {
+            //         path: "$sport.sportslist",
+            //     }
+            // },
             // Stage 3
             {
                 $lookup: {
@@ -1575,22 +1818,31 @@ var model = {
             // Stage 5
             {
                 $match: {
-                    $or: [{
-                        "sport.sportslist.name": {
-                            $regex: data.keyword,
-                            $options: "i"
+                    $or: [
+                        // {
+                        //     "sport.sportslist.name": {
+                        //         $regex: data.keyword,
+                        //         $options: "i"
+                        //     }
+                        // }, 
+                        {
+                            "sportsListSubCategory.name": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        }, {
+                            "athleteId.firstName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "athleteId.sfaId": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
                         }
-                    }, {
-                        "sportsListSubCategory.name": {
-                            $regex: data.keyword,
-                            $options: "i"
-                        }
-                    }, {
-                        "athleteId.firstName": {
-                            $regex: data.keyword,
-                            $options: "i"
-                        }
-                    }],
+                    ],
 
                 }
             },
@@ -1650,7 +1902,6 @@ var model = {
                                     callback(null, 0);
                                 } else {
                                     dataFinal.total = totals.length;
-                                    // console.log("counttotal", dataFinal.count);
                                     callback(null, dataFinal);
                                 }
                             }
@@ -1785,136 +2036,279 @@ var model = {
 
     },
 
+    getIndividualPipeLine: function () {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "athleteId",
+                    "foreignField": "_id",
+                    "as": "athleteId"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athleteId",
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "athleteId.school",
+                    "foreignField": "_id",
+                    "as": "athleteId.school"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$athleteId.school",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sportsListSubCategory"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$sportsListSubCategory",
+
+                }
+            },
+
+            // Stage 7
+            {
+                $lookup: {
+                    "from": "sports",
+                    "localField": "sport",
+                    "foreignField": "_id",
+                    "as": "sport"
+                }
+            },
+
+            // Stage 8
+            {
+                $unwind: {
+                    path: "$sport",
+
+                }
+            },
+
+            // Stage 9
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+
+            // Stage 10
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
+                }
+            },
+
+            // Stage 11
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
+
+            // Stage 12
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+                }
+            },
+
+            // Stage 13
+            {
+                $lookup: {
+                    "from": "weights",
+                    "localField": "sport.weight",
+                    "foreignField": "_id",
+                    "as": "sport.weight"
+                }
+            },
+
+            // Stage 14
+            {
+                $unwind: {
+                    path: "$sport.weight",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 15
+            {
+                $group: {
+                    _id: "$_id",
+                    info: {
+                        $push: {
+                            athleteId: "$athleteId._id",
+                            firstname: "$athleteId.firstName",
+                            middlename: "$athleteId.middleName",
+                            surname: "$athleteId.surname",
+                            school: "$athleteId.school.name",
+                            athleteSchoolName: "$athleteId.atheleteSchoolName",
+                            sfaid: "$athleteId.sfaId",
+                            createdby: "$createdBy",
+                            nominatedSchoolName: "$nominatedSchoolName",
+                            nominatedContactDetails: "$nominatedContactDetails",
+                            nominatedEmailId: "$nominatedEmailId",
+                            nominatedName: "$nominatedName",
+                            isVideoAnalysis: "$isVideoAnalysis",
+                            sportName: "$sportsListSubCategory.name",
+                            eventname: "$sport.sportslist.name",
+                            agegroup: "$sport.ageGroup.name",
+                            weight: "$sport.weight.name",
+                            gender: "$sport.gender",
+                        }
+                    }
+                }
+            },
+        ];
+        return pipeline;
+    },
+
     generateExcel: function (res) {
         var deepSearch = "athleteId sportsListSubCategory";
         async.waterfall([
                 function (callback) {
-                    IndividualSport.find().deepPopulate(deepSearch).exec(function (err, found) {
-                        if (_.isEmpty(found)) {
-                            callback(null, []);
+                    var pipeLine = IndividualSport.getIndividualPipeLine();
+                    IndividualSport.aggregate(pipeLine, function (err, found) {
+                        if (err) {
+                            callback(err, "error in mongoose");
                         } else {
-                            callback(null, found);
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, found);
+                            }
                         }
                     });
                 },
                 function (found, callback) {
                     console.log(found);
                     var excelData = [];
-                    async.each(found, function (mainData, callback) {
-                        console.log("mainData", mainData);
-                        var obj = {};
-                        if (mainData.athleteId) {
-                            obj.AthleteName = mainData.athleteId.firstName + " " + mainData.athleteId.surname;
-                        } else {
-                            obj.AthleteName = "";
-                        }
-                        obj.sportName = mainData.sportsListSubCategory.name;
-                        if (mainData.nominatedSchoolName) {
-                            obj.nominatedSchoolName = mainData.nominatedSchoolName;
-                        } else {
-                            obj.nominatedSchoolName = "";
-                        }
-                        if (mainData.nominatedContactDetails) {
-                            obj.nominatedContactDetails = mainData.nominatedContactDetails;
-                        } else {
-                            obj.nominatedContactDetails = "";
-                        }
-                        if (mainData.nominatedEmailId) {
-                            obj.nominatedEmailId = mainData.nominatedEmailId;
-                        } else {
-                            obj.nominatedEmailId = "";
-                        }
-                        if (mainData.nominatedName) {
-                            obj.nominatedName = mainData.nominatedName;
-                        } else {
-                            obj.nominatedName = "";
-                        }
-                        obj.createdBy = mainData.createdBy;
-                        var sport;
-                        var sports = {};
-                        var count = 0;
-                        async.each(mainData.sport, function (n, innerEachCallback) {
-                                async.waterfall([
-                                        function (callback) {
-                                            Sport.findOne({
-                                                _id: n
-                                            }).exec(function (err, found) {
-                                                if (err) {
-                                                    callback(err, null);
-                                                } else {
-                                                    if (_.isElement(found)) {
-                                                        callback(null, []);
-                                                    } else {
-                                                        console.log("found", found);
-                                                        callback(null, found);
-                                                    }
-                                                }
-                                            });
-                                        },
-                                        function (found, callback) {
-                                            AgeGroup.findOne({
-                                                _id: found.ageGroup
-                                            }).exec(function (err, ageData) {
-                                                if (err) {
-                                                    callback(err, null);
-                                                } else {
-                                                    if (_.isElement(ageData)) {
-                                                        callback(null, []);
-                                                    } else {
-                                                        sports.sport = found;
-                                                        sports.gender = found.gender;
-                                                        sports.age = ageData.name;
-                                                        callback(null, sports);
-                                                    }
-                                                }
-                                            });
-                                        },
-                                        function (sports, callback) {
-                                            console.log("sports", sports);
-                                            SportsList.findOne({
-                                                _id: sports.sport.sportslist
-                                            }).exec(function (err, sportlistData) {
-                                                if (err) {
-                                                    callback(err, null);
-                                                } else {
-                                                    if (_.isElement(sportlistData)) {
-                                                        callback(null, []);
-                                                    } else {
-                                                        console.log("sportlistData", sportlistData);
-                                                        sports.sportName = sportlistData.name;
-                                                        if (count == 0) {
-                                                            sport = "{ EventName:" + sports.sportName + "," + "gender:" + sports.gender + "," + "AgeGroup:" + sports.age + "}";
-                                                        } else {
-                                                            sport = sport + "{ EventName:" + sports.sportName + "," + "gender:" + sports.gender + "," + "AgeGroup:" + sports.age + "}";
-                                                        }
-                                                        count++;
-                                                        obj.Sports = sport;
-                                                        excelData.push(obj);
-                                                        innerEachCallback(null, excelData);
-                                                    }
-                                                }
-                                            });
-                                        }
-                                    ],
-                                    function (err, excelData) {
-                                        if (err) {
-                                            console.log(err);
-                                            callback(null, []);
-                                        } else if (excelData) {
-                                            if (_.isEmpty(excelData)) {
-                                                callback(null, []);
-                                            } else {
-                                                callback(null, excelData);
-                                            }
-                                        }
-                                    });
-                            },
-                            function (err) {
-                                callback(null, excelData);
+                    async.eachSeries(found, function (mainData, callback) {
+                            var obj = {};
+                            obj.year = new Date().getFullYear();
+                            var basicInfo = {};
+                            var event;
+                            var age;
+                            basicInfo.sport = [];
+                            var count = 0;
+                            async.each(mainData.info, function (n, callback) {
+                                console.log("info", n);
+                                console.log("count", count);
+                                if (n.middlename) {
+                                    basicInfo.name = n.firstname + " " + n.middlename + " " + n.surname;
+                                } else {
+                                    basicInfo.name = n.firstname + " " + n.surname;
+                                }
+                                if (n.athleteSchoolName) {
+                                    basicInfo.school = n.athleteSchoolName;
+                                } else {
+                                    basicInfo.school = n.school;
+                                }
+                                basicInfo.sfaid = n.sfaid;
+                                basicInfo.sportName = n.sportName;
+                                basicInfo.createdBy = n.createdby;
+                                if (n.nominatedSchoolName) {
+                                    basicInfo.nominatedSchoolName = n.nominatedSchoolName;
+                                } else {
+                                    basicInfo.nominatedSchoolName = "";
+                                }
+                                if (n.nominatedContactDetails) {
+                                    basicInfo.nominatedContactDetails = n.nominatedContactDetails;
+                                } else {
+                                    basicInfo.nominatedContactDetails = "";
+                                }
+                                if (n.nominatedEmailId) {
+                                    basicInfo.nominatedEmailId = n.nominatedEmailId;
+                                } else {
+                                    basicInfo.nominatedEmailId = "";
+                                }
+                                if (n.nominatedName) {
+                                    basicInfo.nominatedName = n.nominatedName;
+                                } else {
+                                    basicInfo.nominatedName = "";
+                                }
+                                if (n.isVideoAnalysis) {
+                                    basicInfo.isVideoAnalysis = n.isVideoAnalysis;
+                                } else {
+                                    basicInfo.isVideoAnalysis = "";
+                                }
+                                basicInfo.gender = n.gender;
+                                if (count == 0) {
+                                    age = n.agegroup;
+                                    event = age + " - " + n.eventname;
+                                    if (n.weight) {
+                                        basicInfo.weight = n.weight;
+                                    }
+                                    count++;
+                                } else {
+                                    age = n.agegroup;
+                                    event = event + " , " + age + " - " + n.eventname;
+                                    if (n.weight) {
+                                        basicInfo.weight = n.weight;
+                                    }
+                                }
+                                basicInfo.event = event;
+
+                                callback(null, basicInfo);
                             });
-                    }, function (err) {
-                        Config.generateExcelOld("IndividualSport", excelData, res);
-                    });
+                            // console.log("basicInfo", basicInfo);
+                            obj.SFAID = basicInfo.sfaid;
+                            obj.Athlete_Full_Name = basicInfo.name;
+                            obj.SchoolName = basicInfo.school;
+                            obj.Sport = basicInfo.sportName;
+                            obj.Gender = basicInfo.gender;
+                            obj.Event_Category = basicInfo.event;
+                            obj.Weight_Category = basicInfo.weight;
+                            if (basicInfo.createdBy) {
+                                obj.CreatedBy = basicInfo.createdBy;
+                            } else {
+                                obj.Createdby = " ";
+                            }
+
+                            obj.nominatedSchoolName = basicInfo.nominatedSchoolName;
+                            obj.nominatedContactDetails = basicInfo.nominatedContactDetails;
+                            obj.nominatedEmailId = basicInfo.nominatedEmailId;
+                            obj.nominatedName = basicInfo.nominatedName;
+                            obj.isVideoAnalysis = basicInfo.isVideoAnalysis;
+                            excelData.push(obj);
+                            console.log("obj", obj);
+                            callback(null, excelData);
+                        },
+                        function (err) {
+                            Config.generateExcelOld("IndividualSport", excelData, res);
+                        });
+
 
                 },
             ],

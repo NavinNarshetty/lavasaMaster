@@ -32,6 +32,7 @@
               <thead>
                 <tr>
                   <th>#</th>
+                  <th>SFA Id</th>
                   <th>
                     Athlete Name
                   </th>
@@ -48,9 +49,10 @@
                 <!--<tr ng-repeat="item in items">-->
                 <tr ng-repeat="item in items">
                   <!--<tr>-->
-                  <!--<td> {{($index + 1)+((formData.page-1)*maxRow)}}</td>-->
-                  <td>{{$index+1}}</td>
+                  <td> {{($index + 1)+((formData.page-1)*maxRow)}}</td>
+                  <!-- <td>{{$index+1}}</td> -->
 
+                  <td>{{item.athleteId.sfaId}}</td>
                   <td>{{item.athleteId.firstName}} {{item.athleteId.middleName}} {{item.athleteId.surname}} </td>
                   <td>{{item.sportsListSubCategory.name}} </td>
 
@@ -64,8 +66,6 @@
                                         </a>
                     <a class="btn btn-danger" ng-click="removeTeam(item._id)">
                       <i class="fa fa-trash"></i> Delete
-                    </a>
-                    <a class="btn btn-link" ng-click="transferToWebsite(item.athleteId._id)"><i class="fa  fa-user"></i> Access
                     </a>
                   </td>
                   <!--<td ng-repeat="but in json.json.action">

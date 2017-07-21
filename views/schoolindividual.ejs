@@ -134,7 +134,7 @@
         <td>
           <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
 
-            <p style="margin-bottom: 0px;">Congratulations! You have successfully registered a <span style="font-weight: bold;"><%=totalAthlete%> Athletes for <%=completeSportInfo[0].sportName%></span>              Team at SFA Mumbai 2017. Please find details for the same below:
+            <p style="margin-bottom: 0px;">Congratulations! You have successfully registered a <span style="font-weight: bold;"><%=totalAthlete%> Athletes for <%=completeSportInfo[0].sportName%></span>  at SFA Mumbai 2017. Please find details for the same below:
             </p>
           </div>
         </td>
@@ -170,19 +170,18 @@
             <table class="table">
               <thead style="text-align: center; background: #c4c4c4; ">
                 <th style="font-weight:600;">Sr.No.</th>
-                <th style="font-weight:600;">Athlete Name</th>
-                <th style="font-weight:600;">Athlete SFA ID </th>
+                <th style="font-weight:600;">Athlete SFA ID-Name</th>
+                <th style="font-weight:600;">Athlete Gender </th>
+                <th style="font-weight:600;">Athlete AgeGroup </th>
               </thead>
               <tbody>
                 <%_.each(completeSportInfo,function(mainData){%>
                   <tr>
-                    <td colspan="3" style="padding:0px !important;">
+                    <td colspan="4" style="padding:0px !important;">
                       <div style="margin-top: -12px !important;">
                         <ul style="border: 1px solid #091a71;margin-top: 0px;padding: 8px; color: white;background: #091a71; margin-bottom: 0px;">
                           <li style="display: inline-block; color: #00aaff;">
                             <%=mainData.eventName%>
-                              <%=mainData.gender%>
-                                <%=mainData.ageGroup%>
                           </li>
                         </ul>
                       </div>
@@ -195,10 +194,13 @@
                         <%=data.srno%>
                       </td>
                       <td>
-                        <%=data.name%>
+                        <%=data.sfaid%>-<%=data.name%>
                       </td>
                       <td>
-                        <%=data.sfaid%>
+                        <%=data.gender%>
+                      </td>
+                      <td>
+                        <%=data.ageGroup%>
                       </td>
                     </tr>
                     <%})%>

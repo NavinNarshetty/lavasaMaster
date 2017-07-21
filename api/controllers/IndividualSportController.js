@@ -64,6 +64,7 @@ var controller = {
                     req.body.school = found.schoolName;
                     req.body.sfaid = found.sfaID;
                     req.body.email = found.email;
+                    req.body.mobile = found.mobile;
                     IndividualSport.saveInIndividual(req.body, res.callback);
                 }
             });

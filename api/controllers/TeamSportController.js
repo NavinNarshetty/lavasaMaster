@@ -76,6 +76,54 @@ var controller = {
         TeamSport.generateExcel(res);
     },
 
+    editTeam: function (req, res) {
+        if (req.body) {
+            TeamSport.editTeam(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "User Not logged in"
+            });
+        }
+
+    },
+
+    editSaveTeam: function (req, res) {
+        if (req.body.schoolToken) {
+            // req.body.createdBy = "School";
+            Registration.findOne({
+                accessToken: req.body.schoolToken
+            }).exec(function (err, found) {
+                if (err) {
+                    res.json({
+                        value: false,
+                        data: "Incorrect Login Details"
+                    });
+                } else if (_.isEmpty(found)) {
+                    // callback("Incorrect Login Details", null);
+                    res.json({
+                        value: false,
+                        data: "Incorrect Login Details"
+                    });
+                } else {
+                    req.body.schoolSFA = found.sfaID;
+                    // req.body.schoolName = found.schoolName;
+                    // req.school = found._id;
+                    TeamSport.editSaveTeam(req.body, res.callback);
+                }
+            });
+        } else if (req.body.athleteToken) {
+            req.body.createdBy = "Athlete";
+            TeamSport.editteamAthlete(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "User Not logged in"
+            });
+        }
+
+    },
+
 
 
 

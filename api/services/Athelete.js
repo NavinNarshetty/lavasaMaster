@@ -9,9 +9,9 @@ var objectid = require("mongodb").ObjectID;
 var moment = require('moment');
 var request = require("request");
 var generator = require('generate-password');
-// autoIncrement.initialize(mongoose);
+autoIncrement.initialize(mongoose);
 var schema = new Schema({
-
+    receiptId: Number,
     atheleteID: {
         type: Number
     },
@@ -101,12 +101,12 @@ var schema = new Schema({
 
 schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
-// schema.plugin(autoIncrement.plugin, {
-//     model: 'Athelete',
-//     field: 'atheleteID',
-//     startAt: 1,
-//     incrementBy: 1
-// });
+schema.plugin(autoIncrement.plugin, {
+    model: 'Athelete',
+    field: 'receiptId',
+    startAt: 1,
+    incrementBy: 1
+});
 schema.plugin(timestamps);
 module.exports = mongoose.model('Athelete', schema);
 
@@ -568,9 +568,7 @@ var model = {
                     console.log(err);
                     callback(err, null);
                 } else if (found) {
-                    // data.order.bills = null;
                     if (_.isEmpty(found)) {
-                        // console.log("data", data);
                         data.year = new Date().getFullYear();
                         data.verifyCount = 0;
                         data.atheleteID = 0;
@@ -648,7 +646,6 @@ var model = {
                                 }
                             }
                         });
-
                     } else {
                         if (found[0].registrationFee == 'online PAYU' && found[0].paymentStatus == 'Pending') {
                             Athelete.remove({ //finds one with refrence to id
@@ -656,6 +653,7 @@ var model = {
                             }).exec(function (err, removed) {
                                 if (removed) {
                                     console.log("data removed");
+                                    data.year = new Date().getFullYear();
                                     Athelete.saveData(data, function (err, athleteData) {
                                         if (err) {
                                             console.log("err", err);
@@ -846,6 +844,7 @@ var model = {
             }
         });
     },
+
     saveVerify: function (data, found, callback) {
         Athelete.saveData(data, function (err, athleteData) { //saves data to database collection
             console.log("athleteData", athleteData);
@@ -883,6 +882,7 @@ var model = {
             }
         });
     },
+
     getAllAtheleteDetails: function (data, callback) {
         Athelete.find().exec(function (err, found) { //finds all athelete
             if (err) {
@@ -1003,7 +1003,7 @@ var model = {
                 emailData.surname = found.surname;
                 emailData.transactionID = found.transactionID;
                 emailData.Date = moment().format("DD-MM-YYYY");
-                emailData.receiptNo = "SFA" + found.atheleteID;
+                emailData.receiptNo = "SFA" + found.receiptId;
                 emailData.from = "info@sfanow.in";
                 emailData.email1 = [{
                     email: found.email
@@ -1954,15 +1954,16 @@ var model = {
                                 }
                             },
                             function (schoolData, callback) {
-                                if (n.atheleteID) {
-                                    if (n.registrationFee == "online PAYU") {
-                                        obj.receiptNo = "SFA" + n.atheleteID;
-                                    } else {
-                                        obj.receiptNo = "";
-                                    }
-                                } else {
-                                    obj.receiptNo = "";
-                                }
+                                // if (n.receiptId) {
+                                //     if (n.registrationFee == "online PAYU") {
+                                //         obj.receiptNo = "SFA" + n.receiptId;
+                                //     } else {
+                                //         obj.receiptNo = "";
+                                //     }
+                                // } else {
+                                //     obj.receiptNo = "";
+                                // }
+                                obj.receiptNo = "SFA" + n.receiptId;
                                 obj.school = schoolData;
                                 var parentInfo;
                                 var countParent = 0;
@@ -2031,9 +2032,25 @@ var model = {
                                 obj.paymentStatus = n.paymentStatus;
                                 obj.transactionID = n.transactionID;
                                 obj.remarks = n.remarks;
-                                obj.utm_medium = n.utm_medium;
-                                obj.utm_source = n.utm_source;
-                                obj.utm_campaign = n.utm_campaign;
+                                // obj.utm_medium = n.utm_medium;
+                                // obj.utm_source = n.utm_source;
+                                // obj.utm_campaign = n.utm_campaign;
+                                if (n.utm_medium) {
+                                    obj.utm_medium = n.utm_medium;
+                                } else {
+                                    obj.utm_medium = "";
+                                }
+
+                                if (n.utm_campaign) {
+                                    obj.utm_campaign = n.utm_campaign;
+                                } else {
+                                    obj.utm_campaign = "";
+                                }
+                                if (n.utm_source) {
+                                    obj.utm_source = n.utm_source;
+                                } else {
+                                    obj.utm_source = "";
+                                }
                                 // console.log("obj", obj);
                                 excelData.push(obj);
                                 callback(null, excelData);
@@ -2184,9 +2201,25 @@ var model = {
                         obj.paymentStatus = n.paymentStatus;
                         obj.transactionID = n.transactionID;
                         obj.remarks = n.remarks;
-                        obj.utm_medium = n.utm_medium;
-                        obj.utm_source = n.utm_source;
-                        obj.utm_campaign = n.utm_campaign;
+                        // obj.utm_medium = n.utm_medium;
+                        // obj.utm_source = n.utm_source;
+                        // obj.utm_campaign = n.utm_campaign;
+                        if (n.utm_medium) {
+                            obj.utm_medium = n.utm_medium;
+                        } else {
+                            obj.utm_medium = "";
+                        }
+
+                        if (n.utm_campaign) {
+                            obj.utm_campaign = n.utm_campaign;
+                        } else {
+                            obj.utm_campaign = "";
+                        }
+                        if (n.utm_source) {
+                            obj.utm_source = n.utm_source;
+                        } else {
+                            obj.utm_source = "";
+                        }
                         // console.log("obj", obj);
                         excelData.push(obj);
                         callback(null, excelData);

@@ -13,6 +13,14 @@
         "isSort": "",
         "tableRef": "firstName"
     }, {
+        "name": "Middle Name",
+        "isSort": "",
+        "tableRef": "middleName"
+    }, {
+        "name": "Surname",
+        "isSort": "",
+        "tableRef": "surname"
+    }, {
         "name": "Verification Status",
         "isSort": "",
         "tableRef": "status"

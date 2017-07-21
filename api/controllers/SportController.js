@@ -21,6 +21,26 @@ var controller = {
         }
     },
 
+    editAthletePerSchool: function (req, res) {
+        if (req.body) {
+            if (req.body.schoolToken) {
+                Sport.editAthletePerSchool(req.body, res.callback);
+            } else if (req.body.athleteToken) {
+                Sport.getEditAthlete(req.body, res.callback);
+            } else {
+                res.json({
+                    value: false,
+                    data: "Invalid User"
+                });
+            }
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     getSportPerTeam: function (req, res) {
         if (req.body) {
             Sport.getSportPerTeam(req.body, res.callback);

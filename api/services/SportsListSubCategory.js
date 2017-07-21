@@ -157,6 +157,7 @@ var model = {
                     if (found.atheleteSchoolName) {
                         var schoolName = {};
                         schoolName.name = found.atheleteSchoolName;
+                        data.schoolName = found.atheleteSchoolName;
                         callback(null, schoolName);
                     } else {
                         School.findOne({
@@ -167,6 +168,7 @@ var model = {
                             } else {
                                 var schoolName = {};
                                 schoolName.name = schoolData.name;
+                                data.schoolName = found.name;
                                 callback(null, schoolName);
                             }
                         });
@@ -188,6 +190,7 @@ var model = {
                             });
                         } else {
                             data.school = complete._id;
+                            data.schoolName = complete.schoolName;
                             SportsListSubCategory.getOneSport(data, function (err, complete1) {
                                 if (err) {
                                     callback(err, null);
@@ -564,9 +567,161 @@ var model = {
                 var type = {};
                 type.sportType = found.sportType;
                 type.sportName = found.name;
+                type.isTeam = found.isTeam;
                 callback(null, type);
             }
         });
+    },
+    // --------------------------------------EDIT------------------------------------------
+
+    editOneSport: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                var pipeLine = SportsListSubCategory.getAggregatePipeLine(data);
+                var newPipeLine = _.cloneDeep(pipeLine);
+                newPipeLine.push({
+                    $match: {
+                        gender: data.gender,
+                        ageGroup: objectid(data.age)
+                    }
+                });
+                Sport.aggregate(newPipeLine, function (err, totals) {
+                    if (err) {
+                        console.log(err);
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(totals)) {
+                            callback(null, []);
+                        } else {
+                            // var results = {};
+                            console.log(totals);
+                            callback(null, totals);
+                        }
+                    }
+                });
+            },
+            function (totals, callback) {
+                // sportsubData
+                if (totals[0].sportsubData.isTeam == true) {
+                    var results = {};
+                    results.sport = totals[0]._id;
+                    results.minplayer = totals[0].minTeamPlayers;
+                    results.maxPlayer = totals[0].maxTeamPlayers;
+                    callback(null, results);
+                    // TeamSport.count({
+                    //     sport: results.sport,
+                    //     schoolName: data.schoolName
+                    // }).exec(function (err, found) {
+                    //     if (found == totals[0].maxTeam) {
+                    //         console("Max")
+                    //         callback("Max Team Created", null);
+                    //     } else {
+                    //         callback(null, results);
+                    //     }
+                    // });
+                } else {
+                    callback(null, "this is individualSport");
+                }
+            }
+        ], function (err, data2) {
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else if (data2) {
+                if (_.isEmpty(data2)) {
+                    callback("Data is empty", null);
+                } else {
+                    callback(null, data2);
+                }
+            }
+        });
+        // 1. GetSportOfSportCategory
+        // 2. groupBy
+        // callback(GroupByResults);
+        // waterfall: {}
+        //      FindOne
+        //      if(isTeam)
+        //          countTeamForThatSchool
+        //              if(team >= maxTeam) { callback(fail,"MAx Team Created") }
+        //              else GoAhead
+        //      
+    },
+
+    editSchoolPerAthlete: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Athelete.findOne({
+                        accessToken: data.athleteToken
+                    }).exec(function (err, found) {
+                        if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.atheleteSchoolName) {
+                        var schoolName = {};
+                        schoolName.name = found.atheleteSchoolName;
+                        data.schoolName = found.atheleteSchoolName;
+                        callback(null, schoolName);
+                    } else {
+                        School.findOne({
+                            _id: found.school
+                        }).exec(function (err, schoolData) {
+                            if (_.isEmpty(schoolData)) {
+                                callback(null, []);
+                            } else {
+                                var schoolName = {};
+                                schoolName.name = schoolData.name;
+                                data.schoolName = found.name;
+                                callback(null, schoolName);
+                            }
+                        });
+                    }
+
+                },
+                function (schoolName, callback) {
+                    Registration.findOne({
+                        schoolName: schoolName.name
+                    }).exec(function (err, complete) {
+                        if (_.isEmpty(complete)) {
+                            SportsListSubCategory.editOneSport(data, function (err, complete1) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete1);
+                                }
+
+                            });
+                        } else {
+                            data.school = complete._id;
+                            data.schoolName = complete.schoolName;
+                            SportsListSubCategory.editOneSport(data, function (err, complete1) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete1);
+                                }
+
+                            });
+                        }
+                    });
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback("Max Team Created", null);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
     },
 
 };

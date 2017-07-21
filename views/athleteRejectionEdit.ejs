@@ -9,12 +9,12 @@
     <style>
         @font-face {
             font-family: 'TitilliumWeb-Bold';
-            src: url("../../font/TitilliumWeb-Bold.ttf");
+            src: url("../font/TitilliumWeb-Bold.ttf");
         }
         
         @font-face {
             font-family: 'TitilliumWeb-Regular';
-            src: url("../../font/TitilliumWeb-Regular.ttf");
+            src: url("../font/TitilliumWeb-Regular.ttf");
         }
         
         .body {
@@ -41,20 +41,31 @@
             padding-right: 5px;
         }
         
+       a{
+        text-decoration: none;
+         
+       }
+
+       a:hover{
+        text-decoration: underline !important; 
+       }
+
         table {
             width: 600px;
             margin: 0 auto;
+
+
         }
         
         h2:before {
             content: '';
-            width: 51px;
+            width: 100px;
             height: 0px;
             color: #00aaff;
             top: 50%;
             display: block;
             border-bottom: 1px solid #00aaff;
-            left: 5px;
+            left: 100px;
             position: absolute;
             -ms-transform: translate(-50%, -50%);
             -moz-transform: translate(-50%, -50%);
@@ -64,13 +75,13 @@
         
         h2:after {
             content: '';
-            width: 51px;
+            width: 100px;
             height: 0px;
             color: #00aaff;
             top: 50%;
             display: block;
             border-bottom: 1px solid #00aaff;
-            right: -45px;
+            right: 0px;
             position: absolute;
             -ms-transform: translate(-50%, -50%);
             -moz-transform: translate(-50%, -50%);
@@ -85,13 +96,13 @@
         <thead>
             <tr>
                 <td>
-                    <div class="logo text-center" style="margin-top: 30px;"><img src="https://sfa.wohlig.co.in/img/img/logo.png" class="img-responsive" style="margin: 0 auto;"><br></div>
+                    <div class="logo text-center" style="margin-top: 30px;"><img src="../img/logo.png" class="img-responsive" style="margin: 0 auto;"><br></div>
                 </td>
             </tr>
             <tr>
                 <td class="text-center">
-                    <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">WELCOME TO </span>
-                    <h2 style="margin:0px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">VERIFICATION AT SFA MUMBAI 2017 </h2>
+                    <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">SPORTS REGISTRATIONS </span>
+                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA MUMBAI 2017  </h2>
                 </td>
 
             </tr>
@@ -100,16 +111,16 @@
         <tbody>
             <tr>
                 <td>
-                    <div style="padding: 0px 35px; font-family: TitilliumWeb-Regular;font-size: 17px;">
-                        <p> Dear Sir/ Madam, </p>
-                        <p style="font-family:TitilliumWeb-Bold;">Congratulations, You are now a verified Athlete for SFA Mumbai 2017.</p>
-                        <p> Find below your SFA ID and SFA Password to be used to gain access<br> to Sports Registration Forms.</p>
-                        <p>i. SFA ID: <%=sfaID%> <br>ii SFA Password: <%=password%>(To be kept confidential)</p>
-                        <p> We will inform you via Email/SMS, once the Sports Registrations are
-                            <br>open.</p>
-                        <p>The Sports Registration forms will be available on</p>
-                        <p><a href="https://sfanow.in/register" target="_new" style="color:#fff;text-decoration: none;">https://sfanow.in/register</a></p>
-                        <p>For further queries please call its on <span style="font-family:TitilliumWeb-Bold;">7045684365 /66 /67 </span>                            or<br> email us at <span style="font-family:TitilliumWeb-Bold;">info@sfanow.in</span></p>
+                    <div class="main-div"style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
+                        <p> Dear Athlete,</p>
+
+                        <p>Thank you for your interest in participating at SFA Mumbai 2017. We regret to inform you that your application for <%=sportName%> has been rejected. However, we look forward to hosting you at the various workshops, exhibition matches and educational sessions planned during the course of the championship. These activities will advance your sporting knowledge and help take your sporting prowess to the next level.
+                        </p>
+                        <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA Mumbai 2017, by following our Facebook event page:</p>
+                        <a style="   color: #0a1a72; font-weight: 600;"  href="https://www.facebook.com/pg/sportsforallnow/events/" target="_blank">https://www.facebook.com/pg/sportsforallnow/events/</a>
+                        <p>For further details about your application or any other information you may require please contact us on <span style="font-family:TitilliumWeb-Bold;">7045684365 /66 /67 </span>                            or<br> email us at 
+                        <a style="font-family:TitilliumWeb-Bold; color: black;"" href="mailto:info@sfanow.in">info@sfanow.in</a>
+                        </p>
                         <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>
 
                     </div>

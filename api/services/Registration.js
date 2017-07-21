@@ -18,6 +18,7 @@ var schema = new Schema({
     institutionType: {
         type: String,
     },
+    receiptId: Number,
     sfaID: {
         type: String,
         default: ""
@@ -34,8 +35,6 @@ var schema = new Schema({
     schoolCategory: String,
     affiliatedBoard: String,
     schoolLogo: String,
-
-
     schoolAddress: String,
     schoolAddressLine2: String,
     state: String,
@@ -43,8 +42,6 @@ var schema = new Schema({
     city: String,
     locality: String,
     pinCode: String,
-
-
     contactPerson: String,
     lorline: String,
     email: String,
@@ -122,6 +119,12 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
+schema.plugin(autoIncrement.plugin, {
+    model: 'Registration',
+    field: 'receiptId',
+    startAt: 1,
+    incrementBy: 1
+});
 module.exports = mongoose.model('Registration', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
@@ -194,6 +197,7 @@ var model = {
                     callback(err, null);
                 } else if (found) {
                     if (_.isEmpty(found)) {
+
                         Registration.saveRegistration(data, function (err, vData) {
                             if (err) {
                                 callback(err, null);
@@ -992,7 +996,7 @@ var model = {
                             emailData.schoolName = found.schoolName;
                             emailData.transactionID = found.transactionID;
                             emailData.Date = moment().format("DD-MM-YYYY");
-                            var receipt = "SFA" + found.registerID;
+                            var receipt = "SFA" + found.receiptId;
                             emailData.receiptNo = receipt;
                             emailData.from = "info@sfanow.in";
                             emailData.email1 = [{
@@ -1037,8 +1041,12 @@ var model = {
                             }
                             emailData.schoolName = found.schoolName;
                             emailData.schoolAddress = found.schoolAddress;
-                            emailData.panNo = found.panNo;
-                            emailData.gstNo = found.gstNo;
+                            if (found.panNo) {
+                                emailData.panNo = found.panNo;
+                            }
+                            if (found.gstNo) {
+                                emailData.gstNo = found.gstNo;
+                            }
                             emailData.transactionID = found.transactionID;
                             emailData.Date = moment().format("DD-MM-YYYY");
                             var receipt = "SFA" + found.registerID;
@@ -1378,15 +1386,16 @@ var model = {
                         var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
                         // console.log("dateTime", n.createdAt, dateTime);
                         obj.date = dateTime;
-                        if (n.registerID) {
-                            if (n.registrationFee == "online PAYU") {
-                                obj.receiptNo = "SFA" + n.registerID;
-                            } else {
-                                obj.receiptNo = "";
-                            }
-                        } else {
-                            obj.receiptNo = "";
-                        }
+                        // if (n.registerID) {
+                        //     if (n.registrationFee == "online PAYU") {
+                        //         obj.receiptNo = "SFA" + n.registerID;
+                        //     } else {
+                        //         obj.receiptNo = "";
+                        //     }
+                        // } else {
+                        //     obj.receiptNo = "";
+                        // }
+                        obj.receiptNo = "SFA" + n.receiptId;
                         obj.schoolType = n.schoolType;
                         obj.schoolCategory = n.schoolCategory;
                         obj.affiliatedBoard = n.affiliatedBoard;
@@ -1510,11 +1519,32 @@ var model = {
                         obj.paymentStatus = n.paymentStatus;
                         obj.transactionID = n.transactionID;
                         obj.remarks = n.remarks;
-                        obj.panNo = n.panNo;
-                        obj.gstNo = n.gstNo;
-                        obj.utm_medium = n.utm_medium;
-                        obj.utm_source = n.utm_source;
-                        obj.utm_campaign = n.utm_campaign;
+                        if (n.panNo) {
+                            obj.panNo = n.panNo;
+                        } else {
+                            obj.panNo = "";
+                        }
+                        if (n.gstNo) {
+                            obj.gstNo = n.gstNo;
+                        } else {
+                            obj.gstNo = "";
+                        }
+                        if (n.utm_medium) {
+                            obj.utm_medium = n.utm_medium;
+                        } else {
+                            obj.utm_medium = "";
+                        }
+
+                        if (n.utm_campaign) {
+                            obj.utm_campaign = n.utm_campaign;
+                        } else {
+                            obj.utm_campaign = "";
+                        }
+                        if (n.utm_source) {
+                            obj.utm_source = n.utm_source;
+                        } else {
+                            obj.utm_source = "";
+                        }
                         excelData.push(obj);
 
                     });
@@ -1652,14 +1682,12 @@ var model = {
                     var designation = details.designation;
                     if (count == 0) {
                         sportsInfo = "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                        count++;
                     } else {
                         sportsInfo = sportsInfo + "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
                     }
-                    count++;
-
-                    console.log("sportsInfo", sportsInfo);
-
                 });
+                console.log("sportsInfo", sportsInfo);
                 obj.sportsDepartment = sportsInfo;
                 obj.state = n.state;
                 obj.district = n.district;
@@ -1683,11 +1711,32 @@ var model = {
                 obj.paymentStatus = n.paymentStatus;
                 obj.transactionID = n.transactionID;
                 obj.remarks = n.remarks;
-                obj.panNo = n.panNo;
-                obj.gstNo = n.gstNo;
-                obj.utm_medium = n.utm_medium;
-                obj.utm_source = n.utm_source;
-                obj.utm_campaign = n.utm_campaign;
+                if (n.panNo) {
+                    obj.panNo = n.panNo;
+                } else {
+                    obj.panNo = "";
+                }
+                if (n.gstNo) {
+                    obj.gstNo = n.gstNo;
+                } else {
+                    obj.gstNo = "";
+                }
+                if (n.utm_medium) {
+                    obj.utm_medium = n.utm_medium;
+                } else {
+                    obj.utm_medium = "";
+                }
+
+                if (n.utm_campaign) {
+                    obj.utm_campaign = n.utm_campaign;
+                } else {
+                    obj.utm_campaign = "";
+                }
+                if (n.utm_source) {
+                    obj.utm_source = n.utm_source;
+                } else {
+                    obj.utm_source = "";
+                }
                 excelData.push(obj);
 
             });

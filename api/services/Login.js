@@ -1,4 +1,13 @@
 var generator = require('generate-password');
+var mongoose = require('mongoose');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+var uniqueValidator = require('mongoose-unique-validator');
+var timestamps = require('mongoose-timestamp');
+var validators = require('mongoose-validators');
+var monguurl = require('monguurl');
+var objectid = require("mongodb").ObjectID;
+var lodash = require('lodash');
+var moment = require('moment');
 
 var schema = new Schema({});
 
@@ -464,6 +473,36 @@ var model = {
             callback("User not Logged In", null);
         }
     },
+    getSchoolPipeLine: function (data) {
+
+        var pipeline = [{
+                $match: {
+                    "_id": objectid(data.buf)
+                }
+            },
+
+
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "school",
+                    "foreignField": "_id",
+                    "as": "school"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$school",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+        ];
+        return pipeline;
+    },
 
     editAccess: function (data, callback) {
         if (data.athleteId) {
@@ -478,15 +517,70 @@ var model = {
                         _id: buf
                     }).exec(function (err, found) {
                         if (err) {
+                            console.log(err);
                             callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            callback(null, []);
+                        } else if (found) {
+                            console.log("found", found);
+                            if (_.isEmpty(found.accessToken) || found.accessToken == " ") {
+                                data.tokenExist = false;
+                                data.buf = buf;
+                                callback(null, data);
+                            } else {
+                                data.tokenExist = true;
+                                data.buf = buf;
+                                callback(null, data);
+                            }
+                        }
+                    });
+                },
+                function (data, callback) {
+                    if (data.tokenExist == false) {
+                        var token = generator.generate({
+                            length: 16,
+                            numbers: true
+                        })
+                        var matchToken = {
+                            $set: {
+                                accessToken: token
+                            }
+                        }
+                        Athelete.update({
+                            _id: data.buf
+                        }, matchToken).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    console.log("value :", data3);
+                                    callback(null, data3);
+                                }
+                            });
+                    } else {
+                        var data3 = data;
+                        console.log("data3", data3);
+                        callback(null, data3);
+                    }
+                },
+                function (data3, callback) {
+                    // console.log("data", data);
+                    var pipeLine = Login.getSchoolPipeLine(data3);
+                    Athelete.aggregate(pipeLine, function (err, found) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, "error in mongoose");
                         } else {
-                            var finalData = {};
-                            finalData.data = found;
-                            finalData.userType = "Athlete";
-                            finalData.mixAccess = true;
-                            callback(null, finalData);
+                            if (_.isEmpty(found)) {
+                                callback("inside empty");
+                                callback(null, []);
+                            } else {
+                                var finalData = {};
+                                finalData.data = found[0];
+                                finalData.userType = "athlete";
+                                finalData.mixAccess = true;
+                                console.log("finalData", finalData);
+                                callback(null, finalData);
+                            }
                         }
                     });
                 }
@@ -509,14 +603,65 @@ var model = {
                         _id: buf
                     }).exec(function (err, found) {
                         if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else if (found) {
+                            console.log("found", found);
+                            if (_.isEmpty(found.accessToken) || found.accessToken == " ") {
+                                data.tokenExist = false;
+                                data.buf = buf;
+                                callback(null, data);
+                            } else {
+                                data.tokenExist = true;
+                                data.buf = buf;
+                                callback(null, data);
+                            }
+                        }
+                    });
+                },
+                function (data, callback) {
+                    if (data.tokenExist == false) {
+                        var token = generator.generate({
+                            length: 16,
+                            numbers: true
+                        })
+                        var matchToken = {
+                            $set: {
+                                accessToken: token
+                            }
+                        }
+                        Registration.update({
+                            _id: data.buf
+                        }, matchToken).exec(
+                            function (err, data3) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(err, null);
+                                } else if (data3) {
+                                    console.log("value :", data3);
+                                    callback(null, data3);
+                                }
+                            });
+                    } else {
+                        var data3 = data;
+                        callback(null, data3);
+                    }
+                },
+
+                function (data3, callback) {
+                    Registration.findOne({
+                        _id: data.buf
+                    }).exec(function (err, found) {
+                        if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(found)) {
                             callback(null, []);
                         } else {
                             var finalData = {};
                             finalData.data = found;
-                            finalData.userType = "School";
+                            finalData.userType = "school";
                             finalData.mixAccess = true;
+                            console.log("finalData", finalData);
                             callback(null, finalData);
                         }
                     });
