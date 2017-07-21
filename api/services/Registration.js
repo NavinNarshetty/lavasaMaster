@@ -1647,14 +1647,12 @@ var model = {
                     var designation = details.designation;
                     if (count == 0) {
                         sportsInfo = "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
+                        count++;
                     } else {
                         sportsInfo = sportsInfo + "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
                     }
-                    count++;
-
-                    console.log("sportsInfo", sportsInfo);
-
                 });
+                console.log("sportsInfo", sportsInfo);
                 obj.sportsDepartment = sportsInfo;
                 obj.state = n.state;
                 obj.district = n.district;

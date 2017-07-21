@@ -629,7 +629,7 @@ var model = {
                 callback(err, null);
             } else if (data2) {
                 if (_.isEmpty(data2)) {
-                    callback("Max Team Created", null);
+                    callback("Data is empty", null);
                 } else {
                     callback(null, data2);
                 }
@@ -687,7 +687,7 @@ var model = {
                         schoolName: schoolName.name
                     }).exec(function (err, complete) {
                         if (_.isEmpty(complete)) {
-                            SportsListSubCategory.getOneSport(data, function (err, complete1) {
+                            SportsListSubCategory.editOneSport(data, function (err, complete1) {
                                 if (err) {
                                     callback(err, null);
                                 } else {
@@ -698,7 +698,7 @@ var model = {
                         } else {
                             data.school = complete._id;
                             data.schoolName = complete.schoolName;
-                            SportsListSubCategory.getOneSport(data, function (err, complete1) {
+                            SportsListSubCategory.editOneSport(data, function (err, complete1) {
                                 if (err) {
                                     callback(err, null);
                                 } else {
