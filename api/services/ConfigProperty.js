@@ -6,13 +6,13 @@ var schema = new Schema({
     city: String,
     country: String,
     area: [{
-        name: String,
+        type: String,
     }],
     totalPayAmount: Number,
     totalPayAmountInWords: String,
     taxAmount: String,
     taxType: [{
-        name: String,
+        type: String,
     }],
     percentTax: Number,
     reqUrl: String,
@@ -48,6 +48,7 @@ var model = {
                 } else {
                     finalData.city = property.city;
                     finalData.area = property.area;
+                    finalData.type = property.institutionType;
                     callback(null, finalData);
                 }
             }

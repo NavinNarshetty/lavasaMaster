@@ -38,13 +38,17 @@
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "Area/Locality",
-        "type": "text",
+        "name": "Area",
+        "type": "tags",
         "tableRef": "area",
         "placeholder": "Select Area",
-        "id": "area",
+        "id": "Area",
         "validation": ["", "trim", ""],
-        "url": ""
+        "onView": true,
+        "url": "",
+        "dropDownField": "",
+        "dropDownType": "multiple",
+        "dropDown": ""
     }, {
         "name": "Amount",
         "type": "Number",
