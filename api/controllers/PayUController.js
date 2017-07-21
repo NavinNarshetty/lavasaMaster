@@ -128,8 +128,7 @@ var controller = {
                 console.log('yes success');
                 Athelete.updatePaymentStatus(param, function (err, data) {
                     if (err) {
-                        console.log('amoutn not match issue');
-                        // res.redirect("http://localhost:8080/#/sorry/" + orderid + "/" + finalPayAmt);
+                        console.log('amount not match issue');
                         res.json({
                             value: false,
                             data: "Invalid Request"

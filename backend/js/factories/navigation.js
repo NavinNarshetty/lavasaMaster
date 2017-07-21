@@ -121,7 +121,12 @@ myApp.factory('NavigationService', function ($http) {
             classis: "activeColor",
             sref: "#!/individual-sport",
             icon: "phone"
-        }
+        }, {
+            name: "ConfigProperty",
+            classis: "activeColor",
+            sref: "#!/page/viewConfigProperty//",
+            icon: "phone",
+        },
 
         // {
         //     name: "Second Category",

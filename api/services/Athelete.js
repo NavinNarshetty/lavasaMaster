@@ -787,7 +787,7 @@ var model = {
                                             if (_.isEmpty(datafound)) {
                                                 data.atheleteID = 1;
                                                 console.log("atheleteID", data.atheleteID);
-                                                data.sfaId = "M" + "A" + year + data.atheleteID;
+                                                data.sfaId = prefixCity + "A" + year + data.atheleteID;
                                             } else {
                                                 console.log("found", datafound[0].sfaId);
                                                 // if (datafound[0].atheleteID == undefined) {
@@ -795,7 +795,7 @@ var model = {
                                                 // }
                                                 data.atheleteID = ++datafound[0].atheleteID;
                                                 console.log("atheleteID", data.atheleteID);
-                                                data.sfaId = "M" + "A" + year + data.atheleteID;
+                                                data.sfaId = prefixCity + "A" + year + data.atheleteID;
                                             }
                                             data.verifiedDate = new Date();
 

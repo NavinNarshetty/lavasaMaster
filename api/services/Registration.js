@@ -15,6 +15,9 @@ require('mongoose-middleware').initialize(mongoose);
 
 var schema = new Schema({
     registerID: Number,
+    institutionType: {
+        type: String,
+    },
     receiptId: Number,
     sfaID: {
         type: String,
@@ -233,19 +236,42 @@ var model = {
     },
 
     saveRegistration: function (data, callback) {
-        data.verifyCount = 0;
-        data.registerID = 0;
-        console.log("data", data);
-        data.year = new Date().getFullYear();
-        Registration.saveData(data, function (err, registerData) {
-            console.log("registerData", registerData);
-            if (err) {
-                console.log("err", err);
-                callback("There was an error while saving data", null);
-            } else {
-                if (_.isEmpty(registerData)) {
-                    callback("No register data found", null);
-                } else {
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            console.log("err", err);
+                            callback("No school Found!", null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                data.institutionType = property.institutionType;
+                                callback(null, data);
+                            }
+                        }
+                    });
+                },
+                function (data, callback) {
+                    data.verifyCount = 0;
+                    data.registerID = 0;
+                    console.log("data", data);
+                    data.year = new Date().getFullYear();
+                    Registration.saveData(data, function (err, registerData) {
+                        console.log("registerData", registerData);
+                        if (err) {
+                            console.log("err", err);
+                            callback("There was an error while saving data", null);
+                        } else {
+                            if (_.isEmpty(registerData)) {
+                                callback("No register data found", null);
+                            } else {
+                                callback(null, registerData);
+                            }
+                        }
+                    });
+                },
+                function (registerData, callback) {
                     if (registerData.registrationFee == "cash") {
                         Registration.cashPaymentMailSms(data, function (err, mailsms) {
                             if (err) {
@@ -263,8 +289,19 @@ var model = {
                         callback(null, registerData);
                     }
                 }
-            }
-        });
+            ],
+            function (err, results) {
+                if (err) {
+                    console.log(err);
+                    callback(null, results);
+                } else if (results) {
+                    if (_.isEmpty(results)) {
+                        callback(null, results);
+                    } else {
+                        callback(null, results);
+                    }
+                }
+            });
     },
     //on backend save click (update)
     generateSfaID: function (data, callback) {
@@ -293,13 +330,15 @@ var model = {
                             });
                             if (_.isEmpty(data.sfaID)) {
                                 var year = new Date().getFullYear().toString().substr(2, 2);
-
                                 console.log("City", city);
                                 if (_.isEmpty(schoolData.city)) {
                                     schoolData.city = "Mumbai"
                                 }
                                 var city = schoolData.city;
                                 var prefixCity = city.charAt(0);
+                                console.log("prefixCity", prefixCity);
+                                var institutionType = schoolData.institutionType;
+                                var prefixType = institutionType.charAt(0);
                                 console.log("prefixCity", prefixCity);
                                 Registration.find({
                                     "status": 'Verified'
@@ -315,12 +354,12 @@ var model = {
                                             if (_.isEmpty(datafound)) {
                                                 data.registerID = 1;
                                                 console.log("registerID", data.registerID);
-                                                data.sfaID = "M" + "S" + year + data.registerID;
+                                                data.sfaID = prefixCity + prefixType + year + data.registerID;
                                             } else {
                                                 console.log("found", datafound[0].sfaID);
                                                 data.registerID = ++datafound[0].registerID;
                                                 console.log("registerID", data.registerID);
-                                                data.sfaID = "M" + "S" + year + data.registerID;
+                                                data.sfaID = prefixCity + prefixType + year + data.registerID;
                                             }
                                             data.verifiedDate = new Date();
                                             async.parallel([
@@ -361,8 +400,6 @@ var model = {
                                                     });
                                                 },
                                                 function (callback) {
-
-
                                                     Registration.saveVerify(data, schoolData, function (err, vData) {
                                                         if (err) {
                                                             callback(err, null);
@@ -439,9 +476,7 @@ var model = {
                                     callback(err, null);
                                 } else if (vData) {
                                     async.waterfall([
-
                                         function (callback) {
-
                                             Registration.findOne({
                                                 _id: schoolData._id
                                             }).lean().exec(function (err, school) {
