@@ -1549,6 +1549,8 @@ var model = {
                             } else {
                                 var name = data.info[0].firstname + " " + data.info[0].lastname;
                             }
+                            athelete.gender = data.info[0].gender;
+                            athelete.ageGroup = data.info[0].ageGroup;
                             athelete.name = name;
                             athelete.sfaid = data.info[0].sfaid;
                             sportInfo.athleteData.push(athelete);

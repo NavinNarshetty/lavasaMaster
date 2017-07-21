@@ -575,7 +575,7 @@ var model = {
                                 callback(null, []);
                             } else {
                                 var finalData = {};
-                                finalData.data = found;
+                                finalData.data = found[0];
                                 finalData.userType = "athlete";
                                 finalData.mixAccess = true;
                                 console.log("finalData", finalData);
