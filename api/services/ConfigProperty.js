@@ -46,9 +46,9 @@ var model = {
                 if (_.isEmpty(property)) {
                     callback(null, []);
                 } else {
-                    finalData.city = property.city;
-                    finalData.area = property.area;
-                    finalData.type = property.institutionType;
+                    finalData.city = property[0].city;
+                    finalData.area = property[0].area;
+                    finalData.type = property[0].institutionType;
                     callback(null, finalData);
                 }
             }

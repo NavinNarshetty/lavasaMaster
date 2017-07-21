@@ -246,17 +246,18 @@ var model = {
                             if (_.isEmpty(property)) {
                                 callback(null, []);
                             } else {
-                                data.institutionType = property.institutionType;
-                                callback(null, data);
+                                var institutionType = property[0].institutionType;
+                                callback(null, institutionType);
                             }
                         }
                     });
                 },
-                function (data, callback) {
+                function (institutionType, callback) {
                     data.verifyCount = 0;
                     data.registerID = 0;
-                    console.log("data", data);
+                    data.institutionType = institutionType;
                     data.year = new Date().getFullYear();
+                    console.log("data", data);
                     Registration.saveData(data, function (err, registerData) {
                         console.log("registerData", registerData);
                         if (err) {
