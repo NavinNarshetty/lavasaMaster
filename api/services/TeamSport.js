@@ -1108,6 +1108,7 @@ var model = {
         ];
         return pipeline;
     },
+
     getIndividualPipeLine: function (data) {
 
         var pipeline = [
@@ -1173,6 +1174,7 @@ var model = {
         ];
         return pipeline;
     },
+
     //----------------------------------------EDIT-----------------------------------------
 
     editTeam: function (data, callback) {

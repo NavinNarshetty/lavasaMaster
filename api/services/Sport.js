@@ -673,13 +673,13 @@ var model = {
                                 } else {
                                     var final = {};
                                     final.data = [];
-                                    console.log("complete", complete);
+                                    // console.log("complete", complete);
                                     _.each(complete.results, function (n) {
                                         console.log("n", n);
                                         final.data.push(n.athleteId);
                                     });
                                     final.total = complete.total;
-                                    console.log("final", final);
+                                    // console.log("final", final);
                                     callback(null, final);
                                 }
                             }
@@ -708,10 +708,10 @@ var model = {
                         console.log("doubles");
                         var results = {};
                         var finalData = [];
-                        console.log("total", complete.total);
+                        // console.log("total", complete.total);
                         async.eachSeries(complete.results, function (n, callback) {
                                 data.athlete = n._id;
-                                console.log("n", data.athlete);
+                                // console.log("n", data.athlete);
                                 var pipeLine = Sport.getStudentTeamPipeline(data);
                                 StudentTeam.aggregate(pipeLine, function (err, found) {
                                     if (err) {
@@ -762,7 +762,7 @@ var model = {
                     } else if (data.sportName.includes("Shooting") || data.sportName.includes("shooting")) {
                         var results = {};
                         var finalData = [];
-                        console.log("complete", complete);
+                        // console.log("complete", complete);
                         async.each(complete.data, function (n, callback) {
                                 // console.log("n------", n);
                                 data.athlete = n._id;
@@ -2062,10 +2062,6 @@ var model = {
             }, {
                 $match: {
                     "studentId.gender": data.gender,
-                    "studentId.dob": {
-                        $gte: new Date(data.fromDate),
-                        $lte: new Date(data.toDate),
-                    }
                 }
             },
 
@@ -2248,15 +2244,15 @@ var model = {
                     }
                 },
                 function (complete, callback) {
-                    console.log("complete next", complete.results);
+                    // console.log("complete next", complete.results);
                     if (data.sportName.includes("Doubles") || data.sportName.includes("doubles")) {
                         console.log("doubles");
                         var results = {};
                         var finalData = [];
-                        console.log("total", complete.total);
+                        // console.log("total", complete.total);
                         async.eachSeries(complete.results, function (n, callback) {
                                 data.athlete = n._id;
-                                console.log("n", data.athlete);
+                                // console.log("n", data.athlete);
                                 var pipeLine = Sport.getStudentTeamPipeline(data);
                                 StudentTeam.aggregate(pipeLine, function (err, found) {
                                     if (err) {
@@ -2307,7 +2303,7 @@ var model = {
                     } else if (data.sportName.includes("Shooting") || data.sportName.includes("shooting")) {
                         var results = {};
                         var finalData = [];
-                        console.log("complete", complete);
+                        // console.log("complete", complete);
                         async.each(complete.data, function (n, callback) {
                                 // console.log("n------", n);
                                 data.athlete = n._id;
@@ -2477,28 +2473,6 @@ var model = {
                                         }
                                     });
                                 }
-
-                                // function (data, callback) {
-                                //     StudentTeam.findOne({
-                                //         studentId: data.found._id,
-                                //         sport: data.sport
-                                //     }).lean().exec(function (err, studentData) {
-                                //         if (_.isEmpty(studentData)) {
-                                //             var athlete = {};
-                                //             athlete = data.found;
-                                //             athlete.isTeamSelected = false;
-                                //             data.found = athlete;
-                                //             callback(null, data);
-                                //         } else {
-                                //             var athlete = {};
-                                //             athlete = data.found;
-                                //             athlete.isTeamSelected = true;
-                                //             data.found = athlete;
-                                //             console.log("data", data.found);
-                                //             callback(null, data);
-                                //         }
-                                //     });
-                                // }
                             ],
                             function (err, data2) {
                                 if (err) {
@@ -2522,7 +2496,7 @@ var model = {
                             if (_.isEmpty(complete)) {
                                 callback(null, complete);
                             } else {
-                                console.log("complete", complete);
+                                // console.log("complete", complete);
                                 callback(null, complete);
                             }
                         }
