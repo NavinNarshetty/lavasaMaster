@@ -8,8 +8,8 @@ schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Config', schema);
-// var requrl = "http://wohlig.io:1337/api/";
-var requrl = "http://sfa2.wohlig.co.in/api/";
+var requrl = "http://wohlig.io:1337/api/";
+// var requrl = "http://sfa2.wohlig.co.in/api/";
 // var requrl = "https://sfa.wohlig.co.in/api/";
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
@@ -381,7 +381,7 @@ var model = {
                 console.log(err);
                 callback(err, null);
             } else if (userdata && userdata.length > 0) {
-                if (data.filename && data.filename != "") {
+                if (data.filename && data.filename !== "") {
                     request.post({
                         url: requrl + "config/emailReader/",
                         json: data
@@ -391,14 +391,14 @@ var model = {
                             console.log(err);
                             callback(err, null);
                         } else {
-                            if (body && body.value != false) {
-                                var helper = require('sendgrid').mail
+                            if (body && body.value !== false) {
+                                var helper = require('sendgrid').mail;
 
-                                from_email = new helper.Email(data.from)
-                                to_email = new helper.Email(data.email)
-                                subject = data.subject
-                                content = new helper.Content("text/html", body)
-                                mail = new helper.Mail(from_email, subject, to_email, content)
+                                from_email = new helper.Email(data.from);
+                                to_email = new helper.Email(data.email);
+                                subject = data.subject;
+                                content = new helper.Content("text/html", body);
+                                mail = new helper.Mail(from_email, subject, to_email, content);
                                 // console.log("api_key", userdata[0].name);
                                 var sg = require('sendgrid')(userdata[0].name);
                                 var request = sg.emptyRequest({
@@ -414,7 +414,7 @@ var model = {
                                     } else {
                                         callback(null, response);
                                     }
-                                })
+                                });
                             } else {
                                 callback({
                                     message: "Error while sending mail."
@@ -441,7 +441,7 @@ var model = {
                 console.log(err);
                 callback(err, null);
             } else if (userdata && userdata.length > 0) {
-                if (data.filename && data.filename != "") {
+                if (data.filename && data.filename !== "") {
                     //console.log("filename ", data.filename);
                     request.post({
                         url: requrl + "config/emailReader/",
@@ -453,7 +453,7 @@ var model = {
                             callback(err, null);
                         } else {
                             //console.log('email else');
-                            if (body && body.value != false) {
+                            if (body && body.value !== false) {
                                 var sg = require('sendgrid')(userdata[0].name);
 
                                 var request = sg.emptyRequest({
@@ -488,7 +488,7 @@ var model = {
                                         // console.log(response.headers)
                                         callback(null, response);
                                     }
-                                })
+                                });
                             } else {
                                 callback({
                                     message: "Error while sending mail."

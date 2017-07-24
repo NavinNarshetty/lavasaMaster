@@ -1,9 +1,9 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
 
-    getCityArea: function (req, res) {
+    getDetail: function (req, res) {
         if (req.body) {
-            Login.getCityArea(req.body, res.callback);
+            ConfigProperty.getDetail(req.body, res.callback);
         } else {
             res.json({
                 value: false,

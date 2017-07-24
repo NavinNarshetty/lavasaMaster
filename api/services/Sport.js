@@ -729,7 +729,7 @@ var model = {
                                         } else {
                                             if (found[0].sport.sportslist.name == data.sportName) {
                                                 var athlete = {};
-                                                athlete = n
+                                                athlete = n;
                                                 athlete.isTeamSelected = true;
                                                 finalData.push(athlete);
                                                 results.data = finalData;
@@ -785,7 +785,7 @@ var model = {
                                         } else {
                                             if (found[0].sport.sportslist.name == data.sportName) {
                                                 var athlete = {};
-                                                athlete = n
+                                                athlete = n;
                                                 athlete.isTeamSelected = true;
                                                 finalData.push(athlete);
                                                 results.data = finalData;
@@ -1141,7 +1141,7 @@ var model = {
                         } else {
                             console.log("complete1", complete1);
                             dataFinal.total = complete1;
-                            if (complete1 % maxRow == 0) {
+                            if (complete1 % maxRow === 0) {
                                 dataFinal.totalPage = (complete1 / maxRow);
                                 console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                             } else {
@@ -1237,7 +1237,7 @@ var model = {
                             // } else {
                             console.log("complete1", complete1);
                             dataFinal.total = complete1;
-                            if (complete1 % maxRow == 0) {
+                            if (complete1 % maxRow === 0) {
                                 dataFinal.totalPage = (complete1 / maxRow);
                                 console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                             } else {
@@ -1306,7 +1306,7 @@ var model = {
                             callback(err, null);
                         } else {
                             dataFinal.total = complete1;
-                            if (complete1 % maxRow == 0) {
+                            if (complete1 % maxRow === 0) {
                                 dataFinal.totalPage = (complete1 / maxRow);
                                 console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                             } else {
@@ -1452,7 +1452,7 @@ var model = {
                                                             callback(err, null);
                                                         } else {
                                                             dataFinal.total = complete1;
-                                                            if (complete1 % maxRow == 0) {
+                                                            if (complete1 % maxRow === 0) {
                                                                 dataFinal.totalPage = (complete1 / maxRow);
                                                                 console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                                                             } else {
@@ -1508,7 +1508,7 @@ var model = {
                                         } else {
                                             console.log("complete1", complete1);
                                             dataFinal.total = complete1;
-                                            if (complete1 % maxRow == 0) {
+                                            if (complete1 % maxRow === 0) {
                                                 dataFinal.totalPage = (complete1 / maxRow);
                                                 console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                                             } else {
@@ -1571,7 +1571,7 @@ var model = {
                                         } else {
                                             console.log("complete1", complete1);
                                             dataFinal.total = complete1;
-                                            if (complete1 % maxRow == 0) {
+                                            if (complete1 % maxRow === 0) {
                                                 dataFinal.totalPage = (complete1 / maxRow);
                                                 console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                                             } else {
@@ -1633,7 +1633,7 @@ var model = {
                                             callback(err, null);
                                         } else {
                                             dataFinal.total = complete1;
-                                            if (complete1 % maxRow == 0) {
+                                            if (complete1 % maxRow === 0) {
                                                 dataFinal.totalPage = (complete1 / maxRow);
                                                 console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                                             } else {
@@ -1772,7 +1772,7 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        if (data.keyword == "") {
+        if (data.keyword === "") {
             var deepSearch = "sportslist ageGroup weight";
             var Search = Model.find(data.keyword)
 
@@ -2652,7 +2652,7 @@ var model = {
                         } else {
                             // console.log("complete1", complete1);
                             dataFinal.total = complete1;
-                            if (complete1 % maxRow == 0) {
+                            if (complete1 % maxRow === 0) {
                                 dataFinal.totalPage = (complete1 / maxRow);
                                 // console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                             } else {
@@ -2749,7 +2749,7 @@ var model = {
                         } else {
                             console.log("complete1", complete1);
                             dataFinal.total = complete1;
-                            if (complete1 % maxRow == 0) {
+                            if (complete1 % maxRow === 0) {
                                 dataFinal.totalPage = (complete1 / maxRow);
                                 console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                             } else {
@@ -2815,7 +2815,7 @@ var model = {
                             callback(err, null);
                         } else {
                             dataFinal.total = complete1;
-                            if (complete1 % maxRow == 0) {
+                            if (complete1 % maxRow === 0) {
                                 dataFinal.totalPage = (complete1 / maxRow);
                                 console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                             } else {
@@ -2963,7 +2963,7 @@ var model = {
                                                             callback(err, null);
                                                         } else {
                                                             dataFinal.total = complete1;
-                                                            if (complete1 % maxRow == 0) {
+                                                            if (complete1 % maxRow === 0) {
                                                                 dataFinal.totalPage = (complete1 / maxRow);
                                                                 console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                                                             } else {
@@ -3019,7 +3019,7 @@ var model = {
                                         } else {
                                             console.log("complete1", complete1);
                                             dataFinal.total = complete1;
-                                            if (complete1 % maxRow == 0) {
+                                            if (complete1 % maxRow === 0) {
                                                 dataFinal.totalPage = (complete1 / maxRow);
                                                 console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                                             } else {
@@ -3081,7 +3081,7 @@ var model = {
                                             callback(err, null);
                                         } else {
                                             dataFinal.total = complete1;
-                                            if (complete1 % maxRow == 0) {
+                                            if (complete1 % maxRow === 0) {
                                                 dataFinal.totalPage = (complete1 / maxRow);
                                                 console.log("totalPage", dataFinal.totalPage, "maxRow", maxRow, "total", dataFinal.total);
                                             } else {

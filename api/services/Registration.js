@@ -146,7 +146,7 @@ var model = {
                     $ne: "Pending"
                 }
             }]
-        }
+        };
 
         var page = 1;
         if (data.page) {
@@ -322,7 +322,7 @@ var model = {
                     console.log("isempty");
                     callback(null, "No data found");
                 } else {
-                    if (schoolData.verifyCount == 0) {
+                    if (schoolData.verifyCount === 0) {
                         if (data.status == "Verified") {
                             data.verifyCount = 1;
                             data.password = generator.generate({
@@ -333,7 +333,7 @@ var model = {
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 console.log("City", city);
                                 if (_.isEmpty(schoolData.city)) {
-                                    schoolData.city = "Mumbai"
+                                    schoolData.city = "Mumbai";
                                 }
                                 var city = schoolData.city;
                                 var prefixCity = city.charAt(0);
@@ -470,7 +470,7 @@ var model = {
                 if (_.isEmpty(registerData)) {
                     callback("No order data found", null);
                 } else {
-                    if (schoolData.verifyCount == 0) {
+                    if (schoolData.verifyCount === 0) {
                         if (data.status == "Verified") {
                             Registration.successVerifiedMailSms(data, function (err, vData) {
                                 if (err) {
@@ -643,7 +643,7 @@ var model = {
                 paymentStatus: "Paid",
                 transactionID: data.transactionid
             }
-        }
+        };
         Registration.findOne({ //finds one with refrence to id
             schoolName: data.schoolName
         }).exec(function (err, found) {
@@ -1002,11 +1002,12 @@ var model = {
                             emailData.from = "info@sfanow.in";
                             emailData.email1 = [{
                                 email: found.email
-                            }]
+                            }];
                             emailData.bcc1 = [{
-                                email: "payments@sfanow.in",
+                                email: "payments@sfanow.in"
+                            }, {
                                 email: "venkatesh.rathod@sfanow.in"
-                            }]
+                            }];
                             // emailData.email = found.email;
                             emailData.filename = "receipt.ejs";
                             emailData.subject = "SFA: Your Payment Receipt as School for SFA Mumbai 2017";
@@ -1055,11 +1056,12 @@ var model = {
                             emailData.from = "info@sfanow.in";
                             emailData.email1 = [{
                                 email: found.email
-                            }]
+                            }];
                             emailData.bcc1 = [{
-                                email: "payments@sfanow.in",
+                                email: "payments@sfanow.in"
+                            }, {
                                 email: "venkatesh.rathod@sfanow.in"
-                            }]
+                            }];
                             // emailData.email = found.email;
                             emailData.filename = "envoice.ejs";
                             emailData.subject = "SFA: Your Payment Invoice as School for SFA Mumbai 2017";
@@ -1146,7 +1148,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "UTM_Source") {
             matchObj = {
                 utm_source: {
@@ -1162,7 +1164,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "UTM_Campaign") {
             matchObj = {
                 utm_campaign: {
@@ -1178,7 +1180,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "UTM_Medium") {
             matchObj = {
                 utm_medium: {
@@ -1194,7 +1196,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "School Name") {
             matchObj = {
                 'schoolName': {
@@ -1210,34 +1212,33 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-
-            }
+            };
         } else if (data.type == "Payment Mode") {
             if (data.input == "cash" || data.input == "Cash") {
                 matchObj = {
                     'registrationFee': "cash",
-                }
+                };
             } else if (data.input == "online" || data.input == "Online") {
                 matchObj = {
                     'registrationFee': "online PAYU",
                     paymentStatus: {
                         $ne: "Pending"
                     }
-                }
+                };
 
             }
         } else if (data.type == "Payment Status") {
             if (data.input == "Paid" || data.input == "paid") {
                 matchObj = {
                     'paymentStatus': "Paid",
-                }
+                };
             } else if (data.input == "Pending" || data.input == "pending") {
                 matchObj = {
                     'paymentStatus': "Pending",
                     registrationFee: {
                         $ne: "online PAYU"
                     }
-                }
+                };
             }
 
         } else if (data.type == "Verified Status") {
@@ -1257,7 +1258,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else {
             var matchObj = {
                 $or: [{
@@ -1269,7 +1270,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         }
         if (data.keyword !== "") {
             Registration.aggregate(
@@ -1371,7 +1372,7 @@ var model = {
                                 callback(null, complete);
                             } else {
                                 console.log('logs', complete);
-                                callback(null, complete)
+                                callback(null, complete);
                             }
                         }
                     });
@@ -1487,7 +1488,7 @@ var model = {
                             var email = details.email;
                             var mobile = details.mobile;
                             var designation = details.designation;
-                            if (count == 0) {
+                            if (count === 0) {
                                 sportsInfo = "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
                             } else {
                                 sportsInfo = sportsInfo + "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
@@ -1578,7 +1579,7 @@ var model = {
                     $ne: "Pending"
                 }
             }]
-        }
+        };
         Registration.find(matchObj).sort({
             createdAt: -1
         }).lean().exec(function (err, data) {
@@ -1681,7 +1682,7 @@ var model = {
                     var email = details.email;
                     var mobile = details.mobile;
                     var designation = details.designation;
-                    if (count == 0) {
+                    if (count === 0) {
                         sportsInfo = "{ Name:" + name + "," + "Designation:" + designation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
                         count++;
                     } else {
@@ -1800,7 +1801,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "UTM_Source") {
             matchObj = {
                 utm_source: {
@@ -1816,7 +1817,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "UTM_Campaign") {
             matchObj = {
                 utm_campaign: {
@@ -1832,7 +1833,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "UTM_Medium") {
             matchObj = {
                 utm_medium: {
@@ -1848,7 +1849,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "School Name") {
             matchObj = {
                 'schoolName': {
@@ -1865,33 +1866,33 @@ var model = {
                     }
                 }]
 
-            }
+            };
         } else if (data.type == "Payment Mode") {
             if (data.input == "cash" || data.input == "Cash") {
                 matchObj = {
                     'registrationFee': "cash",
-                }
+                };
             } else if (data.input == "online" || data.input == "Online") {
                 matchObj = {
                     'registrationFee': "online PAYU",
                     paymentStatus: {
                         $ne: "Pending"
                     }
-                }
+                };
 
             }
         } else if (data.type == "Payment Status") {
             if (data.input == "Paid" || data.input == "paid") {
                 matchObj = {
                     'paymentStatus': "Paid",
-                }
+                };
             } else if (data.input == "Pending" || data.input == "pending") {
                 matchObj = {
                     'paymentStatus': "Pending",
                     registrationFee: {
                         $ne: "online PAYU"
                     }
-                }
+                };
             }
 
         } else if (data.type == "Verified Status") {
@@ -1911,7 +1912,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else {
             var matchObj = {
                 $or: [{
@@ -1923,7 +1924,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         }
         if (data.keyword !== "") {
             Registration.aggregate(
@@ -2030,7 +2031,7 @@ var model = {
                         var duration = moment.duration(now.diff(end));
                         var dump = duration.asDays();
                         var days = parseInt(dump);
-                        console.log("days", days)
+                        console.log("days", days);
                         if (days == 5) {
                             var emailData = {};
                             emailData.from = "info@sfanow.in";

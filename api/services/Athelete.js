@@ -125,7 +125,7 @@ var model = {
                     $ne: "Pending"
                 }
             }]
-        }
+        };
         var Model = this;
         var Const = this(data);
         var maxRow = Config.maxRow;
@@ -198,7 +198,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
 
         } else if (data.type == "SFA-ID") {
             matchObj = {
@@ -215,7 +215,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "UTM_Source") {
             matchObj = {
                 utm_source: {
@@ -263,7 +263,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "Athlete Name") {
             matchObj = {
                 firstName: {
@@ -281,20 +281,19 @@ var model = {
                     }
                 }]
 
-            }
+            };
         } else if (data.type == "Payment Mode") {
             if (data.input == "cash" || data.input == "Cash") {
                 matchObj = {
                     'registrationFee': "cash",
-                }
+                };
             } else if (data.input == "online" || data.input == "Online") {
                 matchObj = {
                     'registrationFee': "online PAYU",
                     paymentStatus: {
                         $ne: "Pending"
                     }
-                }
-
+                };
             } else {
                 var matchObj = {
                     $or: [{
@@ -306,7 +305,7 @@ var model = {
                             $ne: "Pending"
                         }
                     }],
-                }
+                };
 
             }
 
@@ -315,16 +314,16 @@ var model = {
             if (data.input == "Paid" || data.input == "paid") {
                 matchObj = {
                     'paymentStatus': "Paid",
-                }
+                };
             } else if (data.input == "Pending" || data.input == "pending") {
                 matchObj = {
                     'paymentStatus': "Pending",
                     registrationFee: {
                         $ne: "online PAYU"
                     }
-                }
+                };
             } else {
-                var matchObj = {
+                matchObj = {
                     $or: [{
                         registrationFee: {
                             $ne: "online PAYU"
@@ -335,7 +334,7 @@ var model = {
                         }
                     }],
 
-                }
+                };
             }
         } else if (data.type == "Verified Status") {
             matchObj = {
@@ -353,7 +352,7 @@ var model = {
                     }
                 }]
 
-            }
+            };
         } else {
             var matchObj = {
                 $or: [{
@@ -365,8 +364,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }],
-
-            }
+            };
         }
         if (data.type == "School Name") {
             Athelete.aggregate(
@@ -454,7 +452,7 @@ var model = {
                         }
                     }
                 });
-        } else if (data.keyword != "") {
+        } else if (data.keyword !== "") {
             Athelete.aggregate(
                 [{
                         $match: {
@@ -582,7 +580,7 @@ var model = {
                                 } else {
                                     async.parallel([
                                             function (callback) {
-                                                console.log("inside school save")
+                                                console.log("inside school save");
                                                 if (data.atheleteSchoolName) {
                                                     var schoolData = {};
                                                     schoolData.schoolName = data.atheleteSchoolName;
@@ -665,7 +663,7 @@ var model = {
                                                 console.log("data removed and moved to save again");
                                                 async.parallel([
                                                         function (callback) {
-                                                            console.log("inside school save")
+                                                            console.log("inside school save");
                                                             if (data.atheleteSchoolName) {
                                                                 var schoolData = {};
                                                                 schoolData.schoolName = data.atheleteSchoolName;
@@ -757,7 +755,7 @@ var model = {
                     if (found.atheleteSchoolName) {
                         data.school = undefined;
                     }
-                    if (found.verifyCount == 0) {
+                    if (found.verifyCount === 0) {
 
                         if (data.status == "Verified") {
                             data.verifyCount = 1;
@@ -768,7 +766,7 @@ var model = {
                             if (_.isEmpty(data.sfaId)) {
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 if (_.isEmpty(found.city)) {
-                                    found.city = "Mumbai"
+                                    found.city = "Mumbai";
                                 }
                                 var city = found.city;
                                 var prefixCity = city.charAt(0);
@@ -855,7 +853,7 @@ var model = {
                 if (_.isEmpty(athleteData)) {
                     callback("No order data found", null);
                 } else {
-                    if (found.verifyCount == 0) {
+                    if (found.verifyCount === 0) {
                         if (data.status == "Verified") {
                             Athelete.successVerifiedMailSms(data, function (err, vData) {
                                 if (err) {
@@ -918,7 +916,7 @@ var model = {
                 paymentStatus: "Paid",
                 transactionID: data.transactionid
             }
-        }
+        };
 
         Athelete.findOne({ //finds one with refrence to id
             firstName: data.firstName,
@@ -1007,15 +1005,15 @@ var model = {
                 emailData.from = "info@sfanow.in";
                 emailData.email1 = [{
                     email: found.email
-                }]
+                }];
                 emailData.bcc1 = [{
-                    email: "payments@sfanow.in",
+                    email: "payments@sfanow.in"
+                }, {
                     email: "venkatesh.rathod@sfanow.in"
-                }]
+                }];
                 emailData.filename = "receiptAthelete.ejs";
                 emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA Mumbai 2017";
                 console.log("emaildata", emailData);
-
                 Config.emailTo(emailData, function (err, emailRespo) {
                     if (err) {
                         console.log(err);
@@ -1526,7 +1524,7 @@ var model = {
                             $ne: "Pending"
                         }
                     }]
-                }
+                };
 
             } else {
                 matchObj = {
@@ -1543,7 +1541,7 @@ var model = {
                             $ne: "Pending"
                         }
                     }]
-                }
+                };
             }
         } else if (data.type == "SFA-ID") {
             matchObj = {
@@ -1560,7 +1558,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "UTM_Source") {
             matchObj = {
                 utm_source: {
@@ -1576,7 +1574,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "UTM_Campaign") {
             matchObj = {
                 utm_campaign: {
@@ -1608,7 +1606,7 @@ var model = {
                         $ne: "Pending"
                     }
                 }]
-            }
+            };
         } else if (data.type == "Athlete Name") {
             matchObj = {
                 // $or: [{
@@ -1642,19 +1640,19 @@ var model = {
                     }
                 }]
 
-            }
+            };
         } else if (data.type == "Payment Mode") {
             if (data.input == "cash" || data.input == "Cash") {
                 matchObj = {
                     'registrationFee': "cash",
-                }
+                };
             } else if (data.input == "online" || data.input == "Online") {
                 matchObj = {
                     'registrationFee': "online PAYU",
                     paymentStatus: {
                         $ne: "Pending"
                     }
-                }
+                };
 
             } else {
                 var matchObj = {
@@ -1667,7 +1665,7 @@ var model = {
                             $ne: "Pending"
                         }
                     }],
-                }
+                };
 
             }
 
@@ -1676,14 +1674,14 @@ var model = {
             if (data.input == "Paid" || data.input == "paid") {
                 matchObj = {
                     'paymentStatus': "Paid",
-                }
+                };
             } else if (data.input == "Pending" || data.input == "pending") {
                 matchObj = {
                     'paymentStatus': "Pending",
                     registrationFee: {
                         $ne: "online PAYU"
                     }
-                }
+                };
             } else {
                 var matchObj = {
                     $or: [{
@@ -1696,7 +1694,7 @@ var model = {
                         }
                     }],
 
-                }
+                };
             }
         } else if (data.type == "Verified Status") {
             matchObj = {
@@ -1714,7 +1712,7 @@ var model = {
                     }
                 }]
 
-            }
+            };
         } else {
             var matchObj = {
                 $or: [{
@@ -1727,7 +1725,7 @@ var model = {
                     }
                 }],
 
-            }
+            };
         }
         if (data.type == "School Name") {
             Athelete.aggregate(
@@ -1815,7 +1813,7 @@ var model = {
                         }
                     }
                 });
-        } else if (data.keyword != "" && data.type != "") {
+        } else if (data.keyword !== "" && data.type !== "") {
             Athelete.aggregate(
                 [{
                         $match: {
@@ -1916,7 +1914,7 @@ var model = {
                                 callback(null, complete);
                             } else {
                                 // console.log('logs', complete);
-                                callback(null, complete)
+                                callback(null, complete);
                             }
                         }
                     });
@@ -1974,7 +1972,7 @@ var model = {
                                     var email = details.email;
                                     var mobile = details.mobile;
                                     var relation = details.relation;
-                                    if (countParent == 0) {
+                                    if (countParent === 0) {
                                         parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
                                     } else {
                                         parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
@@ -1988,7 +1986,7 @@ var model = {
                                 _.each(n.sportLevel, function (details) {
                                     var level = details.level;
                                     var sport = details.sport;
-                                    if (countLevel == 0) {
+                                    if (countLevel === 0) {
                                         levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
                                     } else {
                                         levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
@@ -2100,7 +2098,7 @@ var model = {
                     $ne: "Pending"
                 }
             }]
-        }
+        };
         Athelete.find(matchObj).sort({
             createdAt: -1
         }).lean().exec(function (err, data) {
@@ -2143,7 +2141,7 @@ var model = {
                             var email = details.email;
                             var mobile = details.mobile;
                             var relation = details.relation;
-                            if (countParent == 0) {
+                            if (countParent === 0) {
                                 parentInfo = "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
                             } else {
                                 parentInfo = parentInfo + "{ Name:" + name + "," + "Relation:" + relation + "," + "Email:" + email + "," + "Mobile:" + mobile + "}";
@@ -2157,7 +2155,7 @@ var model = {
                         _.each(n.sportLevel, function (details) {
                             var level = details.level;
                             var sport = details.sport;
-                            if (countLevel == 0) {
+                            if (countLevel === 0) {
                                 levelInfo = "{ Level:" + level + "," + "Sport:" + sport + "}";
                             } else {
                                 levelInfo = levelInfo + "{ Level:" + level + "," + "Sport:" + sport + "}";
@@ -2260,7 +2258,7 @@ var model = {
                         var duration = moment.duration(now.diff(end));
                         var dump = duration.asDays();
                         var days = parseInt(dump);
-                        console.log("days", days)
+                        console.log("days", days);
                         if (days == 5) {
                             var emailData = {};
                             emailData.from = "info@sfanow.in";
