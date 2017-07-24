@@ -1912,7 +1912,9 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
         console.log(id);
         $scope.constraints = {};
         $scope.constraints.schoolId = base64Service.encode(id);
-        window.location = 'http://localhost:8080/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        window.location = 'http://sfa5.wohlig.co.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        //  window.location = 'http://localhost:8080/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+
         // window.location = 'http://localhost:8080/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
 
 
@@ -2063,7 +2065,7 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
     $scope.transferToWebsite = function (id) {
         $scope.constraints = {};
         $scope.constraints.athleteId = base64Service.encode(id);
-        window.location = 'http://localhost:8080/#/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
+        window.location = 'http://sfa5.wohlig.co.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
         // $scope.url = "Login/editAccess"
         // NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
         //     console.log(data);
