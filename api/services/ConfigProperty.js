@@ -4,7 +4,10 @@ var schema = new Schema({
         type: String,
     },
     state: String,
-    city: String,
+    sfaCity: String,
+    city: [{
+        type: String
+    }],
     country: String,
     area: [{
         type: String,

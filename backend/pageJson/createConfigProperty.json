@@ -33,10 +33,22 @@
         "name": "City",
         "type": "text",
         "tableRef": "city",
-        "placeholder": "Enter city",
+        "placeholder": "Enter City",
         "id": "city",
         "validation": ["", "trim", ""],
         "url": ""
+    }, {
+        "name": "City",
+        "type": "tags",
+        "tableRef": "city",
+        "placeholder": "Enter city",
+        "id": "city",
+        "validation": ["", "trim", ""],
+        "onView": true,
+        "url": "",
+        "dropDownField": "",
+        "dropDownType": "multiple",
+        "dropDown": ""
     }, {
         "name": "Country",
         "type": "text",

@@ -698,7 +698,7 @@ var model = {
             // Stage 1
             {
                 $match: {
-                    "_id": objectid(data._id)
+                    "_id": objectid(data)
                 }
             },
 
@@ -1211,6 +1211,54 @@ var model = {
 
     },
 
+    editAggregatePipeLine: function (data) {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $match: {
+                    "_id": objectid(data._id)
+                }
+            },
+
+            // Stage 2
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "studentId",
+                    "foreignField": "_id",
+                    "as": "studentId"
+                }
+            },
+
+            // Stage 3
+            {
+                $unwind: {
+                    path: "$studentId",
+                }
+            },
+
+            // Stage 4
+            {
+                $lookup: {
+                    "from": "teamsports",
+                    "localField": "teamId",
+                    "foreignField": "_id",
+                    "as": "teamId"
+                }
+            },
+
+            // Stage 5
+            {
+                $unwind: {
+                    path: "$teamId",
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
     editSaveTeam: function (data, callback) {
         var sport = data.name;
         var index = sport.indexOf("-");
@@ -1384,7 +1432,7 @@ var model = {
     editAthleteRelease: function (data, callback) {
         async.waterfall([
                 function (callback) {
-                    var pipeLine = TeamSport.getAggregatePipeLine(data);
+                    var pipeLine = TeamSport.editAggregatePipeLine(data);
                     StudentTeam.aggregate(pipeLine, function (err, totals) {
                         if (err) {
                             console.log(err);
