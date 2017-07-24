@@ -59,8 +59,9 @@ var model = {
                     callback(null, []);
                 } else {
                     finalData.city = property[0].city;
-                    finalData.area = property[0].area;
+                    finalData.district = property[0].district;
                     finalData.type = property[0].institutionType;
+                    finalData.state = property[0].state;
                     callback(null, finalData);
                 }
             }
