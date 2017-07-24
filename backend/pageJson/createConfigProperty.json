@@ -30,11 +30,11 @@
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "City",
+        "name": "City for SFAID",
         "type": "text",
-        "tableRef": "city",
+        "tableRef": "sfaCity",
         "placeholder": "Enter City",
-        "id": "city",
+        "id": "sfaCity",
         "validation": ["", "trim", ""],
         "url": ""
     }, {
@@ -58,11 +58,11 @@
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "Area",
+        "name": "District",
         "type": "tags",
-        "tableRef": "area",
-        "placeholder": "Select Area",
-        "id": "Area",
+        "tableRef": "district",
+        "placeholder": "Select district",
+        "id": "district",
         "validation": ["", "trim", ""],
         "onView": true,
         "url": "",
@@ -182,16 +182,8 @@
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "DB name",
-        "type": "text",
-        "tableRef": "dbName",
-        "placeholder": "Select dbName",
-        "id": "dbName",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
         "name": "Standards",
-        "type": "mix",
+        "type": "tags",
         "tableRef": "athleteStandards",
         "dropDownType": "multiple",
         "placeholder": "Select athleteStandards",
@@ -204,14 +196,6 @@
         "tableRef": "termsAndCondition",
         "placeholder": "Enter termsAndCondition",
         "id": "termsAndCondition",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "University",
-        "type": "text",
-        "tableRef": "university",
-        "placeholder": "Enter university",
-        "id": "university",
         "validation": ["", "trim", ""],
         "url": ""
     }],

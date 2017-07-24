@@ -96,7 +96,7 @@ var schema = new Schema({
     isSelected: Boolean,
     utm_medium: String,
     utm_source: String,
-    utm_campaign: String
+    utm_campaign: String,
 });
 
 schema.plugin(deepPopulate, {});
@@ -738,65 +738,96 @@ var model = {
     //genarate sfa when status changes to verified and sfaid is blank
     generateAtheleteSfaID: function (data, callback) {
         //find and first time atheleteID idea is for string id generation if required
-        Athelete.findOne({
-            _id: data._id
-        }).sort({
-            createdAt: -1
-        }).exec(function (err, found) {
-            console.log("found", found);
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else {
-                if (_.isEmpty(found)) {
-                    console.log("isempty");
-                    callback("No order data found", null);
-                } else {
-                    if (found.atheleteSchoolName) {
-                        data.school = undefined;
-                    }
-                    if (found.verifyCount === 0) {
-
-                        if (data.status == "Verified") {
-                            data.verifyCount = 1;
-                            data.password = generator.generate({
-                                length: 8,
-                                numbers: true
-                            });
-                            if (_.isEmpty(data.sfaId)) {
-                                var year = new Date().getFullYear().toString().substr(2, 2);
-                                if (_.isEmpty(found.city)) {
-                                    found.city = "Mumbai";
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.findOne({
+                        _id: data._id
+                    }).sort({
+                        createdAt: -1
+                    }).exec(function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete);
+                            }
+                        }
+                    });
+                },
+                function (complete, callback) {
+                    Athelete.findOne({
+                        _id: data._id
+                    }).sort({
+                        createdAt: -1
+                    }).exec(function (err, found) {
+                        console.log("found", found);
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                console.log("isempty");
+                                callback("No order data found", null);
+                            } else {
+                                if (found.atheleteSchoolName) {
+                                    data.school = undefined;
                                 }
-                                var city = found.city;
-                                var prefixCity = city.charAt(0);
-                                console.log("prefixCity", prefixCity);
-                                Athelete.find({
-                                    "status": 'Verified'
-                                }).sort({
-                                    atheleteID: -1
-                                }).limit(1).lean().exec(
-                                    function (err, datafound) {
-                                        console.log("found1***", datafound);
-                                        if (err) {
-                                            console.log(err);
-                                            callback(err, null);
-                                        } else {
-                                            if (_.isEmpty(datafound)) {
-                                                data.atheleteID = 1;
-                                                console.log("atheleteID", data.atheleteID);
-                                                data.sfaId = prefixCity + "A" + year + data.atheleteID;
-                                            } else {
-                                                console.log("found", datafound[0].sfaId);
-                                                // if (datafound[0].atheleteID == undefined) {
-                                                //     datafound[0].atheleteID = 0;
-                                                // }
-                                                data.atheleteID = ++datafound[0].atheleteID;
-                                                console.log("atheleteID", data.atheleteID);
-                                                data.sfaId = prefixCity + "A" + year + data.atheleteID;
-                                            }
-                                            data.verifiedDate = new Date();
+                                if (found.verifyCount === 0) {
 
+                                    if (data.status == "Verified") {
+                                        data.verifyCount = 1;
+                                        data.password = generator.generate({
+                                            length: 8,
+                                            numbers: true
+                                        });
+                                        if (_.isEmpty(data.sfaId)) {
+                                            var year = new Date().getFullYear().toString().substr(2, 2);
+                                            if (_.isEmpty(complete.city)) {
+                                                found.city = "Mumbai";
+                                            }
+                                            var city = complete.sfaCity;
+                                            var prefixCity = city.charAt(0);
+                                            console.log("prefixCity", prefixCity);
+                                            Athelete.find({
+                                                "status": 'Verified'
+                                            }).sort({
+                                                atheleteID: -1
+                                            }).limit(1).lean().exec(
+                                                function (err, datafound) {
+                                                    console.log("found1***", datafound);
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback(err, null);
+                                                    } else {
+                                                        if (_.isEmpty(datafound)) {
+                                                            data.atheleteID = 1;
+                                                            console.log("atheleteID", data.atheleteID);
+                                                            data.sfaId = prefixCity + "A" + year + data.atheleteID;
+                                                        } else {
+                                                            console.log("found", datafound[0].sfaId);
+                                                            // if (datafound[0].atheleteID == undefined) {
+                                                            //     datafound[0].atheleteID = 0;
+                                                            // }
+                                                            data.atheleteID = ++datafound[0].atheleteID;
+                                                            console.log("atheleteID", data.atheleteID);
+                                                            data.sfaId = prefixCity + "A" + year + data.atheleteID;
+                                                        }
+                                                        data.verifiedDate = new Date();
+
+                                                        Athelete.saveVerify(data, found, function (err, vData) {
+                                                            if (err) {
+                                                                callback(err, null);
+                                                            } else if (vData) {
+                                                                callback(null, vData);
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            // data.sfaId = sfa;
+
+                                        } else {
                                             Athelete.saveVerify(data, found, function (err, vData) {
                                                 if (err) {
                                                     callback(err, null);
@@ -805,42 +836,45 @@ var model = {
                                                 }
                                             });
                                         }
-                                    });
-                                // data.sfaId = sfa;
 
-                            } else {
-                                Athelete.saveVerify(data, found, function (err, vData) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else if (vData) {
-                                        callback(null, vData);
+                                    } else {
+                                        Athelete.saveVerify(data, found, function (err, vData) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (vData) {
+                                                callback(null, vData);
+                                            }
+                                        });
+
                                     }
-                                });
-                            }
+                                } else {
+                                    Athelete.saveVerify(data, found, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
 
-                        } else {
-                            Athelete.saveVerify(data, found, function (err, vData) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (vData) {
-                                    callback(null, vData);
                                 }
-                            });
-
-                        }
-                    } else {
-                        Athelete.saveVerify(data, found, function (err, vData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (vData) {
-                                callback(null, vData);
                             }
-                        });
-
+                        }
+                    });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
                     }
                 }
-            }
-        });
+            });
+
     },
 
     saveVerify: function (data, found, callback) {

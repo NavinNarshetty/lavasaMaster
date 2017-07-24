@@ -9,7 +9,7 @@ var schema = new Schema({
         type: String
     }],
     country: String,
-    area: [{
+    district: [{
         type: String,
     }],
     totalPayAmountType: Number,
@@ -31,12 +31,12 @@ var schema = new Schema({
     domainUrl: String,
     paymentUrl: String,
     backendUrl: String,
-    dbName: String,
+    // dbName: String,
     athleteStandards: [{
         type: String
     }],
     termsAndCondition: String,
-    university: String
+    // university: String
 });
 
 schema.plugin(deepPopulate, {});

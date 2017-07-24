@@ -306,157 +306,187 @@ var model = {
     },
     //on backend save click (update)
     generateSfaID: function (data, callback) {
-
-        console.log("inside");
-        Registration.findOne({ //to check registration exist and if it exist retrive previous data
-            _id: data._id
-        }).sort({
-            createdAt: -1
-        }).exec(function (err, schoolData) {
-            console.log("schoolData", schoolData); // retrives registration data
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else {
-                if (_.isEmpty(schoolData)) {
-                    console.log("isempty");
-                    callback(null, "No data found");
-                } else {
-                    if (schoolData.verifyCount === 0) {
-                        if (data.status == "Verified") {
-                            data.verifyCount = 1;
-                            data.password = generator.generate({
-                                length: 8,
-                                numbers: true
-                            });
-                            if (_.isEmpty(data.sfaID)) {
-                                var year = new Date().getFullYear().toString().substr(2, 2);
-                                console.log("City", city);
-                                if (_.isEmpty(schoolData.city)) {
-                                    schoolData.city = "Mumbai";
-                                }
-                                var city = schoolData.city;
-                                var prefixCity = city.charAt(0);
-                                console.log("prefixCity", prefixCity);
-                                var institutionType = schoolData.institutionType;
-                                var prefixType = institutionType.charAt(0);
-                                console.log("prefixCity", prefixCity);
-                                Registration.find({
-                                    "status": 'Verified'
-                                }).sort({
-                                    registerID: -1
-                                }).limit(1).lean().exec(
-                                    function (err, datafound) {
-                                        console.log("found", datafound);
-                                        if (err) {
-                                            console.log(err);
-                                            callback(err, null);
-                                        } else {
-                                            if (_.isEmpty(datafound)) {
-                                                data.registerID = 1;
-                                                console.log("registerID", data.registerID);
-                                                data.sfaID = prefixCity + prefixType + year + data.registerID;
-                                            } else {
-                                                console.log("found", datafound[0].sfaID);
-                                                data.registerID = ++datafound[0].registerID;
-                                                console.log("registerID", data.registerID);
-                                                data.sfaID = prefixCity + prefixType + year + data.registerID;
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.findOne({
+                        _id: data._id
+                    }).sort({
+                        createdAt: -1
+                    }).exec(function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete);
+                            }
+                        }
+                    });
+                },
+                function (complete, callback) {
+                    console.log("inside");
+                    Registration.findOne({ //to check registration exist and if it exist retrive previous data
+                        _id: data._id
+                    }).sort({
+                        createdAt: -1
+                    }).exec(function (err, schoolData) {
+                        console.log("schoolData", schoolData); // retrives registration data
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(schoolData)) {
+                                console.log("isempty");
+                                callback(null, "No data found");
+                            } else {
+                                if (schoolData.verifyCount === 0) {
+                                    if (data.status == "Verified") {
+                                        data.verifyCount = 1;
+                                        data.password = generator.generate({
+                                            length: 8,
+                                            numbers: true
+                                        });
+                                        if (_.isEmpty(data.sfaID)) {
+                                            var year = new Date().getFullYear().toString().substr(2, 2);
+                                            console.log("City", city);
+                                            if (_.isEmpty(complete.city)) {
+                                                schoolData.city = "Mumbai";
                                             }
-                                            data.verifiedDate = new Date();
-                                            async.parallel([
-                                                function (callback) {
-                                                    School.findOne({ //finds one with refrence to id
-                                                        // name: schoolData.schoolName,
-                                                        sfaid: data.sfaID
-                                                    }).exec(function (err, found) {
-                                                        console.log("found old school", found);
-                                                        if (err) {
-                                                            callback(err, null);
-                                                        } else if (_.isEmpty(found)) {
-
-                                                            var school = {};
-                                                            school.name = schoolData.schoolName;
-                                                            if (_.isEmpty(schoolData.sfaID)) {
-                                                                school.sfaid = data.sfaID;
-                                                            } else {
-                                                                school.sfaid = schoolData.sfaID;
-                                                            }
-                                                            School.saveData(school, function (err, newData) {
-                                                                console.log("school created", newData);
-                                                                if (err) {
-                                                                    console.log("err", err);
-                                                                    callback("There was an error while saving order", null);
-                                                                } else {
-                                                                    if (_.isEmpty(newData)) {
-                                                                        callback("No order data found", null);
-                                                                    } else {
-                                                                        callback(null, newData);
-                                                                    }
-                                                                }
-                                                            });
+                                            var city = complete.city;
+                                            var prefixCity = city.charAt(0);
+                                            console.log("prefixCity", prefixCity);
+                                            var institutionType = schoolData.institutionType;
+                                            var prefixType = institutionType.charAt(0);
+                                            console.log("prefixCity", prefixCity);
+                                            Registration.find({
+                                                "status": 'Verified'
+                                            }).sort({
+                                                registerID: -1
+                                            }).limit(1).lean().exec(
+                                                function (err, datafound) {
+                                                    console.log("found", datafound);
+                                                    if (err) {
+                                                        console.log(err);
+                                                        callback(err, null);
+                                                    } else {
+                                                        if (_.isEmpty(datafound)) {
+                                                            data.registerID = 1;
+                                                            console.log("registerID", data.registerID);
+                                                            data.sfaID = prefixCity + prefixType + year + data.registerID;
                                                         } else {
-                                                            callback(null, found);
+                                                            console.log("found", datafound[0].sfaID);
+                                                            data.registerID = ++datafound[0].registerID;
+                                                            console.log("registerID", data.registerID);
+                                                            data.sfaID = prefixCity + prefixType + year + data.registerID;
                                                         }
+                                                        data.verifiedDate = new Date();
+                                                        async.parallel([
+                                                            function (callback) {
+                                                                School.findOne({ //finds one with refrence to id
+                                                                    // name: schoolData.schoolName,
+                                                                    sfaid: data.sfaID
+                                                                }).exec(function (err, found) {
+                                                                    console.log("found old school", found);
+                                                                    if (err) {
+                                                                        callback(err, null);
+                                                                    } else if (_.isEmpty(found)) {
 
-                                                    });
-                                                },
-                                                function (callback) {
-                                                    Registration.saveVerify(data, schoolData, function (err, vData) {
-                                                        if (err) {
-                                                            callback(err, null);
-                                                        } else if (vData) {
-                                                            callback(null, vData);
-                                                        }
-                                                    });
-                                                }
-                                            ], function (err, data3) {
-                                                console.log("data3 : ", data3);
+                                                                        var school = {};
+                                                                        school.name = schoolData.schoolName;
+                                                                        if (_.isEmpty(schoolData.sfaID)) {
+                                                                            school.sfaid = data.sfaID;
+                                                                        } else {
+                                                                            school.sfaid = schoolData.sfaID;
+                                                                        }
+                                                                        School.saveData(school, function (err, newData) {
+                                                                            console.log("school created", newData);
+                                                                            if (err) {
+                                                                                console.log("err", err);
+                                                                                callback("There was an error while saving order", null);
+                                                                            } else {
+                                                                                if (_.isEmpty(newData)) {
+                                                                                    callback("No order data found", null);
+                                                                                } else {
+                                                                                    callback(null, newData);
+                                                                                }
+                                                                            }
+                                                                        });
+                                                                    } else {
+                                                                        callback(null, found);
+                                                                    }
+
+                                                                });
+                                                            },
+                                                            function (callback) {
+                                                                Registration.saveVerify(data, schoolData, function (err, vData) {
+                                                                    if (err) {
+                                                                        callback(err, null);
+                                                                    } else if (vData) {
+                                                                        callback(null, vData);
+                                                                    }
+                                                                });
+                                                            }
+                                                        ], function (err, data3) {
+                                                            console.log("data3 : ", data3);
+                                                            if (err) {
+                                                                console.log(err);
+                                                                callback(err, null);
+                                                            } else {
+                                                                callback(null, data3);
+                                                            }
+                                                        });
+                                                    }
+                                                });
+                                            // data.sfaId = sfa;
+
+                                        } else {
+                                            Registration.saveVerify(data, schoolData, function (err, vData) {
                                                 if (err) {
-                                                    console.log(err);
                                                     callback(err, null);
-                                                } else {
-                                                    callback(null, data3);
+                                                } else if (vData) {
+                                                    callback(null, vData);
                                                 }
                                             });
+
+                                        }
+
+
+
+                                    } else {
+                                        Registration.saveVerify(data, schoolData, function (err, vData) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (vData) {
+                                                callback(null, vData);
+                                            }
+                                        });
+                                    }
+                                } else {
+                                    Registration.saveVerify(data, schoolData, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
                                         }
                                     });
-                                // data.sfaId = sfa;
-
-                            } else {
-                                Registration.saveVerify(data, schoolData, function (err, vData) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else if (vData) {
-                                        callback(null, vData);
-                                    }
-                                });
-
-                            }
-
-
-
-                        } else {
-                            Registration.saveVerify(data, schoolData, function (err, vData) {
-                                if (err) {
-                                    callback(err, null);
-                                } else if (vData) {
-                                    callback(null, vData);
                                 }
-                            });
-                        }
-                    } else {
-                        Registration.saveVerify(data, schoolData, function (err, vData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (vData) {
-                                callback(null, vData);
-                            }
-                        });
-                    }
 
+                            }
+                        }
+                    });
                 }
-            }
-        });
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
+
     },
 
     saveVerify: function (data, schoolData, callback) {
