@@ -90,6 +90,11 @@ var schema = new Schema({
     transactionID: {
         type: String,
     },
+    university: String,
+    faculty: String,
+    degree: String,
+    year: String,
+    course: String,
     verifiedDate: Date,
     remarks: String,
     accessToken: String,
@@ -112,7 +117,6 @@ module.exports = mongoose.model('Athelete', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
-
 
     search: function (data, callback) {
         var matchObj = {
@@ -171,7 +175,7 @@ var model = {
             field: data.field,
             filters: {
                 keyword: {
-                    fields: ['firstName', 'sfaId'],
+                    fields: ['firstName', 'sfaId', 'surname'],
                     term: data.keyword
                 }
             },
@@ -462,6 +466,11 @@ var model = {
                                         $regex: data.keyword,
                                         $options: "i"
                                     }
+                                }, {
+                                    "surname": {
+                                        $regex: data.keyword,
+                                        $options: "i"
+                                    }
                                 },
                                 {
                                     "sfaId": data.keyword
@@ -540,6 +549,7 @@ var model = {
 
         }
     },
+
     //on athelete save or submit press 
     saveAthelete: function (data, callback) {
         if (_.isEmpty(data.school)) {
@@ -735,6 +745,7 @@ var model = {
             });
 
     },
+
     //genarate sfa when status changes to verified and sfaid is blank
     generateAtheleteSfaID: function (data, callback) {
         //find and first time atheleteID idea is for string id generation if required
@@ -2339,14 +2350,5 @@ var model = {
         });
 
     },
-
-
-
-
-
-
-
-
-
 };
 module.exports = _.assign(module.exports, exports, model);

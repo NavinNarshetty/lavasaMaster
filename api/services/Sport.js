@@ -669,7 +669,7 @@ var model = {
                                     var results = {};
                                     results.data = [];
                                     results.total = 0;
-                                    results.totalpages = 0;
+                                    results.totalPages = 0;
                                     callback(null, results);
                                 } else {
                                     var final = {};
