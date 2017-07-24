@@ -11,6 +11,28 @@ var controller = {
         }
     },
 
+    saveInstitution: function (req, res) {
+        if (req.body) {
+            School.saveInstitution(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
+    updateType: function (req, res) {
+        if (req.body) {
+            School.updateType(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     search: function (req, res) {
         if (req.body) {
             School.search(req.body, res.callback);

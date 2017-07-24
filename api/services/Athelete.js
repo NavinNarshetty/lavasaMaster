@@ -740,11 +740,7 @@ var model = {
         //find and first time atheleteID idea is for string id generation if required
         async.waterfall([
                 function (callback) {
-                    ConfigProperty.findOne({
-                        _id: data._id
-                    }).sort({
-                        createdAt: -1
-                    }).exec(function (err, complete) {
+                    ConfigProperty.find().lean().exec(function (err, complete) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -784,10 +780,10 @@ var model = {
                                         });
                                         if (_.isEmpty(data.sfaId)) {
                                             var year = new Date().getFullYear().toString().substr(2, 2);
-                                            if (_.isEmpty(complete.city)) {
+                                            if (_.isEmpty(complete[0].city)) {
                                                 found.city = "Mumbai";
                                             }
-                                            var city = complete.sfaCity;
+                                            var city = complete[0].sfaCity;
                                             var prefixCity = city.charAt(0);
                                             console.log("prefixCity", prefixCity);
                                             Athelete.find({

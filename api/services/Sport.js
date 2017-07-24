@@ -669,6 +669,7 @@ var model = {
                                     var results = {};
                                     results.data = [];
                                     results.total = 0;
+                                    results.totalpages = 0;
                                     callback(null, results);
                                 } else {
                                     var final = {};
@@ -679,6 +680,7 @@ var model = {
                                         final.data.push(n.athleteId);
                                     });
                                     final.total = complete.total;
+                                    final.totalPage = complete.totalPage;
                                     // console.log("final", final);
                                     callback(null, final);
                                 }
@@ -693,6 +695,7 @@ var model = {
                                     var results = {};
                                     results.data = [];
                                     results.total = 0;
+                                    results.totalpages = 0;
                                     callback(null, results);
                                 } else {
                                     // console.log("complete", complete);

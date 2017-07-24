@@ -1,6 +1,6 @@
  var fs = require('fs');
  var schema = new Schema({
-
+     institutionType: String,
      deleteStatus: Boolean,
      timestamp: Date,
      sfaid: String,
@@ -58,6 +58,49 @@
  var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
  var model = {
 
+     saveInstitution: function (data, callback) {
+         async.waterfall([
+                 function (callback) {
+                     ConfigProperty.find().lean().exec(function (err, property) {
+                         if (err) {
+                             callback(err, null);
+                         } else {
+                             if (_.isEmpty(property)) {
+                                 callback(null, []);
+                             } else {
+                                 callback(null, property);
+                             }
+                         }
+                     });
+                 },
+                 function (property, callback) {
+
+                     data.institutionType = property.institutionType;
+                     School.saveData(data, function (err, complete) {
+                         if (err) {
+                             callback(err, null);
+                         } else {
+                             if (_.isEmpty(complete)) {
+                                 callback(null, []);
+                             } else {
+                                 callback(null, complete);
+                             }
+                         }
+                     });
+
+                 }
+             ],
+             function (err, data2) {
+                 if (err) {
+                     console.log(err);
+                     callback(err, null);
+                 } else {
+                     callback(null, data2);
+                 }
+
+             });
+     },
+
      search: function (data, callback) {
          var Model = this;
          var Const = this(data);
@@ -111,6 +154,51 @@
                          _id: value._id,
                      }, {
                          sfaid: sfa,
+                     }).exec(function (err, updated) {
+                         if (err) {
+                             console.log("error :", err);
+                             callback(null, err);
+                         } else {
+
+                             callback(null, updated);
+                         }
+                     });
+
+                 }, function (err) {
+                     if (err) {
+                         console.log(err);
+                         callback(err, null);
+                     } else {
+                         result.count = count;
+                         console.log("count", count);
+                         callback(null, result);
+                     }
+                 });
+
+                 //callback(null, found);
+             }
+         });
+
+
+     },
+
+     updateType: function (data, callback) {
+         var result = {};
+         result.msg = "Updated";
+         School.find().exec(function (err, found) {
+             if (err) {
+                 callback(err, null);
+             } else if (_.isEmpty(found)) {
+                 callback(null, "Data is empty");
+             } else {
+                 var count = 0;
+                 async.eachSeries(found, function (value, callback) {
+                     count++;
+                     var institutionType = "School";
+                     School.update({
+                         _id: value._id,
+                     }, {
+                         institutionType: institutionType,
                      }).exec(function (err, updated) {
                          if (err) {
                              console.log("error :", err);

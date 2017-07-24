@@ -9,9 +9,13 @@
         "isSort": "",
         "tableRef": "sfaid"
     }, {
-        "name": "School Name",
+        "name": "Name",
         "isSort": "",
         "tableRef": "name"
+    }, {
+        "name": "Type",
+        "isSort": "",
+        "tableRef": "institutionType"
     }],
     "action": [{
         "name": "edit",
@@ -37,6 +41,12 @@
     }],
 
     "button": [{
+        "name": "Create",
+        "icon": "plus",
+        "class": "btn-success",
+        "type": "page",
+        "action": "createOldSchool"
+    }, {
         "name": "Excel Export",
         "icon": "print",
         "type": "redirect",

@@ -1,23 +1,25 @@
 {
-    "title": "Edit Old School",
-    "name": "User",
+    "title": "Create School/College",
+    "name": "OldSchool",
     "jsonPage": "viewOldSchool",
     "desciption": "",
-    "pageType": "edit",
-    "urlFields": ["_id"],
+    "pageType": "create",
+    "urlFields": ["OldSchool"],
     "fields": [{
         "name": "Name",
         "type": "text",
         "tableRef": "name",
         "placeholder": "Enter School Name",
-        "id": "name"
+        "id": "name",
+        "validation": ["", "trim", "unique"],
+        "url": ""
     }, {
         "name": "SFA-ID",
         "type": "text",
         "tableRef": "sfaid",
         "placeholder": "Enter Name",
         "id": "sfaid",
-        "validation": ["required", "trim", "unique"],
+        "validation": ["", "trim", "unique"],
         "url": ""
     }, {
         "name": "Type",
@@ -30,7 +32,7 @@
     }],
     "action": [{
         "name": "submit",
-        "action": "submitUser",
+        "action": "submitOldSchool",
         "stateName": {
             "page": "page",
             "json": {
@@ -48,12 +50,6 @@
         }
     }],
     "apiCall": {
-        "url": "School/save",
-        "params": "_id"
-    },
-    "preApi": {
-        "url": "School/getOne",
-        "params": "_id"
+        "url": "School/save"
     }
-
 }

@@ -308,11 +308,7 @@ var model = {
     generateSfaID: function (data, callback) {
         async.waterfall([
                 function (callback) {
-                    ConfigProperty.findOne({
-                        _id: data._id
-                    }).sort({
-                        createdAt: -1
-                    }).exec(function (err, complete) {
+                    ConfigProperty.find().lean().exec(function (err, complete) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -350,10 +346,10 @@ var model = {
                                         if (_.isEmpty(data.sfaID)) {
                                             var year = new Date().getFullYear().toString().substr(2, 2);
                                             console.log("City", city);
-                                            if (_.isEmpty(complete.city)) {
+                                            if (_.isEmpty(complete[0].city)) {
                                                 schoolData.city = "Mumbai";
                                             }
-                                            var city = complete.city;
+                                            var city = complete[0].city;
                                             var prefixCity = city.charAt(0);
                                             console.log("prefixCity", prefixCity);
                                             var institutionType = schoolData.institutionType.toUpperCase();
