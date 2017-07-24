@@ -1212,6 +1212,11 @@ var model = {
     },
 
     editSaveTeam: function (data, callback) {
+        var sport = data.name;
+        var index = sport.indexOf("-");
+        var tempName = sport.slice(++index, sport.length);
+        var indexNext = tempName.indexOf("-");
+        data.linkSportName = tempName.slice(0, indexNext);
         async.waterfall([
                 function (callback) {
                     var matchToken = {
@@ -1567,6 +1572,7 @@ var model = {
                     function (callback) {
                         data.emailfile = "studentmailTeam.ejs";
                         data.schoolSFA = found.sfaID;
+                        data.mobile = found.mobile;
                         data.schoolName = found.schoolName;
                         TeamSport.athleteMailers(data, total, function (err, mailData) {
                             if (err) {
