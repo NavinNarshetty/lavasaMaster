@@ -182,15 +182,6 @@
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "Standards",
-        "type": "tags",
-        "tableRef": "athleteStandards",
-        "dropDownType": "multiple",
-        "placeholder": "Select athleteStandards",
-        "id": "athleteStandards",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
         "name": "TermsAndCondition",
         "type": "text",
         "tableRef": "termsAndCondition",

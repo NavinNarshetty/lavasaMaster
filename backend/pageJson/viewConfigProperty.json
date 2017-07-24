@@ -13,9 +13,9 @@
         "isSort": "",
         "tableRef": "city"
     }, {
-        "name": "Area",
+        "name": "District",
         "isSort": "",
-        "tableRef": "area"
+        "tableRef": "district"
     }],
     "action": [{
         "name": "edit",
