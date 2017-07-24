@@ -356,7 +356,7 @@ var model = {
                                             var city = complete.city;
                                             var prefixCity = city.charAt(0);
                                             console.log("prefixCity", prefixCity);
-                                            var institutionType = schoolData.institutionType;
+                                            var institutionType = schoolData.institutionType.toUpperCase();
                                             var prefixType = institutionType.charAt(0);
                                             console.log("prefixCity", prefixCity);
                                             Registration.find({
