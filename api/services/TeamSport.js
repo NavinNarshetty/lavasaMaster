@@ -698,7 +698,7 @@ var model = {
             // Stage 1
             {
                 $match: {
-                    "_id": objectid(data)
+                    "_id": objectid(data._id)
                 }
             },
 

@@ -3,18 +3,27 @@ var schema = new Schema({
     institutionType: {
         type: String,
     },
+    state: String,
     city: String,
     country: String,
     area: [{
         type: String,
     }],
-    totalPayAmount: Number,
-    totalPayAmountInWords: String,
-    taxAmount: String,
-    taxType: [{
+    totalPayAmountType: Number,
+    totalPayAmountInWordsType: String,
+    taxAmountType: String,
+    taxTypeOfInstitutionType: [{
         type: String,
     }],
-    percentTax: Number,
+    percentTaxOfType: Number,
+
+    totalPayAmountAthlete: Number,
+    totalPayAmountInWordsAthlete: String,
+    taxAmountAthlete: String,
+    taxTypeOfAthlete: [{
+        type: String,
+    }],
+    percentTaxOfAthlete: Number,
     reqUrl: String,
     domainUrl: String,
     paymentUrl: String,
@@ -35,7 +44,7 @@ module.exports = mongoose.model('ConfigProperty', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    getCityArea: function (data, callback) {
+    getDetail: function (data, callback) {
         var finalData = {};
         finalData.area = [];
         ConfigProperty.find().lean().exec(function (err, property) {

@@ -22,6 +22,14 @@
         "validation": ["", "trim", ""],
         "url": ""
     }, {
+        "name": "State",
+        "type": "text",
+        "tableRef": "state",
+        "placeholder": "Enter State",
+        "id": "state",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
         "name": "City",
         "type": "text",
         "tableRef": "city",
@@ -38,7 +46,7 @@
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "Area/Locality",
+        "name": "Area",
         "type": "tags",
         "tableRef": "area",
         "placeholder": "Select Area",
@@ -50,43 +58,91 @@
         "dropDownType": "multiple",
         "dropDown": ""
     }, {
-        "name": "Amount",
+        "name": "Amount for Institution Type",
         "type": "Number",
-        "tableRef": "totalPayAmount",
+        "tableRef": "totalPayAmountType",
         "placeholder": "Select Amount",
         "id": "amount",
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "Amount In Words",
+        "name": "Amount In Words for Institution Type",
         "type": "text",
-        "tableRef": "totalPayAmountInWords",
+        "tableRef": "totalPayAmountInWordsType",
         "placeholder": "Select Amount In Words",
-        "id": "totalPayAmountInWords",
+        "id": "totalPayAmountInWordsType",
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "Tax Amount",
+        "name": "Tax Amount for Institution Type",
         "type": "text",
-        "tableRef": "taxAmount",
+        "tableRef": "taxAmountType",
         "placeholder": "Select Tax Amount",
-        "id": "taxAmount",
+        "id": "taxAmountType",
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "Tax Type",
-        "type": "text",
-        "tableRef": "taxType",
+        "name": "Tax Type for Institution Type",
+        "type": "tags",
+        "tableRef": "taxTypeOfInstitutionType",
         "placeholder": "Select Tax Type",
-        "id": "taxType",
+        "id": "taxTypeOfInstitutionType",
+        "validation": ["", "trim", ""],
+        "url": "",
+        "onView": true,
+        "dropDownField": "",
+        "dropDownType": "multiple",
+        "dropDown": ""
+    }, {
+        "name": "Tax In Percent for Institution Type",
+        "type": "text",
+        "tableRef": "percentTaxOfType",
+        "placeholder": "Select Percent Tax",
+        "id": "percentTaxOfType",
         "validation": ["", "trim", ""],
         "url": ""
     }, {
-        "name": "Tax In Percent",
+        "name": "Amount for Athlete",
+        "type": "Number",
+        "tableRef": "totalPayAmountAthlete",
+        "placeholder": "Select Amount",
+        "id": "totalPayAmountAthlete",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Amount In Words for Athlete",
         "type": "text",
-        "tableRef": "percentTax",
+        "tableRef": "totalPayAmountInWordsAthlete",
+        "placeholder": "Select Amount In Words",
+        "id": "totalPayAmountInWordsAthlete",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Tax Amount for Athlete",
+        "type": "text",
+        "tableRef": "taxAmountAthlete",
+        "placeholder": "Select Tax Amount",
+        "id": "taxAmountAthlete",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Tax Type for Athlete",
+        "type": "tags",
+        "tableRef": "taxTypeOfAthlete",
+        "placeholder": "Select Tax Type",
+        "id": "taxTypeOfAthlete",
+        "validation": ["", "trim", ""],
+        "url": "",
+        "onView": true,
+        "dropDownField": "",
+        "dropDownType": "multiple",
+        "dropDown": ""
+    }, {
+        "name": "Tax In Percent for Athlete",
+        "type": "text",
+        "tableRef": "percentTaxOfAthlete",
         "placeholder": "Select Percent Tax",
-        "id": "percentTax",
+        "id": "percentTaxOfAthlete",
         "validation": ["", "trim", ""],
         "url": ""
     }, {
