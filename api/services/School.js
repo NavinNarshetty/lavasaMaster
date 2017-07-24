@@ -207,7 +207,7 @@
                  var count = 0;
                  async.eachSeries(found, function (value, callback) {
                      count++;
-                     var institutionType = "School";
+                     var institutionType = "school";
                      School.update({
                          _id: value._id,
                      }, {
