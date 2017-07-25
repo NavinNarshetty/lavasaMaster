@@ -1265,6 +1265,7 @@ var model = {
         var tempName = sport.slice(++index, sport.length);
         var indexNext = tempName.indexOf("-");
         data.linkSportName = tempName.slice(0, indexNext);
+        data.countEdit = 0;
         async.waterfall([
                 function (callback) {
                     var matchToken = {
@@ -1305,7 +1306,7 @@ var model = {
                     async.each(found, function (n, callback) {
                         async.waterfall([
                                 function (callback) {
-                                    TeamSport.editAthleteRelease(n, function (err, complete1) {
+                                    TeamSport.editAthleteRelease(n, data, function (err, complete1) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
@@ -1386,7 +1387,8 @@ var model = {
                     });
                 },
                 function (total, callback) {
-                    if (data.schoolToken) {
+
+                    if (data.schoolToken && data.countEdit > 0) {
                         TeamSport.editSchoolTeamMailers(data, total, function (err, final) {
                             if (err) {
                                 callback(err, null);
@@ -1398,7 +1400,7 @@ var model = {
                                 }
                             }
                         });
-                    } else if (data.athleteToken) {
+                    } else if (data.athleteToken && data.countEdit > 0) {
                         TeamSport.editAtheleteTeamMailers(data, total, function (err, final) {
                             if (err) {
                                 callback(err, null);
@@ -1411,6 +1413,8 @@ var model = {
                             }
                         });
 
+                    } else {
+                        callback(null, data);
                     }
                 }
 
@@ -1429,7 +1433,7 @@ var model = {
             });
     },
 
-    editAthleteRelease: function (data, callback) {
+    editAthleteRelease: function (data, param, callback) {
         async.waterfall([
                 function (callback) {
                     var pipeLine = TeamSport.editAggregatePipeLine(data);
@@ -1447,27 +1451,43 @@ var model = {
                     });
                 },
                 function (totals, callback) {
-                    console.log("totals", totals);
-                    var emailData = {};
-                    var index = totals[0].teamId.name.indexOf("-");
-                    emailData.sportName = totals[0].teamId.name.slice(++index, totals[0].teamId.name.length);
-                    emailData.from = "info@sfanow.in";
-                    emailData.email = totals[0].studentId.email;
-                    emailData.filename = "athleteRejectionEdit.ejs";
-                    emailData.teamId = totals[0].teamId.teamId;
-                    emailData.subject = "SFA: Athlete Removed On Edit";
-                    console.log("emaildata", emailData);
-                    Config.email(emailData, function (err, emailRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else if (emailRespo) {
-
-                            callback(null, emailRespo);
+                    _.each(data.athleteTeam, function (n) {
+                        if (totals[0].studentId._id == n) {
+                            totals.isEdited = false;
+                            callback(null, totals);
                         } else {
-                            callback(null, emailRespo);
+                            totals.isEdited = true;
+                            param.countEdit++;
+                            callback(null, totals);
                         }
                     });
+                },
+                function (totals, callback) {
+                    console.log("totals", totals);
+                    if (totals.isEdited == true) {
+                        var emailData = {};
+                        var index = totals[0].teamId.name.indexOf("-");
+                        emailData.sportName = totals[0].teamId.name.slice(++index, totals[0].teamId.name.length);
+                        emailData.from = "info@sfanow.in";
+                        emailData.email = totals[0].studentId.email;
+                        emailData.filename = "athleteRejectionEdit.ejs";
+                        emailData.teamId = totals[0].teamId.teamId;
+                        emailData.subject = "SFA: Athlete Removed On Edit";
+                        console.log("emaildata", emailData);
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
+
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, emailRespo);
+                            }
+                        });
+                    } else {
+                        callback(null, totals);
+                    }
                 },
             ],
             function (err, data2) {
@@ -1748,6 +1768,10 @@ var model = {
                     }
                 }
             });
+    },
+
+    editCheck: function (data, callback) {
+
     },
 
 
