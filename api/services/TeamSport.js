@@ -1384,7 +1384,7 @@ var model = {
                     });
                 },
                 function (total, callback) {
-                    if (data.schoolToken && data.countEdit > 0) {
+                    if (data.schoolToken && data.countEdit == 0) {
                         TeamSport.editSchoolTeamMailers(data, total, function (err, final) {
                             if (err) {
                                 callback(err, null);
@@ -1397,7 +1397,7 @@ var model = {
                             }
                         });
                         callback(null, data);
-                    } else if (data.athleteToken && data.countEdit > 0) {
+                    } else if (data.athleteToken && data.countEdit == 0) {
                         callback(null, data);
                         TeamSport.editAtheleteTeamMailers(data, total, function (err, final) {
                             if (err) {
