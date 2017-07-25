@@ -1449,7 +1449,7 @@ var model = {
                 },
                 function (totals, callback) {
                     _.each(param.athleteTeam, function (m) {
-                        if (totals[0].studentId._id == m) {
+                        if (totals[0].studentId._id == m.studentId) {
                             totals.isEdited = false;
                             callback(null, totals);
                         } else {
