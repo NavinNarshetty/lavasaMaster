@@ -1455,13 +1455,12 @@ var model = {
                         console.log("edit", m);
                         if (totals[0].studentId._id.equals(m.studentId)) {
                             totals.isEdited = false;
-                            callback(null, totals);
                         } else {
                             totals.isEdited = true;
                             param.countEdit++;
-                            callback(null, totals);
                         }
                     });
+                    callback(null, totals);
                 },
                 function (totals, callback) {
                     console.log("totals", totals);
