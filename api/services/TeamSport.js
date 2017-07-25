@@ -1450,8 +1450,8 @@ var model = {
                 },
                 function (totals, callback) {
                     totals.count = 0;
-                    console.log("length", param.atheleteTeam.length);
-                    var length1 = param.atheleteTeam.length;
+                    console.log("length", param.athleteTeam.length);
+                    var length1 = param.athleteTeam.length;
                     console.log("length1", length1);
                     _.each(param.athleteTeam, function (m) {
                         console.log("id", totals[0].studentId._id);
