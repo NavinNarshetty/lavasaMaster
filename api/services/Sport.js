@@ -2330,7 +2330,7 @@ var model = {
                                             finalData.push(athlete);
                                             results.data = finalData;
                                             results.total = complete.total;
-                                            results.totalpages = complete.totalpage;
+                                            results.totalpages = complete.totalpages;
                                             // console.log("data", results);
                                             callback(null, results);
                                         } else {
@@ -2341,7 +2341,7 @@ var model = {
                                                 finalData.push(athlete);
                                                 results.data = finalData;
                                                 results.total = complete.total;
-                                                results.totalpages = complete.totalpage;
+                                                results.totalpages = complete.totalpages;
                                                 // console.log("data", results);
                                                 callback(null, results);
                                             } else {
@@ -2351,7 +2351,7 @@ var model = {
                                                 finalData.push(athlete);
                                                 results.data = finalData;
                                                 results.total = complete.total;
-                                                results.totalpages = complete.totalpage;
+                                                results.totalpages = complete.totalpages;
                                                 callback(null, results);
                                             }
                                         }
