@@ -1450,8 +1450,9 @@ var model = {
                 },
                 function (totals, callback) {
                     totals.count = 0;
-                    var length = param.atheleteTeam.length;
-                    console.log("length", length);
+                    console.log("length", param.atheleteTeam.length);
+                    var length1 = param.atheleteTeam.length;
+                    console.log("length1", length1);
                     _.each(param.athleteTeam, function (m) {
                         console.log("id", totals[0].studentId._id);
                         console.log("edit", m.studentId);
@@ -1461,7 +1462,7 @@ var model = {
                         }
                     });
                     console.log("params", param.countEdit);
-                    if (param.countEdit <= length) {
+                    if (param.countEdit <= length1) {
                         param.countEdit = 0;
                     } else {
                         param.countEdit = 1;
