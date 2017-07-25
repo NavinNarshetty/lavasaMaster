@@ -1200,13 +1200,10 @@ var model = {
                 if (err) {
                     console.log(err);
                     callback(null, []);
-                } else if (complete1) {
-                    if (_.isEmpty(complete1)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, complete1);
-                    }
+                } else {
+                    callback(null, complete1);
                 }
+
             });
 
     },
