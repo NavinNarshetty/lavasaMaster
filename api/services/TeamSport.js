@@ -1386,31 +1386,31 @@ var model = {
                 function (total, callback) {
 
                     if (data.schoolToken && data.countEdit == 0) {
-                        // TeamSport.editSchoolTeamMailers(data, total, function (err, final) {
-                        //     if (err) {
-                        //         callback(err, null);
-                        //     } else {
-                        //         if (_.isEmpty(final)) {
-                        //             callback(null, []);
-                        //         } else {
-                        //             callback(null, final);
-                        //         }
-                        //     }
-                        // });
+                        TeamSport.editSchoolTeamMailers(data, total, function (err, final) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(final)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, final);
+                                }
+                            }
+                        });
                         callback(null, data);
                     } else if (data.athleteToken && data.countEdit == 0) {
                         callback(null, data);
-                        // TeamSport.editAtheleteTeamMailers(data, total, function (err, final) {
-                        //     if (err) {
-                        //         callback(err, null);
-                        //     } else {
-                        //         if (_.isEmpty(final)) {
-                        //             callback(null, []);
-                        //         } else {
-                        //             callback(null, final);
-                        //         }
-                        //     }
-                        // });
+                        TeamSport.editAtheleteTeamMailers(data, total, function (err, final) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(final)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, final);
+                                }
+                            }
+                        });
 
                     } else {
                         callback(null, data);
