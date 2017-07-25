@@ -1386,29 +1386,31 @@ var model = {
                 function (total, callback) {
 
                     if (data.schoolToken && data.countEdit > 0) {
-                        TeamSport.editSchoolTeamMailers(data, total, function (err, final) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                if (_.isEmpty(final)) {
-                                    callback(null, []);
-                                } else {
-                                    callback(null, final);
-                                }
-                            }
-                        });
+                        // TeamSport.editSchoolTeamMailers(data, total, function (err, final) {
+                        //     if (err) {
+                        //         callback(err, null);
+                        //     } else {
+                        //         if (_.isEmpty(final)) {
+                        //             callback(null, []);
+                        //         } else {
+                        //             callback(null, final);
+                        //         }
+                        //     }
+                        // });
+                        callback(null, data);
                     } else if (data.athleteToken && data.countEdit > 0) {
-                        TeamSport.editAtheleteTeamMailers(data, total, function (err, final) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                if (_.isEmpty(final)) {
-                                    callback(null, []);
-                                } else {
-                                    callback(null, final);
-                                }
-                            }
-                        });
+                        callback(null, data);
+                        // TeamSport.editAtheleteTeamMailers(data, total, function (err, final) {
+                        //     if (err) {
+                        //         callback(err, null);
+                        //     } else {
+                        //         if (_.isEmpty(final)) {
+                        //             callback(null, []);
+                        //         } else {
+                        //             callback(null, final);
+                        //         }
+                        //     }
+                        // });
 
                     } else {
                         callback(null, data);
@@ -1449,6 +1451,8 @@ var model = {
                 },
                 function (totals, callback) {
                     _.each(param.athleteTeam, function (m) {
+                        console.log("id", totals[0].studentId._id);
+                        console.log("edit", m);
                         if (totals[0].studentId._id.equals(m.studentId)) {
                             totals.isEdited = false;
                             callback(null, totals);
@@ -1470,18 +1474,19 @@ var model = {
                         emailData.filename = "athleteRejectionEdit.ejs";
                         emailData.teamId = totals[0].teamId.teamId;
                         emailData.subject = "SFA: Athlete Removed On Edit";
-                        console.log("emaildata", emailData);
-                        Config.email(emailData, function (err, emailRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
+                        // console.log("emaildata", emailData);
+                        callback(null, emailData);
+                        // Config.email(emailData, function (err, emailRespo) {
+                        //     if (err) {
+                        //         console.log(err);
+                        //         callback(null, err);
+                        //     } else if (emailRespo) {
 
-                                callback(null, emailRespo);
-                            } else {
-                                callback(null, emailRespo);
-                            }
-                        });
+                        //         callback(null, emailRespo);
+                        //     } else {
+                        //         callback(null, emailRespo);
+                        //     }
+                        // });
                     } else {
                         callback(null, totals);
                     }
