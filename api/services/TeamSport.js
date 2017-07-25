@@ -1300,6 +1300,11 @@ var model = {
                 },
                 function (found, callback) {
                     console.log("found", found);
+                    data.existCount = found.length;
+                    var countNewStudentTeam = data.athleteTeam.length;
+                    if (data.existCount < countNewStudentTeam) {
+                        data.countEdit++;
+                    }
                     async.each(found, function (n, callback) {
                         async.waterfall([
                                 function (callback) {
@@ -1466,9 +1471,6 @@ var model = {
                     if (totals.count == 0) {
                         param.countEdit++;
                     }
-                    // } else {
-                    //     param.countEdit = 1;
-                    // }
                     callback(null, totals);
                 },
                 function (totals, callback) {
