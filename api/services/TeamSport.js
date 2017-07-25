@@ -1385,7 +1385,7 @@ var model = {
                 },
                 function (total, callback) {
 
-                    if (data.schoolToken && data.countEdit > 0) {
+                    if (data.schoolToken && data.countEdit == 0) {
                         // TeamSport.editSchoolTeamMailers(data, total, function (err, final) {
                         //     if (err) {
                         //         callback(err, null);
@@ -1398,7 +1398,7 @@ var model = {
                         //     }
                         // });
                         callback(null, data);
-                    } else if (data.athleteToken && data.countEdit > 0) {
+                    } else if (data.athleteToken && data.countEdit == 0) {
                         callback(null, data);
                         // TeamSport.editAtheleteTeamMailers(data, total, function (err, final) {
                         //     if (err) {
@@ -1450,13 +1450,12 @@ var model = {
                     });
                 },
                 function (totals, callback) {
+                    totals.count = 0;
                     _.each(param.athleteTeam, function (m) {
                         console.log("id", totals[0].studentId._id);
-                        console.log("edit", m);
+                        console.log("edit", m.studentId);
                         if (totals[0].studentId._id.equals(m.studentId)) {
-                            totals.isEdited = false;
-                        } else {
-                            totals.isEdited = true;
+                            totals.count++;
                             param.countEdit++;
                         }
                     });
@@ -1464,7 +1463,7 @@ var model = {
                 },
                 function (totals, callback) {
                     console.log("totals", totals);
-                    if (totals.isEdited == true) {
+                    if (totals.count == 0) {
                         var emailData = {};
                         var index = totals[0].teamId.name.indexOf("-");
                         emailData.sportName = totals[0].teamId.name.slice(++index, totals[0].teamId.name.length);
@@ -1474,18 +1473,18 @@ var model = {
                         emailData.teamId = totals[0].teamId.teamId;
                         emailData.subject = "SFA: Athlete Removed On Edit";
                         // console.log("emaildata", emailData);
-                        callback(null, emailData);
-                        // Config.email(emailData, function (err, emailRespo) {
-                        //     if (err) {
-                        //         console.log(err);
-                        //         callback(null, err);
-                        //     } else if (emailRespo) {
+                        // callback(null, emailData);
+                        Config.email(emailData, function (err, emailRespo) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, err);
+                            } else if (emailRespo) {
 
-                        //         callback(null, emailRespo);
-                        //     } else {
-                        //         callback(null, emailRespo);
-                        //     }
-                        // });
+                                callback(null, emailRespo);
+                            } else {
+                                callback(null, emailRespo);
+                            }
+                        });
                     } else {
                         callback(null, totals);
                     }
