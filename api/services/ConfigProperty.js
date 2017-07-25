@@ -62,6 +62,8 @@ var model = {
                     finalData.district = property[0].district;
                     finalData.type = property[0].institutionType;
                     finalData.state = property[0].state;
+                    finalData.year = property[0].year;
+                    finalData.sfaCity = property[0].sfaCity;
                     callback(null, finalData);
                 }
             }

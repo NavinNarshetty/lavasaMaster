@@ -83,7 +83,38 @@ var controller = {
 
     generateEmailOTP: function (req, res) {
         if (req.body) {
-            Athelete.generateEmailOTP(req.body, res.callback);
+            async.waterfall([
+                    function (callback) {
+                        ConfigProperty.find().lean().exec(function (err, property) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(property)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, property);
+                                }
+                            }
+                        });
+                    },
+                    function (property, callback) {
+                        req.body.propertyType = property[0].institutionType;
+                        req.body.city = property[0].sfaCity;
+                        req.body.year = property[0].year;
+                        Athelete.generateEmailOTP(req.body, res.callback);
+                    }
+                ],
+                function (err, data2) {
+                    if (err) {
+                        console.log(err);
+                        callback(err, null);
+                    } else {
+                        callback(null, data2);
+                    }
+
+                });
+
+
         } else {
             res.json({
                 value: false,
