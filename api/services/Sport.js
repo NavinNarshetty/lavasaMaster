@@ -2307,7 +2307,7 @@ var model = {
                         var results = {};
                         var finalData = [];
                         console.log("complete", complete);
-                        async.each(complete.data, function (n, callback) {
+                        async.each(complete.results, function (n, callback) {
                                 console.log("n------", n);
                                 data.athlete = n._id;
                                 var pipeLine = Sport.getStudentTeamPipeline(data);
