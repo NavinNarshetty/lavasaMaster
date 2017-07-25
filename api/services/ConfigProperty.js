@@ -12,21 +12,36 @@ var schema = new Schema({
     district: [{
         type: String,
     }],
-    totalPayAmountType: Number,
-    totalPayAmountInWordsType: String,
-    taxAmountType: String,
-    taxTypeOfInstitutionType: [{
-        type: String,
-    }],
-    percentTaxOfType: Number,
+    totalAmountType: Number,
+    totalAmountInWordsType: String,
+    taxTotalAmountInWords: String,
+    taxTotalAmount: Number,
+    amoutWithoutTaxType: Number,
+    amoutWithoutTaxTypeInWords: String,
+    cgstAmout: Number,
 
-    totalPayAmountAthlete: Number,
-    totalPayAmountInWordsAthlete: String,
-    taxAmountAthlete: String,
-    taxTypeOfAthlete: [{
-        type: String,
-    }],
-    percentTaxOfAthlete: Number,
+    cgstPercent: Number,
+    sgstAmout: Number,
+
+    sgstPercent: Number,
+    igstAmout: Number,
+
+    igstPercent: Number,
+    totalAmountAthlete: Number,
+    totalAmountInWordsAthlete: String,
+    amoutWithoutTaxAthlete: Number,
+    amoutWithoutTaxAthleteInWords: String,
+    taxTotalAmountAthleteInWords: String,
+    taxTotalAmountAthlete: Number,
+    cgstAmoutAthlete: Number,
+
+    cgstPercentAthlete: Number,
+    sgstAmoutAthlete: Number,
+
+    sgstPercentAthlete: Number,
+    igstAmoutAthlete: Number,
+
+    igstPercentAthlete: Number,
     reqUrl: String,
     domainUrl: String,
     paymentUrl: String,

@@ -159,9 +159,7 @@ var controller = {
                     });
                 },
                 function (property, callback) {
-                    req.body.propertyType = property[0].institutionType;
-                    req.body.city = property[0].sfaCity;
-                    req.body.year = property[0].year;
+                    req.body.property = property[0];
                     Athelete.cronAthleteWithPaymentDue(req.body, res.callback);
 
                 }

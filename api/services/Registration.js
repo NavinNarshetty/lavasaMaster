@@ -2062,6 +2062,10 @@ var model = {
                             var emailData = {};
                             emailData.from = "info@sfanow.in";
                             emailData.email = data.email;
+                            emailData.city = data.property.city;
+                            emailData.year = data.property.year;
+                            emailData.type = data.property.institutionType;
+                            emailData.schoolAmount = data.property.totalAmountType;
                             emailData.filename = "paymentReminderSchool.ejs";
                             emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
                             console.log("emaildata", emailData);
@@ -2081,10 +2085,13 @@ var model = {
                             var emailData = {};
                             emailData.from = "info@sfanow.in";
                             emailData.email = data.email;
+                            emailData.city = data.property.city;
+                            emailData.year = data.property.year;
+                            emailData.type = data.property.institutionType;
+                            emailData.schoolAmount = data.property.totalAmountType;
                             emailData.filename = "paymentReminderSchool.ejs";
                             emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
                             console.log("emaildata", emailData);
-
                             Config.email(emailData, function (err, emailRespo) {
                                 if (err) {
                                     console.log(err);

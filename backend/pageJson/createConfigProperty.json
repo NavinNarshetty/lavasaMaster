@@ -6,190 +6,296 @@
     "pageType": "create",
     "urlFields": ["ConfigProperty"],
     "fields": [{
-        "name": "Year",
-        "type": "text",
-        "tableRef": "year",
-        "placeholder": "Enter Year",
-        "id": "year",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Institution Type",
-        "type": "text",
-        "tableRef": "institutionType",
-        "placeholder": "Enter institutionType",
-        "id": "institutionType",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "State",
-        "type": "text",
-        "tableRef": "state",
-        "placeholder": "Enter State",
-        "id": "state",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "City for SFAID",
-        "type": "text",
-        "tableRef": "sfaCity",
-        "placeholder": "Enter City",
-        "id": "sfaCity",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "City",
-        "type": "tags",
-        "tableRef": "city",
-        "placeholder": "Enter city",
-        "id": "city",
-        "validation": ["", "trim", ""],
-        "onView": true,
-        "url": "",
-        "dropDownField": "",
-        "dropDownType": "multiple",
-        "dropDown": ""
-    }, {
-        "name": "Country",
-        "type": "text",
-        "tableRef": "country",
-        "placeholder": "Enter Country",
-        "id": "country",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "District",
-        "type": "tags",
-        "tableRef": "district",
-        "placeholder": "Select district",
-        "id": "district",
-        "validation": ["", "trim", ""],
-        "onView": true,
-        "url": "",
-        "dropDownField": "",
-        "dropDownType": "multiple",
-        "dropDown": ""
-    }, {
-        "name": "Amount for Institution Type",
-        "type": "Number",
-        "tableRef": "totalPayAmountType",
-        "placeholder": "Select Amount",
-        "id": "amount",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Amount In Words for Institution Type",
-        "type": "text",
-        "tableRef": "totalPayAmountInWordsType",
-        "placeholder": "Select Amount In Words",
-        "id": "totalPayAmountInWordsType",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Tax Amount for Institution Type",
-        "type": "text",
-        "tableRef": "taxAmountType",
-        "placeholder": "Select Tax Amount",
-        "id": "taxAmountType",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Tax Type for Institution Type",
-        "type": "tags",
-        "tableRef": "taxTypeOfInstitutionType",
-        "placeholder": "Select Tax Type",
-        "id": "taxTypeOfInstitutionType",
-        "validation": ["", "trim", ""],
-        "url": "",
-        "onView": true,
-        "dropDownField": "",
-        "dropDownType": "multiple",
-        "dropDown": ""
-    }, {
-        "name": "Tax In Percent for Institution Type",
-        "type": "text",
-        "tableRef": "percentTaxOfType",
-        "placeholder": "Select Percent Tax",
-        "id": "percentTaxOfType",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Amount for Athlete",
-        "type": "Number",
-        "tableRef": "totalPayAmountAthlete",
-        "placeholder": "Select Amount",
-        "id": "totalPayAmountAthlete",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Amount In Words for Athlete",
-        "type": "text",
-        "tableRef": "totalPayAmountInWordsAthlete",
-        "placeholder": "Select Amount In Words",
-        "id": "totalPayAmountInWordsAthlete",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Tax Amount for Athlete",
-        "type": "text",
-        "tableRef": "taxAmountAthlete",
-        "placeholder": "Select Tax Amount",
-        "id": "taxAmountAthlete",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Tax Type for Athlete",
-        "type": "tags",
-        "tableRef": "taxTypeOfAthlete",
-        "placeholder": "Select Tax Type",
-        "id": "taxTypeOfAthlete",
-        "validation": ["", "trim", ""],
-        "url": "",
-        "onView": true,
-        "dropDownField": "",
-        "dropDownType": "multiple",
-        "dropDown": ""
-    }, {
-        "name": "Tax In Percent for Athlete",
-        "type": "text",
-        "tableRef": "percentTaxOfAthlete",
-        "placeholder": "Select Percent Tax",
-        "id": "percentTaxOfAthlete",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Request URL",
-        "type": "text",
-        "tableRef": "reqUrl",
-        "placeholder": "Select reqUrl",
-        "id": "reqUrl",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Domain URL",
-        "type": "text",
-        "tableRef": "domainUrl",
-        "placeholder": "Select domainUrl",
-        "id": "domainUrl",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "Backend URL",
-        "type": "text",
-        "tableRef": "backendUrl",
-        "placeholder": "Select backendUrl",
-        "id": "backendUrl",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }, {
-        "name": "TermsAndCondition",
-        "type": "text",
-        "tableRef": "termsAndCondition",
-        "placeholder": "Enter termsAndCondition",
-        "id": "termsAndCondition",
-        "validation": ["", "trim", ""],
-        "url": ""
-    }],
+            "name": "Year",
+            "type": "text",
+            "tableRef": "year",
+            "placeholder": "Enter Year",
+            "id": "year",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Institution Type",
+            "type": "text",
+            "tableRef": "institutionType",
+            "placeholder": "Enter institutionType",
+            "id": "institutionType",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "State",
+            "type": "text",
+            "tableRef": "state",
+            "placeholder": "Enter State",
+            "id": "state",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "City for SFAID",
+            "type": "text",
+            "tableRef": "sfaCity",
+            "placeholder": "Enter City",
+            "id": "sfaCity",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "City",
+            "type": "tags",
+            "tableRef": "city",
+            "placeholder": "Enter city",
+            "id": "city",
+            "validation": ["", "trim", ""],
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": ""
+        }, {
+            "name": "Country",
+            "type": "text",
+            "tableRef": "country",
+            "placeholder": "Enter Country",
+            "id": "country",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "District",
+            "type": "tags",
+            "tableRef": "district",
+            "placeholder": "Select district",
+            "id": "district",
+            "validation": ["", "trim", ""],
+            "onView": true,
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "multiple",
+            "dropDown": ""
+        }, {
+            "name": "Total Amount for Institution Type",
+            "type": "number",
+            "tableRef": "totalAmountType",
+            "placeholder": "Select Amount",
+            "id": "totalAmountType",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Total Amount In Words for Institution Type",
+            "type": "text",
+            "tableRef": "totalAmountInWordsType",
+            "placeholder": "Select Amount In Words",
+            "id": "totalAmountInWordsType",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Total Tax Amount In Words for Institution Type",
+            "type": "text",
+            "tableRef": "taxTotalAmountInWords",
+            "placeholder": "Select Tax Amount",
+            "id": "taxTotalAmountInWords",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Total Tax Amount for Institution Type",
+            "type": "number",
+            "tableRef": "taxTotalAmount",
+            "placeholder": "Select Amount",
+            "id": "taxTotalAmount",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Amount Without Tax for Institution Type",
+            "type": "number",
+            "tableRef": "amoutWithoutTaxType",
+            "placeholder": "Select Amount",
+            "id": "amoutWithoutTaxType",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Amount Without Tax for Institution Type In Words",
+            "type": "text",
+            "tableRef": "amoutWithoutTaxTypeInWords",
+            "placeholder": "Select Percent Tax",
+            "id": "amoutWithoutTaxTypeInWords",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "CGST Amout",
+            "type": "number",
+            "tableRef": "cgstAmout",
+            "placeholder": "Select Amount",
+            "id": "cgstAmout",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "CGST Percent",
+            "type": "number",
+            "tableRef": "cgstPercent",
+            "placeholder": "Select Amount in numbers",
+            "id": "cgstPercent",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "SGST Amout",
+            "type": "number",
+            "tableRef": "sgstAmout",
+            "placeholder": "Select Amount",
+            "id": "sgstAmout",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "SGST Percent",
+            "type": "number",
+            "tableRef": "sgstPercent",
+            "placeholder": "Select Amount in numbers",
+            "id": "sgstPercent",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "IGST Amout",
+            "type": "number",
+            "tableRef": "igstAmout",
+            "placeholder": "Select Amount",
+            "id": "igstAmout",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "IGST Percent",
+            "type": "number",
+            "tableRef": "igstPercent",
+            "placeholder": "Select Amount in numbers",
+            "id": "igstPercent",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Total Amount for Athlete",
+            "type": "number",
+            "tableRef": "totalAmountAthlete",
+            "placeholder": "Select Amount",
+            "id": "totalAmountAthlete",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Total Amount In Words for Athlete",
+            "type": "text",
+            "tableRef": "totalAmountInWordsAthlete",
+            "placeholder": "Select Amount In Words",
+            "id": "totalAmountInWordsAthlete",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Total Tax Amount In Words for Athlete",
+            "type": "text",
+            "tableRef": "taxTotalAmountAthleteInWords",
+            "placeholder": "Select Tax Amount",
+            "id": "taxTotalAmountAthleteInWords",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Total Tax Amount for Athlete",
+            "type": "number",
+            "tableRef": "taxTotalAmountAthlete",
+            "placeholder": "Select Amount",
+            "id": "taxTotalAmount",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Amount Without Tax for Athlete",
+            "type": "number",
+            "tableRef": "amoutWithoutTaxAthlete",
+            "placeholder": "Select Amount",
+            "id": "amoutWithoutTaxAthlete",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Amount Without Tax for Athlete In Words",
+            "type": "text",
+            "tableRef": "amoutWithoutTaxAthleteInWords",
+            "placeholder": "Select Percent Tax",
+            "id": "amoutWithoutTaxAthleteInWords",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "CGST Amout",
+            "type": "number",
+            "tableRef": "cgstAmoutAthlete",
+            "placeholder": "Select Amount",
+            "id": "cgstAmoutAthlete",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "CGST Percent",
+            "type": "number",
+            "tableRef": "cgstPercentAthlete",
+            "placeholder": "Select Amount in numbers",
+            "id": "cgstPercentAthlete",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "SGST Amout",
+            "type": "number",
+            "tableRef": "sgstAmoutAthlete",
+            "placeholder": "Select Amount",
+            "id": "sgstAmoutAthlete",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "SGST Percent",
+            "type": "number",
+            "tableRef": "sgstPercentAthlete",
+            "placeholder": "Select Amount in numbers",
+            "id": "sgstPercentAthlete",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "IGST Amout",
+            "type": "number",
+            "tableRef": "igstAmoutAthlete",
+            "placeholder": "Select Amount",
+            "id": "igstAmoutAthlete",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "IGST Percent",
+            "type": "number",
+            "tableRef": "igstPercentAthlete",
+            "placeholder": "Select Amount in numbers",
+            "id": "igstPercentAthlete",
+            "validation": ["", "trim", ""],
+            "url": ""
+        },
+        {
+            "name": "Request URL",
+            "type": "text",
+            "tableRef": "reqUrl",
+            "placeholder": "Select reqUrl",
+            "id": "reqUrl",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Domain URL",
+            "type": "text",
+            "tableRef": "domainUrl",
+            "placeholder": "Select domainUrl",
+            "id": "domainUrl",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Backend URL",
+            "type": "text",
+            "tableRef": "backendUrl",
+            "placeholder": "Select backendUrl",
+            "id": "backendUrl",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "TermsAndCondition",
+            "type": "text",
+            "tableRef": "termsAndCondition",
+            "placeholder": "Enter termsAndCondition",
+            "id": "termsAndCondition",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }
+    ],
     "action": [{
         "name": "submit",
         "action": "submitConfigProperty",
