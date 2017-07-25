@@ -2305,6 +2305,9 @@ var model = {
                         if (days == 5) {
                             var emailData = {};
                             emailData.from = "info@sfanow.in";
+                            emailData.city = data.city;
+                            emailData.year = data.year;
+                            emailData.type = data.propertyType;
                             emailData.email = data.email;
                             emailData.filename = "paymentReminderAthlete.ejs";
                             emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
@@ -2324,6 +2327,9 @@ var model = {
                         } else if (days == 10) {
                             var emailData = {};
                             emailData.from = "info@sfanow.in";
+                            emailData.city = data.city;
+                            emailData.year = data.year;
+                            emailData.type = data.propertyType;
                             emailData.email = data.email;
                             emailData.filename = "paymentReminderAthlete.ejs";
                             emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";

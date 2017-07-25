@@ -1448,8 +1448,8 @@ var model = {
                     });
                 },
                 function (totals, callback) {
-                    _.each(data.athleteTeam, function (n) {
-                        if (totals[0].studentId._id == n) {
+                    _.each(param.athleteTeam, function (m) {
+                        if (totals[0].studentId._id == m) {
                             totals.isEdited = false;
                             callback(null, totals);
                         } else {
