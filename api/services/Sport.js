@@ -2247,7 +2247,7 @@ var model = {
                     }
                 },
                 function (complete, callback) {
-                    // console.log("complete next", complete.results);
+                    console.log("complete next", complete.results);
                     if (data.sportName.includes("Doubles") || data.sportName.includes("doubles")) {
                         console.log("doubles");
                         var results = {};
@@ -2255,7 +2255,7 @@ var model = {
                         // console.log("total", complete.total);
                         async.eachSeries(complete.results, function (n, callback) {
                                 data.athlete = n._id;
-                                // console.log("n", data.athlete);
+                                //  console.log("n", data.athlete);
                                 var pipeLine = Sport.getStudentTeamPipeline(data);
                                 StudentTeam.aggregate(pipeLine, function (err, found) {
                                     if (err) {
@@ -2306,9 +2306,9 @@ var model = {
                     } else if (data.sportName.includes("Shooting") || data.sportName.includes("shooting")) {
                         var results = {};
                         var finalData = [];
-                        // console.log("complete", complete);
+                        console.log("complete", complete);
                         async.each(complete.data, function (n, callback) {
-                                // console.log("n------", n);
+                                console.log("n------", n);
                                 data.athlete = n._id;
                                 var pipeLine = Sport.getStudentTeamPipeline(data);
                                 StudentTeam.aggregate(pipeLine, function (err, found) {
