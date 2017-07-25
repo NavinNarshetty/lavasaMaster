@@ -2221,7 +2221,11 @@ var model = {
                                     console.log("complete", complete);
                                     _.each(complete.results, function (n) {
                                         console.log("n", n);
-                                        final.data.push(n.athleteId);
+                                        if (n.athleteId != undefined) {
+                                            final.data.push(n.athleteId);
+                                        } else {
+                                            final.data.push(n.studentId);
+                                        }
                                     });
                                     final.total = complete.total;
                                     console.log("final", final);
