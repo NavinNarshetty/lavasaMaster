@@ -2065,6 +2065,7 @@ var model = {
             }, {
                 $match: {
                     "studentId.gender": data.gender,
+
                 }
             },
 
@@ -2947,7 +2948,7 @@ var model = {
                                                                 console.log("totals", totals);
                                                                 dataFinal.results = totals;
                                                                 _.each(athleteData, function (n) {
-                                                                    dataFinal.results.push(n.studentId);
+                                                                    dataFinal.results.push(n);
                                                                 });
                                                                 console.log("dataFinal", dataFinal);
                                                                 callback(null, dataFinal);
