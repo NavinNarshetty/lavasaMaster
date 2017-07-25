@@ -1384,7 +1384,8 @@ var model = {
                     });
                 },
                 function (total, callback) {
-                    if (data.schoolToken && data.countEdit == 0) {
+                    console.log("countEdit", data.countEdit);
+                    if (data.schoolToken && data.countEdit > 0) {
                         TeamSport.editSchoolTeamMailers(data, total, function (err, final) {
                             if (err) {
                                 callback(err, null);
@@ -1397,7 +1398,7 @@ var model = {
                             }
                         });
                         callback(null, data);
-                    } else if (data.athleteToken && data.countEdit == 0) {
+                    } else if (data.athleteToken && data.countEdit > 0) {
                         callback(null, data);
                         TeamSport.editAtheleteTeamMailers(data, total, function (err, final) {
                             if (err) {
@@ -1458,15 +1459,16 @@ var model = {
                         console.log("edit", m.studentId);
                         if (totals[0].studentId._id.equals(m.studentId)) {
                             totals.count++;
-                            param.countEdit++;
+                            // param.countEdit++;
                         }
                     });
                     console.log("params", param.countEdit);
-                    if (param.countEdit <= length1) {
-                        param.countEdit = 0;
-                    } else {
-                        param.countEdit = 1;
+                    if (totals.count == 0) {
+                        param.countEdit++;
                     }
+                    // } else {
+                    //     param.countEdit = 1;
+                    // }
                     callback(null, totals);
                 },
                 function (totals, callback) {
