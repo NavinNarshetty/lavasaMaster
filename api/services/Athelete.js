@@ -951,76 +951,115 @@ var model = {
     },
 
     updatePaymentStatus: function (data, callback) {
-        console.log("inside update", data);
-        var matchObj = {
-            $set: {
-                paymentStatus: "Paid",
-                transactionID: data.transactionid
-            }
-        };
-
-        Athelete.findOne({ //finds one with refrence to id
-            firstName: data.firstName,
-            surname: data.surname,
-            email: data.email,
-        }).lean().exec(function (err, found) {
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                console.log("empty in Athelete found");
-                callback(null, "Data is empty");
-            } else {
-                console.log("found in update", found);
-                Athelete.update({
-                    _id: found._id
-                }, matchObj).exec(
-                    function (err, data3) {
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
                         if (err) {
-                            console.log(err);
                             callback(err, null);
-                        } else if (data3) {
-                            async.parallel([
-                                    function (callback) {
-                                        Athelete.atheletePaymentMail(found, function (err, vData) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else if (vData) {
-                                                callback(null, vData);
-                                            }
-                                        });
-                                    },
-                                    function (callback) {
-                                        Athelete.receiptMail(found, function (err, mailsms) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else {
-                                                if (_.isEmpty(mailsms)) {
-                                                    callback(null, "Data not found");
-                                                } else {
-                                                    callback(null, mailsms);
-                                                }
-                                            }
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
+                        }
+                    });
+                },
+                function (property, callback) {
+                    console.log("inside update", data);
+                    var matchObj = {
+                        $set: {
+                            paymentStatus: "Paid",
+                            transactionID: data.transactionid
+                        }
+                    };
 
-                                        });
-                                    }
-                                ],
-                                function (err, data2) {
+                    Athelete.findOne({ //finds one with refrence to id
+                        firstName: data.firstName,
+                        surname: data.surname,
+                        email: data.email,
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            console.log("empty in Athelete found");
+                            callback(null, "Data is empty");
+                        } else {
+                            console.log("found in update", found);
+                            Athelete.update({
+                                _id: found._id
+                            }, matchObj).exec(
+                                function (err, data3) {
                                     if (err) {
                                         console.log(err);
-                                        callback(null, []);
-                                    } else if (data2) {
-                                        if (_.isEmpty(data2)) {
-                                            callback(null, []);
-                                        } else {
-                                            callback(null, data2);
-                                        }
+                                        callback(err, null);
+                                    } else if (data3) {
+                                        async.parallel([
+                                                function (callback) {
+                                                    if (property[0].institutionType == "school") {
+                                                        Athelete.atheletePaymentMail(found, function (err, vData) {
+                                                            if (err) {
+                                                                callback(err, null);
+                                                            } else if (vData) {
+                                                                callback(null, vData);
+                                                            }
+                                                        });
+                                                    } else {
+                                                        Athelete.atheletePaymentMailCollege(found, function (err, vData) {
+                                                            if (err) {
+                                                                callback(err, null);
+                                                            } else if (vData) {
+                                                                callback(null, vData);
+                                                            }
+                                                        });
+                                                    }
+
+                                                },
+                                                function (callback) {
+                                                    Athelete.receiptMail(found, function (err, mailsms) {
+                                                        if (err) {
+                                                            callback(err, null);
+                                                        } else {
+                                                            if (_.isEmpty(mailsms)) {
+                                                                callback(null, "Data not found");
+                                                            } else {
+                                                                callback(null, mailsms);
+                                                            }
+                                                        }
+
+                                                    });
+                                                }
+                                            ],
+                                            function (err, data2) {
+                                                if (err) {
+                                                    console.log(err);
+                                                    callback(null, []);
+                                                } else if (data2) {
+                                                    if (_.isEmpty(data2)) {
+                                                        callback(null, []);
+                                                    } else {
+                                                        callback(null, data2);
+                                                    }
+                                                }
+                                            });
                                     }
+
                                 });
                         }
-
                     });
-            }
-        });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
+
+
     },
 
     receiptMail: function (data, callback) {
@@ -1248,6 +1287,32 @@ var model = {
 
             });
         }
+
+    },
+
+    atheletePaymentMailCollege: function (data, callback) {
+        if (data.registrationFee == "cash") {
+            console.log("cash or cheque payment mail");
+            Athelete.registeredCashPaymentMailSms(data, function (err, vData) {
+                if (err) {
+                    callback(err, null);
+                } else if (vData) {
+                    callback(null, vData);
+                }
+            });
+        } else if (data.registrationFee == "online PAYU") {
+            console.log("online payment mail");
+            Athelete.registeredOnlinePaymentMailSms(data, function (err, vData) {
+                if (err) {
+                    callback(err, null);
+                } else if (vData) {
+                    callback(null, vData);
+                }
+            });
+        }
+    },
+
+    registeredUnregisteredMail: function (data, callback) {
 
     },
 

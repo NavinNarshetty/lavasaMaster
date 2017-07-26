@@ -304,6 +304,7 @@ var model = {
                 }
             });
     },
+
     //on backend save click (update)
     generateSfaID: function (data, callback) {
         async.waterfall([
@@ -315,6 +316,7 @@ var model = {
                             if (_.isEmpty(complete)) {
                                 callback(null, []);
                             } else {
+                                data.complete = complete[0];
                                 callback(null, complete);
                             }
                         }
@@ -415,13 +417,25 @@ var model = {
                                                                 });
                                                             },
                                                             function (callback) {
-                                                                Registration.saveVerify(data, schoolData, function (err, vData) {
-                                                                    if (err) {
-                                                                        callback(err, null);
-                                                                    } else if (vData) {
-                                                                        callback(null, vData);
-                                                                    }
-                                                                });
+                                                                if (data.complete.institutionType == "school") {
+                                                                    Registration.saveVerify(data, schoolData, function (err, vData) {
+                                                                        if (err) {
+                                                                            callback(err, null);
+                                                                        } else if (vData) {
+                                                                            callback(null, vData);
+                                                                        }
+                                                                    });
+                                                                } else {
+                                                                    Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
+                                                                        if (err) {
+                                                                            callback(err, null);
+                                                                        } else if (vData) {
+                                                                            callback(null, vData);
+                                                                        }
+                                                                    });
+                                                                }
+
+
                                                             }
                                                         ], function (err, data3) {
                                                             console.log("data3 : ", data3);
@@ -437,6 +451,30 @@ var model = {
                                             // data.sfaId = sfa;
 
                                         } else {
+                                            if (data.complete.institutionType == "school") {
+                                                Registration.saveVerify(data, schoolData, function (err, vData) {
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else if (vData) {
+                                                        callback(null, vData);
+                                                    }
+                                                });
+                                            } else {
+                                                Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else if (vData) {
+                                                        callback(null, vData);
+                                                    }
+                                                });
+                                            }
+
+                                        }
+
+
+
+                                    } else {
+                                        if (data.complete.institutionType == "school") {
                                             Registration.saveVerify(data, schoolData, function (err, vData) {
                                                 if (err) {
                                                     callback(err, null);
@@ -444,12 +482,18 @@ var model = {
                                                     callback(null, vData);
                                                 }
                                             });
-
+                                        } else {
+                                            Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else if (vData) {
+                                                    callback(null, vData);
+                                                }
+                                            });
                                         }
-
-
-
-                                    } else {
+                                    }
+                                } else {
+                                    if (data.complete.institutionType == "school") {
                                         Registration.saveVerify(data, schoolData, function (err, vData) {
                                             if (err) {
                                                 callback(err, null);
@@ -457,15 +501,15 @@ var model = {
                                                 callback(null, vData);
                                             }
                                         });
+                                    } else {
+                                        Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (vData) {
+                                                callback(null, vData);
+                                            }
+                                        });
                                     }
-                                } else {
-                                    Registration.saveVerify(data, schoolData, function (err, vData) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else if (vData) {
-                                            callback(null, vData);
-                                        }
-                                    });
                                 }
 
                             }
@@ -612,6 +656,47 @@ var model = {
 
     },
 
+    saveVerifyCollege: function (data, schoolData, callback) {
+        Registration.saveData(data, function (err, registerData) {
+            console.log("Registration", registerData);
+            console.log("schoolData", schoolData);
+            if (err) {
+                console.log("err", err);
+                callback("There was an error while saving school", null);
+            } else {
+                if (_.isEmpty(registerData)) {
+                    callback("No order data found", null);
+                } else {
+                    if (schoolData.verifyCount === 0) {
+                        if (data.status == "Verified") {
+                            Registration.successVerifiedMailSms(data, function (err, vData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (vData) {
+                                    callback(null, vData);
+                                }
+                            });
+                        } else if (data.status == "Rejected") {
+                            Registration.failureVerifiedMailSms(data, function (err, vData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else if (vData) {
+                                    callback(null, vData);
+                                }
+                            });
+                        } else {
+                            callback(null, registerData);
+                        }
+                    } else {
+                        callback(null, "updated Successfully !!");
+                    }
+
+                }
+            }
+        });
+
+    },
+
     getAllRegistrationDetails: function (data, callback) {
         Registration.find().exec(function (err, found) {
             if (err) {
@@ -661,7 +746,6 @@ var model = {
                     var emailData = {};
                     emailData.from = "info@sfanow.in";
                     emailData.email = data.email;
-                    // emailData.name = data.firstName;
                     emailData.city = property[0].city;
                     emailData.year = property[0].year;
                     emailData.otp = emailOtp;
@@ -942,7 +1026,6 @@ var model = {
                                 emailData.city = property[0].city;
                                 emailData.year = property[0].year;
                                 emailData.email = data.email;
-                                emailData.name = data.firstName;
                                 emailData.sfaID = data.sfaID;
                                 emailData.password = data.password;
                                 emailData.filename = "successVerification.ejs";
@@ -1101,7 +1184,6 @@ var model = {
                                 var emailData = {};
                                 emailData.from = "info@sfanow.in";
                                 emailData.email = data.email;
-                                emailData.name = data.firstName;
                                 emailData.city = property[0].city;
                                 emailData.year = property[0].year;
                                 emailData.filename = "allAthelete.ejs";
@@ -2267,7 +2349,6 @@ var model = {
                             emailData.year = data.property.year;
                             emailData.type = data.property.institutionType;
                             emailData.schoolAmount = data.property.totalAmountType;
-                            emailData.name = data.name;
                             emailData.filename = "paymentReminderSchool.ejs";
                             emailData.subject = "SFA: Your Payment Reminder for SFA " + emailData.city + " " + emailData.year;
                             console.log("emaildata", emailData);
@@ -2287,7 +2368,6 @@ var model = {
                             var emailData = {};
                             emailData.from = "info@sfanow.in";
                             emailData.email = data.email;
-                            emailData.name = data.firstName;
                             emailData.city = data.property.city;
                             emailData.year = data.property.year;
                             emailData.type = data.property.institutionType;
