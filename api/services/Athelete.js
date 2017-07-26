@@ -1024,49 +1024,87 @@ var model = {
     },
 
     receiptMail: function (data, callback) {
-        Athelete.findOne({ //finds one with refrence to id
-            _id: data._id
-        }).exec(function (err, found) {
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback(null, "Data is empty");
-            } else {
-                var emailData = {};
-                if (found.sfaId) {
-                    emailData.sfaId = found.sfaId;
-                } else {
-                    emailData.sfaId = "";
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
+                        }
+                    });
+                },
+                function (property, callback) {
+                    Athelete.findOne({ //finds one with refrence to id
+                        _id: data._id
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, "Data is empty");
+                        } else {
+                            var emailData = {};
+                            if (found.sfaId) {
+                                emailData.sfaId = found.sfaId;
+                            } else {
+                                emailData.sfaId = "";
+                            }
+                            emailData.firstName = found.firstName;
+                            emailData.surname = found.surname;
+                            emailData.transactionID = found.transactionID;
+                            emailData.Date = moment().format("DD-MM-YYYY");
+                            emailData.receiptNo = "SFA" + found.receiptId;
+                            emailData.city = property[0].city;
+                            // emailData.cityCaps = property[0].city.toUpperClass;
+                            emailData.year = property[0].year;
+                            emailData.athleteAmount = property[0].totalAmountAthlete;
+                            emailData.amountInWords = property[0].totalAmountInWordsAthlete;
+                            emailData.amountWithoutTax = property[0].amoutWithoutTaxAthlete;
+                            emailData.cgstAmout = property[0].cgstAmoutAthlete;
+                            emailData.cgstPercent = property[0].cgstPercentAthlete;
+                            emailData.sgstAmout = property[0].sgstAmoutAthlete;
+                            emailData.sgstPercent = property[0].sgstPercentAthlete;
+
+                            emailData.from = "info@sfanow.in";
+                            emailData.email1 = [{
+                                email: found.email
+                            }];
+                            emailData.bcc1 = [{
+                                email: "payments@sfanow.in"
+                            }, {
+                                email: "venkatesh.rathod@sfanow.in"
+                            }];
+                            emailData.filename = "receiptAthelete.ejs";
+                            emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.year + ".";
+                            console.log("emaildata", emailData);
+                            Config.emailTo(emailData, function (err, emailRespo) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, err);
+                                } else if (emailRespo) {
+                                    callback(null, emailRespo);
+                                } else {
+                                    callback(null, "Invalid data");
+                                }
+                            });
+                        }
+                    });
                 }
-                emailData.firstName = found.firstName;
-                emailData.surname = found.surname;
-                emailData.transactionID = found.transactionID;
-                emailData.Date = moment().format("DD-MM-YYYY");
-                emailData.receiptNo = "SFA" + found.receiptId;
-                emailData.from = "info@sfanow.in";
-                emailData.email1 = [{
-                    email: found.email
-                }];
-                emailData.bcc1 = [{
-                    email: "payments@sfanow.in"
-                }, {
-                    email: "venkatesh.rathod@sfanow.in"
-                }];
-                emailData.filename = "receiptAthelete.ejs";
-                emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA Mumbai 2017";
-                console.log("emaildata", emailData);
-                Config.emailTo(emailData, function (err, emailRespo) {
-                    if (err) {
-                        console.log(err);
-                        callback(null, err);
-                    } else if (emailRespo) {
-                        callback(null, emailRespo);
-                    } else {
-                        callback(null, "Invalid data");
-                    }
-                });
-            }
-        });
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
+            });
+
     },
 
     generateMobileOTP: function (data, callback) {
@@ -1096,6 +1134,7 @@ var model = {
         var emailOtp = (Math.random() + "").substring(2, 6);
         var emailData = {};
         emailData.from = "info@sfanow.in";
+        // emailData.name = data.firstName;
         emailData.city = data.city;
         emailData.year = data.year;
         emailData.email = data.email;
@@ -1213,270 +1252,413 @@ var model = {
     },
 
     registeredOnlinePaymentMailSms: function (data, callback) {
-
-
-        async.parallel([
+        async.waterfall([
                 function (callback) {
-                    var emailOtp = (Math.random() + "").substring(2, 6);
-
-                    var emailData = {};
-                    emailData.from = "info@sfanow.in";
-                    emailData.email = data.email;
-                    emailData.filename = "atheleteOnlinePayment.ejs";
-                    emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
-                    console.log("emaildata", emailData);
-
-                    Config.email(emailData, function (err, emailRespo) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
                         if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else if (emailRespo) {
-                            callback(null, emailRespo);
+                            callback(err, null);
                         } else {
-                            callback(null, "Invalid data");
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
                         }
                     });
                 },
-                function (callback) {
+                function (property, callback) {
+                    async.parallel([
+                            function (callback) {
+                                var emailOtp = (Math.random() + "").substring(2, 6);
+                                var emailData = {};
+                                emailData.from = "info@sfanow.in";
+                                emailData.name = data.firstName;
+                                emailData.email = data.email;
+                                emailData.city = property[0].city;
+                                emailData.year = property[0].year;
+                                emailData.filename = "atheleteOnlinePayment.ejs";
+                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.year;
+                                console.log("emaildata", emailData);
+                                Config.email(emailData, function (err, emailRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, err);
+                                    } else if (emailRespo) {
+                                        callback(null, emailRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            },
+                            function (callback) {
 
-                    var smsData = {};
-                    smsData.mobile = data.mobile;
-                    smsData.content = "Thank you for registering for SFA Mumbai 2017. For further details please check your registered email ID.";
-                    console.log("smsdata", smsData);
-                    Config.sendSms(smsData, function (err, smsRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (smsRespo) {
-                            console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
+                                var smsData = {};
+                                smsData.mobile = data.mobile;
+                                smsData.content = "Thank you for registering for SFA " + property[0].city + " " + property[0].year + ". For further details please check your registered email ID.";
+                                console.log("smsdata", smsData);
+                                Config.sendSms(smsData, function (err, smsRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (smsRespo) {
+                                        console.log(smsRespo, "sms sent");
+                                        callback(null, smsRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, final) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, final);
+                            }
+
+                        });
                 }
             ],
-            function (err, final) {
+            function (err, data2) {
                 if (err) {
+                    console.log(err);
                     callback(err, null);
                 } else {
-                    callback(null, final);
+                    callback(null, data2);
                 }
 
             });
+
     },
 
     registeredCashPaymentMailSms: function (data, callback) {
-        async.parallel([
+        async.waterfall([
                 function (callback) {
-
-                    var emailData = {};
-                    emailData.from = "info@sfanow.in";
-                    emailData.email = data.email;
-                    emailData.filename = "atheleteCashPayment.ejs";
-                    emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
-                    console.log("emaildata", emailData);
-
-                    Config.email(emailData, function (err, emailRespo) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
                         if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else if (emailRespo) {
-                            callback(null, emailRespo);
+                            callback(err, null);
                         } else {
-                            callback(null, "Invalid data");
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
                         }
                     });
                 },
-                function (callback) {
+                function (property, callback) {
+                    async.parallel([
+                            function (callback) {
+                                var emailData = {};
+                                emailData.from = "info@sfanow.in";
+                                emailData.email = data.email;
+                                emailData.name = data.firstName;
+                                emailData.city = property[0].city;
+                                emailData.year = property[0].year;
+                                emailData.athleteAmount = property[0].totalAmountAthlete;
+                                emailData.filename = "atheleteCashPayment.ejs";
+                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.year;
+                                console.log("emaildata", emailData);
 
-                    var smsData = {};
+                                Config.email(emailData, function (err, emailRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, err);
+                                    } else if (emailRespo) {
+                                        callback(null, emailRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            },
+                            function (callback) {
+                                var smsData = {};
+                                smsData.mobile = data.mobile;
+                                smsData.content = "Thank you for registering for SFA " + property[0].city + " " + property[0].year + ". For further details please check your registered email ID.";
+                                console.log("smsdata", smsData);
+                                Config.sendSms(smsData, function (err, smsRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (smsRespo) {
+                                        console.log(smsRespo, "sms sent");
+                                        callback(null, smsRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, final) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, final);
+                            }
 
-                    smsData.mobile = data.mobile;
-
-                    smsData.content = "Thank you for registering for SFA Mumbai 2017. For further details please check your registered email ID.";
-                    console.log("smsdata", smsData);
-                    Config.sendSms(smsData, function (err, smsRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (smsRespo) {
-                            console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
+                        });
                 }
             ],
-            function (err, final) {
+            function (err, data2) {
                 if (err) {
+                    console.log(err);
                     callback(err, null);
                 } else {
-                    callback(null, final);
+                    callback(null, data2);
                 }
 
             });
+
     },
 
     successVerifiedMailSms: function (data, callback) {
-        async.parallel([
+        async.waterfall([
                 function (callback) {
-                    var emailData = {};
-                    emailData.from = "info@sfanow.in";
-                    emailData.email = data.email;
-                    emailData.sfaID = data.sfaId;
-                    emailData.password = data.password;
-                    emailData.filename = "registeredVerification.ejs";
-                    emailData.subject = "SFA: You are now a verified Athlete for SFA Mumbai 2017";
-                    console.log("emaildata", emailData);
-
-                    Config.email(emailData, function (err, emailRespo) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
                         if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else if (emailRespo) {
-                            callback(null, emailRespo);
+                            callback(err, null);
                         } else {
-                            callback(null, "Invalid data");
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
                         }
                     });
                 },
-                function (callback) {
+                function (property, callback) {
+                    async.parallel([
+                            function (callback) {
+                                var emailData = {};
+                                emailData.from = "info@sfanow.in";
+                                emailData.email = data.email;
+                                emailData.sfaID = data.sfaId;
+                                emailData.password = data.password;
+                                emailData.name = data.firstName;
+                                emailData.city = property[0].city;
+                                emailData.year = property[0].year;
+                                emailData.filename = "registeredVerification.ejs";
+                                emailData.subject = "SFA: You are now a verified Athlete for SFA " + emailData.city + " " + emailData.year;
+                                console.log("emaildata", emailData);
+                                Config.email(emailData, function (err, emailRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, err);
+                                    } else if (emailRespo) {
+                                        callback(null, emailRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            },
+                            function (callback) {
 
-                    var smsData = {};
-                    smsData.mobile = data.mobile;
+                                var smsData = {};
+                                smsData.mobile = data.mobile;
+                                smsData.content = "Congratulations! You are now a verified SFA Athlete. Kindly check your registered Email ID for your SFA ID and Password.";
+                                console.log("smsdata", smsData);
+                                // callback(null, smsData);
+                                Config.sendSms(smsData, function (err, smsRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (smsRespo) {
+                                        console.log(smsRespo, "sms sent");
+                                        callback(null, smsRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, final) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, final);
+                            }
 
-                    smsData.content = "Congratulations! You are now a verified SFA Athlete. Kindly check your registered Email ID for your SFA ID and Password.";
-                    console.log("smsdata", smsData);
-                    // callback(null, smsData);
-                    Config.sendSms(smsData, function (err, smsRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (smsRespo) {
-                            console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
+                        });
                 }
             ],
-            function (err, final) {
+            function (err, data2) {
                 if (err) {
+                    console.log(err);
                     callback(err, null);
                 } else {
-                    callback(null, final);
+                    callback(null, data2);
                 }
 
             });
     },
 
     failureVerifiedMailSms: function (data, callback) {
-        async.parallel([
+        async.waterfall([
                 function (callback) {
-                    var emailData = {};
-                    emailData.from = "info@sfanow.in";
-                    emailData.email = data.email;
-                    emailData.sfaID = data.sfaID;
-                    emailData.password = data.password;
-                    emailData.filename = "rejection.ejs";
-                    emailData.subject = "SFA: Rejection of Your Application for SFA Mumbai 2017";
-                    console.log("emaildata", emailData);
-
-                    Config.email(emailData, function (err, emailRespo) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
                         if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else if (emailRespo) {
-                            //callback(null, emailRespo);
+                            callback(err, null);
                         } else {
-                            //callback(null, "Invalid data");
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
                         }
                     });
                 },
-                function (callback) {
+                function (property, callback) {
+                    async.parallel([
+                            function (callback) {
+                                var emailData = {};
+                                emailData.from = "info@sfanow.in";
+                                emailData.email = data.email;
+                                emailData.name = data.firstName;
+                                emailData.sfaID = data.sfaID;
+                                emailData.password = data.password;
+                                emailData.city = property[0].city;
+                                emailData.year = property[0].year;
+                                emailData.type = property[0].institutionType;
+                                emailData.filename = "rejection.ejs";
+                                emailData.subject = "SFA: Rejection of Your Application for SFA " + emailData.city + " " + emailData.year;
+                                console.log("emaildata", emailData);
+                                Config.email(emailData, function (err, emailRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, err);
+                                    } else if (emailRespo) {
+                                        //callback(null, emailRespo);
+                                    } else {
+                                        //callback(null, "Invalid data");
+                                    }
+                                });
+                            },
+                            function (callback) {
 
-                    var smsData = {};
-                    smsData.mobile = data.mobile;
+                                var smsData = {};
+                                smsData.mobile = data.mobile;
+                                var city = property[0].city;
+                                var year = property[0].year;
+                                smsData.content = "We regret to inform you that your application has been rejected for SFA " + city + " " + year + ". For further queries please email us at info@sfanow.in";
+                                console.log("smsdata", smsData);
+                                Config.sendSms(smsData, function (err, smsRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (smsRespo) {
+                                        console.log(smsRespo, "sms sent");
+                                        callback(null, smsRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, final) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, final);
+                            }
 
-                    smsData.content = "We regret to inform you that your application has been rejected for SFA Mumbai 2017. For further queries please email us at info@sfanow.in";
-                    console.log("smsdata", smsData);
-                    Config.sendSms(smsData, function (err, smsRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (smsRespo) {
-                            console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
+                        });
                 }
             ],
-            function (err, final) {
+            function (err, data2) {
                 if (err) {
+                    console.log(err);
                     callback(err, null);
                 } else {
-                    callback(null, final);
+                    callback(null, data2);
                 }
 
             });
+
     },
 
     unregistedOnlinePaymentMailSms: function (data, callback) {
-        async.parallel([
+        async.waterfall([
                 function (callback) {
-                    var emailData = {};
-                    emailData.from = "info@sfanow.in";
-                    emailData.email = data.email;
-                    // emailData.sfaID = data.sfaID;
-                    // emailData.password = data.password;
-                    emailData.filename = "unregisteredOnlinePayment.ejs";
-                    emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
-                    console.log("emaildata", emailData);
-
-                    Config.email(emailData, function (err, emailRespo) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
                         if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else if (emailRespo) {
-                            callback(null, emailRespo);
+                            callback(err, null);
                         } else {
-                            callback(null, "Invalid data");
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
                         }
                     });
                 },
-                function (callback) {
+                function (property, callback) {
+                    async.parallel([
+                            function (callback) {
+                                var emailData = {};
+                                emailData.from = "info@sfanow.in";
+                                emailData.email = data.email;
+                                emailData.name = data.firstName;
+                                emailData.city = property[0].city;
+                                emailData.year = property[0].year;
+                                emailData.athleteAmount = property[0].totalAmountAthlete;
+                                // emailData.sfaID = data.sfaID;
+                                // emailData.password = data.password;
+                                emailData.filename = "unregisteredOnlinePayment.ejs";
+                                emailData.subject = "SFA: Thank you for registering for SFA" + emailData.city + " " + emailData.year + ".";
+                                console.log("emaildata", emailData);
 
-                    var smsData = {};
-                    smsData.mobile = data.mobile;
+                                Config.email(emailData, function (err, emailRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, err);
+                                    } else if (emailRespo) {
+                                        callback(null, emailRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            },
+                            function (callback) {
 
-                    smsData.content = "Thank you for registering for SFA Mumbai 2017. For further details please check your registered email ID.";
-                    console.log("smsdata", smsData);
-                    Config.sendSms(smsData, function (err, smsRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (smsRespo) {
-                            console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
+                                var smsData = {};
+                                smsData.mobile = data.mobile;
+                                var city = property[0].city;
+                                var year = property[0].year;
+                                smsData.content = "Thank you for registering for SFA " + city + " " + year + ". For further details please check your registered email ID.";
+                                console.log("smsdata", smsData);
+                                Config.sendSms(smsData, function (err, smsRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (smsRespo) {
+                                        console.log(smsRespo, "sms sent");
+                                        callback(null, smsRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, final) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, final);
+                            }
+
+                        });
                 }
             ],
-            function (err, final) {
+            function (err, data2) {
                 if (err) {
+                    console.log(err);
                     callback(err, null);
                 } else {
-                    callback(null, final);
+                    callback(null, data2);
                 }
 
             });
+
     },
 
     unregistedCashPaymentMailSms: function (data, callback) {
@@ -1500,8 +1682,10 @@ var model = {
                                 var emailData = {};
                                 emailData.from = "info@sfanow.in";
                                 emailData.email = data.email;
+                                emailData.name = data.firstName;
                                 emailData.city = property[0].city;
                                 emailData.year = property[0].year;
+                                emailData.athleteAmount = property[0].totalAmountAthlete;
                                 emailData.filename = "unregistercashpayment.ejs";
                                 emailData.subject = "SFA: Thank you for registering for SFA" + emailData.city + " " + emailData.year + ".";
                                 console.log("emaildata", emailData);
@@ -2338,22 +2522,23 @@ var model = {
                             emailData.city = data.property.city;
                             emailData.year = data.property.year;
                             emailData.type = data.property.institutionType;
-                            emailData.AthleteAmount = data.property.totalAmountAthlete;
+                            emailData.athleteAmount = data.property.totalAmountAthlete;
+                            emailData.name = data.firstName;
                             emailData.email = data.email;
                             emailData.filename = "paymentReminderAthlete.ejs";
-                            emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
+                            emailData.subject = "SFA: Your Payment Reminder for SFA " + emailData.city + " " + emailData.year;
                             console.log("emaildata", emailData);
 
-                            // Config.email(emailData, function (err, emailRespo) {
-                            //     if (err) {
-                            //         console.log(err);
-                            //         callback(null, err);
-                            //     } else if (emailRespo) {
-                            //         callback(null, emailRespo);
-                            //     } else {
-                            //         callback(null, "Invalid data");
-                            //     }
-                            // });
+                            Config.email(emailData, function (err, emailRespo) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, err);
+                                } else if (emailRespo) {
+                                    callback(null, emailRespo);
+                                } else {
+                                    callback(null, "Invalid data");
+                                }
+                            });
 
                         } else if (days == 10) {
                             var emailData = {};
@@ -2361,25 +2546,23 @@ var model = {
                             emailData.city = data.property.city;
                             emailData.year = data.property.year;
                             emailData.type = data.property.institutionType;
-                            // emailData.schoolAmount = data.property.totalAmountType;
-                            // emailData.schoolAmountWords = data.property.totalAmountInWordsType;
-                            emailData.AthleteAmount = data.property.totalAmountAthlete;
-                            // emailData.AthleteAmountWords = data.property.totalAmountInWordsAthlete;
+                            emailData.athleteAmount = data.property.totalAmountAthlete;
+                            emailData.name = data.firstName;
                             emailData.email = data.email;
                             emailData.filename = "paymentReminderAthlete.ejs";
-                            emailData.subject = "SFA: Your Payment Reminder for SFA Mumbai 2017";
+                            emailData.subject = "SFA: Your Payment Reminder for SFA " + emailData.city + " " + emailData.year;
                             console.log("emaildata", emailData);
 
-                            // Config.email(emailData, function (err, emailRespo) {
-                            //     if (err) {
-                            //         console.log(err);
-                            //         callback(null, err);
-                            //     } else if (emailRespo) {
-                            //         callback(null, emailRespo);
-                            //     } else {
-                            //         callback(null, "Invalid data");
-                            //     }
-                            // });
+                            Config.email(emailData, function (err, emailRespo) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, err);
+                                } else if (emailRespo) {
+                                    callback(null, emailRespo);
+                                } else {
+                                    callback(null, "Invalid data");
+                                }
+                            });
 
                         } else {
                             callback(null, "no Athlete found");

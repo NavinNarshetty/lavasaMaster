@@ -77,6 +77,10 @@
             -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
         }
+
+        .text-uppercase{
+            text-transform: uppercase;
+        }
     </style>
 </head>
 
@@ -91,7 +95,7 @@
             <tr>
                 <td class="text-center">
                     <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">WELCOME TO </span>
-                    <h2 style="margin:0px;position: relative;font-family: TitilliumWeb-Bold;color:#0ddb86;font-size: 27px;">BILLING & PAYMENT AT SFA MUMBAI 2017 </h2>
+                    <h2 style="margin:0px;position: relative;font-family: TitilliumWeb-Bold;color:#0ddb86;font-size: 27px;">BILLING & PAYMENT AT SFA <span class="text-uppercase"> <%=city%> </span> <%=year%> </h2>
                 </td>
 
             </tr>
@@ -101,11 +105,11 @@
             <tr>
                 <td>
                     <div style="padding: 0px 50px; font-family: TitilliumWeb-Regular;font-size: 17px;">
-                        <p> Dear Sir/ Madam,</p>
-                        <p style="font-family:TitilliumWeb-Bold;">Thank you for submitting your application for SFA Mumbai 2017.</p>
+                        <p> Dear <%=name%>,</p>
+                        <p style="font-family:TitilliumWeb-Bold;">Thank you for submitting your application for SFA <%=city%> <%=year%>.</p>
                         <p>You have selected the 'Cash/Cheque/Demand Draft Option.<br> To complete the registration process
                             kindly courier/hand deliver
-                            <br>Cash/Cheque/Demand Draft of <i class="fa fa-inr" aria-hidden="true"></i> 200/- (Inclusive
+                            <br>Cash/Cheque/Demand Draft of <i class="fa fa-inr" aria-hidden="true"></i> <%=athleteAmount%>/- (Inclusive
                             of all applicable taxes) in favour of <span style="font-family:TitilliumWeb-Bold;">'SFA Events Private Limited'</span>within
                             10 working days to:
                         </p>

@@ -77,6 +77,10 @@
             -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
         }
+
+        .text-uppercase{
+            text-transform: uppercase;
+        }
     </style>
 </head>
 
@@ -91,7 +95,7 @@
             <tr>
                 <td class="text-center">
                     <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">WELCOME TO </span>
-                    <h2 style="margin:0px;position: relative;font-family: TitilliumWeb-Bold;color:#0ddb86;font-size: 27px;">BILLING & PAYMENT AT SFA MUMBAI 2017 </h2>
+                    <h2 style="margin:0px;position: relative;font-family: TitilliumWeb-Bold;color:#0ddb86;font-size: 27px;">BILLING & PAYMENT AT SFA <span class="text-uppercase"> <%=city%> </span> <%=year%> </h2>
                 </td>
 
             </tr>
@@ -101,7 +105,7 @@
             <tr>
                 <td>
                     <div style="padding: 0px 54px; font-family: TitilliumWeb-Regular;font-size: 17px;">
-                        <p> Dear Sir/ Madam,</p>
+                        <p> Dear <%=name%>,</p>
 
                         <p>We are unable to process your registration for SFA <%=city%> <%year%> due to the non-payment of registration
                             fees. Kindly make a payment of <i class="fa fa-inr" aria-hidden="true"></i> <%=schoolAmount%>/- to complete
