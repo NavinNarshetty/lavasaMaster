@@ -1761,7 +1761,11 @@ var model = {
                                         data.mobile = found.mobile;
                                         data.schoolName = found.atheleteSchoolName;
                                         data.schoolSFA = "Unregistered";
-                                        data.emailfile = "studentTeamUnregister.ejs";
+                                        if (data.property.institutionType == "school") {
+                                            data.emailfile = "studentTeamUnregister.ejs";
+                                        } else {
+                                            data.emailfile = "studentTeam.ejs";
+                                        }
                                         callback(null, data);
 
                                     } else {
