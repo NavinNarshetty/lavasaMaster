@@ -135,7 +135,6 @@ var controller = {
                 function (property, callback) {
                     req.body.property = property[0];
                     Registration.cronSchoolWithPaymentDue(req.body, res.callback);
-
                 }
             ],
             function (err, data2) {

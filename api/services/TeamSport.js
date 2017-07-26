@@ -71,6 +71,20 @@ var model = {
         console.log("data", data);
         async.waterfall([
                 function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
+                        }
+                    });
+                },
+                function (property, callback) {
+
                     var team = {};
                     team.name = data.name;
                     team.sport = data.sport;
@@ -93,6 +107,7 @@ var model = {
                     if (data.isVideoAnalysis) {
                         team.isVideoAnalysis = data.isVideoAnalysis;
                     }
+                    data.property = property[0];
                     callback(null, team);
                 },
                 function (team, callback) {
@@ -485,7 +500,11 @@ var model = {
                                 data.mobile = found.mobile;
                                 data.schoolName = found.atheleteSchoolName;
                                 data.schoolSFA = "Unregistered";
-                                data.emailfile = "studentTeamUnregister.ejs";
+                                if (data.property.institutionType == "school") {
+                                    data.emailfile = "studentTeamUnregister.ejs";
+                                } else {
+                                    data.emailfile = "studentTeam.ejs";
+                                }
                                 callback(null, data);
 
                             } else {
@@ -514,7 +533,11 @@ var model = {
                                         data.mobile = found.mobile;
                                         data.schoolName = found.atheleteSchoolName;
                                         data.schoolSFA = "Unregistered";
-                                        data.emailfile = "studentTeamUnregister.ejs";
+                                        if (data.property.institutionType == "school") {
+                                            data.emailfile = "studentTeamUnregister.ejs";
+                                        } else {
+                                            data.emailfile = "studentTeam.ejs";
+                                        }
                                         callback(null, data);
 
                                     } else {
