@@ -3,10 +3,7 @@ var schema = new Schema({
         type: String,
         required: true,
         unique: true,
-        uniqueCaseInsensitive: true,
-        excel: {
-            name: Name
-        }
+        uniqueCaseInsensitive: true
     }
 });
 
