@@ -348,10 +348,10 @@ var model = {
                                         if (_.isEmpty(data.sfaID)) {
                                             var year = new Date().getFullYear().toString().substr(2, 2);
                                             console.log("City", city);
-                                            if (_.isEmpty(complete[0].city)) {
+                                            if (_.isEmpty(complete[0].sfaCity)) {
                                                 schoolData.city = "Mumbai";
                                             }
-                                            var city = complete[0].city;
+                                            var city = complete[0].sfaCity;
                                             var prefixCity = city.charAt(0);
                                             console.log("prefixCity", prefixCity);
                                             var institutionType = schoolData.institutionType.toUpperCase();
