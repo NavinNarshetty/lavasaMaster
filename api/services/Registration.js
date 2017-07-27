@@ -348,6 +348,7 @@ var model = {
                                         if (_.isEmpty(data.sfaID)) {
                                             var year = new Date().getFullYear().toString().substr(2, 2);
                                             console.log("City", city);
+                                            console.log("complete", complete[0]);
                                             if (_.isEmpty(complete[0].sfaCity)) {
                                                 schoolData.city = "Mumbai";
                                             }
