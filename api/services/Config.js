@@ -9,7 +9,7 @@ schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Config', schema);
 // var requrl = "http://wohlig.io:1337/api/";
-var requrl = "http://testmumbaicollegebackend.sfanow.in";
+var requrl = "http://testmumbaicollegebackend.sfanow.in/api/";
 // var requrl = "http://sfa2.wohlig.co.in/api/";
 // var requrl = "https://sfa.wohlig.co.in/api/";
 
