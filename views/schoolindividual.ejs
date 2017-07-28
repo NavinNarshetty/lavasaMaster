@@ -109,6 +109,10 @@
     a {
       cursor: pointer;
     }
+    
+    .text-uppercase{
+            text-transform: uppercase;
+        }
   </style>
 </head>
 
@@ -123,7 +127,7 @@
       <tr>
         <td class="text-center">
           <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">SPORTS REGISTRATIONS </span>
-          <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA MUMBAI 2017 </h2>
+          <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA <span class="text-uppercase"> <%=city%> </span> <%=year%> </h2>
         </td>
 
       </tr>
@@ -134,7 +138,7 @@
         <td>
           <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
 
-            <p style="margin-bottom: 0px;">Congratulations! You have successfully registered a <span style="font-weight: bold;"><%=totalAthlete%> Athletes for <%=completeSportInfo[0].sportName%></span>  at SFA Mumbai 2017. Please find details for the same below:
+            <p style="margin-bottom: 0px;">Congratulations! You have successfully registered a <span style="font-weight: bold;"><%=totalAthlete%> Athletes for <%=completeSportInfo[0].sportName%></span>  at SFA <%=city%> <%=year%>. Please find details for the same below:
             </p>
           </div>
         </td>
@@ -142,21 +146,34 @@
       <tr>
         <td>
           <div style="padding: 0px 54px;">
-            <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
-        color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 5px">School Name:
+            <%if(type=="school"){%>
+              <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
+               color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 5px">School Name:
               <%=schoolName%>
             </p>
+            <% }else{%>
+              <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
+               color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 5px">College Name:
+              <%=schoolName%>
+            </p>
+           <% }%>      
           </div>
-
         </td>
       </tr>
       <tr>
         <td>
           <div style="padding: 0px 54px;">
+            <%if(type=="school"){%>
             <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
-        color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 0px;">School SFA ID:
+    color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 5px">School SFA ID:
               <%=schoolSFA%>
             </p>
+            <% }else{%>
+            <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
+    color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 5px">College SFA ID:
+              <%=schoolSFA%>
+            </p>
+             <% }%>     
           </div>
 
         </td>
@@ -211,7 +228,7 @@
                   <td colspan="3">
                     <div style="color: #091a71; text-align: justify; font-weight: 600;">
                       <p style="margin-bottom: 0px; ">We wish to see you with a strong contingent,</p>
-                      <p style="margin-top: 5px; ">such that your school is up there on the ranking table!</p>
+                      <p style="margin-top: 5px; ">such that your <%=type%> is up there on the ranking table!</p>
                     </div>
                   </td>
                 </tr>
@@ -228,21 +245,21 @@
                     <div style="text-align:justify; ">
                       <p style="margin-bottom: 0px;
                       "> 1) To make any changes regarding the above information email us at <a style="font-family:TitilliumWeb-Bold; color: black; "
-                          href="mailto:info@sfanow.in ">info@sfanow.in</a>. No changes can be made after 30th September 2017</p>
+                          href="mailto:info@sfanow.in ">info@sfanow.in</a>. No changes can be made after 30th September <%=year%></p>
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="3 ">
                     <div style="text-align:justify; ">
-                      <p style="margin-bottom: 0px; "> 2) Registrations for SFA Mumbai 2017 will close on 30th September 2017.</p>
+                      <p style="margin-bottom: 0px; "> 2) Registrations for SFA <%=city%> <%=year%> will close on 30th September <%=year%>.</p>
                     </div>
                   </td>
                 </tr>
                 <tr>
                   <td colspan="3 ">
                     <div style="text-align:justify; ">
-                      <p style="margin-bottom: 0px; "> 3) Draws & Schedules will be published on our website by 30th October 2017.</p>
+                      <p style="margin-bottom: 0px; "> 3) Draws & Schedules will be published on our website by 30th October <%=year%>.</p>
                     </div>
                   </td>
                 </tr>
@@ -259,7 +276,7 @@
                   <td colspan="3 ">
                     <div style="text-align:justify; ">
                       <p style="margin-bottom: 0px; "> 5) Stay updated with details such as championship draws & schedules, workshops, exhibition matches,
-                        special days and all other announcements with regards to SFA Mumbai 2017, by following our Facebook
+                        special days and all other announcements with regards to SFA <%=city%> <%=year%>, by following our Facebook
                         event page:
                         <a style=" color: #0a1a72; font-style: italic; font-weight: 600; " href="https://www.facebook.com/pg/sportsforallnow/events/
                       " target="_blank ">https://www.facebook.com/pg/sportsforallnow/events/</a>

@@ -2191,6 +2191,17 @@ var model = {
                 };
 
             }
+            //-----------for sponsered---------
+            else if (data.input == "sponsered" || data.input == "Sponsered") {
+                matchObj = {
+                    'registrationFee': "Sponsered",
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                };
+
+            }
+            //-----------for sponsered---------
         } else if (data.type == "Payment Status") {
             if (data.input == "Paid" || data.input == "paid") {
                 matchObj = {

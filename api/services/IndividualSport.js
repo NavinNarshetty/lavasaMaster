@@ -1444,249 +1444,340 @@ var model = {
     },
 
     smsMailsAthlete: function (data, n, callback) {
-        async.parallel([
-                //email
+        async.waterfall([
                 function (callback) {
-                    console.log("event", n);
-                    var emailData = {};
-                    emailData.schoolSFA = data.sfaid;
-                    emailData.schoolName = data.school;
-                    var sport = n.sportName + " " + n.gender + " " + n.ageGroup;
-                    emailData.gender = n.gender;
-                    emailData.ageGroup = n.ageGroup;
-                    var count = 0;
-                    var eventgroup;
-                    _.each(n.eventName, function (event) {
-                        if (count == 0) {
-                            eventgroup = event;
-                            count++;
-                        } else {
-                            eventgroup = eventgroup + ", " + event;
-                        }
-                    });
-                    emailData.eventName = eventgroup;
-                    emailData.sportName = n.sportName;
-                    emailData.completeSport = sport;
-                    emailData.atheleteSFA = n.sfaid;
-                    if (n.middlename) {
-                        var name = n.firstname + " " + n.middlename + " " + n.lastname;
-                    } else {
-                        var name = n.firstname + " " + n.lastname;
-                    }
-                    emailData.atheleteName = name;
-                    emailData.from = "info@sfanow.in";
-                    emailData.email = n.email;
-                    emailData.filename = "athleteindividual.ejs";
-                    emailData.subject = "SFA: Individual Sport Selection";
-                    // callback(null, emailData);
-                    Config.email(emailData, function (err, emailRespo) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
                         if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else if (emailRespo) {
-                            callback(null, emailRespo);
+                            callback(err, null);
                         } else {
-                            callback(null, "Invalid data");
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
                         }
                     });
                 },
-                function (callback) {
-                    var smsData = {};
-                    smsData.mobile = n.mobile;
-                    smsData.content = "SFA: Thank you for registering for Individual Sports at SFA 2017. For Further details Please check your registered email ID.";
-                    console.log("smsdata", smsData);
-                    Config.sendSms(smsData, function (err, smsRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (smsRespo) {
-                            console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
+                function (property, callback) {
+                    async.parallel([
+                            //email
+                            function (callback) {
+                                console.log("event", n);
+                                var emailData = {};
+                                emailData.schoolSFA = data.sfaid;
+                                emailData.schoolName = data.school;
+                                var sport = n.sportName + " " + n.gender + " " + n.ageGroup;
+                                emailData.gender = n.gender;
+                                emailData.ageGroup = n.ageGroup;
+                                var count = 0;
+                                var eventgroup;
+                                _.each(n.eventName, function (event) {
+                                    if (count == 0) {
+                                        eventgroup = event;
+                                        count++;
+                                    } else {
+                                        eventgroup = eventgroup + ", " + event;
+                                    }
+                                });
+                                emailData.eventName = eventgroup;
+                                emailData.sportName = n.sportName;
+                                emailData.completeSport = sport;
+                                emailData.atheleteSFA = n.sfaid;
+                                if (n.middlename) {
+                                    var name = n.firstname + " " + n.middlename + " " + n.lastname;
+                                } else {
+                                    var name = n.firstname + " " + n.lastname;
+                                }
+                                emailData.atheleteName = name;
+                                emailData.name = n.firstName;
+                                emailData.from = "info@sfanow.in";
+                                emailData.email = n.email;
+                                emailData.city = property[0].sfaCity;
+                                emailData.type = property[0].institutionType;
+                                emailData.year = property[0].year;
+                                emailData.filename = "athleteindividual.ejs";
+                                emailData.subject = "SFA: Individual Sport Selection";
+                                // callback(null, emailData);
+                                Config.email(emailData, function (err, emailRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, err);
+                                    } else if (emailRespo) {
+                                        callback(null, emailRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            },
+                            function (callback) {
+                                var smsData = {};
+                                smsData.mobile = n.mobile;
+                                smsData.content = "SFA: Thank you for registering for Individual Sports at SFA " + property[0].year + ". For Further details Please check your registered email ID.";
+                                console.log("smsdata", smsData);
+                                Config.sendSms(smsData, function (err, smsRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (smsRespo) {
+                                        console.log(smsRespo, "sms sent");
+                                        callback(null, smsRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, data3) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(data3)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, data3);
+                                }
+                            }
+                        });
                 }
             ],
-            function (err, data3) {
+            function (err, data2) {
                 if (err) {
                     console.log(err);
                     callback(err, null);
                 } else {
-                    if (_.isEmpty(data3)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, data3);
-                    }
+                    callback(null, data2);
                 }
+
             });
+
     },
 
     smsMailsSchool: function (data, atheleteName, callback) {
-        async.parallel([
-                //email
+        async.waterfall([
                 function (callback) {
-                    var atheleteUniq = atheleteName;
-                    var results1 = atheleteUniq.reduce((arr, ele) => ([].push.apply(arr, ele.info.filter((v) => arr.indexOf(v) == -1)), arr), []);
-                    var unique = _.uniqBy(results1, 'sfaid');
-                    var totalAthlete = unique.length;
-                    var results = _.groupBy(atheleteName, "_id");
-
-                    var collectedSport = [];
-                    _.each(results, function (mainData) {
-                        var sportInfo = {};
-                        sportInfo.eventName = mainData[0].info[0].eventName;
-                        sportInfo.gender = mainData[0].info[0].gender;
-                        sportInfo.ageGroup = mainData[0].info[0].ageGroup;
-                        sportInfo.sportName = mainData[0].info[0].sportName;
-                        var srno = 1;
-                        sportInfo.athleteData = [];
-                        _.each(mainData, function (data) {
-                            var athelete = {};
-                            athelete.srno = srno;
-                            if (data.info[0].middlename) {
-                                var name = data.info[0].firstname + " " + data.info[0].middlename + " " + data.info[0].lastname;
-                            } else {
-                                var name = data.info[0].firstname + " " + data.info[0].lastname;
-                            }
-                            athelete.gender = data.info[0].gender;
-                            athelete.ageGroup = data.info[0].ageGroup;
-                            athelete.name = name;
-                            athelete.sfaid = data.info[0].sfaid;
-                            sportInfo.athleteData.push(athelete);
-                            srno++;
-                        });
-                        collectedSport.push(sportInfo);
-
-                    });
-                    var emailData = {};
-                    emailData.schoolSFA = data.sfaid;
-                    emailData.schoolName = data.school;
-                    emailData.totalAthlete = totalAthlete;
-                    emailData.completeSportInfo = collectedSport;
-                    emailData.from = "info@sfanow.in";
-                    emailData.email = data.email;
-                    emailData.filename = "schoolindividual.ejs";
-                    emailData.subject = "SFA: Individual Sport Selection List";
-                    Config.email(emailData, function (err, emailRespo) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
                         if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else if (emailRespo) {
-                            callback(null, emailRespo);
+                            callback(err, null);
                         } else {
-                            callback(null, "Invalid data");
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
                         }
                     });
                 },
-                function (callback) {
-                    var smsData = {};
-                    smsData.mobile = data.mobile;
-                    smsData.content = "SFA: Thank you for registering for Individual Sports at SFA 2017. For Further details Please check your registered email ID.";
-                    console.log("smsdata", smsData);
-                    Config.sendSms(smsData, function (err, smsRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (smsRespo) {
-                            console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
+                function (property, callback) {
+                    async.parallel([
+                            //email
+                            function (callback) {
+                                var atheleteUniq = atheleteName;
+                                var results1 = atheleteUniq.reduce((arr, ele) => ([].push.apply(arr, ele.info.filter((v) => arr.indexOf(v) == -1)), arr), []);
+                                var unique = _.uniqBy(results1, 'sfaid');
+                                var totalAthlete = unique.length;
+                                var results = _.groupBy(atheleteName, "_id");
+
+                                var collectedSport = [];
+                                _.each(results, function (mainData) {
+                                    var sportInfo = {};
+                                    sportInfo.eventName = mainData[0].info[0].eventName;
+                                    sportInfo.gender = mainData[0].info[0].gender;
+                                    sportInfo.ageGroup = mainData[0].info[0].ageGroup;
+                                    sportInfo.sportName = mainData[0].info[0].sportName;
+                                    var srno = 1;
+                                    sportInfo.athleteData = [];
+                                    _.each(mainData, function (data) {
+                                        var athelete = {};
+                                        athelete.srno = srno;
+                                        if (data.info[0].middlename) {
+                                            var name = data.info[0].firstname + " " + data.info[0].middlename + " " + data.info[0].lastname;
+                                        } else {
+                                            var name = data.info[0].firstname + " " + data.info[0].lastname;
+                                        }
+                                        athelete.gender = data.info[0].gender;
+                                        athelete.ageGroup = data.info[0].ageGroup;
+                                        athelete.name = name;
+                                        athelete.sfaid = data.info[0].sfaid;
+                                        sportInfo.athleteData.push(athelete);
+                                        srno++;
+                                    });
+                                    collectedSport.push(sportInfo);
+
+                                });
+                                var emailData = {};
+                                emailData.schoolSFA = data.sfaid;
+                                emailData.schoolName = data.school;
+                                emailData.totalAthlete = totalAthlete;
+                                emailData.completeSportInfo = collectedSport;
+                                emailData.from = "info@sfanow.in";
+                                emailData.email = data.email;
+                                emailData.city = property[0].sfaCity;
+                                emailData.year = property[0].year;
+                                emailData.type = property[0].institutionType;
+                                emailData.filename = "schoolindividual.ejs";
+                                emailData.subject = "SFA: Individual Sport Selection List";
+                                Config.email(emailData, function (err, emailRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, err);
+                                    } else if (emailRespo) {
+                                        callback(null, emailRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            },
+                            function (callback) {
+                                var smsData = {};
+                                smsData.mobile = data.mobile;
+                                smsData.content = "SFA: Thank you for registering for Individual Sports at SFA " + property[0].year + ". For Further details Please check your registered email ID.";
+                                console.log("smsdata", smsData);
+                                Config.sendSms(smsData, function (err, smsRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (smsRespo) {
+                                        console.log(smsRespo, "sms sent");
+                                        callback(null, smsRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, data3) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(data3)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, data3);
+                                }
+                            }
+                        });
                 }
             ],
-            function (err, data3) {
+            function (err, data2) {
                 if (err) {
                     console.log(err);
                     callback(err, null);
                 } else {
-                    if (_.isEmpty(data3)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, data3);
-                    }
+                    callback(null, data2);
                 }
+
             });
     },
 
     smsMailIndividual: function (data, n, callback) {
-        console.log('data', data);
-        console.log('N', n);
-        async.parallel([
+        async.waterfall([
                 function (callback) {
-                    var emailData = {};
-                    emailData.schoolSFA = data.sfaid;
-                    emailData.schoolName = data.school;
-                    var sport = n.sportName + " " + n.gender + " " + n.ageGroup;
-                    emailData.gender = n.gender;
-                    emailData.ageGroup = n.ageGroup;
-                    var count = 0;
-                    var eventgroup;
-                    _.each(n.eventName, function (event) {
-                        if (count == 0) {
-                            eventgroup = event;
-                            count++;
-                        } else {
-                            eventgroup = eventgroup + ", " + event;
-                        }
-                    });
-                    emailData.eventName = eventgroup;
-                    emailData.sportName = n.sportName;
-                    emailData.completeSport = sport;
-                    emailData.atheleteSFA = n.sfaid;
-                    if (n.middlename) {
-                        var name = n.firstname + " " + n.middlename + " " + n.lastname;
-                    } else {
-                        var name = n.firstname + " " + n.lastname;
-                    }
-                    emailData.atheleteName = name;
-                    emailData.from = "info@sfanow.in";
-                    emailData.email = n.email;
-                    emailData.filename = "athleteindividual.ejs";
-                    emailData.subject = "SFA: Individual Sport Selection";
-                    Config.email(emailData, function (err, emailRespo) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
                         if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else if (emailRespo) {
-                            callback(null, emailRespo);
+                            callback(err, null);
                         } else {
-                            callback(null, "Invalid data");
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
                         }
                     });
                 },
-                function (callback) {
-                    var smsData = {};
-                    smsData.mobile = data.mobile;
-                    smsData.content = "SFA: Thank you for registering for Individual Sports at SFA 2017. For Further details Please check your registered email ID.";
-                    console.log("smsdata", smsData);
-                    Config.sendSms(smsData, function (err, smsRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (smsRespo) {
-                            console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
+                function (property, callback) {
+                    console.log('data', data);
+                    console.log('N', n);
+                    async.parallel([
+                            function (callback) {
+                                var emailData = {};
+                                emailData.schoolSFA = data.sfaid;
+                                emailData.schoolName = data.school;
+                                var sport = n.sportName + " " + n.gender + " " + n.ageGroup;
+                                emailData.gender = n.gender;
+                                emailData.ageGroup = n.ageGroup;
+                                var count = 0;
+                                var eventgroup;
+                                _.each(n.eventName, function (event) {
+                                    if (count == 0) {
+                                        eventgroup = event;
+                                        count++;
+                                    } else {
+                                        eventgroup = eventgroup + ", " + event;
+                                    }
+                                });
+                                emailData.eventName = eventgroup;
+                                emailData.sportName = n.sportName;
+                                emailData.completeSport = sport;
+                                emailData.atheleteSFA = n.sfaid;
+                                if (n.middlename) {
+                                    var name = n.firstname + " " + n.middlename + " " + n.lastname;
+                                } else {
+                                    var name = n.firstname + " " + n.lastname;
+                                }
+                                emailData.atheleteName = name;
+                                emailData.from = "info@sfanow.in";
+                                emailData.email = n.email;
+                                emailData.city = property[0].sfaCity;
+                                emailData.year = property[0].year;
+                                emailData.type = property[0].institutionType;
+                                emailData.filename = "athleteindividual.ejs";
+                                emailData.subject = "SFA: Individual Sport Selection";
+                                Config.email(emailData, function (err, emailRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(null, err);
+                                    } else if (emailRespo) {
+                                        callback(null, emailRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            },
+                            function (callback) {
+                                var smsData = {};
+                                smsData.mobile = data.mobile;
+                                smsData.content = "SFA: Thank you for registering for Individual Sports at SFA " + property[0].year + ". For Further details Please check your registered email ID.";
+                                console.log("smsdata", smsData);
+                                Config.sendSms(smsData, function (err, smsRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (smsRespo) {
+                                        console.log(smsRespo, "sms sent");
+                                        callback(null, smsRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, data3) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(data3)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, data3);
+                                }
+                            }
+                        });
                 }
             ],
-            function (err, data3) {
+            function (err, data2) {
                 if (err) {
                     console.log(err);
                     callback(err, null);
                 } else {
-                    if (_.isEmpty(data3)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, data3);
-                    }
+                    callback(null, data2);
                 }
+
             });
+
+
 
     },
 

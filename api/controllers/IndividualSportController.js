@@ -55,7 +55,6 @@ var controller = {
                         data: "Something went wrong"
                     });
                 } else if (_.isEmpty(found)) {
-                    // console.log("found", found);
                     res.json({
                         value: false,
                         data: "Data not found"

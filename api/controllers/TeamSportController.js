@@ -14,38 +14,70 @@ var controller = {
     },
 
     teamConfirm: function (req, res) {
-        if (req.body.schoolToken) {
-            req.body.createdBy = "School";
-            Registration.findOne({
-                accessToken: req.body.schoolToken
-            }).exec(function (err, found) {
-                if (err) {
-                    res.json({
-                        value: false,
-                        data: "Incorrect Login Details"
+        async.waterfall([
+                function (callback) {
+                    ConfigProperty.find().lean().exec(function (err, property) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(property)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, property);
+                            }
+                        }
                     });
-                } else if (_.isEmpty(found)) {
-                    // callback("Incorrect Login Details", null);
-                    res.json({
-                        value: false,
-                        data: "Incorrect Login Details"
-                    });
-                } else {
-                    req.body.schoolSFA = found.sfaID;
-                    req.body.schoolName = found.schoolName;
-                    req.school = found._id;
-                    TeamSport.teamConfirm(req.body, res.callback);
+                },
+                function (property, callback) {
+                    if (req.body.schoolToken) {
+                        if (property[0].institutionType == "school") {
+                            req.body.createdBy = "School";
+                        } else {
+                            req.body.createdBy = "College";
+                        }
+                        Registration.findOne({
+                            accessToken: req.body.schoolToken
+                        }).exec(function (err, found) {
+                            if (err) {
+                                res.json({
+                                    value: false,
+                                    data: "Incorrect Login Details"
+                                });
+                            } else if (_.isEmpty(found)) {
+                                // callback("Incorrect Login Details", null);
+                                res.json({
+                                    value: false,
+                                    data: "Incorrect Login Details"
+                                });
+                            } else {
+                                req.body.schoolSFA = found.sfaID;
+                                req.body.schoolName = found.schoolName;
+                                req.school = found._id;
+                                TeamSport.teamConfirm(req.body, res.callback);
+                            }
+                        });
+                    } else if (req.body.athleteToken) {
+                        req.body.createdBy = "Athlete";
+                        TeamSport.teamConfirmAthlete(req.body, res.callback);
+                    } else {
+                        res.json({
+                            value: false,
+                            data: "User Not logged in"
+                        });
+                    }
+
                 }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, data2);
+                }
+
             });
-        } else if (req.body.athleteToken) {
-            req.body.createdBy = "Athlete";
-            TeamSport.teamConfirmAthlete(req.body, res.callback);
-        } else {
-            res.json({
-                value: false,
-                data: "User Not logged in"
-            });
-        }
+
     },
 
     rejectionTeam: function (req, res) {

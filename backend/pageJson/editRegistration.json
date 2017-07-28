@@ -368,7 +368,7 @@
             "dropDownField": "",
             "dropDownType": "single",
             "onView": true,
-            "dropDown": ["cash", "online PAYU"]
+            "dropDown": ["cash", "online PAYU", "Sponsered"]
         },
         {
             "name": "Payment Status",
