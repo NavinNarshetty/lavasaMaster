@@ -88,6 +88,9 @@
             -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
         }
+        .text-uppercase{
+            text-transform: uppercase;
+        }
     </style>
 </head>
 
@@ -102,7 +105,7 @@
             <tr>
                 <td class="text-center">
                     <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">SPORTS REGISTRATIONS </span>
-                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA MUMBAI 2017  </h2>
+                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA <span class="text-uppercase"> <%=city%> </span> <%=year%>  </h2>
                 </td>
 
             </tr>
@@ -112,11 +115,11 @@
             <tr>
                 <td>
                     <div class="main-div"style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
-                        <p> Dear Athlete,</p>
+                        <p> Dear <%=name%>,</p>
 
-                        <p>Thank you for your interest in participating at SFA Mumbai 2017. We regret to inform you that your application for <%=sportName%> has been rejected. However, we look forward to hosting you at the various workshops, exhibition matches and educational sessions planned during the course of the championship. These activities will advance your sporting knowledge and help take your sporting prowess to the next level.
+                        <p>Thank you for your interest in participating at SFA <%=city%> <%=year%>. We regret to inform you that your application for <%=sportName%> has been rejected. However, we look forward to hosting you at the various workshops, exhibition matches and educational sessions planned during the course of the championship. These activities will advance your sporting knowledge and help take your sporting prowess to the next level.
                         </p>
-                        <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA Mumbai 2017, by following our Facebook event page:</p>
+                        <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA <%=city%> <%=year%>, by following our Facebook event page:</p>
                         <a style="   color: #0a1a72; font-weight: 600;"  href="https://www.facebook.com/pg/sportsforallnow/events/" target="_blank">https://www.facebook.com/pg/sportsforallnow/events/</a>
                         <p>For further details about your application or any other information you may require please contact us on <span style="font-family:TitilliumWeb-Bold;">7045684365 /66 /67 </span>                            or<br> email us at 
                         <a style="font-family:TitilliumWeb-Bold; color: black;"" href="mailto:info@sfanow.in">info@sfanow.in</a>

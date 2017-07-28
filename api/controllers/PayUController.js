@@ -3,19 +3,29 @@ var controller = {
 
     schoolPayment: function (req, res) {
         if (req) {
-            var id = (req.query.id);
-            Registration.findOne({
-                _id: id
-            }).lean().exec(function (err, data) {
-                PayU.schoolPayment(data, function (err, httpResponse) {
-                    if (httpResponse.statusCode == 302) {
-                        res.redirect(httpResponse.headers.location);
+            ConfigProperty.find().lean().exec(function (err, property) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(property)) {
+                        callback(null, []);
                     } else {
-                        res.send(data);
+                        data.property = property[0];
+                        var id = (req.query.id);
+                        Registration.findOne({
+                            _id: id
+                        }).lean().exec(function (err, data) {
+                            PayU.schoolPayment(data, function (err, httpResponse) {
+                                if (httpResponse.statusCode == 302) {
+                                    res.redirect(httpResponse.headers.location);
+                                } else {
+                                    res.send(data);
+                                }
+                            });
+                        });
                     }
-                });
+                }
             });
-
         } else {
             res.json({
                 value: false,
@@ -26,19 +36,29 @@ var controller = {
 
     atheletePayment: function (req, res) {
         if (req) {
-            var id = (req.query.id);
-            Athelete.findOne({
-                _id: id
-            }).lean().exec(function (err, data) {
-                PayU.atheletePayment(data, function (err, httpResponse) {
-                    if (httpResponse.statusCode == 302) {
-                        res.redirect(httpResponse.headers.location);
+            ConfigProperty.find().lean().exec(function (err, property) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(property)) {
+                        callback(null, []);
                     } else {
-                        res.send(data);
+                        data.property = property[0];
+                        var id = (req.query.id);
+                        Athelete.findOne({
+                            _id: id
+                        }).lean().exec(function (err, data) {
+                            PayU.atheletePayment(data, function (err, httpResponse) {
+                                if (httpResponse.statusCode == 302) {
+                                    res.redirect(httpResponse.headers.location);
+                                } else {
+                                    res.send(data);
+                                }
+                            });
+                        });
                     }
-                });
+                }
             });
-
         } else {
             res.json({
                 value: false,

@@ -23,7 +23,7 @@ var models = {
             numbers: true
         });
         //var txnid = data.;
-        var amount = "12000.00";
+        var amount = data.property.totalAmountType;
         var firstname = data.schoolName;
         var pincode = data.pinCode;
         var city = data.city;
@@ -34,7 +34,12 @@ var models = {
         var phone = data.mobile;
         console.log(data);
         // var pg = found.paymentMethod;
-        var productinfo = "School Registration to SFA";
+        if (data.property.institutionType == "school") {
+            var productinfo = "School Registration to SFA";
+        } else {
+            var productinfo = "College Registration to SFA";
+        }
+
         // var hash = sha512("" + payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
         var hash = sha512(payukey + "|" + txnid + "|" + amount + "|" + productinfo + "|" + firstname + "|" + email + "|||||||||||" + payusalt);
         var hashtext = hash.toString('hex');
@@ -74,7 +79,7 @@ var models = {
         // var txnid = found._id;
         // found.transactionID = txnid;
 
-        var amount = "200.00";
+        var amount = data.property.totalAmountAthlete;
         var firstname = found.firstName;
         var lastname = found.surname;
         var pincode = found.pinCode;

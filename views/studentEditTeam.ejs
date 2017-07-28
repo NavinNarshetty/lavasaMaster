@@ -100,7 +100,6 @@
         a {
             cursor: pointer;
         }
-
         .text-uppercase{
             text-transform: uppercase;
         }
@@ -131,9 +130,7 @@
                     <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
                         <p> Dear <%=name%>,</p>
 
-                        <p style="margin-bottom: 0px;">Your application to register your <span style="font-weight: bold;"><%=sportName%></span>Team at SFA
-                            <%=city%> <%=year%> is now being processed. All athletes mentioned below will receive a verification
-                            phone call from SFA. On successful verification, the team will be considered registered.
+                        <p style="margin-bottom: 0px;">You have successfully edited your <%=sportName%> Team.Please find below details of the updated team.
                         </p>
                         <!--                         <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA <%=city%> <%=year%>, by following our Facebook event page:</p>
                         <a style="   color: #0a1a72;"  href="https://www.facebook.com/pg/sportsforallnow/events/" target="_blank">https://www.facebook.com/pg/sportsforallnow/events/</a>
@@ -150,10 +147,10 @@
                 <td>
                     <div style="padding: 0px 54px;">
                         <!--  <p style="text-align: center;border: 1px solid #091a71;padding: 8px;
-    color: white;background: #091a71; margin-bottom: 0px;"><span>Basketball Boys U-16</span> <span>Team SFA ID: *Will be given after verification</span> </p> -->
+    color: white;background: #091a71; margin-bottom: 0px;"><span>Basketball Boys U-16</span> <span>Team SFA ID: *</span> </p> -->
                         <ul style="border: 1px solid #091a71;padding: 8px;
     color: white;background: #091a71; margin-bottom: 0px;">
-                            <li style="display: inline-block; color: #00aaff;">
+                            <li style="display: inline-block;">
                                 <%=sportName%>
                             </li>
                             <li style="display: inline-block; padding-left: 25px;">Team SFA ID:
@@ -225,11 +222,28 @@
 
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <div style="padding: 0px 54px;">
+                        <% if(type=="school"){%>
+                        <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
+                        color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 0px;">School SFA ID:
+                            <%=schoolSFA%>
+                        </p>
+                         <%}else{%>
+                         <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
+                          color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 0px;">College SFA ID:
+                            <%=schoolSFA%>
+                        </p>
+                         <%}%>    
+                    </div>
 
+                </td>
+            </tr>
 
             <tr>
                 <td>
-                    <div style="padding: 0px 54px; color: #091a71; text-align: justify; font-weight: 600;">
+                    <div style="padding: 0px 54px; color: #091a71; font-weight: 600">
                         <p style="margin-bottom: 0px;">We wish to see you with a strong contingent,</p>
                         <p style="margin-top: 5px;">such that your <%=type%> is up there on the ranking table!</p>
                     </div>
@@ -245,82 +259,73 @@
             </tr>
             <tr>
                 <td>
-                    <div style="padding: 0px 54px; text-align: justify;">
+                    <div style="padding: 0px 54px; ">
                         <p style="margin-bottom: 0px;"> 1) To make any changes regarding the above information email us at <a style="font-family:TitilliumWeb-Bold; color: black;"
-                                " href="mailto:info@sfanow.in ">info@sfanow.in</a>. No changes can be made after 30th November <%=year%> (Changes to a Football Team can be made only up to 30th October <%=year%>)</p>
-                    </div>
-                </td>
-            </tr>
-                                    <tr>
-                <td>
-                    <div style="padding: 0px 54px; text-align: justify; " >
-                        <p style="margin-bottom: 0px; "> 2) Draws and Schedules will be published on our website by 30th October <%=year%> (Draws and Schedules for Football will be published by 30th September <%=year%>)</p>
-                    </div>
-                </td>
-            </tr>
-                                    <tr>
-                <td>
-                     <div style="padding: 0px 54px; text-align: justify; ">
-                         <%if(linkSportName == 'Athletics 4x50m Relay' && linkSportName == 'athletics 4x50m relay' && linkSportName == 'Athletics 4x100m Relay' && linkSportName == 'athletics 4x100m relay' && linkSportName == 'Athletics Medley Relay' && linkSportName == 'athletics medley relay' && linkSportName == 'Badminton Doubles' && linkSportName == 'badminton doubles' && linkSportName == 'Table Tennis Doubles' && linkSportName == 'table tennis doubles' && linkSportName == 'Tennis Mixed Doubles' && linkSportName == 'tennis mixed doubles' && linkSportName == 'Tennis Doubles' && linkSportName == 'tennis doubles' && linkSportName == 'Karate Team Kumite' && linkSportName == 'karate team kumite' && linkSportName == 'Swimming 4x50m Medley Relay' && linkSportName == 'swimming 4x50m medley relay' && linkSportName == 'Swimming 4x50m Freestyle Relay' && linkSportName == 'swimming 4x50m freestyle relay'){%>
-                            <p style="margin-bottom: 0px; "> 4) Click on the following link to view
-                                <%=linkSportName%> Rules and Regulations: <a href="https://sfanow.in/sport/<%=linkSportName%>"
-                            target="_new">https://sfanow.in/sport/
-                            <%=linkSportName%>
-                                </a>
-                        </p>
-                        <%} else if(linkSportName == 'Athletics 4x50m Relay' || linkSportName == 'athletics 4x50m relay' || linkSportName == 'Athletics 4x100m Relay' || linkSportName == 'athletics 4x100m relay' || linkSportName == 'Athletics Medley Relay' || linkSportName == 'athletics medley relay'){%>
-                            <p style="margin-bottom: 0px; "> 4) Click on the following link to view Athletics Rules and Regulations: <a href="https://sfanow.in/sport/Athletics"
-                                    target="_new">https://sfanow.in/sport/Athletics</a></p>
-                            <%} else if(linkSportName == 'Badminton Doubles' || linkSportName == 'badminton doubles'){%>
-                                <p style="margin-bottom: 0px; "> 4) Click on the following link to view Badminton Rules and Regulations: <a href="https://sfanow.in/sport/Badminton"
-                                        target="_new">https://sfanow.in/sport/Badminton</a></p>
-                                <%} else if(linkSportName == 'Table Tennis Doubles' || linkSportName == 'table tennis doubles'){%>
-                                    <p style="margin-bottom: 0px; "> 4) Click on the following link to view Table Tennis Rules and Regulations: <a href="https://sfanow.in/sport/Table Tennis"
-                                            target="_new">https://sfanow.in/sport/Table Tennis</a></p>
-                                    <%} else if(linkSportName == 'Tennis Mixed Doubles' || linkSportName == 'tennis mixed doubles' || linkSportName == 'Tennis Doubles' || linkSportName == 'tennis doubles'){%>
-                                        <p style="margin-bottom: 0px; "> 4) Click on the following link to view Tennis Rules and Regulations: <a href="https://sfanow.in/sport/Tennis"
-                                                target="_new">https://sfanow.in/sport/Tennis</a></p>
-                                        <%} else if(linkSportName == 'Karate Team Kumite' || linkSportName == 'karate team kumite'){%>
-                                            <p style="margin-bottom: 0px; "> 4) Click on the following link to view Karate Rules and Regulations:
-                                                <a href="https://sfanow.in/sport/Karate" target="_new">https://sfanow.in/sport/Karate</a></p>
-                                            <%} else if(linkSportName == 'Swimming 4x50m Medley Relay' || linkSportName == 'swimming 4x50m medley relay' || linkSportName == 'Swimming 4x50m Freestyle Relay' || linkSportName == 'swimming 4x50m freestyle relay'){%>
-                                                <p style="margin-bottom: 0px;"> 4) Click on the following link to view Swimming Rules and Regulations:
-                                                    <a href="https://sfanow.in/sport/Swimming" target="_new">https://sfanow.in/sport/Swimming</a></p>
-                                                <%}%>
+                                href="mailto:info@sfanow.in ">info@sfanow.in</a>. No changes can be made after 30th November
+                            <%=year%> (Changes to a Football Team can be made only up to 30th October <%=year%>)</p>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="padding: 0px 54px; text-align: justify;">
-                        <p style="margin-bottom: 0px;"> 4) Stay updated with details such as championship draws & schedules, workshops, exhibition matches,
+                    <div style="padding: 0px 54px; ">
+                        <p style="margin-bottom: 0px; "> 2) Draws and Schedules will be published on our website by 30th October <%=year%> (Draws and Schedules
+                            for Football will be published by 30th September <%=year%>)</p>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="padding: 0px 54px; ">
+                        <%if(linkSportName == 'Athletics 4x50m Relay' && linkSportName == 'athletics 4x50m relay' && linkSportName == 'Athletics 4x100m Relay' && linkSportName == 'athletics 4x100m relay' && linkSportName == 'Athletics Medley Relay' && linkSportName == 'athletics medley relay' && linkSportName == 'Badminton Doubles' && linkSportName == 'badminton doubles' && linkSportName == 'Table Tennis Doubles' && linkSportName == 'table tennis doubles' && linkSportName == 'Tennis Mixed Doubles' && linkSportName == 'tennis mixed doubles' && linkSportName == 'Tennis Doubles' && linkSportName == 'tennis doubles' && linkSportName == 'Karate Team Kumite' && linkSportName == 'karate team kumite' && linkSportName == 'Swimming 4x50m Medley Relay' && linkSportName == 'swimming 4x50m medley relay' && linkSportName == 'Swimming 4x50m Freestyle Relay' && linkSportName == 'swimming 4x50m freestyle relay'){%>
+                            <p style="margin-bottom: 0px;"> 3) Click on the following link to view
+                                <%=linkSportName%> Rules and Regulations: <a href="https://sfanow.in/sport/<%=linkSportName%>" target="_new">https://sfanow.in/sport/<%=linkSportName%></a></p>
+                            <%} else if(linkSportName == 'Athletics 4x50m Relay' || linkSportName == 'athletics 4x50m relay' || linkSportName == 'Athletics 4x100m Relay' || linkSportName == 'athletics 4x100m relay' || linkSportName == 'Athletics Medley Relay' || linkSportName == 'athletics medley relay'){%>
+                                <p style="margin-bottom: 0px; "> 3) Click on the following link to view Athletics Rules and Regulations: <a href="https://sfanow.in/sport/Athletics"
+                                        target="_new">https://sfanow.in/sport/Athletics</a></p>
+                                <%} else if(linkSportName == 'Badminton Doubles' || linkSportName == 'badminton doubles'){%>
+                                    <p style="margin-bottom: 0px; "> 3) Click on the following link to view Badminton Rules and Regulations: <a href="https://sfanow.in/sport/Badminton"
+                                            target="_new">https://sfanow.in/sport/Badminton</a></p>
+                                    <%} else if(linkSportName == 'Table Tennis Doubles' || linkSportName == 'table tennis doubles'){%>
+                                        <p style="margin-bottom: 0px; "> 3) Click on the following link to view Table Tennis Rules and Regulations: <a href="https://sfanow.in/sport/Table Tennis"
+                                                target="_new">https://sfanow.in/sport/Table Tennis</a></p>
+                                        <%} else if(linkSportName == 'Tennis Mixed Doubles' || linkSportName == 'tennis mixed doubles' || linkSportName == 'Tennis Doubles' || linkSportName == 'tennis doubles'){%>
+                                            <p style="margin-bottom: 0px; "> 3) Click on the following link to view Tennis Rules and Regulations: <a href="https://sfanow.in/sport/Tennis"
+                                                    target="_new">https://sfanow.in/sport/Tennis</a></p>
+                                            <%} else if(linkSportName == 'Karate Team Kumite' || linkSportName == 'karate team kumite'){%>
+                                                <p style="margin-bottom: 0px; "> 3) Click on the following link to view Karate Rules and Regulations:
+                                                    <a href="https://sfanow.in/sport/Karate" target="_new">https://sfanow.in/sport/Karate</a></p>
+                                                <%} else if(linkSportName == 'Swimming 4x50m Medley Relay' || linkSportName == 'swimming 4x50m medley relay' || linkSportName == 'Swimming 4x50m Freestyle Relay' || linkSportName == 'swimming 4x50m freestyle relay'){%>
+                                                    <p style="margin-bottom: 0px;"> 3) Click on the following link to view Swimming Rules and Regulations:
+                                                        <a href="https://sfanow.in/sport/Swimming" target="_new">https://sfanow.in/sport/Swimming</a></p>
+                                                    <%}%>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <div style="padding: 0px 54px; ">
+                        <p style="margin-bottom: 0px;
+                                "> 4) Stay updated with details such as championship draws & schedules, workshops, exhibition matches,
                             special days and all other announcements with regards to SFA <%=city%> <%=year%>, by following our Facebook
-                            event page: <a style="   color: #0a1a72; font-style: italic; font-weight: 600;" href="https://www.facebook.com/pg/sportsforallnow/events/"
-                                target="_blank">https://www.facebook.com/pg/sportsforallnow/events/</a></p>
+                            event page: <a style=" color: #0a1a72; font-style: italic; font-weight: 600; " href="https://www.facebook.com/pg/sportsforallnow/events/
+                                " target="_blank ">https://www.facebook.com/pg/sportsforallnow/events/</a></p>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="padding: 0px 54px; text-align: justify;">
-                        <p style="margin-bottom: 0px;"> 5) In the event that your <%=type%> <span style="font-weight: bold;">DOES NOT </span>register for SFA
-                            <%=city%> <%=year%> by the <span style="font-weight: bold;">30th September <%=year%> an additional fee of Rs. 400/-(inclusive of all applicable taxes) </span>will
-                            be levied <span style="font-weight: bold;">PER ATHLETE</span>. The date and mode for the balance
-                            payment will be communicated to you soon via email and SMS. </p>
+                    <div style="padding: 0px 54px; ">
+                        <p style="margin-bottom: 0px;
+                                "> 5) For further details please contact us on: 704568365/66/67 or email us at
+                            <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">info@sfanow.in</a>
+                        </p>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <div style="padding: 0px 54px; text-align: justify;">
-                        <p style="margin-bottom: 0px;"> 6) For further details please contact us on: 704568365/66/67 or email us at
-                            <a style="font-family:TitilliumWeb-Bold; color: black;" " href="mailto:info@sfanow.in ">info@sfanow.in</a> </p>
-                    </div>
-                </td>
-            </tr>
-                                                                        <tr>
-                <td>
-                    <div style="padding: 0px 54px; " >
+                    <div style="padding: 0px 54px; ">
                         <p style="margin-top: 20px; "> Ab Jeetega India! </p>
                         <p style="font-family:TitilliumWeb-Bold; ">Regards,<br>Team SFA</p>
                     </div>
@@ -331,20 +336,16 @@
         <tfoot>
             <tr>
                 <td>
-                    <div class="blue-footer " style="background:#0a1a72;font-family: TitilliumWeb-Regular; ">
-                        <ul class="list-inline " style="padding: 8px 35px;font-size: 16px;font-weight: bold ">
-                            <li><img src="https://sfa.wohlig.co.in/img/img/g1.png " alt=" "></li>
-                            <li style="vertical-align: top;padding-left: 0; "><a href="www.sfanow.in " target="_new
-                                " style="color:#fff;text-decoration: none; ">www.sfanow.in</a></li>
-                            <li><img src="https://sfa.wohlig.co.in/img/img/g2.png " alt=" "></li>
-                            <li style="vertical-align: top;padding-left: 0; "><a href=" https://goo.gl/bSQ9CB
-                                " target="_new " style="color:#fff;text-decoration: none; ">/sportsforallnow</a></li>
-                            <li><img src="https://sfa.wohlig.co.in/img/img/g3.png " alt=" "></li>
-                            <li style="vertical-align: top;padding-left: 0; "><a href="https://twitter.com/sfanow
-                                " target="_new " style="color:#fff;text-decoration: none; ">/sfanow</a></li>
-                            <li><img src="https://sfa.wohlig.co.in/img/img/g4.png " alt=" "></li>
-                            <li style="vertical-align: top;padding-left: 0; "><a href="https://www.instagram.com/sfanow/
-                                " target="_new " style="color:#fff;text-decoration: none; ">/sfanow </a></li>
+                    <div class="blue-footer" style="background:#0a1a72;font-family: TitilliumWeb-Regular;">
+                        <ul class="list-inline" style="padding: 8px 35px;font-size: 16px;font-weight: bold">
+                            <li><img src="https://sfa.wohlig.co.in/img/img/g1.png" alt=""></li>
+                            <li style="vertical-align: top;padding-left: 0;"><a href="www.sfanow.in" target="_new" style="color:#fff;text-decoration: none;">www.sfanow.in</a></li>
+                            <li><img src="https://sfa.wohlig.co.in/img/img/g2.png" alt=""></li>
+                            <li style="vertical-align: top;padding-left: 0;"><a href=" https://goo.gl/bSQ9CB" target="_new" style="color:#fff;text-decoration: none;">/sportsforallnow</a></li>
+                            <li><img src="https://sfa.wohlig.co.in/img/img/g3.png" alt=""></li>
+                            <li style="vertical-align: top;padding-left: 0;"><a href="https://twitter.com/sfanow" target="_new" style="color:#fff;text-decoration: none;">/sfanow</a></li>
+                            <li><img src="https://sfa.wohlig.co.in/img/img/g4.png" alt=""></li>
+                            <li style="vertical-align: top;padding-left: 0;"><a href="https://www.instagram.com/sfanow/" target="_new" style="color:#fff;text-decoration: none;">/sfanow </a></li>
                         </ul>
                     </div>
                 </td>
