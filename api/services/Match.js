@@ -1,4 +1,3 @@
-
 var mongoose = require('mongoose');
 var deepPopulate = require('mongoose-deep-populate')(mongoose);
 var uniqueValidator = require('mongoose-unique-validator');
@@ -12,18 +11,18 @@ var request = require("request");
 autoIncrement.initialize(mongoose);
 
 var schema = new Schema({
-    incrementalId:  Number,
+    incrementalId: Number,
     sport: {
         type: Schema.Types.ObjectId,
     },
-    opponentsSingle: {
-        type:[Schema.Types.ObjectId],
-        ref:'Athelete'
-    },
-    opponentsTeam: {
-        type:[Schema.Types.ObjectId],
-        ref:'TeamSport'
-    },
+    opponentsSingle: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Athelete'
+    }],
+    opponentsTeam: [{
+        type: Schema.Types.ObjectId,
+        ref: 'TeamSport'
+    }],
     prevMatch: {
         type: Schema.Types.ObjectId,
         ref: 'Match'
@@ -36,7 +35,23 @@ var schema = new Schema({
     results: Schema.Types.Mixed
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    "sport": {
+        select: '_id name '
+    },
+    "opponentsSingle": {
+        select: '_id name '
+    },
+    "opponentsTeam": {
+        select: '_id name '
+    },
+    "prevMatch": {
+        select: '_id name '
+    },
+    "nextMatch": {
+        select: '_id name '
+    },
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 schema.plugin(autoIncrement.plugin, {

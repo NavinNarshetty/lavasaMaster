@@ -110,6 +110,12 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#!/teamsport",
             icon: "phone"
         },
+        {
+            name: "Rounds",
+            classis: "activeColor",
+            sref: "#!/rounds",
+            icon: "phone"
+        },
         // {
         //     name: "Student Team",
         //     classis: "activeColor",

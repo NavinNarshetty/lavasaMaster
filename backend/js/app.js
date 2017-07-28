@@ -270,6 +270,18 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'ExcelUploadCtrl'
         })
 
+        .state('rounds', {
+            url: "/rounds",
+            templateUrl: "views/template.html",
+            controller: 'RoundCtrl'
+        })
+
+        .state('detailrounds', {
+            url: "/detailrounds",
+            templateUrl: "views/template.html",
+            controller: 'DetailRoundCtrl'
+        })
+
         .state('jagz', {
             url: "/jagz",
             templateUrl: "views/jagz.html",

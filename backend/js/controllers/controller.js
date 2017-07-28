@@ -3476,24 +3476,29 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
     })
 
-    .controller('ExcelUploadCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('RoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
-        $scope.template = TemplateService.changecontent("excel-upload");
-        $scope.menutitle = NavigationService.makeactive("Excel Upload");
+        $scope.template = TemplateService.changecontent("tableround");
+        $scope.menutitle = NavigationService.makeactive("Round List");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
-        $scope.form = {
-            file: null,
-            model: $stateParams.model
-        };
-
-        $scope.excelUploaded = function () {
-            console.log("Excel is uploaded with name " + $scope.form.file);
-            NavigationService.uploadExcel($scope.form, function (data) {
-                $scope.data = data.data;
-            });
-        };
     })
+
+     .controller('DetailRoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("detailround");
+        $scope.menutitle = NavigationService.makeactive("Detail Round");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+    })
+
+    myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("dashboard");
+    $scope.menutitle = NavigationService.makeactive("Dashboard");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
 
     .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
         $scope.template = TemplateService;

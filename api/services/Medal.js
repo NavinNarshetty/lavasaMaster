@@ -1,16 +1,42 @@
 var schema = new Schema({
-    name: {
+    medalType:{
         type: String,
-        required: true,
-        unique: true,
-        uniqueCaseInsensitive: true
-        // excel: {
-        //     name: Name
-        // }
-    }
+        enum: ["gold", "silver", "bronze"]
+    },
+    sport:[{
+        type:Schema.Types.ObjectId,
+        ref:'Sport'
+    }],
+    school:[{
+        type:Schema.Types.ObjectId,
+        ref:'School'
+    }],
+    team:[{
+        type:Schema.Types.ObjectId,
+        ref:'TeamSport'
+    }],
+    player:[{
+        type:Schema.Types.ObjectId,
+        ref:'Athelete'
+    }]
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    populate: {
+        "sport": {
+            select: '_id name '
+        },
+        "school": {
+            select: '_id name '
+        },
+         "team": {
+            select: '_id name '
+        },
+         "player": {
+            select: '_id name '
+        },
+    }
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Medal', schema);
