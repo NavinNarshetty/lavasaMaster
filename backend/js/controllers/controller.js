@@ -3492,6 +3492,22 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.navigation = NavigationService.getnav();
     })
 
+     .controller('MatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("tablematch");
+        $scope.menutitle = NavigationService.makeactive("Matches List");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+    })
+
+     .controller('DetailMatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("detailmatch");
+        $scope.menutitle = NavigationService.makeactive("Detail Match");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+    })
+
     myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
     //Used to name the .html file
     $scope.template = TemplateService.changecontent("dashboard");

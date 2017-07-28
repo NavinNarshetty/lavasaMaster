@@ -282,6 +282,19 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'DetailRoundCtrl'
         })
 
+        .state('matches', {
+            url: "/matches",
+            templateUrl: "views/template.html",
+            controller: 'MatchesCtrl'
+        })
+
+        .state('detailmatches', {
+            url: "/detailmatches",
+            templateUrl: "views/template.html",
+            controller: 'DetailMatchesCtrl'
+        })
+
+
         .state('jagz', {
             url: "/jagz",
             templateUrl: "views/jagz.html",
