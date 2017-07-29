@@ -892,7 +892,7 @@ var model = {
                                 // console.log("mobileOtp", mobileOtp);
                                 smsData.mobile = data.mobile;
 
-                                smsData.content = "Thank you for registering for SFA " + property[0].city + " " + property[0].year + ". For further details please check your registered email ID.";
+                                smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].year + ". For further details please check your registered email ID.";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
@@ -969,7 +969,7 @@ var model = {
                             function (callback) {
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                smsData.content = "Thank you for registering for SFA " + property[0].city + " " + property[0].year + ". For further details please check your registered email ID.";
+                                smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].year + ". For further details please check your registered email ID.";
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
                                         console.log(err);
@@ -1026,11 +1026,12 @@ var model = {
                                 emailData.from = "info@sfanow.in";
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
+                                emailData.type = property[0].institutionType;
                                 emailData.email = data.email;
                                 emailData.sfaID = data.sfaID;
                                 emailData.password = data.password;
                                 emailData.filename = "successVerification.ejs";
-                                emailData.subject = "SFA: You are now a verified School for SFA " + emailData.city + " " + emailData.year + ".";
+                                emailData.subject = "SFA: You are now a verified " + emailData.type + " for SFA " + emailData.city + " " + emailData.year + ".";
                                 console.log("emaildata", emailData);
 
                                 Config.email(emailData, function (err, emailRespo) {
@@ -1108,6 +1109,7 @@ var model = {
                                 emailData.sfaID = data.sfaID;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
+                                emailData.type = property[0].institutionType;
                                 emailData.password = data.password;
                                 emailData.filename = "rejection.ejs";
                                 emailData.subject = "SFA: Rejection of Your Application for SFA " + emailData.city + " " + emailData.year;
@@ -1127,7 +1129,7 @@ var model = {
                             function (callback) {
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                smsData.content = "We regret to inform you that your application has been rejected for SFA " + property[0].city + " " + property[0].year + ". For further queries please email us at info@sfanow.in";
+                                smsData.content = "We regret to inform you that your application has been rejected for SFA " + property[0].sfaCity + " " + property[0].year + ". For further queries please email us at info@sfanow.in";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
@@ -1206,7 +1208,7 @@ var model = {
 
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                smsData.content = "Congratulations! Your school has officially registered for SFA " + property[0].city + " " + property[0].year + ".";
+                                smsData.content = "Congratulations! Your school has officially registered for SFA " + property[0].sfaCity + " " + property[0].year + ".";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {

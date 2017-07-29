@@ -1797,7 +1797,7 @@ var model = {
 
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                var city = property[0].city;
+                                var city = property[0].sfaCity;
                                 var year = property[0].year;
                                 smsData.content = "Thank you for registering for SFA " + city + " " + year + ". For further details please check your registered email ID.";
                                 console.log("smsdata", smsData);

@@ -179,15 +179,15 @@
                                         <td>
                                             <%=student.srno%>
                                         </td>
-                                        <%if(student.isCaptain=='true'){%>
+                                        <%if(student.isCaptain==true){%>
                                             <td>Captian
                                                 <%=student.name%>
                                             </td>
-                                            <%}else if(student.isGoalKeeper=='true'){%>
+                                            <%}else if(student.isGoalKeeper==true){%>
                                                 <td>Goalkeeper
                                                     <%=student.name%>
                                                 </td>
-                                                <%}else if(student.isGoalKeeper=='true' && student.isCaptain=='true'){%>
+                                                <%}else if(student.isGoalKeeper==true && student.isCaptain==true){%>
                                                     <td>Captain, Goalkeeper
                                                         <%=student.name%>
                                                     </td>
