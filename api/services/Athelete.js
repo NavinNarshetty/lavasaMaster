@@ -302,9 +302,9 @@ var model = {
                         $ne: "Pending"
                     }
                 };
-            } else if (data.input == "sponsered" || data.input == "Sponsered") {
+            } else if (data.input == "sponsor" || data.input == "Sponsor") {
                 matchObj = {
-                    'registrationFee': "Sponsered",
+                    'registrationFee': "Sponsor",
                     paymentStatus: {
                         $ne: "Pending"
                     }
@@ -636,8 +636,16 @@ var model = {
                                             },
                                             function (callback) {
                                                 console.log("inside payment check");
-                                                if (athleteData.registrationFee == "cash") {
+                                                if (athleteData.registrationFee == "cash" && data.property.institutionType == "school") {
                                                     Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                        if (err) {
+                                                            callback(err, null);
+                                                        } else if (vData) {
+                                                            callback(null, vData);
+                                                        }
+                                                    });
+                                                } else if (athleteData.registrationFee == "cash" && data.property.institutionType == "college") {
+                                                    Athelete.atheletePaymentMailCollege(athleteData, function (err, vData) {
                                                         if (err) {
                                                             callback(err, null);
                                                         } else if (vData) {
@@ -711,8 +719,16 @@ var model = {
                                                         },
                                                         function (callback) {
                                                             console.log("inside payment check");
-                                                            if (athleteData.registrationFee == "cash") {
+                                                            if (athleteData.registrationFee == "cash" && data.property.institutionType == "school") {
                                                                 Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                                    if (err) {
+                                                                        callback(err, null);
+                                                                    } else if (vData) {
+                                                                        callback(null, vData);
+                                                                    }
+                                                                });
+                                                            } else if (athleteData.registrationFee == "cash" && data.property.institutionType == "college") {
+                                                                Athelete.atheletePaymentMailCollege(athleteData, function (err, vData) {
                                                                     if (err) {
                                                                         callback(err, null);
                                                                     } else if (vData) {
@@ -1764,7 +1780,7 @@ var model = {
                                 emailData.year = property[0].year;
                                 emailData.athleteAmount = property[0].totalAmountAthlete;
                                 emailData.filename = "unregistercashpayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA" + emailData.city + " " + emailData.year + ".";
+                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.year + ".";
                                 console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
@@ -1990,9 +2006,9 @@ var model = {
 
             }
             //-----------for sponsered--------- 
-            else if (data.input == "sponsered" || data.input == "Sponsered") {
+            else if (data.input == "sponsor" || data.input == "Sponsor") {
                 matchObj = {
-                    'registrationFee': "Sponsered",
+                    'registrationFee': "Sponsor",
                     paymentStatus: {
                         $ne: "Pending"
                     }

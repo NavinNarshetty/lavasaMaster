@@ -1536,6 +1536,14 @@ var model = {
                     }
                 };
 
+            } else if (data.input == "sponsor" || data.input == "Sponsor") {
+                matchObj = {
+                    'registrationFee': "Sponsor",
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                };
+
             }
         } else if (data.type == "Payment Status") {
             if (data.input == "Paid" || data.input == "paid") {
@@ -2191,17 +2199,17 @@ var model = {
                 };
 
             }
-            //-----------for sponsered---------
-            else if (data.input == "sponsered" || data.input == "Sponsered") {
+            //-----------for sponsored---------
+            else if (data.input == "sponsor" || data.input == "Sponsor") {
                 matchObj = {
-                    'registrationFee': "Sponsered",
+                    'registrationFee': "Sponsor",
                     paymentStatus: {
                         $ne: "Pending"
                     }
                 };
 
             }
-            //-----------for sponsered---------
+            //-----------for sponsored---------
         } else if (data.type == "Payment Status") {
             if (data.input == "Paid" || data.input == "paid") {
                 matchObj = {

@@ -3,7 +3,35 @@ var controller = {
 
     saveAthelete: function (req, res) {
         if (req.body) {
-            Athelete.saveAthelete(req.body, res.callback);
+            async.waterfall([
+                    function (callback) {
+                        ConfigProperty.find().lean().exec(function (err, property) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(property)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, property);
+                                }
+                            }
+                        });
+                    },
+                    function (property, callback) {
+                        req.body.property = property[0];
+                        Athelete.saveAthelete(req.body, res.callback);
+
+                    }
+                ],
+                function (err, data2) {
+                    if (err) {
+                        console.log(err);
+                        callback(err, null);
+                    } else {
+                        callback(null, data2);
+                    }
+
+                });
         } else {
             res.json({
                 value: false,
