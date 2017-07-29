@@ -173,20 +173,20 @@
                             </thead>
                             <tbody>
                                 <% _.each(students,function(student){%>
-                                    <tr style="text-align: center;background: #e1e1e1;">
+                                     <tr style="text-align: center;background: #e1e1e1;">
                                         <td>
                                             <%=student.srno%>
                                         </td>
-                                        <%if(student.isCaptain=='true'){%>
-                                            <td>Captian
+                                        <%if(student.isGoalKeeper==true && student.isCaptain==true){%>
+                                            <td>Captian, Goalkeeper
                                                 <%=student.name%>
                                             </td>
-                                            <%}else if(student.isGoalKeeper=='true'){%>
+                                            <%}else if(student.isGoalKeeper==true){%>
                                                 <td>Goalkeeper
                                                     <%=student.name%>
                                                 </td>
-                                                <%}else if(student.isGoalKeeper=='true' && student.isCaptain=='true'){%>
-                                                    <td>Captain, Goalkeeper
+                                                <%}else if(student.isCaptain==true){%>
+                                                    <td>Captain,
                                                         <%=student.name%>
                                                     </td>
                                                     <%}else{%>

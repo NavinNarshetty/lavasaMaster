@@ -180,16 +180,16 @@
                                         <td>
                                             <%=student.srno%>
                                         </td>
-                                        <%if(student.isCaptain==true){%>
-                                            <td>Captian
+                                        <%if(student.isGoalKeeper==true && student.isCaptain==true){%>
+                                            <td>Captian, Goalkeeper
                                                 <%=student.name%>
                                             </td>
                                             <%}else if(student.isGoalKeeper==true){%>
                                                 <td>Goalkeeper
                                                     <%=student.name%>
                                                 </td>
-                                                <%}else if(student.isGoalKeeper==true && student.isCaptain==true){%>
-                                                    <td>Captain, Goalkeeper
+                                                <%}else if(student.isCaptain==true){%>
+                                                    <td>Captain,
                                                         <%=student.name%>
                                                     </td>
                                                     <%}else{%>
