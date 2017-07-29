@@ -1871,41 +1871,69 @@ var model = {
             console.log("n", n);
             async.parallel([
                 function (callback) {
-                    // if (data.athleteToken) {
-                    var emailData = {};
-                    emailData.sportName = data.name;
-                    emailData.schoolName = data.schoolName;
-                    emailData.schoolSFA = data.schoolSFA;
-                    emailData.from = "info@sfanow.in";
-                    // emailData.email = n.email;
-                    emailData.name = n.firstName;
-                    emailData.city = data.property.sfaCity;
-                    emailData.year = data.property.year;
-                    emailData.type = data.property.institutionType;
-                    emailData.filename = data.emailfile;
-                    emailData.teamId = total.teamSport.teamId;
-                    emailData.students = total.studentTeam;
-                    emailData.linkSportName = data.linkSportName;
-                    emailData.subject = "SFA: Successful Team Sport Registered";
-                    if (data.creatorMail.equals(n.email)) {
-                        emailData.email1 = [{
-                            email: n.email
-                        }];
-                        emailData.bcc1 = [{
-                            email: "raj@wohlig.com"
-                        }];
-                        Config.emailTo(emailData, function (err, emailRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
-                                callback(null, emailRespo);
-                            } else {
-                                callback(null, "Invalid data");
-                            }
-                        });
+                    if (data.athleteToken) {
+                        var emailData = {};
+                        emailData.sportName = data.name;
+                        emailData.schoolName = data.schoolName;
+                        emailData.schoolSFA = data.schoolSFA;
+                        emailData.from = "info@sfanow.in";
+                        // emailData.email = n.email;
+                        emailData.name = n.firstName;
+                        emailData.city = data.property.sfaCity;
+                        emailData.year = data.property.year;
+                        emailData.type = data.property.institutionType;
+                        emailData.filename = data.emailfile;
+                        emailData.teamId = total.teamSport.teamId;
+                        emailData.students = total.studentTeam;
+                        emailData.linkSportName = data.linkSportName;
+                        emailData.subject = "SFA: Successful Team Sport Registered";
+                        if (data.creatorMail.equals(n.email)) {
+                            emailData.email1 = [{
+                                email: n.email
+                            }];
+                            emailData.bcc1 = [{
+                                email: "raj@wohlig.com"
+                            }];
+                            Config.emailTo(emailData, function (err, emailRespo) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, err);
+                                } else if (emailRespo) {
+                                    callback(null, emailRespo);
+                                } else {
+                                    callback(null, "Invalid data");
+                                }
+                            });
+                        } else {
+                            emailData.email = n.email;
+                            Config.email(emailData, function (err, emailRespo) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, err);
+                                } else if (emailRespo) {
+                                    callback(null, emailRespo);
+                                } else {
+                                    callback(null, "Invalid data");
+                                }
+                            });
+                        }
+
                     } else {
+                        var emailData = {};
+                        emailData.sportName = data.name;
+                        emailData.schoolName = data.schoolName;
+                        emailData.schoolSFA = data.schoolSFA;
+                        emailData.from = "info@sfanow.in";
                         emailData.email = n.email;
+                        emailData.name = n.firstName;
+                        emailData.city = data.property.sfaCity;
+                        emailData.year = data.property.year;
+                        emailData.type = data.property.institutionType;
+                        emailData.filename = data.emailfile;
+                        emailData.teamId = total.teamSport.teamId;
+                        emailData.students = total.studentTeam;
+                        emailData.linkSportName = data.linkSportName;
+                        emailData.subject = "SFA: Successful Team Sport Registered";
                         Config.email(emailData, function (err, emailRespo) {
                             if (err) {
                                 console.log(err);
@@ -1917,34 +1945,6 @@ var model = {
                             }
                         });
                     }
-
-                    // } else {
-                    //     var emailData = {};
-                    //     emailData.sportName = data.name;
-                    //     emailData.schoolName = data.schoolName;
-                    //     emailData.schoolSFA = data.schoolSFA;
-                    //     emailData.from = "info@sfanow.in";
-                    //     emailData.email = n.email;
-                    //     emailData.name = n.firstName;
-                    //     emailData.city = data.property.sfaCity;
-                    //     emailData.year = data.property.year;
-                    //     emailData.type = data.property.institutionType;
-                    //     emailData.filename = data.emailfile;
-                    //     emailData.teamId = total.teamSport.teamId;
-                    //     emailData.students = total.studentTeam;
-                    //     emailData.linkSportName = data.linkSportName;
-                    //     emailData.subject = "SFA: Successful Team Sport Registered";
-                    //     Config.email(emailData, function (err, emailRespo) {
-                    //         if (err) {
-                    //             console.log(err);
-                    //             callback(null, err);
-                    //         } else if (emailRespo) {
-                    //             callback(null, emailRespo);
-                    //         } else {
-                    //             callback(null, "Invalid data");
-                    //         }
-                    //     });
-                    // }
                 },
                 //school sms
                 function (callback) {
