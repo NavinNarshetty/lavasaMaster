@@ -351,6 +351,7 @@ var model = {
                                 } else {
                                     athleteInfo.name = found.firstName + ' ' + found.surname;
                                 }
+                                athleteInfo.firstName = found.firstName;
                                 athleteInfo.email = found.email;
                                 athleteInfo.sfaid = found.sfaId;
                                 athleteInfo.isCaptain = n.isCaptain;

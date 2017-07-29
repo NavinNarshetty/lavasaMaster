@@ -104,7 +104,11 @@ var schema = new Schema({
     utm_campaign: String,
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    populate: {
+        school: "_id name"
+    }
+});
 schema.plugin(uniqueValidator);
 schema.plugin(autoIncrement.plugin, {
     model: 'Athelete',
@@ -115,7 +119,7 @@ schema.plugin(autoIncrement.plugin, {
 schema.plugin(timestamps);
 module.exports = mongoose.model('Athelete', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "school", "school"));
 var model = {
 
     search: function (data, callback) {
@@ -397,12 +401,14 @@ var model = {
 
                             $or: [{
                                     "schoolData.name": {
-                                        $regex: data.input
+                                        $regex: data.input,
+                                        // $options: 'i'
                                     }
                                 },
                                 {
                                     "atheleteSchoolName": {
-                                        $regex: data.input
+                                        $regex: data.input,
+                                        // $options: 'i'
                                     }
                                 }
                             ]
@@ -948,6 +954,9 @@ var model = {
             } else if (_.isEmpty(found)) {
                 callback(null, "Data is empty");
             } else {
+                // found = Object(found);
+                // delete found.school;
+                // console.log("found", found.school);
                 callback(null, found);
             }
 
