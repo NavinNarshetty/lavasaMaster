@@ -848,7 +848,7 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
         name: 'Racquet Sports'
     }, {
         name: 'Combat Sports'
-    }]
+    }];
     $scope.filterList = [];
     $scope.filterList = [{
         name: 'Gender'
@@ -3484,7 +3484,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.navigation = NavigationService.getnav();
     })
 
-     .controller('DetailRoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('DetailRoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("detailround");
         $scope.menutitle = NavigationService.makeactive("Detail Round");
@@ -3492,7 +3492,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.navigation = NavigationService.getnav();
     })
 
-     .controller('MatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('MatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tablematch");
         $scope.menutitle = NavigationService.makeactive("Matches List");
@@ -3500,21 +3500,179 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.navigation = NavigationService.getnav();
     })
 
-     .controller('DetailMatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('DetailMatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("detailmatch");
         $scope.menutitle = NavigationService.makeactive("Detail Match");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
     })
+    .controller('MedalsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("tablemedal");
+        $scope.menutitle = NavigationService.makeactive("Medal List");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.formData = {};
+        $scope.formData.page = 1;
+        $scope.formData.type = '';
+        $scope.formData.keyword = '';
+        // $scope.selectedStatus = 'All';
+        $scope.searchInTable = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            }
+        }
+        $scope.viewTable = function () {
+            $scope.url = "Rules/search";
+            $scope.formData.page = $scope.formData.page++;
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                console.log("data.value", data);
+                $scope.items = data.data.results;
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
+            });
+        }
+        $scope.viewTable();
+        $scope.confDel = function (data) {
+            $scope.id = data;
+            $scope.modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'views/modal/delete.html',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'sm',
+                scope: $scope
 
-    myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
-    //Used to name the .html file
-    $scope.template = TemplateService.changecontent("dashboard");
-    $scope.menutitle = NavigationService.makeactive("Dashboard");
-    TemplateService.title = $scope.menutitle;
-    $scope.navigation = NavigationService.getnav();
-})
+            });
+        };
+
+        $scope.noDelete = function () {
+            $scope.modalInstance.close();
+        }
+        $scope.delete = function (data) {
+            console.log(data);
+            $scope.url = "Rules/delete";
+            $scope.constraints = {};
+            $scope.constraints._id = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                if (data.value) {
+                    toastr.success('Successfully Deleted', 'Rules Meaasge');
+                    $scope.modalInstance.close();
+                    $scope.viewTable();
+                } else {
+                    toastr.error('Something went wrong while Deleting', 'Rules Meaasge');
+                }
+
+            });
+        }
+    })
+
+    .controller('DetailMedalCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("detailmedal");
+        $scope.menutitle = NavigationService.makeactive("Medal Detail");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.medalForm = {};
+
+        $scope.sportList = [{
+            name: 'Football'
+        }, {
+            name: 'Hockey'
+        }, {
+            name: 'Kho-Kho'
+        }]
+
+        if ($stateParams.id != '') {
+            $scope.title = "Edit";
+            $scope.getOneOldSchoolById = function () {
+                $scope.url = "SportsList/getOne";
+                $scope.constraints = {};
+                $scope.constraints._id = $stateParams.id;
+                NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                    $scope.medalForm = data.data;
+                });
+            };
+            $scope.getOneOldSchoolById();
+            $scope.saveData = function (data) {
+                if (data) {
+                    $scope.url = "SportsList/save";
+                    NavigationService.apiCall($scope.url, data, function (data) {
+                        console.log("data.value", data);
+                        if (data.data.nModified == '1') {
+                            toastr.success(" Updated Successfully", "SportList Message");
+                            $state.go('sportslist');
+
+                        }
+
+                    });
+                } else {
+                    toastr.error("Invalid Data", "SportList Message");
+                }
+            };
+
+        } else {
+
+            $scope.title = 'Create';
+            $scope.saveData = function (data, formvalid) {
+                if (data) {
+                    if (formvalid.$valid) {
+                        // data.sportsListSubCategory = $scope.sportlistsubcategory;
+                        $scope.url = "SportsList/save";
+                        console.log(data);
+                        NavigationService.apiCall($scope.url, data, function (data) {
+                            console.log("data.value", data);
+                            if (data.value === true) {
+                                toastr.success(" Saved Successfully", "SportList Message");
+                                $state.go('sportslist');
+
+                            } else {
+                                toastr.error("Please enter all fields", 'SportList Message')
+                            }
+
+                        });
+                    } else {
+                        toastr.error("Please enter all fields", 'SportList Message')
+                    }
+                } else {
+                    toastr.error("Invalid Data", "SportList Message");
+                }
+            };
+
+        }
+
+
+    })
+    .controller('GalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("tablegallery");
+        $scope.menutitle = NavigationService.makeactive("Gallery");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+    })
+
+    .controller('DetailGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("gallerydetail");
+        $scope.menutitle = NavigationService.makeactive("Gallery Detail");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+    })
+
+myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("dashboard");
+        $scope.menutitle = NavigationService.makeactive("Dashboard");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+    })
 
     .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
         $scope.template = TemplateService;

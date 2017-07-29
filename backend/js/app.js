@@ -294,6 +294,27 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'DetailMatchesCtrl'
         })
 
+        .state('medals', {
+            url: "/medals",
+            templateUrl: "views/template.html",
+            controller: 'MedalsCtrl'
+        })
+        .state('detailmedal', {
+            url: "/detailmedal",
+            templateUrl: "views/template.html",
+            controller: 'DetailMedalCtrl'
+        })
+        .state('gallery', {
+            url: "/gallery",
+            templateUrl: "views/template.html",
+            controller: 'GalleryCtrl'
+        })
+        .state('galleryDetail', {
+            url: "/gallerydetail",
+            templateUrl: "views/template.html",
+            controller: 'DetailGalleryCtrl'
+        })
+
 
         .state('jagz', {
             url: "/jagz",

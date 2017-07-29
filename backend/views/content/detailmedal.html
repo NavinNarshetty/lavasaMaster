@@ -1,0 +1,104 @@
+<div class="heading-sec">
+    <div class="row">
+        <div class="col-md-4 column">
+            <div class="heading-profile">
+                <h2>{{title}} Medal</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Top Bar Chart -->
+<div class="panel-content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="widget">
+                <div class="form-elements-sec">
+                    <form name="detailForm" role="form" class="sec">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Medal Type</label>
+                                    <ui-select name="medalType" id="medalType" theme="bootstrap" ng-model="medalForm.medalType" ng-change="searchSportListSubCategory($select.selected._id)"
+                                        required>
+                                        <ui-select-match placeholder="Enter Medal Type" allow-clear="true">
+                                            {{$select.selected.name}}
+                                        </ui-select-match>
+                                        <ui-select-choices refresh.delay="0" repeat="item in sportstypeitems | filter:$select.search" refresh="getAllSportListSubCategory($select.search)">
+                                            <span ng-bind-html="item.name"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <div class="error-msg" ng-if="detailForm.medalType.$invalid && detailForm.medalType.$touched">Please Enter Medal Type*</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>School</label>
+                                    <ui-select name="selectsporttype" id="selectsporttype" theme="bootstrap" ng-model="medalForm.sportsListSubCategory" ng-change="searchSportListSubCategory($select.selected._id)"
+                                        required>
+                                        <ui-select-match placeholder="Enter School" allow-clear="true">
+                                            {{$select.selected.name}}
+                                        </ui-select-match>
+                                        <ui-select-choices refresh.delay="0" repeat="item in sportstypeitems | filter:$select.search" refresh="getAllSportListSubCategory($select.search)">
+                                            <span ng-bind-html="item.name"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <div class="error-msg" ng-if="detailForm.selectsporttype.$invalid && detailForm.selectsporttype.$touched">Please Enter School*</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Sport</label>
+
+                                    <ui-select name="selectfilter" multiple="" id="selectfilter" theme="bootstrap" ng-model="medalForm.sport" required>
+                                        <ui-select-match placeholder="Enter Sport">
+                                            {{$select.selected[$index].name}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in sportList | filter:{name:$select.search}">
+                                            <span ng-bind-html="item.name"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                    <div class="error-msg" ng-if="detailForm.selectfilter.$invalid && detailForm.selectfilter.$touched">Please Enter Filter*</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>team</label>
+
+                                    <ui-select name="team" multiple="" id="team" theme="bootstrap" ng-model="medalForm.team" required>
+                                        <ui-select-match placeholder="Enter Team">
+                                            {{$select.selected[$index].name}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in sportList | filter:{name:$select.search}">
+                                            <span ng-bind-html="item.name"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                    <div class="error-msg" ng-if="detailForm.team.$invalid && detailForm.team.$touched">Please Enter Filter*</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>player</label>
+
+                                    <ui-select name="player" multiple="" id="player" theme="bootstrap" ng-model="medalForm.player" required>
+                                        <ui-select-match placeholder="Enter Team">
+                                            {{$select.selected[$index].name}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in sportList | filter:{name:$select.search}">
+                                            <span ng-bind-html="item.name"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                    <div class="error-msg" ng-if="detailForm.player.$invalid && detailForm.player.$touched">Please Enter Filter*</div>
+                                </div>
+
+                                <div class="text-center mt20 odd-even-button">
+                                    <button class="btn btn-default" type="submit" ng-click="saveData(medalForm)">Save</button>
+                                    <button class="btn btn-default" ng-click="onCancel('agegroup')">Cancel</button>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<div class="text-center mt20 odd-even-button">
+                            <button class="btn btn-default" type="submit" ng-click="saveData(data)">Save</button>
+                            <button class="btn btn-default" ng-click="onCancel(json.json.action[1].stateName)">Cancel</button>
+                        </div>-->
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
