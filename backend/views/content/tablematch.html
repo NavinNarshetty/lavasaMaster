@@ -33,8 +33,12 @@
                 <tr>
                   <th>#</th>
                   <th>
-                    Name
+                    Match Id
                   </th>
+                  <th>
+                    Sport
+                  </th>
+
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -44,7 +48,8 @@
                   <!--<tr>-->
                   <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                   <!--<td>{{($index + 1)}}</td>-->
-                  <td>{{item.name}}</td>
+                  <td>{{item.incrementalId}}</td>
+                  <td>{{item.sport}}</td>
                   <td>
                     <a class="btn btn-primary" target="_blank" ui-sref="detailagegroup({id:item._id})">
                       <i class="fa fa-pencil"></i> Edit

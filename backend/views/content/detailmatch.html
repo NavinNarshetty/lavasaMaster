@@ -17,9 +17,64 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Name*</label>
-                                    <input type="text" ng-model="formData.name" class="form-control" placeholder="Enter Name" required>
-                                    <div class="error-msg" ng-if="detailForm.agename.$invalid && detailForm.agename.$touched">Please Enter Valid Name *</div>
+                                    <label>Match Id*</label>
+                                    <input type="text" name="incrementalId" ng-model="formData.incrementalId" class="form-control" placeholder="Enter Name" required>
+                                    <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>sport</label>
+                                    <input type="text" name="sport" ng-model="formData.sport" class="form-control" placeholder="Enter sport" required>
+                                    <div class="error-msg" ng-if="detailForm.sport.$invalid && detailForm.sport.$touched">Please Enter Valid Sport *</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Opponents Single</label>
+
+                                    <ui-select name="opponentsSingle" multiple="" id="opponentsSingle" theme="bootstrap" ng-model="medalForm.opponentsSingle"
+                                        required>
+                                        <ui-select-match placeholder="Enter Team">
+                                            {{$select.selected[$index].name}}
+                                        </ui-select-match>
+                                        <ui-select-choices repeat="item in sportList | filter:{name:$select.search}">
+                                            <span ng-bind-html="item.name"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+
+                                    <div class="error-msg" ng-if="detailForm.opponentsSingle.$invalid && detailForm.opponentsSingle.$touched">Please Enter Filter*</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Opponents Team</label>
+                                    <ui-select name="opponentsTeam" multiple id="opponentsTeam" theme="bootstrap" ng-model="formData.ageGroup" ng-change="searchAge($select.selected._id)"
+                                        required>
+                                        <ui-select-match placeholder="Enter Opponents Team" allow-clear="true">
+                                            {{$select.selected[$index].name}}
+                                        </ui-select-match>
+                                        <ui-select-choices refresh.delay="0" repeat="item in sportList | filter:$select.search" refresh="getAllAge($select.search)">
+                                            <span ng-bind-html="item.name"></span>
+                                        </ui-select-choices>
+                                    </ui-select>
+                                    <div class="error-msg" ng-if="detailForm.opponentsTeam.$invalid && detailForm.opponentsTeam.$touched">Please Enter Opponents Team *</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Previous Match</label>
+                                    <input type="text" name="prevMatch" ng-model="formData.prevMatch" class="form-control" placeholder="Enter Previous Match"
+                                        required>
+                                    <div class="error-msg" ng-if="detailForm.prevMatch.$invalid && detailForm.prevMatch.$touched">Previous Match *</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Next Match</label>
+                                    <input type="text" name="nextMatch" ng-model="formData.nextMatch" class="form-control" placeholder="Enter Next Match" required>
+                                    <div class="error-msg" ng-if="detailForm.nextMatch.$invalid && detailForm.nextMatch.$touched">Please Enter Valid Name *</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Score Card</label>
+                                    <input type="text" name="scoreCard" ng-model="formData.scoreCard" class="form-control" placeholder="Enter Name" required>
+                                    <div class="error-msg" ng-if="detailForm.scoreCard.$invalid && detailForm.scoreCard.$touched">Please Enter Next Match*</div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Results</label>
+                                    <input type="text" name="results" ng-model="formData.results" class="form-control" placeholder="Enter Name" required>
+                                    <div class="error-msg" ng-if="detailForm.results.$invalid && detailForm.results.$touched">Please Enter Results *</div>
                                 </div>
                                 <div class="text-center mt20 odd-even-button">
                                     <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
