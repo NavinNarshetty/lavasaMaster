@@ -1,0 +1,231 @@
+<section class="confirmTeam">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 col-sm-12 col-xs-12">
+        <div class="Heading">
+          <h1 class="text-center school">Sports Registration Form</h1>
+          <h1 class="text-center text-uppercase checkTeam"><span>Check & Confirm Your Team</span></h1>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">
+        <div class="pull-right sp-tab-right">
+          <div class="">
+            <div class="display-inline">
+              <p class="mb0">SFA ID:</p>
+              <p class="mb0" ng-if="detail.userType === 'school'">{{type | firstcapitalize}} Name:</p>
+              <p class="mb0" ng-if="detail.userType === 'athlete'">Athlete Name:</p>
+            </div>
+            <div class="display-inline">
+              <p class="mb0">&nbsp;{{detail.sfaIdObj}}</p>
+              <p class="mb0" ng-if="detail.userType === 'school'">&nbsp;{{detail.schoolName}}</p>
+              <p class="mb0" ng-if="detail.userType === 'athlete'">&nbsp;{{detail.firstName}}&nbsp&nbsp{{detail.surname}}</p>
+            </div>
+          </div>
+          <ul class="list-inline">
+            <li ng-click="logoutCandidate();" ng-if="detail.isLoggedIn"><a>Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+        <div class="row">
+          <div class="box-padd mb91">
+            <div class="confirmForm">
+              <div class="">
+                <form class="form-horizontal">
+                  <div class="form-group">
+                    <div class="readSchoolName selectDefault">
+                      <div class="col-md-offset-2 col-md-8 col-sm-offset-2 col-sm-8 col-xs-12">
+                        <label for="inputEmail3" class="col-md-4 col-sm-4 col-xs-12 control-label para3">{{type | firstcapitalize}} Name:</label>
+                        <div class="col-md-7 col-sm-8 col-xs-12">
+                          <!-- <input type="text" class="form-control" ng-model="formData.schoolName" id="inputEmail3" readonly> -->
+                          <select class="form-control changeBorder" id="inputEmail3">
+                            <option value="">{{formData.schoolName}}</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group text-center">
+                    <h4 class="teamHead">{{selectService.sportName}}</h4>
+                  </div>
+                  <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12">
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                      <p class="note note-size"><strong>Note:</strong></p>
+                    </div>
+                    <div class="col-md-11 col-sm-11 col-xs-12">
+                      <p class="note" ng-if="selectService.sportName == 'Archery' || selectService.sportName == 'archery'">1. In case you wish to participate in 2 event categories kindly ensure that you select Indian Bow as
+                        your 1st event.
+                      </p>
+                      <p class="note" ng-if="selectService.sportName == 'Fencing' || selectService.sportName == 'fencing'">1. Can participate in all events.</p>
+                      <p class="note">2. An athlete can participate in an age category as per the cut-off dates mentioned in the rules and
+                        regulations.
+                      </p>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                      <div class="fencing-table">
+                        <div class="selectedTeamTable table-responsive scrollbar style-1">
+
+                          <table class="table table-bordered" ng-init="st=selectService.sportName;">
+                            <thead>
+                              <th>
+                                <div class="mid_col">Sr. No.</div>
+                              </th>
+                              <th>SFA ID-Name</th>
+                              <th>Gender</th>
+
+                              <th>Event 1</th>
+                              <th>Event 2</th>
+                              <th ng-if="st=='Fencing'">Event 3</th>
+                              <!--
+                              <div class="hover-img">
+                                <img src="img/icon/icon.png" alt="logo" class="img-responsive myicon">
+                                <div class="iconinfo sf-list">
+                                  <p class="margin0">This logo will be displayed on your school’s profile page on sfanow.in</p>
+                                </div>
+                              </div>-->
+
+                            </thead>
+                            <tbody>
+                              <tr ng-class="{'missing-fields':selectService.showMissingFields && !athelete.isValidSelection}" ng-repeat="athelete in selectService.team track by $index">
+                                <td>
+
+                                  <div class="mid_cols">
+                                    <span>{{$index+1}}</span>
+                                    <!--<span class="missing-fields" ng-if="selectService.showMissingFields && !athelete.isValidSelection">*</span>-->
+                                  </div>
+                                </td>
+                                <td ng-if="athelete.middleName">{{athelete.sfaId+' - '+athelete.firstName+' '+athelete.middleName+' '+athelete.surname}}</td>
+                                <td ng-if="!athelete.middleName">{{athelete.sfaId+' - '+athelete.firstName+' '+athelete.surname}}</td>
+                                <td>{{athelete.gender | firstcapitalize}}</td>
+                                <td>
+                                  <div>
+                                    <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[0]" ng-required=""
+                                      ng-options="{{config.event1Expression}}" ng-change="selectService.isValidSelection(athelete)">
+                                  </select>
+                                  </div>
+                                </td>
+                                <td>
+                                  <div>
+                                    <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[1]" ng-required=""
+                                      ng-options="{{config.event2Expression}}" ng-change="selectService.isValidSelection(athelete)"
+                                      ng-disabled="athelete.disableEvent2">
+                                  </select>
+                                  </div>
+
+
+                                </td>
+                                <!--hidden-->
+                                <td ng-if="st=='Fencing'">
+                                  <select class="form-control" ng-init="selectService.isValidSelection(athelete)" ng-model="athelete.sport[2]" ng-required=""
+                                    ng-options="{{config.event3Expression}}" ng-change="selectService.isValidSelection(athelete)"
+                                    </select>
+                                </td>
+                            </tbody>
+                          </table>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+                      <div class="nominate">
+                        <a data-toggle="collapse" data-target="#collapseExample">
+                          <p class="">Nominate a fellow sports enthusiast, who’s got what it takes to compete and become an SFA Champion,
+                            NOW!
+                            <i class="fa fa-chevron-down pull-right"></i>
+                          </p>
+                        </a>
+                        <div class="collapse" id="collapseExample" ng-if="detail.userType === 'athlete'">
+                          <div class="">
+                            <div class="form-group">
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" class="form-control text-center" ng-model="formData.nominatedName" placeholder="Enter Athlete Name" name="nominatedName"
+                                  id="nominatedName">
+                              </div>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" class="form-control text-center" ng-model="formData.nominatedSchoolName" placeholder="Enter Athlete SchoolName"
+                                  name="nominatedSchoolName" id="nominatedSchoolName">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="tel" only-Digits maxlength="11" minlength="7" class="form-control text-center" ng-model="formData.nominatedContactDetails"
+                                  placeholder="Enter Contact Details" name="nominatedContactDetails" id="nominatedContactDetails">
+                              </div>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="email" class="form-control text-center" ng-model="formData.nominatedEmailId" placeholder="Enter Email Id" name="nominatedEmailId"
+                                  id="nominatedEmailId">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="collapse" id="collapseExample" ng-if="detail.userType === 'school'">
+                          <div class="">
+                            <div class="form-group">
+                              <!--<div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" class="form-control" ng-model="nominatedName" placeholder="Enter Athlete Name" name="nominatedName" id="nominatedName">
+                              </div>-->
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" class="form-control text-center" ng-model="formData.nominatedSchoolName" placeholder="Enter SchoolName"
+                                  name="nominatedSchoolName" id="nominatedSchoolName">
+                              </div>
+                              <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="tel" only-Digits maxlength="11" minlength="7" class="form-control text-center" ng-model="formData.nominatedContactDetails"
+                                  placeholder="Enter Contact Details" name="nominatedContactDetails" id="nominatedContactDetails">
+                              </div>
+                            </div>
+                            <div class="form-group">
+                              <!--<div class="col-md-6 col-sm-6 col-xs-12">-->
+                              <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
+                                <input type="email" class="form-control text-center" ng-model="formData.nominatedEmailId" placeholder="Enter Email Id" name="nominatedEmailId"
+                                  id="nominatedEmailId">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12">
+                    <div class="col-md-1 col-sm-1 col-xs-12">
+                      <p class="note note-size"><strong>Note:</strong></p>
+                    </div>
+                    <div class="col-md-11 col-sm-11 col-xs-12" ng-if="detail.userType === 'school'">
+                      <p class="note">Click ‘Confirm’ to register your athlete entry/entries. If you wish to make a change click ‘Edit’.
+                        Please note all registered athletes will be notified via email and SMS on successful sports registration.</p>
+                    </div>
+                    <div class="col-md-11 col-sm-11 col-xs-12" ng-if="detail.userType === 'athlete'">
+                      <p class="note">Click ‘Confirm’ to register your entry. If you wish not to register now click ‘Back’. Please note you
+                        will be notified via email and SMS on successful sports registration.</p>
+                    </div>
+                  </div>
+                  <div class="form-group ">
+                    <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-12 ">
+                      <div class="col-md-6 col-sm-6 col-xs-12 " ng-if="detail.userType === 'school'">
+                        <button class="btn btn-default sub-mit form-control " ng-disabled="isDisabled==true " type="button" ng-click="selectService.editTeam('individual-selection');">Edit</button>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12 " ng-if="detail.userType === 'athlete'">
+                        <button class="btn btn-default sub-mit form-control " ng-disabled="isDisabled==true " type="button" ui-sref="sports-selection">Back</button>
+                      </div>
+                      <div class="col-md-6 col-sm-6 col-xs-12 ">
+                        <button class="btn btn-default sub-mit form-control " ng-disabled="isDisabled==true" type="button" promise-btn="yourPromise"
+                          ng-click="selectService.confirmSelection(formData)">Confirm</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,70 @@
+<div class="schoolbenefit-modal">
+  <div class="cross-close-term pull-right">
+    <button type="button" aria-label="Close" ng-click="$dismiss()" class="float-right close-btn">X</button>
+    <!--<i class="fa fa-2x fa-times-circle-o" aria-hidden="true"></i>-->
+    <!--<i class="fa  fa-times" aria-hidden="true"></i>-->
+    </a>
+  </div>
+  <h4 class="modsub custm-font">
+    BENEFITS FOR A REGISTERED SFA ATHLETE
+  </h4>
+  <p class="mgtp">Overall benefits that an athlete can avail by being a registered member athlete of SFA:</p>
+  <h5 class="custm-font">SFA Championship SFA {{sfaCity | capitalize}} {{year}}</h5>
+  <p class="mgtp cutm-font-prime">Athlete sporting experience at par International sporting standards</p>
+  <ul class="tick mr-left">
+    <li>State-of-the-art,multi-sporting infrastructure & facilities</li>
+    <li>HD Match Videography capturing every game of an athlete</li>
+    <li>High Quality Competition – A chance to compete with the {{sfaCity}}’s best sporting talent</li>
+    <li>Secure & Hygienic sporting environment</li>
+    <li>Immediate First Aid Care with Physiotherapists & Physicians stationed at all sporting arenas</li>
+    <li>All sports conducted as per Standard, Fair practices by Certified Match Officials</li>
+    <li>Access to Hydration & Nutrition centre’s with Complimentary Energy Drinks for each athlete</li>
+    <li>Scouting of talented athletes across different sports with an opportunity to win training & development scholarship along
+      with complimentary mental & fitness assessment programs</li>
+    <li>Athletes can avail training in the sport of their choice with SFA’s Training & Development Programs*</li>
+    <li>Eligible to win Special Hampers <span ng-if="isCollege == false">& Cash Prizes</span> in the following award categories:
+      <ul style="list-style-type: decimal; padding-left: 13px;">
+        <li>Most promising male athlete</li>
+        <li>Most promising female athlete</li>
+        <li>Athlete participating in the maximum number of sports</li>
+      </ul>
+    </li>
+    <li>No entry fees applicable to parents or other visitors accompanying an athlete from a registered {{type}}.</li>
+  </ul>
+  <h5 class="custm-font">Advanced SPORTS SESSIONS</h5>
+  <p class="mgtp cutm-font-prime">Complimentary Sport sessions by leading professionals for all athletes <span ng-if="isCollege == false">of the {{type}}</span></p>
+  <div class=" mgtp">
+    <label class="custm-font pdl21" ng-if="isCollege == false">In {{type | firstcapitalize}}:</label>
+    <ul class="tick mr-left">
+      <li>Fitness Assessment </li>
+      <li>Hydration Clinic</li>
+      <li>Nutrition Workshop</li>
+    </ul>
+    <label class="custm-font pdl21">Championship:</label>
+    <ul class="tick mr-left">
+      <li>Sports Workshops & Fitness Clinics for athletes</li>
+      <li>Special Sport tutorials for athletes & non-athletes (Shooting, Archery etc)</li>
+      <li>Special Days (Opening Ceremony, Girls Day, Closing Ceremony & other special days)</li>
+    </ul>
+    <div class="mod-cls">
+      <h5 class=" custm-font">{{type | capitalize}} SPORTS ONLINE</h5>
+      <p class="custom-a mgtp cutm-font-prime"> Comprehensive Online {{type | firstcapitalize}} Sporting Profiles accessible on the SFA Portal<a href="https://sfanow.in/"
+          target="_new" style="color: mediumblue"> (WWW.SFANOW.IN) </a></p>
+    </div>
+    <ul class="tick mr-left">
+      <li>Athlete sporting profiles comprising of:
+        <ul class="notick" style="list-style-type: decimal; padding-left:14px; padding-top: 10px;">
+          <li>HD Match Videos of all the games played across each sport & event category</li>
+          <li>Athlete’s SFA Track Record</li>
+          <li>Year on year Match Statistics</li>
+          <li>Achievements across every sport & event category</li>
+          <li>Opportunity to get match video analyzed by experts in selected sports</li>
+        </ul>
+      </li>
+      <li>Photo & Video Gallery capturing all the sporting action</li>
+      <li>Fixtures, Draws & Match schedules to be published online prior to the championship</li>
+    </ul>
+    <p>*All Training & Development Programs to be announced one month prior to the championship </p>
+    <p>*All special awards to be announced one month prior to the championship</p>
+  </div>
+</div>

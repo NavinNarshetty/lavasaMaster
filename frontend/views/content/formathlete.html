@@ -1,0 +1,901 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class=" school regis">Athlete Registration Form</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-push-2 col-xs-12">
+            <div class="box box-padd">
+                <div class="mod-cls">
+                    <p class="para sf-list custom-a"><span class="blue fs-14">Kindly Note:</span> This is a one-time registration process. Completion of this
+                        process will allow you to register using your SFA ID for all future SFA Events. This also enables
+                        us to create a personalized sporting experience for you on our website www.sfanow.in to highlight
+                        your performances in sport by way of profiles, records maintenance, match videos, statistics and
+                        reports.
+                        <br> The annual Athlete registration fees for SFA {{sfaCity}} {{year}} is Rs. <span ng-if="isCollege == false">200 <br>In the event
+                        that your {{type}} does not register for SFA {{sfaCity}} {{year}} by the 30th of September an additional fees
+                        of Rs. 400/- (Inclusive of all applicable taxes) will be levied.This discounted fees for registered
+                        {{type}} athletes is a step to encourage {{type}}s to support their athletes and sports.</span>
+                        <span ng-if="isCollege == true">300</span> (Inclusive of all applicable taxes).
+                        <br>
+                        <a ng-click="athBenModal(type, sfaCity, year)"><strong>Click here</strong></a> to view registered
+                        athlete benefits for SFA {{sfaCity}} {{year}}.
+                    </p>
+                </div>
+                <div class="t-padd">
+                    <h5 class="blue fs-14">We request you to keep the following details ready to ensure a smooth registration process: </h5>
+                    <ul type="circle" class="para mar-l sf-list">
+                        <li>Mobile Number which you wish to register with SFA </li>
+                        <li>Email ID which you wish to register with SFA</li>
+                        <li>Scanned copy of your Aadhar ID Card OR Passport OR Pan Card OR Birth Certificate</li>
+                        <li ng-if="isCollege == false">Scanned copy of your {{type | firstcapitalize}} ID Card OR {{type | firstcapitalize}} Report Card</li>
+                        <li ng-if="isCollege == true">Scanned copy of your {{type | firstcapitalize}} ID Card</li>
+                        <li>Credit Card/Debit Card/Bank Details (Only in case of online payment)</li>
+                        <li>Your profile picture in JPEG/PNG format</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="blue-top">
+                        <h5 class="blue fs-14">
+                            *The applicant represents that the information provided is true and correct. SFA will keep confidential and protect your
+                            personal information except where disclosure is required or permitted by law.</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-push-2 col-xs-12">
+            <div class="dummy">
+                <div>
+                    <p class=" d-padd pl13 para2 sf-list" style="text-align: justify">In case you have participated in previous SFA Championships you will need to enter your SFA ID & Name
+                        to ensure that your previous year's match videos and statistics reflect in your new profile, which
+                        will be created on successful completion of this registration process.</p>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
+                    <label class="para2 sfa-padd sf-list"> SFA ID or Name:</label>
+                </div>
+                <div class="col-md-8 col-sm-8 col-xs-12">
+                    <ui-select name="idSfa" id="idSfa" theme="bootstrap" ng-model="sfaId" ng-change="searchChange($select.selected.sfaid)">
+                        <ui-select-match allow-clear="true" placeholder="Select/Search SFA ID or Name">
+                            {{$select.selected.sfaid}}
+                        </ui-select-match>
+                        <ui-select-choices refresh-delay="0" repeat="item in atheleList | filter: $select.search" refresh="refreshChange($select.search)">
+                            <span ng-bind-html="item.sfaid"></span><br>
+                            <large>{{item.firstname}} {{item.lastname}} {{item.middlename}}
+                            </large>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+                <div class="mar-left">
+                    <p class="para2 t-padd sf-list"><br>If you have not participated in SFA Championships before, your SFA ID will be generated<br> on successful
+                        completion of registration.</p>
+                    <p class="para2 b-padd sf-list">Please Note: All fields marked with * are mandatory.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-push-2 col-xs-12">
+            <form class="form-horizontal" name="formAthlete" ng-submit="saveAthelete(formData,formAthlete)">
+                <div class="wid-hei">
+                    <div class="step1 fs-14">
+                        Step 1: Personal Details
+                    </div>
+                </div>
+                <div class="box box-padd para2 box-hei2">
+                    <div class="form-group dummy">
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list">*Select your {{type | firstcapitalize}}:</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <ui-select class="sfa-drop" name="selectSchoolName" id="selectSchoolName" theme="bootstrap" ng-model="formData.school" ng-change="searchChangeSchool($select.selected._id)">
+                                <ui-select-match allow-clear="true" placeholder="Select/Search your {{type}}">
+                                    {{$select.selected.name}}
+                                </ui-select-match>
+                                <ui-select-choices refresh-delay="0" repeat="item in schoolList | filter: $select.search" refresh="refreshChangeSchool($select.search)">
+                                    <span ng-bind-html="item.name"></span>
+                                </ui-select-choices>
+                            </ui-select>
+                            <div class="validate-col" ng-if="(formAthlete.selectSchoolName.$invalid && formAthlete.selectSchoolName.$touched) && !showSchool">Select Your {{type | firstcapitalize}}</div>
+                        </div>
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <p class="text-center sf-list">or</p>
+                            <p class="text-center sf-list">In case you do not find your {{type}}, click on add {{type}}.</p>
+                            <div class="text-center">
+                                <a class="btn btn-default sub-mit sf-list" ng-disabled="oneClick == true" ng-click="goto()">Add {{type | firstcapitalize}}</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div ng-if="showSchool && !formData.school">
+                        <div>
+                            <div class="x-img3">
+                                <div class="x-img right27" ng-click="goToPrevious()">
+                                    <img src="img/icon/x.png" alt="logo" class="img-responsive pull-right">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12 sf-list">  *{{type | firstcapitalize}} Name:</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <input type="text" ng-model="formData.atheleteSchoolName" capitalize name="schoolName" class="sfa-drop sf-list form-control"
+                                        required>
+                                    <div class="validate-col" ng-if="formAthlete.schoolName.$invalid && formAthlete.schoolName.$touched">Please Enter Your {{type | firstcapitalize}} Name</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12 sf-list">*Area/Locality:</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <input type="text" only-alpha ng-model="formData.atheleteSchoolLocality" capitalize name="area" class="sfa-drop sf-list form-control"
+                                        required>
+                                    <div class="validate-col" ng-if="formAthlete.area.$invalid && formAthlete.area.$touched">Please Enter Your Area/Locality</div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-3 col-sm-3 col-xs-12 sf-list">*{{type | firstcapitalize}} Contact:</label>
+                                <div class="col-md-8 col-sm-8 col-xs-12">
+                                    <input type="text" name="schoolContact" only-Digits ng-model="formData.atheleteSchoolContact" class="sfa-drop sf-list form-control"
+                                        minlength="11" maxlength="11" required>
+                                    <div class="validate-col" ng-if="formAthlete.schoolContact.$invalid && formAthlete.schoolContact.$touched">Please Enter Your {{type | firstcapitalize}} Contact</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-5 col-sm-5 col-xs-12 sf-list">*Upload {{type | firstcapitalize}} ID Card OR Report Card:</label>
+                        <div class="col-md-5 col-sm-7 col-xs-12" ng-init="show=0">
+                            <!--<a class="btn btn-default myupload">Upload </a>-->
+                            <div class="dirctive-op pl13">
+                                <upload-image2 class="up-img schoolId ng-isolate-scope" ng-model="formData.atheleteSchoolIdImage" file-types="'image/jpeg,image/png'"
+                                    ng-disabled="type.disabled" ng-click="show=1" ng-callback="changeitSchoolId" no-view></upload-image2>
+                            </div>
+                            <div class="display-inline padd-l38">
+                                <div class="w150" ng-if="show==1 && formData.atheleteSchoolIdImage != ''">
+                                    <img src="{{formData.atheleteSchoolIdImage |serverimage2}}" class="img-responsive
+                w100">
+                                </div>
+                            </div>
+                            <div class="hover-img" ng-if="show==1 && formData.atheleteSchoolIdImage != ''">
+                                <img src="img/icon/x.png" alt="logo" ng-click="removeImage(formData.atheleteSchoolIdImage,
+                'schoolId')" class="img-responsive myicon">
+                            </div>
+                            <div class="hover-img">
+                                <img src="img/icon/icon.png" alt="logo" class="img-responsive myicon">
+                                <div class="iconinfo sf-list">
+                                    <p>This is to verify that you are an athlete from the selected {{type}}</p>
+                                </div>
+                            </div>
+                            <label class="kindly-up up-m175 sf-list">Kindly upload only .jpg or .png format. Maximum file size 1MB.</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <h4 class="blue fs-14">Athlete Details</h4>
+                        </div>
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list">*Surname:</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="text" only-alpha ng-model="formData.surname" name="surname" capitalize class="sfa-drop sf-list form-control"
+                                required>
+                            <div class="validate-col" ng-if="formAthlete.surname.$invalid && formAthlete.surname.$touched">Please Enter Your Surname</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list">*First Name:</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="text" only-alpha ng-model="formData.firstName" capitalize name="firstName" class="sfa-drop sf-list
+                form-control" required>
+                            <div class="validate-col" ng-if="formAthlete.firstName.$invalid && formAthlete.firstName.$touched">Please Enter Your First Name</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list">Middle Name:</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="text" only-alpha ng-model="formData.middleName" capitalize class="sfa-drop sf-list form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list">*Gender:</label>
+                        <!--<input type="radio" name="gender" value="male"><label class="padd-lr"> Male</label>
+                            <input type="radio" name="gender" value="male"><label class="padd-lr"> Female</label>-->
+                        <div class="col-md-4 col-sm-5 col-xs-12">
+                            <input type="radio" ng-model="formData.gender" id="radio04" name="radio1" value="male" required>
+                            <label for="radio04" class="padd-lr sf-list"><span></span>Male</label>
+                            <input type="radio" ng-model="formData.gender" id="radio03" name="radio1" value="female" required>
+                            <label for="radio03" class="padd-lr sf-list"><span></span>Female</label>
+                        </div>
+                        <!--<div class="validate-col" ng-if="formAthlete.radio.$invalid && formAthlete.radio.$touched">Please Enter Your School Name *</div>-->
+                    </div>
+                    <div class="form-group" ng-if="isCollege == false">
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list">*Grade/Standard:</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <select class="sfa-drop2 sfa4 sf-list form-control" name="gradestd" ng-model="formData.standard" required>
+                                <option style="display:none"></option>
+                                <option>Jr. KG </option> 
+                                <option>Sr. KG </option>
+                                <option>1 </option>
+                                <option>2 </option>
+                                <option>3 </option>
+                                <option>4 </option>
+                                <option>5 </option>
+                                <option>6 </option>
+                                <option>7 </option>
+                                <option>8 </option>
+                                <option>9 </option>
+                                <option>10 </option>
+                                <option>11 </option>
+                                <option>12 </option>
+                            </select>
+                            <div class="validate-col" ng-if="formAthlete.gradestd.$invalid && formAthlete.gradestd.$touched">Select Grade/Standard</div>
+                        </div>
+                        <label class="col-md-2 col-sm-2 col-xs-12 sf-list blood-mob">  Blood Group:</label>
+                        <!--<input type="text" class="bor-t" required minlength="10" maxlength="10">-->
+                        <div class="col-md-3 col-sm-3 col-xs-11">
+                            <select class="sfa-drop2 sfa4 blood-mob2 sf-list form-control" ng-model="formData.bloodGroup">
+                                <option style="display:none"></option>
+                                <option>AB - </option>
+                                <option>AB + </option>
+                                <option>A - </option>
+                                <option>A + </option>
+                                <option>B -</option>
+                                <option>B + </option>
+                                <option>O - </option>
+                                <option>O + </option>
+                            </select>
+                        </div>
+                        <div class="hover-img margin0 col-md-1 col-sm-1 col-xs-1">
+                            <img src="img/icon/icon.png" alt="logo" class="img-responsive myicon">
+                            <div class="iconinfo sf-list">
+                                <p>This information will be important in case of medical emergencies</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="isCollege == true">
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list">*University:</label>
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <select class="sfa-drop2 sfa4 sf-list form-control" name="university" ng-model="formData.university" required>
+                             <option style="display:none"></option>
+                             <option>Mumbai University (MU)</option>
+                             <option>Other</option>
+                            </select>
+                            <div class="validate-col" ng-if="formAthlete.university.$invalid && formAthlete.university.$touched">Select University</div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12" ng-if="formData.university =='Other'">
+                            <input name="university" placeholder="Enter university" ng-model="formData.universities" type="text" class="sfa-drop form-control sfa434"
+                                required>
+                            <div class="validate-col" ng-if="formAthlete.university.$invalid && formAthlete.university.$touched">Select University</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="isCollege == true">
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list ">*Course:</label>
+                        <div class="col-md-4 col-sm-4 col-xs-12 ">
+                            <select class="sfa-drop2 sfa4 sf-list form-control " name="course " ng-model="formData.course" required>
+                                <option style="display:none "></option>
+                                <option>B.A.F (Bachelor of Commerce -  Accounting & Finance)</option>
+                                <option>B.B.A (Bachelor of Business Administration)</option>
+                                <option>B.B.I (Bachelor of Commerce - Banking & Insurance)</option>
+                                <option>B.Com (Bachelor of Commerce)</option>
+                                <option>B.F.M (Bachelor of Commerce - Financial Markets)</option>
+                                <option>B.M.M (Bachelor of Mass Media)</option>
+                                <option>B.M.S (Bachelor of Management Studies)</option>
+                                <option>B.Sc IT (Bachelor of Science - Information Technology)</option>
+                                <option>Other</option>
+                            </select>
+                            <div class="validate-col " ng-if="formAthlete.course.$invalid && formAthlete.course.$touched ">Select Course</div>
+                        </div>
+
+                        <div class="col-md-4 col-sm-4 col-xs-12" ng-if="formData.course =='Other'">
+                            <input name="courses" placeholder="Enter Course" ng-model="formData.courses" type="text" class="sfa-drop form-control sfa434"
+                                required>
+                            <div class="validate-col" ng-if="formAthlete.courses.$invalid && formAthlete.courses.$touched">Select Course</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="isCollege == true">
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list blood-mob"> *Faculty:</label>
+                        <!--<input type="text" class="bor-t" required minlength="10" maxlength="10">-->
+                        <div class="col-md-4 col-sm-4 col-xs-12">
+                            <select class="sfa-drop2 sfa4 blood-mob2 sf-list form-control" ng-model="formData.faculty" name="faculty" required>
+                                <option style="display:none"></option>
+                                <option>Commerce</option>
+                                <option>Science</option>
+                                <option>Arts</option>
+                                <option>Other</option>
+                            </select>
+                            <div class="validate-col" ng-if="formAthlete.faculty.$invalid && formAthlete.faculty.$touched">Select Faculty</div>
+                        </div>
+                        <div class="col-md-4 col-sm-4 col-xs-12" ng-if="formData.faculty =='Other'">
+                            <input name="faculties" placeholder="Enter Faculty" ng-model="formData.faculties" type="text" class="sfa-drop form-control sfa434"
+                                required>
+                            <div class="validate-col" ng-if="formAthlete.faculties.$invalid && formAthlete.faculties.$touched ">Select Faculty</div>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="isCollege==true">
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list">*Degree:</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12 ">
+                            <select class="sfa-drop2 sfa4 sf-list form-control" name="degree" ng-model="formData.degree" required>
+                                <option style="display:none "></option>
+                                <option>Junior College</option>
+                                <option>Undergraduate</option>
+                                <option>Postgraduate</option>
+                                <option>Diploma</option>
+                            </select>
+                            <div class="validate-col" ng-if="formAthlete.degree.$invalid && formAthlete.degree.$touched">Select Degree</div>
+                        </div>
+                        <label class="col-md-2 col-sm-2 col-xs-12 sf-list blood-mob "> *Year:</label>
+                        <!--<input type="text " class="bor-t " required minlength="10 " maxlength="10 ">-->
+                        <div class="col-md-3 col-sm-3 col-xs-11">
+                            <select class="sfa-drop2 sfa4 blood-mob2 sf-list form-control" name="years" ng-model="formData.year" required>
+                                <option style="display:none "></option>
+                                <option>1st Year</option>
+                                <option>2nd Year</option>
+                                <option>3rd Year</option>
+                                <option>4th Year</option>
+                                <option>5th Year</option>
+                            </select>
+                            <div class="validate-col" ng-if="formAthlete.years.$invalid && formAthlete.years.$touched">Select Year</div>
+                        </div>
+                    </div>
+                    <div class="form-group " ng-if="isCollege == true">
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list blood-mob ">  Blood Group:</label>
+                        <!--<input type="text " class="bor-t " required minlength="10 " maxlength="10 ">-->
+                        <div class="col-md-3 col-sm-3 col-xs-10 ">
+                            <select class="sfa-drop2 sfa4 blood-mob2 sf-list form-control " ng-model="formData.bloodGroup ">
+                                <option style="display:none "></option>
+                                <option>AB - </option>
+                                <option>AB + </option>
+                                <option>A - </option>
+                                <option>A + </option>
+                                <option>B -</option>
+                                <option>B + </option>
+                                <option>O - </option>
+                                <option>O + </option>
+                            </select>
+                        </div>
+                        <div class="hover-img margin0 col-md-2 col-sm-2 col-xs-2 ">
+                            <img src="img/icon/icon.png " alt="logo " class="img-responsive myicon ">
+                            <div class="iconinfo sf-list ">
+                                <p>This information will be important in case of medical emergencies</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list ">*Upload Photograph:</label>
+                        <div class="col-md-9 col-sm-9 col-xs-12 " ng-init="show=0 ">
+                            <!--<a class="btn btn-default myupload ">Upload </a>-->
+                            <div class="dirctive-op pl13 ">
+                                <upload-image2 class="up-img photoGraph ng-isolate-scope " ng-model="formData.photograph
+                            " file-types=" 'image/jpeg,image/png' " ng-disabled="type.disabled " ng-click="show=1 " ng-callback="changeitPhotograph "
+                                    no-view></upload-image2>
+                            </div>
+                            <div class="display-inline padd-l38 ">
+                                <div class="w150 " ng-if="show==1 && formData.photograph ">
+                                    <img src="{{formData.photograph |serverimage2}} " class="img-resopnsive w100 ">
+                                </div>
+                            </div>
+                            <div class="hover-img " ng-if="show==1 && formData.photograph ">
+                                <img src="img/icon/x.png " alt="logo " ng-click="removePhoto(formData.photograph,
+                            'photoGraph') " class="img-responsive myicon ">
+                            </div>
+                            <div class="hover-img ">
+                                <img src="img/icon/icon.png " alt="logo " class="img-responsive myicon ">
+                                <div class="iconinfo sf-list ">
+                                    <p>This photograph will be displayed on your SFA Athlete profile.</p>
+                                </div>
+                            </div>
+                            <label class="kindly-up up-m175 sf-list ">Kindly upload only .jpg or .png format. Maximum file size 1MB.</label>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <label class="col-md-3 col-sm-3 col-xs-12 sf-list ">*Date Of Birth:</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12 ">
+                            <input-date class="bor-t date-month sf-list " ng-model="formData.dob "></input-date>
+                            <!--<input ui-date="dateOptions " ng-model="formData.dob " class="bor-t date-month sf-list
+                            " name="dob " ng-required="true ">-->
+                            <div class="validate-col " ng-if="formAthlete.dob.$invalid && formAthlete.dob.$touched ">Please Enter Date of birth</div>
+                        </div>
+                        <div class="col-md-6 col-sm-6 col-xs-12 ">
+                            <label class="sf-list ">Age:</label>
+                            <label ng-if="formData.dob ">{{ageCalculate(formData.dob)}}</label>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-12 ol-sm-12 col-xs-12 ">
+                            <label class="padd-r12 sf-list label-age ">*Upload Age Proof:</label>
+                            <select class="sfa-drop2 sf-list sfa-mob2 label-two " name="ageProof " ng-model="formData.ageProof " required>
+                                <option style="display:none "></option>
+                                <option>Adhaar Card </option>
+                                <option value="hello ">Birth Certificate + Photo ID</option>
+                                <option>PAN Card</option>
+                                <option>Passport</option>
+                            </select>
+                            <!--<a class="btn btn-default myupload upload4 ">Upload</a>-->
+                            <div class="dirctive-op upload5 Upload-Age ">
+                                <upload-image2 class="up-img birthImg ng-isolate-scope " ng-model="formData.birthImage
+                            " no-view file-types=" 'image/jpeg,image/png' " ng-disabled="type.disabled " ng-callback="changeitBirthImage "></upload-image2>
+                            </div>
+                            <!--<a class="btn btn-default myupload upload6 " ng-show="formData.ageProof=='hello'
+                            " ng-click="show=1 ">Upload </a>-->
+                            <div class="dirctive-op upload7 Upload-Age " ng-show="formData.ageProof=='hello' ">
+                                <upload-image2 class="up-img photoImg ng-isolate-scope " file-types="
+                            'image/jpeg,image/png' " ng-disabled="type.disabled " ng-callback="changeitPhotoImage " no-view
+                                    ng-model="formData.photoImage ">
+                                </upload-image2>
+                            </div>
+                            <!--<label class=" myupload2 ">  <upload-image2 class="up-img " no-view></upload-image2></label>-->
+                            <!--<label class=" myupload "><upload-image2 class="up-img " ng-show="myVar=='hello' " no-view></upload-image2></label>-->
+                            <div class="hover-img " ng-if="formData.ageProof !='hello' && formData.birthImage ">
+                                <!--<div class=" padd-l38 display-block float-r ">
+                                    <div class="w150 " ng-if="show==1 && formData.photoImage ">
+                                        <img src="img/icon/x.png " alt="logo " ng-click="removeProof1(formData.photoImage,
+                            'photoImg') " class="img-responsive myicon cross-icon ">
+                                    </div>
+                                    <div class="w150 " ng-if="show==1 && formData.photoImage ">
+                                        <img src="{{formData.photoImage |serverimage2}} " class="img-resopnsive w100 ">
+                                    </div>
+                                </div>-->
+                                <div class="display-inline ">
+                                    <div class="w150 ">
+                                        <img src="{{formData.birthImage |serverimage2}} " class="img-resopnsive w100 ">
+                                    </div>
+                                </div>
+                                <div class="hover-img " style="margin-left:18px ">
+                                    <img src="img/icon/x.png " alt="logo " ng-click="removeProof(formData.birthImage,
+                            'birthImg') " class="img-responsive myicon ">
+                                </div>
+                                <!--<div class=" padd-l38 display-inline ">
+                                    <div class="w150 ">
+                                        <img src="img/icon/x.png " alt="logo " ng-click="removeProof(formData.birthImage,
+                            'birthImg') " class="img-responsive myicon cross-icon ">
+                                    </div>
+                                    <div class="w150 ">
+                                        <img src="{{formData.birthImage |serverimage2}} " class="img-resopnsive w100 ">
+                                    </div>
+                                </div>-->
+                            </div>
+                            <div class="hover-img ">
+                                <img src="img/icon/icon.png " alt="logo " class="img-responsive myicon ">
+                                <div class="iconinfo icon-msrl age sf-list ">
+                                    <p>For age verification</p>
+                                </div>
+                            </div>
+                            <div class="validate-col " ng-if="formAthlete.ageProof.$invalid && formAthlete.ageProof.$touched ">Select Age Proof</div>
+                            <div ng-if="formData.ageProof=='hello' ">
+                                <div class=" padd-l38 display-block float-r " ng-if="formData.photoImage !='' ">
+                                    <!--ng-if="formData.birthImage && formData.photoImage "-->
+                                    <div class="w150 ">
+                                        <img src="img/icon/x.png " alt="logo " ng-click="removeProof1(formData.photoImage,
+                            'photoImg') " class="img-responsive myicon cross-icon ">
+                                    </div>
+                                    <div class="w150 ">
+                                        <img src="{{formData.photoImage |serverimage2}} " class="img-resopnsive w100 ">
+                                    </div>
+                                </div>
+                                <div class=" padd-l38 display-block float-r " ng-if="formData.birthImage !='' ">
+                                    <!--ng-if="formData.birthImage && formData.photoImage "-->
+                                    <div class="w150 ">
+                                        <img src="img/icon/x.png " alt="logo " ng-click="removeProof(formData.birthImage,
+                            'birthImg') " class="img-responsive myicon cross-icon ">
+                                    </div>
+                                    <div class="w150 ">
+                                        <img src="{{formData.birthImage |serverimage2}} " class="img-resopnsive w100 ">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="clearfix "></div>
+                            <div class="text-right ">
+                                <label class="kindly-up up-m175 ">Kindly upload only .jpg or .png format. Maximum file size 1MB.</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group ">
+                        <!--<label class="col-md-3 col-sm-3 col-xs-12 sf-list ">  *Pan No:</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12 ">
+                            <input ng-model="formData.panNo " touppercase name="panno " type="text " class="bor-t form-control
+                            " minlength="10 " maxlength="10 "
+                                required>
+                            <div class="validate-col " ng-show="formAthlete.panno.$invalid && formAthlete.panno.$touched ">Enter Your PAN No.</div>
+                        </div>-->
+                        <!--<label class="col-md-3 col-sm-3 col-xs-12 sf-list "> GST IN No:</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12 ">
+                            <input name="gstNo " ng-model="formData.gstNo " type="text " class="bor-t form-control
+                            " minlength="15 " maxlength="15 ">
+                        </div>-->
+                    </div>
+                    <div class="form-group ">
+                        <div class="col-md-12 col-sm-12 col-xs-12 ">
+                            <h4 class=" ">Have you played International/National/State tournaments?</h4>
+                            <input type="radio" ng-model="formData.played" id="radio07" name="radios" value="yes" ng-click="showLevels(true);">
+                            <label for="radio07" class="padd-lr sf-list "><span></span>Yes</label>
+                            <input type="radio" ng-model="formData.played" id="radio08" name="radios" ng-click="showLevels(false);" value="no">
+                            <label for="radio08" class="padd-lr sf-list "><span></span>No</label>
+                        </div>
+                    </div>
+                    <div class="box3 box3-display " ng-repeat="(sportLevelIndex,sportLevel) in formData.sportLevel ">
+                        <div class="x-img2 ">
+                            <img src="img/icon/x.png " ng-click="removeSportLevelForm(sportLevelIndex) " alt="logo" class="img-responsive myicon pull-right"
+                                ng-class="{ 'no-opacitys':formData.sportLevel.length==1}">
+                        </div>
+                        <div class="yes-level sf-list ">
+                            <label class="sportlevel ">Level:</label>
+                            <select class="sfa-drop2 sfa-drop5 sf-list " ng-model="sportLevel.level " required>
+                           <option style="display:none "></option>
+                           <option>National</option>
+                           <option>State</option>
+                           <option>International</option>
+                        </select>
+                        </div>
+                        <div class=" " ng-if="isCollege == false">
+                            <label class="sportlevel sf-list ">Sport:</label>
+                            <select class="sfa-drop2 sf-list " ng-model="sportLevel.sport " required>
+                            <option style="display:none "></option>
+                            <option>Archery</option>
+                            <option>Athletics</option>
+                            <option>Badminton</option>
+                            <option>Basketball</option>
+                            <option>Boxing</option>
+                            <option>Carrom</option>
+                            <option>Chess</option>
+                            <option>Fencing</option>
+                            <option>Football</option>
+                            <option>Handball</option>
+                            <option>Hockey</option>
+                            <option>Judo</option>
+                            <option>Kabaddi</option>
+                            <option>Karate</option>
+                            <option>Kho Kho</option>
+                            <option>Shooting</option>
+                            <option>Squash</option>
+                            <option>Sports MMA</option>
+                            <option>Swimming</option>
+                            <option>Table Tennis</option>
+                            <option>Taekwondo</option>
+                            <option>Tennis</option>
+                            <option>Throwball</option>
+                            <option>Volleyball</option>
+                            <option>Waterpolo</option>
+                          </select>
+                        </div>
+                        <div class=" " ng-if="isCollege == true">
+                            <label class="sportlevel sf-list ">Sport:</label>
+                            <select class="sfa-drop2 sf-list " ng-model="sportLevel.sport " required>
+                            <option style="display:none "></option>
+                            <option>Archery</option>
+                            <option>Boxing</option>
+                            <option>Carrom</option>
+                            <option>Chess</option>
+                            <option>Fencing</option>
+                            <option>Handball</option>
+                            <option>Hockey</option>
+                            <option>Judo</option>
+                            <option>Kabaddi</option>
+                            <option>Shooting</option>
+                            <option>Squash</option>
+                            <option>Swimming</option>
+                            <option>Taekwondo</option>
+                            <option>Tennis</option>
+                            <option>Waterpolo</option>
+                          </select>
+                        </div>
+                        <div class="plus ">
+                            <img src="img/icon/p.png " alt="logo " class="img-responsive " ng-click="addSportLevelForm(sportLevelIndex)
+                            " ng-class="{ 'no-opacity':formData.sportLevel.length>=9}">
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </div>
+                <div class="wid-hei top-mar">
+                    <div class="step1 fs-14">
+                        Step 2: Contact Details
+                    </div>
+                </div>
+                <div class="box box-padd para2">
+                    <div class="form-group hidden-xs">
+                        <label class="mobileno-padd mobileno-mob sf-list">*Mobile No:</label>
+                        <input type="text" name="mobile1" only-Digits ng-model="formData.mobile" class="bor-t sfa-drop" minlength="10" maxlength="10"
+                            required>
+                        <a class="btn btn-default sub-mit send-otp sf-list" ng-click="sendMobileOTP(formData.mobile)">Send OTP </a>
+                        <label class="enter-otp sf-list"> *Enter OTP:</label>
+                        <input type="text" ng-model="formData.smsOTP" ng-change="checkMobileOTP(formData.smsOTP)" class="bor-t width-100 sfa-drop"
+                            required>
+                        <div class="hover-img">
+                            <img src="img/icon/icon.png" alt="logo" class="img-responsive myicon">
+                            <div class="iconinfo iconinfo3 sf-list">
+                                <p ng-if="isCollege == false">Kindly ensure the contact details given below are correct. A verification One Time Password
+                                    (OTP) will be sent. We welcome parents to enter their details in this section. All important
+                                    details regarding SFA {{sfaCity}} {{year}} such asconfirmation of registration, draws
+                                    and schedules will besent on the same.</p>
+                                <p ng-if="isCollege == true"> Kindly ensure that they contact details given below are correct. A verification One Time
+                                    Password (OTP) will be sent. All important details regarding SFA {{sfaCity}} {{year}}
+                                    such as confirmation of registration, draws and schedule will be sent on the same.</p>
+                            </div>
+                        </div>
+                        <div class="validate-col noerrPosmobile" ng-if="formAthlete.mobile1.$invalid && formAthlete.mobile1.$touched">Please Enter Your Mobile No.</div>
+                        <div ng-if="formAthlete.mobile1.$invalid && formAthlete.mobile1.$touched" class="tr-right validate-col errPos" ng-show="showMobileOtpSuccess">Please Enter Correct Mobile OTP</div>
+                        <div ng-if="!(formAthlete.mobile1.$invalid && formAthlete.mobile1.$touched)" class="tr-right validate-col errPos1" ng-show="showMobileOtpSuccess">Please Enter Correct Mobile OTP</div>
+                    </div>
+                    <div class="form-group visible-xs">
+                        <div class="col-xs-12 d-padd">
+                            <label class="mobileno-padd padd0">*Mobile No:</label>
+                            <div class="padd0">
+                                <input type="text" name="mobile" only-Digits ng-model="formData.mobile" class="bor-t sfa-drop" minlength="10" maxlength="10"
+                                    required>
+                                <a class="btn btn-default sub-mit send-otp sf-list" ng-click="sendMobileOTP(formData.mobile)">Send OTP </a>
+                                <div class="validate-col noerrPosmobile" ng-if="formAthlete.mobile.$invalid && formAthlete.mobile.$touched">Please Enter Your Mobile No.</div>
+                            </div>
+                            <div class="padd0">
+                                <label class="enter-otp sf-list padd0"> *Enter OTP:</label>
+                                <input type="text" ng-model="formData.smsOTP" ng-change="checkMobileOTP(formData.smsOTP)" class="bor-t width-100 sfa-drop"
+                                    required>
+                                <div class="hover-img">
+                                    <img src="img/icon/icon.png" alt="logo" class="img-responsive myicon">
+                                    <div class="iconinfo iconinfo3 sf-list">
+                                        <p>Kindly ensure the contact details given below are correct. A verification One Time
+                                            Password (OTP) will be sent. We welcome parents to enter their details in this
+                                            section. All important details regarding SFA {{sfaCity}} {{year}} such asconfirmation
+                                            of registration, draws and schedules will besent on the same.</p>
+                                    </div>
+                                </div>
+                                <div ng-if="formAthlete.mobile.$invalid && formAthlete.mobile.$touched" class="tr-right validate-col errPos padd0" ng-show="showMobileOtpSuccess">Please Enter Correct Mobile OTP</div>
+                                <div ng-if="!(formAthlete.mobile.$invalid && formAthlete.mobile.$touched)" class="tr-right validate-col errPos1 padd0" ng-show="showMobileOtpSuccess">Please Enter Correct Mobile OTP</div>
+                            </div>
+                            <!--<a class="btn btn-default sub-mit send-otp verify-otp-regis" ng-click="checkOTP(formData.enterOTP)">Verify OTP </a>-->
+                            <!--only-Digits removed-->
+                        </div>
+                    </div>
+                    <div class="form-group hidden-xs">
+                        <label class="emailid-padd email-mob3 sf-list">*Email:</label>
+                        <input type="email" name="email1" ng-model="formData.email" class="bor-t sfa-drop" required>
+                        <a class="btn btn-default sub-mit send-otp sf-list" ng-click="sendEmailOTP(formData.email)">Send OTP </a>
+                        <label class="enter-otp sf-list"> *Enter OTP:</label>
+                        <input type="text" ng-model="formData.emailOTP" ng-change="checkEmailOTP(formData.emailOTP)" class="bor-t sfa-drop width-100"
+                            required>
+                        <div class="validate-col noerrPos" ng-if="formAthlete.email1.$invalid && formAthlete.email1.$touched">Please Enter Your Email Id</div>
+                        <div ng-if="!(formAthlete.email1.$invalid && formAthlete.email1.$touched)" class="tr-right validate-col errPos1" ng-show="showEmailOtpSuccess">Please Enter Correct Email OTP</div>
+                        <div ng-if="formAthlete.email1.$invalid && formAthlete.email1.$touched" class="tr-right validate-col errPos" ng-show="showEmailOtpSuccess">Please Enter Correct Email OTP</div>
+                        <!--<a class="btn btn-default sub-mit send-otp verify-otp sf-list" ng-change="checkEmailOTP(formData.emailOTP)">Verify OTP </a>-->
+                        <!--only-Digits removed from upper line-->
+                        <!--<div class="hover-img">
+                                    <img src="img/icon/icon.png" alt="logo" class="img-responsive myicon">
+                                    <div class="iconinfo iconinfo3">
+                                        <p>Kindly ensure the contact details given below are correct. A verification One Time
+                                            Password (OTP) will be sent. We welcome parents to enter their details in this
+                                            section. All important details regarding SFA Mumbai {{year}} such asconfirmation
+                                            of registration, draws and schedules will besent on the same.</p>
+                                    </div>
+                               
+                            </div>-->
+                    </div>
+                    <div class="form-group visible-xs">
+                        <div class="col-xs-12 d-padd">
+                            <label class="mobileno-padd padd0">*Email:</label>
+                            <div class="padd0">
+                                <input type="email" name="email" ng-model="formData.email" class="bor-t sfa-drop" required>
+                                <a class="btn btn-default sub-mit send-otp sf-list" ng-click="sendEmailOTP(formData.email)">Send OTP </a>
+                                <div class="validate-col noerrPos" ng-if="formAthlete.email.$invalid && formAthlete.email.$touched">Please Enter Your Email Id</div>
+                            </div>
+                            <div class="">
+                                <label class="enter-otp sf-list padd0"> *Enter OTP:</label>
+                                <input type="text" ng-model="formData.emailOTP" ng-change="checkEmailOTP(formData.emailOTP)" class="bor-t width-100 sfa-drop"
+                                    required>
+                                <div ng-if="!(formAthlete.email.$invalid && formAthlete.email.$touched)" class="tr-right validate-col errPos1 padd0" ng-show="showEmailOtpSuccess">Please Enter Correct Email OTP</div>
+                                <div ng-if="formAthlete.email.$invalid && formAthlete.email.$touched" class="tr-right validate-col errPos padd0" ng-show="showEmailOtpSuccess">Please Enter Correct Email OTP</div>
+                            </div>
+                            <!--<a class="btn btn-default sub-mit send-otp verify-otp-regis" ng-click="checkOTP(formData.enterOTP)">Verify OTP </a>-->
+                            <!--only-Digits removed-->
+                        </div>
+                    </div>
+                    <!--<div class="form-group">
+                                <label class="col-sm-2">*Email:</label>
+                                <div class="col-sm-10">
+                                <input type="email" class="bor-t" required>
+                                </div>
+                            </div>-->
+                    <div class="form-group">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h4 class="blue fs-14">Residential Address</h4>
+                        </div>
+                        <label class="col-md-2 col-sm-2 col-xs-12 sf-list">*Line 1:</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="text" ng-model="formData.address" capitalize name="address" class="sfa-drop form-control" required>
+                            <div class="validate-col" ng-if="formAthlete.address.$invalid && formAthlete.address.$touched">Please Enter Your Address</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12 sf-list">Line 2:</label>
+                        <div class="col-md-8 col-sm-8 col-xs-12">
+                            <input type="text" ng-model="formData.addressLine2" capitalize class="sfa-drop form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12 sf-list"> *State:</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input name="state" ng-model="formData.state" type="text" class="sfa-drop form-control sfa434" readonly>
+                        </div>
+                        <label class="col-md-2 col-sm-2 col-xs-12 sf-list"> *District:</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <select class="sfa-drop2 form-control sf-list" name="district" ng-model="formData.district" ng-options="districts for districts in district"
+                                required>
+                            </select>
+                            <div class="validate-col" ng-show="formRegister.district.$invalid && formRegister.district.$touched">Please Enter Your District*</div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-2 col-sm-2 col-xs-12 sf-list">  *City</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <select class="sfa-drop2 form-control sf-list" name="city" ng-model="formData.city" ng-options="cities for cities in city"
+                                required>
+                            </select>
+                            <div class="validate-col" ng-if="formAthlete.city.$invalid && formAthlete.city.$touched">Select Your City</div>
+                        </div>
+                        <label class="col-md-2 col-sm-2 col-xs-12 sf-list">*Pin Code:</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12">
+                            <input type="text" only-Digits name="pincode" ng-model="formData.pinCode" class="sfa-drop2 form-control" minlength="6" maxlength="6"
+                                required>
+                            <div class="validate-col" ng-if="formAthlete.pincode.$invalid && formAthlete.pincode.$touched">Please Enter Your Pincode</div>
+                        </div>
+                        <!--<div class="col-md-6 col-sm-6 col-xs-12">
+                            <label class="padd-r4 pin-mob sf-list">*Pin Code:</label>
+                            <input type="text" only-Digits name="pincode" ng-model="formData.pinCode" class="sfa-drop2 w147" minlength="6" maxlength="6"
+                                required>
+                            <div class="validate-col" ng-if="formAthlete.pincode.$invalid && formAthlete.pincode.$touched">Please Enter Your Pincode</div>
+                    </div>-->
+                    </div>
+                    <!--<div class="d-padd mar-l pl13">
+                    </div>-->
+                    <div class="d-padd mar-l pl13">
+                        <h4 class="blue pb10 fs-14" ng-if="isCollege == false">Parent/Guardian Details</h4>
+                        <h4 class="blue pb10 fs-14" ng-if="isCollege == true">Emergency Contact Details</h4>
+                        <!--<p class="check-box">
+                            <label class="sf-list" ng-click="termcondition()">I have carefully read and understood the terms and conditions of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <input type="checkbox" ng-model="formData.termsAndCondition" id="test5" />
+                            <label for="test5"></label>
+                        </p>-->
+                        <!--<p class="check-box">
+                            <label class="sf-list"><span ng-click="termcondition()">I have carefully read and understood the terms and conditions of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</span></label>
+                            <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
+                                id="test5" />
+                            <label for="test5" class="padding0"></label>
+                            <div class="validate-col" ng-show="showTerm">Please accept terms and conditions</div>
+                        </p>-->
+                        <div class="checkbox-custom">
+                            <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
+                                id="test5" />
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition()" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
+                        </div>
+                        <div class="box2" ng-repeat="x in formData.parentDetails track by $index">
+                            <div class="d-padd pl13">
+                                <div class="x-img3" ng-if="isCollege == false">
+                                    <div class="x-img" ng-click="removeSportForm($index)">
+                                        <img src="img/icon/x.png" alt="logo" class="img-responsive  pull-right">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="relation-top">
+                                        <label class="col-md-2 col-sm-2 col-xs-12 sf-list"> *Relation:</label>
+                                        <!--<input type="radio" name="gender" value="male" ng-click="myshow=true"> <label class="padd-lr">Mother</label>
+                                    <input type="radio" name="gender" value="male" ng-click="myshow=true"><label class="padd-lr"> Father</label>
+                                    <input type="radio" name="gender" value="male"><label class="padd-lr"> Guardian</label>-->
+                                        <div class="col-md-8 col-sm-8 col-xs-12 sf-list">
+                                            <input ng-model="x.relation" type="radio" id="{{'radio02'+$index}}" name="{{'radio02'+$index}}" value="mother" required>
+                                            <label for="{{'radio02'+$index}}" class="padd-lr sf-list"><span></span>Mother</label>
+                                            <input ng-model="x.relation" type="radio" id="{{'radio09'+$index}}" name="{{'radio02'+$index}}" value="father" required>
+                                            <label for="{{'radio09'+$index}}" class="padd-lr sf-list"><span></span>Father</label>
+                                            <input ng-if="isCollege == false" ng-model="x.relation" type="radio" id="{{'radio10'+$index}}" name="{{'radio02'+$index}}"
+                                                value="guardian" required>
+                                            <label ng-if="isCollege == false" for="{{'radio10'+$index}}" class="padd-lr sf-list"><span></span>Guardian</label>
+                                            <input ng-if="isCollege == true" ng-model="x.relation" type="radio" id="{{'radio20'+$index}}" name="{{'radio02'+$index}}"
+                                                value="other" required>
+                                            <label ng-if="isCollege == true" for="{{'radio20'+$index}}" class="padd-lr sf-list"><span></span>Other</label>
+                                            <!--<div class="validate-col" ng-if="formAthlete.{{$index}}.$invalid && formAthlete.{{$index}}.$touched">Please Enter Your School Name *</div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 col-sm-2 col-xs-12 sf-list">*First Name:</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input ng-model="x.name" only-alpha type="text" name="parentName" capitalize class="sfa-drop form-control" required>
+                                        <div class="validate-col" ng-if="formAthlete.parentName.$invalid && formAthlete.parentName.$touched">Please Enter Your Parent Name</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 col-sm-2 col-xs-12 sf-list">*Surname:</label>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <input type="text" only-alpha class="sfa-drop form-control" ng-model="x.surname" capitalize name="parentSurname" required>
+                                        <div class="validate-col" ng-if="formAthlete.parentSurname.$invalid && formAthlete.parentSurname.$touched">Please Enter Your Parent Surname</div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-md-2 col-sm-2 col-xs-12 sf-list"> *Mobile:</label>
+                                    <div class="col-md-3 col-sm-3 col-xs-12">
+                                        <input type="text" only-Digits ng-model="x.mobile" class="bor-t form-control" minlength="10" maxlength="10" name="mobileno"
+                                            required>
+                                        <div class="validate-col" ng-if="formAthlete.mobileno.$invalid && formAthlete.mobileno.$touched">Enter Your Mobile No.</div>
+                                    </div>
+                                    <label class="col-md-2 col-sm-2 col-xs-12 sf-list" ng-if="isCollege == false"> *Email:</label>
+                                    <div class="col-md-3 col-sm-3 col-xs-12" ng-if="isCollege == false">
+                                        <input type="email" class="bor-t form-control" name="emailId" ng-model="x.email" required>
+                                        <div class="validate-col" ng-if="formAthlete.emailId.$invalid && formAthlete.emailId.$touched">Please Enter Your Email Id</div>
+                                    </div>
+                                    <label class="col-md-2 col-sm-2 col-xs-12 sf-list" ng-if="isCollege == true"> Email:</label>
+                                    <div class="col-md-3 col-sm-3 col-xs-12" ng-if="isCollege == true">
+                                        <input type="email" class="bor-t form-control" name="emailId" ng-model="x.email">
+                                    </div>
+                                    <!--<div class="col-md-6 col-sm-6 col-xs-12">
+                                        <label class="email-padd3 email-mob sf-list">  *Email:</label>
+                                        <input type="email" class="bor-t" name="emailId" ng-model="x.email" required>
+                                        <div class="validate-col" ng-if="formAthlete.emailId.$invalid && formAthlete.emailId.$touched">Please Enter Your Email Id</div>
+                                    </div>-->
+                                </div>
+                            </div>
+                            <div class="sub-padd text-center" ng-if="isCollege == false">
+                                <img src="img/icon/p.png" alt="logo" class="img-responsive display-inline" ng-click="addSportForm(m)">
+                                <div class="inline-block">
+                                    <p class="display-inline">Add Parent</p>
+                                </div>
+                            </div>
+                            <div class="sub-padd text-center" ng-if="isCollege == true">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="wid-hei top-mar">
+                    <div class="step1">
+                        Step 3: Registration Fee
+                    </div>
+                </div>
+                <div class="box box-padd">
+                    <!--<div class="d-padd">
+                            <h4>Paayment Gateway:</h4>
+                        </div>-->
+                    <div class="d-padd pl13 para2" ng-init="show=4">
+                        <div class="form-group hidden-xs">
+                            <input ng-model="formData.registrationFee" type="radio" id="radio11" name="radio" value="cash">
+                            <label for="radio11" class="padd-lr sf-list" ng-click="show=5"><span></span>Cash/Cheque/Demand Draft</label>
+                            <input ng-model="formData.registrationFee" type="radio" id="radio13" name="radio" value="online PAYU">
+                            <label for="radio13" class="padd-lr sf-list" ng-click="show=6"><span></span>Online Payment</label>
+                            <p ng-if="show==6" class="ft12">Online Payment: Selecting this option will enable you to pay the registration fee of Rs.
+                                <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">300</span> (Inclusive
+                                of all applicable taxes) via one of the following methods: 1) Credit Card 2) Debit Card 3)
+                                Net Banking
+                            </p>
+                            <!--<input ng-model="formData.registrationFee" type="radio" id="radio12" name="radio" value="cheque">
+                            <label for="radio12" class="padd-lr sf-list"><span></span>Cheque</label>-->
+                            <p ng-if="show==5" class="ft12">
+                                Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs.
+                                <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">300</span> (Inclusive
+                                of all applicable taxes) by Cash/Cheque/Demand Draft in favour of ‘SFA Events Private Limited’
+                                which is to be couriered/hand delivered to: 1306, Panchratna Building, Opera House (Next
+                                to Roxy Cinema), Charni Road, Mumbai – 400004</p>
+                        </div>
+                        <div class="form-group visible-xs">
+                            <div class="">
+                                <input ng-model="formData.registrationFee" type="radio" id="radio11" name="radioxs" value="cash">
+                                <label for="radio11" class="padd-lr sf-list" ng-click="show=5"><span></span>Cash/Cheque/Demand Draft</label>
+                                <p ng-if="show==5" class="ft12">
+                                    Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs.
+                                    <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">300</span>                                    (Inclusive of all applicable taxes) by Cash/Cheque/Demand Draft in favour of ‘SFA Events
+                                    Private Limited’ which is to be couriered/hand delivered to: 1306, Panchratna Building,
+                                    Opera House (Next to Roxy Cinema), Charni Road, Mumbai – 400004</p>
+                            </div>
+                            <div class="">
+                                <input ng-model="formData.registrationFee" type="radio" id="radio13" name="radioxs" value="online PAYU">
+                                <label for="radio13" class="padd-lr sf-list" ng-click="show=6"><span></span>Online Payment</label>
+                                <p ng-if="show==6" class="ft12">Online Payment: Selecting this option will enable you to pay the registration fee of Rs.
+                                    <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">300</span>                                    (Inclusive of all applicable taxes) via one of the following methods: 1) Credit Card
+                                    2) Debit Card 3) Net Banking
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center sub-padd">
+                    <button class="btn btn-default sub-mit" ng-disabled="isDisabled==true" type="submit">Accept & Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--</div>
+</div>
+</div>
+</div>-->

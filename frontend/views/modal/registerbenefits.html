@@ -1,0 +1,62 @@
+<div class="schoolbenefit-modal">
+  <div class="cross-close-term pull-right">
+    <button type="button" aria-label="Close" ng-click="$dismiss()" class="float-right close-btn">X</button>
+    <!--<i class="fa fa-2x fa-times-circle-o" aria-hidden="true"></i>-->
+    <!--<i class="fa  fa-times" aria-hidden="true"></i>-->
+    </a>
+  </div>
+  <h4 class="modsub custm-font">
+    BENEFITS FOR A {{type | capitalize}} REGISTERED WITH SFA
+  </h4>
+  <p class="mgtp">Overall benefits that a {{type}} and its students (Athletes & Non Athletes) can avail by being a registered member {{type}}
+    of SFA:
+  </p>
+  <h5 class="custm-font"><b>SFA Championship SFA {{sfaCity | capitalize}} {{year}}</b></h5>
+  <p class="mgtp cutm-font-prime">Be a part of the largest professional youth sporting championship<span ng-if="isCollege == false">!</span><span ng-if="isCollege == true">, where best college contingents battle it out across 15+ Sports.</span></p>
+  <ul class="mr-left">
+    <li>{{type | firstcapitalize}}s are eligible to participate across <span ng-if="isCollege == false">25+</span> <span ng-if="isCollege == true">15+</span>      Sports</li>
+    <li>Eligible to be featured on the {{type | firstcapitalize}} Ranking Table (Ranking of {{type | firstcapitalize}}s as per
+      the sporting performance)</li>
+    <li>Automatic Qualification for special awards. Eligible to win Special Hampers & Cash Prizes in the following award categories:
+      <ul style="list-style-type: decimal; padding-top: 10px;">
+        <li>{{type | firstcapitalize}} participating in the maximum number of sports</li>
+        <li>{{type | firstcapitalize}} with maximum win%</li>
+        <li>Best coaching team of a {{type}}<br>*All special awards to be announced once registrations are closed</li>
+      </ul>
+    </li>
+    <li ng-if="isCollege == false">Discounted athlete registration fees for all participants from registered {{type}} </li>
+    <li>No entry fee is applicable to parents or any other visitors accompanying athletes of registered {{type}}s.</li>
+  </ul>
+  <h5 class="custm-font">Advanced SPORTS SESSIONS</h5>
+  <p class="mgtp cutm-font-prime">Complimentary Sport sessions by leading professionals for all the students of the {{type}} (Athletes & Non-Athletes)</p>
+  <div class=" mgtp">
+    <label class="pdl21 custm-font" ng-if="isCollege == false">In {{type | firstcapitalize}}:</label>
+    <ul class="tick mr-left" ng-if="isCollege == false">
+      <li>Fitness Assessment </li>
+      <li>Hydration Clinic</li>
+      <li>Nutrition Workshop</li>
+    </ul>
+    <label class="pdl21 custm-font">Championship:</label>
+    <ul class="tick mr-left">
+      <li>Sports Workshops & Fitness Clinics for athletes</li>
+      <li>Special Sport tutorials for athletes & non-athletes (Shooting, Archery etc)</li>
+      <li>Special Days (Opening Ceremony, Girls Day, Closing Ceremony & other special days)</li>
+    </ul>
+    <div class="mod-cls">
+      <h5 class=" custm-font">{{type | capitalize}} SPORTS ONLINE <span><a href="https://sfanow.in/"
+          target="_new" style="color: mediumblue"> (WWW.SFANOW.IN) </a></span></h5>
+      <p class="custom-a cutm-font-prime" ng-if="isCollege == false">Comprehensive Online {{type | firstcapitalize}} Sporting Profiles accessible on the SFA Portal<a href="https://sfanow.in/"
+          target="_new" style="color: mediumblue"> (WWW.SFANOW.IN) </a></p>
+      <p class="custom-a cutm-font-prime" ng-if="isCollege == true"> Comprehensive Online {{type | firstcapitalize}} Sporting Profiles complete with:</p>
+    </div>
+    <ul class="mr-left">
+      <li>HD Match videos showcasing talent of the {{type}}s across disciplines.</li>
+      <li>{{type | firstcapitalize}}’s SFA Track Record</li>
+      <li>Year on year Match Statistics</li>
+      <li>Achievements across every sport </li>
+      <li>Team Profiles & Statistics</li>
+      <li>Individual profiles showcasing accomplishment and maintaining record for each athlete of the {{type}}</li>
+    </ul>
+  </div>
+  <p>*All special awards to be announced one month prior to the championship</p>
+</div>

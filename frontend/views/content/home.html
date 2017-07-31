@@ -1,33 +1,341 @@
-<div class="container">
-
-    <a class="btn btn-default" ng-click="buttonClick()">Demo Button</a>
-
-    <flex-slider flex-slide="s in mySlides" prev-text="" next-text="">
+<section class="home-slider hidden-xs hidden-sm">
+    <flex-slider flex-slide="banner in banners track by $index" prev-text="" next-text="" slideshow=true>
         <li>
-            <img ng-src="{{s}}" class="img-full">
+            <a href="{{banner.link}}" target="_blank"><img ng-src="{{banner.image | uploadpath}}" class="img-responsive"></a>
         </li>
     </flex-slider>
-
-    <swiper autoplay="5000" effect="slide" slides-per-view="1" loop="true">
-        <slides>
-            <slide ng-repeat="s in mySlides">
-                <img ng-src="{{s}}" class="img-full" noloading="true">
-            </slide>
-        </slides>
-        <prev></prev>
-        <next></next>
-        <pagination></pagination>
-    </swiper>
-
+</section>
+<section class="home-slider hidden-lg hidden-md ">
+    <flex-slider flex-slide="banner in bannerss track by $index" prev-text="" next-text="">
+        <li auto-height>
+            <a href="{{banner.link}}" target="_blank"><img ng-src="{{banner.img}}" class="img-responsive" auto-height onloading="true" slideshow=true></a>
+        </li>
+    </flex-slider>
+    <!-- <div class="text-center scr-dn">
+      <h4 class="color-white font-semi text-up">scroll down</h4>
+    </div> -->
+</section>
+<!-- <section class="hidden-lg hidden-md">
+  <div class="container-fluid">
     <div class="row">
-        <div class="col-md-2" ng-repeat="s in mySlides">
-            <a ng-href="{{s}}" rel="gal" fancybox>
-                <img ng-src="{{s}}" class="img-full">
-            </a>
+      <div class="col-md-12">
+        <div class="mobile-sports-slider sport-slider">
+          <flex-slider flex-slide="banner in game track by $index"  prev-text="" next-text="" startAt="0" item-width="100" item-margin="60"  animation="slide" move="1" slideshow="false">
+            <li class="text-center">
+                  <a ui-sref="sport({name:banner.name})"><figure class="">
+                   <img ng-src="{{banner.image | uploadpath }}" class="img-responsive iconBlue">
+                </figure></a>
+                <figcaption class="color-blue text-up">{{banner.name}}</figcaption>
+              </li>
+          </flex-slider>
         </div>
-        <div class="col-md-2">
-            <a class="various fancybox.iframe" href="http://www.youtube.com/embed/L9szn1QQfas?autoplay=1" fancybox><img ng-src="http://img.youtube.com/vi/L9szn1QQfas/maxresdefault.jpg" class="img-full"></a>
+      </div>
+    </div>
+  </div>
+</section> -->
+<!-- <section class="mt-110">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-offset-2 col-md-8">
+        <div class="live-stream">
+      <h3 class="text-up color-orange font-semi ch-mod">
+        watch sfa mumbai 2016 <span class="cl-ch">live!</span>
+      </h3>
+      <div class="video-live">
+<iframe width="100%" height="390" src="https://www.youtube.com/embed/33vyhmwBWGw" frameborder="0" allowfullscreen></iframe>
+
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</section> -->
+<section class="hidden-lg hidden-md mt80">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="mobile-sports-slider sport-slider">
+                    <h4 class="color-blue text-up text-center font-semi">Sports for sfa mumbai 2017</h4>
+                    <flex-slider flex-slide="banner in game track by $index" prev-text="" next-text="" startAt="0" item-width="70" item-margin="40"
+                        animation="slide" move="1" slideshow=true slideshowSpeed="500" class="mt25">
+                        <li class="text-center">
+                            <a ui-sref="sport({name:banner.name})">
+                                <figure class="">
+                                    <img ng-src="{{banner.image | uploadpath }}" class="img-responsive iconBlue">
+                                </figure>
+                            </a>
+                            <figcaption class="color-blue text-up">{{banner.name}}</figcaption>
+                        </li>
+                    </flex-slider>
+                </div>
+            </div>
         </div>
     </div>
-
-</div>
+</section>
+<section class="mt80 m-zeromob">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 padding0">
+                <div class="first-box sf-relative hidden-xs hidden-sm" ui-sref="draw-schedule">
+                    <img src="img/sf-big.jpg" alt="" class="img-responsive width100 zm">
+                    <div class="stupnames sf-absulate">
+                        <h1 class="text-up color-white font-bold b-bttom-1 fr-h1">Results</h1>
+                        <h5 class="text-up color-white adj-h2">Champions Of SFA Mumbai 2016</h5>
+                    </div>
+                </div>
+                <div class="first-box sf-relative hidden-lg hidden-md" ui-sref="draw-schedule">
+                    <img src="img/sf-m.jpg" alt="" class="img-responsive width100 zm">
+                    <div class="stupname sf-absulate banner-set text-center">
+                        <h1 class="text-up color-white font-bold b-bttom-1 ">Results</h1>
+                        <h5 class="text-up color-white ">Champions Of SFA Mumbai 2016</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row sf-relative">
+            <div class="">
+                <!-- <div class="sf-absulate clip1">
+        <div class="">
+          <img src="img/c2.png" alt="">
+        </div>
+      </div> -->
+                <div class="col-md-4 padding0">
+                    <div class="first-box sf-relative" ui-sref="students">
+                        <img src="img/st1.jpg" alt="" class="img-responsive width100 zm">
+                        <div class="stupname sf-absulate banner-set">
+                            <h1 class="text-up banner-set sf-absulate color-white font-bold">Athletes</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 padding0">
+                    <div class="first-box sf-relative" ui-sref="school">
+                        <img src="img/st2.jpg" alt="" class="img-responsive width100 zm">
+                        <div class="stupname sf-absulate banner-set">
+                            <h1 class="text-up banner-set sf-absulate color-white font-bold">schools</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 padding0">
+                    <div class="first-box sf-relative" ui-sref="team">
+                        <img src="img/st3.jpg" alt="" class="img-responsive width100 zm">
+                        <div class="stupname sf-absulate banner-set">
+                            <h1 class="text-up banner-set sf-absulate color-white font-bold">teams</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt25">
+            <div class="row sf-relative">
+                <!-- <div class="clip2 sf-absulate">
+        <img src="img/c3.png" alt="">
+      </div> -->
+                <!-- <div class="clip3 sf-absulate">
+        <img src="img/c4.png" alt="">
+      </div> -->
+                <div class="col-md-6 padding0">
+                    <div class="first-box sf-relative">
+                        <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/m_B6wkNuIek?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                            <img src="img/sf-half.jpg" alt="" class="img-responsive width100 zm">
+                            <div class="stupname sf-absulate banner-set text-center">
+                                <div class="stupname">
+                                    <h2 class="text-up color-white font-bold margin0 b-bttom-1"> girls day</h2>
+                                    <h5 class="text-up color-white ">Celebration with Saina Nehwal</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-6 padding0">
+                    <div class="first-box sf-relative">
+                        <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/sXgd7e6ZxXw?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                            <img src="img/sf-half2.jpg" alt="" class="img-responsive width100 zm">
+                            <div class="stupname sf-absulate banner-set text-center">
+                                <div class="stupname">
+                                    <h2 class="text-up color-white font-bold margin0 b-bttom-1"> Olympians</h2>
+                                    <h5 class="text-up color-white ">Atanu Das and Bombayla Devi</h5>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 padding0">
+                    <div class="first-box sf-relative">
+                        <img src="img/sf1.jpg" alt="" class="img-responsive width100 zm">
+                        <div class="stupname sf-absulate banner-set">
+                            <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/xKSjixy8rRM?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                            <img src="img/new-play.png" alt="" class="img-responsive width100"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 padding0">
+                    <div class="first-box sf-relative" ui-sref="special-awards">
+                        <img src="img/sf2.jpg" alt="" class="img-responsive width100 zm">
+                        <div class="stupname sf-absulate banner-set">
+                            <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/pM1NqD_dmPI?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                            <img src="img/new-play.png" alt="" class="img-responsive width100"></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 padding0">
+                    <div class="first-box sf-relative">
+                        <img src="img/sf3.jpg" alt="" class="img-responsive width100 zm">
+                        <div class="stupname sf-absulate banner-set">
+                            <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/OOHaBrEtzpA?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                            <img src="img/new-play.png" alt="" class="img-responsive width100"></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="showme">
+                <div class="row shome">
+                    <div class="col-md-4 padding0">
+                        <div class="first-box sf-relative">
+                            <img src="img/new1.jpg" alt="" class="img-responsive width100 zm">
+                            <div class="stupname sf-absulate banner-set">
+                                <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/QYH4Z0aEVcQ?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                                <img src="img/new-play.png" alt="" class="img-responsive width100"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding0">
+                        <div class="first-box sf-relative">
+                            <img src="img/new2.jpg" alt="" class="img-responsive width100 zm">
+                            <div class="stupname sf-absulate banner-set">
+                                <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/9Bqau8N9EWE?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                                <img src="img/new-play.png" alt="" class="img-responsive width100"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding0">
+                        <div class="first-box sf-relative">
+                            <img src="img/new3.jpg" alt="" class="img-responsive width100 zm">
+                            <div class="stupname sf-absulate banner-set">
+                                <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/1lJTUE1b9-E?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                                <img src="img/new-play.png" alt="" class="img-responsive width100"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row ">
+                    <div class="col-md-4 padding0">
+                        <div class="first-box sf-relative">
+                            <img src="img/new4.jpg" alt="" class="img-responsive width100 zm">
+                            <div class="stupname sf-absulate banner-set">
+                                <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/z3gKPJIT1pE?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                                <img src="img/new-play.png" alt="" class="img-responsive width100"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding0">
+                        <div class="first-box sf-relative">
+                            <img src="img/new5.jpg" alt="" class="img-responsive width100 zm">
+                            <div class="stupname sf-absulate banner-set">
+                                <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/wGE7gZlG00U?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                                <img src="img/new-play.png" alt="" class="img-responsive width100"></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 padding0">
+                        <div class="first-box sf-relative">
+                            <img src="img/new6.jpg" alt="" class="img-responsive width100 zm">
+                            <div class="stupname sf-absulate banner-set">
+                                <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/p7YDy8P0doM?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                                <img src="img/new-play.png" alt="" class="img-responsive width100"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 padding0">
+                        <div class="first-box sf-relative">
+                            <img src="img/new7.jpg" alt="" class="img-responsive width100 zm">
+                            <div class="stupname sf-absulate banner-set">
+                                <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/D4nWGi65vPM?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                                <img src="img/new-play.png" alt="" class="img-responsive width100"></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt25">
+                <button type="submit" name="button" class="text-up btn-orange padd-btn pd-450" ng-click="showme=true " ng-hide="showme">VIEW MORE</button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="mt80">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <div class="text-center mb25">
+                    <div class="social-logo">
+                        <img src="img/fb-logo.png" alt="Sports For All">
+                    </div>
+                    <div class="box-social">
+                        <!-- <div class="fb-page" data-href="https://www.facebook.com/sportsforallnow" data-width="360" data-height="500" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true" data-show-posts="true">
+                            <div class="fb-xfbml-parse-ignore">
+                                <blockquote cite="https://www.facebook.com/sportsforallnow"><a href="https://www.facebook.com/sportsforallnow">SFA Now</a></blockquote>
+                            </div>
+                        </div> -->
+                        <div class="fb-page" data-href="https://www.facebook.com/sportsforallnow" data-tabs="timeline" data-width="360" data-height="820"
+                            data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                            <blockquote cite="https://www.facebook.com/sportsforallnow" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/sportsforallnow">Sports For All</a></blockquote>
+                        </div>
+                        <div id="fb-root"></div>
+                        <!-- <script>
+                       (function(d, s, id) {
+                          var js, fjs = d.getElementsByTagName(s)[0];
+                          if (d.getElementById(id)) return;
+                          js = d.createElement(s);
+                          js.id = id;
+                          js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.4&appId=1452795161694777";
+                          fjs.parentNode.insertBefore(js, fjs);
+                       }(document, 'script', 'facebook-jssdk'));
+                    </script> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <div class="text-center mb25">
+                    <div class="social-logo">
+                        <img src="img/tw-logo.png" alt="Sports For All">
+                    </div>
+                    <div class="box-social">
+                        <!-- <a class="twitter-timeline" href="https://twitter.com/sfanow">Tweets by sfanow</a> -->
+                        <!-- <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+                        <a class="twitter-timeline" href="https://twitter.com/sfanow" data-widget-id="641859487024869376">Tweets by @sfanow</a>
+                        <!-- <script>
+                     ! function(d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0],
+                           p = /^http:/.test(d.location) ? 'http' : 'https';
+                        if (!d.getElementById(id)) {
+                           js = d.createElement(s);
+                           js.id = id;
+                           js.src = p + "://platform.twitter.com/widgets.js";
+                           fjs.parentNode.insertBefore(js, fjs);
+                        }
+                     }(document, "script", "twitter-wjs");
+                  </script> -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-12">
+                <div class="text-center mb25">
+                    <div class="social-logo">
+                        <img src="img/inst-logo.png" alt="Sports For All">
+                    </div>
+                    <div class="box-social">
+                        <div class="fb-set" style="height: 820px;overflow-y: hidden;">
+                            <iframe src="//lightwidget.com/widgets/836f36bbf5d959b8b1e7134bd93bf799.html" id="instansive_554a6dce8a" name="instansive_554a6dce8a"
+                                scrolling="yes" allowtransparency="true" class="instansive-widget" style="width: 100%;height: 100%; border: 0; overflow: hidden;"></iframe>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
