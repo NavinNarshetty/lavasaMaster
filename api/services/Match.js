@@ -63,5 +63,62 @@ schema.plugin(autoIncrement.plugin, {
 module.exports = mongoose.model('Match', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
-var model = {};
+var model = {
+
+    getAggregatePipeline: function () {
+        var pipeline = [{
+            $lookup: {
+                "from": "atheletes",
+                "localField": "opponentsSingle",
+                "foreignField": "_id",
+                "as": "opponentsSingle"
+            }
+        }, {
+            $lookup: {
+                "from": "sports",
+                "localField": "sport",
+                "foreignField": "_id",
+                "as": "sport"
+            }
+        }, {
+            $unwind: {
+                path: "$sport",
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }];
+        return pipeline;
+    },
+    getOneMatch: function (data, callback) {
+        if (!_.isEmpty(data)) {
+            var commonPipeline = Match.getAggregatePipeline();
+            var newPipeline = [{
+                $match: {
+                    "_id": ObjectId(data._id)
+                }
+            }];
+            _.each(commonPipeline, function (n) {
+                newPipeline.push(n);
+            });
+            Match.aggregate(newPipeline, function (err, result) {
+                if (err || _.isEmpty(result)) {
+                    callback(err, result);
+                } else {
+                    callback(null, result);
+                }
+            });
+        } else {
+            callback("Invalid Params", null);
+        }
+    },
+    getAll: function (data, callback) {
+        var pipeline = Match.getAggregatePipeline(data);
+        Match.aggregate(pipeline, function (err, result) {
+            if (err || _.isEmpty(result)) {
+                callback(err, result);
+            } else {
+                callback(null, result);
+            }
+        });
+    }
+};
 module.exports = _.assign(module.exports, exports, model);
