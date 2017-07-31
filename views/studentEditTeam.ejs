@@ -130,7 +130,7 @@
                     <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
                         <p> Dear <%=name%>,</p>
 
-                        <p style="margin-bottom: 0px;">You have successfully edited your <%=sportName%> Team.Please find below details of the updated team.
+                        <p style="margin-bottom: 0px;">You have successfully edited your <%=sportName%> Team. Please find below details of the updated team.
                         </p>
                         <!--                         <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA <%=city%> <%=year%>, by following our Facebook event page:</p>
                         <a style="   color: #0a1a72;"  href="https://www.facebook.com/pg/sportsforallnow/events/" target="_blank">https://www.facebook.com/pg/sportsforallnow/events/</a>
@@ -178,16 +178,13 @@
                                             <%=student.srno%>
                                         </td>
                                         <%if(student.isGoalKeeper==true && student.isCaptain==true){%>
-                                            <td>Captian, Goalkeeper
-                                                <%=student.name%>
+                                            <td><%=student.name%> (Captian,Goalkeeper)   
                                             </td>
                                             <%}else if(student.isGoalKeeper==true){%>
-                                                <td>Goalkeeper
-                                                    <%=student.name%>
+                                                <td><%=student.name%> (Goalkeeper)                                       
                                                 </td>
                                                 <%}else if(student.isCaptain==true){%>
-                                                    <td>Captain,
-                                                        <%=student.name%>
+                                                    <td> <%=student.name%> (Captain)         
                                                     </td>
                                                     <%}else{%>
                                                         <td>
