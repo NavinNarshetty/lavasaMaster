@@ -1887,7 +1887,10 @@ var model = {
                         emailData.students = total.studentTeam;
                         emailData.linkSportName = data.linkSportName;
                         emailData.subject = "SFA: Successful Team Sport Registered";
-                        if (data.creatorMail.equals(n.email)) {
+                        var creatorMail = data.creatorMail;
+                        console.log("creatorMail", creatorMail);
+                        console.log("email", n.email);
+                        if (creatorMail.equals(n.email)) {
                             emailData.email1 = [{
                                 email: n.email
                             }];
