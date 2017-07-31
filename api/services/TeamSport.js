@@ -1890,7 +1890,7 @@ var model = {
                         var creatorMail = data.creatorMail;
                         console.log("creatorMail", creatorMail);
                         console.log("email", n.email);
-                        if (creatorMail.equals(n.email)) {
+                        if (creatorMail === n.email) {
                             emailData.email1 = [{
                                 email: n.email
                             }];
