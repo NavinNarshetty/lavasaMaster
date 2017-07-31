@@ -79,6 +79,8 @@ var model = {
                     finalData.state = property[0].state;
                     finalData.year = property[0].year;
                     finalData.sfaCity = property[0].sfaCity;
+                    finalData.amount = property[0].totalAmountType;
+                    finalData.athleteAmount = property[0].totalAmountAthlete;
                     callback(null, finalData);
                 }
             }
