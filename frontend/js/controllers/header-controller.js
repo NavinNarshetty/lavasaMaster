@@ -6,8 +6,8 @@
 //     $.fancybox.close(true);
 // });
 
-var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in/register";
-var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in/register";
+var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
+var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
 var globalLinkForAll = "http://mumbai.sfanow.in/";
 myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr) {
     $scope.template = TemplateService;
@@ -20,8 +20,11 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
         $scope.variables.online = $rootScope.online;
     });
 
-    $scope.registerSchool = globalLinkSchoolRegister;
-    $scope.registerCollege = globalLinkCollegeRegister;
+    if (window.location.origin != "http://testmumbaischool.sfanow.in") {
+        $scope.registerSchool = globalLinkSchoolRegister;
+    } else {
+        $scope.registerCollege = globalLinkCollegeRegister;
+    }
     $scope.linkForAll = globalLinkForAll;
     $scope.linkForAllSports = globalLinkForAll + "sport/";
 
