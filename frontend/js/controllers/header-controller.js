@@ -8,7 +8,7 @@
 
 var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in/register";
 var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in/register";
-var globalLinkForAll = "http://sfa5.wohlig.co.in/";
+var globalLinkForAll = "http://mumbai.sfanow.in/";
 myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
