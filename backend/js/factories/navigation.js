@@ -14,12 +14,12 @@ myApp.factory('NavigationService', function ($http) {
             subnav: [{
                 name: "Edit School",
                 classis: "",
-                sref: "#!/page/viewRegistration//",
+                sref: "#/page/viewRegistration//",
                 icon: "phone"
             }, {
                 name: "View School",
                 classis: "",
-                sref: "#!/school",
+                sref: "#/school",
                 icon: "phone"
             }]
         },
@@ -31,12 +31,12 @@ myApp.factory('NavigationService', function ($http) {
             subnav: [{
                 name: "Edit Athlete",
                 classis: "",
-                sref: "#!/page/viewAthelete//",
+                sref: "#/page/viewAthelete//",
                 icon: "phone"
             }, {
                 name: "View Athlete",
                 classis: "",
-                sref: "#!/athlete",
+                sref: "#/athlete",
                 icon: "phone"
             }]
         },
@@ -48,120 +48,120 @@ myApp.factory('NavigationService', function ($http) {
             subnav: [{
                 name: "Edit Old School",
                 classis: "",
-                sref: "#!/page/viewOldSchool//",
+                sref: "#/page/viewOldSchool//",
                 icon: "phone"
             }, {
                 name: "View Old School",
                 classis: "",
-                sref: "#!/oldschool",
+                sref: "#/oldschool",
                 icon: "phone"
             }]
         }, {
             name: "Age Group",
             classis: "activeColor",
-            sref: "#!/agegroup",
+            sref: "#/agegroup",
             icon: "phone"
         },
         {
             name: "Rules",
             classis: "activeColor",
-            sref: "#!/rules",
+            sref: "#/rules",
             icon: "phone"
         },
         {
             name: "Weight",
             classis: "activeColor",
-            sref: "#!/firstcategory",
+            sref: "#/firstcategory",
             icon: "phone"
         },
         {
             name: "Draw Format",
             classis: "activeColor",
-            sref: "#!/drawformat",
+            sref: "#/drawformat",
             icon: "phone"
         },
         {
             name: "Category",
             classis: "activeColor",
-            sref: "#!/sports-list-cat",
+            sref: "#/sports-list-cat",
             icon: "phone"
         },
         {
             name: "Sub Category",
             classis: "activeColor",
-            sref: "#!/sports-list-subcat",
+            sref: "#/sports-list-subcat",
             icon: "phone"
         },
         {
             name: "Sports List",
             classis: "activeColor",
-            sref: "#!/sports-list",
+            sref: "#/sports-list",
             icon: "phone"
         },
         {
             name: "Sports",
             classis: "activeColor",
-            sref: "#!/sports",
+            sref: "#/sports",
             icon: "phone"
         },
         {
             name: "Team Sport",
             classis: "activeColor",
-            sref: "#!/teamsport",
+            sref: "#/teamsport",
             icon: "phone"
         },
         {
             name: "Rounds",
             classis: "activeColor",
-            sref: "#!/rounds",
+            sref: "#/rounds",
             icon: "phone"
         },
         {
             name: "Matches",
             classis: "activeColor",
-            sref: "#!/matches",
+            sref: "#/matches",
             icon: "phone"
         },
         {
             name: "Medals",
             classis: "activeColor",
-            sref: "#!/medals",
+            sref: "#/medals",
             icon: "phone"
         },
         {
             name: "Gallery",
             classis: "activeColor",
-            sref: "#!/gallery",
+            sref: "#/gallery",
             icon: "phone"
         },
         // {
         //     name: "Student Team",
         //     classis: "activeColor",
-        //     sref: "#!/student-team",
+        //     sref: "#/student-team",
         //     icon: "phone"
         // },
         {
             name: "Individual Sport",
             classis: "activeColor",
-            sref: "#!/individual-sport",
+            sref: "#/individual-sport",
             icon: "phone"
         }, {
             name: "ConfigProperty",
             classis: "activeColor",
-            sref: "#!/page/viewConfigProperty//",
+            sref: "#/page/viewConfigProperty//",
             icon: "phone",
         },
 
         // {
         //     name: "Second Category",
         //     classis: "activeColor",
-        //     sref: "#!/secondcategory",
+        //     sref: "#/secondcategory",
         //     icon: "phone"
         // },
         // {
         //     name: "Third Category",
         //     classis: "activeColor",
-        //     sref: "#!/thirdcategory",
+        //     sref: "#/thirdcategory",
         //     icon: "phone"
         // },
     ];
