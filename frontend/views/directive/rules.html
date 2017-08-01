@@ -1,0 +1,42 @@
+<h4 class="ruleHead" ng-if="items.tournamentFormat">Tournament Format:-</h4>
+<div class="mb15" ng-if="items.tournamentFormat" ng-bind-html="items.tournamentFormat"></div>
+<h4 class="ruleHead" ng-if="items.rulesAndRegulation">Rules & Regulations:-</h4>
+<div class="mb15" ng-if="items.rulesAndRegulation" ng-bind-html="items.rulesAndRegulation"></div>
+<h4 class="ruleHead" ng-if="items.ageGroupContent">Age Groups, Events & Weight Categories:-</h4>
+<div class="mb15" ng-if="items.ageGroupContent" ng-bind-html="items.ageGroupContent"></div>
+<div class="faq-tables table-responsive mb15" ng-if="items.ageGroupTable">
+    <table class="table margin0">
+        <thead>
+            <tr>
+                <th class="lowerthead borderRule">Age Group & Event</th>
+                <th class="lowerthead borderRule" ng-if="items.ageGroupTable[0].weight">Weight Categories</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="value in items.ageGroupTable">
+                <td>{{value.agegroup}}</td>
+                <td ng-if="value.weight">{{value.weight}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4 class="ruleHead" ng-if="items.eligibilityContent">Eligibility Criteria:-</h4>
+<div class="mb15" ng-if="items.eligibilityContent" ng-bind-html="items.eligibilityContent"></div>
+<div class="faq-tables table-responsive" ng-if="items.eligibilityTable">
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="lowerthead borderRule">Age Group</th>
+                <th class="lowerthead borderRule">Cut Off Dates</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="value in items.eligibilityTable">
+                <td>{{value.agegroup}}</td>
+                <td>{{value.date}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<h4 class="ruleHead" ng-if="items.tournamentCommittee">TOURNAMENT ORGANIZING COMMITTEE:-</h4>
+<div class="mb15" ng-if="items.tournamentCommittee" ng-bind-html="items.tournamentCommittee"></div>

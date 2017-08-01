@@ -1,4 +1,6 @@
  $output-bourbon-deprecation-warnings: false;
+ @import url(https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600,700);
+ @import "../../bower_components/jquery-ui/themes/smoothness/jquery-ui.css";
  @import "../../bower_components/bourbon/app/assets/stylesheets/bourbon";
  @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap/mixins";
  @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap-sprockets";
@@ -7,10 +9,18 @@
  @import "../../bower_components/angular-ui-swiper/dist/angular-ui-swiper";
  @import "../../bower_components/fancyBox/source/jquery.fancybox";
  @import "../../bower_components/smart-app-banner/smart-app-banner";
+ @import "../../bower_components/angular-loading-bar/src/loading-bar";
+ @import "../../bower_components/angular-responsive-tables/release/angular-responsive-tables.min.css";
+ @import "../../bower_components/angular-toastr/dist/angular-toastr.css";
+ @import "../../bower_components/angular-promise-buttons/src/styles/style.scss";
+ @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
  /****** Please Import Libraries Above This!!!!!! ******/
- 
+
  @import "main";
+ @import "sagar";
  @import "other/fancybox-override";
+ @import "responsive/mobile";
+ @import "responsive/mobilenew";
  @import "responsive/lg";
  @import "responsive/md";
  @import "responsive/sm";

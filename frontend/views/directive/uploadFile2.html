@@ -1,0 +1,9 @@
+<div class="form-group">
+    <div class="btn-upload btn btn-outline btn-small create-btn">
+        <input id="inputImage" ng-show="!isMultiple" type="file" image="image" title="Choose Files" class="btn">
+        <input id="inputImage" ng-show="isMultiple" type="file" image="image" title="Choose Multiple Files" class="btn" onchange="angular.element(this).scope().clearOld()"
+            multiple>
+        <span ng-show="!isMultiple">UPLOAD</span>
+        <span ng-show="isMultiple">Upload Files</span>
+    </div>
+</div>

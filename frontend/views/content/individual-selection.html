@@ -1,0 +1,225 @@
+<section class="selectAthletes">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12 mb25">
+                        <h1 class="text-center school-sports spt-m">Sports Registration Form</h1>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="pull-right mb25 sp-tab-right ">
+                            <div class="">
+                                <div class="display-inline">
+                                    <p class="mb0">SFA ID:</p>
+                                    <p class="mb0" ng-if="detail.userType === 'school'">{{type | firstcapitalize}} Name:</p>
+                                    <p class="mb0" ng-if="detail.userType === 'athlete'">Athlete Name:</p>
+                                </div>
+                                <div class="display-inline">
+                                    <p class="mb0">&nbsp;{{detail.sfaIdObj}}</p>
+                                    <p class="mb0" ng-if="detail.userType === 'school'">&nbsp;{{detail.schoolName}}</p>
+                                    <p class="mb0" ng-if="detail.userType === 'athlete'">&nbsp;{{detail.firstName}}&nbsp&nbsp{{detail.surname}}</p>
+                                </div>
+                            </div>
+                            <ul class="list-inline">
+                                <li ng-click="logoutCandidate();" ng-if="detail.isLoggedIn"><a>Logout</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="step5">{{basicSportDetails.sportName}}</div>
+                    <div class="box-padd-term mb91">
+                        <div class="row">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <form class="">
+                                    <div class="row hide">
+                                        <div class="readSchoolName">
+                                            <!--control-label-->
+                                            <label for="inputEmail3" class="col-md-2 col-sm-3 col-xs-12 para2">Select Gender</label>
+                                            <div class="col-md-10 col-sm-9 col-xs-12">
+                                                <input type="radio" ng-model="formData.gender" id="radio04" name="radioMale" value="male" required ng-change="sortGenderWise('male');selectService.gender='male';selectService.ageGroup=''">
+                                                <label for="radio04" class="padd-lr sf-list"><span></span>Male</label>
+                                                <input type="radio" ng-model="formData.gender" id="radio03" name="radioFemale" value="female" required ng-checked="selectService.gender=='female'"
+                                                    ng-change="sortGenderWise('female');selectService.gender='female';selectService.ageGroup=''">
+                                                <label for="radio03" class="padd-lr sf-list"><span></span>Female</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" ng-if="showAges">
+                                        <div class="readSchoolName">
+                                            <label for="inputEmail3" class="col-md-2 col-sm-3 col-xs-12 para2">Select Age Group</label>
+                                            <div class="col-md-10 col-sm-9 col-xs-12">
+                                                <div class="display-inline w10" ng-repeat="data in getEvents track by $index">
+                                                    <input type="radio" id="{{data._id}}" name="radio1" value="{{data._id}}" required ng-click="filterAge(data._id);">
+                                                    <label for="{{data._id}}" class="padd-lr sf-list"><span></span>{{data._id}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7">
+                                <div class="separateTwoBox">
+                                    <form class="form-horizontal hidden-xs">
+                                        <div class="mb15">
+                                            <div class="readSchoolName">
+                                                <label for="input3" class="col-md-3 col-sm-3 col-xs-12 control-label para2">SEARCH:</label>
+                                                <div class="col-md-7 col-sm-7 col-xs-9">
+                                                    <input type="text" class="form-control" touppercase ng-model-options="{debounce: 750}" id="input3" placeholder="SEARCH BY SFAID / FIRSTNAME"
+                                                        ng-model="getAthletePerSchoolObj.sfaid" ng-change="searchaBysfaId(getAthletePerSchoolObj.sfaid);">
+                                                </div>
+                                                <div class="hover-img margin0 pt7 col-md-2 col-sm-2 col-xs-3">
+                                                    <img src="img/icon/icon.png" alt="logo" class="img-responsive myicon">
+                                                    <div class="iconinfo sf-list">
+                                                        <p>Only registered athletes from your {{type}} as per the selected gender
+                                                            and age group will be displayed below</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                    <form class="visible-xs">
+                                        <div class="form-group">
+                                            <div class="readSchoolName">
+                                                <div class="col-xs-8">
+                                                    <label for="input4" class="para2">SEARCH:</label>
+                                                </div>
+                                                <div class="hover-img margin0 col-xs-4">
+                                                    <img src="img/icon/icon.png" alt="logo" class="img-responsive myicon pull-right">
+                                                    <div class="iconinfo sf-list">
+                                                        <p>Only athlete which have registered for sfa mumbai 2017 from your
+                                                            {{type}} will be displayed below.
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 mob-bottom">
+                                                    <input type="text" class="form-control" id="input4" placeholder="SEARCH BY SFAID / FIRSTNAME" touppercase ng-model="getAthletePerSchoolObj.sfaid"
+                                                        ng-model-options="{debounce: 750}" ng-change="searchaBysfaId(getAthletePerSchoolObj.sfaid);">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="scroll-div">
+                                        <div class="scrollbar style-1">
+                                            <div ng-if="isLoading" class="mt15 text-center">
+                                                <h4>Loading...</h4>
+                                            </div>
+                                            <div ng-if="listOfAthelete.length <= 0 && isLoading === false && getAthletePerSchoolObj.sfaid" class="mt15 text-center">
+                                                <h4>The SFA ID is invalid or Athlete name is not found. Kindly Check if the Athlete
+                                                    is registered for SFA Mumbai 2017.</h4>
+                                            </div>
+                                            <div ng-if="listOfAthelete.length <= 0 && isLoading === false && !getAthletePerSchoolObj.sfaid" class="mt15 text-center">
+                                                <h4>No Athlete Found</h4>
+                                            </div>
+                                            <div class="mt15">
+                                                <!--<div class="col-md-4 col-sm-4 col-xs-12 mb15" ng-repeat="checked in selectAthlete track by $index">-->
+                                                <div class="col-md-4 col-sm-4 col-xs-12 mb15" ng-repeat="checked in listOfAthelete">
+                                                    <div class="school-sec">
+                                                        <div class="selectedPlayer" ng-if="checked.isIndividualSelected === true">
+                                                            <h4 class="">Athlete has been already Registered</h4>
+                                                        </div>
+                                                        <div class="stu-img">
+                                                            <img ng-src="{{checked.atheleteSchoolIdImage | serverimage2:70:70:'cover' }}" class="img-responsive" alt="">
+                                                        </div>
+                                                        <div class="stu-check">
+                                                            <div class="checkbox-custom">
+                                                                <input type="checkbox" name="checkIhav" ng-model="checked.checked" value="option{{$index+1}}" id="option{{$index+1}}" ng-click="selectService.pushToTeam(checked, checked.checked, listOfAthelete, getEvents);"
+                                                                />
+                                                                <label for="option{{$index+1}}"><span></span></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="stu-name text-center">
+                                                            <h4 class="color-orange text-up font-semi">{{checked.firstName}} {{checked.lastName}}</h4>
+                                                        </div>
+                                                        <div class="stu-id text-center" ng-if="checked.sfaId">
+                                                            <h4 class="color-blue">SFA ID: {{checked.sfaId}}</h4>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--Loading more data-->
+                                    <div ng-if="selectAthlete.length>0" infinite-scroll-disabled='busy' infinite-scroll='loadMore();'></div>
+                                    <!--Loading more data-->
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="separateTwoBox pl15">
+                                    <!--<div class="text-center mt15 ">
+                                        <h4 class="player-selected">{{sportTitle}} Male U-8</h4>
+                                    </div>-->
+                                    <!--<div class="kind-select">
+                                        <p>Kindly select a minimum of 11 players and a maximum of 18 players.</p>
+                                    </div>-->
+                                    <div class="mt5">
+                                        <div class="player-selected">
+                                            <p>Athletes Selected: {{selectService.team.length}}</p>
+                                        </div>
+                                    </div>
+                                    <div class="scroll-div scroll-height scroll-height-I">
+                                        <div class="selectedTeamTable table-responsive scrollbar style-1">
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <th>
+                                                        <div class="mid_col">Sr. No.</div>
+                                                    </th>
+                                                    <th>SFA ID-Name</th>
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr ng-repeat="athlete in selectService.team track by $index" ng-if="athlete.checked">
+                                                        <td>
+                                                            <div class="mid_cols">{{$index+1}}</div>
+                                                        </td>
+                                                        <!--<td>{{athlete.sfaId}} - {{athlete.firstName}}</td>-->
+                                                        <td>{{athlete.fullNameWithsfaId |shorten:32}}</td>
+                                                        <td>
+                                                            <div ng-click="selectService.pushToTeam(athlete, athelete.checked, listOfAthelete, getEvents)">
+                                                                <i class="fa fa-lg fa-times-circle pointer" aria-hidden="true"></i>
+
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <!--<tr>
+                                                    <td>
+                                                        <div class="mid_cols">2</div>
+                                                    </td>
+                                                    <td>126 - Kunjal Rawal</td>
+                                                    <td>
+                                                        <i class="fa fa-lg fa-times-circle pointer" aria-hidden="true"></i>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="mid_cols">3</div>
+                                                    </td>
+                                                    <td>126 - Kunjal Rawal</td>
+                                                    <td>
+                                                        <i class="fa fa-lg fa-times-circle pointer" aria-hidden="true"></i>
+                                                    </td>
+                                                </tr>-->
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row text-center mt25 mb-50">
+                            <div class="col-md-12 col-sm-12 col-xs-12">
+                                <button class="btn btn-default width-86 sub-mit" type="button" ui-sref="sports-selection">Back</button>
+                                <button class="btn btn-default width-86 sub-mit" type="button" ng-click="selectService.goNext(basicSportDetails,formData.gender,formData.ageGroup,selectService.team.length);">Next</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

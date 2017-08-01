@@ -1353,7 +1353,8 @@ var model = {
                     if (data.existCount < countNewStudentTeam) {
                         data.countEdit++;
                     }
-                    async.each(found, function (n, callback) {
+                    data.removal = [];
+                    async.eachSeries(found, function (n, callback) {
                         async.waterfall([
                                 function (callback) {
                                     TeamSport.editAthleteRelease(n, data, function (err, complete1) {
@@ -1363,6 +1364,9 @@ var model = {
                                             if (_.isEmpty(complete1)) {
                                                 callback(null, []);
                                             } else {
+                                                if (complete1.removEmail) {
+                                                    data.removal.push(complete1.removEmail);
+                                                }
                                                 callback(null, complete1);
                                             }
                                         }
@@ -1370,6 +1374,7 @@ var model = {
                                 },
 
                                 function (complete1, callback) {
+                                    console.log("complete1", complete1);
                                     StudentTeam.remove({
                                         _id: n._id
                                     }).exec(function (err, found) {
@@ -1521,7 +1526,9 @@ var model = {
                     console.log("length", param.athleteTeam.length);
                     var length1 = param.athleteTeam.length;
                     console.log("length1", length1);
+                    console.log("totals", totals);
                     _.each(param.athleteTeam, function (m) {
+
                         console.log("id", totals[0].studentId._id);
                         console.log("edit", m.studentId);
                         if (totals[0].studentId._id.equals(m.studentId)) {
@@ -1546,22 +1553,29 @@ var model = {
                         emailData.city = data.property.sfaCity;
                         emailData.year = data.property.year;
                         emailData.name = totals[0].studentId.firstName;
-                        emailData.filename = "athleteRejectionEdit.ejs";
+                        // emailData.filename = "athleteRejectionEdit.ejs";
                         emailData.teamId = totals[0].teamId.teamId;
                         emailData.subject = "SFA: Athlete Removed On Edit";
-                        Config.email(emailData, function (err, emailRespo) {
-                            if (err) {
-                                console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
+                        emailData.removEmail = totals[0].studentId.email;
+                        finalData = totals;
 
-                                callback(null, emailRespo);
-                            } else {
-                                callback(null, emailRespo);
-                            }
-                        });
+                        finalData.removEmail = emailData;
+                        // totals.removeName = totals[0].studentId.firstName;
+                        callback(null, finalData);
+                        // Config.email(emailData, function (err, emailRespo) {
+                        //     if (err) {
+                        //         console.log(err);
+                        //         callback(null, err);
+                        //     } else if (emailRespo) {
+
+                        //         callback(null, emailRespo);
+                        //     } else {
+                        //         callback(null, emailRespo);
+                        //     }
+                        // });
                     } else {
-                        callback(null, totals);
+                        finalData = totals;
+                        callback(null, finalData);
                     }
                 },
             ],
@@ -1723,7 +1737,7 @@ var model = {
                     },
                     //athlete email
                     function (callback) {
-                        data.emailfile = "studentEditTeam.ejs";
+                        data.emailfile = "studentEditTeamRemove.ejs";
                         data.schoolSFA = found.sfaID;
                         data.mobile = found.mobile;
                         data.schoolName = found.schoolName;
@@ -1867,48 +1881,160 @@ var model = {
 
     athleteEditMailers: function (data, total, callback) {
         console.log("data", data);
-        async.each(total.studentTeam, function (n, callback) {
-            console.log("n", n);
-            async.parallel([
+        async.waterfall([
                 function (callback) {
-                    if (data.athleteToken) {
-                        var emailData = {};
-                        emailData.sportName = data.name;
-                        emailData.schoolName = data.schoolName;
-                        emailData.schoolSFA = data.schoolSFA;
-                        emailData.from = "info@sfanow.in";
-                        // emailData.email = n.email;
-                        emailData.name = n.firstName;
-                        emailData.city = data.property.sfaCity;
-                        emailData.year = data.property.year;
-                        emailData.type = data.property.institutionType;
-                        emailData.filename = data.emailfile;
-                        emailData.teamId = total.teamSport.teamId;
-                        emailData.students = total.studentTeam;
-                        emailData.linkSportName = data.linkSportName;
-                        emailData.subject = "SFA: Successful Team Sport Registered";
-                        var creatorMail = data.creatorMail;
-                        console.log("creatorMail", creatorMail);
-                        console.log("email", n.email);
-                        if (creatorMail === n.email) {
-                            emailData.email1 = [{
-                                email: n.email
-                            }];
-                            emailData.bcc1 = [{
-                                email: "raj@wohlig.com"
-                            }];
-                            Config.emailTo(emailData, function (err, emailRespo) {
-                                if (err) {
-                                    console.log(err);
-                                    callback(null, err);
-                                } else if (emailRespo) {
-                                    callback(null, emailRespo);
+                    async.each(total.studentTeam, function (n, callback) {
+                        console.log("n", n);
+                        async.parallel([
+                            function (callback) {
+                                if (data.athleteToken) {
+                                    var emailData = {};
+                                    emailData.sportName = data.name;
+                                    emailData.schoolName = data.schoolName;
+                                    emailData.schoolSFA = data.schoolSFA;
+                                    emailData.from = "info@sfanow.in";
+                                    // emailData.email = n.email;
+                                    emailData.name = n.firstName;
+                                    emailData.city = data.property.sfaCity;
+                                    emailData.year = data.property.year;
+                                    emailData.type = data.property.institutionType;
+                                    // emailData.filename = data.emailfile;
+                                    emailData.teamId = total.teamSport.teamId;
+                                    emailData.students = total.studentTeam;
+                                    emailData.linkSportName = data.linkSportName;
+                                    emailData.subject = "SFA: Successful Team Sport Registered";
+                                    var creatorMail = data.creatorMail;
+                                    console.log("creatorMail", creatorMail);
+                                    console.log("email", n.email);
+                                    if (creatorMail === n.email) {
+                                        emailData.filename = data.emailfile;
+                                        emailData.email1 = [{
+                                            email: n.email
+                                        }];
+                                        emailData.bcc1 = [{
+                                            email: "raj@wohlig.com"
+                                        }];
+                                        Config.emailTo(emailData, function (err, emailRespo) {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(null, err);
+                                            } else if (emailRespo) {
+                                                callback(null, emailRespo);
+                                            } else {
+                                                callback(null, "Invalid data");
+                                            }
+                                        });
+                                    } else {
+                                        emailData.filename = "studentEditTeamRemove.ejs";
+                                        emailData.email = n.email;
+                                        Config.email(emailData, function (err, emailRespo) {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(null, err);
+                                            } else if (emailRespo) {
+                                                callback(null, emailRespo);
+                                            } else {
+                                                callback(null, "Invalid data");
+                                            }
+                                        });
+                                    }
+
                                 } else {
-                                    callback(null, "Invalid data");
+                                    var emailData = {};
+                                    emailData.sportName = data.name;
+                                    emailData.schoolName = data.schoolName;
+                                    emailData.schoolSFA = data.schoolSFA;
+                                    emailData.from = "info@sfanow.in";
+                                    emailData.email = n.email;
+                                    emailData.name = n.firstName;
+                                    emailData.city = data.property.sfaCity;
+                                    emailData.year = data.property.year;
+                                    emailData.type = data.property.institutionType;
+                                    emailData.filename = data.emailfile;
+                                    emailData.teamId = total.teamSport.teamId;
+                                    emailData.students = total.studentTeam;
+                                    emailData.linkSportName = data.linkSportName;
+                                    emailData.subject = "SFA: Successful Team Sport Registered";
+                                    // callback(null, emailData);
+                                    Config.email(emailData, function (err, emailRespo) {
+                                        if (err) {
+                                            console.log(err);
+                                            callback(null, err);
+                                        } else if (emailRespo) {
+                                            callback(null, emailRespo);
+                                        } else {
+                                            callback(null, "Invalid data");
+                                        }
+                                    });
                                 }
-                            });
+                            },
+                            //school sms
+                            function (callback) {
+                                var smsData = {};
+                                smsData.mobile = data.mobile;
+                                smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.year + ". For Further details Please check your rehistered email ID.";
+                                console.log("smsdata", smsData);
+                                // callback(null, smsData);
+                                Config.sendSms(smsData, function (err, smsRespo) {
+                                    if (err) {
+                                        console.log(err);
+                                        callback(err, null);
+                                    } else if (smsRespo) {
+                                        console.log(smsRespo, "sms sent");
+                                        callback(null, smsRespo);
+                                    } else {
+                                        callback(null, "Invalid data");
+                                    }
+                                });
+                            }
+                        ], function (err, data3) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(data3)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, data3);
+                                }
+                            }
+                        });
+                    }, function (err) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
                         } else {
+                            var msg = "All email sent!!";
+                            callback(null, msg);
+                        }
+                    });
+                },
+                function (msg, callback) {
+                    if (_.isEmpty(data.removal)) {
+                        callback(null, msg);
+                    } else {
+                        console.log("totalremoval", data);
+                        var removal = data.removal;
+                        console.log("totalremoval", removal);
+                        async.each(removal, function (n, callback) {
+                            console.log("n", n);
+                            // callback(null, n);
+                            var emailData = {};
+                            emailData.sportName = n.sportName;
+                            emailData.schoolName = data.schoolName;
+                            emailData.schoolSFA = data.schoolSFA;
+                            emailData.from = "info@sfanow.in";
                             emailData.email = n.email;
+                            emailData.name = n.name;
+                            emailData.city = n.city;
+                            emailData.year = n.year;
+                            emailData.type = data.property.institutionType;
+                            emailData.filename = "studentEditTeamRemove.ejs";
+                            emailData.teamId = n.teamId
+                            emailData.students = total.studentTeam;
+                            emailData.linkSportName = data.linkSportName;
+                            emailData.subject = n.subject;
+                            console.log("emailData....", emailData);
                             Config.email(emailData, function (err, emailRespo) {
                                 if (err) {
                                     console.log(err);
@@ -1919,75 +2045,33 @@ var model = {
                                     callback(null, "Invalid data");
                                 }
                             });
-                        }
-
-                    } else {
-                        var emailData = {};
-                        emailData.sportName = data.name;
-                        emailData.schoolName = data.schoolName;
-                        emailData.schoolSFA = data.schoolSFA;
-                        emailData.from = "info@sfanow.in";
-                        emailData.email = n.email;
-                        emailData.name = n.firstName;
-                        emailData.city = data.property.sfaCity;
-                        emailData.year = data.property.year;
-                        emailData.type = data.property.institutionType;
-                        emailData.filename = data.emailfile;
-                        emailData.teamId = total.teamSport.teamId;
-                        emailData.students = total.studentTeam;
-                        emailData.linkSportName = data.linkSportName;
-                        emailData.subject = "SFA: Successful Team Sport Registered";
-                        Config.email(emailData, function (err, emailRespo) {
+                        }, function (err) {
                             if (err) {
                                 console.log(err);
-                                callback(null, err);
-                            } else if (emailRespo) {
-                                callback(null, emailRespo);
+                                callback(err, null);
                             } else {
-                                callback(null, "Invalid data");
+                                var msg = "All email sent!!";
+                                callback(null, msg);
                             }
                         });
                     }
-                },
-                //school sms
-                function (callback) {
-                    var smsData = {};
-                    smsData.mobile = data.mobile;
-                    smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.year + ". For Further details Please check your rehistered email ID.";
-                    console.log("smsdata", smsData);
-                    // callback(null, smsData);
-                    Config.sendSms(smsData, function (err, smsRespo) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (smsRespo) {
-                            console.log(smsRespo, "sms sent");
-                            callback(null, smsRespo);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
-                    });
+
                 }
-            ], function (err, data3) {
+
+            ],
+            function (err, data2) {
                 if (err) {
                     console.log(err);
-                    callback(err, null);
-                } else {
-                    if (_.isEmpty(data3)) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
                         callback(null, []);
                     } else {
-                        callback(null, data3);
+                        callback(null, data2);
                     }
                 }
             });
-        }, function (err) {
-            if (err) {
-                console.log(err);
-                callback(err, null);
-            } else {
-                callback(null, "All email sent!!");
-            }
-        });
+
     },
 
 };

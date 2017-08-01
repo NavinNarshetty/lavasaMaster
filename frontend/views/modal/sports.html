@@ -1,0 +1,26 @@
+
+<div class="sports-modal">
+  <div class="modal-dialog modal-sm" >
+
+      <div class="modal-header">
+        <button type="button" aria-label="Close" ng-click="$dismiss()" class="float-right close-btn">X</button>
+        <h3 class="modal-title color-blue font-semi text-center text-up mt25" >sport participated</h3>
+      </div>
+      <div class="modal-body">
+      <ul class="padding0 text-center sports-all-list margin0">
+        <li ng-repeat= "sport in modalSports">
+          <div class="sport-list pointer" ui-sref="sport({name:sport._id.name})">
+            <div class="list-img">
+              <img ng-src="{{sport._id.image | uploadpath}}" style="width:100px;" alt="">
+            </div>
+            <div class="sports-name display-inline">
+              <h4 class="text-up color-base">{{sport._id.name}}</h4>
+            </div>
+          </div>
+        </li>
+      </ul>
+      </div>
+
+
+  </div>
+</div>

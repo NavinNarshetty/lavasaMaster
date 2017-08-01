@@ -1,10 +1,12 @@
 myApp.service('TemplateService', function () {
     this.title = "Home";
-    this.meta = "";
-    this.metadesc = "";
-
+    this.meta = "Google";
+    this.metadesc = "Home";
+    this.description = "";
+    this.keywords = "";
     var d = new Date();
     this.year = d.getFullYear();
+    this.onlyAlpha = /^[A-z]+$/;
 
     this.init = function () {
         this.header = "views/template/header.html";
