@@ -1,6 +1,6 @@
 var historyApiFallback = require('connect-history-api-fallback');
 module.exports = function (grunt) {
-    var folderName = grunt.option('target');
+    var folderName = grunt.option('target') || "frontend";
     var route = {
         "/bower_components": "bower_components"
     };

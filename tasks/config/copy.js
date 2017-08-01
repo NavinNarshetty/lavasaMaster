@@ -25,17 +25,26 @@ module.exports = function (grunt) {
         assets: {
             files: [{
                 expand: true,
-                cwd: './assets',
+                cwd: './frontend',
                 src: ['**'],
                 dest: '.tmp/public'
             }]
         },
+        copyBackend: {
+            files: [{
+                expand: true,
+                cwd: './backend',
+                src: ['**'],
+                dest: '.tmp/public/backend'
+            }]
+        },
+
         development: {
             files: [{
                 expand: true,
                 cwd: './frontend',
                 src: ['fonts/**', 'img/**', 'views/**'],
-                dest: '.tmp/public/frontend'
+                dest: '.tmp/public'
             }]
         },
         developmentFont: {
