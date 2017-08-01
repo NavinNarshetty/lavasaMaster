@@ -3493,6 +3493,20 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.menutitle = NavigationService.makeactive("Matches List");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        $scope.formData = {};
+
+
+
+        $scope.getAllMatches = function () {
+            $scope.url = "Match/getAll"
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                if (data.value) {
+                    $scope.getallMatches = data.data;
+                    console.log($scope.getallMatches, "$scope.getallMatches");
+                }
+            })
+        }
+        $scope.getAllMatches();
     })
 
     .controller('DetailMatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
