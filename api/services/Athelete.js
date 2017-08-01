@@ -1387,7 +1387,7 @@ var model = {
 
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                smsData.content = "Thank you for registering for SFA " + property[0].city + " " + property[0].year + ". For further details please check your registered email ID.";
+                                smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].year + ". For further details please check your registered email ID.";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
@@ -1467,7 +1467,7 @@ var model = {
                             function (callback) {
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                smsData.content = "Thank you for registering for SFA " + property[0].city + " " + property[0].year + ". For further details please check your registered email ID.";
+                                smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].year + ". For further details please check your registered email ID.";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
@@ -1630,7 +1630,7 @@ var model = {
 
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                var city = property[0].city;
+                                var city = property[0].sfaCity;
                                 var year = property[0].year;
                                 smsData.content = "We regret to inform you that your application has been rejected for SFA " + city + " " + year + ". For further queries please email us at info@sfanow.in";
                                 console.log("smsdata", smsData);
@@ -1715,7 +1715,7 @@ var model = {
 
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                var city = property[0].city;
+                                var city = property[0].sfaCity;
                                 var year = property[0].year;
                                 smsData.content = "Thank you for registering for SFA " + city + " " + year + ". For further details please check your registered email ID.";
                                 console.log("smsdata", smsData);

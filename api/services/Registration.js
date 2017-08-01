@@ -952,6 +952,7 @@ var model = {
                                 emailData.email = data.email;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
+                                emailData.type = property[0].institutionType;
                                 emailData.amount = property[0].totalAmountType;
                                 emailData.filename = "schoolCashPayment.ejs";
                                 emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.year;
