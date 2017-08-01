@@ -259,7 +259,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'SportTeamCtrl'
         });
-    $urlRouterProvider.otherwise("/championship");
+    if (window.location.origin != "http://testmumbaischool.sfanow.in") {
+        $urlRouterProvider.otherwise("/register");
+    } else {
+        $urlRouterProvider.otherwise("/championship");
+    }
     $locationProvider.html5Mode(isproduction);
 });
 
