@@ -1372,6 +1372,7 @@ var model = {
                                         athelete.lastname = n.lastname;
                                         athelete.sfaid = n.sfaid;
                                         athelete.email = n.email;
+                                        athelete.mobile = n.mobile;
                                         athelete.age = n.age;
                                         athelete.gender = n.gender;
                                         athelete.eventName.push(n.eventName);
