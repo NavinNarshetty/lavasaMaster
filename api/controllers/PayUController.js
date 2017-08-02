@@ -10,15 +10,17 @@ var controller = {
                     if (_.isEmpty(property)) {
                         callback(null, []);
                     } else {
-                        console.log(property);
-                        console.log(property[0]);
-                        req.body.property = property[0];
-                        console.log(req.body.property);
+                        // console.log(property);
+                        // console.log(property[0]);
+                        // req.body.property = property[0];
+                        // console.log(req.body.property);
                         var id = (req.query.id);
                         Registration.findOne({
                             _id: id
                         }).lean().exec(function (err, data) {
-                            data.property = req.body.property;
+                            console.log('Hi', property[0]);
+                            data.property = property[0];
+                            console.log('Bye', data.property);
                             PayU.schoolPayment(data, function (err, httpResponse) {
                                 if (httpResponse.statusCode == 302) {
                                     res.redirect(httpResponse.headers.location);
