@@ -1490,7 +1490,7 @@ var model = {
                                     var name = n.firstname + " " + n.lastname;
                                 }
                                 emailData.atheleteName = name;
-                                emailData.name = n.firstName;
+                                emailData.name = n.firstname;
                                 emailData.mobile = n.mobile;
                                 emailData.from = "info@sfanow.in";
                                 emailData.email = n.email;
@@ -1499,7 +1499,7 @@ var model = {
                                 emailData.year = property[0].year;
                                 emailData.filename = "athleteindividual.ejs";
                                 emailData.subject = "SFA: Individual Sport Selection";
-                                callback(null, emailData);
+                                console.log(null, emailData);
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
                                         console.log(err);
