@@ -10,7 +10,7 @@ var controller = {
                     if (_.isEmpty(property)) {
                         callback(null, []);
                     } else {
-                        data.property = property[0];
+                        req.body.property = property[0];
                         var id = (req.query.id);
                         Registration.findOne({
                             _id: id
@@ -43,7 +43,7 @@ var controller = {
                     if (_.isEmpty(property)) {
                         callback(null, []);
                     } else {
-                        data.property = property[0];
+                        req.body.property = property[0];
                         var id = (req.query.id);
                         Athelete.findOne({
                             _id: id
