@@ -277,7 +277,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
 
         .state('detailrounds', {
-            url: "/detailrounds",
+            url: "/detailrounds/:id",
             templateUrl: "views/template.html",
             controller: 'DetailRoundCtrl'
         })

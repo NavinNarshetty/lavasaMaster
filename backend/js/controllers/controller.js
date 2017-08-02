@@ -3471,12 +3471,75 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
     })
 
-    .controller('RoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('RoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tableround");
         $scope.menutitle = NavigationService.makeactive("Round List");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        $scope.formData = {};
+        $scope.formData.page = 1;
+        $scope.formData.type = '';
+        $scope.formData.keyword = '';
+
+        $scope.searchInTable = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            }
+        }
+        $scope.viewTable = function () {
+
+            $scope.url = "Round/search";
+            // $scope.search = $scope.formData.keyword;
+            $scope.formData.page = $scope.formData.page++;
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                console.log("data.value", data);
+                $scope.items = data.data.results;
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
+            });
+        }
+        $scope.viewTable();
+
+
+        $scope.confDel = function (data) {
+            $scope.id = data;
+            $scope.modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'backend/views/modal/delete.html',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'sm',
+                scope: $scope
+            });
+        };
+
+
+        $scope.noDelete = function () {
+            $scope.modalInstance.close();
+        }
+
+        $scope.delete = function (data) {
+            // console.log(data);
+            $scope.url = "Round/delete";
+            $scope.constraints = {};
+            $scope.constraints._id = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                if (data.value) {
+                    toastr.success('Successfully Deleted', 'Age Group Message');
+                    $scope.modalInstance.close();
+                    $scope.viewTable();
+                } else {
+                    toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
+                }
+            });
+        }
+
     })
 
     .controller('DetailRoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
@@ -3491,9 +3554,9 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 $scope.url = "Round/save";
                 NavigationService.apiCall($scope.url, data, function (data) {
                     console.log("data.value", data);
-                    if (data.data.nModified == '1') {
+                    if (data.value) {
                         toastr.success(" Updated Successfully", "SportList Message");
-                        $state.go('sportslist');
+                        $state.go('round');
                     }
                 });
             } else {
