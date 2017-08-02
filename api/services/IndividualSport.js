@@ -1491,6 +1491,7 @@ var model = {
                                 }
                                 emailData.atheleteName = name;
                                 emailData.name = n.firstName;
+                                emailData.mobile = n.mobile;
                                 emailData.from = "info@sfanow.in";
                                 emailData.email = n.email;
                                 emailData.city = property[0].sfaCity;
@@ -1498,7 +1499,7 @@ var model = {
                                 emailData.year = property[0].year;
                                 emailData.filename = "athleteindividual.ejs";
                                 emailData.subject = "SFA: Individual Sport Selection";
-                                // callback(null, emailData);
+                                callback(null, emailData);
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
                                         console.log(err);
@@ -1598,6 +1599,7 @@ var model = {
                                         }
                                         athelete.gender = data.info[0].gender;
                                         athelete.ageGroup = data.info[0].ageGroup;
+                                        athelete.mobile = data.info[0].mobile;
                                         athelete.name = name;
                                         athelete.sfaid = data.info[0].sfaid;
                                         sportInfo.athleteData.push(athelete);
