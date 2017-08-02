@@ -258,6 +258,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/sport-teamdetail/:id",
             templateUrl: tempateURL,
             controller: 'SportTeamCtrl'
+        })
+        .state('college-faq', {
+            url: "/college-faq",
+            templateUrl: tempateURL,
+            controller: 'CollegeFaqCtrl'
         });
     if (window.location.origin != "http://testmumbaischool.sfanow.in") {
         $urlRouterProvider.otherwise("/register");
