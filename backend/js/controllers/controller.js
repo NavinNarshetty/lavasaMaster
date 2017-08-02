@@ -50,7 +50,7 @@ myApp.controller('AgeGroupCtrl', function ($scope, TemplateService, NavigationSe
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'backend/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -191,7 +191,7 @@ myApp.controller('RulesCtrl', function ($scope, TemplateService, NavigationServi
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'backend/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -347,7 +347,7 @@ myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, Navigatio
         }
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'backend/views/modal/deleterule.html',
+            templateUrl: 'views/modal/deleterule.html',
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -416,7 +416,7 @@ myApp.controller('FirstCategoryCtrl', function ($scope, TemplateService, Navigat
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'backend/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -564,7 +564,7 @@ myApp.controller('DrawFormatCtrl', function ($scope, TemplateService, Navigation
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: "backend/views/modal/delete.html",
+            templateUrl: "views/modal/delete.html",
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -708,7 +708,7 @@ myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService,
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'backend/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -918,7 +918,7 @@ myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, Na
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'backend/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             size: 'sm',
             scope: $scope
         });
@@ -1055,7 +1055,7 @@ myApp.controller('SportsListCtrl', function ($scope, TemplateService, Navigation
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'backend/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             keyboard: false,
             backdrop: 'static',
             size: 'sm',
@@ -1256,7 +1256,7 @@ myApp.controller('SportsCtrl', function ($scope, TemplateService, NavigationServ
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'backend/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             size: 'sm',
             scope: $scope
         });
@@ -1477,7 +1477,7 @@ myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationS
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'backend/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -1719,7 +1719,7 @@ myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, Naviga
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: 'backend/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -2435,7 +2435,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         globalfunction.confDel = function (callback) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: 'backend/views/modal/conf-delete.html',
+                templateUrl: 'views/modal/conf-delete.html',
                 size: 'sm',
                 scope: $scope
             });
@@ -2448,7 +2448,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         globalfunction.openModal = function (callback) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: 'backend/views/modal/modal.html',
+                templateUrl: 'views/modal/modal.html',
                 size: 'lg',
                 scope: $scope
             });
@@ -2813,7 +2813,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         //     $scope.data = data;
         //     var modalInstance = $uibModal.open({
         //         animation: $scope.animationsEnabled,
-        //         templateUrl: '/backend/views/modal/modal.html',
+        //         templateUrl: '/views/modal/modal.html',
         //         size: 'lg',
         //         scope: $scope
         //     });
@@ -2860,7 +2860,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.data = data;
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: 'backend/views/modal/modal.html',
+                templateUrl: 'views/modal/modal.html',
                 size: 'lg',
                 scope: $scope
             });
@@ -3075,7 +3075,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.holdObject = holdobj;
             var modalInstance = $uibModal.open({
                 scope: $scope,
-                templateUrl: 'backend/views/modal/' + filename + '.html',
+                templateUrl: 'views/modal/' + filename + '.html',
                 size: 'lg'
             });
         };
@@ -3224,7 +3224,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.holdObject = holdobj;
             var modalInstance = $uibModal.open({
                 scope: $scope,
-                templateUrl: 'backend/views/modal/' + filename + '.html',
+                templateUrl: 'views/modal/' + filename + '.html',
                 size: 'lg'
             });
         };
@@ -3511,7 +3511,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.id = data;
             $scope.modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: 'backend/views/modal/delete.html',
+                templateUrl: 'views/modal/delete.html',
                 backdrop: 'static',
                 keyboard: false,
                 size: 'sm',
@@ -3632,7 +3632,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.id = data;
             $scope.modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: 'backend/views/modal/delete.html',
+                templateUrl: 'views/modal/delete.html',
                 backdrop: 'static',
                 keyboard: false,
                 size: 'sm',
