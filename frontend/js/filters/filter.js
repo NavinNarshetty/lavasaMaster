@@ -175,8 +175,8 @@ myApp.filter('myFilter', function () {
     .filter('serverimage', function () {
         return function (image) {
             if (image && image !== null) {
-                console.log("adminUrl--", adminUrl);
-                return adminUrl + "upload/readFile?file=" + image;
+                console.log("adminUrl--", adminUrl2);
+                return adminUrl2 + "upload/readFile?file=" + image;
             } else {
                 return undefined;
             }
@@ -196,7 +196,7 @@ myApp.filter('myFilter', function () {
                 other += "&style=" + style;
             }
             if (image && image !== null) {
-                console.log("adminUrl--", adminUrl);
+                console.log("adminUrl--", adminUrl2);
                 return adminUrl2 + "upload/readFile?file=" + image + other;
             } else {
                 return undefined;

@@ -731,8 +731,8 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
     };
     $scope.openModal = function () {
         // $timeout(function () {
-        fbq('track', 'CompleteRegistration');
-        GoogleAdWordsService.sendRegisterCustomerConversion();
+        // fbq('track', 'CompleteRegistration');
+        // GoogleAdWordsService.sendRegisterCustomerConversion();
         // });
         var modalInstance = $uibModal.open({
             animation: true,
@@ -975,8 +975,8 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
 
     $scope.openModal = function () {
         // $timeout(function () {
-        fbq('track', 'CompleteRegistration');
-        GoogleAdWordsService.sendRegisterCustomerConversion();
+        // fbq('track', 'CompleteRegistration');
+        // GoogleAdWordsService.sendRegisterCustomerConversion();
         // });
         var modalInstance = $uibModal.open({
             animation: true,
@@ -1483,7 +1483,7 @@ myApp.controller('SorryAtheleteCtrl', function ($scope, TemplateService, Navigat
     window.setTimeout(function () {
 
         // Move to a new location or you can do something else
-        window.location.href = adminUrl + "/formathlete";
+        window.location.href = adminUrl2 + "/formathlete";
 
     }, 5000);
 
@@ -1498,7 +1498,7 @@ myApp.controller('PaymentFailureCtrl', function ($scope, TemplateService, Naviga
 
     window.setTimeout(function () {
         // Move to a new location or you can do something else
-        window.location.href = adminUrl + "/formregis";
+        window.location.href = adminUrl2 + "/formregis";
 
     }, 5000);
 
