@@ -60,10 +60,10 @@ var models = {
                 // furl: 'http://sfa2.wohlig.co.in/api/payU/successErrorSchool',
                 // surl: 'https://sfa.wohlig.co.in/api/payU/successErrorSchool',
                 // furl: 'https://sfa.wohlig.co.in/api/payU/successErrorSchool',
-                surl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorSchool',
-                furl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorSchool',
-                // surl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorSchool',
-                // furl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorSchool',
+                // surl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorSchool',
+                // furl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorSchool',
+                surl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorSchool',
+                furl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorSchool',
                 hash: hashtext
                 // pg: pg
             }
