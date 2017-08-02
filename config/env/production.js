@@ -30,6 +30,7 @@ module.exports = {
   // realHost: "http://sfa2.wohlig.co.in",
   // realHost: "http://testmumbaischool.sfanow.in",
   realHost: "http://testmumbaicollege.sfanow.in",
+
   // realHost: "https://sfa.wohlig.co.in",
   emails: ["chintan@wohlig.com", "jagruti@wohlig.com", "tushar@wohlig.com", "chirag@wohlig.com", "harsh@wohlig.com"]
 
