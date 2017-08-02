@@ -90,6 +90,12 @@
             "placeholder": "Enter Address",
             "id": "address"
         }, {
+            "name": "School Address Line2",
+            "type": "text",
+            "tableRef": "schoolAddressLine2",
+            "placeholder": "Enter Address line 2",
+            "id": "addressline2"
+        }, {
             "name": "State",
             "type": "tags",
             "tableRef": "state",

@@ -1717,6 +1717,7 @@ var model = {
                                     var name = n.firstname + " " + n.lastname;
                                 }
                                 emailData.atheleteName = name;
+                                emailData.name = n.firstName;
                                 emailData.from = "info@sfanow.in";
                                 emailData.email = n.email;
                                 emailData.city = property[0].sfaCity;

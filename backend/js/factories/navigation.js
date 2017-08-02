@@ -234,6 +234,7 @@ myApp.factory('NavigationService', function ($http) {
         searchCall: function (url, formData, i, callback) {
             $http.post(adminurl + url, formData).then(function (data) {
                 data = data.data;
+                console.log(data, i);
                 callback(data, i);
             });
         },

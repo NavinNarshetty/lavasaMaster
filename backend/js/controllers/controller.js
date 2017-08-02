@@ -3485,6 +3485,25 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.menutitle = NavigationService.makeactive("Detail Round");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+
+        $scope.saveData = function (data) {
+            if (data) {
+                $scope.url = "Round/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.data.nModified == '1') {
+                        toastr.success(" Updated Successfully", "SportList Message");
+                        $state.go('sportslist');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "SportList Message");
+            }
+        };
+
+
     })
 
     .controller('MatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
