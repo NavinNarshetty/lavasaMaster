@@ -2286,7 +2286,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             if (dataSend.keyword === null || dataSend.keyword === undefined) {
                 dataSend.keyword = "";
             }
-            NavigationService[$scope.api](dataSend, ++i, function (data) {
+            NavigationService[$scope.api]([$scope.url], dataSend, ++i, function (data) {
                 if (data.value) {
                     $scope.list = data.data.results;
                     if ($scope.search.modelData) {
