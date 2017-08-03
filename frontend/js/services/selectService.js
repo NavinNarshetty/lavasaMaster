@@ -114,6 +114,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
                 } else {
                     if ($.jStorage.get('userType') == 'athlete') {
                         this.disableNextOnRules = true;
+                        $state.go('sports-selection');
                     }
                 }
             }

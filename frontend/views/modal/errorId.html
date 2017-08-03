@@ -1,6 +1,6 @@
 <div class="modal-body ">
-
     <div class="text-center">
-        <h4 class="Uppercase text-center">Please Upload {{type | firstcapitalize}} Id Image</h4>
+        <h4 class="Uppercase text-center" ng-if="type == 'school'">Please Upload {{type | firstcapitalize}} Id Image</h4>
+        <h4 class="Uppercase text-center" ng-if="type == 'college'">Please Upload {{type | firstcapitalize}} Id Card</h4>
     </div>
 </div>
