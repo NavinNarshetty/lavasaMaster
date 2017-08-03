@@ -25,10 +25,8 @@ var model = {
                     });
                 },
                 function (data, callback) {
-                    // console.log("data", data);
                     Athelete.find().lean().exec(function (err, complete) {
                         if (err) {
-                            // console.log("err", err);
                             callback(err, null);
                         } else {
                             if (_.isEmpty(complete)) {
@@ -123,11 +121,8 @@ var model = {
                             emailData.type = data.property.institutionType;
                             emailData.filename = "athleteAutoMail.ejs";
                             emailData.subject = "SFA: Sports Registration Now Open";
-                            // console.log("emailData", emailData);
-                            // callback(null, emailData);
                             Config.email(emailData, function (err, emailRespo) {
                                 if (err) {
-                                    console.log(err);
                                     callback(null, err);
                                 } else if (emailRespo) {
                                     callback(null, emailRespo);
