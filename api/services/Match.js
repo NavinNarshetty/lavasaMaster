@@ -14,6 +14,11 @@ var schema = new Schema({
     incrementalId: Number,
     sport: {
         type: Schema.Types.ObjectId,
+        ref: 'Sport'
+    },
+    round: {
+        type: Schema.Types.ObjectId,
+        ref: 'Round'
     },
     opponentsSingle: [{
         type: Schema.Types.ObjectId,
@@ -23,20 +28,24 @@ var schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'TeamSport'
     }],
-    prevMatch: {
+    prevMatch: [{
         type: Schema.Types.ObjectId,
         ref: 'Match'
-    },
+    }],
     nextMatch: {
         type: Schema.Types.ObjectId,
         ref: 'Match'
     },
     scoreCard: Schema.Types.Mixed,
-    results: Schema.Types.Mixed
+    results: Schema.Types.Mixed,
+    scheduleDate: Date,
 });
 
 schema.plugin(deepPopulate, {
     "sport": {
+        select: '_id name '
+    },
+    "round": {
         select: '_id name '
     },
     "opponentsSingle": {
@@ -119,6 +128,67 @@ var model = {
                 callback(null, result);
             }
         });
+    },
+
+    getAllwithFind: function (data, callback) {
+        var deepSearch = "sport nextMatch opponentsSingle opponentsTeam prevMatch nextMatch";
+        Match.find().lean().deepPopulate(deepSearch).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else {
+                if (_.isEmpty()) {
+                    callback(null, []);
+                } else {
+                    callback(null, found);
+                }
+            }
+        });
+    },
+
+    saveMatch: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    if (_.isEmpty(data.opponentsSingle)) {
+                        data.opponentsSingle = undefined;
+                    }
+                    if (_.isEmpty(data.opponentsTeam)) {
+                        data.opponentsTeam = undefined;
+                    }
+                    if (_.isEmpty(data.prevMatch)) {
+                        data.prevMatch = undefined;
+                    }
+                    if (_.isEmpty(data.nextMatch)) {
+                        data.nextMatch = undefined;
+                    }
+                    callback(null, data);
+                },
+                function (data, callback) {
+                    Match.saveData(data, function (err, complete) {
+                        if (err) {
+                            console.log("err", err);
+                            callback("There was an error while saving", null);
+                        } else {
+                            if (_.isEmpty(complete)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, complete);
+                            }
+                        }
+                    });
+                }
+            ],
+            function (err, results) {
+                if (err) {
+                    console.log(err);
+                    callback(null, results);
+                } else if (results) {
+                    if (_.isEmpty(results)) {
+                        callback(null, results);
+                    } else {
+                        callback(null, results);
+                    }
+                }
+            });
     }
 };
 module.exports = _.assign(module.exports, exports, model);

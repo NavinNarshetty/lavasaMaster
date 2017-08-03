@@ -50,7 +50,7 @@ myApp.controller('AgeGroupCtrl', function ($scope, TemplateService, NavigationSe
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: '/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -416,7 +416,7 @@ myApp.controller('FirstCategoryCtrl', function ($scope, TemplateService, Navigat
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: '/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -564,7 +564,7 @@ myApp.controller('DrawFormatCtrl', function ($scope, TemplateService, Navigation
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: "/views/modal/delete.html",
+            templateUrl: "views/modal/delete.html",
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -708,7 +708,7 @@ myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService,
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: '/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -918,7 +918,7 @@ myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, Na
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: '/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             size: 'sm',
             scope: $scope
         });
@@ -1055,7 +1055,7 @@ myApp.controller('SportsListCtrl', function ($scope, TemplateService, Navigation
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: '/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             keyboard: false,
             backdrop: 'static',
             size: 'sm',
@@ -1256,7 +1256,7 @@ myApp.controller('SportsCtrl', function ($scope, TemplateService, NavigationServ
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: '/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             size: 'sm',
             scope: $scope
         });
@@ -1477,7 +1477,7 @@ myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationS
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: '/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -1719,7 +1719,7 @@ myApp.controller('IndividualTeamCtrl', function ($scope, TemplateService, Naviga
         $scope.id = data;
         $scope.modalInstance = $uibModal.open({
             animation: $scope.animationsEnabled,
-            templateUrl: '/views/modal/delete.html',
+            templateUrl: 'views/modal/delete.html',
             backdrop: 'static',
             keyboard: false,
             size: 'sm',
@@ -2286,7 +2286,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             if (dataSend.keyword === null || dataSend.keyword === undefined) {
                 dataSend.keyword = "";
             }
-            NavigationService[$scope.api](dataSend, ++i, function (data) {
+            NavigationService[$scope.api]([$scope.url], dataSend, ++i, function (data) {
                 if (data.value) {
                     $scope.list = data.data.results;
                     if ($scope.search.modelData) {
@@ -2435,7 +2435,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         globalfunction.confDel = function (callback) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: '/views/modal/conf-delete.html',
+                templateUrl: 'views/modal/conf-delete.html',
                 size: 'sm',
                 scope: $scope
             });
@@ -2448,7 +2448,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         globalfunction.openModal = function (callback) {
             var modalInstance = $uibModal.open({
                 animation: $scope.animationsEnabled,
-                templateUrl: '/backend/views/modal/modal.html',
+                templateUrl: 'views/modal/modal.html',
                 size: 'lg',
                 scope: $scope
             });
@@ -2813,7 +2813,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         //     $scope.data = data;
         //     var modalInstance = $uibModal.open({
         //         animation: $scope.animationsEnabled,
-        //         templateUrl: '/backend/views/modal/modal.html',
+        //         templateUrl: '/views/modal/modal.html',
         //         size: 'lg',
         //         scope: $scope
         //     });
@@ -3471,12 +3471,75 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
     })
 
-    .controller('RoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('RoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tableround");
         $scope.menutitle = NavigationService.makeactive("Round List");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        $scope.formData = {};
+        $scope.formData.page = 1;
+        $scope.formData.type = '';
+        $scope.formData.keyword = '';
+
+        $scope.searchInTable = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            }
+        }
+        $scope.viewTable = function () {
+
+            $scope.url = "Round/search";
+            // $scope.search = $scope.formData.keyword;
+            $scope.formData.page = $scope.formData.page++;
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                console.log("data.value", data);
+                $scope.items = data.data.results;
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
+            });
+        }
+        $scope.viewTable();
+
+
+        $scope.confDel = function (data) {
+            $scope.id = data;
+            $scope.modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'views/modal/delete.html',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'sm',
+                scope: $scope
+            });
+        };
+
+
+        $scope.noDelete = function () {
+            $scope.modalInstance.close();
+        }
+
+        $scope.delete = function (data) {
+            // console.log(data);
+            $scope.url = "Round/delete";
+            $scope.constraints = {};
+            $scope.constraints._id = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                if (data.value) {
+                    toastr.success('Successfully Deleted', 'Age Group Message');
+                    $scope.modalInstance.close();
+                    $scope.viewTable();
+                } else {
+                    toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
+                }
+            });
+        }
+
     })
 
     .controller('DetailRoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
@@ -3485,6 +3548,23 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.menutitle = NavigationService.makeactive("Detail Round");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+
+        $scope.saveData = function (data) {
+            if (data) {
+                $scope.url = "Round/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value) {
+                        toastr.success(" Updated Successfully", "SportList Message");
+                        $state.go('round');
+                    }
+                });
+            } else {
+                toastr.error("Invalid Data", "SportList Message");
+            }
+        };
+
+
     })
 
     .controller('MatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
