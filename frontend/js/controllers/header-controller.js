@@ -6,9 +6,12 @@
 //     $.fancybox.close(true);
 // });
 
-var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
-var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
-var globalLinkForAll = "http://testmumbai.sfanow.in/";
+var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in";
+var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
+var globalLinkForAll = "http://mumbai.sfanow.in/";
+// var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
+// var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
+// var globalLinkForAll = "http://testmumbai.sfanow.in/";
 myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
@@ -20,7 +23,8 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
         $scope.variables.online = $rootScope.online;
     });
 
-    if (window.location.origin != "http://testmumbaischool.sfanow.in") {
+    // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
+    if (window.location.origin != "http://mumbaischool.sfanow.in") {
         $scope.registerSchool = globalLinkSchoolRegister;
     } else {
         $scope.registerCollege = globalLinkCollegeRegister;
