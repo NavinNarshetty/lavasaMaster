@@ -67,4 +67,11 @@ module.exports = [
   'frontend/js/controllers/header-controller.js',
   'frontend/js/controllers/language-controller.js',
   'frontend/js/controllers/collegeController.js',
+  // DRAWS AND SCHEDULE
+  'frontend/js/controllers/draws-schedule/direct-finalController.js',
+  'frontend/js/controllers/draws-schedule/heats-Controller.js',
+  'frontend/js/controllers/draws-schedule/league-knockoutController.js',
+  'frontend/js/controllers/draws-schedule/qf-finalController.js',
+  'frontend/js/controllers/draws-schedule/qf-knockoutController.js',
+  'frontend/js/controllers/draws-schedule/time-trialController.js',
 ];

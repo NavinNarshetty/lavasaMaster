@@ -1,0 +1,54 @@
+// COLOR VARIABLES
+$sport-primary: #10259c !default; //blue
+$sport-success: #27b465 !default; //green
+$sport-warning: #ffb026 !default; //yellow
+$sport-danger: #da495b !default; //red
+$sport-info: #000072 !default; //lighter-blue
+$sport-base: #1a1a1a !default; //black
+$sport-white: #fff !default;
+$sport-grey: #e1e1e1 !default;
+$sport-dark-grey: #757575 !default;
+$sport-light-grey: #e5e5e5 !default;
+$sport-other-blue: #2a45d4 !default;
+$sport-light-green:#bcd200 !default;
+$sport-bg-table: #f2f2f2 !default;
+$sport-grey-year: #c0c0c0 !default;
+$sport-green-graph: #0edb87 !default;
+$sport-green-table:#5aeba4 !default;
+$sport-blue-table:#7fdfff !default;
+$sport-table-knockout:#f5f4f4 !default;
+// COLOR VARIABLES END
+// COMMON CLASS
+.sport-color-primary {
+  color: $sport-primary;
+}
+
+.sport-color-warning {
+  color: $sport-warning;
+}
+
+.sport-green-table {
+  color: $sport-green-table;
+}
+
+.sport-blue-table {
+  color: $sport-blue-table;
+}
+
+.sport-btn-blue-outline {
+  border: 1px solid $sport-primary;
+  background-color: transparent;
+  color: $sport-primary;
+  &:hover,
+  &:active,
+  &:focus {
+    border: 1px solid $sport-primary;
+    background-color: transparent;
+    color: $sport-primary;
+    outline: none;
+  }
+}
+
+.table-knockout {}
+
+// END COMMON CLASS

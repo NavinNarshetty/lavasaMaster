@@ -263,6 +263,37 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/college-faq",
             templateUrl: tempateURL,
             controller: 'CollegeFaqCtrl'
+        })
+        // Draws and Schedule
+        .state('heats', {
+            url: "/heats",
+            templateUrl: tempateURL,
+            controller: 'HeatsCtrl'
+        })
+        .state('time-trial', {
+            url: "/time-trial",
+            templateUrl: tempateURL,
+            controller: 'TimeTrialCtrl'
+        })
+        .state('direct-final', {
+            url: "/direct-final",
+            templateUrl: tempateURL,
+            controller: 'DirectFinalCtrl'
+        })
+        .state('qf-final', {
+            url: "/qf-final",
+            templateUrl: tempateURL,
+            controller: 'qfFinalCtrl'
+        })
+        .state('league-knockout', {
+            url: "/league-knockout",
+            templateUrl: tempateURL,
+            controller: 'LeagueKnockoutCtrl'
+        })
+        .state('qf-knockout', {
+            url: "/qf-knockout",
+            templateUrl: tempateURL,
+            controller: 'QfKnockoutCtrl'
         });
     if (window.location.origin != "http://testmumbaischool.sfanow.in") {
         $urlRouterProvider.otherwise("/register");
