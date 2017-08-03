@@ -139,6 +139,7 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
                                                 console.log("im intrue");
                                                 value.isTeamSelected = false;
                                                 value.checked = true;
+                                                $scope.selectService.team = _.filter($scope.selectService.team, 'checked');
                                                 $scope.pushToTeam(value, value.checked, $scope.selectAthlete);
                                             }
                                         });
@@ -379,17 +380,8 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
     // function pushToTeam
     $scope.pushToTeam = function(checked, bool, listOfAthelete, objIndex) {
         if ($.jStorage.get("sportTitle") === "Tennis Mixed Doubles") {
+            $scope.selectService.pushToTeam(checked, bool, listOfAthelete);
             $scope.selectService.team = _.filter($scope.selectService.team, 'checked');
-            if ($scope.selectService.team.length < $scope.maxPlayer) {
-                $scope.selectService.pushToTeam(checked, bool, listOfAthelete);
-            } else {
-                if (objIndex !== undefined) {
-                    $scope.listOfAthelete[objIndex].checked = false;
-                }
-                $scope.setDisabled = true;
-
-            }
-
             $scope.selectService.team = _.uniqBy($scope.selectService.team, 'gender');
             if (bool) {
                 var indexOfAthlete = _.findIndex($scope.selectService.team, ['sfaId', checked.sfaId]);
@@ -419,16 +411,19 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
                 });
             }
         } else {
-            $scope.selectService.team = _.filter($scope.selectService.team, 'checked');
-            if ($scope.selectService.team.length < $scope.maxPlayer) {
-                $scope.selectService.pushToTeam(checked, bool, listOfAthelete);
+            $scope.selectService.pushToTeam(checked, bool, listOfAthelete);
+
+            if ($scope.selectService.team.length <= $scope.maxPlayer) {
+                console.log("$scope.selectService.team.length ",
+                    $scope.selectService.team.length);
+
             } else {
                 if (objIndex !== undefined) {
                     $scope.listOfAthelete[objIndex].checked = false;
                 }
                 $scope.setDisabled = true;
             }
-
+            $scope.selectService.team = _.filter($scope.selectService.team, 'checked');
         }
 
     };
