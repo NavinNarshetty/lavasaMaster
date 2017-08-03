@@ -3549,14 +3549,27 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
 
+        if ($stateParams.id) {
+            $scope.getOneOldSchoolById = function () {
+                $scope.url = 'Round/getOne';
+                $scope.constraints = {};
+                $scope.constraints._id = $stateParams.id;
+                NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                    $scope.formData = data.data;
+                });
+            };
+            $scope.getOneOldSchoolById();
+        }
+
         $scope.saveData = function (data) {
+            console.log("data", data);
             if (data) {
                 $scope.url = "Round/save";
                 NavigationService.apiCall($scope.url, data, function (data) {
                     console.log("data.value", data);
                     if (data.value) {
                         toastr.success(" Updated Successfully", "SportList Message");
-                        $state.go('round');
+                        $state.go('rounds');
                     }
                 });
             } else {

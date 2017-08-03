@@ -820,6 +820,7 @@ var model = {
                                             if (_.isEmpty(complete[0].city)) {
                                                 found.city = "Mumbai";
                                             }
+                                            var type = complete[0].institutionType;
                                             var city = complete[0].sfaCity;
                                             var prefixCity = city.charAt(0);
                                             console.log("prefixCity", prefixCity);
@@ -834,8 +835,12 @@ var model = {
                                                         console.log(err);
                                                         callback(err, null);
                                                     } else {
-                                                        if (_.isEmpty(datafound)) {
+                                                        if (_.isEmpty(datafound) && type == 'school') {
                                                             data.atheleteID = 1;
+                                                            console.log("atheleteID", data.atheleteID);
+                                                            data.sfaId = prefixCity + "A" + year + data.atheleteID;
+                                                        } else if (_.isEmpty(datafound) && type == 'college') {
+                                                            data.atheleteID = 50001;
                                                             console.log("atheleteID", data.atheleteID);
                                                             data.sfaId = prefixCity + "A" + year + data.atheleteID;
                                                         } else {

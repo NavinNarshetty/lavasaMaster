@@ -22,7 +22,7 @@ var schema = new Schema({
     },
     opponentsSingle: [{
         type: Schema.Types.ObjectId,
-        ref: 'Athelete'
+        ref: 'IndividualSport'
     }],
     opponentsTeam: [{
         type: Schema.Types.ObjectId,
@@ -43,22 +43,22 @@ var schema = new Schema({
 
 schema.plugin(deepPopulate, {
     "sport": {
-        select: '_id name '
+        select: '_id sportslist gender ageGroup'
     },
     "round": {
         select: '_id name '
     },
     "opponentsSingle": {
-        select: '_id name '
+        select: '_id sport athleteId sportsListSubCategory createdBy '
     },
     "opponentsTeam": {
-        select: '_id name '
+        select: '_id name teamId schoolName studentTeam createdBy sport school'
     },
     "prevMatch": {
-        select: '_id name '
+        select: '_id incrementalId '
     },
     "nextMatch": {
-        select: '_id name '
+        select: '_id incrementalId '
     },
 });
 schema.plugin(uniqueValidator);
