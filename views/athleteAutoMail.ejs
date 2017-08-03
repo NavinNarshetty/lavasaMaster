@@ -105,9 +105,9 @@
       cursor: pointer;
     }
 
-    .text-uppercase{
-            text-transform: uppercase;
-        }
+    .text-uppercase {
+      text-transform: uppercase;
+    }
   </style>
 </head>
 
@@ -122,7 +122,9 @@
       <tr>
         <td class="text-center">
           <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">SPORTS REGISTRATIONS </span>
-          <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA <span class="text-uppercase"> <%=city%> </span> <%=year%> </h2>
+          <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA <span class="text-uppercase"> <%=city%> </span>
+            <%=year%>
+          </h2>
         </td>
 
       </tr>
@@ -133,39 +135,42 @@
         <td>
           <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
             <% if(type=="school"){%>
-             <p> Dear Sir/Madam,</p>
-            <%}else{%>
-             <p> Dear <%=name%>,</p>
-            <%}%>
-            
+              <p> Dear Sir/Madam,</p>
+              <%}else{%>
+                <p> Dear
+                  <%=name%>,</p>
+                <%}%>
 
-            <p style="margin-bottom: 0px;">
-              This is to inform you that Sports Registrations are now open. Kindly check on the following link to register for the the sport(s) of your choice.
-            </p>
-            <p>The Sports Registration forms will be available on <a style="font-family:TitilliumWeb-Bold; color: black;" href="https://mumbaischool.sfanow.in/sports-registration" target="_new" style="color:#fff;text-decoration: none;">https://mumbaischool.sfanow.in/sports-registration</a></p>
-            <p style="margin-bottom: 0px;">For further details please contact us on: 704568365/66/67 or email us at
-              <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">info@sfanow.in</a>
-            </p>
-             <p style="font-family:TitilliumWeb-Bold; font-weight:bold; ">Regards,<br>Team SFA</p>
+
+                  <p style="margin-bottom: 0px;">
+                    This is to inform you that Sports Registrations are now open. Kindly check on the following link to register for the the
+                    sport(s) of your choice.
+                  </p>
+                  <p>The Sports Registration forms will be available on <a style="font-family:TitilliumWeb-Bold; color: black;"
+                      href="http://mumbaischool.sfanow.in/sports-registration" target="_new" style="color:#fff;text-decoration: none;">http://mumbaischool.sfanow.in/sports-registration</a></p>
+                  <p style="margin-bottom: 0px;">For further details please contact us on: 704568365/66/67 or email us at
+                    <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">info@sfanow.in</a>
+                  </p>
+                  <p style="font-family:TitilliumWeb-Bold; font-weight:bold; ">Regards,<br>Team SFA</p>
           </div>
         </td>
-      </tr>      
+      </tr>
     </tbody>
     <tfoot>
       <tr>
         <td>
           <div class="blue-footer" style="background:#0a1a72;font-family: TitilliumWeb-Regular;">
-                        <ul class="list-inline" style="padding: 8px 35px;font-size: 16px;font-weight: bold">
-                            <li><img src="https://sfa.wohlig.co.in/img/img/g1.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="www.sfanow.in" target="_new" style="color:#fff;text-decoration: none;">www.sfanow.in</a></li>
-                            <li><img src="https://sfa.wohlig.co.in/img/img/g2.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href=" https://goo.gl/bSQ9CB" target="_new" style="color:#fff;text-decoration: none;">/sportsforallnow</a></li>
-                            <li><img src="https://sfa.wohlig.co.in/img/img/g3.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="https://twitter.com/sfanow" target="_new" style="color:#fff;text-decoration: none;">/sfanow</a></li>
-                            <li><img src="https://sfa.wohlig.co.in/img/img/g4.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="https://www.instagram.com/sfanow/" target="_new" style="color:#fff;text-decoration: none;">/sfanow </a></li>
-                        </ul>
-                    </div>
+            <ul class="list-inline" style="padding: 8px 35px;font-size: 16px;font-weight: bold">
+              <li><img src="https://sfa.wohlig.co.in/img/img/g1.png" alt=""></li>
+              <li style="vertical-align: top;padding-left: 0;"><a href="www.sfanow.in" target="_new" style="color:#fff;text-decoration: none;">www.sfanow.in</a></li>
+              <li><img src="https://sfa.wohlig.co.in/img/img/g2.png" alt=""></li>
+              <li style="vertical-align: top;padding-left: 0;"><a href=" https://goo.gl/bSQ9CB" target="_new" style="color:#fff;text-decoration: none;">/sportsforallnow</a></li>
+              <li><img src="https://sfa.wohlig.co.in/img/img/g3.png" alt=""></li>
+              <li style="vertical-align: top;padding-left: 0;"><a href="https://twitter.com/sfanow" target="_new" style="color:#fff;text-decoration: none;">/sfanow</a></li>
+              <li><img src="https://sfa.wohlig.co.in/img/img/g4.png" alt=""></li>
+              <li style="vertical-align: top;padding-left: 0;"><a href="https://www.instagram.com/sfanow/" target="_new" style="color:#fff;text-decoration: none;">/sfanow </a></li>
+            </ul>
+          </div>
         </td>
       </tr>
     </tfoot>
