@@ -11,41 +11,41 @@
             font-family: 'TitilliumWeb-Bold';
             src: url("../font/TitilliumWeb-Bold.ttf");
         }
-        
+
         @font-face {
             font-family: 'TitilliumWeb-Regular';
             src: url("../font/TitilliumWeb-Regular.ttf");
         }
-        
+
         .body {
             font-family: TitilliumWeb-Regular;
         }
-        
+
         .img-responsive {
             max-width: 100%;
             height: auto;
             display: block;
         }
-        
+
         .inline-block {
             display: inline-block;
         }
-        
+
         .text-center {
             text-align: center;
         }
-        
+
         .list-inline>li {
             display: inline-block;
             padding-left: 5px;
             padding-right: 5px;
         }
-        
+
         table {
             width: 600px;
             margin: 0 auto;
         }
-        
+
         h2:before {
             content: '';
             width: 51px;
@@ -61,7 +61,7 @@
             -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
         }
-        
+
         h2:after {
             content: '';
             width: 51px;
@@ -78,7 +78,7 @@
             transform: translate(-50%, -50%);
         }
 
-        .text-uppercase{
+        .text-uppercase {
             text-transform: uppercase;
         }
     </style>
@@ -95,7 +95,9 @@
             <tr>
                 <td class="text-center">
                     <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">WELCOME TO </span>
-                    <h2 style="margin:0px;position: relative;font-family: TitilliumWeb-Bold;color:#0ddb86;font-size: 27px;">BILLING & PAYMENT AT SFA <span class="text-uppercase"> <%=city%> </span> <%=year%> </h2>
+                    <h2 style="margin:0px;position: relative;font-family: TitilliumWeb-Bold;color:#0ddb86;font-size: 27px;">BILLING & PAYMENT AT SFA <span class="text-uppercase"> <%=city%> </span>
+                        <%=year%>
+                    </h2>
                 </td>
 
             </tr>
@@ -105,29 +107,33 @@
             <tr>
                 <td>
                     <div style="padding: 0px 50px; font-family: TitilliumWeb-Regular;font-size: 17px;">
-                       <p> Dear Sir/Madam,</p>
-                        <p style="font-family:TitilliumWeb-Bold;">Thank you for submitting your application for SFA <%=city%> <%=year%>.</p>
+                        <p> Dear Sir/Madam,</p>
+                        <p style="font-family:TitilliumWeb-Bold;">Thank you for submitting your application for SFA
+                            <%=city%>
+                                <%=year%>.</p>
                         <p>You have selected the 'Cash/Cheque/Demand Draft Option.<br> To complete the registration process
                             kindly courier/hand deliver
-                            <br>Cash/Cheque/Demand Draft of <i class="fa fa-inr" aria-hidden="true"></i> <%=amount%>/- (Inclusive
-                            of all applicable taxes) in favour of <span style="font-family:TitilliumWeb-Bold;">'SFA Events Private Limited'</span>within
-                            10 working days to:
+                            <br>Cash/Cheque/Demand Draft of <i class="fa fa-inr" aria-hidden="true"></i>
+                            <%=amount%>/- (Inclusive of all applicable taxes) in favour of <span style="font-family:TitilliumWeb-Bold;">'SFA Events Private Limited'</span>within
+                                10 working days to:
                         </p>
                         <p><span style="font-family:TitilliumWeb-Bold;"> SFA Events Private Limited,</span>
                             <br>1306, Panchratna Building, <br> Opera House,<br> Mumbai 400004
                             <br>(Next to Roxy Cinema)
                         </p>
-                       <% if(type=="school"){%>
-                            <p>As part of our verification process a representative from SFA will call You within 2 working days
-                            on receipt of payment. </p>
-                        <%}else{%>
-                            <p>You will receive an email and call confirming the status of your registration within 2 working days on receipt of payment. </p>
-                       <%}%>
-                        
-                        <p> If you do not receive an email from us within the stipulated time please call us on<span style="font-family:TitilliumWeb-Bold;"> 7045684365 /66 /67</span>or
-                            email us at <span style="font-family:TitilliumWeb-Bold;">info@sfanow.in</span>
-                        </p>
-                        <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>
+                        <% if(type=="school"){%>
+                            <p>As part of our verification process a representative from SFA will call You within 2 working
+                                days on receipt of payment. </p>
+                            <%}else{%>
+                                <p>You will receive an email confirming the status of your registration within 2 working days
+                                    on receipt of payment. </p>
+                                <%}%>
+
+                                    <p> If you do not receive an email from us within the stipulated time please call us on
+                                        <span style="font-family:TitilliumWeb-Bold;"> 7045684365 /66 /67</span>or email us
+                                        at <span style="font-family:TitilliumWeb-Bold;">info@sfanow.in</span>
+                                    </p>
+                                    <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>
 
                     </div>
                 </td>
@@ -136,7 +142,7 @@
         <tfoot>
             <tr>
                 <td>
-                   <div class="blue-footer" style="background:#0a1a72;font-family: TitilliumWeb-Regular;">
+                    <div class="blue-footer" style="background:#0a1a72;font-family: TitilliumWeb-Regular;">
                         <ul class="list-inline" style="padding: 8px 35px;font-size: 16px;font-weight: bold">
                             <li><img src="https://sfa.wohlig.co.in/img/img/g1.png" alt=""></li>
                             <li style="vertical-align: top;padding-left: 0;"><a href="www.sfanow.in" target="_new" style="color:#fff;text-decoration: none;">www.sfanow.in</a></li>

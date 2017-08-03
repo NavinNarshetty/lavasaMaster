@@ -1535,6 +1535,7 @@ var model = {
                                 emailData.name = data.firstName;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
+                                emailData.type = property[0].institutionType;
                                 emailData.filename = "registeredVerification.ejs";
                                 emailData.subject = "SFA: You are now a verified Athlete for SFA " + emailData.city + " " + emailData.year;
                                 console.log("emaildata", emailData);
