@@ -92,9 +92,9 @@ var controller = {
 
                         // res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess");
 
-                        res.redirect("http://mumbaicollege.sfanow.in/paymentSuccess");
+                        res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
 
-                        // res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
+                        // res.redirect("http://mumbaicollege.sfanow.in/paymentSuccess");
 
                         // res.redirect("https://sfanow.in/paymentSuccess");
                     }
@@ -122,9 +122,9 @@ var controller = {
                                 console.log("found", found);
                                 // res.redirect("http://testmumbaicollege.sfanow.in/paymentFailure");
 
-                                // res.redirect("http://testmumbaischool.sfanow.in/paymentFailure");
+                                res.redirect("http://testmumbaischool.sfanow.in/paymentFailure");
 
-                                res.redirect("http://mumbaicollege.sfanow.in/paymentFailure");
+                                // res.redirect("http://mumbaicollege.sfanow.in/paymentFailure");
 
                                 // res.redirect("http://mumbaischool.sfanow.in/paymentFailure");
 
@@ -169,9 +169,9 @@ var controller = {
                             data: "Invalid Request"
                         });
                     } else {
-                        // res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
+                        res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
 
-                        res.redirect("http://mumbaicollege.sfanow.in/paymentSuccess");
+                        // res.redirect("http://mumbaicollege.sfanow.in/paymentSuccess");
 
                         // res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess");
 
@@ -208,9 +208,9 @@ var controller = {
 
                                 // res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
 
-                                res.redirect("http://mumbaicollege.sfanow.in/sorryAthelete");
+                                res.redirect("http://mumbaischool.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://mumbaischool.sfanow.in/sorryAthelete");
+                                // res.redirect("http://mumbaicollege.sfanow.in/sorryAthelete");
 
                                 // res.redirect("https://sfanow.in/sorryAthelete");
                             }
