@@ -18,6 +18,7 @@ $sport-green-table:#5aeba4 !default;
 $sport-blue-table:#7fdfff !default;
 $sport-table-knockout:#f5f4f4 !default;
 $sport-type-head:#fb7700 !default;
+$sport-table-grey:#efeeee !default;
 // COLOR VARIABLES END
 // FONT IMPORTS
 @font-face {
@@ -142,6 +143,7 @@ $sport-type-head:#fb7700 !default;
         padding: 8px;
         line-height: 1.428571429;
         text-align: center;
+        text-transform: uppercase;
       }
     }
   }
@@ -277,9 +279,57 @@ $sport-type-head:#fb7700 !default;
 // END COMMON CLASS
 // *******************QUALIFYING+ FINAL ROUND************************
 .qualifying-final-round {
-  height: 100vh;
+  min-height: 100vh;
+  .qf-final-event-holder {
+    border: 1px solid $sport-grey-year;
+    padding: 25px;
+  }
+  .qf-final-finalround {
+    border-bottom: 1px solid $sport-primary;
+  }
+  .qf-final-qualifyinground {
+    margin: 25px 0px;
+  }
+  .qf-final-viewmore {
+    text-align: right;
+  }
+  .qf-final-sportname {
+    margin: 40px;
+    border-bottom: $sport-grey-year;
+  }
 }
 
+// FINAL ROUND TABLE
+.qf-final-finaltable,
+.qf-final-qualifyinground {
+  margin-bottom: 10px;
+  .table-draws-schedule {
+    thead {
+      tr {
+        background-color: $sport-blue-table;
+        border: none;
+        th {
+          border: none;
+          h4 {
+            color: $sport-primary;
+            @extend .d-fjalla-one;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          border: none;
+          background-color: $sport-table-grey;
+          @extend .d-opensans-regular;
+        }
+      }
+    }
+  }
+}
+
+// END FINAL ROUND TABLE
 // *******************END QUALIFYING + FINAL ROUND********************
 // CHAMPIONSHIP SCHEDULE PAGE
 .chamionshipschedule-page {
