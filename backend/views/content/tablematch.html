@@ -17,12 +17,17 @@
             <div class="pull-right">
               <!--<div class="pull-right">-->
               <form class="search-form mr-form ">
-                <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
+                <input type="text " ng-change="searchInTable(search)" placeholder="Search Here...
                              " ng-model="search" />
               </form>
               <a class="btn btn-success" ui-sref="detailmatches">
                  Create
               </a>
+              <!--<a class="btn btn-success" ui-sref="excel-upload">
+                 Upload-Excel
+              </a>-->
+              <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
+
             </div>
             <h3>List of Matches<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
           </div>
@@ -36,7 +41,7 @@
                     Match Id
                   </th>
                   <th>
-                    Sport
+                    Round
                   </th>
 
                   <th>Actions</th>
@@ -48,8 +53,8 @@
                   <!--<tr>-->
                   <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                   <!--<td>{{($index + 1)}}</td>-->
-                  <td>{{item.incrementalId}}</td>
-                  <td>{{item.sport}}</td>
+                  <td>{{item.matchId}}</td>
+                  <td>{{item.round}}</td>
                   <td>
                     <a class="btn btn-primary" target="_blank" ui-sref="detailagegroup({id:item._id})">
                       <i class="fa fa-pencil"></i> Edit

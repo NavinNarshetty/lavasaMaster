@@ -39,6 +39,17 @@ var controller = {
         }
     },
 
+    search: function (req, res) {
+        if (req.body) {
+            Match.search(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
 
 
 };

@@ -12,14 +12,12 @@ autoIncrement.initialize(mongoose);
 
 var schema = new Schema({
     incrementalId: Number,
+    matchId: String,
     sport: {
         type: Schema.Types.ObjectId,
         ref: 'Sport'
     },
-    round: {
-        type: Schema.Types.ObjectId,
-        ref: 'Round'
-    },
+    round: String,
     opponentsSingle: [{
         type: Schema.Types.ObjectId,
         ref: 'IndividualSport'
@@ -39,6 +37,7 @@ var schema = new Schema({
     scoreCard: Schema.Types.Mixed,
     results: Schema.Types.Mixed,
     scheduleDate: Date,
+    scheduleTime: String,
 });
 
 schema.plugin(deepPopulate, {
@@ -74,27 +73,57 @@ module.exports = mongoose.model('Match', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    getAggregatePipeline: function () {
+    getAggregatePipeline: function (data) {
         var pipeline = [{
-            $lookup: {
-                "from": "atheletes",
-                "localField": "opponentsSingle",
-                "foreignField": "_id",
-                "as": "opponentsSingle"
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "opponentsSingle",
+                    "foreignField": "_id",
+                    "as": "opponentsSingle"
+                }
+            }, {
+                $lookup: {
+                    "from": "sports",
+                    "localField": "sport",
+                    "foreignField": "_id",
+                    "as": "sport"
+                }
+            }, {
+                $unwind: {
+                    path: "$sport",
+                }
+            }, {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
+                }
+            },
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+
+                }
             }
-        }, {
-            $lookup: {
-                "from": "sports",
-                "localField": "sport",
-                "foreignField": "_id",
-                "as": "sport"
-            }
-        }, {
-            $unwind: {
-                path: "$sport",
-                preserveNullAndEmptyArrays: false // optional
-            }
-        }];
+        ];
         return pipeline;
     },
     getOneMatch: function (data, callback) {
@@ -125,9 +154,93 @@ var model = {
             if (err || _.isEmpty(result)) {
                 callback(err, result);
             } else {
+
                 callback(null, result);
             }
         });
+    },
+
+    search: function (data, callback) {
+        var maxRow = Config.maxRow;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['matchId', 'round'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                asc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var matchObj = {};
+        if (data.keyword == "") {
+            var pipeline = Match.getAggregatePipeline(data);
+            Match.aggregate(pipeline, function (err, result) {
+                if (err) {
+                    console.log(err);
+                    callback(null, err);
+                } else {
+                    if (_.isEmpty(result)) {
+                        var count = result.length;
+                        console.log("count", count);
+
+                        var data = {};
+                        data.options = options;
+
+                        data.results = result;
+                        data.total = count;
+                        callback(null, data);
+                    } else {
+                        var count = result.length;
+                        console.log("count", count);
+
+                        var data = {};
+                        data.options = options;
+                        data.results = result;
+                        data.total = count;
+                        callback(null, data);
+
+                    }
+                }
+            });
+        } else {
+            matchObj = {
+                round: {
+                    $regex: data.keyword,
+                    $options: "i"
+                },
+                matchId: {
+                    $regex: data.keyword,
+                    $options: "i"
+                }
+            };
+            Match.find(matchObj)
+                .sort({
+                    createdAt: -1
+                })
+                .order(options)
+                .keyword(options)
+                .page(options, function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        callback(null, found);
+                    }
+                });
+
+        }
     },
 
     getAllwithFind: function (data, callback) {

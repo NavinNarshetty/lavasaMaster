@@ -3587,19 +3587,65 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
         $scope.formData = {};
+        $scope.formData.page = 1;
+        $scope.formData.type = '';
+        $scope.formData.keyword = '';
 
-
-
-        $scope.getAllMatches = function () {
-            $scope.url = "Match/getAll"
-            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
-                if (data.value) {
-                    $scope.getallMatches = data.data;
-                    console.log($scope.getallMatches, "$scope.getallMatches");
-                }
-            })
+        $scope.searchInTable = function (data) {
+            $scope.formData.page = 1;
+            if (data.length >= 2) {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            } else if (data.length == '') {
+                $scope.formData.keyword = data;
+                $scope.viewTable();
+            }
         }
-        $scope.getAllMatches();
+        $scope.viewTable = function () {
+            $scope.url = "Match/search"
+            $scope.formData.page = $scope.formData.page++;
+            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                console.log("data.value", data);
+                $scope.items = data.data.results;
+                $scope.totalItems = data.data.total;
+                $scope.maxRow = data.data.options.count;
+            });
+        }
+        $scope.viewTable();
+
+
+        $scope.confDel = function (data) {
+            $scope.id = data;
+            $scope.modalInstance = $uibModal.open({
+                animation: $scope.animationsEnabled,
+                templateUrl: 'views/modal/delete.html',
+                backdrop: 'static',
+                keyboard: false,
+                size: 'sm',
+                scope: $scope
+            });
+        };
+
+
+        $scope.noDelete = function () {
+            $scope.modalInstance.close();
+        }
+
+        $scope.delete = function (data) {
+            // console.log(data);
+            $scope.url = "Match/delete";
+            $scope.constraints = {};
+            $scope.constraints._id = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                if (data.value) {
+                    toastr.success('Successfully Deleted', 'Age Group Message');
+                    $scope.modalInstance.close();
+                    $scope.viewTable();
+                } else {
+                    toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
+                }
+            });
+        }
     })
 
     .controller('DetailMatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
