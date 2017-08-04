@@ -8,7 +8,7 @@
 
 var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in";
 var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
-var globalLinkForAll = "http://mumbai.sfanow.in/";
+var globalLinkForAll = "https://mumbai.sfanow.in/";
 // var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
 // var globalLinkForAll = "http://testmumbai.sfanow.in/";

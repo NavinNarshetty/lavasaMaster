@@ -101,10 +101,9 @@
             cursor: pointer;
         }
 
-        .text-uppercase{
+        .text-uppercase {
             text-transform: uppercase;
         }
-
     </style>
 </head>
 
@@ -119,7 +118,9 @@
             <tr>
                 <td class="text-center">
                     <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">SPORTS REGISTRATIONS </span>
-                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA <span class="text-uppercase"> <%=city%> </span> <%=year%> </h2>
+                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA <span class="text-uppercase"> <%=city%> </span>
+                        <%=year%>
+                    </h2>
                 </td>
 
             </tr>
@@ -129,12 +130,14 @@
             <tr>
                 <td>
                     <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
-                        <p> Dear <%=name%>,</p>
+                        <p> Dear
+                            <%=name%>,</p>
 
-                        <<p style="margin-bottom: 0px;">You have successfully edited your <%=sportName%> Team. Please find below details of the updated team.
-                        </p>
-                        <!--                         <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA <%=city%> <%=year%>, by following our Facebook event page:</p>
-                        <a style="   color: #0a1a72;"  href="https://www.facebook.com/pg/sportsforallnow/events/" target="_blank">https://www.facebook.com/pg/sportsforallnow/events/</a>
+                        <<p style="margin-bottom: 0px;">You have successfully edited your
+                            <%=sportName%> Team. Please find below details of the updated team.
+                                </p>
+                                <!--                         <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA <%=city%> <%=year%>, by following our Facebook event page:</p>
+                        <a style="   color: #0a1a72;"  href="https://www.facebook.com/events/237874770032808/?active_tab=discussion" target="_blank">https://www.facebook.com/events/237874770032808/?active_tab=discussion</a>
                         <p>For further details about your application or any other information you may require please contact us on <span style="font-family:TitilliumWeb-Bold;">7045684365 /66 /67 </span>                            or<br> email us at 
                         <a style="font-family:TitilliumWeb-Bold; color: black;"" href="mailto:info@sfanow.in">info@sfanow.in</a>
                         </p>
@@ -174,18 +177,21 @@
                             </thead>
                             <tbody>
                                 <% _.each(students,function(student){%>
-                                     <tr style="text-align: center;background: #e1e1e1;">
+                                    <tr style="text-align: center;background: #e1e1e1;">
                                         <td>
                                             <%=student.srno%>
                                         </td>
                                         <%if(student.isGoalKeeper==true && student.isCaptain==true){%>
-                                            <td><%=student.name%> (Captian,Goalkeeper)   
+                                            <td>
+                                                <%=student.name%> (Captian,Goalkeeper)
                                             </td>
                                             <%}else if(student.isGoalKeeper==true){%>
-                                                <td><%=student.name%> (Goalkeeper)                                       
+                                                <td>
+                                                    <%=student.name%> (Goalkeeper)
                                                 </td>
                                                 <%}else if(student.isCaptain==true){%>
-                                                    <td> <%=student.name%> (Captain)         
+                                                    <td>
+                                                        <%=student.name%> (Captain)
                                                     </td>
                                                     <%}else{%>
                                                         <td>
@@ -205,17 +211,17 @@
             <tr>
                 <td>
                     <div style="padding: 0px 54px;">
-                       <% if(type=="school"){%>
-                        <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
+                        <% if(type=="school"){%>
+                            <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
                        color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 5px">School Name:
-                            <%=schoolName%>
-                        </p>
-                    <%}else{%>
-                       <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
+                                <%=schoolName%>
+                            </p>
+                            <%}else{%>
+                                <p style="text-align: left;border: 1px solid #e1e1e1;padding: 8px;
                        color: black;background: #e1e1e1; margin-bottom: 0px; margin-top: 5px">College Name:
-                            <%=schoolName%>
-                        </p>
-                    <%}%> 
+                                    <%=schoolName%>
+                                </p>
+                                <%}%>
                     </div>
 
                 </td>
@@ -226,7 +232,8 @@
                 <td>
                     <div style="padding: 0px 54px; color: #091a71; text-align: justify; font-weight: 600;">
                         <p style="margin-bottom: 0px;">We wish to see you with a strong contingent,</p>
-                        <p style="margin-top: 5px;">such that your <%=type%> is up there on the ranking table!</p>
+                        <p style="margin-top: 5px;">such that your
+                            <%=type%> is up there on the ranking table!</p>
                     </div>
                 </td>
             </tr>
@@ -249,7 +256,7 @@
                                     <tr>
                 <td>
                     <div style="padding: 0px 54px; text-align: justify; " >
-                        <p style="margin-bottom: 0px; "> 2) Draws and Schedules will be published on our website by 30th October <%=year%> (Draws and Schedules for Football will be published by 30th September <%=year%>)</p>
+                        <p style="margin-bottom: 0px; "> 2) Draws and Schedules will be published on our website by 20th November <%=year%> (Draws and Schedules for Football will be published by 30th September <%=year%>)</p>
                     </div>
                 </td>
             </tr>
@@ -289,19 +296,22 @@
                 <td>
                     <div style="padding: 0px 54px; text-align: justify;">
                         <p style="margin-bottom: 0px;"> 4) Stay updated with details such as championship draws & schedules, workshops, exhibition matches,
-                            special days and all other announcements with regards to SFA <%=city%> <%=year%>, by following our Facebook
-                            event page: <a style="   color: #0a1a72; font-style: italic; font-weight: 600;" href="https://www.facebook.com/pg/sportsforallnow/events/"
-                                target="_blank">https://www.facebook.com/pg/sportsforallnow/events/</a></p>
+                            special days and all other announcements with regards to SFA
+                            <%=city%>
+                                <%=year%>, by following our Facebook event page: <a style="   color: #0a1a72; font-style: italic; font-weight: 600;"
+                                        href="https://www.facebook.com/events/237874770032808/?active_tab=discussion" target="_blank">https://www.facebook.com/events/237874770032808/?active_tab=discussion</a></p>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="padding: 0px 54px; text-align: justify;">
-                        <p style="margin-bottom: 0px;"> 5) In the event that your <%=type%> <span style="font-weight: bold;">DOES NOT </span>register for SFA
-                            <%=city%> <%=year%> by the <span style="font-weight: bold;">30th September <%=year%> an additional fee of Rs. 400/-(inclusive of all applicable taxes) </span>will
-                            be levied <span style="font-weight: bold;">PER ATHLETE</span>. The date and mode for the balance
-                            payment will be communicated to you soon via email and SMS. </p>
+                        <p style="margin-bottom: 0px;"> 5) In the event that your
+                            <%=type%> <span style="font-weight: bold;">DOES NOT </span>register for SFA
+                                <%=city%>
+                                    <%=year%> by the <span style="font-weight: bold;">30th September <%=year%> an additional fee of Rs. 400/-(inclusive of all applicable taxes) </span>will
+                                        be levied <span style="font-weight: bold;">PER ATHLETE</span>. The date and mode
+                                        for the balance payment will be communicated to you soon via email and SMS. </p>
                     </div>
                 </td>
             </tr>

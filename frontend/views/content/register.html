@@ -523,11 +523,20 @@
                             </div>
                             <p>Sport Registration</p>
                         </div>
-                        <div class="category-padding-sport f-s">
+                        <div class="category-padding-sport f-s mod-cls">
                             <p>Once the athlete / {{type}} registration is complete, log in using your SFA ID and password to
                                 register for your sport/sports of interest.
                             </p>
-                            <p class="mb-191" ng-if="isCollege == false">All registered {{type}}s and athletes will be notified when registration for sports will be open!
+                            <p ng-if="isCollege == false">
+                                If you do not have an SFA ID and Password kindly register yourself as an athlete / school by clicking the relevant option.
+                            </p>
+                            <!-- <p class="custom-a" ng-if="isCollege == false"><a href="http://{{sfaCity}}school.sfanow.in/formregis" target="_new">Click here for {{type |firstcapitalize}} Registration Form</a>
+                            </p>
+                            <p class="mb-75 custom-a" ng-if="isCollege == false"><a href="http://mumbaischool.sfanow.in/formathlete" target="_new"><strong>Click here for Athlete Registration Form</strong></a>
+                            </p> -->
+                            <p class="custom-a" ng-if="isCollege == false">For {{type | firstcapitalize}}:<br><a href="http://{{sfaCity}}school.sfanow.in/formregis" target="_new">http://mumbaischool.sfanow.in/formregis</a>
+                            </p>
+                            <p class="mb-75 custom-a" ng-if="isCollege == false">For Athlete:<br><a href="http://mumbaischool.sfanow.in/formathlete" target="_new"><strong>http://mumbaischool.sfanow.in/formathlete</strong></a>
                             </p>
                             <p class="mb-33" ng-if="isCollege == true">All registered {{type}}s and athletes will be notified when registration for sports will be open!
                             </p>

@@ -11,52 +11,49 @@
             font-family: 'TitilliumWeb-Bold';
             src: url("../font/TitilliumWeb-Bold.ttf");
         }
-        
+
         @font-face {
             font-family: 'TitilliumWeb-Regular';
             src: url("../font/TitilliumWeb-Regular.ttf");
         }
-        
+
         .body {
             font-family: TitilliumWeb-Regular;
         }
-        
+
         .img-responsive {
             max-width: 100%;
             height: auto;
             display: block;
         }
-        
+
         .inline-block {
             display: inline-block;
         }
-        
+
         .text-center {
             text-align: center;
         }
-        
+
         .list-inline>li {
             display: inline-block;
             padding-left: 5px;
             padding-right: 5px;
         }
-        
-       a{
-        text-decoration: none;
-         
-       }
 
-       a:hover{
-        text-decoration: underline !important; 
-       }
+        a {
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline !important;
+        }
 
         table {
             width: 600px;
             margin: 0 auto;
-
-
         }
-        
+
         h2:before {
             content: '';
             width: 100px;
@@ -72,7 +69,7 @@
             -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
         }
-        
+
         h2:after {
             content: '';
             width: 100px;
@@ -88,7 +85,8 @@
             -webkit-transform: translate(-50%, -50%);
             transform: translate(-50%, -50%);
         }
-        .text-uppercase{
+
+        .text-uppercase {
             text-transform: uppercase;
         }
     </style>
@@ -105,7 +103,9 @@
             <tr>
                 <td class="text-center">
                     <span style="font-family: TitilliumWeb-Regular;color:#0a1a72;font-size: 20px;">SPORTS REGISTRATIONS </span>
-                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA <span class="text-uppercase"> <%=city%> </span> <%=year%>  </h2>
+                    <h2 style="margin:10px;position: relative;font-family: TitilliumWeb-Bold;color:#00aaff;font-size: 27px;">SFA <span class="text-uppercase"> <%=city%> </span>
+                        <%=year%>
+                    </h2>
                 </td>
 
             </tr>
@@ -114,17 +114,29 @@
         <tbody>
             <tr>
                 <td>
-                    <div class="main-div"style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
-                        <p> Dear <%=name%>,</p>
+                    <div class="main-div" style="padding: 0px 54px; text-align: justify; font-family: TitilliumWeb-Regular;font-size: 17px;">
+                        <p> Dear
+                            <%=name%>,</p>
 
-                        <p>Thank you for your interest in participating at SFA <%=city%> <%=year%>. We regret to inform you that your application for <%=sportName%> has been rejected. However, we look forward to hosting you at the various workshops, exhibition matches and educational sessions planned during the course of the championship. These activities will advance your sporting knowledge and help take your sporting prowess to the next level.
+                        <p>Thank you for your interest in participating at SFA
+                            <%=city%>
+                                <%=year%>. We regret to inform you that your application for
+                                    <%=sportName%> has been rejected. However, we look forward to hosting you at the various workshops,
+                                        exhibition matches and educational sessions planned during the course of the championship.
+                                        These activities will advance your sporting knowledge and help take your sporting
+                                        prowess to the next level.
                         </p>
-                        <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA <%=city%> <%=year%>, by following our Facebook event page:</p>
-                        <a style="   color: #0a1a72; font-weight: 600;"  href="https://www.facebook.com/pg/sportsforallnow/events/" target="_blank">https://www.facebook.com/pg/sportsforallnow/events/</a>
-                        <p>For further details about your application or any other information you may require please contact us on <span style="font-family:TitilliumWeb-Bold;">7045684365 /66 /67 </span>                            or<br> email us at 
-                        <a style="font-family:TitilliumWeb-Bold; color: black;"" href="mailto:info@sfanow.in">info@sfanow.in</a>
+                        <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA
+                            <%=city%>
+                                <%=year%>, by following our Facebook event page:</p>
+                        <a style="   color: #0a1a72; font-weight: 600;" href="https://www.facebook.com/events/237874770032808/?active_tab=discussion"
+                            target="_blank">https://www.facebook.com/events/237874770032808/?active_tab=discussion</a>
+                        <p>For further details about your application or any other information you may require please contact
+                            us on <span style="font-family:TitilliumWeb-Bold;">7045684365 /66 /67 </span> or<br> email us
+                            at
+                            <a style="font-family:TitilliumWeb-Bold; color: black;" " href="mailto:info@sfanow.in ">info@sfanow.in</a>
                         </p>
-                        <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>
+                        <p style="font-family:TitilliumWeb-Bold; ">Regards,<br>Team SFA</p>
 
                     </div>
                 </td>
@@ -133,16 +145,20 @@
         <tfoot>
             <tr>
                 <td>
-                    <div class="blue-footer" style="background:#0a1a72;font-family: TitilliumWeb-Regular;">
-                        <ul class="list-inline" style="padding: 8px 35px;font-size: 16px;font-weight: bold">
-                            <li><img src="https://sfa.wohlig.co.in/img/img/g1.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="www.sfanow.in" target="_new" style="color:#fff;text-decoration: none;">www.sfanow.in</a></li>
-                            <li><img src="https://sfa.wohlig.co.in/img/img/g2.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href=" https://goo.gl/bSQ9CB" target="_new" style="color:#fff;text-decoration: none;">/sportsforallnow</a></li>
-                            <li><img src="https://sfa.wohlig.co.in/img/img/g3.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="https://twitter.com/sfanow" target="_new" style="color:#fff;text-decoration: none;">/sfanow</a></li>
-                            <li><img src="https://sfa.wohlig.co.in/img/img/g4.png" alt=""></li>
-                            <li style="vertical-align: top;padding-left: 0;"><a href="https://www.instagram.com/sfanow/" target="_new" style="color:#fff;text-decoration: none;">/sfanow </a></li>
+                    <div class="blue-footer " style="background:#0a1a72;font-family: TitilliumWeb-Regular; ">
+                        <ul class="list-inline " style="padding: 8px 35px;font-size: 16px;font-weight: bold ">
+                            <li><img src="https://sfa.wohlig.co.in/img/img/g1.png " alt=" "></li>
+                            <li style="vertical-align: top;padding-left: 0; "><a href="www.sfanow.in " target="_new
+                                " style="color:#fff;text-decoration: none; ">www.sfanow.in</a></li>
+                            <li><img src="https://sfa.wohlig.co.in/img/img/g2.png " alt=" "></li>
+                            <li style="vertical-align: top;padding-left: 0; "><a href=" https://goo.gl/bSQ9CB
+                                " target="_new " style="color:#fff;text-decoration: none; ">/sportsforallnow</a></li>
+                            <li><img src="https://sfa.wohlig.co.in/img/img/g3.png " alt=" "></li>
+                            <li style="vertical-align: top;padding-left: 0; "><a href="https://twitter.com/sfanow
+                                " target="_new " style="color:#fff;text-decoration: none; ">/sfanow</a></li>
+                            <li><img src="https://sfa.wohlig.co.in/img/img/g4.png " alt=" "></li>
+                            <li style="vertical-align: top;padding-left: 0; "><a href="https://www.instagram.com/sfanow/
+                                " target="_new " style="color:#fff;text-decoration: none; ">/sfanow </a></li>
                         </ul>
                     </div>
                 </td>
