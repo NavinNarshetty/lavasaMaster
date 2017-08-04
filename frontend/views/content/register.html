@@ -533,7 +533,8 @@
                             </p>
                         </div>
                         <!--<div class="text-center mb-20"><button class="btn-category  blue-light">Sports Registration Form</button></div>-->
-                        <div class="text-center mb-20"><a ui-sref="sports-registration"><button class="btn-category  blue-light" >Click here for Sports Registration</button></a></div>
+                        <div class="text-center mb-20" ng-if="isCollege == false"><a ui-sref="sports-registration"><button class="btn-category  blue-light" >Click here for Sports Registration</button></a></div>
+                        <div class="text-center mb-20" ng-if="isCollege == true"><button class="com-category  blue-light">Opening shortly</button></div>
                         <!-- <div class="text-center mb-20"><a ui-sref="sports-registration"><button class="com-category  blue-light" >Opening shortly</button></a></div> -->
                     </div>
                 </div>

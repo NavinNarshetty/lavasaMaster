@@ -147,7 +147,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         console.log(err, data);
         if (err) {
             $scope.errorMsgpan = err;
-            if (err == 'Please Upload File Size Upto 1 MB') {
+            if (err == 'Please Upload File Size Upto 5 MB') {
                 $scope.openUploadSizeModal();
                 $timeout(function () {
                     $scope.uploadSizeInstances.close();
@@ -168,7 +168,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         console.log(err, data);
         if (err) {
             $scope.errorMsgpan = err;
-            if (err == 'Please Upload File Size Upto 1 MB') {
+            if (err == 'Please Upload File Size Upto 5 MB') {
                 $scope.openUploadSizeModal();
                 $timeout(function () {
                     $scope.uploadSizeInstances.close();
@@ -189,7 +189,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         console.log(err, data);
         if (err) {
             $scope.errorMsgpan = err;
-            if (err == 'Please Upload File Size Upto 1 MB') {
+            if (err == 'Please Upload File Size Upto 5 MB') {
                 $scope.openUploadSizeModal();
                 $timeout(function () {
                     $scope.uploadSizeInstances.close();
@@ -210,7 +210,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         console.log(err, data);
         if (err) {
             $scope.errorMsgpan = err;
-            if (err == 'Please Upload File Size Upto 1 MB') {
+            if (err == 'Please Upload File Size Upto 5 MB') {
                 $scope.openUploadSizeModal();
                 $timeout(function () {
                     $scope.uploadSizeInstances.close();
@@ -910,7 +910,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
         console.log(err, data);
         if (err) {
             $scope.errorMsgpan = err;
-            if (err == 'Please Upload File Size Upto 1 MB') {
+            if (err == 'Please Upload File Size Upto 5 MB') {
                 $scope.openUploadSizeModal();
                 $timeout(function () {
                     $scope.uploadSizeInstances.close();
@@ -931,7 +931,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
         console.log(err, data);
         if (err) {
             $scope.errorMsgpan = err;
-            if (err == 'Please Upload File Size Upto 1 MB') {
+            if (err == 'Please Upload File Size Upto 5 MB') {
                 $scope.openUploadSizeModal();
                 $timeout(function () {
                     $scope.uploadSizeInstances.close();

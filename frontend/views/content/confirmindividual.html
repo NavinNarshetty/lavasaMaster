@@ -83,9 +83,8 @@
                               <th>SFA ID-Name</th>
                               <th>Gender</th>
                               <th>Age Group</th>
-                              <th ng-if="st=='Judo' || st=='Boxing' || st=='Taekwondo' || st=='Sport MMA'">Weight</th>
+                              <th ng-if="st=='Judo' || st=='Boxing' || st=='Taekwondo' || st=='Sport MMA'">Weight Category</th>
                             </thead>
-
                             <tbody>
                               <tr ng-class="{'missing-fields':selectService.showMissingFields && !athelete.isValidSelection}" ng-repeat="athelete in selectService.team track by $index">
                                 <td>
