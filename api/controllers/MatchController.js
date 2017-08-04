@@ -50,6 +50,17 @@ var controller = {
         }
     },
 
+    uploadExcelMatch: function (req, res) {
+        if (req.body) {
+            Match.uploadExcelMatch(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
 
 
 };

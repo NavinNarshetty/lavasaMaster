@@ -126,6 +126,7 @@ var model = {
         ];
         return pipeline;
     },
+
     getOneMatch: function (data, callback) {
         if (!_.isEmpty(data)) {
             var commonPipeline = Match.getAggregatePipeline();
@@ -148,6 +149,7 @@ var model = {
             callback("Invalid Params", null);
         }
     },
+
     getAll: function (data, callback) {
         var pipeline = Match.getAggregatePipeline(data);
         Match.aggregate(pipeline, function (err, result) {
@@ -302,6 +304,61 @@ var model = {
                     }
                 }
             });
-    }
+    },
+
+    uploadExcelMatch: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Config.importGS(data.file, function (err, importData) {
+                        console.log("importData", importData);
+                        if (err || _.isEmpty(importData)) {
+                            callback(err, null);
+                        } else {
+                            callback(null, importData);
+                        }
+                    });
+                },
+                function (importData, callback) {
+                    async.concatSeries(importData, function (singleData, callback) {
+                        console.log("singleData", singleData["MATCH ID"]);
+                        async.waterfall([
+                                function (callback) {
+                                    var sport = _.split(singleData.SPORT, " ");
+                                    console.log("sport", sport);
+                                    callback(null, sport);
+                                }
+                            ],
+                            function (err, results) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, results);
+                                } else if (results) {
+                                    if (_.isEmpty(results)) {
+                                        callback(null, results);
+                                    } else {
+                                        callback(null, results);
+                                    }
+                                }
+                            });
+                    }, function (err, singleData) {
+                        // console.log("singleData", singleData);
+                        callback(null, singleData)
+                    });
+                }
+            ],
+            function (err, results) {
+                if (err) {
+                    console.log(err);
+                    callback(null, results);
+                } else if (results) {
+                    if (_.isEmpty(results)) {
+                        callback(null, results);
+                    } else {
+                        callback(null, results);
+                    }
+                }
+            });
+    },
+
 };
 module.exports = _.assign(module.exports, exports, model);
