@@ -6,25 +6,26 @@
     <div class="row">
       <div class="col-md-12 drop-1">
         <select class="form-control">
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="mercedes">Mercedes</option>
-          <option value="audi">Audi</option>
+          <option ng-model="form.resultType" value="knockout">Knockout</option>
+          <option ng-model="form.resultType" value="heat">Heat</option>
+          <option ng-model="form.resultType" value="league">League</option>
+          <option ng-model="form.resultType" value="league-cum-knockout">League cum Knockout</option>
+          <option ng-model="form.resultType" value="qualifying-knockout">Qualifying Knockout</option>
+          <option ng-model="form.resultType" value="qualifying-round">Qualifying Round</option>
+          <option ng-model="form.resultType" value="swiss-league">Swiss League</option>
         </select>
       </div>
       <div class="col-md-12 drop-2">
         <select class="form-control">
-          <option value="volvo">Volvo</option>
-          <option value="saab">Saab</option>
-          <option value="mercedes">Mercedes</option>
-          <option value="audi">Audi</option>
+          <option ng-model="form.playerType" value="team">Team</option>
+          <option ng-model="form.playerType" value="individual">Individual</option>
         </select>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12">
         <!--<button class="btn btn-green-outline btn-scoring"> Upload Image</button>-->
-         <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
+        <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
       </div>
     </div>
 
@@ -35,7 +36,7 @@
         </div>
 
         <div class="col-md-4">
-          <button class="btn btn-green-outline btn-scoring">Save</button>
+          <button class="btn btn-green-outline btn-scoring" ng-click="uploadExcelMatch(form)">Save</button>
         </div>
 
       </div>

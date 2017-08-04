@@ -3590,6 +3590,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.formData.page = 1;
         $scope.formData.type = '';
         $scope.formData.keyword = '';
+        $scope.form = {};
 
         $scope.searchInTable = function (data) {
             $scope.formData.page = 1;
@@ -3658,6 +3659,16 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 windowClass: 'backmodal'
             })
         }
+
+        $scope.uploadExcelMatch = function (data) {
+            $scope.url = "Match/uploadExcelMatch";
+            $scope.constraints = {};
+            $scope.constraints = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data upload", data);
+            });
+        }
+
     })
 
     .controller('DetailMatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
