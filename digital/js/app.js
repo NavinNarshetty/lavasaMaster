@@ -10,7 +10,8 @@ var myApp = angular.module('myApp', [
     'angular-flexslider',
     'ui.swiper',
     'angularPromiseButtons',
-    'toastr'
+    'toastr',
+    'ui.select'
 ]);
 
 // Define all the routes below
@@ -24,6 +25,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/",
             templateUrl: tempateURL,
             controller: 'HomeCtrl'
+        })
+        .state('matchstart', {
+            url: "/match-start",
+            templateUrl: tempateURL,
+            controller: 'MatchStartCtrl'
         })
         .state('form', {
             url: "/form",
