@@ -265,6 +265,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'CollegeFaqCtrl'
         })
         // Draws and Schedule
+        .state('championshipschedule', {
+            url: "/championship-schedule",
+            templateUrl: tempateURL,
+            controller: 'ChampionshipScheduleCtrl'
+        })
         .state('heats', {
             url: "/heats",
             templateUrl: tempateURL,
@@ -295,7 +300,8 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'QfKnockoutCtrl'
         });
-    if (window.location.origin != "http://testmumbaischool.sfanow.in") {
+    // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
+    if (window.location.origin != "http://mumbaischool.sfanow.in") {
         $urlRouterProvider.otherwise("/register");
     } else {
         $urlRouterProvider.otherwise("/championship");

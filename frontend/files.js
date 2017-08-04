@@ -74,4 +74,5 @@ module.exports = [
   'frontend/js/controllers/draws-schedule/qf-finalController.js',
   'frontend/js/controllers/draws-schedule/qf-knockoutController.js',
   'frontend/js/controllers/draws-schedule/time-trialController.js',
+  'frontend/js/controllers/draws-schedule/championshipschedule.js'
 ];

@@ -589,8 +589,8 @@ myApp.directive('img', function ($compile, $parse) {
                         // if (image.file.type == "image/png" || image.file.type == "image/jpeg") {
                         // $scope.uploadStatus = "uploading";
                         // console.log("AAAA", image.file.size);
-                        if (image.file.size > 1000000) {
-                            $scope.callback('Please Upload File Size Upto 1 MB', null);
+                        if (image.file.size > 5000000) {
+                            $scope.callback('Please Upload File Size Upto 5 MB', null);
                         } else {
                             $scope.callback('Uploading', null);
                             var Template = this;

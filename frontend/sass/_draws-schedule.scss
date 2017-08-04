@@ -17,8 +17,71 @@ $sport-green-graph: #0edb87 !default;
 $sport-green-table:#5aeba4 !default;
 $sport-blue-table:#7fdfff !default;
 $sport-table-knockout:#f5f4f4 !default;
+$sport-type-head:#fb7700 !default;
+$sport-table-grey:#efeeee !default;
 // COLOR VARIABLES END
+// FONT IMPORTS
+@font-face {
+  font-family: "Fjalla One";
+  src: url('../fonts/FJALLAONE-REGULAR_1.OTF');
+}
+
+@font-face {
+  font-family: "Opensans Semibold";
+  src: url('../fonts/OPENSANS-SEMIBOLD_3.TTF');
+}
+
+@font-face {
+  font-family: "Opensans Regular";
+  src: url('../fonts/OPENSANS-REGULAR_3.TTF');
+}
+
+@font-face {
+  font-family: "Teko";
+  src: url('../fonts/Teko-Regular_0.ttf');
+}
+
+@font-face {
+  font-family: "Teko Semibold";
+  src: url('../fonts/Teko-SemiBold_0.ttf');
+}
+
+.d-fjalla-one {
+  font-family: "Fjalla One";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.d-opensans-semibold {
+  font-family: "Opensans Semibold";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.d-opensans-regular {
+  font-family: "Opensans Regular";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.d-teko {
+  font-family: "Teko";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.d-teko-semibold {
+  font-family: "Teko Semibold";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// END FONT FAMILY IMPORTS
 // COMMON CLASS
+.sport-type-head {
+  color: $sport-type-head;
+}
+
 .sport-color-primary {
   color: $sport-primary;
 }
@@ -35,6 +98,23 @@ $sport-table-knockout:#f5f4f4 !default;
   color: $sport-blue-table;
 }
 
+.draws-a {
+  a {
+    color: $sport-primary;
+    text-decoration: underline;
+    &:active,
+    &:focus,
+    &:hover,
+    &.active {
+      color: $sport-primary;
+    }
+  }
+}
+
+.m-clear {
+  margin: 0px;
+}
+
 .sport-btn-blue-outline {
   border: 1px solid $sport-primary;
   background-color: transparent;
@@ -49,6 +129,222 @@ $sport-table-knockout:#f5f4f4 !default;
   }
 }
 
-.table-knockout {}
+// ********************COMMON TABLE FOR ALL SCHEDULE *************
+.table-draws-schedule {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  border-collapse: separate;
+  border-spacing: 0px 5px;
+  thead {
+    tr {
+      th {
+        border: 1px solid #000;
+        padding: 8px;
+        line-height: 1.428571429;
+        text-align: center;
+        text-transform: uppercase;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        border: 1px solid #000;
+        padding: 8px;
+        line-height: 1.428571429;
+        text-align: center;
+      }
+    }
+  }
+}
 
+// *******************END COMMON TABLE FOR SCHEDULE ****************
+// *******************TABLE FOUR *******************
+.table-four {
+  thead {
+    tr {
+      th {
+        &:nth-child(-n+3) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        &:nth-child(-n+3) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+}
+
+// *******************END TABLE FOUR ****************
+// *******************TABLE FIVE ********************
+.table-five {
+  thead {
+    tr {
+      th {
+        &:nth-child(-n+4) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        &:nth-child(-n+4) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+}
+
+// *******************TABLE FIVE END  *********************
+// ******************TABLE SIX ************************
+.table-six {
+  thead {
+    tr {
+      th {
+        &:nth-child(-n+5) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        &:nth-child(-n+5) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+}
+
+// ******************END TABLE SIX *********************
+// *******************TABLE SEVEN ***************
+.table-seven {
+  thead {
+    tr {
+      th {
+        &:nth-child(-n+6) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        &:nth-child(-n+6) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+}
+
+// *******************END TABLE SEVEN **************
 // END COMMON CLASS
+// *******************QUALIFYING+ FINAL ROUND************************
+.qualifying-final-round {
+  min-height: 100vh;
+  .qf-final-event-holder {
+    border: 1px solid $sport-grey-year;
+    padding: 25px;
+  }
+  .qf-final-finalround {
+    border-bottom: 1px solid $sport-primary;
+  }
+  .qf-final-qualifyinground {
+    margin: 25px 0px;
+  }
+  .qf-final-viewmore {
+    text-align: right;
+  }
+  .qf-final-sportname {
+    margin: 40px;
+    border-bottom: $sport-grey-year;
+  }
+}
+
+// FINAL ROUND TABLE
+.qf-final-finaltable,
+.qf-final-qualifyinground {
+  margin-bottom: 10px;
+  .table-draws-schedule {
+    thead {
+      tr {
+        background-color: $sport-blue-table;
+        border: none;
+        th {
+          border: none;
+          h4 {
+            color: $sport-primary;
+            @extend .d-fjalla-one;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          border: none;
+          background-color: $sport-table-grey;
+          @extend .d-opensans-regular;
+        }
+      }
+    }
+  }
+}
+
+// END FINAL ROUND TABLE
+// *******************END QUALIFYING + FINAL ROUND********************
+// CHAMPIONSHIP SCHEDULE PAGE
+.chamionshipschedule-page {
+  padding: 40px 0;
+}
+
+.championship-drawstitle {
+  padding: 20px 0;
+  text-align: center;
+  h3 {
+    color: $sport-warning;
+  }
+  p {
+    font-size: 16px;
+  }
+}
+
+// CHAMPIONSHIP SCHEDULE PAGE END

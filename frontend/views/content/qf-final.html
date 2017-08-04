@@ -1,11 +1,196 @@
-<div class="container">
-  <table class="table">
-    <thead>
-      <tr>
+<div class="qualifying-final-round">
+  <div class="container">
+    <!--SPORT NAME-->
+    <div class="qf-final-sportname text-center">
+      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>athletics</span> |
+        <span>girls</span> |
+        <span> U-14</span></h3>
+      <div class="draws-downloadpdf draws-a">
+        <a href="#">Download the schedule in pdf format</a>
+      </div>
+    </div>
+    <!--END SPORT NAME-->
+    <!--SPORT EVENT NAME-->
+    <div class="qf-final-sporteventname text-center">
+      <h3 class="d-fjalla-one text-uppercase sport-color-primary">long jump</h3>
+    </div>
+    <!--END SPORT EVENT NAME-->
 
-      </tr>
-    </thead>
-  </table>
+    <!--EVENT HOLDER -->
+    <div class="qf-final-event-holder">
+      <!--FINAL ROUND HOLDER-->
+      <div class="qf-final-finalround">
+        <!--FINAL HEAD-->
+        <div class="qf-final-finalround-head">
+          <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Final</h3>
+          <p class="sport-color-primary"><span>17th August,</span>
+            <span>2017</span> |
+            <span>10.30am</span></p>
+        </div>
+        <!--END FINAL HEAD-->
+        <!--FINAL TABLE-->
+        <div class="qf-final-finaltable table-responsive">
+          <table class="table-draws-schedule table-five">
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <h4 class="m-clear">Result</h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="m-clear"> name</h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="m-clear">
+                      school
+                    </h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="m-clear">
+                      best attempt
+                    </h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="m-clear">Video</h4>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="final in Qffinal track by $index">
+                <td>
+                  <div>{{$index+1}}</div>
+                </td>
+                <td>
+                  <div class="text-capitalize">{{final.name}} </div>
+                </td>
+                <td>
+                  <div class="text-capitalize">
+                    {{final.schoolname}}
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    {{final.bestattempt}}
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <a href="">
+                        <img src="img/sf-play.png" alt="">
+                      </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!--END FINAL TABLE-->
+      </div>
+      <!--END FINAL ROUND HOLDER-->
 
+      <!--QUALIFYING ROUND HOLDER-->
+      <div class="qf-final-qualifyinground">
+        <!--QUALIFYING HEAD-->
+        <div class="qf-final-qualifyingroundhead">
+          <h3 class="text-uppercase d-fjalla-one sport-color-primary m-clear">Qualifying</h3>
+          <p class="sport-color-primary"><span>17th August,</span>
+            <span>2017</span> |
+            <span>10.30am</span></p>
+        </div>
+        <!--END QUALIFYING HEAD-->
+        <!--QUALIFYING TABLE-->
+        <div class="qf-final-qualifyingroundtable table-responsive">
+          <table class="table-draws-schedule table-six">
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <h4 class="sport-color-primary m-clear">sr.no</h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="sport-color-primary m-clear">name</h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="sport-color-primary m-clear">school</h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="sport-color-primary m-clear">best attempt</h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="sport-color-primary m-clear">result</h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="sport-color-primary m-clear">video</h4>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="qualify in Qffinal track by $index">
+                <td>
+                  <div class="text-capitalize">
+                    {{$index+1}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize">
+                    {{ qualify.name}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize">
+                    {{qualify.schoolname}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize">
+                    {{qualify.bestattempt}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize">
+                    {{qualify.result}}
+                  </div>
+                </td>
+                <td>
+                  <div class="">
+                    <a href="">
+                        <img src="img/sf-play.png" alt="">
+                      </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
 
+          </table>
+        </div>
+        <div class="qf-final-viewmore">
+          <button class="btn sport-btn-blue-outline">View More</button>
+        </div>
+        <!--END QUALIFYING TABLE-->
+      </div>
+      <!--END QUALIFYING HOLDER-->
+    </div>
+    <!--EVENT HOLDER END-->
+
+  </div>
 </div>
