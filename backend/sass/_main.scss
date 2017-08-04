@@ -1262,5 +1262,37 @@
      }
  }
 
+ .btn-green-outline {
+     border: 1px solid #0a1a72;
+     background: transparent;
+     color: #0a1a72;
+     outline: none;
+     &:hover,
+     &:active,
+     &:focus {
+         border: 1px solid #0a1a72;
+         background: transparent;
+         color: #0a1a72;
+         outline: none;
+     }
+ }
+
+ .drop-1 {
+     padding: 20px 15px;
+ }
+
+ .drop-2 {
+     padding: 20px 15px;
+ }
+
+ .btn-scoring {
+     width: 100%;
+     text-transform: uppercase;
+ }
+
+ .backmodal {
+     padding: 50px;
+ }
+
  @import "fancybox-override";
  @import "other/mobile";

@@ -23,11 +23,9 @@
               <a class="btn btn-success" ui-sref="detailmatches">
                  Create
               </a>
-              <!--<a class="btn btn-success" ui-sref="excel-upload">
+              <a class="btn btn-success" ng-click="openExcelUpload()">
                  Upload-Excel
-              </a>-->
-              <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
-
+              </a>
             </div>
             <h3>List of Matches<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
           </div>

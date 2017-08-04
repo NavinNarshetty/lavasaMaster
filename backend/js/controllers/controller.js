@@ -3580,7 +3580,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
     })
 
-    .controller('MatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('MatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tablematch");
         $scope.menutitle = NavigationService.makeactive("Matches List");
@@ -3645,6 +3645,18 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                     toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
                 }
             });
+        }
+
+        $scope.openExcelUpload = function () {
+            $uibModal.open({
+                animation: true,
+                scope: $scope,
+                backdrop: 'static',
+                keyboard: false,
+                templateUrl: 'views/modal/uploadMatches.html',
+                size: 'lg',
+                windowClass: 'backmodal'
+            })
         }
     })
 
