@@ -503,170 +503,176 @@
                         </ul>
                         <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
                             from their school registrations. </p>-->
-                        <p class="custom-a" ng-if="isCollege == false"><a ng-click="athBenModal(type, sfaCity, year)"><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
-                        <p class="custom-a mb-75" ng-if="isCollege == true"><a ng-click="athBenModal(type, sfaCity, year)"><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
+                        <p class="custom-a mb-33" ng-if="isCollege==f alse "><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
+                        <p class="custom-a mb-75 " ng-if="isCollege==t rue "><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
                     </div>
-                    <div class="text-center mb-20 "><a ui-sref="formathlete"><button class="btn-category orange"> Click here for Athlete Registration Form</button></a></div>
+                    <div class="text-center mb-20 "><a ui-sref="formathlete "><button class="btn-category orange "> Click here for Athlete Registration Form</button></a></div>
                 </div>
             </div>
         </div>
 
-        <p class="text-center step mt50 mb25">Step 2 : Sports Registration</p>
-        <div class="row">
-            <div class="col-md-6 col-sm-12 col-xs-12">
-                <div class="">
+        <p class="text-center step mt50 mb25 ">Step 2 : Sports Registration</p>
+        <div class="row ">
+            <div class="col-md-6 col-sm-12 col-xs-12 ">
+                <div class=" ">
                     <!--<p class="text-center step mb-75 ">Step2 : Sport Registration</p>-->
-                    <div class="sport-registration school-registration">
-                        <div class="btn-sport btn-school text-center">
-                            <div class="school-icon">
-                                <img src="img/icon/3.png" class="img-responsive">
+                    <div class="sport-registration school-registration ">
+                        <div class="btn-sport btn-school text-center ">
+                            <div class="school-icon ">
+                                <img src="img/icon/3.png " class="img-responsive ">
                             </div>
                             <p>Sport Registration</p>
                         </div>
-                        <div class="category-padding-sport f-s mod-cls">
+                        <div class="category-padding-sport f-s mod-cls ">
                             <p>Once the athlete / {{type}} registration is complete, log in using your SFA ID and password to
                                 register for your sport/sports of interest.
                             </p>
-                            <p ng-if="isCollege == false">
+                            <p ng-if="isCollege==f alse ">
                                 If you do not have an SFA ID and Password kindly register yourself as an athlete / school by clicking the relevant option.
                             </p>
-                            <!-- <p class="custom-a" ng-if="isCollege == false"><a href="http://{{sfaCity}}school.sfanow.in/formregis" target="_new">Click here for {{type |firstcapitalize}} Registration Form</a>
+                            <!-- <p class="custom-a " ng-if="isCollege==f alse "><a href="http://{{sfaCity}}school.sfanow.in/formregis
+                            " target="_new ">Click here for {{type |firstcapitalize}} Registration Form</a>
                             </p>
-                            <p class="mb-75 custom-a" ng-if="isCollege == false"><a href="http://mumbaischool.sfanow.in/formathlete" target="_new"><strong>Click here for Athlete Registration Form</strong></a>
+                            <p class="mb-75 custom-a " ng-if="isCollege==f alse "><a href="http://mumbaischool.sfanow.in/formathlete
+                            " target="_new "><strong>Click here for Athlete Registration Form</strong></a>
                             </p> -->
-                            <p class="custom-a" ng-if="isCollege == false">For {{type | firstcapitalize}}:<br><a href="http://{{sfaCity}}school.sfanow.in/formregis" target="_new">http://mumbaischool.sfanow.in/formregis</a>
+                            <p class="custom-a " ng-if="isCollege==f alse
+                            ">For {{type | firstcapitalize}}:<br><a href="http://{{sfaCity}}school.sfanow.in/formregis " target="_new ">http://mumbaischool.sfanow.in/formregis</a>
                             </p>
-                            <p class="mb-75 custom-a" ng-if="isCollege == false">For Athlete:<br><a href="http://mumbaischool.sfanow.in/formathlete" target="_new"><strong>http://mumbaischool.sfanow.in/formathlete</strong></a>
+                            <p class="mb-75 custom-a " ng-if="isCollege==f alse ">For Athlete:<br><a href="http://mumbaischool.sfanow.in/formathlete
+                            " target="_new "><strong>http://mumbaischool.sfanow.in/formathlete</strong></a>
                             </p>
-                            <p class="mb-33" ng-if="isCollege == true">All registered {{type}}s and athletes will be notified when registration for sports will be open!
+                            <p class="mb-33 " ng-if="isCollege==t rue ">All registered {{type}}s and athletes will be notified when registration for sports will be open!
                             </p>
                         </div>
-                        <!--<div class="text-center mb-20"><button class="btn-category  blue-light">Sports Registration Form</button></div>-->
-                        <div class="text-center mb-20" ng-if="isCollege == false"><a ui-sref="sports-registration"><button class="btn-category  blue-light" >Click here for Sports Registration</button></a></div>
-                        <div class="text-center mb-20" ng-if="isCollege == true"><button class="com-category  blue-light">Opening shortly</button></div>
-                        <!-- <div class="text-center mb-20"><a ui-sref="sports-registration"><button class="com-category  blue-light" >Opening shortly</button></a></div> -->
+                        <!--<div class="text-center mb-20 "><button class="btn-category blue-light ">Sports Registration Form</button></div>-->
+                        <div class="text-center mb-20 " ng-if="isCollege==f alse "><a ui-sref="sports-registration
+                            "><button class="btn-category blue-light " >Click here for Sports Registration</button></a></div>
+                        <div class="text-center mb-20 " ng-if="isCollege==t rue "><button class="com-category blue-light ">Opening shortly</button></div>
+                        <!-- <div class="text-center mb-20 "><a ui-sref="sports-registration "><button class="com-category
+                            blue-light " >Opening shortly</button></a></div> -->
                     </div>
                 </div>
             </div>
-            <div class="col-md-6 col-sm-12 col-xs-12">
-                <div class="">
+            <div class="col-md-6 col-sm-12 col-xs-12 ">
+                <div class=" ">
                     <!--<p class="text-center step mb-75 ">Step2 : Sport Registration</p>-->
-                    <div class="sport-registration athletes">
-                        <div class="btn-sport  btn-school text-center pdt5">
-                            <div class="sport-icon">
-                                <!--<img src="img/icon/3.png" class="img-responsive">-->
+                    <div class="sport-registration athletes ">
+                        <div class="btn-sport btn-school text-center pdt5 ">
+                            <div class="sport-icon ">
+                                <!--<img src="img/icon/3.png " class="img-responsive ">-->
                             </div>
                             <p>SFA {{sfaCity}} {{year}}</p>
                             <p>Championship Schedule* </p>
                         </div>
-                        <div class="category-padding-sport cus-pd-lr f-s" ng-if="isCollege == false">
-                            <div class="row">
+                        <div class="category-padding-sport cus-pd-lr f-s " ng-if="isCollege==f alse ">
+                            <div class="row ">
                                 <div class="col-md-6 col-sm-6 col-xs-12 ver-line ">
-                                    <div class="t-center">
-                                        <ul class="display-table list-style v-line f-12 sf-relative">
+                                    <div class="t-center ">
+                                        <ul class="display-table list-style v-line f-12 sf-relative ">
 
-                                            <li class="pl-8"><span class="font-boldcus">1. Archery:</span> 15<sup>th</sup>-17<sup>th</sup>                                                Dec
+                                            <li class="pl-8 "><span class="font-boldcus ">1. Archery:</span> 15<sup>th</sup>-17<sup>th</sup>                                                Dec
                                             </li>
-                                            <li class="pl-8">2. Athletics: TBA</li>
-                                            <li class="pl-8"><span class="font-boldcus">3. Badminton:</span> 6<sup>th</sup>-13<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8"><span class="font-boldcus">4. Basketball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8"><span class="font-boldcus">5. Boxing:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8"><span class="font-boldcus">6. Carrom:</span> 9<sup>th</sup>-11<sup>th</sup> Dec</li>
-                                            <li class="pl-8"><span class="font-boldcus">7. Chess:</span> 13<sup>th</sup>-17<sup>th</sup> Dec</li>
-                                            <li class="pl-8"><span class="font-boldcus">8. Fencing:</span> 14<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8"><span class="font-boldcus">9. Football:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">10. Handball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li class="pl-8 ">2. Athletics: TBA</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">3. Badminton:</span> 6<sup>th</sup>-13<sup>th</sup>                                                Dec</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">4. Basketball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">5. Boxing:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">6. Carrom:</span> 9<sup>th</sup>-11<sup>th</sup>                                                Dec</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">7. Chess:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">8. Fencing:</span> 14<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">9. Football:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">10. Handball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
                                             <li>11. Hockey: TBA</li>
-                                            <li><span class="font-boldcus">12. Judo:</span> 16<sup>th</sup>-17<sup>th</sup> Dec</li>
-                                            <li><span class="font-boldcus">13. Kabaddi:</span> 6<sup>th</sup>-12<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">12. Judo:</span> 16<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">13. Kabaddi:</span> 6<sup>th</sup>-12<sup>th</sup>                                                Dec</li>
                                         </ul>
                                     </div>
                                 </div>
 
 
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div class="t-center">
-                                        <ul class="display-table list-style v-line f-12 To25">
-                                            <li><span class="font-boldcus">14. Karate:</span> 8<sup>th</sup>-10<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">15. Kho Kho:</span> 7<sup>th</sup>-10<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">16. Sport MMA:</span> 11<sup>th</sup>-12<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">17. Shooting:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">18. Squash:</span> 12<sup>th</sup>-14<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">19. Swimming:</span> 9<sup>th</sup>-10<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">20. Table Tennis:</span> 6<sup>th</sup>-11<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">21. Taekwondo:</span> 6<sup>th</sup>-7<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">22. Tennis:</span> 7<sup>th</sup>-13<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">23. Throwball:</span> 14<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">24. Volleyball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">25. Water Polo:</span> 11<sup>th</sup> Dec</li>
+                                <div class="col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="t-center ">
+                                        <ul class="display-table list-style v-line f-12 To25 ">
+                                            <li><span class="font-boldcus ">14. Karate:</span> 8<sup>th</sup>-10<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">15. Kho Kho:</span> 7<sup>th</sup>-10<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">16. Sport MMA:</span> 11<sup>th</sup>-12<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">17. Shooting:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">18. Squash:</span> 12<sup>th</sup>-14<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">19. Swimming:</span> 9<sup>th</sup>-10<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">20. Table Tennis:</span> 6<sup>th</sup>-11<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">21. Taekwondo:</span> 6<sup>th</sup>-7<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">22. Tennis:</span> 7<sup>th</sup>-13<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">23. Throwball:</span> 14<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">24. Volleyball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">25. Water Polo:</span> 11<sup>th</sup> Dec</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="category-padding-sport cus-pd-lr f-s" ng-if="isCollege == true">
-                            <div class="row">
+                        <div class="category-padding-sport cus-pd-lr f-s " ng-if="isCollege==t rue ">
+                            <div class="row ">
                                 <div class="col-md-6 col-sm-6 col-xs-12 ver-line ">
-                                    <div class="t-center">
-                                        <ul class="display-table list-style v-line f-12 sf-relative">
+                                    <div class="t-center ">
+                                        <ul class="display-table list-style v-line f-12 sf-relative ">
 
-                                            <li class="pl-8"><span class="font-boldcus">1. Archery:</span> 15<sup>th</sup>-17<sup>th</sup>                                                Dec
+                                            <li class="pl-8 "><span class="font-boldcus ">1. Archery:</span> 15<sup>th</sup>-17<sup>th</sup>                                                Dec
                                             </li>
-                                            <li class="pl-8"><span class="font-boldcus">2. Boxing:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8"><span class="font-boldcus">3. Carrom:</span> 9<sup>th</sup>-11<sup>th</sup> Dec</li>
-                                            <li class="pl-8"><span class="font-boldcus">4. Chess:</span> 13<sup>th</sup>-17<sup>th</sup> Dec</li>
-                                            <li class="pl-8"><span class="font-boldcus">5. Fencing:</span> 14<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8"><span class="font-boldcus">6. Handball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8">7. Hockey: TBA</li>
-                                            <li class="pl-8"><span class="font-boldcus">8. Judo:</span> 16<sup>th</sup>-17<sup>th</sup> Dec</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">2. Boxing:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">3. Carrom:</span> 9<sup>th</sup>-11<sup>th</sup>                                                Dec</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">4. Chess:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">5. Fencing:</span> 14<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">6. Handball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li class="pl-8 ">7. Hockey: TBA</li>
+                                            <li class="pl-8 "><span class="font-boldcus ">8. Judo:</span> 16<sup>th</sup>-17<sup>th</sup> Dec</li>
                                         </ul>
                                     </div>
                                 </div>
-                                <div class="col-md-6 col-sm-6 col-xs-12">
-                                    <div class="t-center">
-                                        <ul class="display-table list-style v-line f-12 To25">
-                                            <li class="pl-8"><span class="font-boldcus">9. Kabaddi:</span> 6<sup>th</sup>-12<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">10. Shooting:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">11. Squash:</span> 12<sup>th</sup>-14<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">12. Swimming:</span> 9<sup>th</sup>-10<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">13. Taekwondo:</span> 6<sup>th</sup>-7<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">14. Tennis:</span> 7<sup>th</sup>-13<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus">15. Water Polo:</span> 11<sup>th</sup> Dec</li>
+                                <div class="col-md-6 col-sm-6 col-xs-12 ">
+                                    <div class="t-center ">
+                                        <ul class="display-table list-style v-line f-12 To25 ">
+                                            <li class="pl-8 "><span class="font-boldcus ">9. Kabaddi:</span> 6<sup>th</sup>-12<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">10. Shooting:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">11. Squash:</span> 12<sup>th</sup>-14<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">12. Swimming:</span> 9<sup>th</sup>-10<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">13. Taekwondo:</span> 6<sup>th</sup>-7<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">14. Tennis:</span> 7<sup>th</sup>-13<sup>th</sup>                                                Dec</li>
+                                            <li><span class="font-boldcus ">15. Water Polo:</span> 11<sup>th</sup> Dec</li>
                                         </ul>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <p class="text-center">*SFA shall keep you informed in-case there is any change of dates. </p>
-                        <p class="text-center" ng-if="isCollege == false">*Football qualifiers will be held in November. Dates will be announced soon.</p>
-                        <!--<div class="text-center mb-20"><button class="btn-category  blue-light">Sports Registration Form</button></div>-->
-                        <!--<div class="text-center mb-20"><button class="com-category  blue-light">Opening shortly</button></div>-->
+                        <p class="text-center ">*SFA shall keep you informed in-case there is any change of dates. </p>
+                        <p class="text-center " ng-if="isCollege==f alse ">*Football qualifiers will be held in November. Dates will be announced soon.</p>
+                        <!--<div class="text-center mb-20 "><button class="btn-category blue-light ">Sports Registration Form</button></div>-->
+                        <!--<div class="text-center mb-20 "><button class="com-category blue-light ">Opening shortly</button></div>-->
                     </div>
                 </div>
             </div>
         </div>
 
     </div>
-    <!--<div class="text-center">Sports Registration Form</div>-->
-    <div class="store-for-you" ng-if="isCollege == false">
-        <h2 class="text-center">WHAT’S IN STORE FOR YOU</h2>
-        <div class="sport-row-space">
-            <div class="row">
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="common-store f-s">
+    <!--<div class="text-center ">Sports Registration Form</div>-->
+    <div class="store-for-you " ng-if="isCollege==f alse ">
+        <h2 class="text-center ">WHAT’S IN STORE FOR YOU</h2>
+        <div class="sport-row-space ">
+            <div class="row ">
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store f-s ">
                         <p>PRO SPORT EXPERIENCE </p>
-                        <ul class="store-padding">
+                        <ul class="store-padding ">
                             <li>World-Class Multi-Sporting Infrastructure & Facilities</li>
                             <li>High Quality Competition </li>
                             <li>Quality Governance</li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="common-store f-s">
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store f-s ">
                         <p>PRO CARE FOR ENHANCED PERFORMANCE
                         </p>
-                        <ul class="store-for-you-list">
+                        <ul class="store-for-you-list ">
                             <li>Injury Prevention Centres & Oncourt Physiocare</li>
                             <li> Hydration & Nutrition Stations </li>
                             <li>Safe & Hygenic Sporting Environment
@@ -674,13 +680,13 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="common-store pd-left f-s">
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store pd-left f-s ">
                         <p>PRO ATHLETE DEVELOPMENT</p>
-                        <ul class="store-for-you-list">
+                        <ul class="store-for-you-list ">
                             <li><b>Athlete & School Profiles</b></li>
-                            <li style="list-style-type: circle;"> Profiles Comprehensive sport bios </li>
-                            <li style="list-style-type: circle;">Statistics, scores and records</li>
+                            <li style="list-style-type: circle; "> Profiles Comprehensive sport bios </li>
+                            <li style="list-style-type: circle; ">Statistics, scores and records</li>
                             <li><b> HD Match Videos of Every Game</b>
                             </li>
                         </ul>
@@ -688,30 +694,30 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row ">
             <div class="col-md-4 col-sm-4 col-xs-12 ">
-                <div class="common-store f-s">
+                <div class="common-store f-s ">
                     <p>ELITE ATHLETE CLUB</p>
-                    <ul class="store-for-you-list">
+                    <ul class="store-for-you-list ">
                         <li><b>Scouting for talented athletes across different sports and empowering them with:</b></li>
-                        <li style="list-style-type: circle;"> Training & Development Scholarships</li>
-                        <li style="list-style-type: circle;"> Complimentary mental and fitness assessment programs</li>
+                        <li style="list-style-type: circle; "> Training & Development Scholarships</li>
+                        <li style="list-style-type: circle; "> Complimentary mental and fitness assessment programs</li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="common-store f-s">
+            <div class="col-md-4 col-sm-4 col-xs-12 ">
+                <div class="common-store f-s ">
                     <p>THE YOUTH SPORT DEVELOPMENT FUND</p>
-                    <ul class="store-padding">
+                    <ul class="store-padding ">
                         <li>The Youth Sport Development Fund will be awarded to the top-ranking schools enabling them to further
                             develop sport in their schools.</li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="common-store pd-left f-s">
+            <div class="col-md-4 col-sm-4 col-xs-12 ">
+                <div class="common-store pd-left f-s ">
                     <p>SPECIAL DAYS</p>
-                    <ul class="store-for-you-list">
+                    <ul class="store-for-you-list ">
                         <li>Opening Ceremony</li>
                         <li>Girl’s Day Celebration</li>
                         <li> Differently-abled Day </li>
@@ -723,25 +729,25 @@
             </div>
         </div>
     </div>
-    <div class="store-for-you" ng-if="isCollege == true">
-        <h2 class="text-center">WHAT’S IN STORE FOR YOU</h2>
-        <div class="sport-row-space">
-            <div class="row">
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="common-store f-s">
+    <div class="store-for-you " ng-if="isCollege==t rue ">
+        <h2 class="text-center ">WHAT’S IN STORE FOR YOU</h2>
+        <div class="sport-row-space ">
+            <div class="row ">
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store f-s ">
                         <p>PRO SPORT EXPERIENCE </p>
-                        <ul class="store-for-you-list">
+                        <ul class="store-for-you-list ">
                             <li>World-Class Multi-Sporting Infrastructure & Facilities</li>
                             <li>High Quality Competition</li>
                             <li>Quality Governance - National & State Associations</li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="common-store f-s">
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store f-s ">
                         <p>PRO CARE FOR ENHANCED PERFORMANCE
                         </p>
-                        <ul class="store-for-you-list">
+                        <ul class="store-for-you-list ">
                             <li>Injury Prevention Centres & Oncourt Physiocare</li>
                             <li> Hydration & Nutrition Stations with complimentary energy drinks.</li>
                             <li>Safe & Hygenic Sporting Environment
@@ -749,11 +755,11 @@
                         </ul>
                     </div>
                 </div>
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="common-store pd-left f-s">
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store pd-left f-s ">
                         <p>PRO HD MATCH VIDEOS</p>
                         <!-- <p>PRO ATHLETE DEVELOPMENT</p> -->
-                        <ul class="store-for-you-list">
+                        <ul class="store-for-you-list ">
                             <li>HD match videography for every game</li>
                             <li>Digital record maintenance</li>
                             <li>Match Videos enhanced with statistics and advanced analytics
@@ -763,21 +769,21 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row ">
             <div class="col-md-4 col-sm-4 col-xs-12 ">
-                <div class="common-store f-s">
+                <div class="common-store f-s ">
                     <p>PRO DATA & ANALYTICS PORTAL</p>
-                    <ul class="store-for-you-list">
+                    <ul class="store-for-you-list ">
                         <li>Athlete & College Profiles</li>
                         <li>Comprehensive sport bios</li>
                         <li>Year-on-Year record maintenance</li>
                     </ul>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="common-store f-s">
+            <div class="col-md-4 col-sm-4 col-xs-12 ">
+                <div class="common-store f-s ">
                     <p>END-TO-END ONLINE MANAGEMENT</p>
-                    <ul class="store-for-you-list">
+                    <ul class="store-for-you-list ">
                         <li>One time E-Registration process for athletes & colleges</li>
                         <li>Fixtures, Draws and Match Schedules to be published online prior to the championship
                         </li>
@@ -785,12 +791,12 @@
                     </ul>
                 </div>
             </div>
-            <div class="col-md-4 col-sm-4 col-xs-12">
-                <div class="common-store pd-left f-s">
+            <div class="col-md-4 col-sm-4 col-xs-12 ">
+                <div class="common-store pd-left f-s ">
                     <p>ELITE ATHLETE CLUB</p>
-                    <ul class="store-for-you-list">
+                    <ul class="store-for-you-list ">
                         <li>Scouting for talented athletes across different sports and empowering them with:</li>
-                        <ul style="padding:0;margin:0">
+                        <ul style="padding:0;margin:0 ">
                             <li>Training & Development Scholarships </li>
                             <li>Complimentary mental and fitness assessment programs</li>
                         </ul>
@@ -799,29 +805,29 @@
             </div>
         </div>
     </div>
-    <div class="past-championship">
-        <h2 class="text-center">SFA Past Championships</h2>
-        <div class="championship-blue">
-            <div class="video">
-                <div class="display-inline relate">
-                    <a class="fancybox.iframe" href="https://www.youtube.com/embed/Gfhf2uWIg98" fancybox-box>
-                        <img src="img/icon/sport1.jpg" class="img-responsive">
+    <div class="past-championship ">
+        <h2 class="text-center ">SFA Past Championships</h2>
+        <div class="championship-blue ">
+            <div class="video ">
+                <div class="display-inline relate ">
+                    <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
+                        <img src="img/icon/sport1.jpg " class="img-responsive ">
                     </a>
-                    <h2 class="text-center">SFA {{sfaCity | capitalize}} 2016</h2>
-                    <div class="video-icon">
-                        <a class="fancybox.iframe" href="https://www.youtube.com/embed/j-iLIlmhi4I" fancybox-box>
-                            <img src="img/video.png" class="img-responsive">
+                    <h2 class="text-center ">SFA {{sfaCity | capitalize}} 2016</h2>
+                    <div class="video-icon ">
+                        <a class="fancybox.iframe " href="https://www.youtube.com/embed/j-iLIlmhi4I " fancybox-box>
+                            <img src="img/video.png " class="img-responsive ">
                         </a>
                     </div>
                 </div>
-                <div class="display-inline ml3 relate">
-                    <a class="fancybox.iframe" href="https://www.youtube.com/embed/Gfhf2uWIg98" fancybox-box>
-                        <img src="img/icon/sport2.jpg" class="img-responsive">
+                <div class="display-inline ml3 relate ">
+                    <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
+                        <img src="img/icon/sport2.jpg " class="img-responsive ">
                     </a>
-                    <h2 class="text-center">SFA {{sfaCity | capitalize}} 2015</h2>
-                    <div class="video-icon">
-                        <a class="fancybox.iframe" href="https://www.youtube.com/embed/Gfhf2uWIg98" fancybox-box>
-                            <img src="img/video.png" class="img-responsive">
+                    <h2 class="text-center ">SFA {{sfaCity | capitalize}} 2015</h2>
+                    <div class="video-icon ">
+                        <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
+                            <img src="img/video.png " class="img-responsive ">
                         </a>
                     </div>
                 </div>
@@ -829,15 +835,15 @@
         </div>
     </div>
 </div>
-<div class="tab-register hidden-xs" ng-if="isCollege == false">
-    <div class="registration side-menu2">
-        <div class="tab-img dis-bloc" ng-if="closeReg == true">
-            <img src=" img/icon/reg.png " class="img-responsive">
-            <!--<img src=" img/icon/reg.png " class="img-responsive" ng-click="closeMenu();">-->
+<div class="tab-register hidden-xs " ng-if="isCollege==f alse ">
+    <div class="registration side-menu2 ">
+        <div class="tab-img dis-bloc " ng-if="closeReg==t rue ">
+            <img src=" img/icon/reg.png " class="img-responsive ">
+            <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="closeMenu(); ">-->
         </div>
-        <div class="tab-img dis-bloc" ng-if="closeReg == false">
-            <img src=" img/icon/reg.png " class="img-responsive" ng-mouseover="getMenu();">
-            <!--<img src=" img/icon/reg.png " class="img-responsive" ng-click="getMenu();">-->
+        <div class="tab-img dis-bloc " ng-if="closeReg==f alse ">
+            <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
+            <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="getMenu(); ">-->
         </div>
         <div class="btn-tab dis-bloc ">
             <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
@@ -845,15 +851,15 @@
             </a>
         </div>
     </div>
-    <div class="tab1">
-        <div class="age-event side-menu1">
-            <div class="tab-img dis-bloc" ng-if="closeAge == true">
+    <div class="tab1 ">
+        <div class="age-event side-menu1 ">
+            <div class="tab-img dis-bloc " ng-if="closeAge==t rue ">
                 <img src="img/icon/age.png " class="img-responsive ">
             </div>
-            <div class="tab-img dis-bloc" ng-if="closeAge == false">
-                <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1();">
+            <div class="tab-img dis-bloc " ng-if="closeAge==f alse ">
+                <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
             </div>
-            <div class="btn-tab dis-bloc">
+            <div class="btn-tab dis-bloc ">
                 <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
                     <button class=" ">Age Group & Event Categories</button>
                 </a>
@@ -861,13 +867,13 @@
         </div>
     </div>
 </div>
-<div class="tab-register visible-xs" ng-if="isCollege == false">
-    <div class="registration side-menu menu-out menu-in" ng-mouseleave="closeMenu();">
-        <div class="tab-img dis-bloc" ng-if="closeReg == true">
-            <img src=" img/icon/reg.png " class="img-responsive">
+<div class="tab-register visible-xs " ng-if="isCollege==f alse ">
+    <div class="registration side-menu menu-out menu-in " ng-mouseleave="closeMenu(); ">
+        <div class="tab-img dis-bloc " ng-if="closeReg==t rue ">
+            <img src=" img/icon/reg.png " class="img-responsive ">
         </div>
-        <div class="tab-img dis-bloc" ng-if="closeReg == false">
-            <img src=" img/icon/reg.png " class="img-responsive" ng-mouseover="getMenu();">
+        <div class="tab-img dis-bloc " ng-if="closeReg==f alse ">
+            <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
         </div>
         <div class="btn-tab dis-bloc ">
             <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
@@ -875,15 +881,15 @@
             </a>
         </div>
     </div>
-    <div class="tab1">
-        <div class="age-event menu-in1  menu-out side-menu1" ng-mouseleave="closeMenu1();">
-            <div class="tab-img dis-bloc" ng-if="closeAge == true">
+    <div class="tab1 ">
+        <div class="age-event menu-in1 menu-out side-menu1 " ng-mouseleave="closeMenu1(); ">
+            <div class="tab-img dis-bloc " ng-if="closeAge==t rue ">
                 <img src="img/icon/age.png " class="img-responsive ">
             </div>
-            <div class="tab-img dis-bloc" ng-if="closeAge == false">
-                <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1();">
+            <div class="tab-img dis-bloc " ng-if="closeAge==f alse ">
+                <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
             </div>
-            <div class="btn-tab dis-bloc">
+            <div class="btn-tab dis-bloc ">
                 <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
                     <button class=" ">Age Group & Event Categories</button>
                 </a>
@@ -891,15 +897,15 @@
         </div>
     </div>
 </div>
-<div class="tab-register hidden-xs" ng-if="isCollege == true">
-    <div class="registration side-menu2">
-        <div class="tab-img dis-bloc" ng-if="closeReg == true">
-            <img src=" img/icon/reg.png " class="img-responsive">
-            <!--<img src=" img/icon/reg.png " class="img-responsive" ng-click="closeMenu();">-->
+<div class="tab-register hidden-xs " ng-if="isCollege==t rue ">
+    <div class="registration side-menu2 ">
+        <div class="tab-img dis-bloc " ng-if="closeReg==t rue ">
+            <img src=" img/icon/reg.png " class="img-responsive ">
+            <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="closeMenu(); ">-->
         </div>
-        <div class="tab-img dis-bloc" ng-if="closeReg == false">
-            <img src=" img/icon/reg.png " class="img-responsive" ng-mouseover="getMenu();">
-            <!--<img src=" img/icon/reg.png " class="img-responsive" ng-click="getMenu();">-->
+        <div class="tab-img dis-bloc " ng-if="closeReg==f alse ">
+            <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
+            <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="getMenu(); ">-->
         </div>
         <div class="btn-tab dis-bloc ">
             <a href="img/pdf/sfa_atheletecollege_group.pdf " target="_new ">
@@ -907,15 +913,15 @@
             </a>
         </div>
     </div>
-    <div class="tab1">
-        <div class="age-event side-menu1">
-            <div class="tab-img dis-bloc" ng-if="closeAge == true">
+    <div class="tab1 ">
+        <div class="age-event side-menu1 ">
+            <div class="tab-img dis-bloc " ng-if="closeAge==t rue ">
                 <img src="img/icon/age.png " class="img-responsive ">
             </div>
-            <div class="tab-img dis-bloc" ng-if="closeAge == false">
-                <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1();">
+            <div class="tab-img dis-bloc " ng-if="closeAge==f alse ">
+                <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
             </div>
-            <div class="btn-tab dis-bloc">
+            <div class="btn-tab dis-bloc ">
                 <a href="img/pdf/sfa_agegroupcollege_event.pdf " target="_new ">
                     <button class=" ">Age Group & Event Categories</button>
                 </a>
@@ -923,13 +929,13 @@
         </div>
     </div>
 </div>
-<div class="tab-register visible-xs" ng-if="isCollege == true">
-    <div class="registration side-menu menu-out menu-in" ng-mouseleave="closeMenu();">
-        <div class="tab-img dis-bloc" ng-if="closeReg == true">
-            <img src=" img/icon/reg.png " class="img-responsive">
+<div class="tab-register visible-xs " ng-if="isCollege==t rue ">
+    <div class="registration side-menu menu-out menu-in " ng-mouseleave="closeMenu(); ">
+        <div class="tab-img dis-bloc " ng-if="closeReg==t rue ">
+            <img src=" img/icon/reg.png " class="img-responsive ">
         </div>
-        <div class="tab-img dis-bloc" ng-if="closeReg == false">
-            <img src=" img/icon/reg.png " class="img-responsive" ng-mouseover="getMenu();">
+        <div class="tab-img dis-bloc " ng-if="closeReg==f alse ">
+            <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
         </div>
         <div class="btn-tab dis-bloc ">
             <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
@@ -937,15 +943,15 @@
             </a>
         </div>
     </div>
-    <div class="tab1">
-        <div class="age-event menu-in1  menu-out side-menu1" ng-mouseleave="closeMenu1();">
-            <div class="tab-img dis-bloc" ng-if="closeAge == true">
+    <div class="tab1 ">
+        <div class="age-event menu-in1 menu-out side-menu1 " ng-mouseleave="closeMenu1(); ">
+            <div class="tab-img dis-bloc " ng-if="closeAge==t rue ">
                 <img src="img/icon/age.png " class="img-responsive ">
             </div>
-            <div class="tab-img dis-bloc" ng-if="closeAge == false">
-                <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1();">
+            <div class="tab-img dis-bloc " ng-if="closeAge==f alse ">
+                <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
             </div>
-            <div class="btn-tab dis-bloc">
+            <div class="btn-tab dis-bloc ">
                 <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
                     <button class=" ">Age Group & Event Categories</button>
                 </a>
