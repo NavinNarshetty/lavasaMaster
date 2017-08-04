@@ -24,7 +24,7 @@
     <div class="row">
       <div class="col-md-12">
         <!--<button class="btn btn-green-outline btn-scoring"> Upload Image</button>-->
-        <upload-image ng-model="tour.pdf" ng-callback="tourPdf(data);" allow-type="application/pdf" no-view class="tour-uploadinput pointer"></upload-image>
+         <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
       </div>
     </div>
 
