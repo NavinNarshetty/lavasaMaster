@@ -2,7 +2,7 @@ module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
 
     getOneMatch: function (req, res) {
-        if (req.body._id) {
+        if (req.body) {
             Match.getOneMatch(req.body, res.callback);
         } else {
             res.json({
