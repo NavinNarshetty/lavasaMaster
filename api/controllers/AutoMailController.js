@@ -21,9 +21,6 @@ var controller = {
                 data: "Invalid Request"
             });
         }
-    },
-
-
-
+    }
 };
 module.exports = _.assign(module.exports, controller);

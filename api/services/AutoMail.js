@@ -52,7 +52,7 @@ var model = {
                             }];
                             emailData.city = data.property.sfaCity;
                             emailData.year = data.property.year;
-                            emailData.type = "athelete"
+                            emailData.type = "athelete";
                             emailData.filename = "athleteAutoMail.ejs";
                             emailData.subject = "SFA: Sports Registration Now Open";
                             console.log("complete", emailData);
