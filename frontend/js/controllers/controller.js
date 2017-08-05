@@ -63,13 +63,13 @@ myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService
         isFirstDisabled: false
     };
 
-    if (window.location.host == 'testmumbaischool.sfanow.in') {
-        $scope.isCollege = false;
-    } else if (window.location.host == 'testmumbaicollege.sfanow.in') {
-        $scope.isCollege = true;
-    }
+    // if (window.location.host == 'testmumbaischool.sfanow.in') {
+    //     $scope.isCollege = false;
+    // } else if (window.location.host == 'testmumbaicollege.sfanow.in') {
+    //     $scope.isCollege = true;
+    // }
 
-    if (window.location.host == 'mumbaischool.sfanow.in') {
+    if (window.location.host == "mumbaischool.sfanow.in") {
         $scope.isCollege = false;
     } else if (window.location.host == 'mumbaicollege.sfanow.in') {
         $scope.isCollege = true;
