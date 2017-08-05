@@ -50,7 +50,7 @@ myApp.controller('VenueCtrl', function ($scope, TemplateService, NavigationServi
     $scope.navigation = NavigationService.getNavigation();
 });
 
-myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService, $timeout, errorService, toastr) {
     //Used to name the .html file
     $scope.template = TemplateService.getHTML("content/faq.html");
     TemplateService.title = "FAQ"; //This is the Title of the Website
@@ -62,6 +62,47 @@ myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService
         isFirstOpen: true,
         isFirstDisabled: false
     };
+
+    if (window.location.host == 'testmumbaischool.sfanow.in') {
+        $scope.isCollege = false;
+    } else if (window.location.host == 'testmumbaicollege.sfanow.in') {
+        $scope.isCollege = true;
+    }
+
+    // if (window.location.host == 'mumbaischool.sfanow.in') {
+    //     $scope.isCollege = false;
+    // } else  if (window.location.host == 'mumbaicollege.sfanow.in') {
+    //     $scope.isCollege = true;
+    // }
+    // NavigationService.getDetail(function (data) {
+    //     errorService.errorCode(data, function (allData) {
+    //         console.log(allData);
+    //         if (!allData.message) {
+    //             if (allData.value === true) {
+    //                 $scope.city = allData.data.city;
+    //                 $scope.district = allData.data.district;
+    //                 $scope.state = allData.data.state;
+    //                 $scope.year = allData.data.year;
+    //                 $scope.sfaCity = allData.data.sfaCity;
+    //                 if (allData.data.type == 'school') {
+    //                     $scope.isCollege = false;
+    //                     $scope.type = allData.data.type;
+    //                     // $scope.registrationLink = globalLinkSchool;
+    //                     // $scope.athleteLink = globalLinkSchoolAthlete;
+    //                     // $scope.sportsRegistrationLink = globalLinkSchoolSportsRegistration;
+    //                 } else {
+    //                     $scope.isCollege = true;
+    //                     $scope.type = allData.data.type;
+    //                     // $scope.registrationLink = globalLinkCollege;
+    //                     // $scope.athleteLink = globalLinkCollegeAthlete;
+    //                     // $scope.sportsRegistrationLink = globalLinkCollegeSportsRegistration;
+    //                 }
+    //             }
+    //         } else {
+    //             toastr.error(allData.message, 'Error Message');
+    //         }
+    //     });
+    // });
 });
 
 
