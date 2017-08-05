@@ -46,9 +46,9 @@ schema.plugin(deepPopulate, {
         "sport": {
             select: '_id sportslist gender ageGroup'
         },
-        "opponentsSingle": {
-            select: '_id sport athleteId sportsListSubCategory createdBy '
-        },
+        "opponentsSingle": [{
+            select: '_id athleteId sportsListSubCategory createdBy '
+        }],
         "opponentsTeam": {
             select: '_id name teamId schoolName studentTeam createdBy sport school'
         },
@@ -70,7 +70,7 @@ schema.plugin(autoIncrement.plugin, {
 });
 module.exports = mongoose.model('Match', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "opponentsSingle", "opponentsSingle"));
 var model = {
 
     getAggregatePipeline: function (data) {
@@ -246,7 +246,7 @@ var model = {
     },
 
     getAllwithFind: function (data, callback) {
-        var deepSearch = "sport";
+        var deepSearch = "sport opponentsSingle";
         Match.find().lean().deepPopulate(deepSearch).exec(function (err, found) {
             if (err) {
                 callback(err, null);
@@ -360,6 +360,24 @@ var model = {
                 }
             });
     },
+
+    getOne: function (data, callback) {
+        var deepSearch = "sport opponentsSingle";
+        Match.find({
+            matchId: data.matchId
+        }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else {
+                if (_.isEmpty(found)) {
+                    callback(null, []);
+                } else {
+                    console.log("found", found);
+                    callback(null, found);
+                }
+            }
+        });
+    }
 
 };
 module.exports = _.assign(module.exports, exports, model);

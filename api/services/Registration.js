@@ -369,8 +369,13 @@ var model = {
                                                         console.log(err);
                                                         callback(err, null);
                                                     } else {
-                                                        if (_.isEmpty(datafound)) {
+                                                        var typeVal = complete[0].institutionType;
+                                                        if (_.isEmpty(datafound) && typeVal == 'school') {
                                                             data.registerID = 1;
+                                                            console.log("registerID", data.registerID);
+                                                            data.sfaID = prefixCity + prefixType + year + data.registerID;
+                                                        } else if (_.isEmpty(datafound) && typeVal == 'college') {
+                                                            data.registerID = 103;
                                                             console.log("registerID", data.registerID);
                                                             data.sfaID = prefixCity + prefixType + year + data.registerID;
                                                         } else {
@@ -395,10 +400,10 @@ var model = {
                                                                         school.name = schoolData.schoolName;
                                                                         if (_.isEmpty(schoolData.sfaID)) {
                                                                             school.sfaid = data.sfaID;
-                                                                            school.institutionType = data.complete.institutionType;
+                                                                            school.institutionType = complete[0].institutionType;
                                                                         } else {
                                                                             school.sfaid = schoolData.sfaID;
-                                                                            school.institutionType = data.complete.institutionType;
+                                                                            school.institutionType = complete[0].institutionType;
                                                                         }
                                                                         School.saveData(school, function (err, newData) {
                                                                             console.log("school created", newData);
