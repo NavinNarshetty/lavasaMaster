@@ -395,8 +395,10 @@ var model = {
                                                                         school.name = schoolData.schoolName;
                                                                         if (_.isEmpty(schoolData.sfaID)) {
                                                                             school.sfaid = data.sfaID;
+                                                                            school.type = data.complete.institutionType;
                                                                         } else {
                                                                             school.sfaid = schoolData.sfaID;
+                                                                            school.type = data.complete.institutionType;
                                                                         }
                                                                         School.saveData(school, function (err, newData) {
                                                                             console.log("school created", newData);

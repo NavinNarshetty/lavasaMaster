@@ -35,30 +35,30 @@ var schema = new Schema({
         ref: 'Match'
     },
     scoreCard: Schema.Types.Mixed,
-    results: Schema.Types.Mixed,
+    resultsCombat: Schema.Types.Mixed,
+    resultsRacquet: Schema.Types.Mixed,
     scheduleDate: Date,
     scheduleTime: String,
 });
 
 schema.plugin(deepPopulate, {
-    "sport": {
-        select: '_id sportslist gender ageGroup'
-    },
-    "round": {
-        select: '_id name '
-    },
-    "opponentsSingle": {
-        select: '_id sport athleteId sportsListSubCategory createdBy '
-    },
-    "opponentsTeam": {
-        select: '_id name teamId schoolName studentTeam createdBy sport school'
-    },
-    "prevMatch": {
-        select: '_id incrementalId '
-    },
-    "nextMatch": {
-        select: '_id incrementalId '
-    },
+    populate: {
+        "sport": {
+            select: '_id sportslist gender ageGroup'
+        },
+        "opponentsSingle": {
+            select: '_id sport athleteId sportsListSubCategory createdBy '
+        },
+        "opponentsTeam": {
+            select: '_id name teamId schoolName studentTeam createdBy sport school'
+        },
+        "prevMatch": {
+            select: '_id incrementalId '
+        },
+        "nextMatch": {
+            select: '_id incrementalId '
+        },
+    }
 });
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
@@ -246,14 +246,15 @@ var model = {
     },
 
     getAllwithFind: function (data, callback) {
-        var deepSearch = "sport nextMatch opponentsSingle opponentsTeam prevMatch nextMatch";
+        var deepSearch = "sport";
         Match.find().lean().deepPopulate(deepSearch).exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else {
-                if (_.isEmpty()) {
+                if (_.isEmpty(found)) {
                     callback(null, []);
                 } else {
+                    console.log("found", found);
                     callback(null, found);
                 }
             }
