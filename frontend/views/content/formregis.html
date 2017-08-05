@@ -43,10 +43,15 @@
                         to ensure that your previous years' match videos and statistics reflect in your new profile, which
                         will be created on successful completion of this registration process</p>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-12" ng-if="isCollege == false">
+                <div class="mar-left" ng-if="isCollege == true">
+                    <p class="d-padd para2 t-padd sf-list" style="text-align: justify">In case you have participated in previous SFA Championships you will need to enter your SFA ID & Name
+                        to ensure that your previous years' match videos and statistics reflect in your new profile, which
+                        will be created on successful completion of this registration process</p>
+                </div>
+                <div class="col-md-3 col-sm-3 col-xs-12">
                     <label class="para2 sfa-padd sf-list">  SFA ID or Name:</label>
                 </div>
-                <div class="col-md-8 col-sm-8 col-xs-12" ng-if="isCollege == false">
+                <div class="col-md-8 col-sm-8 col-xs-12">
                     <ui-select name="idSfa" id="idSfa" theme="bootstrap" ng-model="sfaId" ng-change="searchSFA($select.selected.sfaid)">
                         <ui-select-match allow-clear="true" placeholder="Select/Search SFA ID or Name">
                             {{$select.selected.sfaid}}
