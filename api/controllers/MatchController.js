@@ -16,10 +16,9 @@ var controller = {
         Match.getAll(req.body, res.callback);
     },
 
-    getAllwithFind: function (req, res) {
+    getOne: function (req, res) {
         if (req.body) {
-            Match.getAllwithFind(req.body, res.callback);
-
+            Match.getOne(req.body, res.callback);
         } else {
             res.json({
                 "data": "Body not Found",

@@ -133,134 +133,18 @@ var model = {
         return pipeline;
     },
 
-    getAggregatePipeline1: function (data) {
-        var pipeline = [{
-                $match: {
-                    "matchId": data.matchId
-                }
-            },
-            {
-                $lookup: {
-                    "from": "atheletes",
-                    "localField": "opponentsSingle",
-                    "foreignField": "_id",
-                    "as": "opponentsSingle"
-                }
-            },
-            {
-                $lookup: {
-                    "from": "sports",
-                    "localField": "sport",
-                    "foreignField": "_id",
-                    "as": "sport"
-                }
-            },
-            {
-                $unwind: {
-                    path: "$sport",
-                }
-            },
-            {
-                $lookup: {
-                    "from": "sportslists",
-                    "localField": "sport.sportslist",
-                    "foreignField": "_id",
-                    "as": "sport.sportslist"
-                }
-            },
-            // Stage 2
-            {
-                $unwind: {
-                    path: "$sport.sportslist",
-                }
-            },
-            {
-                $lookup: {
-                    "from": "sportslistsubcategories",
-                    "localField": "sport.sportslist.sportsListSubCategory",
-                    "foreignField": "_id",
-                    "as": "sport.sportslist.sportsListSubCategory"
-                }
-            },
-            // Stage 2
-            {
-                $unwind: {
-                    path: "$sport.sportslist.sportsListSubCategory",
-                }
-            },
-            {
-                $lookup: {
-                    "from": "sportslistcategories",
-                    "localField": "sport.sportslist.sportsListSubCategory.sportsListCategory",
-                    "foreignField": "_id",
-                    "as": "sport.sportslist.sportsListSubCategory.sportsListCategory"
-                }
-            },
-            // Stage 2
-            {
-                $unwind: {
-                    path: "$sport.sportslist.sportsListSubCategory.sportsListCategory",
-                }
-            },
-            // Stage 3
-            {
-                $lookup: {
-                    "from": "agegroups",
-                    "localField": "sport.ageGroup",
-                    "foreignField": "_id",
-                    "as": "sport.ageGroup"
-                }
-            },
-
-            // Stage 4
-            {
-                $unwind: {
-                    path: "$sport.ageGroup",
-
-                }
-            }
-        ];
-        return pipeline;
-    },
-
-    getOneMatch: function (data, callback) {
-        var pipeline = Match.getAggregatePipeline1(data);
-        Match.aggregate(pipeline, function (err, result) {
-            if (err || _.isEmpty(result)) {
-                callback(err, result);
-            } else {
-                var finalData = {};
-                finalData.sportType = result[0].sport.sportslist.sportsListSubCategory.sportsListCategory.name;
-                finalData.sportName = result[0].sport.sportslist.name + "-" + result[0].sport.gender + "-" + result[0].sport.ageGroup.name;
-                if (_.isEmpty(result[0].opponentsSingle)) {
-                    finalData.players = result[0].opponentsTeam;
-                } else {
-                    finalData.players = result[0].opponentsSingle;
-                }
-                if (_.isEmpty(result[0].resultsCombat)) {
-                    finalData.resultsCombat = "";
-                } else {
-                    finalData.resultsCombat = result[0].resultsCombat;
-                }
-                if (_.isEmpty(result[0].resultsRacquet)) {
-                    finalData.resultsRacquet = "";
-                } else {
-                    finalData.resultsRacquet = result[0].resultsRacquet;
-                }
-
-                callback(null, finalData);
-            }
-        });
-    },
-
     getAll: function (data, callback) {
-        var pipeline = Match.getAggregatePipeline1(data);
-        Match.aggregate(pipeline, function (err, result) {
-            if (err || _.isEmpty(result)) {
-                callback(err, result);
+        var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId.school opponentsTeam";
+        Match.findOne().lean().deepPopulate(deepSearch).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
             } else {
-
-                callback(null, result);
+                if (_.isEmpty(found)) {
+                    callback(null, []);
+                } else {
+                    console.log("found0", found);
+                    callback(null, found);
+                }
             }
         });
     },
@@ -348,7 +232,7 @@ var model = {
         }
     },
 
-    getAllwithFind: function (data, callback) {
+    getOne: function (data, callback) {
         async.waterfall([
                 function (callback) {
                     var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId.school opponentsTeam";
