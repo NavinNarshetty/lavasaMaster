@@ -375,7 +375,7 @@ var model = {
                                                             console.log("registerID", data.registerID);
                                                             data.sfaID = prefixCity + prefixType + year + data.registerID;
                                                         } else if (_.isEmpty(datafound) && typeVal == 'college') {
-                                                            data.registerID = 103;
+                                                            data.registerID = 101;
                                                             console.log("registerID", data.registerID);
                                                             data.sfaID = prefixCity + prefixType + year + data.registerID;
                                                         } else {
