@@ -107,6 +107,74 @@
             "onView": true,
             "dropDown": ["Jr. KG ", "Sr. KG ", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
         }, {
+            "name": "University",
+            "type": "tags",
+            "tableRef": "university",
+            "placeholder": "Enter University",
+            "id": "university",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Mumbai University", "Other"]
+        }, {
+            "name": "Faculty",
+            "type": "tags",
+            "tableRef": "faculty",
+            "placeholder": "Enter Faculty",
+            "id": "faculty",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Arts", "Commerce", "Science", "Others"]
+        }, {
+            "name": "Course",
+            "type": "tags",
+            "tableRef": "course",
+            "placeholder": "Enter Course",
+            "id": "course",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["B.A.F(Bachelor of Commerce - Accounting & Finance)",
+                " B.B.A(Bachelor of Business Administration)",
+                " B.B.I(Bachelor of Commerce - Banking & Insurance)",
+                "B.Com(Bachelor of Commerce)",
+                " B.F.M(Bachelor of Commerce - Financial Markets)",
+                " B.M.M(Bachelor of Mass Media)",
+                " B.M.S(Bachelor of Management Studies)",
+                "B.Sc IT(Bachelor of Science - Information Technology)",
+                " Others"
+            ]
+        }, {
+            "name": "Year",
+            "type": "tags",
+            "tableRef": "year",
+            "placeholder": "Enter Year",
+            "id": "year",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["1st Year", "2nd Year", "3rd Year", "4th Year", "5th Year"]
+        }, {
+            "name": "Degree",
+            "type": "tags",
+            "tableRef": "degree",
+            "placeholder": "Enter Degree",
+            "id": "year",
+            "url": "",
+            "dropDownField": "",
+            "dropDownType": "single",
+            "onView": true,
+            "dropDown": ["Junior College",
+                "Undergraduate",
+                "Postgraduate",
+                "Diploma"
+            ]
+        }, {
             "name": "Blood Group",
             "type": "tags",
             "tableRef": "bloodGroup",
