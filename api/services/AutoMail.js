@@ -43,14 +43,20 @@ var model = {
                             var emailData = {};
                             emailData.name = found.firstName;
                             emailData.from = "info@sfanow.in";
-                            emailData.email = found.email;
+                            // emailData.email = found.email;
+                            emailData.email1 = [{
+                                email: found.email
+                            }];
+                            emailData.bcc1 = [{
+                                email: "sunil.rathod@sfanow.in"
+                            }];
                             emailData.city = data.property.sfaCity;
                             emailData.year = data.property.year;
                             emailData.type = "athelete"
                             emailData.filename = "athleteAutoMail.ejs";
                             emailData.subject = "SFA: Sports Registration Now Open";
                             console.log("complete", emailData);
-                            Config.email(emailData, function (err, emailRespo) {
+                            Config.emailTo(emailData, function (err, emailRespo) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, err);
@@ -115,13 +121,19 @@ var model = {
                     async.each(complete, function (found, callback) {
                             var emailData = {};
                             emailData.from = "info@sfanow.in";
-                            emailData.email = found.email;
+                            // emailData.email = found.email;
+                            emailData.email1 = [{
+                                email: found.email
+                            }];
+                            emailData.bcc1 = [{
+                                email: "sunil.rathod@sfanow.in"
+                            }];
                             emailData.city = data.property.sfaCity;
                             emailData.year = data.property.year;
                             emailData.type = data.property.institutionType;
                             emailData.filename = "athleteAutoMail.ejs";
                             emailData.subject = "SFA: Sports Registration Now Open";
-                            Config.email(emailData, function (err, emailRespo) {
+                            Config.emailTo(emailData, function (err, emailRespo) {
                                 if (err) {
                                     callback(null, err);
                                 } else if (emailRespo) {
