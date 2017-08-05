@@ -69,9 +69,9 @@ myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService
     //     $scope.isCollege = true;
     // }
 
-    if (window.location.host == "mumbaischool.sfanow.in") {
+    if (window.location.hostname == "mumbaischool.sfanow.in") {
         $scope.isCollege = false;
-    } else if (window.location.host == 'mumbaicollege.sfanow.in') {
+    } else if (window.location.host == "mumbaicollege.sfanow.in") {
         $scope.isCollege = true;
     }
     // NavigationService.getDetail(function (data) {
