@@ -29,9 +29,9 @@ module.exports = {
   port: 878,
   // realHost: "http://sfa2.wohlig.co.in",
   // realHost: "http://testmumbaischool.sfanow.in",
-  // realHost: "http://testmumbaicollege.sfanow.in",
+  realHost: "http://testmumbaicollege.sfanow.in",
   // realHost: "http://mumbaischool.sfanow.in",
-  realHost: "http://mumbaicollege.sfanow.in",
+  // realHost: "http://mumbaicollege.sfanow.in",
 
   // realHost: "https://sfa.wohlig.co.in",
   emails: ["chintan@wohlig.com", "jagruti@wohlig.com", "tushar@wohlig.com", "chirag@wohlig.com", "harsh@wohlig.com"]

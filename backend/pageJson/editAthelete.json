@@ -127,7 +127,7 @@
             "dropDownField": "",
             "dropDownType": "single",
             "onView": true,
-            "dropDown": ["Arts", "Commerce", "Science", "Others"]
+            "dropDown": ["Arts", "Commerce", "Science", "Other"]
         }, {
             "name": "Course",
             "type": "tags",
@@ -139,19 +139,19 @@
             "dropDownType": "single",
             "onView": true,
             "dropDown": ["B.A.F(Bachelor of Commerce - Accounting & Finance)",
-                " B.B.A(Bachelor of Business Administration)",
-                " B.B.I(Bachelor of Commerce - Banking & Insurance)",
+                "B.B.A(Bachelor of Business Administration)",
+                "B.B.I(Bachelor of Commerce - Banking & Insurance)",
                 "B.Com(Bachelor of Commerce)",
-                " B.F.M(Bachelor of Commerce - Financial Markets)",
-                " B.M.M(Bachelor of Mass Media)",
-                " B.M.S(Bachelor of Management Studies)",
+                "B.F.M(Bachelor of Commerce - Financial Markets)",
+                "B.M.M(Bachelor of Mass Media)",
+                "B.M.S(Bachelor of Management Studies)",
                 "B.Sc IT(Bachelor of Science - Information Technology)",
-                " Others"
+                "Other"
             ]
         }, {
             "name": "Year",
             "type": "tags",
-            "tableRef": "year",
+            "tableRef": "collegeYear",
             "placeholder": "Enter Year",
             "id": "year",
             "url": "",
@@ -164,7 +164,7 @@
             "type": "tags",
             "tableRef": "degree",
             "placeholder": "Enter Degree",
-            "id": "year",
+            "id": "degree",
             "url": "",
             "dropDownField": "",
             "dropDownType": "single",

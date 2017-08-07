@@ -93,7 +93,7 @@ var schema = new Schema({
     university: String,
     faculty: String,
     degree: String,
-    year: String,
+    collegeYear: String,
     course: String,
     verifiedDate: Date,
     remarks: String,
