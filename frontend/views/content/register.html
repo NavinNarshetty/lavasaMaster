@@ -511,8 +511,8 @@
             </div>
         </div>
 
-        <p class="text-center step mt50 mb25 ">Step 2 : Sports Registration</p>
-        <div class="row ">
+        <p class="text-center step mt50 mb25" ng-if="sfaCity == 'Mumbai'">Step 2 : Sports Registration</p>
+        <div class="row" ng-if="sfaCity == 'Mumbai'">
             <div class="col-md-6 col-sm-12 col-xs-12 ">
                 <div class=" ">
                     <!--<p class="text-center step mb-75 ">Step2 : Sport Registration</p>-->
@@ -538,7 +538,7 @@
                             </p> -->
                             <p class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:<br><a href="http://{{sfaCity}}school.sfanow.in/formregis " target="_new ">http://mumbaischool.sfanow.in/formregis</a>
                             </p>
-                            <p class="mb-75 custom-a" ng-if="isCollege==false">For Athlete:<br><a href="http://mumbaischool.sfanow.in/formathlete
+                            <p class="mb91 custom-a" ng-if="isCollege==false">For Athlete:<br><a href="http://mumbaischool.sfanow.in/formathlete
                             " target="_new "><strong>http://mumbaischool.sfanow.in/formathlete</strong></a>
                             </p>
                             <p class="mb-33" ng-if="isCollege==true">All registered {{type}}s and athletes will be notified when registration for sports will be open!
@@ -650,6 +650,30 @@
             </div>
         </div>
 
+        <div class="row" ng-if="sfaCity != 'Mumbai'">
+            <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+                <div class="sport-sec">
+                    <p class="text-center step mb-75 ">Step2 : Sport Registration</p>
+                    <div class="sport-registration">
+                        <div class="btn-sport text-center">
+                            <div class="sport-icon">
+                                <img src="img/icon/3.png" class="img-responsive">
+                            </div>
+                            <p>Sport Registration</p>
+                        </div>
+                        <div class="category-padding-sport f-s">
+                            <p>Once the athlete / school registration is complete, log in using your SFA ID and password to
+                                register for your sport/sports of interest.
+                            </p>
+                            <p>All registered schools and athletes will be notified when registration for sports will be open!
+                            </p>
+                        </div>
+                        <!--<div class="text-center mb-20"><button class="btn-category  blue-light">Sports Registration Form</button></div>-->
+                        <div class="text-center mb-20"><button class="com-category  blue-light">Opening shortly</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!--<div class="text-center ">Sports Registration Form</div>-->
     <div class="store-for-you" ng-if="isCollege==false">
