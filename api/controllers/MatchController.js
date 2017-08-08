@@ -60,6 +60,17 @@ var controller = {
         }
     },
 
+    getSportId: function (req, res) {
+        if (req.body) {
+            Match.getSportId(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
 
 
 };

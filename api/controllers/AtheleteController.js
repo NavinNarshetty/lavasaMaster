@@ -188,6 +188,7 @@ var controller = {
                 },
                 function (property, callback) {
                     req.body.property = property[0];
+                    console.log("property", req.body.property);
                     Athelete.cronAthleteWithPaymentDue(req.body, res.callback);
 
                 }
