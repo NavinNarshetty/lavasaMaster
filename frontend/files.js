@@ -22,7 +22,7 @@ module.exports = [
   'bower_components/angulartics/dist/angulartics.min.js',
   'bower_components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js',
   'bower_components/angular-ui-swiper/dist/angular-ui-swiper.js',
-  'bower_components/angular-ui-select/dist/select.js',
+  'bower_components/angular-ui-select/dist/select.min.js',
   'bower_components/angularjs-ordinal-filter/ordinal-browser.js',
   'bower_components/ng-dialog/js/ngDialog.min.js',
   'bower_components/angular-loading-bar/src/loading-bar.js',
@@ -52,6 +52,7 @@ module.exports = [
   'frontend/js/services/errorService.js',
   'frontend/js/services/loginService.js',
   'frontend/js/services/GoogleAdWordsService.js',
+  'frontend/js/services/configService.js',
 
   //Factories
   'frontend/js/factories/navigation.js',

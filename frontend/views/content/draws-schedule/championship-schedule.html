@@ -1,0 +1,165 @@
+<div class="chamionshipschedule-page">
+  <!-- VIEW DRAW FORM CARD -->
+  <section>
+    <div class="championsip-draws">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <div class="championship-drawstitle">
+              <h3>SFA Championship 2017-18</h3>
+              <p>To view Draws & Schedules of your match kindly select the relevent categories to get results. </p>
+            </div>
+            <div class="championshipdraw-card">
+              <form name=championshipDrawsForm>
+                <!-- SPORT -->
+                <div class="form-group">
+                  <div class="display-inline championshipdraw-card-lable">
+                    <label for="">Sport</label>
+                  </div>
+                  <div class="display-inline championshipdraw-card-dropdown">
+                    <ui-select ng-model="item.selected" theme="bootstrap">
+                      <ui-select-match placeholder="Select Sport">{{$select.selected}}</ui-select-match>
+                      <ui-select-choices repeat="item in sportList | filter: $select.search">
+                        <div>
+                          <p>{{item}}</p>
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+                <!-- SPORT END -->
+                <!-- GENDER -->
+                <div class="form-group">
+                  <div class="display-inline championshipdraw-card-lable">
+                    <label for="">Gender</label>
+                  </div>
+                  <div class="display-inline championshipdraw-card-dropdown">
+                    <ui-select ng-model="item.selected" theme="bootstrap">
+                      <ui-select-match placeholder="Select Sport">{{$select.selected}}</ui-select-match>
+                      <ui-select-choices repeat="item in sportList | filter: $select.search">
+                        <div>
+                          <p>{{item}}</p>
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                </div>
+                <!-- GENDER END -->
+                <!-- AGE GROUP -->
+                <div class="form-group">
+                  <div class="display-inline championshipdraw-card-lable">
+                    <label for="">Age Group</label>
+                  </div>
+                  <div class="display-inline championshipdraw-card-dropdown">
+                    <ui-select ng-model="item.selected" theme="bootstrap">
+                      <ui-select-match placeholder="Select Sport">{{$select.selected}}</ui-select-match>
+                      <ui-select-choices repeat="item in sportList | filter: $select.search">
+                        <div>
+                          <p>{{item}}</p>
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+
+                </div>
+                <!-- AGE GROUP END -->
+                <!-- EVENT -->
+                <div class="form-group">
+                  <div class="display-inline championshipdraw-card-lable">
+                    <label for="">Event</label>
+                  </div>
+                  <div class="display-inline championshipdraw-card-dropdown">
+                    <ui-select ng-model="item.selected" theme="bootstrap">
+                      <ui-select-match placeholder="Select Sport">{{$select.selected}}</ui-select-match>
+                      <ui-select-choices repeat="item in sportList | filter: $select.search">
+                        <div>
+                          <p>{{item}}</p>
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+
+                </div>
+                <!-- EVENT -->
+                <!-- VIEW DRAW BUTTON -->
+                <div class="championshipdraw-card-lable">
+
+                </div>
+                <div class="viewdraw championshipdraw-card-dropdown">
+                  <button class="btn">View Draw</button>
+                </div>
+                <!-- VIEW DRAW BUTTON -->
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- VIEW DRAW FORM CARD END -->
+  <!-- CHAMPIONSHIP SCHEDULE -->
+  <section>
+    <div class="championship-schedule">
+      <div class="container">
+        <div class="championship-scheduletitle">
+          <h3>CHAMPIONSHIP schedule</h3>
+        </div>
+        <div class="row">
+          <div class="col-md-offset-1 col-md-5">
+            <div class="championshipschedule-tableholder tale-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Sport </th>
+                    <th>Dates</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="schedule in schedulelist track by $index">
+                    <td>
+                      <div class="schedulesport-name">
+                        {{schedule.sport}}
+                      </div>
+                    </td>
+                    <td>
+                      <div class="schedulesport-dates">
+                        {{schedule.date}}
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="championshipschedule-tableholder tale-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Sport </th>
+                    <th>Dates</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="schedule in schedulelist track by $index">
+                    <td>
+                      <div class="schedulesport-name">
+                        {{schedule.sport}}
+                      </div>
+                    </td>
+                    <td>
+                      <div class="schedulesport-dates">
+                        {{schedule.date}}
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- CHAMPIONSHIP SCHEDULE END -->
+</div>

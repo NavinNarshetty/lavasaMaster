@@ -1,5 +1,5 @@
 // COLOR VARIABLES
-$sport-primary: #10259c !default; //blue
+$sport-primary: #0a1a72!default; //blue
 $sport-success: #27b465 !default; //green
 $sport-warning: #ffb026 !default; //yellow
 $sport-danger: #da495b !default; //red
@@ -276,6 +276,64 @@ $sport-table-grey:#efeeee !default;
 }
 
 // *******************END TABLE SEVEN **************
+// ********************BLUE TABLE ******************
+.q-blue-table {
+  .table-draws-schedule {
+    thead {
+      tr {
+        background-color: $sport-blue-table;
+        border: none;
+        th {
+          border: none;
+          h4 {
+            color: $sport-primary;
+            @extend .d-fjalla-one;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          border: none;
+          background-color: $sport-table-grey;
+          @extend .d-opensans-regular;
+        }
+      }
+    }
+  }
+}
+
+// ********************END BLUE TABLE*****************
+// ********************ORANGE TABLE *******************
+.q-orange-table {
+  .table-draws-schedule {
+    thead {
+      tr {
+        background-color: $sport-warning;
+        border: none;
+        th {
+          border: none;
+          h4 {
+            color: $sport-primary;
+            @extend .d-fjalla-one;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          border: none;
+          background-color: $sport-table-grey;
+          @extend .d-opensans-regular;
+        }
+      }
+    }
+  }
+}
+
+// ********************END ORANGE TABLE ***************
 // END COMMON CLASS
 // *******************QUALIFYING+ FINAL ROUND************************
 .qualifying-final-round {
@@ -285,7 +343,7 @@ $sport-table-grey:#efeeee !default;
     padding: 25px;
   }
   .qf-final-finalround {
-    border-bottom: 1px solid $sport-primary;
+    border-bottom: 2px solid $sport-primary;
   }
   .qf-final-qualifyinground {
     margin: 25px 0px;
@@ -295,7 +353,10 @@ $sport-table-grey:#efeeee !default;
   }
   .qf-final-sportname {
     margin: 40px;
-    border-bottom: $sport-grey-year;
+    border-bottom: 1px solid $sport-grey-year;
+  }
+  .draws-downloadpdf {
+    margin-bottom: 30px;
   }
 }
 
@@ -347,4 +408,172 @@ $sport-table-grey:#efeeee !default;
   }
 }
 
+.championshipdraw-card-lable {
+  width: 25%;
+  vertical-align: middle;
+  font-size: 16px;
+  text-align: right;
+  padding: 8px;
+}
+
+.championshipdraw-card-dropdown {
+  vertical-align: middle;
+  width: 60%;
+}
+
 // CHAMPIONSHIP SCHEDULE PAGE END
+//*********************** QUALIFYING + KNOCKOUT ******************
+.qualifying-knockout-round {
+  min-height: 100vh;
+  .qf-knockout-sportname {
+    margin: 30px 40px;
+    border-bottom: 1px solid $sport-grey-year;
+  }
+  .qf-knockout-sporteventname {
+    margin: 30px 0;
+  }
+  .draws-downloadpdf {
+    padding-bottom: 25px;
+  }
+  .qf-knockout-holder {
+    border: 1px solid $sport-grey-year;
+    padding: 25px;
+  }
+  .qf-knockout-viewmore {
+    padding-bottom: 25px;
+    border-bottom: 2px solid $sport-primary;
+  }
+  .qf-knockout-qualifyinghead {
+    padding-top: 40px;
+  }
+}
+
+//  *********************END QUALIFYING + KNOCKOUT ***************
+// **********************TIME TRIAL ROUND *************************
+.time-trial-round {
+  min-height: 100vh;
+  .time-trial-sportname {
+    margin: 30px 40px;
+  }
+  .draws-downloadpdf {
+    padding-bottom: 25px;
+    border-bottom: 1px solid $sport-grey-year;
+  }
+  .time-trial-winnerholder {
+    border: 1px solid $sport-grey-year;
+    padding: 25px;
+  }
+  .time-trial-eventname {
+    padding-bottom: 25px;
+  }
+  .time-trial-winnerhead {
+    padding-bottom: 30px;
+  }
+  .time-trial-winnertable {
+    padding-bottom: 25px;
+    border-bottom: 2px solid $sport-primary;
+  }
+  .time-trial-timehead {
+    padding-top: 40px;
+  }
+}
+
+// ACCORDIAN
+.time-trial-accordian {
+  .panel-default>.panel-heading {
+    background-color: $sport-blue-table;
+  }
+  .panel-heading {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+  }
+  .panel-default {
+    border-color: #fff;
+  }
+}
+
+.time-trial-accordioncontent {
+  .q-blue-table {
+    .table-draws-schedule {
+      thead {
+        tr {
+          background-color: #dbdbdb;
+          border: none;
+          th {
+            border: none;
+            h4 {
+              color: $sport-primary;
+              @extend .d-fjalla-one;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// END ACCORDIAN
+// **********************END TIME TRIAL ROUND *********************
+// **********************HEATS ROUNDS*************************
+.heat-rounds {
+  min-height: 100vh;
+  .heat-sportname {
+    margin: 30px 40px;
+  }
+  .draws-downloadpdf {
+    padding-bottom: 25px;
+    border-bottom: 1px solid $sport-grey-year;
+  }
+  .heats-finalrounds-holder {
+    border: 1px solid $sport-grey-year;
+    padding: 25px;
+  }
+  .heats-semifinalhead {
+    padding-top: 30px;
+  }
+  .heats-final-table {
+    padding-bottom: 25px;
+    border-bottom: 2px solid $sport-primary;
+  }
+  .heat-eventname {
+    padding-bottom: 25px;
+  }
+}
+
+// ACCORDIAN
+.heat-trial-accordian {
+  .panel-default>.panel-heading {
+    background-color: $sport-green-table;
+  }
+}
+
+// END ACCORDIAN
+// **********************END HEATS ROUNDS ********************
+//*********************** LEAGUE CUM KNOCKOUT ***************
+.league-knockout-round {
+  min-height: 100vh;
+  .league-knockout-sportname {
+    margin: 30px 40px;
+  }
+  .league-knockout-outerholder {
+    padding: 25px;
+    border: 1px solid $sport-grey-year;
+  }
+  .league-knockout-table,
+  .league-knockout-accordian,
+  .league-knockout-pointsviewmore {
+    padding-bottom: 25px;
+    border-bottom: 2px solid $sport-primary;
+  }
+  .league-knockout-pointshead {
+    padding-top: 25px;
+  }
+}
+
+.league-knockout-pointsaccordian {
+  .panel-default>.panel-heading {
+    background-color: $sport-green-table;
+  }
+}
+
+// **********************END LEAUGE CUM KNOCKOUT ************

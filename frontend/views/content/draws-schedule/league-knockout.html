@@ -1,0 +1,319 @@
+<div class="league-knockout-round">
+  <div class="container">
+    <!--SPORT NAME-->
+    <div class="league-knockout-sportname text-center">
+      <h3 class="text-uppercase d-fjalla-one sport-type-head">
+        <span>football</span> |
+        <span>girls</span> |
+        <span> U-14</span>
+      </h3>
+      <div class="draws-downloadpdf draws-a">
+        <a href="#">Download the schedule in pdf format</a>
+      </div>
+
+    </div>
+    <!--END SPORT NAME-->
+
+    <!--OUTER HOLDER DIV-->
+    <div class="league-knockout-outerholder">
+      <!--KNOCKOUT HEAD-->
+      <div class="league-knockout-knockouthead">
+        <h3 class="d-fjalla-one text-uppercase sport-color-primary">knockout</h3>
+      </div>
+      <!--END KNOCKOUT HEAD-->
+
+      <!--KNOCKOUT TABLE-->
+      <div class="league-knockout-table table-responsive  q-orange-table">
+        <table class="table-draws-schedule table-five">
+          <thead>
+            <tr>
+              <th>
+                <div>
+                  <h4 class="m-clear">Round</h4>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <h4 class="m-clear">team1</h4>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <h4 class="m-clear">team2</h4>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <h4 class="m-clear">score</h4>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <h4 class="m-clear">video</h4>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="knockout in knockTabe track by $index">
+              <td>
+                <div class="text-capitalize">
+                  {{knockout.round}}
+                </div>
+              </td>
+              <td>
+                <div class="text-capitalize">
+                  {{knockout.team1}}
+                </div>
+              </td>
+              <td>
+                <div class="text-capitalize">
+                  {{knockout.team2}}
+                </div>
+              </td>
+              <td>
+                <div class="text-capitalize">
+                  {{knockout.score}}
+                </div>
+              </td>
+              <td>
+                <div class="text-capitalize">
+                  <a href="">
+                        <img src="img/sf-play.png" alt="">
+                  </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="league-knockout-viewmore text-right ">
+          <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+        </div>
+      </div>
+      <!--END KNOCKOUT TABLE-->
+
+
+      <!--POINTS TABLE-->
+      <div class="league-knockout-pointstable">
+        <!--HEAD-->
+        <div class="league-knockout-pointshead">
+          <h3 class="d-fjalla-one text-uppercase sport-color-primary">points table</h3>
+        </div>
+        <!--END HEAD-->
+
+        <!--ACCORDIAN POINTS -->
+        <div class="time-trial-accordian league-knockout-pointsaccordian">POINTS
+          <uib-accordion close-others="oneAtATime">
+            <div uib-accordion-group class="panel-default" is-open="points.open" ng-repeat="points in pointTable  track by $index">
+              <uib-accordion-heading class="clearfix">
+                <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
+                <a href="">
+                  <h4 class="d-fjalla-one text-uppercase  text-center sport-color-primary m-clear">{{points.round}}</h4>
+                </a>
+                <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
+              </uib-accordion-heading>
+              <!--TIME TABLE-->
+              <div class="time-trial-accordioncontent heat-trial-accordiancontent">
+                <div class="accordian-timetrial-table q-blue-table">
+                  <table class="table-draws-schedule table-seven">
+                    <thead>
+                      <tr>
+                        <th>
+                          <div class="">
+                            <h4 class="m-clear">Position</h4>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="">
+                            <h4 class="m-clear">Team</h4>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="">
+                            <h4 class="m-clear">Matches</h4>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="">
+                            <h4 class="m-clear">Won</h4>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="">
+                            <h4 class="m-clear">lost</h4>
+                          </div>
+                        </th>
+                        <th>
+                          <div>
+                            <h4 class="m-clear">Draw</h4>
+                          </div>
+                        </th>
+                        <th>
+                          <div>
+                            <h4 class="m-clear">Points</h4>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="content in points.detail track by $index">
+                        <td>
+                          <div class="text-capitalize">
+                            {{$index+1}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-capitalize">
+                            {{content.team1}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-capitalize">
+                            {{content.match}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-capitalize">
+                            {{content.won}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-capitalize">
+                            {{content.lost}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-capitalize">
+                            {{content.draw}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-capitalize">
+                            {{content.points}}
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!--END TIME TABLE-->
+            </div>
+          </uib-accordion>
+          <!--VIEW BUTTON TIME TRIAL-->
+          <div class="league-knockout-pointsviewmore text-right ">
+            <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+          </div>
+          <!--END VIEW BUTTON FOR TIME TRIAL-->
+        </div>
+        <!--END ACCORDIAN POINTS-->
+
+      </div>
+      <!--END POINTS TABLE-->
+
+
+      <!--MATCH DETAIL TABLE-->
+      <div class="league-knockout-matchestable">
+        <!--HEAD-->
+        <div class="league-knockout-matchhead">
+          <h3 class="d-fjalla-one text-uppercase sport-color-primary">
+            Matches
+          </h3>
+        </div>
+        <!--END HEAD-->
+
+        <!--ACCORDIAN MATCH-->
+        <div class="time-trial-accordian league-knockout-matchaccordian">
+          <uib-accordion close-others="oneAtATime">
+            <div uib-accordion-group class="panel-default" is-open="points.open" ng-repeat="points in pointTable  track by $index">
+              <uib-accordion-heading class="clearfix">
+                <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
+                <a href="">
+                  <h4 class="d-fjalla-one text-uppercase  text-center sport-color-primary m-clear">{{points.round}}</h4>
+                </a>
+                <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
+              </uib-accordion-heading>
+              <!--MATCHES TABLE-->
+              <div class="time-trial-accordioncontent league-knockout-accordiancontent">
+                <div class="accordian-timetrial-table q-blue-table">
+                  <table class="table-draws-schedule table-seven">
+                    <thead>
+                      <tr>
+                        <th>
+                          <div class="">
+                            <h4 class="m-clear">Match no</h4>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="">
+                            <h4 class="m-clear">Team A</h4>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="">
+                            <h4 class="m-clear">Team B</h4>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="">
+                            <h4 class="m-clear">Score</h4>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="">
+                            <h4 class="m-clear">Video</h4>
+                          </div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="content in points.detail track by $index">
+                        <td>
+                          <div class="text-capitalize">
+                            {{$index+1}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-capitalize">
+                            {{content.team1}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-capitalize">
+                            {{content.team2}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-capitalize">
+                            {{content.score}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-capitalize">
+                            <a href="">
+                        <img src="img/sf-play.png" alt="">
+                      </a>
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!--MATCHES TABLE END-->
+            </div>
+          </uib-accordion>
+          <div class="league-knockout-viewmore text-right ">
+            <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+          </div>
+        </div>
+        <!--END ACCORDIAN MATCH-->
+      </div>
+      <!--END MATCH DETAIL TABLE-->
+
+
+    </div>
+    <!--OUTER HOLDER DIV-->
+
+  </div>
+</div>
