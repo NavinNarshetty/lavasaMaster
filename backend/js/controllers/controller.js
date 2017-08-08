@@ -3664,6 +3664,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.url = "Match/uploadExcelMatch";
             $scope.constraints = {};
             $scope.constraints = data;
+            console.log("form", $scope.constraints);
             NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
                 console.log("data upload", data);
             });

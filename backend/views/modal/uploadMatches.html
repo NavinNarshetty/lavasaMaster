@@ -5,20 +5,20 @@
   <div class="modal-body">
     <div class="row">
       <div class="col-md-12 drop-1">
-        <select class="form-control">
-          <option ng-model="form.resultType" value="knockout">Knockout</option>
-          <option ng-model="form.resultType" value="heat">Heat</option>
-          <option ng-model="form.resultType" value="league">League</option>
-          <option ng-model="form.resultType" value="league-cum-knockout">League cum Knockout</option>
-          <option ng-model="form.resultType" value="qualifying-knockout">Qualifying Knockout</option>
-          <option ng-model="form.resultType" value="qualifying-round">Qualifying Round</option>
-          <option ng-model="form.resultType" value="swiss-league">Swiss League</option>
+        <select class="form-control" ng-model="form.resultType">
+          <option  value="knockout">Knockout</option>
+          <option  value="heat">Heat</option>
+          <option  value="league">League</option>
+          <option  value="league-cum-knockout">League cum Knockout</option>
+          <option  value="qualifying-knockout">Qualifying Knockout</option>
+          <option  value="qualifying-round">Qualifying Round</option>
+          <option  value="swiss-league">Swiss League</option>
         </select>
       </div>
       <div class="col-md-12 drop-2">
-        <select class="form-control">
-          <option ng-model="form.playerType" value="team">Team</option>
-          <option ng-model="form.playerType" value="individual">Individual</option>
+        <select class="form-control" ng-model="form.playerType">
+          <option  value="team">Team</option>
+          <option  value="individual">Individual</option>
         </select>
       </div>
     </div>
