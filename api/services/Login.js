@@ -235,7 +235,10 @@ var model = {
         if (data.type == "school" && sfatype == 'S') {
             Registration.findOne({
                 sfaID: data.sfaid,
-                email: data.email
+                email: {
+                    $regex: data.email,
+                    $options: "i"
+                }
             }).lean().exec(function (err, found) {
                 if (err) {
                     callback(err, null);
@@ -288,7 +291,10 @@ var model = {
         } else if (data.type == "athlete" && sfatype == 'A') {
             Athelete.findOne({
                 sfaId: data.sfaid,
-                email: data.email
+                email: {
+                    $regex: data.email,
+                    $options: "i"
+                }
             }).lean().exec(function (err, found) {
                 if (err) {
                     callback(err, null);
