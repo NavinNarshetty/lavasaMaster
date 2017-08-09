@@ -28,8 +28,8 @@ module.exports = {
   port: 1337,
   // port: 878,
   // realHost: "http://sfa2.wohlig.co.in",
-  realHost: "http://testmumbaischool.sfanow.in",
-  // realHost: "http://testmumbaicollege.sfanow.in",
+  // realHost: "http://testmumbaischool.sfanow.in",
+  realHost: "http://testmumbaicollege.sfanow.in",
   // realHost: "http://mumbaischool.sfanow.in",
   // realHost: "http://mumbaicollege.sfanow.in",
 
