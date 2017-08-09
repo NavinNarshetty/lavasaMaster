@@ -63,11 +63,23 @@ myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService
         isFirstDisabled: false
     };
 
-    // if (window.location.host == 'testmumbaischool.sfanow.in') {
-    //     $scope.isCollege = false;
-    // } else if (window.location.host == 'testmumbaicollege.sfanow.in') {
-    //     $scope.isCollege = true;
-    // }
+    if (window.location.host == 'testmumbaischool.sfanow.in') {
+        $scope.isCollege = false;
+    } else if (window.location.host == 'testmumbaicollege.sfanow.in') {
+        $scope.isCollege = true;
+    } else if (window.location.hostname == "testhyderabadschool.sfanow.in") {
+        $scope.isCollege = false;
+    } else if (window.location.host == "testhyderabadcollege.sfanow.in") {
+        $scope.isCollege = true;
+    } else if (window.location.hostname == "testahmedabadschool.sfanow.in") {
+        $scope.isCollege = false;
+    } else if (window.location.host == "testahmedabadcollege.sfanow.in") {
+        $scope.isCollege = true;
+    } else if (window.location.hostname == "mumbaischool.sfanow.in") {
+        $scope.isCollege = false;
+    } else if (window.location.host == "mumbaicollege.sfanow.in") {
+        $scope.isCollege = true;
+    }
 
     // if (window.location.host == 'localhost:8082') {
     //     $scope.isCollege = true;
@@ -75,12 +87,6 @@ myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService
     // } else if (window.location.host == 'testmumbaicollege.sfanow.in') {
     //     $scope.isCollege = true;
     // }
-
-    if (window.location.hostname == "mumbaischool.sfanow.in") {
-        $scope.isCollege = false;
-    } else if (window.location.host == "mumbaicollege.sfanow.in") {
-        $scope.isCollege = true;
-    }
 });
 
 
