@@ -71,6 +71,17 @@ var controller = {
         }
     },
 
+    updateResult: function (req, res) {
+        if (req.body) {
+            Match.updateResult(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
 
 
 };

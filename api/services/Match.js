@@ -644,6 +644,52 @@ var model = {
         });
     },
 
+    updateResult: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    if (data.resultsCombat) {
+                        var matchObj = {
+                            $set: {
+                                resultsCombat: data.resultsCombat
+                            }
+                        };
+                        callback(null, matchObj);
+
+                    } else if (data.resultsRacquet) {
+                        var matchObj = {
+                            $set: {
+                                resultsRacquet: data.resultsRacquet
+                            }
+                        };
+                        callback(null, matchObj);
+                    }
+                },
+                function (matchObj, callback) {
+                    Match.update({
+                        matchId: data.matchId
+                    }, matchObj).exec(
+                        function (err, match) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(match)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, match);
+                                }
+                            }
+                        });
+                }
+            ],
+            function (err, results) {
+                if (err || _.isEmpty(results)) {
+                    callback(err, null);
+                } else {
+                    callback(null, results);
+                }
+            });
+    },
+
 
 
 };
