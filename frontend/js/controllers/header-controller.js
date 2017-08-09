@@ -6,13 +6,13 @@
 //     $.fancybox.close(true);
 // });
 
-var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in";
-var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
-var globalLinkForAll = "https://mumbai.sfanow.in/";
+// var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in";
+// var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
+// var globalLinkForAll = "https://mumbai.sfanow.in/";
 // var globalLinkForAll = "http://localhost:8082/";
-// var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
-// var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
-// var globalLinkForAll = "http://testmumbai.sfanow.in/";
+var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
+var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
+var globalLinkForAll = "http://testmumbai.sfanow.in/";
 myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
@@ -43,106 +43,97 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
         console.log(selectedCity);
         switch (selectedCity) {
             case 'mumbai':
-                console.log('mumbai', selectedCity);
                 $scope.selectedCity = 'mumbai';
                 if (window.location.pathname == '/') {
-                    console.log('in/', selectedCity);
-                    if (window.location.href == 'http://hyderabadschool.sfanow.in') {
-                        sublink = "http://mumbaischool.sfanow.in";
+                    if (window.location.href == 'http://testhyderabadschool.sfanow.in') {
+                        sublink = "http://testmumbaischool.sfanow.in";
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://hyderabadcollege.sfanow.in') {
-                        sublink = "http://mumbaicollege.sfanow.in";
+                    } else if (window.location.href == 'http://testhyderabadcollege.sfanow.in') {
+                        sublink = "http://testmumbaicollege.sfanow.in";
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://ahmedabadschool.sfanow.in') {
-                        sublink = "http://mumbaischool.sfanow.in";
+                    } else if (window.location.href == 'http://testahmedabadschool.sfanow.in') {
+                        sublink = "http://testmumbaischool.sfanow.in";
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://ahmedabadcollege.sfanow.in') {
-                        sublink = "http://mumbaicollege.sfanow.in";
+                    } else if (window.location.href == 'http://testahmedabadcollege.sfanow.in') {
+                        sublink = "http://testmumbaicollege.sfanow.in";
                         window.open(sublink, '_self');
                     }
                 } else {
-                    console.log('in', selectedCity);
-                    if (window.location.href == 'http://hyderabadschool.sfanow.in' + window.location.pathname) {
-                        sublink = "http://mumbaischool.sfanow.in" + window.location.pathname;
+                    if (window.location.href == 'http://testhyderabadschool.sfanow.in' + window.location.pathname) {
+                        sublink = "http://testmumbaischool.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://hyderabadcollege.sfanow.in' + window.location.pathname) {
-                        sublink = "http://mumbaicollege.sfanow.in" + window.location.pathname;
+                    } else if (window.location.href == 'http://testhyderabadcollege.sfanow.in' + window.location.pathname) {
+                        sublink = "http://testmumbaicollege.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://ahmedabadschool.sfanow.in' + window.location.pathname) {
-                        sublink = "http://mumbaischool.sfanow.in" + window.location.pathname;
+                    } else if (window.location.href == 'http://testahmedabadschool.sfanow.in' + window.location.pathname) {
+                        sublink = "http://testmumbaischool.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://ahmedabadcollege.sfanow.in' + window.location.pathname) {
-                        sublink = "http://mumbaicollege.sfanow.in" + window.location.pathname;
+                    } else if (window.location.href == 'http://testahmedabadcollege.sfanow.in' + window.location.pathname) {
+                        sublink = "http://testmumbaicollege.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
                     }
                 }
                 break;
             case 'hyderabad':
-                console.log('hyderabad', selectedCity);
                 $scope.selectedCity = 'hyderabad';
                 if (window.location.pathname == '/') {
-                    console.log('in/', selectedCity);
-                    if (window.location.href == 'http://mumbaischool.sfanow.in') {
-                        sublink = "http://hyderabadschool.sfanow.in";
+                    if (window.location.href == 'http://testmumbaischool.sfanow.in') {
+                        sublink = "http://testhyderabadschool.sfanow.in";
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://mumbaicollege.sfanow.in') {
-                        sublink = "http://hyderabadcollege.sfanow.in";
+                    } else if (window.location.href == 'http://testmumbaicollege.sfanow.in') {
+                        sublink = "http://testhyderabadcollege.sfanow.in";
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://ahmedabadschool.sfanow.in') {
-                        sublink = "http://hyderabadschool.sfanow.in";
+                    } else if (window.location.href == 'http://testahmedabadschool.sfanow.in') {
+                        sublink = "http://testhyderabadschool.sfanow.in";
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://ahmedabadcollege.sfanow.in') {
-                        sublink = "http://hyderabadcollege.sfanow.in";
+                    } else if (window.location.href == 'http://testahmedabadcollege.sfanow.in') {
+                        sublink = "http://testhyderabadcollege.sfanow.in";
                         window.open(sublink, '_self');
                     }
                 } else {
-                    console.log('in', selectedCity);
-                    if (window.location.href == 'http://mumbaischool.sfanow.in' + window.location.pathname) {
-                        sublink = "http://hyderabadschool.sfanow.in" + window.location.pathname;
+                    if (window.location.href == 'http://testmumbaischool.sfanow.in' + window.location.pathname) {
+                        sublink = "http://testhyderabadschool.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://mumbaicollege.sfanow.in' + window.location.pathname) {
-                        sublink = "http://hyderabadcollege.sfanow.in" + window.location.pathname;
+                    } else if (window.location.href == 'http://testmumbaicollege.sfanow.in' + window.location.pathname) {
+                        sublink = "http://testhyderabadcollege.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://ahmedabadschool.sfanow.in' + window.location.pathname) {
-                        sublink = "http://hyderabadschool.sfanow.in" + window.location.pathname;
+                    } else if (window.location.href == 'http://testahmedabadschool.sfanow.in' + window.location.pathname) {
+                        sublink = "http://testhyderabadschool.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://ahmedabadcollege.sfanow.in' + window.location.pathname) {
-                        sublink = "http://hyderabadcollege.sfanow.in" + window.location.pathname;
+                    } else if (window.location.href == 'http://testahmedabadcollege.sfanow.in' + window.location.pathname) {
+                        sublink = "http://testhyderabadcollege.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
                     }
                 }
                 break;
             case 'ahmedabad':
                 $scope.selectedCity = 'ahmedabad';
-                console.log('ahmedabad', selectedCity);
                 if (window.location.pathname == '/') {
-                    console.log('in/', selectedCity);
-                    if (window.location.href == 'http://hyderabadschool.sfanow.in') {
-                        sublink = "http://ahmedabadschool.sfanow.in";
+                    if (window.location.href == 'http://testhyderabadschool.sfanow.in') {
+                        sublink = "http://testahmedabadschool.sfanow.in";
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://hyderabadcollege.sfanow.in') {
-                        sublink = "http://ahmedabadcollege.sfanow.in";
+                    } else if (window.location.href == 'http://testhyderabadcollege.sfanow.in') {
+                        sublink = "http://testahmedabadcollege.sfanow.in";
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://mumbaischool.sfanow.in') {
-                        sublink = "http://ahmedabadschool.sfanow.in";
+                    } else if (window.location.href == 'http://testmumbaischool.sfanow.in') {
+                        sublink = "http://testahmedabadschool.sfanow.in";
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://mumbaicollege.sfanow.in') {
-                        sublink = "http://ahmedabadcollege.sfanow.in";
+                    } else if (window.location.href == 'http://testmumbaicollege.sfanow.in') {
+                        sublink = "http://testahmedabadcollege.sfanow.in";
                         window.open(sublink, '_self');
                     }
                 } else {
-                    console.log('in', selectedCity);
-                    if (window.location.href == 'http://hyderabadschool.sfanow.in' + window.location.pathname) {
-                        sublink = "http://ahmedabadschool.sfanow.in" + window.location.pathname;
+                    if (window.location.href == 'http://testhyderabadschool.sfanow.in' + window.location.pathname) {
+                        sublink = "http://testahmedabadschool.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://hyderabadcollege.sfanow.in' + window.location.pathname) {
-                        sublink = "http://ahmedabadcollege.sfanow.in" + window.location.pathname;
+                    } else if (window.location.href == 'http://testhyderabadcollege.sfanow.in' + window.location.pathname) {
+                        sublink = "http://testahmedabadcollege.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://mumbaischool.sfanow.in' + window.location.pathname) {
-                        sublink = "http://ahmedabadschool.sfanow.in" + window.location.pathname;
+                    } else if (window.location.href == 'http://testmumbaischool.sfanow.in' + window.location.pathname) {
+                        sublink = "http://testahmedabadschool.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
-                    } else if (window.location.href == 'http://mumbaicollege.sfanow.in' + window.location.pathname) {
-                        sublink = "http://ahmedabadcollege.sfanow.in" + window.location.pathname;
+                    } else if (window.location.href == 'http://testmumbaicollege.sfanow.in' + window.location.pathname) {
+                        sublink = "http://testahmedabadcollege.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
                     }
                 }
