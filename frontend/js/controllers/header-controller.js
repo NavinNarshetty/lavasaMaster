@@ -25,17 +25,17 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
     });
 
     if (globalLinkForAll == 'https://mumbai.sfanow.in/') {
-        $scope.selectedCity = 'Mumbai';
+        $scope.selectedCity = 'mumbai';
     } else if (globalLinkForAll == 'https://hyderabad.sfanow.in/') {
-        $scope.selectedCity = 'Hyderabad';
+        $scope.selectedCity = 'hyderabad';
     } else if (globalLinkForAll == 'https://ahmedabad.sfanow.in/') {
-        $scope.selectedCity = 'Ahmedabad';
+        $scope.selectedCity = 'ahmedabad';
     } else if (globalLinkForAll == 'http://testmumbai.sfanow.in/') {
-        $scope.selectedCity = 'Mumbai';
+        $scope.selectedCity = 'mumbai';
     } else if (globalLinkForAll == 'http://testhyderabad.sfanow.in/') {
-        $scope.selectedCity = 'Hyderabad';
+        $scope.selectedCity = 'hyderabad';
     } else if (globalLinkForAll == 'http://testahmedabad.sfanow.in/') {
-        $scope.selectedCity = 'Ahmedabad';
+        $scope.selectedCity = 'ahmedabad';
     }
 
     $scope.changeUrl = function (selectedCity) {
@@ -142,6 +142,15 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
                 break;
         }
     };
+
+    if (window.location.host == "testmumbaischool.sfanow.in" || window.location.host == "testmumbaicollege.sfanow.in") {
+        $scope.selectedCity = 'mumbai';
+    } else if (window.location.host == "testhyderabadschool.sfanow.in" || window.location.host == "testhyderabadcollege.sfanow.in") {
+        $scope.selectedCity = 'hyderabad';
+    } else if (window.location.host == "testahmedabadschool.sfanow.in" || window.location.host == "testahmedabadcollege.sfanow.in") {
+        $scope.selectedCity = 'ahmedabad';
+    }
+
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin != globalLinkSchoolRegister) {
         $scope.registerSchool = globalLinkSchoolRegister;

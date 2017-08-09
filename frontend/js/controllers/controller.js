@@ -67,15 +67,15 @@ myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService
         $scope.isCollege = false;
     } else if (window.location.host == 'testmumbaicollege.sfanow.in') {
         $scope.isCollege = true;
-    } else if (window.location.hostname == "testhyderabadschool.sfanow.in") {
+    } else if (window.location.host == "testhyderabadschool.sfanow.in") {
         $scope.isCollege = false;
     } else if (window.location.host == "testhyderabadcollege.sfanow.in") {
         $scope.isCollege = true;
-    } else if (window.location.hostname == "testahmedabadschool.sfanow.in") {
+    } else if (window.location.host == "testahmedabadschool.sfanow.in") {
         $scope.isCollege = false;
     } else if (window.location.host == "testahmedabadcollege.sfanow.in") {
         $scope.isCollege = true;
-    } else if (window.location.hostname == "mumbaischool.sfanow.in") {
+    } else if (window.location.host == "mumbaischool.sfanow.in") {
         $scope.isCollege = false;
     } else if (window.location.host == "mumbaicollege.sfanow.in") {
         $scope.isCollege = true;
