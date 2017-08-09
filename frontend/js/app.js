@@ -309,6 +309,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/qf-knockout",
             templateUrl: tempateURL,
             controller: 'QfKnockoutCtrl'
+        })
+        .state('knockout', {
+            url: "/knockout",
+            templateUrl: tempateURL,
+            controller: 'KnockoutCtrl'
         });
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {
