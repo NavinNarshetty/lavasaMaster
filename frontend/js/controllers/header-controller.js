@@ -43,8 +43,10 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
         console.log(selectedCity);
         switch (selectedCity) {
             case 'mumbai':
+                console.log('mumbai', selectedCity);
                 $scope.selectedCity = 'mumbai';
                 if (window.location.pathname == '/') {
+                    console.log(selectedCity);
                     if (window.location.href == 'http://hyderabadschool.sfanow.in') {
                         sublink = "http://mumbaischool.sfanow.in";
                         window.open(sublink, '_self');
@@ -59,6 +61,7 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
                         window.open(sublink, '_self');
                     }
                 } else {
+                    console.log(selectedCity);
                     if (window.location.href == 'http://hyderabadschool.sfanow.in' + window.location.pathname) {
                         sublink = "http://mumbaischool.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
@@ -75,8 +78,10 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
                 }
                 break;
             case 'hyderabad':
+                console.log('hyderabad', selectedCity);
                 $scope.selectedCity = 'hyderabad';
                 if (window.location.pathname == '/') {
+                    console.log(selectedCity);
                     if (window.location.href == 'http://mumbaischool.sfanow.in') {
                         sublink = "http://hyderabadschool.sfanow.in";
                         window.open(sublink, '_self');
@@ -91,6 +96,7 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
                         window.open(sublink, '_self');
                     }
                 } else {
+                    console.log(selectedCity);
                     if (window.location.href == 'http://mumbaischool.sfanow.in' + window.location.pathname) {
                         sublink = "http://hyderabadschool.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
@@ -108,7 +114,9 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
                 break;
             case 'ahmedabad':
                 $scope.selectedCity = 'ahmedabad';
+                console.log('ahmedabad', selectedCity);
                 if (window.location.pathname == '/') {
+                    console.log(selectedCity);
                     if (window.location.href == 'http://hyderabadschool.sfanow.in') {
                         sublink = "http://ahmedabadschool.sfanow.in";
                         window.open(sublink, '_self');
@@ -123,6 +131,7 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
                         window.open(sublink, '_self');
                     }
                 } else {
+                    console.log(selectedCity);
                     if (window.location.href == 'http://hyderabadschool.sfanow.in' + window.location.pathname) {
                         sublink = "http://ahmedabadschool.sfanow.in" + window.location.pathname;
                         window.open(sublink, '_self');
