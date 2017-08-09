@@ -147,9 +147,9 @@ myApp.controller('ForgotPasswordCtrl', function ($scope, TemplateService, Naviga
                     } else {
                         if (allData.error == "Incorrect Type") {
                             if ($scope.formData.type == 'athlete') {
-                                toastr.error('Only Athlete Can Apply From Here For Forgot Password. Please Check You Are {{$scope.typeFirst}} Or Athlete, Please Try Again.', 'Forgot Password Message');
+                                toastr.error('Only Athlete Can Apply From Here For Forgot Password. Please Check You Are ' + $scope.typeFirst + ' Or Athlete, Please Try Again.', 'Forgot Password Message');
                             } else {
-                                toastr.error('Only {{$scope.typeFirst}} Can Apply From Here For Forgot Password. Please Check You Are {{$scope.typeFirst}} Or Athlete, Please Try Again.', 'Forgot Password Message');
+                                toastr.error('Only ' + $scope.typeFirst + ' Can Apply From Here For Forgot Password. Please Check You Are ' + $scope.typeFirst + ' Or Athlete, Please Try Again.', 'Forgot Password Message');
                             }
                         } else {
                             toastr.error('Please Try Again By Entering Valid  SFA Id And Email Id.', 'Forgot Password Message');

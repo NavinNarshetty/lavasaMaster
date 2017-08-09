@@ -39,14 +39,15 @@
         <div class="col-md-8 col-md-push-2 col-sm-12 col-xs-12">
             <div class="box-sfa dummy">
                 <div class="mar-left" ng-if="isCollege == false">
-                    <p class="d-padd para2 t-padd sf-list" style="text-align: justify">In case you have participated in previous SFA Championships you will need to enter your SFA ID & Name
+                    <p class="d-padd para2 t-padd sf-list" style="text-align: justify" ng-if="sfaCity == 'Mumbai'">In case you have participated in previous SFA Championships you will need to enter your SFA ID & Name
                         to ensure that your previous years' match videos and statistics reflect in your new profile, which
                         will be created on successful completion of this registration process</p>
+                    <p class="d-padd para2 t-padd sf-list" style="text-align: justify" ng-if="sfaCity == 'Hyderabad'">Kindly Select the name of your school from the below mentioned list. In case your school’s name does
+                        not appear in the list kindly add the name of your school and proceed.</p>
                 </div>
                 <div class="mar-left" ng-if="isCollege == true">
-                    <p class="d-padd para2 t-padd sf-list" style="text-align: justify">In case you have participated in previous SFA Championships you will need to enter your SFA ID & Name
-                        to ensure that your previous years' match videos and statistics reflect in your new profile, which
-                        will be created on successful completion of this registration process</p>
+                    <p class="d-padd para2 t-padd sf-list" style="text-align: justify">Kindly Select the name of your college from the below mentioned list. In case your college’s name does
+                        not appear in the list kindly add the name of your college and proceed. </p>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <label class="para2 sfa-padd sf-list">  SFA ID or Name:</label>

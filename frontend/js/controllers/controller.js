@@ -163,9 +163,16 @@ myApp.controller('ChampionsCtrl', function ($scope, TemplateService, NavigationS
 
 });
 
-myApp.controller('ChampionshipCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+myApp.controller('ChampionshipCtrl', function ($scope, TemplateService, NavigationService, $timeout, configService) {
     //Used to name the .html file
     $scope.template = TemplateService.getHTML("content/championship.html");
     TemplateService.title = "Championship"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
+    });
 });
