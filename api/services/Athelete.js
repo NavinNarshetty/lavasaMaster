@@ -2619,10 +2619,10 @@ var model = {
 
                 callback(null, "Data is empty");
             } else {
-                async.each(found, function (data, callback) {
-                    if (data.registrationFee != "online PAYU" && data.paymentStatus != "Pending") {
+                async.each(found, function (data1, callback) {
+                    if (data1.registrationFee != "online PAYU" && data1.paymentStatus != "Pending") {
                         var now = moment(new Date()); //todays date
-                        var end = moment(data.createdAt); // another date
+                        var end = moment(data1.createdAt); // another date
                         var duration = moment.duration(now.diff(end));
                         var dump = duration.asDays();
                         var days = parseInt(dump);
@@ -2634,8 +2634,8 @@ var model = {
                             emailData.year = data.property.year;
                             emailData.type = data.property.institutionType;
                             emailData.athleteAmount = data.property.totalAmountAthlete;
-                            emailData.name = data.firstName;
-                            emailData.email = data.email;
+                            emailData.name = data1.firstName;
+                            emailData.email = data1.email;
                             emailData.filename = "paymentReminderAthlete.ejs";
                             emailData.subject = "SFA: Your Payment Reminder for SFA " + emailData.city + " " + emailData.year;
                             console.log("emaildata", emailData);
@@ -2658,8 +2658,8 @@ var model = {
                             emailData.year = data.property.year;
                             emailData.type = data.property.institutionType;
                             emailData.athleteAmount = data.property.totalAmountAthlete;
-                            emailData.name = data.firstName;
-                            emailData.email = data.email;
+                            emailData.name = data1.firstName;
+                            emailData.email = data1.email;
                             emailData.filename = "paymentReminderAthlete.ejs";
                             emailData.subject = "SFA: Your Payment Reminder for SFA " + emailData.city + " " + emailData.year;
                             console.log("emaildata", emailData);

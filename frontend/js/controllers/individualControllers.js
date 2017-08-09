@@ -1,29 +1,13 @@
-myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, errorService, $state, NavigationService, $stateParams, toastr, $timeout, loginService, selectService) {
+myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, errorService, $state, NavigationService, $stateParams, toastr, $timeout, loginService, selectService, configService) {
     $scope.template = TemplateService.getHTML("content/individual-selection.html");
     TemplateService.title = "Individual Selection";
     $scope.navigation = NavigationService.getNavigation();
-    NavigationService.getDetail(function (data) {
-        errorService.errorCode(data, function (allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
     $scope.selectService = selectService;
     $.jStorage.set("sportsId", $stateParams.id);
@@ -189,34 +173,18 @@ myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, e
 
 
 //Confirm-Fencing
-myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter) {
+myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
     $scope.template = TemplateService.getHTML("content/confirmfencing.html");
     TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
     $scope.navigation = NavigationService.getNavigation();
-    NavigationService.getDetail(function (data) {
-        errorService.errorCode(data, function (allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
     $scope.selectService = selectService;
     $scope.formData = {};
@@ -266,34 +234,18 @@ myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, Naviga
 });
 
 //Confirm-Individual
-myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter) {
+myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
     $scope.template = TemplateService.getHTML("content/confirmindividual.html");
     TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
     $scope.navigation = NavigationService.getNavigation();
-    NavigationService.getDetail(function (data) {
-        errorService.errorCode(data, function (allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
     $scope.selectService = selectService;
     $scope.redirectTo = $.jStorage.get("confirmPageKey");
@@ -379,34 +331,18 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
 
 //Confirm-karate
 
-myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter) {
+myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
     $scope.template = TemplateService.getHTML("content/confirmkarate.html");
     TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
     $scope.navigation = NavigationService.getNavigation();
-    NavigationService.getDetail(function (data) {
-        errorService.errorCode(data, function (allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
     $scope.formData = {};
     $scope.selectService = selectService;
@@ -434,36 +370,20 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
 
 //Confirm-athlete-swimming
 
-myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, NavigationService, loginService, $timeout, $state, selectService, toastr, $stateParams, $filter) {
+myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, NavigationService, loginService, $timeout, $state, selectService, toastr, $stateParams, $filter, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
     $scope.template = TemplateService.getHTML("content/confirmathleteswim.html");
     TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
     $scope.navigation = NavigationService.getNavigation();
-    $scope.selectService = selectService;
-    NavigationService.getDetail(function (data) {
-        errorService.errorCode(data, function (allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
+    $scope.selectService = selectService;
     $scope.formData = {};
     loginService.loginGet(function (data) {
         $scope.detail = data;
@@ -491,32 +411,16 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
 });
 
 
-myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService) {
+myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService, configService) {
     $scope.template = TemplateService.getHTML("content/individual-congrats.html");
     TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
     $scope.navigation = NavigationService.getNavigation();
-    NavigationService.getDetail(function (data) {
-        errorService.errorCode(data, function (allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
     // $scope.formData = {};
     loginService.loginGet(function (data) {

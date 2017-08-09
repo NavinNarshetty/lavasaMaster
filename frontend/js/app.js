@@ -264,9 +264,19 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'CollegeFaqCtrl'
         })
+        .state('championshipschedules', {
+            url: "/championship-schedule",
+            templateUrl: tempateURL,
+            controller: 'ChampionshipSchedulesCtrl'
+        })
+        .state('hyderabad', {
+            url: "/hyderabad",
+            templateUrl: tempateURL,
+            controller: 'HyderabadCtrl'
+        })
         // Draws and Schedule
         .state('championshipschedule', {
-            url: "/championship-schedule",
+            url: "/draws-schedule",
             templateUrl: tempateURL,
             controller: 'ChampionshipScheduleCtrl'
         })
@@ -299,12 +309,29 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/qf-knockout",
             templateUrl: tempateURL,
             controller: 'QfKnockoutCtrl'
+        })
+        .state('knockout', {
+            url: "/knockout",
+            templateUrl: tempateURL,
+            controller: 'KnockoutCtrl'
         });
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
-    if (window.location.origin != "http://mumbaischool.sfanow.in") {
-        $urlRouterProvider.otherwise("/register");
-    } else {
+    if (window.location.origin == "http://mumbaischool.sfanow.in") {
         $urlRouterProvider.otherwise("/championship");
+    } else if (window.location.origin == "http://mumbaicollege.sfanow.in") {
+        $urlRouterProvider.otherwise("/register");
+    } else if (window.location.origin == "http://testmumbaischool.sfanow.in") {
+        $urlRouterProvider.otherwise("/championship");
+    } else if (window.location.origin == "http://testmumbaicollege.sfanow.in") {
+        $urlRouterProvider.otherwise("/register");
+    } else if (window.location.origin == "http://testhyderabadschool.sfanow.in") {
+        $urlRouterProvider.otherwise("/championship");
+    } else if (window.location.origin == "http://testhyderabadcollege.sfanow.in") {
+        $urlRouterProvider.otherwise("/register");
+    } else if (window.location.origin == "http://testahmedabadschool.sfanow.in") {
+        $urlRouterProvider.otherwise("/championship");
+    } else if (window.location.origin == "http://testahmedabadcollege.sfanow.in") {
+        $urlRouterProvider.otherwise("/register");
     }
     $locationProvider.html5Mode(isproduction);
 });

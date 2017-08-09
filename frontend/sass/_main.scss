@@ -5296,7 +5296,7 @@ input[type="radio"]:checked+label span {
 }
 
 .registration-desc {
-    padding: 60px;
+    padding: 44px;
     h2 {
         font-family: Futura Std Bold Condensed;
         color: white;
@@ -7583,3 +7583,72 @@ h1.forgot-space {
 }
 
 // END COLLEGE-FAQ
+.schedule {
+    .championship-scheduletitle {
+        border-top: 0 !important;
+    }
+    .championshipschedule-tableholder table {
+        th,
+        td {
+            text-align: left;
+            padding-left: 50px;
+        }
+    }
+}
+
+.citySelect.sfa-select {
+    position: relative;
+    z-index: 9;
+    margin-left: 38px;
+    select {
+        @include appearance(none);
+        border: none;
+        text-transform: uppercase;
+        font-size: 11px;
+        padding: 3px 18px 0 0;
+        width: 100%;
+        background-color: transparent;
+        outline: 0;
+        color: #0a1a72;
+        cursor: pointer;
+    }
+    &:after {
+        font: normal normal normal 14px/1 FontAwesome;
+        content: '\f0dd';
+        height: 30px;
+        width: 0;
+        background-color: transparent;
+        color: #091a71;
+        position: absolute;
+        top: -5px;
+        left: 82%;
+        text-align: center;
+        line-height: 22px;
+        font-size: 22px;
+        z-index: -1;
+    }
+    .only-border {
+        border: 0;
+        width: 100%;
+        position: absolute;
+        height: 28px;
+        top: -2px;
+        z-index: -1;
+        left: 0;
+    }
+}
+
+.navbar-toggle {
+    float: none;
+}
+
+.forCityPlacing {
+    display: inline-block;
+    position: absolute;
+    top: 5px;
+    right: 15px;
+}
+
+.forCityPlacingSm {
+    float: right;
+}

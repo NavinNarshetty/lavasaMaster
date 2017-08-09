@@ -9,3 +9,11 @@ myApp.controller('CollegeFaqCtrl', function ($scope, TemplateService, $state, Na
     isFirstDisabled: false
   };
 });
+
+
+myApp.controller('HyderabadCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
+  $scope.template = TemplateService.getHTML("content/hyderabad.html");
+  TemplateService.title = "Championship"; //This is the Title of the Website
+  $scope.navigation = NavigationService.getNavigation();
+
+});

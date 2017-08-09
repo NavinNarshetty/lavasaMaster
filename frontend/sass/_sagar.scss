@@ -168,3 +168,58 @@
 }
 
 // END CITY-VIDEO
+// ABOUT CHAMPIONSHIP HYDERABAD
+.hyderabad-sporticonholder {
+    padding: 30px 0px;
+    .sport-icon-championship {
+        padding: 0;
+        text-align: center;
+    }
+    .sport-icon-championship li {
+        width: 10%;
+        padding: 0 10px;
+    }
+}
+
+.prosport-holder {
+    .proffessional {
+        padding: 20px;
+    }
+    .brand-blue {
+        color: #0a1a72;
+        &:before {
+            background-color: #0a1a72;
+            border: 1px solid #0a1a72;
+        }
+    }
+    .hyderabad-prosportimageholder {
+        width: 90%;
+    }
+    .hyderabad-prosportexperience {
+        h3 {
+            color: #0da24a;
+        }
+    }
+}
+
+.prosporteducation-head {
+    h3 {
+        color: #0da24a;
+    }
+}
+
+.prosporteducation-holder {
+    .proffessional {
+        padding: 5px;
+    }
+}
+
+.pro-dataanalytics-head {
+    color: #0da24a;
+    letter-spacing: 1px;
+}
+
+// .another-pro-data-holder {
+//     margin-top: 55px;
+// }
+// END ABOUT CHAMPIONSHIP
