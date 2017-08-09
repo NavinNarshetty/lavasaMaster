@@ -1,0 +1,83 @@
+<section class="schedule">
+    <div class="championship-schedule championship-schedule-line mb-50">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12">
+
+                    <div class="championship-scheduletitle ">
+                        <h2 class="text-center text-capitalize d-fjalla-one m-clear">Championship schedule</h2>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-5 col-sm-6 col-xs-12">
+                            <div class="championshipschedule-tableholder table-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Sport </th>
+                                            <th>Dates</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="schedule in schedulelist track by $index">
+                                            <td>
+                                                <div class="schedulesport-name">
+                                                    {{schedule.sport}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="schedulesport-dates">
+                                                    <span ng-if="schedule.sport!='Athletics' && schedule.sport!='Hockey'">  {{schedule.date1}}<sup>th</sup> <span>-</span>                                                    {{schedule.date2}}<sup>th</sup> {{schedule.month}}
+                                                    </span>
+                                                    <span ng-if="schedule.sport=='Athletics' || schedule.sport=='Hockey'">TBA</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-5 col-sm-6 col-xs-12">
+                            <div class="championshipschedule-tableholder tale-responsive">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Sport </th>
+                                            <th>Dates</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="schedule in schedulelist2 track by $index">
+                                            <td>
+                                                <div class="schedulesport-name">
+                                                    {{schedule.sport}}
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="schedulesport-dates">
+                                                    <span ng-if="schedule.sport == ''" style="opacity:0;">dummy</span>
+                                                    <span ng-if="schedule.sport!='Water Polo' && schedule.sport != ''">{{schedule.date1}}<sup>th</sup> <span>-</span>                                                    {{schedule.date2}}<sup>th</sup> {{schedule.month}}
+                                                    </span>
+                                                    <span ng-if="schedule.sport=='Water Polo' ">{{schedule.date}}<sup>th</sup> {{schedule.month}}  </span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-offset-1 col-md-11 col-sm-12 col-xs-12">
+                            <div class="">
+                                <p class="m-clear">
+                                    *SFA shall keep you informed in-case there is any change of dates.
+                                </p>
+                                <p class="m-clear" ng-if="isCollege == false">*Football qualifiers will be held in November. Dates will be announced soon.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,983 +1,1800 @@
-<div class="container-fluid">
-    <div class="registration-img">
-        <div class="row">
-            <div class="col-md-3 col-sm-12 col-xs-12">
-                <div class="registration-desc">
-                    <h2 ng-if="isCollege == false">BE A PART OF THE LARGEST PROFESSIONAL YOUTH SPORTING CHAMPIONSHIP</h2>
-                    <h2 ng-if="isCollege == true">BE A PART OF THE FIRST PROFESSIONAL YOUTH SPORTING CHAMPIONSHIP</h2>
-                    <h3>SFA {{sfaCity | capitalize}} {{year}}</h3>
-                </div>
-            </div>
-            <div class="col-md-9 col-sm-12 col-xs-12" ng-if="isCollege == false">
-                <div class="sport-icon ul-show">
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/1_Handball.png" class="img-responsive">
-                            <p>HANDBALL</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/2_Basketball.png" class="img-responsive">
-                            <p>Basketball</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/3_Volleyball.png" class="img-responsive">
-                            <p>Volleyball</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/4_Throwball.png" class="img-responsive">
-                            <p>Throwball</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/5_Hockey.png" class="img-responsive">
-                            <p>Hockey</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/6_Kho Kho.png" class="img-responsive">
-                            <p>Kho Kho</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/7_Kabaddi.png" class="img-responsive">
-                            <p>Kabaddi</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/8_Football.png" class="img-responsive">
-                            <p>Football</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/19_Shooting.png" class="img-responsive">
-                            <p>Shooting</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/20_Archery.png" class="img-responsive">
-                            <p>Archery</p>
-                        </li>
-                    </ul>
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/9_Badminton.png" class="img-responsive">
-                            <p>Badminton</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/10_Tennis.png" class="img-responsive">
-                            <p>Tennis</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/11_Table-Tennis.png" class="img-responsive">
-                            <p>Table Tennis</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/12_Squash.png" class="img-responsive">
-                            <p>Squash</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/13_Judo.png" class="img-responsive">
-                            <p>Judo</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/14_Taekwondo.png" class="img-responsive">
-                            <p>Taekwondo</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/15_Boxing.png" class="img-responsive">
-                            <p>Boxing</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/16_Fencing.png" class="img-responsive">
-                            <p>Fencing</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/17_Karate.png" class="img-responsive">
-                            <p>Karate</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/18_MMA.png" class="img-responsive">
-                            <p>Sport MMA</p>
-                        </li>
-                    </ul>
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/23_Carrom.png" class="img-responsive">
-                            <p>Carrom</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/24_Chess.png" class="img-responsive">
-                            <p>Chess</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/26_Athletics.png" class="img-responsive">
-                            <p>Athletics</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/21_Swimming.png" class="img-responsive">
-                            <p>Swimming</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/22_WaterPolo.png" class="img-responsive">
-                            <p>Water Polo</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="sport-icon ul-hide">
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/1_Handball.png" class="img-responsive">
-                            <p>HANDBALL</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/2_Basketball.png" class="img-responsive">
-                            <p>Basketball</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/3_Volleyball.png" class="img-responsive">
-                            <p>Volleyball</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/4_Throwball.png" class="img-responsive">
-                            <p>Throwball</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/5_Hockey.png" class="img-responsive">
-                            <p>Hockey</p>
-                        </li>
-                    </ul>
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/6_Kho Kho.png" class="img-responsive">
-                            <p>Kho Kho</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/7_Kabaddi.png" class="img-responsive">
-                            <p>Kabaddi</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/8_Football.png" class="img-responsive">
-                            <p>Football</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/19_Shooting.png" class="img-responsive">
-                            <p>Shooting</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/20_Archery.png" class="img-responsive">
-                            <p>Archery</p>
-                        </li>
-                    </ul>
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/9_Badminton.png" class="img-responsive">
-                            <p>Badminton</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/10_Tennis.png" class="img-responsive">
-                            <p>Tennis</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/11_Table-Tennis.png" class="img-responsive">
-                            <p>Table Tennis</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/12_Squash.png" class="img-responsive">
-                            <p>Squash</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/13_Judo.png" class="img-responsive">
-                            <p>Judo</p>
-                        </li>
-                    </ul>
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/14_Taekwondo.png" class="img-responsive">
-                            <p>Taekwondo</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/15_Boxing.png" class="img-responsive">
-                            <p>Boxing</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/16_Fencing.png" class="img-responsive">
-                            <p>Fencing</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/17_Karate.png" class="img-responsive">
-                            <p>Karate</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/18_MMA.png" class="img-responsive">
-                            <p>Sport MMA</p>
-                        </li>
-                    </ul>
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/23_Carrom.png" class="img-responsive">
-                            <p>Carrom</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/24_Chess.png" class="img-responsive">
-                            <p>Chess</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/26_Athletics.png" class="img-responsive">
-                            <p>Athletics</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/21_Swimming.png" class="img-responsive">
-                            <p>Swimming</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/22_WaterPolo.png" class="img-responsive">
-                            <p>Water Polo</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-9 col-sm-12 col-xs-12" ng-if="isCollege == true">
-                <div class="sport-icon ul-show">
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/1_Handball.png" class="img-responsive">
-                            <p>HANDBALL</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/5_Hockey.png" class="img-responsive">
-                            <p>Hockey</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/7_Kabaddi.png" class="img-responsive">
-                            <p>Kabaddi</p>
-                        </li>
-                    </ul>
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/20_Archery.png" class="img-responsive">
-                            <p>Archery</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/19_Shooting.png" class="img-responsive">
-                            <p>Shooting</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/23_Carrom.png" class="img-responsive">
-                            <p>Carrom</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/24_Chess.png" class="img-responsive">
-                            <p>Chess</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/10_Tennis.png" class="img-responsive">
-                            <p>Tennis</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/12_Squash.png" class="img-responsive">
-                            <p>Squash</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/21_Swimming.png" class="img-responsive">
-                            <p>Swimming</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/22_WaterPolo.png" class="img-responsive">
-                            <p>Water Polo</p>
-                        </li>
-                    </ul>
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/15_Boxing.png" class="img-responsive">
-                            <p>Boxing</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/16_Fencing.png" class="img-responsive">
-                            <p>Fencing</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/13_Judo.png" class="img-responsive">
-                            <p>Judo</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/14_Taekwondo.png" class="img-responsive">
-                            <p>Taekwondo</p>
-                        </li>
-                    </ul>
-                </div>
-                <div class="sport-icon ul-hide">
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/1_Handball.png" class="img-responsive">
-                            <p>HANDBALL</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/5_Hockey.png" class="img-responsive">
-                            <p>Hockey</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/7_Kabaddi.png" class="img-responsive">
-                            <p>Kabaddi</p>
-                        </li>
-                    </ul>
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/20_Archery.png" class="img-responsive">
-                            <p>Archery</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/19_Shooting.png" class="img-responsive">
-                            <p>Shooting</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/23_Carrom.png" class="img-responsive">
-                            <p>Carrom</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/24_Chess.png" class="img-responsive">
-                            <p>Chess</p>
-                        </li>
-                    </ul>
-                    <ul class="list-unstyled">
-
-                        <li>
-                            <img src="img/icon/10_Tennis.png" class="img-responsive">
-                            <p>Tennis</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/12_Squash.png" class="img-responsive">
-                            <p>Squash</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/21_Swimming.png" class="img-responsive">
-                            <p>Swimming</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/22_WaterPolo.png" class="img-responsive">
-                            <p>Water Polo</p>
-                        </li>
-                    </ul>
-                    <ul class="list-unstyled">
-                        <li>
-                            <img src="img/icon/15_Boxing.png" class="img-responsive">
-                            <p>Boxing</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/16_Fencing.png" class="img-responsive">
-                            <p>Fencing</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/13_Judo.png" class="img-responsive">
-                            <p>Judo</p>
-                        </li>
-                        <li>
-                            <img src="img/icon/14_Taekwondo.png" class="img-responsive">
-                            <p>Taekwondo</p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--<div class="container hidden-xs hidden-sm">-->
-<div class="container">
-    <div class="venue">
-        <div>
-            <p class="f-s" ng-if="isCollege == false">Sports For All brings to you {{sfaCity}}'s ultimate inter-school sporting championship, where best school contingents
-                will battle it out to be ranked as the No.1 School for Sports. Schools & Athletes from across Mumbai City,
-                Mumbai Suburban, Thane, Raigad and Palghar can register and compete at SFA {{sfaCity}} {{year}}.</p>
-            <p class="f-s" ng-if="isCollege == true">Sports For All brings to you {{sfaCity}}’s first inter-college professional sporting championship, where college
-                contingents will battle it out to be ranked as the No. 1 College for sports. Colleges & Athletes from across
-                Mumbai City, Mumbai Suburban, Thane, Raigad and Palghar can register and compete at SFA {{sfaCity}} {{year}}.</p>
-            <p class="f-s" ng-if="isCollege == true">
-                SFA professional sporting experience includes – World class multi-sporting infrastructure, best-in-class stadium experience,
-                HD match videography, college & athlete sports profiles, College ranking, talent scouting and a lot more.</p>
-        </div>
-        <div class="date-details">
-            <ul class="list-unstyled sport25 text-center" ng-if="isCollege == false">
-                <li>25+ Sports* </li>
-            </ul>
-            <ul class="list-unstyled date-venue" ng-if="isCollege == false">
-                <li>Dates: 1st Dec – 17th Dec {{year}}** </li>
-                <li>Venue: DY Patil Sports Academy, Nerul***</li>
-            </ul>
-            <ul class="list-unstyled date-venue" ng-if="isCollege == true">
-                <li>Dates: 1st Dec – 17th Dec {{year}}* </li>
-                <li>Venue: DY Patil Sports Academy, Nerul**</li>
-            </ul>
-            <div class="venue-bottom ">
-                <ul class="list-unstyled" ng-if="isCollege == false">
-                    <li>*More sports to be announced shortly </li>
-                    <li>**Final dates to be announced shortly </li>
-                    <li> ***Venue for Athletics and Hockey to be announced soon</li>
-                </ul>
-                <ul class="list-unstyled" ng-if="isCollege == true">
-                    <li>*Final dates to be announced shortly </li>
-                    <li> **Venue for Hockey to be announced soon</li>
-                </ul>
-            </div>
-        </div>
-    </div>
-    <div class="categories">
-        <h1 class="text-center">Register for SFA {{sfaCity}} {{year}}</h1>
-        <p class="f-s f16 text-center margin0">Every {{type |firstcapitalize}} and Athlete (participating in a team sport or individual sport) must register themselves
-            individually first.
-        </p>
-        <p class="f-s f16 text-center margin0">Once your individual registration process is complete, you can proceed to register yourself for the sport/sports
-            of your interest.</p>
-        <p class="f-s f16 text-center margin0">Kindly go through the ‘Age Group and Event Categories’ to understand your sporting opportunities at SFA {{sfaCity}}
-            {{year}}.
-        </p>
-        <p class="text-center step mt35 mb25">Step 1 : {{type |firstcapitalize}} / Athlete Registration & Verification</p>
-        <div class="row">
-            <div class="col-md-6 col-sm-12 col-xs-12">
-                <div class="school-registration">
-                    <div class="btn-school text-center">
-                        <p>{{type |firstcapitalize}} Registration</p>
-                        <p>To be filled by {{type |firstcapitalize}} Authorities</p>
-                        <div class="school-icon">
-                            <img src="img/icon/2.png" class="img-responsive">
-                        </div>
+<!-- Mumbai -->
+<section ng-if="sfaCity == 'Mumbai'">
+    <div class="container-fluid">
+        <div class="registration-img">
+            <div class="row">
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="registration-desc">
+                        <h2 ng-if="isCollege == false">BE A PART OF THE LARGEST PROFESSIONAL YOUTH SPORTING CHAMPIONSHIP</h2>
+                        <h2 ng-if="isCollege == true">BE A PART OF THE FIRST PROFESSIONAL YOUTH SPORTING CHAMPIONSHIP</h2>
+                        <h3>SFA {{sfaCity | capitalize}} {{year}}</h3>
                     </div>
-                    <div class="category-padding f-s mod-cls">
-                        <p><b>Register your {{type}} for SFA {{sfaCity}} {{year}}:</b>
-                        </p>
-                        <ul class="list-unstyled school-list">
-                            <li ng-if="isCollege == false">Fill out the online ‘{{type |firstcapitalize}} Registration Form’ & pay the registration amount
-                                of INR 12,000/- (inclusive of all applicable taxes)
+                </div>
+                <div class="col-md-9 col-sm-12 col-xs-12" ng-if="isCollege == false">
+                    <div class="sport-icon ul-show">
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/1_Handball.png" class="img-responsive">
+                                <p>HANDBALL</p>
                             </li>
-                            <li ng-if="isCollege == true">Fill out the college registration form & pay the college registration fees.</li>
-                            <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 2500 will be charged to each college registering
-                                for SFA Mumbai 2017</li>
-                            <li>After the verification process, SFA will issue a unique {{type}} SFA ID and password. (This process
-                                may take up to 2 working days).
-                                <!--**<br><span class="f-14">** Please keep your SFA ID and password safe as you will require this to register individual and and team athletes from your school.</span>-->
+                            <li>
+                                <img src="img/icon/2_Basketball.png" class="img-responsive">
+                                <p>Basketball</p>
                             </li>
-                            <li>Proceed to SPORTS REGISTRATION to register athletes from your {{type}} for their sport/sports
-                                of interest.</li>
-                            <!-- <li>You will be notified once the sports registration is open.</li> -->
-                            <!--<li>Proceed to register athletes from your school for Sports Registration</li>-->
+                            <li>
+                                <img src="img/icon/3_Volleyball.png" class="img-responsive">
+                                <p>Volleyball</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/4_Throwball.png" class="img-responsive">
+                                <p>Throwball</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/5_Hockey.png" class="img-responsive">
+                                <p>Hockey</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/6_Kho Kho.png" class="img-responsive">
+                                <p>Kho Kho</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/7_Kabaddi.png" class="img-responsive">
+                                <p>Kabaddi</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/8_Football.png" class="img-responsive">
+                                <p>Football</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/19_Shooting.png" class="img-responsive">
+                                <p>Shooting</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/20_Archery.png" class="img-responsive">
+                                <p>Archery</p>
+                            </li>
                         </ul>
-                        <p class="f-16">Successful registration will enable all athletes from your {{type}} to participate in all <span ng-if="isCollege == false">25+</span>
-                            <span ng-if="isCollege == true">15+</span> disciplines of sport at a subsidized registration
-                            fee.
-                        </p>
-                        <p class="custom-a"><a ng-click="regisBenModal(type, sfaCity, year)"><strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{year}}</strong></a></p>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/9_Badminton.png" class="img-responsive">
+                                <p>Badminton</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/10_Tennis.png" class="img-responsive">
+                                <p>Tennis</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/11_Table-Tennis.png" class="img-responsive">
+                                <p>Table Tennis</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/12_Squash.png" class="img-responsive">
+                                <p>Squash</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/13_Judo.png" class="img-responsive">
+                                <p>Judo</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/14_Taekwondo.png" class="img-responsive">
+                                <p>Taekwondo</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/15_Boxing.png" class="img-responsive">
+                                <p>Boxing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/16_Fencing.png" class="img-responsive">
+                                <p>Fencing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/17_Karate.png" class="img-responsive">
+                                <p>Karate</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/18_MMA.png" class="img-responsive">
+                                <p>Sport MMA</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/23_Carrom.png" class="img-responsive">
+                                <p>Carrom</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/24_Chess.png" class="img-responsive">
+                                <p>Chess</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/26_Athletics.png" class="img-responsive">
+                                <p>Athletics</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/21_Swimming.png" class="img-responsive">
+                                <p>Swimming</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/22_WaterPolo.png" class="img-responsive">
+                                <p>Water Polo</p>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="text-center mb-20 "><a ui-sref="formregis"><button class="btn-category green-btn "> Click here for {{type |firstcapitalize}} Registration Form</button></a></div>
+                    <div class="sport-icon ul-hide">
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/1_Handball.png" class="img-responsive">
+                                <p>HANDBALL</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/2_Basketball.png" class="img-responsive">
+                                <p>Basketball</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/3_Volleyball.png" class="img-responsive">
+                                <p>Volleyball</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/4_Throwball.png" class="img-responsive">
+                                <p>Throwball</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/5_Hockey.png" class="img-responsive">
+                                <p>Hockey</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/6_Kho Kho.png" class="img-responsive">
+                                <p>Kho Kho</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/7_Kabaddi.png" class="img-responsive">
+                                <p>Kabaddi</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/8_Football.png" class="img-responsive">
+                                <p>Football</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/19_Shooting.png" class="img-responsive">
+                                <p>Shooting</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/20_Archery.png" class="img-responsive">
+                                <p>Archery</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/9_Badminton.png" class="img-responsive">
+                                <p>Badminton</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/10_Tennis.png" class="img-responsive">
+                                <p>Tennis</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/11_Table-Tennis.png" class="img-responsive">
+                                <p>Table Tennis</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/12_Squash.png" class="img-responsive">
+                                <p>Squash</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/13_Judo.png" class="img-responsive">
+                                <p>Judo</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/14_Taekwondo.png" class="img-responsive">
+                                <p>Taekwondo</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/15_Boxing.png" class="img-responsive">
+                                <p>Boxing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/16_Fencing.png" class="img-responsive">
+                                <p>Fencing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/17_Karate.png" class="img-responsive">
+                                <p>Karate</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/18_MMA.png" class="img-responsive">
+                                <p>Sport MMA</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/23_Carrom.png" class="img-responsive">
+                                <p>Carrom</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/24_Chess.png" class="img-responsive">
+                                <p>Chess</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/26_Athletics.png" class="img-responsive">
+                                <p>Athletics</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/21_Swimming.png" class="img-responsive">
+                                <p>Swimming</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/22_WaterPolo.png" class="img-responsive">
+                                <p>Water Polo</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-12 col-xs-12" ng-if="isCollege == true">
+                    <div class="sport-icon ul-show">
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/1_Handball.png" class="img-responsive">
+                                <p>HANDBALL</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/5_Hockey.png" class="img-responsive">
+                                <p>Hockey</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/7_Kabaddi.png" class="img-responsive">
+                                <p>Kabaddi</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/20_Archery.png" class="img-responsive">
+                                <p>Archery</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/19_Shooting.png" class="img-responsive">
+                                <p>Shooting</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/23_Carrom.png" class="img-responsive">
+                                <p>Carrom</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/24_Chess.png" class="img-responsive">
+                                <p>Chess</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/10_Tennis.png" class="img-responsive">
+                                <p>Tennis</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/12_Squash.png" class="img-responsive">
+                                <p>Squash</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/21_Swimming.png" class="img-responsive">
+                                <p>Swimming</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/22_WaterPolo.png" class="img-responsive">
+                                <p>Water Polo</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/15_Boxing.png" class="img-responsive">
+                                <p>Boxing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/16_Fencing.png" class="img-responsive">
+                                <p>Fencing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/13_Judo.png" class="img-responsive">
+                                <p>Judo</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/14_Taekwondo.png" class="img-responsive">
+                                <p>Taekwondo</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sport-icon ul-hide">
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/1_Handball.png" class="img-responsive">
+                                <p>HANDBALL</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/5_Hockey.png" class="img-responsive">
+                                <p>Hockey</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/7_Kabaddi.png" class="img-responsive">
+                                <p>Kabaddi</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/20_Archery.png" class="img-responsive">
+                                <p>Archery</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/19_Shooting.png" class="img-responsive">
+                                <p>Shooting</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/23_Carrom.png" class="img-responsive">
+                                <p>Carrom</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/24_Chess.png" class="img-responsive">
+                                <p>Chess</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+
+                            <li>
+                                <img src="img/icon/10_Tennis.png" class="img-responsive">
+                                <p>Tennis</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/12_Squash.png" class="img-responsive">
+                                <p>Squash</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/21_Swimming.png" class="img-responsive">
+                                <p>Swimming</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/22_WaterPolo.png" class="img-responsive">
+                                <p>Water Polo</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/15_Boxing.png" class="img-responsive">
+                                <p>Boxing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/16_Fencing.png" class="img-responsive">
+                                <p>Fencing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/13_Judo.png" class="img-responsive">
+                                <p>Judo</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/14_Taekwondo.png" class="img-responsive">
+                                <p>Taekwondo</p>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-
-
-            <div class="col-md-6 col-sm-12 col-xs-12">
-                <div class="athletes">
-                    <div class="athlets-btn text-center">
-                        <div class="athlets-icon">
-                            <img src="img/icon/1.png" class="img-responsive">
+        </div>
+    </div>
+    <!--<div class="container hidden-xs hidden-sm">-->
+    <div class="container">
+        <div class="venue">
+            <div>
+                <p class="f-s" ng-if="isCollege == false">Sports For All brings to you {{sfaCity}}'s ultimate inter-school sporting championship, where best school
+                    contingents will battle it out to be ranked as the No.1 School for Sports. Schools & Athletes from across
+                    Mumbai City, Mumbai Suburban, Thane, Raigad and Palghar can register and compete at SFA {{sfaCity}} {{year}}.</p>
+                <p class="f-s" ng-if="isCollege == true">Sports For All brings to you {{sfaCity}}’s first inter-college professional sporting championship, where
+                    college contingents will battle it out to be ranked as the No. 1 College for sports. Colleges & Athletes
+                    from across Mumbai City, Mumbai Suburban, Thane, Raigad and Palghar can register and compete at SFA {{sfaCity}}
+                    {{year}}.
+                </p>
+                <p class="f-s" ng-if="isCollege == true">
+                    SFA professional sporting experience includes – World class multi-sporting infrastructure, best-in-class stadium experience,
+                    HD match videography, college & athlete sports profiles, College ranking, talent scouting and a lot more.</p>
+            </div>
+            <div class="date-details">
+                <ul class="list-unstyled sport25 text-center" ng-if="isCollege == false">
+                    <li>25+ Sports* </li>
+                </ul>
+                <ul class="list-unstyled date-venue" ng-if="isCollege == false">
+                    <li>Dates: 1st Dec – 17th Dec {{year}}** </li>
+                    <li>Venue: DY Patil Sports Academy, Nerul***</li>
+                </ul>
+                <ul class="list-unstyled date-venue" ng-if="isCollege == true">
+                    <li>Dates: 1st Dec – 17th Dec {{year}}* </li>
+                    <li>Venue: DY Patil Sports Academy, Nerul**</li>
+                </ul>
+                <div class="venue-bottom ">
+                    <ul class="list-unstyled" ng-if="isCollege == false">
+                        <li>*More sports to be announced shortly </li>
+                        <li>**Final dates to be announced shortly </li>
+                        <li> ***Venue for Athletics and Hockey to be announced soon</li>
+                    </ul>
+                    <ul class="list-unstyled" ng-if="isCollege == true">
+                        <li>*Final dates to be announced shortly </li>
+                        <li> **Venue for Hockey to be announced soon</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="categories">
+            <h1 class="text-center">Register for SFA {{sfaCity}} {{year}}</h1>
+            <p class="f-s f16 text-center margin0">Every {{type |firstcapitalize}} and Athlete (participating in a team sport or individual sport) must register
+                themselves individually first.
+            </p>
+            <p class="f-s f16 text-center margin0">Once your individual registration process is complete, you can proceed to register yourself for the sport/sports
+                of your interest.</p>
+            <p class="f-s f16 text-center margin0">Kindly go through the ‘Age Group and Event Categories’ to understand your sporting opportunities at SFA {{sfaCity}}
+                {{year}}.
+            </p>
+            <p class="text-center step mt35 mb25">Step 1 : {{type |firstcapitalize}} / Athlete Registration & Verification</p>
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="school-registration">
+                        <div class="btn-school text-center">
+                            <p>{{type |firstcapitalize}} Registration</p>
+                            <p>To be filled by {{type |firstcapitalize}} Authorities</p>
+                            <div class="school-icon">
+                                <img src="img/icon/2.png" class="img-responsive">
+                            </div>
                         </div>
-                        <p>Athlete Registration</p>
-                        <p>To be filled by Athletes / Parents</p>
+                        <div class="category-padding f-s mod-cls">
+                            <p><b>Register your {{type}} for SFA {{sfaCity}} {{year}}:</b>
+                            </p>
+                            <ul class="list-unstyled school-list">
+                                <li ng-if="isCollege == false">Fill out the online ‘{{type |firstcapitalize}} Registration Form’ & pay the registration
+                                    amount of INR 12,000/- (inclusive of all applicable taxes)
+                                </li>
+                                <li ng-if="isCollege == true">Fill out the college registration form & pay the college registration fees.</li>
+                                <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 2500 will be charged to each college registering
+                                    for SFA Mumbai 2017</li>
+                                <li>After the verification process, SFA will issue a unique {{type}} SFA ID and password. (This
+                                    process may take up to 2 working days).
+                                    <!--**<br><span class="f-14">** Please keep your SFA ID and password safe as you will require this to register individual and and team athletes from your school.</span>-->
+                                </li>
+                                <li>Proceed to SPORTS REGISTRATION to register athletes from your {{type}} for their sport/sports
+                                    of interest.</li>
+                                <!-- <li>You will be notified once the sports registration is open.</li> -->
+                                <!--<li>Proceed to register athletes from your school for Sports Registration</li>-->
+                            </ul>
+                            <p class="f-16">Successful registration will enable all athletes from your {{type}} to participate in all
+                                <span ng-if="isCollege == false">25+</span>
+                                <span ng-if="isCollege == true">15+</span> disciplines of sport at a subsidized registration
+                                fee.
+                            </p>
+                            <p class="custom-a"><a ng-click="regisBenModal(type, sfaCity, year)"><strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{year}}</strong></a></p>
+                        </div>
+                        <div class="text-center mb-20 "><a ui-sref="formregis"><button class="btn-category green-btn "> Click here for {{type |firstcapitalize}} Registration Form</button></a></div>
                     </div>
-                    <div class="category-padding-athelet f-s mod-cls">
-                        <!--<p>Once an athlete registers with SFA, he/she can participate in as many sports as he/she chooses to
+                </div>
+
+
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="athletes">
+                        <div class="athlets-btn text-center">
+                            <div class="athlets-icon">
+                                <img src="img/icon/1.png" class="img-responsive">
+                            </div>
+                            <p>Athlete Registration</p>
+                            <p>To be filled by Athletes / Parents</p>
+                        </div>
+                        <div class="category-padding-athelet f-s mod-cls">
+                            <!--<p>Once an athlete registers with SFA, he/she can participate in as many sports as he/she chooses to
                             (basis eligibility criteria).
                         </p>-->
-                        <p><b>Register as an athlete for SFA {{sfaCity}} {{year}}:</b>
-                        </p>
-                        <ul class="list-unstyled athlete-list f-s">
-                            <li ng-if="isCollege == false"> Fill out the online ‘Athlete Registration Form’ & pay the registration amount of INR 200/- (inclusive
-                                of all applicable taxes)<br>
-                                <span class="f-14">*In the event that your school does not register for SFA {{sfaCity}} {{year}} by the 30th of September,
+                            <p><b>Register as an athlete for SFA {{sfaCity}} {{year}}:</b>
+                            </p>
+                            <ul class="list-unstyled athlete-list f-s">
+                                <li ng-if="isCollege == false"> Fill out the online ‘Athlete Registration Form’ & pay the registration amount of INR 200/-
+                                    (inclusive of all applicable taxes)<br>
+                                    <span class="f-14">*In the event that your school does not register for SFA {{sfaCity}} {{year}} by the 30th of September,
                                     an additional fee of INR 400/- (Inclusive of all applicable taxes) will be levied.</span>
-                            </li>
-                            <li ng-if="isCollege == true">Fill out the athlete registration form & pay the athlete registration fees.</li>
-                            <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 300 will be charged to each athlete registering
-                                for SFA Mumbai 2017</li>
-                            <li>After the verification process, SFA will issue a unique athlete SFA ID and password. (This process
-                                may take up to 2 working days).
-                                <!--**<br><span class="f-14">**Please keep your SFA ID and password safe as you will require this to register yourself for 
+                                </li>
+                                <li ng-if="isCollege == true">Fill out the athlete registration form & pay the athlete registration fees.</li>
+                                <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 300 will be charged to each athlete registering
+                                    for SFA Mumbai 2017</li>
+                                <li>After the verification process, SFA will issue a unique athlete SFA ID and password. (This
+                                    process may take up to 2 working days).
+                                    <!--**<br><span class="f-14">**Please keep your SFA ID and password safe as you will require this to register yourself for 
                             individual/team sports that you wish to participate in. </span>-->
-                            </li>
-                            <li>Proceed to SPORTS REGISTRATION to register for you particular sport/sports.
-                                <!--<br><span class="f-14">* You can participate in all 25+ disciplines of sport</span><br>
+                                </li>
+                                <li>Proceed to SPORTS REGISTRATION to register for you particular sport/sports.
+                                    <!--<br><span class="f-14">* You can participate in all 25+ disciplines of sport</span><br>
                                 <span class="f-14">* The sport registration will be opening soon and you will be notified once the sport registration
                                     process begins.</span>-->
-                            </li>
-                            <!-- <li>You will be notified once the sport registration is open.</li> -->
-                            <!--<li>Proceed to register for Sports Registration</li>-->
-                        </ul>
-                        <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
+                                </li>
+                                <!-- <li>You will be notified once the sport registration is open.</li> -->
+                                <!--<li>Proceed to register for Sports Registration</li>-->
+                            </ul>
+                            <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
                             from their school registrations. </p>-->
-                        <p class="custom-a mb-33" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
-                        <p class="custom-a mb-75" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
+                            <p class="custom-a mb-33" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
+                            <p class="custom-a mb-75" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
+                        </div>
+                        <div class="text-center mb-20 "><a ui-sref="formathlete"><button class="btn-category orange "> Click here for Athlete Registration Form</button></a></div>
                     </div>
-                    <div class="text-center mb-20 "><a ui-sref="formathlete"><button class="btn-category orange "> Click here for Athlete Registration Form</button></a></div>
                 </div>
             </div>
-        </div>
 
-        <p class="text-center step mt50 mb25" ng-if="sfaCity == 'Mumbai'">Step 2 : Sports Registration</p>
-        <div class="row" ng-if="sfaCity == 'Mumbai'">
-            <div class="col-md-6 col-sm-12 col-xs-12 ">
-                <div class=" ">
-                    <!--<p class="text-center step mb-75 ">Step2 : Sport Registration</p>-->
-                    <div class="sport-registration school-registration ">
-                        <div class="btn-sport btn-school text-center ">
-                            <div class="school-icon ">
-                                <img src="img/icon/3.png " class="img-responsive ">
+            <p class="text-center step mt50 mb25" ng-if="sfaCity == 'Mumbai'">Step 2 : Sports Registration</p>
+            <div class="row" ng-if="sfaCity == 'Mumbai'">
+                <div class="col-md-6 col-sm-12 col-xs-12 ">
+                    <div class=" ">
+                        <!--<p class="text-center step mb-75 ">Step2 : Sport Registration</p>-->
+                        <div class="sport-registration school-registration ">
+                            <div class="btn-sport btn-school text-center ">
+                                <div class="school-icon ">
+                                    <img src="img/icon/3.png " class="img-responsive ">
+                                </div>
+                                <p>Sport Registration</p>
                             </div>
-                            <p>Sport Registration</p>
-                        </div>
-                        <div class="category-padding-sport f-s mod-cls">
-                            <p>Once the athlete / {{type}} registration is complete, log in using your SFA ID and password to
-                                register for your sport/sports of interest.
-                            </p>
-                            <p ng-if="isCollege==false">
-                                If you do not have an SFA ID and Password, kindly register yourself as an athlete / school by clicking the relevant option.
-                            </p>
-                            <!-- <p class="custom-a " ng-if="isCollege==false"><a href="http://{{sfaCity}}school.sfanow.in/formregis
+                            <div class="category-padding-sport f-s mod-cls">
+                                <p>Once the athlete / {{type}} registration is complete, log in using your SFA ID and password
+                                    to register for your sport/sports of interest.
+                                </p>
+                                <p ng-if="isCollege==false">
+                                    If you do not have an SFA ID and Password, kindly register yourself as an athlete / school by clicking the relevant option.
+                                </p>
+                                <!-- <p class="custom-a " ng-if="isCollege==false"><a href="http://{{sfaCity}}school.sfanow.in/formregis
                             " target="_new ">Click here for {{type |firstcapitalize}} Registration Form</a>
                             </p>
                             <p class="mb-75 custom-a " ng-if="isCollege==false"><a href="http://mumbaischool.sfanow.in/formathlete
                             " target="_new "><strong>Click here for Athlete Registration Form</strong></a>
                             </p> -->
-                            <p class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:<br><a href="http://{{sfaCity}}school.sfanow.in/formregis " target="_new ">http://mumbaischool.sfanow.in/formregis</a>
-                            </p>
-                            <p class="mb91 custom-a" ng-if="isCollege==false">For Athlete:<br><a href="http://mumbaischool.sfanow.in/formathlete
+                                <p class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:<br><a href="http://{{sfaCity}}school.sfanow.in/formregis "
+                                        target="_new ">http://mumbaischool.sfanow.in/formregis</a>
+                                </p>
+                                <p class="mb91 custom-a" ng-if="isCollege==false">For Athlete:<br><a href="http://mumbaischool.sfanow.in/formathlete
                             " target="_new "><strong>http://mumbaischool.sfanow.in/formathlete</strong></a>
-                            </p>
-                            <p class="mb-33" ng-if="isCollege==true">All registered {{type}}s and athletes will be notified when registration for sports will be open!
-                            </p>
-                        </div>
-                        <!--<div class="text-center mb-20 "><button class="btn-category blue-light ">Sports Registration Form</button></div>-->
-                        <div class="text-center mb-20" ng-if="isCollege==false"><a ui-sref="sports-registration"><button class="btn-category blue-light " >Click here for Sports Registration</button></a></div>
-                        <div class="text-center mb-20" ng-if="isCollege==true"><button class="com-category blue-light">Opening shortly</button></div>
-                        <!-- <div class="text-center mb-20 "><a ui-sref="sports-registration "><button class="com-category
+                                </p>
+                                <p class="mb-33" ng-if="isCollege==true">All registered {{type}}s and athletes will be notified when registration for sports will
+                                    be open!
+                                </p>
+                            </div>
+                            <!--<div class="text-center mb-20 "><button class="btn-category blue-light ">Sports Registration Form</button></div>-->
+                            <div class="text-center mb-20" ng-if="isCollege==false"><a ui-sref="sports-registration"><button class="btn-category blue-light " >Click here for Sports Registration</button></a></div>
+                            <div class="text-center mb-20" ng-if="isCollege==true"><button class="com-category blue-light">Opening shortly</button></div>
+                            <!-- <div class="text-center mb-20 "><a ui-sref="sports-registration "><button class="com-category
                             blue-light " >Opening shortly</button></a></div> -->
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6 col-sm-12 col-xs-12 ">
-                <div class=" ">
-                    <!--<p class="text-center step mb-75 ">Step2 : Sport Registration</p>-->
-                    <div class="sport-registration athletes">
-                        <div class="btn-sport btn-school text-center pdt5 ">
-                            <div class="sport-icon ">
-                                <!--<img src="img/icon/3.png " class="img-responsive ">-->
+                <div class="col-md-6 col-sm-12 col-xs-12 ">
+                    <div class=" ">
+                        <!--<p class="text-center step mb-75 ">Step2 : Sport Registration</p>-->
+                        <div class="sport-registration athletes">
+                            <div class="btn-sport btn-school text-center pdt5 ">
+                                <div class="sport-icon ">
+                                    <!--<img src="img/icon/3.png " class="img-responsive ">-->
+                                </div>
+                                <p>SFA {{sfaCity}} {{year}}</p>
+                                <p>Championship Schedule* </p>
                             </div>
-                            <p>SFA {{sfaCity}} {{year}}</p>
-                            <p>Championship Schedule* </p>
-                        </div>
-                        <div class="category-padding-sport cus-pd-lr f-s " ng-if="isCollege==false">
-                            <div class="row ">
-                                <div class="col-md-6 col-sm-6 col-xs-12 ver-line ">
-                                    <div class="t-center ">
-                                        <ul class="display-table list-style v-line f-12 sf-relative ">
+                            <div class="category-padding-sport cus-pd-lr f-s " ng-if="isCollege==false">
+                                <div class="row ">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 ver-line ">
+                                        <div class="t-center ">
+                                            <ul class="display-table list-style v-line f-12 sf-relative ">
 
-                                            <li class="pl-8 "><span class="font-boldcus ">1. Archery:</span> 15<sup>th</sup>-17<sup>th</sup>                                                Dec
-                                            </li>
-                                            <li class="pl-8 ">2. Athletics: TBA</li>
-                                            <li class="pl-8 "><span class="font-boldcus ">3. Badminton:</span> 6<sup>th</sup>-13<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8 "><span class="font-boldcus ">4. Basketball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8 "><span class="font-boldcus ">5. Boxing:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8 "><span class="font-boldcus ">6. Carrom:</span> 9<sup>th</sup>-11<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8 "><span class="font-boldcus ">7. Chess:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8 "><span class="font-boldcus ">8. Fencing:</span> 14<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8 "><span class="font-boldcus ">9. Football:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">10. Handball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li>11. Hockey: TBA</li>
-                                            <li><span class="font-boldcus ">12. Judo:</span> 16<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">13. Kabaddi:</span> 6<sup>th</sup>-12<sup>th</sup>                                                Dec</li>
-                                        </ul>
+                                                <li class="pl-8 "><span class="font-boldcus ">1. Archery:</span> 15<sup>th</sup>-17<sup>th</sup>                                                    Dec
+                                                </li>
+                                                <li class="pl-8 ">2. Athletics: TBA</li>
+                                                <li class="pl-8 "><span class="font-boldcus ">3. Badminton:</span> 6<sup>th</sup>-13<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 "><span class="font-boldcus ">4. Basketball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 "><span class="font-boldcus ">5. Boxing:</span> 13<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 "><span class="font-boldcus ">6. Carrom:</span> 9<sup>th</sup>-11<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 "><span class="font-boldcus ">7. Chess:</span> 13<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 "><span class="font-boldcus ">8. Fencing:</span> 14<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 "><span class="font-boldcus ">9. Football:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">10. Handball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li>11. Hockey: TBA</li>
+                                                <li><span class="font-boldcus ">12. Judo:</span> 16<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">13. Kabaddi:</span> 6<sup>th</sup>-12<sup>th</sup>                                                    Dec</li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                </div>
 
 
-                                <div class="col-md-6 col-sm-6 col-xs-12 ">
-                                    <div class="t-center ">
-                                        <ul class="display-table list-style v-line f-12 To25 ">
-                                            <li><span class="font-boldcus ">14. Karate:</span> 8<sup>th</sup>-10<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">15. Kho Kho:</span> 7<sup>th</sup>-10<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">16. Sport MMA:</span> 11<sup>th</sup>-12<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">17. Shooting:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">18. Squash:</span> 12<sup>th</sup>-14<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">19. Swimming:</span> 9<sup>th</sup>-10<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">20. Table Tennis:</span> 6<sup>th</sup>-11<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">21. Taekwondo:</span> 6<sup>th</sup>-7<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">22. Tennis:</span> 7<sup>th</sup>-13<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">23. Throwball:</span> 14<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">24. Volleyball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">25. Water Polo:</span> 11<sup>th</sup> Dec</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="category-padding-sport cus-pd-lr f-s " ng-if="isCollege==true">
-                            <div class="row ">
-                                <div class="col-md-6 col-sm-6 col-xs-12 ver-line ">
-                                    <div class="t-center">
-                                        <ul class="display-table list-style v-line f-12 sf-relative">
-
-                                            <li class="pl-8 "><span class="font-boldcus ">1. Archery:</span> 15<sup>th</sup>-17<sup>th</sup>                                                Dec
-                                            </li>
-                                            <li class="pl-8 "><span class="font-boldcus ">2. Boxing:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8 "><span class="font-boldcus ">3. Carrom:</span> 9<sup>th</sup>-11<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8 "><span class="font-boldcus ">4. Chess:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8 "><span class="font-boldcus ">5. Fencing:</span> 14<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8 "><span class="font-boldcus ">6. Handball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li class="pl-8 ">7. Hockey: TBA</li>
-                                            <li class="pl-8 "><span class="font-boldcus ">8. Judo:</span> 16<sup>th</sup>-17<sup>th</sup> Dec</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 col-sm-6 col-xs-12 ">
-                                    <div class="t-center ">
-                                        <ul class="display-table list-style v-line f-12 To25 ">
-                                            <li class="pl-8 "><span class="font-boldcus ">9. Kabaddi:</span> 6<sup>th</sup>-12<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">10. Shooting:</span> 13<sup>th</sup>-17<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">11. Squash:</span> 12<sup>th</sup>-14<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">12. Swimming:</span> 9<sup>th</sup>-10<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">13. Taekwondo:</span> 6<sup>th</sup>-7<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">14. Tennis:</span> 7<sup>th</sup>-13<sup>th</sup>                                                Dec</li>
-                                            <li><span class="font-boldcus ">15. Water Polo:</span> 11<sup>th</sup> Dec</li>
-                                        </ul>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 ">
+                                        <div class="t-center ">
+                                            <ul class="display-table list-style v-line f-12 To25 ">
+                                                <li><span class="font-boldcus ">14. Karate:</span> 8<sup>th</sup>-10<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">15. Kho Kho:</span> 7<sup>th</sup>-10<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">16. Sport MMA:</span> 11<sup>th</sup>-12<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">17. Shooting:</span> 13<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">18. Squash:</span> 12<sup>th</sup>-14<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">19. Swimming:</span> 9<sup>th</sup>-10<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">20. Table Tennis:</span> 6<sup>th</sup>-11<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">21. Taekwondo:</span> 6<sup>th</sup>-7<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">22. Tennis:</span> 7<sup>th</sup>-13<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">23. Throwball:</span> 14<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">24. Volleyball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">25. Water Polo:</span> 11<sup>th</sup> Dec</li>
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <p class="text-center">*SFA shall keep you informed in-case there is any change of dates. </p>
-                        <p class="text-center" ng-if="isCollege==false">*Football qualifiers will be held in November. Dates will be announced soon.</p>
-                        <!--<div class="text-center mb-20 "><button class="btn-category blue-light ">Sports Registration Form</button></div>-->
-                        <!--<div class="text-center mb-20 "><button class="com-category blue-light ">Opening shortly</button></div>-->
-                    </div>
-                </div>
-            </div>
-        </div>
+                            <div class="category-padding-sport cus-pd-lr f-s " ng-if="isCollege==true">
+                                <div class="row ">
+                                    <div class="col-md-6 col-sm-6 col-xs-12 ver-line ">
+                                        <div class="t-center">
+                                            <ul class="display-table list-style v-line f-12 sf-relative">
 
-        <div class="row" ng-if="sfaCity != 'Mumbai'">
-            <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
-                <div class="sport-sec">
-                    <p class="text-center step mb-75 ">Step2 : Sport Registration</p>
-                    <div class="sport-registration">
-                        <div class="btn-sport text-center">
-                            <div class="sport-icon">
-                                <img src="img/icon/3.png" class="img-responsive">
+                                                <li class="pl-8 "><span class="font-boldcus ">1. Archery:</span> 15<sup>th</sup>-17<sup>th</sup>                                                    Dec
+                                                </li>
+                                                <li class="pl-8 "><span class="font-boldcus ">2. Boxing:</span> 13<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 "><span class="font-boldcus ">3. Carrom:</span> 9<sup>th</sup>-11<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 "><span class="font-boldcus ">4. Chess:</span> 13<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 "><span class="font-boldcus ">5. Fencing:</span> 14<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 "><span class="font-boldcus ">6. Handball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 ">7. Hockey: TBA</li>
+                                                <li class="pl-8 "><span class="font-boldcus ">8. Judo:</span> 16<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-xs-12 ">
+                                        <div class="t-center ">
+                                            <ul class="display-table list-style v-line f-12 To25 ">
+                                                <li class="pl-8 "><span class="font-boldcus ">9. Kabaddi:</span> 6<sup>th</sup>-12<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">10. Shooting:</span> 13<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">11. Squash:</span> 12<sup>th</sup>-14<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">12. Swimming:</span> 9<sup>th</sup>-10<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">13. Taekwondo:</span> 6<sup>th</sup>-7<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">14. Tennis:</span> 7<sup>th</sup>-13<sup>th</sup>                                                    Dec</li>
+                                                <li><span class="font-boldcus ">15. Water Polo:</span> 11<sup>th</sup> Dec</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                            <p>Sport Registration</p>
+                            <p class="text-center">*SFA shall keep you informed in-case there is any change of dates. </p>
+                            <p class="text-center" ng-if="isCollege==false">*Football qualifiers will be held in November. Dates will be announced soon.</p>
+                            <!--<div class="text-center mb-20 "><button class="btn-category blue-light ">Sports Registration Form</button></div>-->
+                            <!--<div class="text-center mb-20 "><button class="com-category blue-light ">Opening shortly</button></div>-->
                         </div>
-                        <div class="category-padding-sport f-s">
-                            <p>Once the athlete / school registration is complete, log in using your SFA ID and password to
-                                register for your sport/sports of interest.
-                            </p>
-                            <p>All registered schools and athletes will be notified when registration for sports will be open!
-                            </p>
-                        </div>
-                        <!--<div class="text-center mb-20"><button class="btn-category  blue-light">Sports Registration Form</button></div>-->
-                        <div class="text-center mb-20"><button class="com-category  blue-light">Opening shortly</button></div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--<div class="text-center ">Sports Registration Form</div>-->
-    <div class="store-for-you" ng-if="isCollege==false">
-        <h2 class="text-center">WHAT’S IN STORE FOR YOU</h2>
-        <div class="sport-row-space">
+        <!--<div class="text-center ">Sports Registration Form</div>-->
+        <div class="store-for-you" ng-if="isCollege==false">
+            <h2 class="text-center">WHAT’S IN STORE FOR YOU</h2>
+            <div class="sport-row-space">
+                <div class="row ">
+                    <div class="col-md-4 col-sm-4 col-xs-12 ">
+                        <div class="common-store f-s">
+                            <p>PRO SPORT EXPERIENCE </p>
+                            <ul class="store-padding">
+                                <li>World-Class Multi-Sporting Infrastructure & Facilities</li>
+                                <li>High Quality Competition </li>
+                                <li>Quality Governance</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 ">
+                        <div class="common-store f-s ">
+                            <p>PRO CARE FOR ENHANCED PERFORMANCE
+                            </p>
+                            <ul class="store-for-you-list ">
+                                <li>Injury Prevention Centres & Oncourt Physiocare</li>
+                                <li> Hydration & Nutrition Stations </li>
+                                <li>Safe & Hygenic Sporting Environment
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 ">
+                        <div class="common-store pd-left f-s ">
+                            <p>PRO ATHLETE DEVELOPMENT</p>
+                            <ul class="store-for-you-list ">
+                                <li><b>Athlete & School Profiles</b></li>
+                                <li style="list-style-type: circle; "> Profiles Comprehensive sport bios </li>
+                                <li style="list-style-type: circle; ">Statistics, scores and records</li>
+                                <li><b> HD Match Videos of Every Game</b>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="row ">
                 <div class="col-md-4 col-sm-4 col-xs-12 ">
-                    <div class="common-store f-s">
-                        <p>PRO SPORT EXPERIENCE </p>
-                        <ul class="store-padding">
-                            <li>World-Class Multi-Sporting Infrastructure & Facilities</li>
-                            <li>High Quality Competition </li>
-                            <li>Quality Governance</li>
+                    <div class="common-store f-s ">
+                        <p>ELITE ATHLETE CLUB</p>
+                        <ul class="store-for-you-list ">
+                            <li><b>Scouting for talented athletes across different sports and empowering them with:</b></li>
+                            <li style="list-style-type: circle; "> Training & Development Scholarships</li>
+                            <li style="list-style-type: circle; "> Complimentary mental and fitness assessment programs</li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12 ">
                     <div class="common-store f-s ">
-                        <p>PRO CARE FOR ENHANCED PERFORMANCE
-                        </p>
+                        <p>THE YOUTH SPORT DEVELOPMENT FUND</p>
+                        <ul class="store-padding ">
+                            <li>The Youth Sport Development Fund will be awarded to the top-ranking schools enabling them to
+                                further develop sport in their schools.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store pd-left f-s ">
+                        <p>SPECIAL DAYS</p>
                         <ul class="store-for-you-list ">
-                            <li>Injury Prevention Centres & Oncourt Physiocare</li>
-                            <li> Hydration & Nutrition Stations </li>
-                            <li>Safe & Hygenic Sporting Environment
+                            <li>Opening Ceremony</li>
+                            <li>Girl’s Day Celebration</li>
+                            <li> Differently-abled Day </li>
+                            <li>Coach’s Day</li>
+                            <li>Alumni Day</li>
+                            <li>Awards Night </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="store-for-you" ng-if="isCollege==true">
+            <h2 class="text-center">WHAT’S IN STORE FOR YOU</h2>
+            <div class="sport-row-space">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="common-store f-s">
+                            <p>PRO SPORT EXPERIENCE </p>
+                            <ul class="store-for-you-list">
+                                <li>World-Class Multi-Sporting Infrastructure & Facilities</li>
+                                <li>High Quality Competition</li>
+                                <li>Quality Governance - National & State Associations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 ">
+                        <div class="common-store f-s ">
+                            <p>PRO CARE FOR ENHANCED PERFORMANCE
+                            </p>
+                            <ul class="store-for-you-list ">
+                                <li>Injury Prevention Centres & Oncourt Physiocare</li>
+                                <li> Hydration & Nutrition Stations with complimentary energy drinks.</li>
+                                <li>Safe & Hygenic Sporting Environment
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 ">
+                        <div class="common-store pd-left f-s ">
+                            <p>PRO HD MATCH VIDEOS</p>
+                            <!-- <p>PRO ATHLETE DEVELOPMENT</p> -->
+                            <ul class="store-for-you-list ">
+                                <li>HD match videography for every game</li>
+                                <li>Digital record maintenance</li>
+                                <li>Match Videos enhanced with statistics and advanced analytics
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store f-s ">
+                        <p>PRO DATA & ANALYTICS PORTAL</p>
+                        <ul class="store-for-you-list ">
+                            <li>Athlete & College Profiles</li>
+                            <li>Comprehensive sport bios</li>
+                            <li>Year-on-Year record maintenance</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store f-s ">
+                        <p>END-TO-END ONLINE MANAGEMENT</p>
+                        <ul class="store-for-you-list ">
+                            <li>One time E-Registration process for athletes & colleges</li>
+                            <li>Fixtures, Draws and Match Schedules to be published online prior to the championship
+                            </li>
+                            <li>Record Maintenance of all championship led scores, records, statistics & ranking table on the
+                                website
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-4 col-sm-4 col-xs-12 ">
                     <div class="common-store pd-left f-s ">
-                        <p>PRO ATHLETE DEVELOPMENT</p>
+                        <p>ELITE ATHLETE CLUB</p>
                         <ul class="store-for-you-list ">
-                            <li><b>Athlete & School Profiles</b></li>
-                            <li style="list-style-type: circle; "> Profiles Comprehensive sport bios </li>
-                            <li style="list-style-type: circle; ">Statistics, scores and records</li>
-                            <li><b> HD Match Videos of Every Game</b>
-                            </li>
+                            <li>Scouting for talented athletes across different sports and empowering them with:</li>
+                            <ul style="padding:0;margin:0 ">
+                                <li>Training & Development Scholarships </li>
+                                <li>Complimentary mental and fitness assessment programs</li>
+                            </ul>
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row ">
-            <div class="col-md-4 col-sm-4 col-xs-12 ">
-                <div class="common-store f-s ">
-                    <p>ELITE ATHLETE CLUB</p>
-                    <ul class="store-for-you-list ">
-                        <li><b>Scouting for talented athletes across different sports and empowering them with:</b></li>
-                        <li style="list-style-type: circle; "> Training & Development Scholarships</li>
-                        <li style="list-style-type: circle; "> Complimentary mental and fitness assessment programs</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-12 ">
-                <div class="common-store f-s ">
-                    <p>THE YOUTH SPORT DEVELOPMENT FUND</p>
-                    <ul class="store-padding ">
-                        <li>The Youth Sport Development Fund will be awarded to the top-ranking schools enabling them to further
-                            develop sport in their schools.</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-12 ">
-                <div class="common-store pd-left f-s ">
-                    <p>SPECIAL DAYS</p>
-                    <ul class="store-for-you-list ">
-                        <li>Opening Ceremony</li>
-                        <li>Girl’s Day Celebration</li>
-                        <li> Differently-abled Day </li>
-                        <li>Coach’s Day</li>
-                        <li>Alumni Day</li>
-                        <li>Awards Night </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="store-for-you" ng-if="isCollege==true">
-        <h2 class="text-center">WHAT’S IN STORE FOR YOU</h2>
-        <div class="sport-row-space">
-            <div class="row">
-                <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="common-store f-s">
-                        <p>PRO SPORT EXPERIENCE </p>
-                        <ul class="store-for-you-list">
-                            <li>World-Class Multi-Sporting Infrastructure & Facilities</li>
-                            <li>High Quality Competition</li>
-                            <li>Quality Governance - National & State Associations</li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-12 ">
-                    <div class="common-store f-s ">
-                        <p>PRO CARE FOR ENHANCED PERFORMANCE
-                        </p>
-                        <ul class="store-for-you-list ">
-                            <li>Injury Prevention Centres & Oncourt Physiocare</li>
-                            <li> Hydration & Nutrition Stations with complimentary energy drinks.</li>
-                            <li>Safe & Hygenic Sporting Environment
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 col-xs-12 ">
-                    <div class="common-store pd-left f-s ">
-                        <p>PRO HD MATCH VIDEOS</p>
-                        <!-- <p>PRO ATHLETE DEVELOPMENT</p> -->
-                        <ul class="store-for-you-list ">
-                            <li>HD match videography for every game</li>
-                            <li>Digital record maintenance</li>
-                            <li>Match Videos enhanced with statistics and advanced analytics
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row ">
-            <div class="col-md-4 col-sm-4 col-xs-12 ">
-                <div class="common-store f-s ">
-                    <p>PRO DATA & ANALYTICS PORTAL</p>
-                    <ul class="store-for-you-list ">
-                        <li>Athlete & College Profiles</li>
-                        <li>Comprehensive sport bios</li>
-                        <li>Year-on-Year record maintenance</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-12 ">
-                <div class="common-store f-s ">
-                    <p>END-TO-END ONLINE MANAGEMENT</p>
-                    <ul class="store-for-you-list ">
-                        <li>One time E-Registration process for athletes & colleges</li>
-                        <li>Fixtures, Draws and Match Schedules to be published online prior to the championship
-                        </li>
-                        <li>Record Maintenance of all championship led scores, records, statistics & ranking table on the website</li>
-                    </ul>
-                </div>
-            </div>
-            <div class="col-md-4 col-sm-4 col-xs-12 ">
-                <div class="common-store pd-left f-s ">
-                    <p>ELITE ATHLETE CLUB</p>
-                    <ul class="store-for-you-list ">
-                        <li>Scouting for talented athletes across different sports and empowering them with:</li>
-                        <ul style="padding:0;margin:0 ">
-                            <li>Training & Development Scholarships </li>
-                            <li>Complimentary mental and fitness assessment programs</li>
-                        </ul>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="past-championship ">
-        <h2 class="text-center ">SFA Past Championships</h2>
-        <div class="championship-blue ">
-            <div class="video ">
-                <div class="display-inline relate ">
-                    <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
+        <div class="past-championship ">
+            <h2 class="text-center ">SFA Past Championships</h2>
+            <div class="championship-blue ">
+                <div class="video ">
+                    <div class="display-inline relate ">
+                        <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
                         <img src="img/icon/sport1.jpg " class="img-responsive ">
                     </a>
-                    <h2 class="text-center ">SFA {{sfaCity | capitalize}} 2016</h2>
-                    <div class="video-icon ">
-                        <a class="fancybox.iframe " href="https://www.youtube.com/embed/j-iLIlmhi4I " fancybox-box>
+                        <h2 class="text-center ">SFA {{sfaCity | capitalize}} 2016</h2>
+                        <div class="video-icon ">
+                            <a class="fancybox.iframe " href="https://www.youtube.com/embed/j-iLIlmhi4I " fancybox-box>
                             <img src="img/video.png " class="img-responsive ">
                         </a>
+                        </div>
                     </div>
-                </div>
-                <div class="display-inline ml3 relate ">
-                    <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
+                    <div class="display-inline ml3 relate ">
+                        <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
                         <img src="img/icon/sport2.jpg " class="img-responsive ">
                     </a>
-                    <h2 class="text-center ">SFA {{sfaCity | capitalize}} 2015</h2>
-                    <div class="video-icon ">
-                        <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
+                        <h2 class="text-center ">SFA {{sfaCity | capitalize}} 2015</h2>
+                        <div class="video-icon ">
+                            <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
                             <img src="img/video.png " class="img-responsive ">
                         </a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-<div class="tab-register hidden-xs " ng-if="isCollege==false">
-    <div class="registration side-menu2 ">
-        <div class="tab-img dis-bloc " ng-if="closeReg==true">
-            <img src=" img/icon/reg.png " class="img-responsive ">
-            <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="closeMenu(); ">-->
-        </div>
-        <div class="tab-img dis-bloc " ng-if="closeReg==false">
-            <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
-            <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="getMenu(); ">-->
-        </div>
-        <div class="btn-tab dis-bloc ">
-            <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
-                <button class=" ">Registration Process</button>
-            </a>
-        </div>
-    </div>
-    <div class="tab1 ">
-        <div class="age-event side-menu1 ">
-            <div class="tab-img dis-bloc " ng-if="closeAge==true">
-                <img src="img/icon/age.png " class="img-responsive ">
+    <div class="tab-register hidden-xs " ng-if="isCollege==false">
+        <div class="registration side-menu2 ">
+            <div class="tab-img dis-bloc " ng-if="closeReg==true">
+                <img src=" img/icon/reg.png " class="img-responsive ">
+                <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="closeMenu(); ">-->
             </div>
-            <div class="tab-img dis-bloc " ng-if="closeAge==false">
-                <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
+            <div class="tab-img dis-bloc " ng-if="closeReg==false">
+                <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
+                <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="getMenu(); ">-->
             </div>
             <div class="btn-tab dis-bloc ">
-                <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
-                    <button class=" ">Age Group & Event Categories</button>
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="tab-register visible-xs " ng-if="isCollege==false">
-    <div class="registration side-menu menu-out menu-in " ng-mouseleave="closeMenu(); ">
-        <div class="tab-img dis-bloc " ng-if="closeReg==true">
-            <img src=" img/icon/reg.png " class="img-responsive ">
-        </div>
-        <div class="tab-img dis-bloc " ng-if="closeReg==false">
-            <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
-        </div>
-        <div class="btn-tab dis-bloc ">
-            <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
+                <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
                 <button class=" ">Registration Process</button>
             </a>
+            </div>
         </div>
-    </div>
-    <div class="tab1 ">
-        <div class="age-event menu-in1 menu-out side-menu1 " ng-mouseleave="closeMenu1(); ">
-            <div class="tab-img dis-bloc " ng-if="closeAge==true">
-                <img src="img/icon/age.png " class="img-responsive ">
-            </div>
-            <div class="tab-img dis-bloc " ng-if="closeAge==false">
-                <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
-            </div>
-            <div class="btn-tab dis-bloc ">
-                <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
+        <div class="tab1 ">
+            <div class="age-event side-menu1 ">
+                <div class="tab-img dis-bloc " ng-if="closeAge==true">
+                    <img src="img/icon/age.png " class="img-responsive ">
+                </div>
+                <div class="tab-img dis-bloc " ng-if="closeAge==false">
+                    <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
+                </div>
+                <div class="btn-tab dis-bloc ">
+                    <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
                     <button class=" ">Age Group & Event Categories</button>
                 </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="tab-register hidden-xs " ng-if="isCollege==true">
-    <div class="registration side-menu2 ">
-        <div class="tab-img dis-bloc " ng-if="closeReg==true">
-            <img src=" img/icon/reg.png " class="img-responsive ">
-            <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="closeMenu(); ">-->
-        </div>
-        <div class="tab-img dis-bloc " ng-if="closeReg==false">
-            <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
-            <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="getMenu(); ">-->
-        </div>
-        <div class="btn-tab dis-bloc ">
-            <a href="img/pdf/sfa_atheletecollege_group.pdf " target="_new ">
+    <div class="tab-register visible-xs " ng-if="isCollege==false">
+        <div class="registration side-menu menu-out menu-in " ng-mouseleave="closeMenu(); ">
+            <div class="tab-img dis-bloc " ng-if="closeReg==true">
+                <img src=" img/icon/reg.png " class="img-responsive ">
+            </div>
+            <div class="tab-img dis-bloc " ng-if="closeReg==false">
+                <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
+            </div>
+            <div class="btn-tab dis-bloc ">
+                <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
                 <button class=" ">Registration Process</button>
             </a>
+            </div>
         </div>
-    </div>
-    <div class="tab1 ">
-        <div class="age-event side-menu1 ">
-            <div class="tab-img dis-bloc " ng-if="closeAge==true">
-                <img src="img/icon/age.png " class="img-responsive ">
-            </div>
-            <div class="tab-img dis-bloc " ng-if="closeAge==false">
-                <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
-            </div>
-            <div class="btn-tab dis-bloc ">
-                <a href="img/pdf/sfa_agegroupcollege_event.pdf " target="_new ">
+        <div class="tab1 ">
+            <div class="age-event menu-in1 menu-out side-menu1 " ng-mouseleave="closeMenu1(); ">
+                <div class="tab-img dis-bloc " ng-if="closeAge==true">
+                    <img src="img/icon/age.png " class="img-responsive ">
+                </div>
+                <div class="tab-img dis-bloc " ng-if="closeAge==false">
+                    <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
+                </div>
+                <div class="btn-tab dis-bloc ">
+                    <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
                     <button class=" ">Age Group & Event Categories</button>
                 </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="tab-register visible-xs " ng-if="isCollege==true">
-    <div class="registration side-menu menu-out menu-in " ng-mouseleave="closeMenu(); ">
-        <div class="tab-img dis-bloc " ng-if="closeReg==true">
-            <img src=" img/icon/reg.png " class="img-responsive ">
-        </div>
-        <div class="tab-img dis-bloc " ng-if="closeReg==false">
-            <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
-        </div>
-        <div class="btn-tab dis-bloc ">
-            <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
+    <div class="tab-register hidden-xs " ng-if="isCollege==true">
+        <div class="registration side-menu2 ">
+            <div class="tab-img dis-bloc " ng-if="closeReg==true">
+                <img src=" img/icon/reg.png " class="img-responsive ">
+                <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="closeMenu(); ">-->
+            </div>
+            <div class="tab-img dis-bloc " ng-if="closeReg==false">
+                <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
+                <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="getMenu(); ">-->
+            </div>
+            <div class="btn-tab dis-bloc ">
+                <a href="img/pdf/sfa_atheletecollege_group.pdf " target="_new ">
                 <button class=" ">Registration Process</button>
             </a>
+            </div>
         </div>
-    </div>
-    <div class="tab1 ">
-        <div class="age-event menu-in1 menu-out side-menu1" ng-mouseleave="closeMenu1();">
-            <div class="tab-img dis-bloc" ng-if="closeAge==true">
-                <img src="img/icon/age.png" class="img-responsive">
-            </div>
-            <div class="tab-img dis-bloc" ng-if="closeAge==false">
-                <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
-            </div>
-            <div class="btn-tab dis-bloc ">
-                <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
+        <div class="tab1 ">
+            <div class="age-event side-menu1 ">
+                <div class="tab-img dis-bloc " ng-if="closeAge==true">
+                    <img src="img/icon/age.png " class="img-responsive ">
+                </div>
+                <div class="tab-img dis-bloc " ng-if="closeAge==false">
+                    <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
+                </div>
+                <div class="btn-tab dis-bloc ">
+                    <a href="img/pdf/sfa_agegroupcollege_event.pdf " target="_new ">
                     <button class=" ">Age Group & Event Categories</button>
                 </a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+    <div class="tab-register visible-xs " ng-if="isCollege==true">
+        <div class="registration side-menu menu-out menu-in " ng-mouseleave="closeMenu(); ">
+            <div class="tab-img dis-bloc " ng-if="closeReg==true">
+                <img src=" img/icon/reg.png " class="img-responsive ">
+            </div>
+            <div class="tab-img dis-bloc " ng-if="closeReg==false">
+                <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
+            </div>
+            <div class="btn-tab dis-bloc ">
+                <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
+                <button class=" ">Registration Process</button>
+            </a>
+            </div>
+        </div>
+        <div class="tab1 ">
+            <div class="age-event menu-in1 menu-out side-menu1" ng-mouseleave="closeMenu1();">
+                <div class="tab-img dis-bloc" ng-if="closeAge==true">
+                    <img src="img/icon/age.png" class="img-responsive">
+                </div>
+                <div class="tab-img dis-bloc" ng-if="closeAge==false">
+                    <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
+                </div>
+                <div class="btn-tab dis-bloc ">
+                    <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
+                    <button class=" ">Age Group & Event Categories</button>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Hyderabad -->
+<section ng-if="sfaCity == 'Hyderabad'">
+    <div class="container-fluid">
+        <div class="registration-img">
+            <div class="row">
+                <div class="col-md-3 col-sm-12 col-xs-12">
+                    <div class="registration-desc">
+                        <h2 ng-if="isCollege == false">GOT WHAT IT TAKES TO BE THE NO. 1 SCHOOL FOR SPORTS IN HYDERABAD?</h2>
+                        <h2 ng-if="isCollege == true">BE A PART OF THE FIRST PROFESSIONAL YOUTH SPORTING CHAMPIONSHIP</h2>
+                        <h3>SFA {{sfaCity | capitalize}} {{year}}</h3>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-12 col-xs-12" ng-if="isCollege == false">
+                    <div class="sport-icon ul-show">
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/1_Handball.png" class="img-responsive">
+                                <p>HANDBALL</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/2_Basketball.png" class="img-responsive">
+                                <p>Basketball</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/3_Volleyball.png" class="img-responsive">
+                                <p>Volleyball</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/4_Throwball.png" class="img-responsive">
+                                <p>Throwball</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/5_Hockey.png" class="img-responsive">
+                                <p>Hockey</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/6_Kho Kho.png" class="img-responsive">
+                                <p>Kho Kho</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/7_Kabaddi.png" class="img-responsive">
+                                <p>Kabaddi</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/8_Football.png" class="img-responsive">
+                                <p>Football</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/19_Shooting.png" class="img-responsive">
+                                <p>Shooting</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/20_Archery.png" class="img-responsive">
+                                <p>Archery</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/9_Badminton.png" class="img-responsive">
+                                <p>Badminton</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/11_Table-Tennis.png" class="img-responsive">
+                                <p>Table Tennis</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/13_Judo.png" class="img-responsive">
+                                <p>Judo</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/14_Taekwondo.png" class="img-responsive">
+                                <p>Taekwondo</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/15_Boxing.png" class="img-responsive">
+                                <p>Boxing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/16_Fencing.png" class="img-responsive">
+                                <p>Fencing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/17_Karate.png" class="img-responsive">
+                                <p>Karate</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/23_Carrom.png" class="img-responsive">
+                                <p>Carrom</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/24_Chess.png" class="img-responsive">
+                                <p>Chess</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/26_Athletics.png" class="img-responsive">
+                                <p>Athletics</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/21_Swimming.png" class="img-responsive">
+                                <p>Swimming</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/22_WaterPolo.png" class="img-responsive">
+                                <p>Water Polo</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sport-icon ul-hide">
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/1_Handball.png" class="img-responsive">
+                                <p>HANDBALL</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/2_Basketball.png" class="img-responsive">
+                                <p>Basketball</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/3_Volleyball.png" class="img-responsive">
+                                <p>Volleyball</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/4_Throwball.png" class="img-responsive">
+                                <p>Throwball</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/5_Hockey.png" class="img-responsive">
+                                <p>Hockey</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/6_Kho Kho.png" class="img-responsive">
+                                <p>Kho Kho</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/7_Kabaddi.png" class="img-responsive">
+                                <p>Kabaddi</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/8_Football.png" class="img-responsive">
+                                <p>Football</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/19_Shooting.png" class="img-responsive">
+                                <p>Shooting</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/20_Archery.png" class="img-responsive">
+                                <p>Archery</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/9_Badminton.png" class="img-responsive">
+                                <p>Badminton</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/10_Tennis.png" class="img-responsive">
+                                <p>Tennis</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/11_Table-Tennis.png" class="img-responsive">
+                                <p>Table Tennis</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/12_Squash.png" class="img-responsive">
+                                <p>Squash</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/13_Judo.png" class="img-responsive">
+                                <p>Judo</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/14_Taekwondo.png" class="img-responsive">
+                                <p>Taekwondo</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/15_Boxing.png" class="img-responsive">
+                                <p>Boxing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/16_Fencing.png" class="img-responsive">
+                                <p>Fencing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/17_Karate.png" class="img-responsive">
+                                <p>Karate</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/18_MMA.png" class="img-responsive">
+                                <p>Sport MMA</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/23_Carrom.png" class="img-responsive">
+                                <p>Carrom</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/24_Chess.png" class="img-responsive">
+                                <p>Chess</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/26_Athletics.png" class="img-responsive">
+                                <p>Athletics</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/21_Swimming.png" class="img-responsive">
+                                <p>Swimming</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/22_WaterPolo.png" class="img-responsive">
+                                <p>Water Polo</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-9 col-sm-12 col-xs-12" ng-if="isCollege == true">
+                    <div class="sport-icon ul-show">
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/1_Handball.png" class="img-responsive">
+                                <p>HANDBALL</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/5_Hockey.png" class="img-responsive">
+                                <p>Hockey</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/7_Kabaddi.png" class="img-responsive">
+                                <p>Kabaddi</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/20_Archery.png" class="img-responsive">
+                                <p>Archery</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/19_Shooting.png" class="img-responsive">
+                                <p>Shooting</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/23_Carrom.png" class="img-responsive">
+                                <p>Carrom</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/24_Chess.png" class="img-responsive">
+                                <p>Chess</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/10_Tennis.png" class="img-responsive">
+                                <p>Tennis</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/12_Squash.png" class="img-responsive">
+                                <p>Squash</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/21_Swimming.png" class="img-responsive">
+                                <p>Swimming</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/22_WaterPolo.png" class="img-responsive">
+                                <p>Water Polo</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/15_Boxing.png" class="img-responsive">
+                                <p>Boxing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/16_Fencing.png" class="img-responsive">
+                                <p>Fencing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/13_Judo.png" class="img-responsive">
+                                <p>Judo</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/14_Taekwondo.png" class="img-responsive">
+                                <p>Taekwondo</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="sport-icon ul-hide">
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/1_Handball.png" class="img-responsive">
+                                <p>HANDBALL</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/5_Hockey.png" class="img-responsive">
+                                <p>Hockey</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/7_Kabaddi.png" class="img-responsive">
+                                <p>Kabaddi</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/20_Archery.png" class="img-responsive">
+                                <p>Archery</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/19_Shooting.png" class="img-responsive">
+                                <p>Shooting</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/23_Carrom.png" class="img-responsive">
+                                <p>Carrom</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/24_Chess.png" class="img-responsive">
+                                <p>Chess</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+
+                            <li>
+                                <img src="img/icon/10_Tennis.png" class="img-responsive">
+                                <p>Tennis</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/12_Squash.png" class="img-responsive">
+                                <p>Squash</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/21_Swimming.png" class="img-responsive">
+                                <p>Swimming</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/22_WaterPolo.png" class="img-responsive">
+                                <p>Water Polo</p>
+                            </li>
+                        </ul>
+                        <ul class="list-unstyled">
+                            <li>
+                                <img src="img/icon/15_Boxing.png" class="img-responsive">
+                                <p>Boxing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/16_Fencing.png" class="img-responsive">
+                                <p>Fencing</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/13_Judo.png" class="img-responsive">
+                                <p>Judo</p>
+                            </li>
+                            <li>
+                                <img src="img/icon/14_Taekwondo.png" class="img-responsive">
+                                <p>Taekwondo</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--<div class="container hidden-xs hidden-sm">-->
+    <div class="container">
+        <div class="venue">
+            <div>
+                <p class="f-s" ng-if="isCollege == false">Sports For All brings to you {{sfaCity}}'s first inter-school professional sporting championship, where school
+                    contingents will battle it out to be ranked as the No.1 School for Sports. Schools & Athletes from across
+                    Hyderabad City can register and compete at SFA {{sfaCity}} {{year}}.</p>
+                <p class="f-s" ng-if="isCollege == true">Sports For All brings to you {{sfaCity}}’s first inter-college professional sporting championship, where
+                    college contingents will battle it out to be ranked as the No. 1 College for sports. Colleges & Athletes
+                    from across Mumbai City, Mumbai Suburban, Thane, Raigad and Palghar can register and compete at SFA {{sfaCity}}
+                    {{year}}.
+                </p>
+                <p class="f-s" ng-if="isCollege == true">
+                    SFA professional sporting experience includes – World class multi-sporting infrastructure, best-in-class stadium experience,
+                    HD match videography, college & athlete sports profiles, College ranking, talent scouting and a lot more.</p>
+            </div>
+            <div class="date-details">
+                <ul class="list-unstyled sport25 text-center" ng-if="isCollege == false">
+                    <li>20+ Sports* </li>
+                </ul>
+                <ul class="list-unstyled date-venue" ng-if="isCollege == false">
+                    <li>Dates: 1st – 20th NOVEMBER {{year}}** </li>
+                    <li>Venue: Gachibowli Stadium***</li>
+                </ul>
+                <ul class="list-unstyled date-venue" ng-if="isCollege == true">
+                    <li>Dates: 1st Dec – 17th Dec {{year}}* </li>
+                    <li>Venue: DY Patil Sports Academy, Nerul**</li>
+                </ul>
+                <div class="venue-bottom ">
+                    <ul class="list-unstyled" ng-if="isCollege == false">
+                        <li>*Final sports to be announced shortly </li>
+                        <li>**Final dates to be announced shortly </li>
+                        <li> ***Final venue to be announced shortly</li>
+                    </ul>
+                    <ul class="list-unstyled" ng-if="isCollege == true">
+                        <li>*Final dates to be announced shortly </li>
+                        <li> **Venue for Hockey to be announced soon</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="categories">
+            <h1 class="text-center">Register for SFA {{sfaCity}} {{year}}</h1>
+            <p class="f-s f16 text-center margin0">Every {{type |firstcapitalize}} and Athlete (participating in a team sport or individual sport) must register
+                themselves individually first.
+            </p>
+            <p class="f-s f16 text-center margin0">Once your individual registration process is complete, you can proceed to register yourself for the sport/sports
+                of your interest.</p>
+            <p class="f-s f16 text-center margin0">Kindly go through the ‘Age Group and Event Categories’ to understand your sporting opportunities at SFA {{sfaCity}}
+                {{year}}.
+            </p>
+            <p class="text-center step mt35 mb25">Step 1 : {{type |firstcapitalize}} / Athlete Registration & Verification</p>
+            <div class="row">
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="school-registration">
+                        <div class="btn-school text-center">
+                            <p>{{type |firstcapitalize}} Registration</p>
+                            <p>To be filled by {{type |firstcapitalize}} Authorities</p>
+                            <div class="school-icon">
+                                <img src="img/icon/2.png" class="img-responsive">
+                            </div>
+                        </div>
+                        <div class="category-padding f-s mod-cls">
+                            <p><b>Register your {{type}} for SFA {{sfaCity}} {{year}}:</b>
+                            </p>
+                            <ul class="list-unstyled school-list">
+                                <li ng-if="isCollege == false">Fill out the online ‘{{type |firstcapitalize}} Registration Form’ & pay the registration
+                                    amount of INR 12,000/- (inclusive of all applicable taxes)
+                                </li>
+                                <li ng-if="isCollege == true">Fill out the college registration form & pay the college registration fees.</li>
+                                <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 2500 will be charged to each college registering
+                                    for SFA Mumbai 2017</li>
+                                <li>After the verification process, SFA will issue a unique {{type}} SFA ID and password. (This
+                                    process may take up to 2 working days).
+                                    <!--**<br><span class="f-14">** Please keep your SFA ID and password safe as you will require this to register individual and and team athletes from your school.</span>-->
+                                </li>
+                                <li>Proceed to SPORTS REGISTRATION (Opening Shortly) to register athletes from your {{type}}
+                                    for their sport/sports of interest.</li>
+                                <li>You will be notified once the sports registration is open.</li>
+                                <!--<li>Proceed to register athletes from your school for Sports Registration</li>-->
+                            </ul>
+                            <p class="f-16">Successful registration will enable all athletes from your {{type}} to participate in all
+                                <span ng-if="isCollege == false">20+</span>
+                                <span ng-if="isCollege == true">15+</span> disciplines of sport at a subsidized registration
+                                fee.
+                            </p>
+                            <p class="custom-a"><a ng-click="regisBenModal(type, sfaCity, year)"><strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{year}}</strong></a></p>
+                        </div>
+                        <div class="text-center mb-20 "><a ui-sref="formregis"><button class="btn-category green-btn "> Click here for {{type |firstcapitalize}} Registration Form</button></a></div>
+                    </div>
+                </div>
+
+
+                <div class="col-md-6 col-sm-12 col-xs-12">
+                    <div class="athletes">
+                        <div class="athlets-btn text-center">
+                            <div class="athlets-icon">
+                                <img src="img/icon/1.png" class="img-responsive">
+                            </div>
+                            <p>Athlete Registration</p>
+                            <p>To be filled by Athletes / Parents</p>
+                        </div>
+                        <div class="category-padding-athelet f-s mod-cls">
+                            <!--<p>Once an athlete registers with SFA, he/she can participate in as many sports as he/she chooses to
+                            (basis eligibility criteria).
+                        </p>-->
+                            <p><b>Register as an athlete for SFA {{sfaCity}} {{year}}:</b>
+                            </p>
+                            <ul class="list-unstyled athlete-list f-s">
+                                <li ng-if="isCollege == false"> Fill out the online ‘Athlete Registration Form’ & pay the registration amount of INR 200/-
+                                    (inclusive of all applicable taxes)<br>
+                                    <span class="f-14">*In the event that your school does not register for SFA {{sfaCity}} {{year}} by the 30th of September,
+                                    an additional fee of INR 400/- (Inclusive of all applicable taxes) will be levied.</span>
+                                </li>
+                                <li ng-if="isCollege == true">Fill out the athlete registration form & pay the athlete registration fees.</li>
+                                <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 300 will be charged to each athlete registering
+                                    for SFA Mumbai 2017</li>
+                                <li>After the verification process, SFA will issue a unique athlete SFA ID and password. (This
+                                    process may take up to 2 working days).
+                                    <!--**<br><span class="f-14">**Please keep your SFA ID and password safe as you will require this to register yourself for 
+                            individual/team sports that you wish to participate in. </span>-->
+                                </li>
+                                <li>Proceed to SPORTS REGISTRATION (Opening Shortly) to register for you particular sport/sports.
+                                    <!--<br><span class="f-14">* You can participate in all 25+ disciplines of sport</span><br>
+                                <span class="f-14">* The sport registration will be opening soon and you will be notified once the sport registration
+                                    process begins.</span>-->
+                                </li>
+                                <li>You will be notified once the sport registration is open.</li>
+                                <!--<li>Proceed to register for Sports Registration</li>-->
+                            </ul>
+                            <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
+                            from their school registrations. </p>-->
+                            <p class="custom-a" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
+                            <p class="custom-a mb-75" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
+                        </div>
+                        <div class="text-center mb-20 "><a ui-sref="formathlete"><button class="btn-category orange "> Click here for Athlete Registration Form</button></a></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
+                    <div class="sport-sec">
+                        <p class="text-center step mb-75 ">Step2 : Sport Registration</p>
+                        <div class="sport-registration">
+                            <div class="btn-sport text-center">
+                                <div class="sport-icon">
+                                    <img src="img/icon/3.png" class="img-responsive">
+                                </div>
+                                <p>Sport Registration</p>
+                            </div>
+                            <div class="category-padding-sport f-s">
+                                <p>Once the athlete / school registration is complete, log in using your SFA ID and password
+                                    to register for your sport/sports of interest.
+                                </p>
+                                <p>All registered schools and athletes will be notified when registration for sports will be
+                                    open!
+                                </p>
+                            </div>
+                            <!--<div class="text-center mb-20"><button class="btn-category  blue-light">Sports Registration Form</button></div>-->
+                            <div class="text-center mb-20"><button class="com-category  blue-light">Opening shortly</button></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<div class="text-center ">Sports Registration Form</div>-->
+        <div class="store-for-you" ng-if="isCollege==false">
+            <h2 class="text-center">WHAT’S IN STORE FOR YOU</h2>
+            <div class="sport-row-space">
+                <div class="row ">
+                    <div class="col-md-4 col-sm-4 col-xs-12 ">
+                        <div class="common-store f-s">
+                            <p>PRO SPORT EXPERIENCE </p>
+                            <ul class="store-padding">
+                                <li>World-Class Multi-Sporting Infrastructure & Facilities</li>
+                                <li>High Quality Competition </li>
+                                <li>Quality Governance</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 ">
+                        <div class="common-store f-s ">
+                            <p>PRO CARE FOR ENHANCED PERFORMANCE
+                            </p>
+                            <ul class="store-for-you-list ">
+                                <li>Injury Prevention Centres & Oncourt Physiocare</li>
+                                <li> Hydration & Nutrition Stations </li>
+                                <li>Safe & Hygenic Sporting Environment
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 ">
+                        <div class="common-store pd-left f-s ">
+                            <p>PRO HD MATCH VIDEOS</p>
+                            <!-- <p>PRO ATHLETE DEVELOPMENT</p> -->
+                            <ul class="store-for-you-list ">
+                                <li>HD match videography for every game</li>
+                                <li>Digital record maintenance</li>
+                                <li>Match Videos enhanced with statistics and advanced analytics
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store f-s ">
+                        <p>PRO DATA & ANALYTICS PORTAL</p>
+                        <ul class="store-for-you-list ">
+                            <li>Athlete & School Profiles</li>
+                            <li>Comprehensive sport bios</li>
+                            <li>Year-on-Year record maintenance</li>
+                            <li>Match statistics and reports</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store f-s ">
+                        <p>END-TO-END ONLINE MANAGEMENT</p>
+                        <ul class="store-for-you-list ">
+                            <li>One time E-Registration process for athletes & schools</li>
+                            <li>Fixtures, Draws and Match Schedules to be published online prior to the championship
+                            </li>
+                            <li>Record Maintenance of all championship led scores, records, statistics & ranking table on the
+                                website
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="store-for-you" ng-if="isCollege==true">
+            <h2 class="text-center">WHAT’S IN STORE FOR YOU</h2>
+            <div class="sport-row-space">
+                <div class="row">
+                    <div class="col-md-4 col-sm-4 col-xs-12">
+                        <div class="common-store f-s">
+                            <p>PRO SPORT EXPERIENCE </p>
+                            <ul class="store-for-you-list">
+                                <li>World-Class Multi-Sporting Infrastructure & Facilities</li>
+                                <li>High Quality Competition</li>
+                                <li>Quality Governance - National & State Associations</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 ">
+                        <div class="common-store f-s ">
+                            <p>PRO CARE FOR ENHANCED PERFORMANCE
+                            </p>
+                            <ul class="store-for-you-list ">
+                                <li>Injury Prevention Centres & Oncourt Physiocare</li>
+                                <li> Hydration & Nutrition Stations with complimentary energy drinks.</li>
+                                <li>Safe & Hygenic Sporting Environment
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-4 col-sm-4 col-xs-12 ">
+                        <div class="common-store pd-left f-s ">
+                            <p>PRO HD MATCH VIDEOS</p>
+                            <!-- <p>PRO ATHLETE DEVELOPMENT</p> -->
+                            <ul class="store-for-you-list ">
+                                <li>HD match videography for every game</li>
+                                <li>Digital record maintenance</li>
+                                <li>Match Videos enhanced with statistics and advanced analytics
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store f-s ">
+                        <p>PRO DATA & ANALYTICS PORTAL</p>
+                        <ul class="store-for-you-list ">
+                            <li>Athlete & College Profiles</li>
+                            <li>Comprehensive sport bios</li>
+                            <li>Year-on-Year record maintenance</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store f-s ">
+                        <p>END-TO-END ONLINE MANAGEMENT</p>
+                        <ul class="store-for-you-list ">
+                            <li>One time E-Registration process for athletes & colleges</li>
+                            <li>Fixtures, Draws and Match Schedules to be published online prior to the championship
+                            </li>
+                            <li>Record Maintenance of all championship led scores, records, statistics & ranking table on the
+                                website
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-12 ">
+                    <div class="common-store pd-left f-s ">
+                        <p>ELITE ATHLETE CLUB</p>
+                        <ul class="store-for-you-list ">
+                            <li>Scouting for talented athletes across different sports and empowering them with:</li>
+                            <ul style="padding:0;margin:0 ">
+                                <li>Training & Development Scholarships </li>
+                                <li>Complimentary mental and fitness assessment programs</li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="past-championship ">
+            <h2 class="text-center ">SFA Past Championships</h2>
+            <div class="championship-blue ">
+                <div class="video ">
+                    <div class="display-inline relate ">
+                        <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
+                        <img src="img/icon/sport1.jpg " class="img-responsive ">
+                    </a>
+                        <h2 class="text-center ">SFA {{sfaCity | capitalize}} 2016</h2>
+                        <div class="video-icon ">
+                            <a class="fancybox.iframe " href="https://www.youtube.com/embed/j-iLIlmhi4I " fancybox-box>
+                            <img src="img/video.png " class="img-responsive ">
+                        </a>
+                        </div>
+                    </div>
+                    <div class="display-inline ml3 relate ">
+                        <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
+                        <img src="img/icon/sport2.jpg " class="img-responsive ">
+                    </a>
+                        <h2 class="text-center ">SFA {{sfaCity | capitalize}} 2015</h2>
+                        <div class="video-icon ">
+                            <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
+                            <img src="img/video.png " class="img-responsive ">
+                        </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-register hidden-xs " ng-if="isCollege==false">
+        <div class="registration side-menu2 ">
+            <div class="tab-img dis-bloc " ng-if="closeReg==true">
+                <img src=" img/icon/reg.png " class="img-responsive ">
+                <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="closeMenu(); ">-->
+            </div>
+            <div class="tab-img dis-bloc " ng-if="closeReg==false">
+                <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
+                <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="getMenu(); ">-->
+            </div>
+            <div class="btn-tab dis-bloc ">
+                <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
+                <button class=" ">Registration Process</button>
+            </a>
+            </div>
+        </div>
+        <div class="tab1 ">
+            <div class="age-event side-menu1 ">
+                <div class="tab-img dis-bloc " ng-if="closeAge==true">
+                    <img src="img/icon/age.png " class="img-responsive ">
+                </div>
+                <div class="tab-img dis-bloc " ng-if="closeAge==false">
+                    <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
+                </div>
+                <div class="btn-tab dis-bloc ">
+                    <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
+                    <button class=" ">Age Group & Event Categories</button>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-register visible-xs " ng-if="isCollege==false">
+        <div class="registration side-menu menu-out menu-in " ng-mouseleave="closeMenu(); ">
+            <div class="tab-img dis-bloc " ng-if="closeReg==true">
+                <img src=" img/icon/reg.png " class="img-responsive ">
+            </div>
+            <div class="tab-img dis-bloc " ng-if="closeReg==false">
+                <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
+            </div>
+            <div class="btn-tab dis-bloc ">
+                <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
+                <button class=" ">Registration Process</button>
+            </a>
+            </div>
+        </div>
+        <div class="tab1 ">
+            <div class="age-event menu-in1 menu-out side-menu1 " ng-mouseleave="closeMenu1(); ">
+                <div class="tab-img dis-bloc " ng-if="closeAge==true">
+                    <img src="img/icon/age.png " class="img-responsive ">
+                </div>
+                <div class="tab-img dis-bloc " ng-if="closeAge==false">
+                    <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
+                </div>
+                <div class="btn-tab dis-bloc ">
+                    <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
+                    <button class=" ">Age Group & Event Categories</button>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-register hidden-xs " ng-if="isCollege==true">
+        <div class="registration side-menu2 ">
+            <div class="tab-img dis-bloc " ng-if="closeReg==true">
+                <img src=" img/icon/reg.png " class="img-responsive ">
+                <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="closeMenu(); ">-->
+            </div>
+            <div class="tab-img dis-bloc " ng-if="closeReg==false">
+                <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
+                <!--<img src=" img/icon/reg.png " class="img-responsive " ng-click="getMenu(); ">-->
+            </div>
+            <div class="btn-tab dis-bloc ">
+                <a href="img/pdf/sfa_atheletecollege_group.pdf " target="_new ">
+                <button class=" ">Registration Process</button>
+            </a>
+            </div>
+        </div>
+        <div class="tab1 ">
+            <div class="age-event side-menu1 ">
+                <div class="tab-img dis-bloc " ng-if="closeAge==true">
+                    <img src="img/icon/age.png " class="img-responsive ">
+                </div>
+                <div class="tab-img dis-bloc " ng-if="closeAge==false">
+                    <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
+                </div>
+                <div class="btn-tab dis-bloc ">
+                    <a href="img/pdf/sfa_agegroupcollege_event.pdf " target="_new ">
+                    <button class=" ">Age Group & Event Categories</button>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-register visible-xs " ng-if="isCollege==true">
+        <div class="registration side-menu menu-out menu-in " ng-mouseleave="closeMenu(); ">
+            <div class="tab-img dis-bloc " ng-if="closeReg==true">
+                <img src=" img/icon/reg.png " class="img-responsive ">
+            </div>
+            <div class="tab-img dis-bloc " ng-if="closeReg==false">
+                <img src=" img/icon/reg.png " class="img-responsive " ng-mouseover="getMenu(); ">
+            </div>
+            <div class="btn-tab dis-bloc ">
+                <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
+                <button class=" ">Registration Process</button>
+            </a>
+            </div>
+        </div>
+        <div class="tab1 ">
+            <div class="age-event menu-in1 menu-out side-menu1" ng-mouseleave="closeMenu1();">
+                <div class="tab-img dis-bloc" ng-if="closeAge==true">
+                    <img src="img/icon/age.png" class="img-responsive">
+                </div>
+                <div class="tab-img dis-bloc" ng-if="closeAge==false">
+                    <img src="img/icon/age.png " class="img-responsive " ng-mouseover="getMenu1(); ">
+                </div>
+                <div class="btn-tab dis-bloc ">
+                    <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
+                    <button class=" ">Age Group & Event Categories</button>
+                </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

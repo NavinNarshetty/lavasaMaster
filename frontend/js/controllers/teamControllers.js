@@ -1,29 +1,13 @@
-myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
+myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, configService) {
     $scope.template = TemplateService.getHTML("content/team-selection.html");
     TemplateService.title = "Team Selection"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
-    NavigationService.getDetail(function(data) {
-        errorService.errorCode(data, function(allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
     $scope.selectService = selectService;
     console.log("$scope.selectService", $scope.selectService);
@@ -46,11 +30,11 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
     $scope.editablestudentTeam = [];
     // mixAccess
 
-    loginService.loginGet(function(data) {
+    loginService.loginGet(function (data) {
         $scope.detail = data;
     });
 
-    window.onbeforeunload = function() {
+    window.onbeforeunload = function () {
         NavigationService.setVariable(null);
     };
     if ($scope.detail.userType === "athlete") {
@@ -60,10 +44,10 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
         $scope.constraints.schoolToken = $scope.detail.accessToken;
         $scope.getAthletePerSchoolObj.schoolToken = $scope.detail.accessToken;
     }
-    $scope.getSportDetails = function() {
+    $scope.getSportDetails = function () {
         // $scope.constraints._id = $stateParams.id;
         NavigationService.getSportDetails($scope.constraints,
-            function(data) {
+            function (data) {
                 $scope.basicSportDetails = data.data;
                 $scope.selectService.sportName = data.data.sportName;
                 $scope.selectService.sportType = data.data.sportType;
@@ -77,8 +61,8 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
         $state.go('sports-selection');
     }
     //*** logout function
-    $scope.logoutCandidate = function() {
-        loginService.logoutCandidate(function(data) {
+    $scope.logoutCandidate = function () {
+        loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
                 $state.go('sports-registration');
@@ -93,7 +77,7 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
     }
 
     // *****for getting all athletes*****
-    $scope.athletePerSchool = function(getAthletePerSchoolObj) {
+    $scope.athletePerSchool = function (getAthletePerSchoolObj) {
         var url = '';
         if ($.jStorage.get("editTeamId") !== null) {
             if ($scope.detail.mixAccess === true || !$scope.detail.mixAccess) {
@@ -108,8 +92,8 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
         $scope.setDisabled = false;
         if ($scope.busy) return;
         $scope.busy = true;
-        NavigationService.getAthletePerSchool(getAthletePerSchoolObj, url, function(data) {
-            errorService.errorCode(data, function(allData) {
+        NavigationService.getAthletePerSchool(getAthletePerSchoolObj, url, function (data) {
+            errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
                     if (allData.value) {
                         $scope.isLoading = false;
@@ -124,16 +108,16 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
                             if (allData.data.totalpages >= getAthletePerSchoolObj.page) {
                                 $scope.showMsg = true;
                                 $scope.isLoading = false;
-                                _.each(allData.data.data, function(value) {
+                                _.each(allData.data.data, function (value) {
                                     value.fullNameWithsfaId = value.sfaId + " - " + value.firstName + "   " + value.surname;
                                     $scope.selectAthlete.push(value);
                                     $scope.busy = false;
                                 });
                                 $scope.selectAthlete = _.uniqBy($scope.selectAthlete, 'sfaId');
                                 if ($.jStorage.get("flag") === null) {
-                                    _.each($scope.editablestudentTeam, function(key) {
+                                    _.each($scope.editablestudentTeam, function (key) {
                                         console.log("edit key", key.studentId);
-                                        _.each($scope.selectAthlete, function(value) {
+                                        _.each($scope.selectAthlete, function (value) {
                                             console.log("edit value", value._id);
                                             if (key.studentId === value._id) {
                                                 console.log("im intrue");
@@ -147,8 +131,8 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
                                     });
                                 } else {
                                     console.log("flag is not null");
-                                    _.each($scope.editablestudentTeam, function(key) {
-                                        _.each($scope.selectAthlete, function(value) {
+                                    _.each($scope.editablestudentTeam, function (key) {
+                                        _.each($scope.selectAthlete, function (value) {
                                             if (key.studentId === value._id) {
                                                 value.isTeamSelected = false;
                                             }
@@ -192,15 +176,15 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
 
 
     // *****for getting one sportId*****
-    $scope.getSportId = function(constraints) {
+    $scope.getSportId = function (constraints) {
         var getOneSportUrl = '';
         if ($.jStorage.get("editTeamId") !== null) {
             getOneSportUrl = 'SportsListSubCategory/editOneSport';
         } else {
             getOneSportUrl = 'SportsListSubCategory/getOneSport';
         }
-        NavigationService.getOneSportForRegistration(constraints, getOneSportUrl, function(data) {
-            errorService.errorCode(data, function(allData) {
+        NavigationService.getOneSportForRegistration(constraints, getOneSportUrl, function (data) {
+            errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
                     if (allData.value) {
                         $scope.showMsg = true;
@@ -232,7 +216,7 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
     };
 
     //***** for getting age group *****
-    $scope.filterAge = function(ageId, ageName) {
+    $scope.filterAge = function (ageId, ageName) {
         $scope.listOfAthelete = [];
         $scope.isLoading = true;
         $scope.busy = false;
@@ -245,7 +229,7 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
     };
 
     // *****search by sfaId*****
-    $scope.searchaBysfaId = function(serach) {
+    $scope.searchaBysfaId = function (serach) {
         $scope.selectAthlete = [];
         $scope.listOfAthelete = [];
         $scope.busy = false;
@@ -253,13 +237,13 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
         $scope.athletePerSchool($scope.getAthletePerSchoolObj);
     };
     // *****load more data *****
-    $scope.loadMore = function() {
+    $scope.loadMore = function () {
         ++$scope.getAthletePerSchoolObj.page;
         $scope.athletePerSchool($scope.getAthletePerSchoolObj);
     };
 
     //    *****sorting age genderwise*****
-    $scope.sortGenderWise = function(gender) {
+    $scope.sortGenderWise = function (gender) {
         if (gender == 'both') {
             $scope.showFemale = false;
             $scope.showMale = false;
@@ -311,10 +295,10 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
     }
 
     //  *****getting all age group ***** 
-    $scope.sportGet = function(ageGroup) {
+    $scope.sportGet = function (ageGroup) {
         if ($stateParams.id) {
-            NavigationService.getSports($scope.constraints, function(data) {
-                errorService.errorCode(data, function(allData) {
+            NavigationService.getSports($scope.constraints, function (data) {
+                errorService.errorCode(data, function (allData) {
                     if (!allData.message) {
                         if (allData.value === true) {
                             if (allData.data.length === 0) {
@@ -333,17 +317,17 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
                                 $scope.femaleAgeGrp = _.cloneDeep($scope.getSports.female);
                                 $scope.maleAndFemale = _.cloneDeep($scope.getSports.both);
                                 var sortIt = [$scope.maleAgeGrp, $scope.femaleAgeGrp, $scope.maleAndFemale];
-                                _.each(sortIt, function(arr) {
-                                    _.each(arr, function(key) {
+                                _.each(sortIt, function (arr) {
+                                    _.each(arr, function (key) {
                                         if (key) {
                                             key.orderage = parseInt(key.ageData.name.slice(2));
                                         }
                                     });
                                 });
                                 if (ageGroup) {
-                                    _.each(sortIt, function(arr) {
+                                    _.each(sortIt, function (arr) {
                                         console.log("arr", arr);
-                                        _.each(arr, function(key) {
+                                        _.each(arr, function (key) {
                                             if (key.ageGroup === ageGroup) {
                                                 key.disablethis = false;
                                             } else {
@@ -378,7 +362,7 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
     $scope.sportGet();
 
     // function pushToTeam
-    $scope.pushToTeam = function(checked, bool, listOfAthelete, objIndex) {
+    $scope.pushToTeam = function (checked, bool, listOfAthelete, objIndex) {
         if ($.jStorage.get("sportTitle") === "Tennis Mixed Doubles") {
             $scope.selectService.pushToTeam(checked, bool, listOfAthelete);
             $scope.selectService.team = _.filter($scope.selectService.team, 'checked');
@@ -404,7 +388,7 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
                 $scope.setDisabled = false;
             }
             if ($scope.selectService.team.length === 0) {
-                _.each($scope.listOfAthelete, function(key) {
+                _.each($scope.listOfAthelete, function (key) {
                     if (key.disableGender) {
                         key.disableGender = false;
                     }
@@ -428,10 +412,10 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
 
     };
     // function
-    $scope.deselectCheckbx = function() {
+    $scope.deselectCheckbx = function () {
         $scope.setDisabled = false;
         if ($.jStorage.get("sportTitle") === "Tennis Mixed Doubles") {
-            _.each($scope.listOfAthelete, function(key) {
+            _.each($scope.listOfAthelete, function (key) {
                 if (key.disableGender) {
                     key.disableGender = false;
                     key.checked = false;
@@ -441,7 +425,7 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
     };
 
     // function
-    $scope.maxPlayerAllow = function(index) {
+    $scope.maxPlayerAllow = function (index) {
         if (selectService.team.length > $scope.maxPlayer) {
             toastr.error('Kindly select a minimum of' + ' ' + ' ' + $scope.minPlayer + ' ' + 'players and a maximum of' + ' ' + $scope.maxPlayer + ' ' +
                 'players');
@@ -455,13 +439,13 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
         $scope.filterAge($scope.selectService.ageGroup, $scope.showAgeObj);
     }
 
-    $scope.editTeamFun = function() {
+    $scope.editTeamFun = function () {
         if ($.jStorage.get("teamId") !== null) {
             $scope.isEdit = true;
             $scope.teamIdObj = {};
             $scope.teamIdObj.teamid = $.jStorage.get("teamId");
-            NavigationService.editTeam($scope.teamIdObj, function(data) {
-                errorService.errorCode(data, function(allData) {
+            NavigationService.editTeam($scope.teamIdObj, function (data) {
+                errorService.errorCode(data, function (allData) {
                     if (!allData.message) {
                         if (allData.value) {
                             $scope.editTeamData = allData.data[0];
@@ -489,32 +473,16 @@ myApp.controller('TeamSelectionCtrl', function($scope, TemplateService, $state, 
 
 });
 
-myApp.controller('ConfirmTeamCtrl', function($scope, TemplateService, NavigationService, $timeout, toastr, $state, $stateParams, loginService, selectService, $filter, errorService) {
+myApp.controller('ConfirmTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, toastr, $state, $stateParams, loginService, selectService, $filter, errorService, configService) {
     $scope.template = TemplateService.getHTML("content/confirmteam.html");
     TemplateService.title = "Confirm Team"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
-    NavigationService.getDetail(function(data) {
-        errorService.errorCode(data, function(allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
     $scope.teamMembers = selectService.team;
     $scope.selectService = selectService;
@@ -535,13 +503,13 @@ myApp.controller('ConfirmTeamCtrl', function($scope, TemplateService, Navigation
     // $scope.setTeamIdNull = function () {
     //     $.jStorage.set("teamId", null);
     // };
-    $scope.setVariable = function() {
+    $scope.setVariable = function () {
         NavigationService.setVariable(true);
     };
 
     $scope.ageTitle = $.jStorage.get("ageTitle");
     $scope.gender = $.jStorage.get("gender");
-    _.each($scope.teamMembers, function(n) {
+    _.each($scope.teamMembers, function (n) {
         n.isCaptain = false;
         n.isGoalKeeper = false;
         n.studentId = n._id;
@@ -550,12 +518,12 @@ myApp.controller('ConfirmTeamCtrl', function($scope, TemplateService, Navigation
     if ($.jStorage.get("userDetails") === null) {
         $state.go('sports-registration');
     }
-    loginService.loginGet(function(data) {
+    loginService.loginGet(function (data) {
         $scope.detail = data;
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
-    $scope.logoutCandidate = function() {
-        loginService.logoutCandidate(function(data) {
+    $scope.logoutCandidate = function () {
+        loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
                 $state.go('sports-registration');
@@ -590,24 +558,24 @@ myApp.controller('ConfirmTeamCtrl', function($scope, TemplateService, Navigation
     } else {
         $scope.confirmTeamObject.athleteToken = $.jStorage.get("userDetails").accessToken;
     }
-    $scope.isCaptainFun = function(index) {
-        _.each($scope.teamMembers, function(key) {
+    $scope.isCaptainFun = function (index) {
+        _.each($scope.teamMembers, function (key) {
             key.isCaptain = false;
         });
         $scope.teamMembers[index].isCaptain = true;
         $scope.teamMembers[index].isCap = 'Capt';
     };
 
-    $scope.isGoalKeeperFun = function(index) {
-        _.each($scope.teamMembers, function(key) {
+    $scope.isGoalKeeperFun = function (index) {
+        _.each($scope.teamMembers, function (key) {
             key.isGoalKeeper = false;
         });
         $scope.teamMembers[index].isGoalKeeper = true;
     };
-    $scope.confirmTeamToGo = function(confirmTeamObject) {
+    $scope.confirmTeamToGo = function (confirmTeamObject) {
         console.log("confirmTeamObject", confirmTeamObject);
-        NavigationService.teamConfirm(confirmTeamObject, function(data) {
-            errorService.errorCode(data, function(allData) {
+        NavigationService.teamConfirm(confirmTeamObject, function (data) {
+            errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
                     if (allData.value) {
                         toastr.success("Successfully Confirmed", 'Success Message');
@@ -620,15 +588,15 @@ myApp.controller('ConfirmTeamCtrl', function($scope, TemplateService, Navigation
             });
         });
     };
-    $scope.finalConfirmTeam = function(sportTitle) {
+    $scope.finalConfirmTeam = function (sportTitle) {
         console.log($scope.confirmTeamObject, "$scope.confirmTeamObject");
-        $scope.yourPromise = NavigationService.success().then(function() {
+        $scope.yourPromise = NavigationService.success().then(function () {
             $scope.confirmTeamObject.athleteTeam = _.cloneDeep($scope.teamMembers);
             console.log($scope.confirmTeamObject, "$scope.confirmTeamObject");
-            var isCapObj = _.find($scope.teamMembers, function(key) {
+            var isCapObj = _.find($scope.teamMembers, function (key) {
                 return key.isCaptain === true;
             });
-            var isGoalKeeperObj = _.find($scope.teamMembers, function(key) {
+            var isGoalKeeperObj = _.find($scope.teamMembers, function (key) {
                 return key.isGoalKeeper === true;
             });
 
@@ -672,35 +640,19 @@ myApp.controller('ConfirmTeamCtrl', function($scope, TemplateService, Navigation
 
 });
 
-myApp.controller('TeamCongratsCtrl', function($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService) {
+myApp.controller('TeamCongratsCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService, configService) {
     $scope.template = TemplateService.getHTML("content/team-congrats.html");
     TemplateService.title = "Team Congrats"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
-    NavigationService.getDetail(function(data) {
-        errorService.errorCode(data, function(allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
     // $scope.formData = {};
-    loginService.loginGet(function(data) {
+    loginService.loginGet(function (data) {
         $scope.detail = data;
     });
 
@@ -708,8 +660,8 @@ myApp.controller('TeamCongratsCtrl', function($scope, TemplateService, toastr, N
         $state.go('sports-registration');
     }
 
-    $scope.logoutCandidate = function() {
-        loginService.logoutCandidate(function(data) {
+    $scope.logoutCandidate = function () {
+        loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
                 $state.go('sports-registration');

@@ -81,35 +81,6 @@ myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService
     } else if (window.location.host == "mumbaicollege.sfanow.in") {
         $scope.isCollege = true;
     }
-    // NavigationService.getDetail(function (data) {
-    //     errorService.errorCode(data, function (allData) {
-    //         console.log(allData);
-    //         if (!allData.message) {
-    //             if (allData.value === true) {
-    //                 $scope.city = allData.data.city;
-    //                 $scope.district = allData.data.district;
-    //                 $scope.state = allData.data.state;
-    //                 $scope.year = allData.data.year;
-    //                 $scope.sfaCity = allData.data.sfaCity;
-    //                 if (allData.data.type == 'school') {
-    //                     $scope.isCollege = false;
-    //                     $scope.type = allData.data.type;
-    //                     // $scope.registrationLink = globalLinkSchool;
-    //                     // $scope.athleteLink = globalLinkSchoolAthlete;
-    //                     // $scope.sportsRegistrationLink = globalLinkSchoolSportsRegistration;
-    //                 } else {
-    //                     $scope.isCollege = true;
-    //                     $scope.type = allData.data.type;
-    //                     // $scope.registrationLink = globalLinkCollege;
-    //                     // $scope.athleteLink = globalLinkCollegeAthlete;
-    //                     // $scope.sportsRegistrationLink = globalLinkCollegeSportsRegistration;
-    //                 }
-    //             }
-    //         } else {
-    //             toastr.error(allData.message, 'Error Message');
-    //         }
-    //     });
-    // });
 });
 
 

@@ -1,29 +1,13 @@
-myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $location, TemplateService, NavigationService, $timeout, toastr, $state, errorService, loginService, selectService, $uibModal) {
+myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $location, TemplateService, NavigationService, $timeout, toastr, $state, errorService, loginService, selectService, $uibModal, configService) {
     $scope.template = TemplateService.getHTML("content/sports-selection.html");
     TemplateService.title = "Sports Selection";
     $scope.navigation = NavigationService.getNavigation();
-    NavigationService.getDetail(function (data) {
-        errorService.errorCode(data, function (allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
     selectService.reset();
     $scope.sportsschool = true;
@@ -214,32 +198,16 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     };
 });
 
-myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, NavigationService, toastr, $timeout, $stateParams, errorService, loginService, selectService) {
+myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, NavigationService, toastr, $timeout, $stateParams, errorService, loginService, selectService, configService) {
     $scope.template = TemplateService.getHTML("content/sports-rules.html");
     TemplateService.title = "Sports Rules And Regulations";
     $scope.navigation = NavigationService.getNavigation();
-    NavigationService.getDetail(function (data) {
-        errorService.errorCode(data, function (allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
     $scope.selectService = selectService;
     $scope.basicSportDetails = {};
@@ -340,32 +308,16 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
 
 });
 
-myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService) {
+myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService, configService) {
     $scope.template = TemplateService.getHTML("content/sport-individualdetail.html");
     TemplateService.title = "Registered Individual Detail";
     $scope.navigation = NavigationService.getNavigation();
-    NavigationService.getDetail(function (data) {
-        errorService.errorCode(data, function (allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
     // $scope.formData = {};
     $scope.constraints = {};
@@ -431,32 +383,16 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
     };
 });
 
-myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService, selectService) {
+myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService, selectService, configService) {
     $scope.template = TemplateService.getHTML("content/sport-teamdetail.html");
     TemplateService.title = "Registered Team Detail";
     $scope.navigation = NavigationService.getNavigation();
-    NavigationService.getDetail(function (data) {
-        errorService.errorCode(data, function (allData) {
-            console.log(allData);
-            if (!allData.message) {
-                if (allData.value === true) {
-                    $scope.city = allData.data.city;
-                    $scope.district = allData.data.district;
-                    $scope.state = allData.data.state;
-                    $scope.year = allData.data.year;
-                    $scope.sfaCity = allData.data.sfaCity;
-                    if (allData.data.type == 'school') {
-                        $scope.isCollege = false;
-                        $scope.type = allData.data.type;
-                    } else {
-                        $scope.isCollege = true;
-                        $scope.type = allData.data.type;
-                    }
-                }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
     });
     // $scope.formData = {};
     $scope.selectService = selectService;
