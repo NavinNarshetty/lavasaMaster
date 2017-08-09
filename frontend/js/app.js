@@ -269,6 +269,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'ChampionshipSchedulesCtrl'
         })
+        .state('hyderabad', {
+            url: "/hyderabad",
+            templateUrl: tempateURL,
+            controller: 'HyderabadCtrl'
+        })
         // Draws and Schedule
         .state('championshipschedule', {
             url: "/draws-schedule",
@@ -313,6 +318,14 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
     } else if (window.location.origin == "http://testmumbaischool.sfanow.in") {
         $urlRouterProvider.otherwise("/championship");
     } else if (window.location.origin == "http://testmumbaicollege.sfanow.in") {
+        $urlRouterProvider.otherwise("/register");
+    } else if (window.location.origin == "http://testhyderabadschool.sfanow.in") {
+        $urlRouterProvider.otherwise("/championship");
+    } else if (window.location.origin == "http://testhyderabadcollege.sfanow.in") {
+        $urlRouterProvider.otherwise("/register");
+    } else if (window.location.origin == "http://testahmedabadschool.sfanow.in") {
+        $urlRouterProvider.otherwise("/championship");
+    } else if (window.location.origin == "http://testahmedabadcollege.sfanow.in") {
         $urlRouterProvider.otherwise("/register");
     }
     $locationProvider.html5Mode(isproduction);
