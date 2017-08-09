@@ -1474,7 +1474,6 @@ var model = {
                         callback(null, data);
                     }
                 }
-
             ],
             function (err, complete1) {
                 if (err) {

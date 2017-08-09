@@ -292,6 +292,23 @@ var model = {
     saveMatch: function (data, callback) {
         async.waterfall([
                 function (callback) {
+                    Match.findOne().sort({
+                        incrementalId: -1
+                    }).exec(function (err, match) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(match)) {
+                            var matchID = data.matchId + 1;
+                            callback(null, matchID);
+                        } else {
+                            var matchID = data.matchId + ++match.incrementalId;
+                            callback(null, matchID);
+
+                        }
+                    });
+                },
+                function (matchID, callback) {
+                    data.matchId = matchID;
                     if (_.isEmpty(data.opponentsSingle)) {
                         data.opponentsSingle = undefined;
                     }
@@ -340,16 +357,42 @@ var model = {
                     });
                 },
                 function (importData, callback) {
-                    if (data.resultType == "knockout" && data.playerType == "individual") {
-                        Match.saveKnockoutIndividual(importData, function (err, complete) {
-                            if (err || _.isEmpty(complete)) {
-                                callback(err, null);
-                            } else {
-                                callback(null, complete);
-                            }
-                        });
-                    } else {
+                    var excelLength = importData.length;
+                    var range = data.range;
+                    var sum = 0;
+                    while (range >= 1) {
+                        sum = parseInt(sum) + range;
+                        range = range / 2;
+                    }
+                    if (data.thirdPlace == "yes") {
+                        sum = sum + 1;
+                    }
+                    console.log("sum", sum);
+                    if (excelLength == sum) {
                         callback(null, importData);
+                    } else {
+                        err = "excel row do not match with selected range";
+                        callback(null, {
+                            error: err,
+                            success: importData
+                        });
+                    }
+                },
+                function (importData, callback) {
+                    if (importData.error) {
+                        callback(null, importData);
+                    } else {
+                        if (data.resultType == "knockout" && data.playerType == "individual") {
+                            Match.saveKnockoutIndividual(importData, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else {
+                            callback(null, importData);
+                        }
                     }
                 }
             ],
@@ -476,7 +519,6 @@ var model = {
         async.concatSeries(importData, function (singleData, callback) {
             async.waterfall([
                     function (callback) {
-                        // singleData.SPORT = _.split(singleData.SPORT, " ");
                         var date = Math.round((singleData.DATE - 25569) * 86400 * 1000);
                         date = new Date(date);
                         singleData.DATE = date.toISOString();
@@ -569,8 +611,7 @@ var model = {
                         } else {
                             var paramData = {};
                             paramData.opponentsSingle = [];
-                            var match = singleData["MATCH ID"];
-                            paramData.matchId = match;
+                            paramData.matchId = data.matchId;;
                             paramData.round = singleData["ROUND NAME"];
                             if (_.isEmpty(singleData["PARTICIPANT 1"]) || _.isEmpty(singleData["PARTICIPANT 2"])) {
                                 paramData.opponentsSingle = "";
