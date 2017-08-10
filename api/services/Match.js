@@ -182,7 +182,7 @@ var model = {
                     callback(null, err);
                 } else {
                     if (_.isEmpty(result)) {
-                        var count = result.length;
+                        var count = 0;
                         console.log("count", count);
 
                         var data = {};
@@ -402,7 +402,7 @@ var model = {
                                     callback(null, complete);
                                 }
                             });
-                        }else if (data.resultType == "knockout" && data.playerType == "team") {
+                        } else if (data.resultType == "knockout" && data.playerType == "team") {
                             Match.saveKnockoutTeam(importData, data, function (err, complete) {
                                 if (err || _.isEmpty(complete)) {
                                     callback(err, null);
@@ -561,6 +561,7 @@ var model = {
     },
 
     saveKnockoutIndividual: function (importData, data, callback) {
+        var countError = 0;
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
@@ -598,6 +599,7 @@ var model = {
                                 function (singleData, callback) {
                                     // console.log("logssss", singleData);
                                     if (singleData.error) {
+                                        countError++;
                                         callback(null, singleData);
                                     } else {
                                         if (_.isEmpty(singleData["SFAID 1"])) {
@@ -628,6 +630,7 @@ var model = {
                                 function (singleData, callback) {
                                     // console.log("logssss", singleData);
                                     if (singleData.err) {
+                                        countError++;
                                         callback(null, singleData);
                                     } else {
                                         if (_.isEmpty(singleData["SFAID 2"])) {
@@ -654,6 +657,7 @@ var model = {
                                 function (singleData, callback) {
                                     // console.log("logssss", singleData);
                                     if (singleData.error) {
+                                        countError++;
                                         callback(null, singleData);
                                     } else {
                                         var paramData = {};
@@ -691,8 +695,27 @@ var model = {
                     });
                 },
                 function (singleData, callback) {
-                    // console.log("single in next phase", singleData);
-                    callback(null, singleData);
+                    async.concatSeries(singleData, function (n, callback) {
+                            console.log("n", n);
+                            if (countError != 0 && n.error == null) {
+                                console.log("inside", n.success._id, "count", countError);
+                                Match.remove({
+                                    _id: n.success._id
+                                }).exec(function (err, found) {
+                                    if (err || _.isEmpty(found)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, n);
+                                    }
+                                });
+                            } else {
+                                callback(null, n);
+                            }
+                        },
+                        function (err, singleData) {
+                            callback(null, singleData);
+                        });
+
                 }
             ],
             function (err, results) {
@@ -704,7 +727,7 @@ var model = {
             });
     },
 
-    saveKnockoutTeam: function (importData,data, callback) {
+    saveKnockoutTeam: function (importData, data, callback) {
         async.concatSeries(importData, function (singleData, callback) {
             async.waterfall([
                     function (callback) {
