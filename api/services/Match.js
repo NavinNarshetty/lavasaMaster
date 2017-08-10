@@ -402,6 +402,14 @@ var model = {
                                     callback(null, complete);
                                 }
                             });
+                        }else if (data.resultType == "knockout" && data.playerType == "team") {
+                            Match.saveKnockoutTeam(importData, data, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
                         } else {
                             callback(null, importData);
                         }
@@ -696,7 +704,7 @@ var model = {
             });
     },
 
-    saveKnockoutTeam: function (importData, callback) {
+    saveKnockoutTeam: function (importData,data, callback) {
         async.concatSeries(importData, function (singleData, callback) {
             async.waterfall([
                     function (callback) {
