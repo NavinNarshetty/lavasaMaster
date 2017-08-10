@@ -204,8 +204,8 @@
                         <div class="col-md-3 col-sm-3 col-xs-12">
                             <input name="state" ng-model="formData.state" type="text" class="sfa-drop form-control sfa434" readonly>
                         </div>
-                        <label class="col-md-2 col-sm-2 col-xs-12"> *District:</label>
-                        <div class="col-md-3 col-sm-3 col-xs-12">
+                        <label class="col-md-2 col-sm-2 col-xs-12" ng-if="district.length > 0"> *District:</label>
+                        <div class="col-md-3 col-sm-3 col-xs-12" ng-if="district.length > 0">
                             <select name="district" ng-model="formData.district" class="sfa-drop2 form-control" ng-options="districts for districts in district"
                                 required>
                             <!-- <option style="display:none"></option>
