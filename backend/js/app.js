@@ -20,24 +20,24 @@ var myApp = angular.module('myApp', [
     'ui.date'
 ]);
 
-myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
+myApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider) {
     // for http request with session
     $httpProvider.defaults.withCredentials = true;
     $stateProvider
 
         .state('dashboard', {
-            url: "/dashboard",
-            templateUrl: "views/template.html",
-            controller: 'DashboardCtrl',
-        })
+        url: "/dashboard",
+        templateUrl: "views/template.html",
+        controller: 'DashboardCtrl',
+    })
 
-        .state('school', {
-            url: "/school",
-            templateUrl: "views/template.html",
-            controller: 'SchoolCtrl'
-        })
+    .state('school', {
+        url: "/school",
+        templateUrl: "views/template.html",
+        controller: 'SchoolCtrl'
+    })
 
-        .state('athlete', {
+    .state('athlete', {
             url: "/athlete",
             templateUrl: "views/template.html",
             controller: 'AthleteCtrl'
@@ -53,7 +53,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'ViewSchoolCtrl'
         })
 
-        .state('viewAthlete', {
+    .state('viewAthlete', {
             url: "/viewAthlete/:id",
             templateUrl: "views/template.html",
             controller: 'ViewAthleteCtrl'
@@ -112,8 +112,8 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'DetailSecondCategoryCtrl'
         })
 
-        //third-category
-        .state('thirdcategory', {
+    //third-category
+    .state('thirdcategory', {
             url: "/thirdcategory",
             templateUrl: "views/template.html",
             controller: 'ThirdCategoryCtrl'
@@ -230,103 +230,118 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         //     controller: 'PageJsonCtrl'
         // })
 
-        .state('loginapp', {
-            url: "/login/:id",
-            templateUrl: "views/login.html",
-            controller: 'LoginCtrl'
-        })
+    .state('loginapp', {
+        url: "/login/:id",
+        templateUrl: "views/login.html",
+        controller: 'LoginCtrl'
+    })
 
-        .state('country-list', {
-            url: "/country-list/{page:.*}/{keyword:.*}",
-            templateUrl: "views/template.html",
-            controller: 'CountryCtrl',
-            params: {
-                page: "1",
-                keyword: ""
-            }
-        })
+    .state('country-list', {
+        url: "/country-list/{page:.*}/{keyword:.*}",
+        templateUrl: "views/template.html",
+        controller: 'CountryCtrl',
+        params: {
+            page: "1",
+            keyword: ""
+        }
+    })
 
-        .state('createcountry', {
-            url: "/country-create",
-            templateUrl: "views/template.html",
-            controller: 'CreateCountryCtrl'
-        })
+    .state('createcountry', {
+        url: "/country-create",
+        templateUrl: "views/template.html",
+        controller: 'CreateCountryCtrl'
+    })
 
-        .state('editcountry', {
-            url: "/country-edit/:id",
-            templateUrl: "views/template.html",
-            controller: 'EditCountryCtrl'
-        })
+    .state('editcountry', {
+        url: "/country-edit/:id",
+        templateUrl: "views/template.html",
+        controller: 'EditCountryCtrl'
+    })
 
-        .state('schema-creator', {
-            url: "/schema-creator",
-            templateUrl: "views/template.html",
-            controller: 'SchemaCreatorCtrl'
-        })
+    .state('schema-creator', {
+        url: "/schema-creator",
+        templateUrl: "views/template.html",
+        controller: 'SchemaCreatorCtrl'
+    })
 
-        .state('excel-upload', {
+    .state('excel-upload', {
             url: "/excel-upload/:model",
             templateUrl: "views/template.html",
             controller: 'ExcelUploadCtrl'
         })
-
+        //rounds
         .state('rounds', {
             url: "/rounds",
             templateUrl: "views/template.html",
             controller: 'RoundCtrl'
         })
-
+        //detailrounds
         .state('detailrounds', {
             url: "/detailrounds/:id",
             templateUrl: "views/template.html",
             controller: 'DetailRoundCtrl'
         })
-
+        //matches
         .state('matches', {
             url: "/matches",
             templateUrl: "views/template.html",
             controller: 'MatchesCtrl'
         })
-
+        //detailmatches
         .state('detailmatches', {
             url: "/detailmatches",
             templateUrl: "views/template.html",
             controller: 'DetailMatchesCtrl'
         })
-
+        //medals
         .state('medals', {
             url: "/medals",
             templateUrl: "views/template.html",
             controller: 'MedalsCtrl'
         })
+        //detailmedal
         .state('detailmedal', {
             url: "/detailmedal",
             templateUrl: "views/template.html",
             controller: 'DetailMedalCtrl'
         })
+        //gallery
         .state('gallery', {
             url: "/gallery",
             templateUrl: "views/template.html",
             controller: 'GalleryCtrl'
         })
+        //galleryDetail
         .state('galleryDetail', {
             url: "/gallerydetail",
             templateUrl: "views/template.html",
             controller: 'DetailGalleryCtrl'
         })
+        //faq
+        .state('faq', {
+            url: "/faq",
+            templateUrl: "views/template.html",
+            controller: 'FaqCtrl'
+        })
+        //detail faq
+        .state('detailfaq', {
+            url: "/detailfaq/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailFaqCtrl'
+        })
 
 
-        .state('jagz', {
-            url: "/jagz",
-            templateUrl: "views/jagz.html",
-            controller: 'JagzCtrl'
-        });
+    .state('jagz', {
+        url: "/jagz",
+        templateUrl: "views/jagz.html",
+        controller: 'JagzCtrl'
+    });
 
     $urlRouterProvider.otherwise("/dashboard");
     $locationProvider.html5Mode(isproduction);
 });
 
-myApp.config(function ($translateProvider) {
+myApp.config(function($translateProvider) {
     $translateProvider.translations('en', LanguageEnglish);
     $translateProvider.translations('hi', LanguageHindi);
     $translateProvider.preferredLanguage('en');

@@ -5,7 +5,7 @@ var uploadurl = imgurl;
 
 
 
-myApp.factory('NavigationService', function ($http) {
+myApp.factory('NavigationService', function($http) {
     var navigation = [{
             name: "School",
             classis: "activeColor",
@@ -134,6 +134,12 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#/gallery",
             icon: "phone"
         },
+        {
+            name: "Faq",
+            classis: "activeColor",
+            sref: "#/faq",
+            icon: "phone"
+        },
         // {
         //     name: "Student Team",
         //     classis: "activeColor",
@@ -167,23 +173,23 @@ myApp.factory('NavigationService', function ($http) {
     ];
 
     return {
-        getnav: function () {
+        getnav: function() {
             return navigation;
         },
-        parseAccessToken: function (data, callback) {
+        parseAccessToken: function(data, callback) {
             if (data) {
                 $.jStorage.set("accessToken", data);
                 callback();
             }
         },
-        removeAccessToken: function (data, callback) {
+        removeAccessToken: function(data, callback) {
             $.jStorage.flush();
         },
-        profile: function (callback, errorCallback) {
+        profile: function(callback, errorCallback) {
             var data = {
                 accessToken: $.jStorage.get("accessToken")
             };
-            $http.post(adminurl + 'user/profile', data).then(function (data) {
+            $http.post(adminurl + 'user/profile', data).then(function(data) {
                 data = data.data;
                 if (data.value === true) {
                     $.jStorage.set("profile", data.data);
@@ -193,7 +199,7 @@ myApp.factory('NavigationService', function ($http) {
                 }
             });
         },
-        makeactive: function (menuname) {
+        makeactive: function(menuname) {
             for (var i = 0; i < navigation.length; i++) {
                 if (navigation[i].name == menuname) {
                     navigation[i].classis = "activeColor";
@@ -204,48 +210,48 @@ myApp.factory('NavigationService', function ($http) {
             return menuname;
         },
 
-        search: function (url, formData, i, callback) {
-            $http.post(adminurl + url, formData).then(function (data) {
+        search: function(url, formData, i, callback) {
+            $http.post(adminurl + url, formData).then(function(data) {
                 data = data.data;
                 callback(data, i);
             });
         },
-        delete: function (url, formData, callback) {
-            $http.post(adminurl + url, formData).then(function (data) {
+        delete: function(url, formData, callback) {
+            $http.post(adminurl + url, formData).then(function(data) {
                 data = data.data;
                 callback(data);
             });
         },
-        countrySave: function (formData, callback) {
-            $http.post(adminurl + 'country/save', formData).then(function (data) {
-                data = data.data;
-                callback(data);
-
-            });
-        },
-
-        apiCall: function (url, formData, callback) {
-            $http.post(adminurl + url, formData).then(function (data) {
+        countrySave: function(formData, callback) {
+            $http.post(adminurl + 'country/save', formData).then(function(data) {
                 data = data.data;
                 callback(data);
 
             });
         },
-        searchCall: function (url, formData, i, callback) {
-            $http.post(adminurl + url, formData).then(function (data) {
+
+        apiCall: function(url, formData, callback) {
+            $http.post(adminurl + url, formData).then(function(data) {
+                data = data.data;
+                callback(data);
+
+            });
+        },
+        searchCall: function(url, formData, i, callback) {
+            $http.post(adminurl + url, formData).then(function(data) {
                 data = data.data;
                 console.log(data, i);
                 callback(data, i);
             });
         },
-        generateSchoolExcel: function (callback) {
-            $http.post(adminurl + 'Registration/generateExcel').then(function (data) {
+        generateSchoolExcel: function(callback) {
+            $http.post(adminurl + 'Registration/generateExcel').then(function(data) {
                 // data = data.data;
                 callback(data);
             });
         },
-        generateAthleteExcel: function (callback) {
-            $http.post(adminurl + 'Athelete/generateExcel').then(function (data) {
+        generateAthleteExcel: function(callback) {
+            $http.post(adminurl + 'Athelete/generateExcel').then(function(data) {
                 // data = data.data;
                 callback(data);
             });
@@ -259,11 +265,11 @@ myApp.factory('NavigationService', function ($http) {
         //     });
         // },
 
-        generateAthleteExcelWithData: function (data, callback) {
+        generateAthleteExcelWithData: function(data, callback) {
             console.log('from Controller', data);
             $http.post(adminurl + 'Athelete/generateExcel', data, {
                 responseType: 'arraybuffer'
-            }).then(function (response) {
+            }).then(function(response) {
                 var header = response.headers('Content-Disposition')
                 var fileName = "Athlete" + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
                 console.log(fileName);
@@ -280,11 +286,11 @@ myApp.factory('NavigationService', function ($http) {
             })
         },
 
-        generateSchoolExcelWithData: function (data, callback) {
+        generateSchoolExcelWithData: function(data, callback) {
             console.log('from Controller', data);
             $http.post(adminurl + 'Registration/generateExcel', data, {
                 responseType: 'arraybuffer'
-            }).then(function (response) {
+            }).then(function(response) {
                 var header = response.headers('Content-Disposition')
                 var fileName = "Registration" + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
                 console.log(fileName);
@@ -301,48 +307,48 @@ myApp.factory('NavigationService', function ($http) {
             })
         },
 
-        generateExcel: function (url, callback) {
-            $http.post(adminurl + url).then(function (data) {
+        generateExcel: function(url, callback) {
+            $http.post(adminurl + url).then(function(data) {
                 // data = data.data;
                 callback(data);
             });
         },
 
-        generateOldSchoolExcel: function (callback) {
-            $http.post(adminurl + 'School/generateExcel').then(function (data) {
+        generateOldSchoolExcel: function(callback) {
+            $http.post(adminurl + 'School/generateExcel').then(function(data) {
                 // data = data.data;
                 callback(data);
             });
         },
-        getOneOldSchoolById: function (url, formData, callback) {
-            $http.post(adminurl + url, formData).then(function (data) {
+        getOneOldSchoolById: function(url, formData, callback) {
+            $http.post(adminurl + url, formData).then(function(data) {
                 data = data.data;
                 callback(data);
             });
         },
-        getOneCountry: function (id, callback) {
+        getOneCountry: function(id, callback) {
             $http.post(adminurl + 'country/getOne', {
                 _id: id
-            }).then(function (data) {
+            }).then(function(data) {
                 data = data.data;
                 callback(data);
 
             });
         },
-        getLatLng: function (address, i, callback) {
+        getLatLng: function(address, i, callback) {
             $http({
                 url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyC62zlixVsjaq4zDaL4cefNCubjCgxkte4",
                 method: 'GET',
                 withCredentials: false,
-            }).then(function (data) {
+            }).then(function(data) {
                 data = data.data;
                 callback(data, i);
             });
         },
-        uploadExcel: function (form, callback) {
+        uploadExcel: function(form, callback) {
             $http.post(adminurl + form.model + '/import', {
                 file: form.file
-            }).then(function (data) {
+            }).then(function(data) {
                 data = data.data;
                 callback(data);
 

@@ -1,0 +1,27 @@
+<div class="row mt25">
+    <div class="col-md-6">
+        <div class="faq-tables">
+            <table class="table margin0">
+                <thead>
+                    <tr>
+                        <th class="upperthead" colspan="2" ng-bind-html="items[0].heading">
+                        </th>
+                        <!-- <th class="upperthead" colspan="2">For all sports (Except for Swimming, Swimming Relay, Water Polo & Karate Team Kumite)
+                        </th> -->
+                    </tr>
+                    <tr>
+                        <th class="lowerthead">Age Group</th>
+                        <th class="lowerthead">Cut Off Dates</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="data in items">
+                        <td>{{data.agegroup}}</td>
+                        <td>{{data.date}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

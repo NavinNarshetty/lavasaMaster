@@ -1,56 +1,56 @@
-myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
-        $scope.template = TemplateService.getHTML("content/home.html");
-        TemplateService.title = "Home"; //This is the Title of the Website
-        $scope.navigation = NavigationService.getNavigation();
+myApp.controller('HomeCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+    $scope.template = TemplateService.getHTML("content/home.html");
+    TemplateService.title = "Home"; //This is the Title of the Website
+    $scope.navigation = NavigationService.getNavigation();
 
-        $scope.mySlides = [
-            'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
-            'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg',
-            'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg',
-            'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
-        ];
-        var abc = _.times(100, function (n) {
-            return n;
-        });
+    $scope.mySlides = [
+        'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
+        'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg',
+        'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg',
+        'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
+    ];
+    var abc = _.times(100, function(n) {
+        return n;
+    });
 
-        var i = 0;
-        $scope.buttonClick = function () {
-            i++;
-            console.log("This is a button Click");
-        };
+    var i = 0;
+    $scope.buttonClick = function() {
+        i++;
+        console.log("This is a button Click");
+    };
 
 
 
-    })
+})
 
-    .controller('FormCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
-        $scope.template = TemplateService.getHTML("content/form.html");
-        TemplateService.title = "Form"; //This is the Title of the Website
-        $scope.navigation = NavigationService.getNavigation();
-        $scope.formSubmitted = false;
-        $scope.submitForm = function (data) {
-            console.log(data);
-            $scope.formSubmitted = true;
-        };
-    })
+.controller('FormCtrl', function($scope, TemplateService, NavigationService, $timeout) {
+    $scope.template = TemplateService.getHTML("content/form.html");
+    TemplateService.title = "Form"; //This is the Title of the Website
+    $scope.navigation = NavigationService.getNavigation();
+    $scope.formSubmitted = false;
+    $scope.submitForm = function(data) {
+        console.log(data);
+        $scope.formSubmitted = true;
+    };
+})
 
-    //Example API Controller
-    .controller('DemoAPICtrl', function ($scope, TemplateService, apiService, NavigationService, $timeout) {
-        apiService.getDemo($scope.formData, function (data) {
-            console.log(data);
-        });
-    })
+//Example API Controller
+.controller('DemoAPICtrl', function($scope, TemplateService, apiService, NavigationService, $timeout) {
+    apiService.getDemo($scope.formData, function(data) {
+        console.log(data);
+    });
+})
 
 ;
 
-myApp.controller('VenueCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+myApp.controller('VenueCtrl', function($scope, TemplateService, NavigationService, $timeout) {
     //Used to name the .html file
     $scope.template = TemplateService.getHTML("content/venue.html");
     TemplateService.title = "Venue"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
 });
 
-myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService, $timeout, errorService, toastr) {
+myApp.controller('FaqCtrl', function($scope, TemplateService, NavigationService, $timeout, errorService, toastr) {
     //Used to name the .html file
     $scope.template = TemplateService.getHTML("content/faq.html");
     TemplateService.title = "FAQ"; //This is the Title of the Website
@@ -87,17 +87,33 @@ myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService
     // } else if (window.location.host == 'testmumbaicollege.sfanow.in') {
     //     $scope.isCollege = true;
     // }
+
+    NavigationService.getAllFaqs(function(data) {
+        errorService.errorCode(data, function(allData) {
+            if (!allData.message) {
+                if (allData.value) {
+                    console.log(allData.data.results, "allData");
+                    $scope.allFaqs = allData.data.results;
+
+                } else {
+                    //    
+                }
+            } else {
+                toastr.error(allData.message, 'Error Message');
+            }
+        });
+    });
 });
 
 
-myApp.controller('TermsConditionCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+myApp.controller('TermsConditionCtrl', function($scope, TemplateService, NavigationService, $timeout) {
     //Used to name the .html file
     $scope.template = TemplateService.getHTML("content/terms-condition.html");
     TemplateService.title = "Terms & Condition"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
 });
 
-myApp.controller('ChampionsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
+myApp.controller('ChampionsCtrl', function($scope, TemplateService, NavigationService, $timeout, $state) {
     //Used to name the .html file
     $scope.template = TemplateService.getHTML("content/champions.html");
     TemplateService.title = "Champions"; //This is the Title of the Website
@@ -110,7 +126,7 @@ myApp.controller('ChampionsCtrl', function ($scope, TemplateService, NavigationS
     $scope.statuses = {};
     $scope.statuses.open = {};
     $scope.statuses.doubleBronze = false;
-    $scope.profiles = function (participantType, studentid, teamid) {
+    $scope.profiles = function(participantType, studentid, teamid) {
         if (participantType == 'player') {
             $state.go('student-profile', {
                 id: studentid
@@ -123,19 +139,19 @@ myApp.controller('ChampionsCtrl', function ($scope, TemplateService, NavigationS
         }
 
     };
-    $scope.getWinners = function (sportid) {
+    $scope.getWinners = function(sportid) {
         var constraints = {};
         constraints.sport = sportid;
-        _.each($scope.statuses.open, function (value, key) {
+        _.each($scope.statuses.open, function(value, key) {
             $scope.statuses.open[key] = false;
         });
         constraints.year = $scope.filter.year;
         $scope.statuses.doubleBronze = false;
         $scope.winners = undefined;
-        NavigationService.getWinners(constraints, function (response) {
+        NavigationService.getWinners(constraints, function(response) {
             if (response.value) {
                 $scope.winners = response.data;
-                _.each($scope.winners, function (key) {
+                _.each($scope.winners, function(key) {
                     if (key.Bronze.length > 1) {
                         $scope.statuses.doubleBronze = true;
                     }
@@ -145,19 +161,19 @@ myApp.controller('ChampionsCtrl', function ($scope, TemplateService, NavigationS
             }
         });
     };
-    $scope.getSportList = function () {
+    $scope.getSportList = function() {
         $scope.sports = undefined;
-        NavigationService.getAllSportList(function (response) {
+        NavigationService.getAllSportList(function(response) {
             if (response.value) {
                 if ($scope.filter.year == '2015') {
-                    _.remove(response.data, function (key) {
+                    _.remove(response.data, function(key) {
                         return !_.includes($scope.sportName, key.name);
                     });
                 }
                 $scope.sports = _.chain(response.data)
                     .groupBy("sporttype")
                     .toPairs()
-                    .map(function (currentItem) {
+                    .map(function(currentItem) {
                         return _.zipObject(["sporttype", "name"], currentItem);
                     })
                     .value();
@@ -169,12 +185,12 @@ myApp.controller('ChampionsCtrl', function ($scope, TemplateService, NavigationS
 
 });
 
-myApp.controller('ChampionshipCtrl', function ($scope, TemplateService, NavigationService, $timeout, configService) {
+myApp.controller('ChampionshipCtrl', function($scope, TemplateService, NavigationService, $timeout, configService) {
     //Used to name the .html file
     $scope.template = TemplateService.getHTML("content/championship.html");
     TemplateService.title = "Championship"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
-    configService.getDetail(function (data) {
+    configService.getDetail(function(data) {
         $scope.state = data.state;
         $scope.year = data.year;
         $scope.sfaCity = data.sfaCity;
