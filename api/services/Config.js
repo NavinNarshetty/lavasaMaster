@@ -14,7 +14,11 @@ module.exports = mongoose.model('Config', schema);
 // var requrl = "http://mumbaischool.sfanow.in/api/";
 // var requrl = "http://mumbaicollege.sfanow.in/api/";
 // var requrl = "http://testmumbaischool.sfanow.in/api/";
-var requrl = "http://testmumbaicollege.sfanow.in/api/";
+// var requrl = "http://testmumbaicollege.sfanow.in/api/";
+var requrl = "http://testhyderabadschool.sfanow.in/api/";
+// var requrl = "http://testhyderabadcollege.sfanow.in/api/";
+// var requrl = "http://testahmedabadschool.sfanow.in/api/";
+// var requrl = "http://testahmedabadcollege.sfanow.in/api/";
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
