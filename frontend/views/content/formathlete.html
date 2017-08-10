@@ -48,15 +48,15 @@
     <div class="row">
         <div class="col-md-8 col-md-push-2 col-xs-12">
             <div class="dummy">
-                <div>
+                <div ng-if="sfaCity == 'Mumbai'">
                     <p class=" d-padd pl13 para2 sf-list" style="text-align: justify">In case you have participated in previous SFA Championships you will need to enter your SFA ID & Name
                         to ensure that your previous year's match videos and statistics reflect in your new profile, which
                         will be created on successful completion of this registration process.</p>
                 </div>
-                <div class="col-md-3 col-sm-3 col-xs-12">
+                <div class="col-md-3 col-sm-3 col-xs-12" ng-if="sfaCity == 'Mumbai'">
                     <label class="para2 sfa-padd sf-list"> SFA ID or Name:</label>
                 </div>
-                <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="col-md-8 col-sm-8 col-xs-12" ng-if="sfaCity == 'Mumbai'">
                     <ui-select name="idSfa" id="idSfa" theme="bootstrap" ng-model="sfaId" ng-change="searchChange($select.selected.sfaid)">
                         <ui-select-match allow-clear="true" placeholder="Select/Search SFA ID or Name">
                             {{$select.selected.sfaid}}
@@ -69,7 +69,7 @@
                     </ui-select>
                 </div>
                 <div class="mar-left">
-                    <p class="para2 t-padd sf-list"><br>If you have not participated in SFA Championships before, your SFA ID will be generated<br> on successful
+                    <p class="para2 t-padd sf-list" ng-if="sfaCity == 'Mumbai'"><br>If you have not participated in SFA Championships before, your SFA ID will be generated<br> on successful
                         completion of registration.</p>
                     <p class="para2 b-padd sf-list">Please Note: All fields marked with * are mandatory.</p>
                 </div>
