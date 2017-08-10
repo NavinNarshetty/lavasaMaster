@@ -75,8 +75,13 @@ var models = {
                 // furl: 'http://testahmedabadschool.sfanow.in/api/payU/successErrorSchool',
                 // surl: 'http://testahmedabadcollege.sfanow.in/api/payU/successErrorSchool',
                 // furl: 'http://testahmedabadcollege.sfanow.in/api/payU/successErrorSchool',
-                hash: hashtext
-                // pg: pg
+                hash: hashtext,
+                // pg: pg,
+                address: address,
+                state: state,
+                country: country,
+                postalcode: pincode,
+                city: city
             }
         }, callback);
     },
@@ -141,6 +146,7 @@ var models = {
                 state: state,
                 country: country,
                 postalcode: pincode,
+                city: city,
 
             }
         }, callback);
