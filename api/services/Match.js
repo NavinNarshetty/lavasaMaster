@@ -163,7 +163,7 @@ var model = {
             field: data.field,
             filters: {
                 keyword: {
-                    fields: ['matchId', 'round'],
+                    fields: ['matchId', 'round', 'sport'],
                     term: data.keyword
                 }
             },
@@ -205,6 +205,7 @@ var model = {
                 }
             });
         } else {
+            var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId.school opponentsTeam";
             matchObj = {
                 round: {
                     $regex: data.keyword,
@@ -221,6 +222,7 @@ var model = {
                 })
                 .order(options)
                 .keyword(options)
+                .deepPopulate(deepSearch)
                 .page(options, function (err, found) {
                     if (err) {
                         callback(err, null);
