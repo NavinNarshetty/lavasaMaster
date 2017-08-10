@@ -700,7 +700,6 @@ var model = {
         async.concatSeries(importData, function (singleData, callback) {
             async.waterfall([
                     function (callback) {
-                        // singleData.SPORT = _.split(singleData.SPORT, " ");
                         var date = Math.round((singleData.DATE - 25569) * 86400 * 1000);
                         date = new Date(date);
                         singleData.DATE = date.toISOString();
@@ -733,7 +732,7 @@ var model = {
                     },
                     function (singleData, callback) {
                         if (singleData.error) {
-                            callback(singleData, null);
+                            callback(null, singleData);
                         } else {
                             if (_.isEmpty(singleData["TEAMID 1"])) {
                                 callback(null, singleData);
@@ -762,7 +761,7 @@ var model = {
                     },
                     function (singleData, callback) {
                         if (singleData.err) {
-                            callback(singleData, null);
+                            callback(null, singleData);
                         } else {
                             if (_.isEmpty(singleData["TEAMID 2"])) {
                                 console.log("inside sfa");
@@ -787,7 +786,7 @@ var model = {
                     },
                     function (singleData, callback) {
                         if (singleData.error) {
-                            callback(null, singleData.error);
+                            callback(null, singleData);
                         } else {
                             var paramData = {};
                             paramData.opponentsTeam = [];
