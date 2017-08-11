@@ -15,6 +15,26 @@ var controller = {
             });
         }
     },
+    uploadTest: function (req, res) {
+        res.callback(null, {
+            total: 5,
+            value: [
+                "Chintan",
+                "Chirag",
+                "ABC",
+                {
+                    name: "Chintan",
+                    error: "Some Error Occured"
+                },
+                {
+                    name: "Chirag",
+                    error: "Some Other Error Occured"
+                }
+            ]
+
+        });
+    }
+
 
 };
 module.exports = _.assign(module.exports, controller);
