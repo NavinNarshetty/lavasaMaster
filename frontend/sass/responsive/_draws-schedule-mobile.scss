@@ -1,0 +1,189 @@
+@media screen and (max-width: 1200px) {
+  // *********KNOCKOUT SINGLES *********
+  .knockout-cardholder {
+    min-height: 195px;
+  }
+  .knockout-cardholder-round2 {
+    min-height: 420px;
+  }
+  .knockout-cardholder-round3 {
+    min-height: 840px;
+  } // *********KNOCKOUT SINGLES END*********
+  // **********KNOCKOUT DOUBLES ************
+  .knockout-doubles-cardholder {
+    min-height: 360px;
+  }
+  .knockout-doubles-cardholder-round2 {
+    min-height: 720px;
+  }
+  .knockout-doubles-cardholder-round3 {
+    min-height: 1440px;
+  } // **********KNOCKOUT DOUBLES END ************
+  // CHAMPIONSHIP SCHEDULE
+  .chamionshipschedule-page {
+    padding: 0;
+  } // CHAMPIONSHIP SCHEDULE END
+}
+
+@media screen and (max-width: 991px) {
+  // KNOCKOUT DOUBLES
+  .knockout-doubles-round {
+    margin-top: 100px;
+  } // KNOCKOOUT DOUBLES END
+  // KNOCKOUT SINGLES
+  .knockout-sportname {
+    margin-top: 120px;
+  } // KNOKOUT SINGLES END
+  // HEATS
+  .heat-rounds {
+    margin-top: 105px;
+  } // HEATS END
+  // TIME_TRIAL
+  .time-trial-round {
+    margin-top: 105px;
+  } // TIME_TRIAL END
+  // QUALIFYING + FINAL
+  .qualifying-final-round {
+    margin-top: 105px;
+  } // QUALIFYING + FINAL END
+  // LEAGUE + KNOCKOUT
+  .league-knockout-round {
+    margin-top: 92px;
+  } // LEAGUE + KNOCKOUT END
+  // QUALIFYING + KNOCKOUT
+  .qualifying-knockout-round {
+    margin-top: 92px;
+  } // QUALIFYING + KNOCKOUT END
+  // CHAMPIONSHIP_SCHEDULE
+  .championsip-draws {
+    margin-top: 100px;
+  }
+  .championship-schedule-tablefooter {
+    padding-left: 0;
+  } // CHAMPIONSHIP_SCHEDULE END
+}
+
+@media screen and (max-width: 767px) {
+  // KNOCKOUT DOUBLES
+  .knockout-doubles-round {
+    margin-top: 30px;
+  }
+  .knockout-swiper-holder .swiper-button-next {
+    right: 15px;
+  }
+  .knockout-swiper-holder .swiper-button-prev {
+    left: 15px;
+  }
+  .knockout-doubles-cardholder {
+    min-height: 280px;
+  }
+  .knockout-doubles-cardholder-round2 {
+    min-height: 560px;
+  }
+  .knockout-doubles-cardholder-round3 {
+    min-height: 1120px;
+  } // KNOCOUT DOUBLES END
+  // KNOCKOUT SINGLES
+  .knockout-sportname {
+    margin-top: 40px;
+  }
+  .knockout-cardholder {
+    min-height: 175px;
+  }
+  .knockout-cardholder-round2 {
+    min-height: 380px;
+  }
+  .knockout-cardholder-round3 {
+    min-height: 760px;
+  } // KNOCKOUT SINGLES END
+  // HEATS
+  .heat-rounds {
+    margin-top: 25px;
+  } // HEATS END
+  .time-trial-round {
+    margin-top: 25px;
+  } // TIME_TRIAL END
+  // QUALIFYING + FINAL
+  .qualifying-final-round {
+    margin-top: 0px;
+  } // QUALIFYING + FINAL END
+  // LEAUGE + KNOCKOUT
+  .league-knockout-round {
+    margin-top: 10px;
+  } // LEAUGE + KNOCKOUT END
+  // QUALIFYING + KNOCKOUT
+  .qualifying-knockout-round {
+    margin-top: 10px;
+  } // QUALIFYING + KNOCKOUT END
+  // CHAMPIONSHIP_SCHEDULE
+  .championsip-draws {
+    margin-top: 10px;
+  } // CHAMPIONSHIP_SCHEDULE END
+}
+
+@media screen and (max-width: 480px) {
+  // KNOCKOUT DOUBLES PAGE
+  .knockout-doubles-cardholder {
+    min-height: 280px;
+  }
+  .knockout-doubles-cardholder-round2 {
+    min-height: 560px;
+  }
+  .knockout-doubles-cardholder-round3 {
+    min-height: 1120px;
+  }
+  .knockout-swiper-holder .swiper-button-next {
+    right: 15px;
+  }
+  .knockout-swiper-holder .swiper-button-prev {
+    left: 15px;
+  } // END KNOCKOUT DOUBLES PAGE
+  // HEATS
+  .heat-sportname {
+    h3 {
+      font-size: 21px;
+    }
+  } // HEATS END
+  // TIME_TRIAL
+  .time-trial-sportname {
+    h3 {
+      font-size: 21px;
+    }
+  } // TIME_TRIAL END
+  // QUALIFYING + FINAL
+  .qf-final-sportname {
+    h3 {
+      font-size: 21px;
+    }
+  } // QUALIFYING + FINAL END
+  // LEAUGE + KNOCKOUT
+  .league-knockout-sportname {
+    h3 {
+      font-size: 21px;
+    }
+    .draws-downloadpdf {
+      font-size: 12px;
+    }
+  } // LEAUGE + KNOCKOUT END
+  // QUALIFYNG + KNOCKOUT
+  .qf-knockout-sportname {
+    h3 {
+      font-size: 21px;
+    }
+  }
+  .draws-downloadpdf {
+    font-size: 12px;
+  } // QUALIFYNG + KNOCKOUT END
+  // CHAMPIONSHIP SCHEDULE
+  .championshipdraw-card-form {
+    padding: 20px;
+  }
+  .championship-drawstitle {
+    h3 {
+      font-size: 21px;
+    }
+    p {
+      font-size: 12px;
+    }
+  } // CHAMPIONSHIP SCHEDULE END
+}

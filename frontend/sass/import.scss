@@ -14,7 +14,7 @@
  @import "../../bower_components/angular-toastr/dist/angular-toastr.css";
  @import "../../bower_components/angular-promise-buttons/src/styles/style.scss";
  @import "../../bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
- @import "../../bower_components/angular-ui-select/dist/select.min.css";
+ @import "../../bower_components/angular-ui-select/dist/select.min.css"; //  @import "../../bower_components/swiper/dist/css/swiper.min.css";
  /****** Please Import Libraries Above This!!!!!! ******/
 
  @import "main";
@@ -27,3 +27,4 @@
  @import "responsive/md";
  @import "responsive/sm";
  @import "responsive/xs";
+ @import "responsive/_draws-schedule-mobile"

@@ -370,7 +370,7 @@ myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, Navigat
 
 //Confirm-athlete-swimming
 
-myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, NavigationService, loginService, $timeout, $state, selectService, toastr, $stateParams, $filter, configService) {
+myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, NavigationService, loginService, $timeout, $state, selectService, toastr, $stateParams, $filter, configService, errorService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
     $scope.template = TemplateService.getHTML("content/confirmathleteswim.html");

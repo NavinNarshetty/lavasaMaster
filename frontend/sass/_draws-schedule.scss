@@ -90,6 +90,10 @@ $sport-table-grey:#efeeee !default;
   color: $sport-warning;
 }
 
+.sport-success {
+  color: $sport-success;
+}
+
 .sport-green-table {
   color: $sport-green-table;
 }
@@ -109,6 +113,18 @@ $sport-table-grey:#efeeee !default;
       color: $sport-primary;
     }
   }
+}
+
+.get-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  @include transform(translate(-50%,
+  -50%));
+}
+
+.relate {
+  position: relative;
 }
 
 .m-clear {
@@ -409,9 +425,6 @@ $sport-table-grey:#efeeee !default;
 .championship-drawstitle {
   padding: 20px 0;
   text-align: center;
-  h3 {
-    color: $sport-warning;
-  }
   p {
     font-size: 16px;
   }
@@ -653,4 +666,182 @@ $sport-table-grey:#efeeee !default;
   min-height: 100vh;
 }
 
+.knockout-swiper-holder {
+  margin: 20px 0px;
+  .knockout-viewmore {
+    width: 100%;
+    margin: 0px 5px;
+  }
+  .sport-btn-blue-outline {
+    width: 100%;
+  }
+  .swiper-button-next {
+    right: -25px;
+  }
+  .swiper-button-prev {
+    left: -25px;
+  }
+}
+
+.knockout-viewmore {
+  .sport-btn-blue-outline {
+    font-size: 18px;
+  }
+}
+
+// Custom SWiper
+.knockout-swiper-holder {
+  .swiper-button-prev,
+  .swiper-button-next,
+  .swiper-container-rtl .swiper-button-prev,
+  .swiper-container-rtl .swiper-button-next {
+    background-image: none;
+    width: auto;
+    height: auto;
+    padding: 5px;
+    margin: -15px;
+  }
+}
+
+// End Custom Swiper
+// KNOCKOUT CARD
+.knockout-schedulecardsholder {
+  margin: 20px 0;
+  border-top: 1px solid $sport-grey-year;
+}
+
+.knockout-cardholder {
+  min-height: 175px;
+  box-shadow: 0 0 10px $sport-grey-year; // border: 1px solid $sport-grey-year;
+  margin-bottom: 15px;
+  position: relative;
+  .knockout-card {
+    &:nth-child(2) {
+      border-bottom: none;
+    }
+  }
+}
+
+.knockout-card {
+  padding: 11px 5px;
+  border-bottom: 1px solid $sport-grey-year;
+  border-left: 10px solid transparent;
+}
+
+.knockout-winner-name {
+  color: $sport-primary;
+}
+
+.knockout-winnercard {
+  border-left: 10px solid $sport-success;
+  .knockout-winner-name {
+    color: $sport-success;
+  }
+}
+
+.knockout-cardimage {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.knockout-round-width {
+  width: 100%;
+}
+
+.knockout-card-content {
+  width: 100%;
+  padding: 5px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: #0a1a72;
+  color: #fff;
+}
+
+.knockout-cardplayername {
+  width: calc(100% - 55px);
+  @extend .d-opensans-regular;
+}
+
+.knockout-cardholder-round2 {
+  min-height: 380px;
+}
+
+.knockout-cardholder-round3 {
+  min-height: 760px;
+}
+
+// END KNOCKOUT CARD
+// WINNER CARD
+.knockout-winnercardholder {
+  box-shadow: 0 0 10px $sport-grey-year; // border: 1px solid $sport-grey-year;
+  padding: 5px;
+  margin: 5px 0px;
+}
+
+.knockout-winnercardname {
+  width: calc(100% - 35px);
+  vertical-align: middle;
+}
+
+.knockout-winnercardimgage {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.knockout-winnercardplayername {
+  width: calc(100% - 45px);
+  vertical-align: middle;
+}
+
+.knockout-winnermedalholder {
+  width: 30px;
+  vertical-align: middle;
+}
+
+// END WINNER CARD
 // **********************END KNOCKOUT **********************
+// **********************KNOCKOUT DOUBLES*******************
+.knockout-doubles-round {
+  min-height: 100vh;
+}
+
+.knockout-doubles-cardholder {
+  min-height: 280px;
+  box-shadow: 0 0 10px $sport-grey-year; // border: 1px solid $sport-grey-year;
+  margin-bottom: 15px;
+  position: relative;
+  .knockout-card {
+    &:nth-child(even) {
+      border-bottom: none;
+    }
+    &:nth-child(2) {
+      border-bottom: 3px solid $sport-primary;
+    }
+  }
+  .knockout-cardimage {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.knockout-doubles-cardholder-round2 {
+  min-height: 560px;
+}
+
+.knockout-doubles-cardholder-round3 {
+  min-height: 1120px;
+}
+
+// WINNER CARD
+.knockout-winnercardname-holder {
+  margin: 0 0 5px;
+}
+
+// WINNER CARD END
+// **********************KNOCKOUT DOUBLES END*******************

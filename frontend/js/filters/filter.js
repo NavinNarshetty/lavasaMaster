@@ -283,6 +283,18 @@ myApp.filter('myFilter', function () {
         };
     })
 
+    .filter('truncate', function () {
+        return function (value, limit) {
+            if (value) {
+                if (value.length < limit) {
+                    return value;
+                } else {
+                    return value.slice(0, limit) + "...";
+                }
+            }
+        }
+    })
+
     .filter('isValidSelection', function () {
         return function (age, event) {
             if (age != 'None') {

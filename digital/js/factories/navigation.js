@@ -1,4 +1,5 @@
-myApp.factory('NavigationService', function () {
+var uploadurl = adminurl + "upload/";
+myApp.factory('NavigationService', function ($http) {
     var navigation = [{
             name: "Home",
             classis: "active",
@@ -26,5 +27,15 @@ myApp.factory('NavigationService', function () {
         getNavigation: function () {
             return navigation;
         },
+        getOneMatch: function(formData, callback){
+          console.log(formData, "matchData");
+          $http({
+              url: adminurl + "match/getOne",
+              method: "POST",
+              data: formData
+          }).success(function (data) {
+              callback(data)
+          });
+        }
     };
 });

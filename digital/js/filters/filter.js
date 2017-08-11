@@ -31,3 +31,40 @@ myApp.filter('indianCurrency', function () {
     }
   }
 });
+
+// TRUNCATE
+myApp.filter('truncate', function () {
+    return function (value, limit) {
+        if (value) {
+            if (value.length < limit) {
+                return value;
+            } else {
+                return value.slice(0, limit) + "...";
+            }
+        }
+    }
+});
+// TRUNCATE END
+
+// SERVER IMAGE
+myApp.filter('serverimage', function () {
+    return function (image, width, height, style) {
+        var other = "";
+        if (width && width !== "") {
+            other += "&width=" + width;
+        }
+        if (height && height !== "") {
+            other += "&height=" + height;
+        }
+        if (style && style !== "") {
+            other += "&style=" + style;
+        }
+        if (image && image !== null) {
+            return adminurl + "upload/readFile?file=" + image + other;
+        } else {
+            return undefined;
+        }
+    };
+})
+
+// SERVER IMAGE  END

@@ -17,7 +17,8 @@ var myApp = angular.module('myApp', [
     'toastr',
     'infinite-scroll',
     'angularPromiseButtons',
-    'ui.swiper'
+    'ui.swiper',
+
 ]);
 
 // Define all the routes below
@@ -314,6 +315,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/knockout",
             templateUrl: tempateURL,
             controller: 'KnockoutCtrl'
+        })
+        .state('knockout-doubles', {
+            url: "/knockout-doubles",
+            templateUrl: tempateURL,
+            controller: 'KnockoutDoublesCtrl'
         });
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {

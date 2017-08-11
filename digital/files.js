@@ -6,6 +6,7 @@ module.exports = [
   'bower_components/fancyBox/source/jquery.fancybox.js',
   'bower_components/smart-app-banner/smart-app-banner.js',
   "bower_components/moment/min/moment.min.js",
+  "bower_components/swiper/dist/js/swiper.jquery.js",
 
 
   //Angular Libs
@@ -17,6 +18,7 @@ module.exports = [
   'bower_components/angular-ui-router/release/angular-ui-router.min.js',
   'bower_components/angular-flexslider/angular-flexslider.js',
   'bower_components/angular-translate/angular-translate.js',
+  "bower_components/angularjs-imageupload-directive/public/javascripts/imageupload.js",
   'bower_components/lodash/lodash.js',
   'bower_components/angulartics/dist/angulartics.min.js',
   // 'bower_components/angulartics-google-analytics/dist/angulartics-ga.min.js',
@@ -51,4 +53,5 @@ module.exports = [
   'digital/js/controllers/header-controller.js',
   'digital/js/controllers/language-controller.js',
   'digital/js/controllers/matchstart-controller.js',
+  'digital/js/controllers/combatscore-controller.js',
 ];
