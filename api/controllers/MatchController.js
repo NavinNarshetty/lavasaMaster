@@ -50,13 +50,13 @@ var controller = {
     },
 
     uploadExcelMatch: function (req, res) {
-        if (req.body) {
+        if (req.body.resultType && req.body.playerType && req.body.matchId || req.body.thirdPlace || req.body.range) {
             Match.uploadExcelMatch(req.body, res.callback);
         } else {
-            res.json({
-                "data": "Body not Found",
-                "value": false
-            })
+            var data = [{
+                error: "All Fields Required !"
+            }];
+            res.callback(null, data);
         }
     },
 
@@ -83,8 +83,9 @@ var controller = {
     },
 
     generateExcel: function (req, res) {
-        if (req.body) {
-            Match.generateExcel(req.body, res.callback);
+        console.log("req", req.body);
+        if (req.body.resultType == "knockout" && req.body.playerType == "individual") {
+            Match.generateExcelKnockoutIndividual(req.body, res.callback);
         } else {
             res.json({
                 "data": "Body not Found",

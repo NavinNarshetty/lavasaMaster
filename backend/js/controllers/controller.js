@@ -3911,13 +3911,18 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.view = "views/excelImportView/" + $stateParams.view + ".html";
         // $scope.referenceFile = adminurl + "../importFormat/" + $stateParams.referenceFile + ".xlsx";
         $scope.form = {};
-
-
         $scope.url = $stateParams.controller + "/" + $stateParams.funcName;
 
+        $scope.generateExcel = function (data) {
+            $scope.qwerty = data;
+            console.log("data", data);
+            $scope.url = "match/generateExcel";
+            NavigationService.generateExcelWithData($scope.url, $scope.qwerty, function (data) {
+                window.location.href = adminurl + $scope.url;
+            });
+        }
 
         $scope.excelUploaded = function () {
-            // console.log("Excel is uploaded with name " + $scope.form.file);
             NavigationService.uploadExcel($scope.url, $scope.form, function (data) {
                 $scope.data = data.data;
             });
