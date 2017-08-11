@@ -1011,8 +1011,15 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
             size: 'lg'
         });
     };
-    $scope.termcondition = function (size) {
-
+    $scope.termcondition = function (type, sfaCity, year) {
+        $scope.type = type;
+        $scope.sfaCity = sfaCity;
+        $scope.year = year;
+        if (type == 'school') {
+            $scope.isCollege = false;
+        } else {
+            $scope.isCollege = true;
+        }
         $scope.termconditionModal = $uibModal.open({
             animation: true,
             templateUrl: 'views/modal/terms.html',
@@ -1540,8 +1547,15 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
         });
     };
 
-    $scope.termcondition = function (size) {
-
+    $scope.termcondition = function (type, sfaCity, year) {
+        $scope.type = type;
+        $scope.sfaCity = sfaCity;
+        $scope.year = year;
+        if (type == 'school') {
+            $scope.isCollege = false;
+        } else {
+            $scope.isCollege = true;
+        }
         $scope.termconditionModal = $uibModal.open({
             animation: true,
             templateUrl: 'views/modal/terms-school.html',

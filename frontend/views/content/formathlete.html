@@ -15,8 +15,9 @@
                         reports.
                         <br> The annual Athlete registration fees for SFA {{sfaCity}} {{year}} is Rs. <span ng-if="isCollege == false">200 <br>In the event
                         that your {{type}} does not register for SFA {{sfaCity}} {{year}} by the 30th of September an additional fees
-                        of Rs. 400/- (Inclusive of all applicable taxes) will be levied.This discounted fees for registered
-                        {{type}} athletes is a step to encourage {{type}}s to support their athletes and sports.</span>
+                        of Rs. <span class="sfaCity == 'Hyderabad'">200</span><span class="sfaCity == 'Mumbai'">400</span>/-
+                        (Inclusive of all applicable taxes) will be levied.This discounted fees for registered {{type}} athletes
+                        is a step to encourage {{type}}s to support their athletes and sports.</span>
                         <span ng-if="isCollege == true">300</span> (Inclusive of all applicable taxes).
                         <br>
                         <a ng-click="athBenModal(type, sfaCity, year)"><strong>Click here</strong></a> to view registered
@@ -787,7 +788,7 @@
                         <div class="checkbox-custom">
                             <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                                 id="test5" />
-                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition()" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition(type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
                             <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
                         </div>
                         <div class="box2" ng-repeat="x in formData.parentDetails track by $index">
