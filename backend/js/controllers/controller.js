@@ -374,7 +374,368 @@ myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, Navigatio
     //end cancel
 
 
-})
+});
+
+//FaqCtrl
+
+myApp.controller('FaqCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tablefaq");
+    $scope.menutitle = NavigationService.makeactive("Faq");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    // $scope.selectedStatus = 'All';
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
+    $scope.viewTable = function () {
+        $scope.url = "Faq/search";
+        $scope.formData.page = $scope.formData.page++;
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
+
+        });
+
+    }
+    $scope.viewTable();
+    $scope.confDel = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'views/modal/delete.html',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+
+        });
+    };
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    };
+    $scope.delete = function (data) {
+        console.log(data);
+        $scope.url = "Faq/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            console.log("data.value", data);
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'Rules Meaasge');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something went wrong while Deleting', 'Rules Meaasge');
+            }
+
+        });
+    };
+
+});
+//DetailFaqCtrl
+myApp.controller('DetailFaqCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("faqdetail");
+    $scope.menutitle = NavigationService.makeactive("Deatil Faq");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.deleteVal = "";
+
+    if ($stateParams.id !== '') {
+        //edit
+        $scope.title = 'Edit';
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = "Faq/getOne";
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                console.log(data.data, "data.data");
+                $scope.formData = data.data;
+            });
+
+        };
+        $scope.getOneOldSchoolById();
+        $scope.saveData = function (data) {
+            if (data) {
+                $scope.url = "Faq/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.data.nModified == '1') {
+                        toastr.success(" Updated Successfully", "Rules Message");
+                        $state.go('faq');
+
+                    }
+
+                });
+            } else {
+                toastr.error("invalid data", "Rules Message");
+            }
+        };
+        //edit
+    } else {
+        $scope.title = "Create";
+        $scope.saveData = function (data) {
+            if (data) {
+                console.log(data);
+                $scope.url = "Faq/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true) {
+                        toastr.success(" Saved Successfully", "Faq Message");
+                        $state.go('faq');
+                    }
+                });
+            } else {
+                toastr.error("invalid data", "Faq Message");
+            }
+        };
+    }
+    //cancel
+    $scope.onCancel = function (sendTo) {
+        $state.go(sendTo);
+    };
+    $scope.addCont = function (crdv, tableContent) {
+        console.log(tableContent, "tableContent");
+        switch (tableContent) {
+            case 'tableContent1':
+                if (!crdv.tableContent1) {
+                    crdv.tableContent1 = [{
+                        "agegroup": "",
+                        "date": ""
+                    }];
+                } else {
+                    crdv.tableContent1.push({
+                        "agegroup": "",
+                        "date": ""
+                    });
+                }
+
+                break;
+            case 'tableContent2':
+                if (!crdv.tableContent2) {
+                    crdv.tableContent2 = [{
+                        "agegroup": "",
+                        "date": ""
+                    }];
+                } else {
+                    crdv.tableContent2.push({
+                        "agegroup": "",
+                        "date": ""
+                    });
+                }
+
+                break;
+            case 'tableContent3':
+                if (!crdv.tableContent3) {
+                    crdv.tableContent3 = [{
+                        "agegroup": "",
+                        "date": ""
+                    }];
+                } else {
+                    crdv.tableContent3.push({
+                        "agegroup": "",
+                        "date": ""
+                    });
+                }
+
+                break;
+            case 'tableContent4':
+                if (!crdv.tableContent4) {
+                    crdv.tableContent4 = [{
+                        "agegroup": "",
+                        "date": ""
+                    }];
+                } else {
+                    crdv.tableContent4.push({
+                        "agegroup": "",
+                        "date": ""
+                    });
+                }
+
+                break;
+            case 'tableContent5':
+                if (!crdv.tableContent5) {
+                    crdv.tableContent5 = [{
+                        "agegroup": "",
+                        "date": ""
+                    }];
+                } else {
+                    crdv.tableContent5.push({
+                        "agegroup": "",
+                        "date": ""
+                    });
+                }
+
+                break;
+            case 'tableContent6':
+                if (!crdv.tableContent6) {
+                    crdv.tableContent6 = [{
+                        "agegroup": "",
+                        "date": ""
+                    }];
+                } else {
+                    crdv.tableContent6.push({
+                        "agegroup": "",
+                        "date": ""
+                    });
+                }
+
+                break;
+            case 'tableContent7':
+                if (!crdv.tableContent7) {
+                    crdv.tableContent7 = [{
+                        "agegroup": "",
+                        "date": ""
+                    }];
+                } else {
+                    crdv.tableContent7.push({
+                        "agegroup": "",
+                        "date": ""
+                    });
+                }
+
+                break;
+            case 'tableContent8':
+                if (!crdv.tableContent8) {
+                    crdv.tableContent8 = [{
+                        "agegroup": "",
+                        "date": ""
+                    }];
+                } else {
+                    crdv.tableContent8.push({
+                        "agegroup": "",
+                        "date": ""
+                    });
+                }
+
+                break;
+            case 'tableContent9':
+                if (!crdv.tableContent9) {
+                    crdv.tableContent9 = [{
+                        "agegroup": "",
+                        "date": ""
+                    }];
+                } else {
+                    crdv.tableContent9.push({
+                        "agegroup": "",
+                        "date": ""
+                    });
+                }
+
+                break;
+            case 'tableContent10':
+                if (!crdv.tableContent10) {
+                    crdv.tableContent10 = [{
+                        "agegroup": "",
+                        "date": ""
+                    }];
+                } else {
+                    crdv.tableContent10.push({
+                        "agegroup": "",
+                        "date": ""
+                    });
+                }
+
+                break;
+
+        }
+
+    };
+
+    $scope.confDelete = function (val) {
+        if ($scope.deleteVal === 1) {
+            $scope.formData.tableContent1.splice($.jStorage.get("deleteSpecificIndex"), 1);
+        } else if ($scope.deleteVal === 2) {
+            $scope.formData.tableContent2.splice($.jStorage.get("deleteSpecificIndex"), 1);
+        } else if ($scope.deleteVal === 3) {
+            $scope.formData.tableContent3.splice($.jStorage.get("deleteSpecificIndex"), 1);
+        } else if ($scope.deleteVal === 4) {
+            $scope.formData.tableContent4.splice($.jStorage.get("deleteSpecificIndex"), 1);
+        } else if ($scope.deleteVal === 5) {
+            $scope.formData.tableContent5.splice($.jStorage.get("deleteSpecificIndex"), 1);
+        } else if ($scope.deleteVal === 6) {
+            $scope.formData.tableContent6.splice($.jStorage.get("deleteSpecificIndex"), 1);
+        } else if ($scope.deleteVal === 7) {
+            $scope.formData.tableContent7.splice($.jStorage.get("deleteSpecificIndex"), 1);
+        } else if ($scope.deleteVal === 8) {
+            $scope.formData.tableContent8.splice($.jStorage.get("deleteSpecificIndex"), 1);
+        } else if ($scope.deleteVal === 9) {
+            $scope.formData.tableContent9.splice($.jStorage.get("deleteSpecificIndex"), 1);
+        } else if ($scope.deleteVal === 10) {
+            $scope.formData.tableContent10.splice($.jStorage.get("deleteSpecificIndex"), 1);
+        }
+    };
+
+    $scope.deleteFunc = function (id, value) {
+        if (value === 1) {
+            $scope.deleteVal = 1;
+            $.jStorage.set("deleteSpecificIndex", id);
+        } else if (value === 2) {
+            $scope.deleteVal = 2;
+            $.jStorage.set("deleteSpecificIndex", id);
+        } else if (value === 3) {
+            $scope.deleteVal = 3;
+            $.jStorage.set("deleteSpecificIndex", id);
+        } else if (value === 4) {
+            $scope.deleteVal = 4;
+            $.jStorage.set("deleteSpecificIndex", id);
+        } else if (value === 5) {
+            $scope.deleteVal = 5;
+            $.jStorage.set("deleteSpecificIndex", id);
+        } else if (value === 6) {
+            $scope.deleteVal = 6;
+            $.jStorage.set("deleteSpecificIndex", id);
+        } else if (value === 7) {
+            $scope.deleteVal = 7;
+            $.jStorage.set("deleteSpecificIndex", id);
+        } else if (value === 8) {
+            $scope.deleteVal = 8;
+            $.jStorage.set("deleteSpecificIndex", id);
+        } else if (value === 9) {
+            $scope.deleteVal = 9;
+            $.jStorage.set("deleteSpecificIndex", id);
+        } else if (value === 10) {
+            $scope.deleteVal = 10;
+            $.jStorage.set("deleteSpecificIndex", id);
+        }
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'views/modal/deleterule.html',
+            backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+
+        });
+    };
+
+
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    };
+    //end cancel
+
+
+});
 //First Category
 myApp.controller('FirstCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
     //registration filter view
@@ -3541,7 +3902,27 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         }
 
     })
+    .controller('ExcelUploadCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("excel-upload");
+        $scope.menutitle = NavigationService.makeactive("Excel Upload");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.view = "views/excelImportView/" + $stateParams.view + ".html";
+        // $scope.referenceFile = adminurl + "../importFormat/" + $stateParams.referenceFile + ".xlsx";
+        $scope.form = {};
 
+
+        $scope.url = $stateParams.controller + "/" + $stateParams.funcName;
+
+
+        $scope.excelUploaded = function () {
+            // console.log("Excel is uploaded with name " + $scope.form.file);
+            NavigationService.uploadExcel($scope.url, $scope.form, function (data) {
+                $scope.data = data.data;
+            });
+        };
+    })
     .controller('DetailRoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("detailround");

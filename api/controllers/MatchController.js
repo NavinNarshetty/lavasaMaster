@@ -82,6 +82,17 @@ var controller = {
         }
     },
 
+    generateExcel: function (req, res) {
+        if (req.body) {
+            Match.generateExcel(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
 
 
 };

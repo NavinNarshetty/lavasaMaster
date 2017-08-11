@@ -1,11 +1,11 @@
-myApp.service('configService', function ($http, TemplateService, $state, toastr, NavigationService, errorService) {
-    this.getDetail = function (callback) {
+myApp.service('configService', function($http, TemplateService, $state, toastr, NavigationService, errorService) {
+    this.getDetail = function(callback) {
         $http({
             url: adminUrl2 + 'ConfigProperty/getDetail',
             method: 'POST',
-        }).then(function (data) {
+        }).then(function(data) {
             var all = {};
-            errorService.errorCode(data, function (allData, callback) {
+            errorService.errorCode(data, function(allData, callback) {
                 if (!allData.message) {
                     if (allData.value === true) {
                         all.city = allData.data.city;
@@ -16,10 +16,12 @@ myApp.service('configService', function ($http, TemplateService, $state, toastr,
                         if (allData.data.type == 'school') {
                             all.isCollege = false;
                             all.type = allData.data.type;
+                            NavigationService.setIsColg(all.type);
                             // callback(allData.data);
                         } else {
                             all.isCollege = true;
                             all.type = allData.data.type;
+                            NavigationService.setIsColg(all.type);
                         }
                     }
                 } else {

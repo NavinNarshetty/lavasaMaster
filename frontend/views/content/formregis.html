@@ -67,10 +67,10 @@
                 </div>
                 <!--<div class="mar-left">-->
                 <div class="mar-left">
-                    <p class="para2 t-padd sf-list" ng-if="isCollege == false"><br>If you have not participated in SFA Championships before, your SFA ID will be generated<br> on successful
+                    <p class="para2 t-padd sf-list" ng-if="isCollege == false && sfaCity == 'Mumbai'"><br>If you have not participated in SFA Championships before, your SFA ID will be generated<br> on successful
                         completion of registration.</p>
                     <p class="para2 t-padd sf-list" ng-if="isCollege == true"><br>Your SFA ID will be generated on successful completion of registration.</p>
-                    <p class="para2 b-padd sf-list">Please Note: All fields marked with * are mandatory.</p>
+                    <p class="para2 b-padd sf-list"><br>Please Note: All fields marked with * are mandatory.</p>
                 </div>
                 <!--</div>-->
             </div>
@@ -520,7 +520,7 @@
                         Step 3: Select Sports
                     </div>
                 </div>
-                <div class=" box box-padd r para2 sf-list" ng-if="isCollege == false">
+                <div class=" box box-padd r para2 sf-list" ng-if="isCollege == false && sfaCity == 'Mumbai'">
                     <div class="d-padd d-paddd">
                         <div class="dis-inline">
                             <h4 class="blue fs-14">Team Sports</h4>
@@ -566,6 +566,99 @@
                                 <label for="Karate" ng-class="{basketball:Karate}">Karate</label></p>
                             <p> <input type="checkbox" id="Sport" ng-click="addCombatSports('Sport Mma')" />
                                 <label for="Sport" ng-class="{basketball:Sport}">Sport MMA</label></p>
+                            <p> <input type="checkbox" id="Taekwondo" ng-click="addCombatSports('Taekwondo')" />
+                                <label for="Taekwondo" ng-class="{basketball:Taekwondo}">Taekwondo</label></p>
+                        </div>
+                        <div class="dis-inline">
+                            <div>
+                                <h4 class="blue fs-14">Target Sports</h4>
+                                <p> <input type="checkbox" id="Archery" ng-click="addTargetSports('Archery')" />
+                                    <label for="Archery" ng-class="{basketball:Archery}">Archery</label></p>
+                                <p> <input type="checkbox" id="Shooting" ng-click="addTargetSports('Shooting')" />
+                                    <label for="Shooting" ng-class="{basketball:Shooting}">Shooting</label></p>
+                            </div>
+                            <div class="aquatics">
+                                <h4 class="blue fs-14">Aquatics</h4>
+                                <p> <input type="checkbox" id="Swimming" ng-click="addAquaticsSports('Swimming')" />
+                                    <label for="Swimming" ng-class="{basketball:Swimming}">Swimming</label></p>
+                                <p> <input type="checkbox" id="Water" ng-click="addAquaticsSports('Water Poloa')" />
+                                    <label for="Water" ng-class="{basketball:Water}">Water Polo</label></p>
+                            </div>
+                        </div>
+                        <div class="dis-inline">
+                            <h4 class="blue fs-14">Individual Sports</h4>
+                            <p> <input type="checkbox" id="Athletics" ng-click="addIndividualSports('Athletics')" />
+                                <label for="Athletics" ng-class="{basketball:Athletics}">Athletics</label></p>
+                            <p> <input type="checkbox" id="Carrom" ng-click="addIndividualSports('Carrom')" />
+                                <label for="Carrom" ng-class="{basketball:Carrom}">Carrom</label></p>
+                            <p> <input type="checkbox" id="Chess" ng-click="addIndividualSports('Chess')" />
+                                <label for="Chess" ng-class="{basketball:Chess}">Chess</label></p>
+                        </div>
+                        <div class="validate-col" ng-show="showTeamSports">Please select atleast one sports Type</div>
+                        <!--<p class="check-box">
+                            <label class="sf-list"><span ng-click="termcondition()"> I have carefully read and understood the terms and conditions of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</span></label>
+                            <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
+                                id="test5" />
+                            <label for="test5" class="padding0"></label>
+                            <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
+                        </p>-->
+                        <div class="checkbox-custom">
+                            <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
+                                id="test5" />
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition()" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
+                        </div>
+                        <!--<p> <label class="sel-spo">Selected Sports:</label>Basketball, Football, Hockey</p>-->
+                        <p class="regest-fee">A registration fee of <span ng-if="isCollege == false">12,000</span>
+                            <span ng-if="isCollege == true">2,500</span>/- (inclusive of all applicable taxes) will be payable.<br>
+                            <label class="blue fs-14"> #Kindly Note:</label> This is an annual fee that enables your {{type}}
+                            to send any number of athletes across all the above mentioned sports. This fee structure has
+                            been devised to encourage {{type}}s and athletes to participate in multiple sports and to maintain
+                            a high quality of competition.</p>
+                    </div>
+                </div>
+                <div class=" box box-padd r para2 sf-list" ng-if="isCollege == false && sfaCity == 'Hyderabad'">
+                    <div class="d-padd d-paddd">
+                        <div class="dis-inline">
+                            <h4 class="blue fs-14">Team Sports</h4>
+                            <!--<p> <input type="checkbox">Football</p>-->
+                            <p> <input type="checkbox" id="Basketball" ng-click="addTeamSports('Basketball')" />
+                                <label for="Basketball" ng-class="{basketball:Basketball}">Basketball</label></p>
+                            <p> <input type="checkbox" id="Handball" ng-click="addTeamSports('Handball')" />
+                                <label for="Handball" ng-class="{basketball:Handball}">Handball</label></p>
+                            <p> <input type="checkbox" id="Hockey" ng-click="addTeamSports('Hockey')" />
+                                <label for="Hockey" ng-class="{basketball:Hockey}">Hockey</label></p>
+                            <p> <input type="checkbox" id="Kabaddi" ng-click="addTeamSports('Kabaddi')" />
+                                <label for="Kabaddi" ng-class="{basketball:Kabaddi}">Kabaddi</label></p>
+                            <p> <input type="checkbox" id="Kho" ng-click="addTeamSports('Kho Kho')" />
+                                <label for="Kho" ng-class="{basketball:Kho}">Kho Kho</label></p>
+                            <p> <input type="checkbox" id="Throwball" ng-click="addTeamSports('Throwball')" />
+                                <label for="Throwball" ng-class="{basketball:Throwball}">Throwball</label></p>
+                            <p> <input type="checkbox" id="Volleyball" ng-click="addTeamSports('Volleyball')" />
+                                <label for="Volleyball" ng-class="{basketball:Volleyball}">Volleyball</label></p>
+                            <p> <input type="checkbox" id="Football" ng-click="addTeamSports('Football')" />
+                                <label for="Football" ng-class="{basketball:Football}">Football</label></p>
+                        </div>
+                        <div class="dis-inline">
+                            <h4 class="blue fs-14">Racquet Sports
+                            </h4>
+                            <p> <input type="checkbox" id="Badminton" ng-click="addRacquetSports('Badminton')" />
+                                <label for="Badminton" ng-class="{basketball:Badminton}">Badminton</label></p>
+                            <p> <input type="checkbox" id="Table" ng-click="addRacquetSports('Table Tennis')" />
+                                <label for="Table" ng-class="{basketball:Table}">Table Tennis</label></p>
+                            <p> <input type="checkbox" id="Tennis" ng-click="addRacquetSports('Tennis')" />
+                                <label for="Tennis" ng-class="{basketball:Tennis}">Tennis</label></p>
+                        </div>
+                        <div class="dis-inline">
+                            <h4 class="blue fs-14">Combat Sports</h4>
+                            <p> <input type="checkbox" id="Boxing" ng-click="addCombatSports('Boxing')" />
+                                <label for="Boxing" ng-class="{basketball:Boxing}">Boxing</label></p>
+                            <p> <input type="checkbox" id="Fencing" ng-click="addCombatSports('Fencing')" />
+                                <label for="Fencing" ng-class="{basketball:Fencing}">Fencing</label></p>
+                            <p> <input type="checkbox" id="Judo" ng-click="addCombatSports('Judo')" />
+                                <label for="Judo" ng-class="{basketball:Judo}">Judo</label></p>
+                            <p> <input type="checkbox" id="Karate" ng-click="addCombatSports('Karate')" />
+                                <label for="Karate" ng-class="{basketball:Karate}">Karate</label></p>
                             <p> <input type="checkbox" id="Taekwondo" ng-click="addCombatSports('Taekwondo')" />
                                 <label for="Taekwondo" ng-class="{basketball:Taekwondo}">Taekwondo</label></p>
                         </div>

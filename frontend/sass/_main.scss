@@ -6750,12 +6750,15 @@ h1.forgot-space {
 }
 
 .sp-head-tab {
-    p {
+    .highlight {
         color: #091a71;
-        font-size: 16.67px;
+    }
+    p {
+        // color: #091a71;
+        font-size: 15px;
         font-family: Titillium Web Regular;
-        font-style: italic;
-        margin: 0;
+        // font-style: italic;
+        margin: 0 0 10px;
     }
     h3 {
         color: #091a71;

@@ -1,92 +1,107 @@
 <div class="container">
-  <div class="row">
-    <div class="col-md-12 col-sm-12 col-xs-12 mb25">
-      <h1 class="text-center school-sports spt-m">Sports Registration Form</h1>
-    </div>
-  </div>
-  <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
-    <div class="pull-right mb25 sp-tab-right ">
-      <div class="">
-        <div class="display-inline">
-          <p class="mb0">SFA ID:</p>
-          <p class="mb0" ng-if="detail.userType === 'school'">{{type | firstcapitalize}} Name:</p>
-          <p class="mb0" ng-if="detail.userType === 'athlete'">Athlete Name:</p>
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12 mb25">
+            <h1 class="text-center school-sports spt-m">Sports Registration Form</h1>
         </div>
-        <div class="display-inline">
-          <p class="mb0">&nbsp;{{detail.sfaIdObj}}</p>
-          <p class="mb0" ng-if="detail.userType === 'school'">&nbsp;{{detail.schoolName}}</p>
-          <p class="mb0" ng-if="detail.userType === 'athlete'">&nbsp;{{detail.firstName}}&nbsp&nbsp{{detail.surname}}</p>
+    </div>
+    <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+        <div class="pull-right mb25 sp-tab-right ">
+            <div class="">
+                <div class="display-inline">
+                    <p class="mb0">SFA ID:</p>
+                    <p class="mb0" ng-if="detail.userType === 'school'">{{type | firstcapitalize}} Name:</p>
+                    <p class="mb0" ng-if="detail.userType === 'athlete'">Athlete Name:</p>
+                </div>
+                <div class="display-inline">
+                    <p class="mb0">&nbsp;{{detail.sfaIdObj}}</p>
+                    <p class="mb0" ng-if="detail.userType === 'school'">&nbsp;{{detail.schoolName}}</p>
+                    <p class="mb0" ng-if="detail.userType === 'athlete'">&nbsp;{{detail.firstName}}&nbsp&nbsp{{detail.surname}}</p>
+                </div>
+            </div>
+            <ul class="list-inline">
+                <li ui-sref="change-password"><a>Change Password</a></li>
+                <li ng-click="logoutCandidate();" ng-if="detail.isLoggedIn"><a>Logout</a></li>
+            </ul>
         </div>
-      </div>
-      <ul class="list-inline">
-        <li ui-sref="change-password"><a>Change Password</a></li>
-        <li ng-click="logoutCandidate();" ng-if="detail.isLoggedIn"><a>Logout</a></li>
-      </ul>
     </div>
-  </div>
-  <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 sp-main-tab">
-    <div class="text-center">
-      <div class="display-inline mob-mr mob-mr" style="margin-right: 50px" ng-click="sptabchange('1');" ng-class="{'blue-active':sportsschool==true}">
-        <div class="step4">Sports</div>
-      </div>
-      <div class="display-inline" ng-click="sptabchange('2')" ng-class="{'blue-active':sportsregistered==true}">
-        <div class="step4">Registered Sports</div>
-      </div>
-    </div>
-    <div class="box-padd mb-50" ng-show="sportsschool">
-      <div class="sp-head-tab" ng-if="allSportsListSubCatArr.length>0">
-        <!-- <p>Athletes need to register themselves via to be available</p>
-        <p>for selection in a team. Kindly ensure all the athletes are registered to form your team.</p> -->
-        <p>Please note: Only athletes which have registered for SFA Mumbai 2017 will be available in the selection box for all
-          sports.
-        </p>
-      </div>
-      <div class="text-center sp-head-tab" ng-if="allSportsListSubCatArr.length == 0">
-        <h3>No Sports List Found For Selection.
-        </h3>
-      </div>
-      <div class="text-center sp-head-tab" ng-if="allSportsListSubCatArr.length == undefined">
-        <h3>Loading...</h3>
-      </div>
-      <div class="sp-row-tab" ng-repeat="data in allSportsListSubCatArr track by $index" ng-if="allSportsListSubCatArr.length>0">
-        <h5>{{data.sportName}}</h5>
-        <ul class="list-inline">
-          <li ng-repeat="value in data.tempArr | orderBy: 'name'  track by $index">
-            <button class="btn btn-default " ng-if="value.name != 'Tennis Mixed Doubles'" type="button" ng-click="redirectTo(value);setTeamIdNull();">{{value.name}}</button>
-            <!-- <button class="btn btn-default " ng-if="value.name == 'Tennis Mixed Doubles' && !detail.mixAccess" type="button" ng-click="messageForTennisMixedDoubles()">{{value.name}}</button> -->
-            <!-- && detail.mixAccess -->
-            <button class="btn btn-default " ng-if="value.name == 'Tennis Mixed Doubles'" type="button" ui-sref="sports-rules({id:value._id})"
-              ng-click="setTeamIdNull();">{{value.name}}</button>
-          </li>
+    <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12 sp-main-tab">
+        <div class="text-center">
+            <div class="display-inline mob-mr mob-mr" style="margin-right: 50px" ng-click="sptabchange('1');" ng-class="{'blue-active':sportsschool==true}">
+                <div class="step4">Sports</div>
+            </div>
+            <div class="display-inline" ng-click="sptabchange('2')" ng-class="{'blue-active':sportsregistered==true}">
+                <div class="step4">Registered Sports</div>
+            </div>
+        </div>
+        <div class="box-padd mb-50" ng-show="sportsschool">
+            <div class="sp-head-tab">
+                <p>
+                    Kindly Note, the following sports will not be available for selection if you log in as an athlete:</p>
+                <p class="highlight"> Basketball, Football, Handball, Hockey ,Kabaddi, Kho Kho, Throwball, Volleyball, Water Polo.</strong>
+                </p>
 
-        </ul>
-      </div>
-    </div>
-    <!-- REGISTERED SPORTS TAB -->
-    <div class="box-padd mb-50" ng-show="sportsregistered">
-      <div class="registeredsport-tab" ng-if="registerSport.length > 0">
-        <ul class="list-unstyled registeredsport-list">
-          <li class="registersport-lists" ng-repeat="sport in registerSport | orderBy:'_id.sportName' track by $index">
-            <div class="list-sportregistered">
-              <div class="clearfix sportregistered-title para2">
-                <!--<div class="pull-right" ng-if="sport._id.type=='team'">
+
+                <p> This DOES NOT mean that you cannot participate in these sports. It is your School who will make the team using the login ID and Password provided to them upon School Registration.</p>
+                <p> In the event that a team from an unregistered school would like participate in any of the above mentioned sports they will have to email us at <a href="mailto:info@sfanow.in" ng-if="sfaCity === 'Mumbai'">info@sfanow.in</a> <a href="mailto:info.hyd@sfanow.in"
+                        ng-if="sfaCity === 'Hyderabad'">info.hyd@sfanow.in</a> with the following information:</p>
+                <p class="highlight"> Sport , Gender , Event Category , Names of all team members (Should be from the same school) , SFA ID’s of all team members.</strong>
+                </p>
+                <p> We will respond to you within a maximum of 5 working days of receiving your email.
+                </p>
+
+            </div>
+
+            <div class="sp-head-tab" ng-if="allSportsListSubCatArr.length>0">
+                <!-- <p>Athletes need to register themselves via to be available</p>
+        <p>for selection in a team. Kindly ensure all the athletes are registered to form your team.</p> -->
+                <p>Please note: Only athletes which have registered for SFA {{sfaCity}} 2017 will be available in the selection box for all sports.
+                </p>
+            </div>
+            <div class="text-center sp-head-tab" ng-if="allSportsListSubCatArr.length == 0">
+                <h3>No Sports List Found For Selection.
+                </h3>
+            </div>
+            <div class="text-center sp-head-tab" ng-if="allSportsListSubCatArr.length == undefined">
+                <h3>Loading...</h3>
+            </div>
+            <div class="sp-row-tab" ng-repeat="data in allSportsListSubCatArr track by $index" ng-if="allSportsListSubCatArr.length>0 && !data.hideTeamSport">
+                <h5>{{data.sportName}}</h5>
+                <ul class="list-inline">
+                    <li ng-repeat="value in data.tempArr | orderBy: 'name'  track by $index" ng-if="!value.isVisibleSport">
+                        <button class="btn btn-default " ng-if="value.name != 'Tennis Mixed Doubles'" type="button" ng-click="redirectTo(value);setTeamIdNull();">{{value.name}}</button>
+                        <!-- <button class="btn btn-default " ng-if="value.name == 'Tennis Mixed Doubles' && !detail.mixAccess" type="button" ng-click="messageForTennisMixedDoubles()">{{value.name}}</button> -->
+                        <!-- && detail.mixAccess -->
+                        <button class="btn btn-default " ng-if="value.name == 'Tennis Mixed Doubles'" type="button" ui-sref="sports-rules({id:value._id})" ng-click="setTeamIdNull();">{{value.name}}</button>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+        <!-- REGISTERED SPORTS TAB -->
+        <div class="box-padd mb-50" ng-show="sportsregistered">
+            <div class="registeredsport-tab" ng-if="registerSport.length > 0">
+                <ul class="list-unstyled registeredsport-list">
+                    <li class="registersport-lists" ng-repeat="sport in registerSport | orderBy:'_id.sportName' track by $index">
+                        <div class="list-sportregistered">
+                            <div class="clearfix sportregistered-title para2">
+                                <!--<div class="pull-right" ng-if="sport._id.type=='team'">
                   <p>{{sport._id.teamId}}</p>
                 </div>-->
-                <p>{{sport._id.sportName}}</p>
-              </div>
-              <a ui-sref="sport-individualdetail({id:sport._id.sportsListSubCategory})" ng-if="sport._id.type!='Team'" class="sportregistered-viewbtn para2">View Details</a>
-              <a ui-sref="sport-teamdetail({id:sport._id.sportsListSubCategory})" ng-if="sport._id.type=='Team'" class="sportregistered-viewbtn para2">View Details</a>
+                                <p>{{sport._id.sportName}}</p>
+                            </div>
+                            <a ui-sref="sport-individualdetail({id:sport._id.sportsListSubCategory})" ng-if="sport._id.type!='Team'" class="sportregistered-viewbtn para2">View Details</a>
+                            <a ui-sref="sport-teamdetail({id:sport._id.sportsListSubCategory})" ng-if="sport._id.type=='Team'" class="sportregistered-viewbtn para2">View Details</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-          </li>
-        </ul>
-      </div>
-      <div class="text-center sp-head-tab" ng-if="registerSport.length == 0">
-        <h3>No Registered Sports Found.</h3>
-      </div>
-      <div class="text-center sp-head-tab" ng-if="registerSport.length == undefined">
-        <h3>Loading...</h3>
-      </div>
+            <div class="text-center sp-head-tab" ng-if="registerSport.length == 0">
+                <h3>No Registered Sports Found.</h3>
+            </div>
+            <div class="text-center sp-head-tab" ng-if="registerSport.length == undefined">
+                <h3>Loading...</h3>
+            </div>
+        </div>
+        <!-- REGISTERED SPORTS TAB END -->
     </div>
-    <!-- REGISTERED SPORTS TAB END -->
-  </div>
 </div>

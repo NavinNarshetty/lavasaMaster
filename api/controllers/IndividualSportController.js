@@ -2,16 +2,15 @@ module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
 
     getAthletePerSchool: function (req, res) {
-
         if (req.body.schoolToken) {
             console.log("inside");
             Registration.findOne({
                 accessToken: req.body.schoolToken
             }).exec(function (err, found) {
                 if (err) {
-                    callback(err, null);
+                    res.callback(err, null);
                 } else if (_.isEmpty(found)) {
-                    callback("Incorrect Login Details", null);
+                    res.callback("Incorrect Login Details", null);
                 } else {
                     console.log("inside");
                     IndividualSport.getAthletePerSchool(req.body, res.callback);

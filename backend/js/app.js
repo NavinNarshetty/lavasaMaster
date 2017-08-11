@@ -265,54 +265,69 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
 
         .state('excel-upload', {
-            url: "/excel-upload/:model",
+            url: "/excel-upload/:controller/:funcName/:view",
             templateUrl: "views/template.html",
             controller: 'ExcelUploadCtrl'
         })
-
+        //rounds
         .state('rounds', {
             url: "/rounds",
             templateUrl: "views/template.html",
             controller: 'RoundCtrl'
         })
-
+        //detailrounds
         .state('detailrounds', {
             url: "/detailrounds/:id",
             templateUrl: "views/template.html",
             controller: 'DetailRoundCtrl'
         })
-
+        //matches
         .state('matches', {
             url: "/matches",
             templateUrl: "views/template.html",
             controller: 'MatchesCtrl'
         })
-
+        //detailmatches
         .state('detailmatches', {
             url: "/detailmatches",
             templateUrl: "views/template.html",
             controller: 'DetailMatchesCtrl'
         })
-
+        //medals
         .state('medals', {
             url: "/medals",
             templateUrl: "views/template.html",
             controller: 'MedalsCtrl'
         })
+        //detailmedal
         .state('detailmedal', {
             url: "/detailmedal",
             templateUrl: "views/template.html",
             controller: 'DetailMedalCtrl'
         })
+        //gallery
         .state('gallery', {
             url: "/gallery",
             templateUrl: "views/template.html",
             controller: 'GalleryCtrl'
         })
+        //galleryDetail
         .state('galleryDetail', {
             url: "/gallerydetail",
             templateUrl: "views/template.html",
             controller: 'DetailGalleryCtrl'
+        })
+        //faq
+        .state('faq', {
+            url: "/faq",
+            templateUrl: "views/template.html",
+            controller: 'FaqCtrl'
+        })
+        //detail faq
+        .state('detailfaq', {
+            url: "/detailfaq/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailFaqCtrl'
         })
 
 

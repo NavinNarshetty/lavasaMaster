@@ -134,6 +134,12 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#/gallery",
             icon: "phone"
         },
+        {
+            name: "Faq",
+            classis: "activeColor",
+            sref: "#/faq",
+            icon: "phone"
+        },
         // {
         //     name: "Student Team",
         //     classis: "activeColor",
@@ -339,10 +345,8 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data, i);
             });
         },
-        uploadExcel: function (form, callback) {
-            $http.post(adminurl + form.model + '/import', {
-                file: form.file
-            }).then(function (data) {
+        uploadExcel: function (url, form, callback) {
+            $http.post(adminurl + url, form).then(function (data) {
                 data = data.data;
                 callback(data);
 

@@ -29,7 +29,8 @@ var models = {
         var city = data.city;
         var country = "India";
         var state = data.state;
-        var address = data.address;
+        var schoolAddress1 = data.schoolAddress;
+        var schoolAddress2 = data.schoolAddressLine2;
         var email = data.email;
         var phone = data.mobile;
         console.log(data);
@@ -77,10 +78,11 @@ var models = {
                 // furl: 'http://testahmedabadcollege.sfanow.in/api/payU/successErrorSchool',
                 hash: hashtext,
                 // pg: pg,
-                address: address,
+                address1: schoolAddress1,
+                address2: schoolAddress2,
                 state: state,
                 country: country,
-                postalcode: pincode,
+                zipcode: pincode,
                 city: city
             }
         }, callback);
@@ -104,7 +106,8 @@ var models = {
         var city = found.city;
         var country = "India";
         var state = found.state;
-        var address = found.address;
+        var athleteAddress1 = data.address;
+        var athleteAddress2 = data.addressLine2;
         var email = found.email;
         var phone = found.mobile;
         var productinfo = "Athelete registeration to SFA";
@@ -142,12 +145,12 @@ var models = {
                 // surl: 'http://testahmedabadcollege.sfanow.in/api/payU/successErrorAthelete',
                 // furl: 'http://testahmedabadcollege.sfanow.in/api/payU/successErrorAthelete',
                 hash: hashtext,
-                address: address,
+                address1: athleteAddress1,
+                address2: athleteAddress2,
                 state: state,
                 country: country,
-                postalcode: pincode,
-                city: city,
-
+                zipcode: pincode,
+                city: city
             }
         }, callback);
     },
