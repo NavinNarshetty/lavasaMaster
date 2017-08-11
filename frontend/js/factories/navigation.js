@@ -554,6 +554,9 @@ myApp.factory('NavigationService', function($http, $window, $q, $timeout, $log) 
         setVariable: function(flag) {
             $.jStorage.set("flag", flag);
         },
+        setIsColg: function(data) {
+            $.jStorage.set("IsColg", data);
+        },
 
         editTeamId: function(id) {
             $.jStorage.set("editTeamId", id);
