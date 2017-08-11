@@ -2,56 +2,56 @@
   <div class="matchstart-header clearfix">
     <div class="container">
       <div class="pull-right">
-        <p class="m-clear">match id: <span>mu17-123456</span> </p>
+        <p class="m-clear">match id: <span>{{matchData.matchId}}</span> </p>
       </div>
-      <p class="m-clear">football - boys u-16 - round 1</p>
+      <p class="m-clear">{{matchDetails.sportsName}}</p>
     </div>
   </div>
   <div class="matchstart-section get-center">
   <div class="container">
     <div class="row">
-      <div class="col-md-offset-1 col-md-6">
+      <div class="col-md-offset-1 col-md-6 col-sm-6">
         <div class="matchstart-players">
-          <div class="matchplayer-card player1">
+          <div class="matchplayer-card" ng-repeat = "player in matchDetails.players track by $index">
             <div class="matchplayer-playerid">
-              <p>SFA ID: <span>MA-17-123456</span></p>
+              <p>SFA ID: <span class="text-uppercase">{{player.sfaId}}</span></p>
             </div>
             <div class="matchplayer-image">
               <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
+              <!-- <img ng-src="{{player.photograph|serverimage}}" alt="" class="img-responsive"> -->
             </div>
             <div class="matchplayer-details">
-              <p class="matchplayer-name">Sudharshan A Anandkumar</p>
-              <p class="matchplayer-school">Jamnabai Narsee International School</p>
-            </div>
-          </div>
-          <div class="matchplayer-card player2">
-            <div class="matchplayer-playerid text-capitalize">
-              <p>SFA ID: <span>MA-17-123456</span></p>
-            </div>
-            <div class="matchplayer-image">
-              <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
-            </div>
-            <div class="matchplayer-details">
-              <p class="matchplayer-name">Sudharshan A Anandkumar</p>
-              <p class="matchplayer-school">Jamnabai Narsee International School</p>
+              <p class="matchplayer-name">{{player.firstName}} {{player.surname}}</p>
+              <p class="matchplayer-school">{{player.school.name}}</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-md-2">
+      <div class="col-md-2 col-sm-3">
         <div class="matchstart-noshow pointer" ng-click="showNoMatch();">
           <p class="get-center">CLICK HERE IN CASE OF NO MATCH AND WALKOVER</p>
         </div>
       </div>
-      <div class="col-md-2">
-        <div class="matchstart-uploadpic text-uppercase hide">
-          <p class="get-center ">Upload Picture</p>
+      <div class="col-md-2 col-sm-3">
+        <div class="matchstart-uploadholder text-uppercase ">
+          <button class="btn btn-green-outline btn-scoring">Upload Picture</button>
+          <upload-image ng-model="matchDetails.resultsCombat.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
         </div>
-        <div class="matchstart-uploadpic text-uppercase  ">
-          <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
+        <div class="digital-swiper scorescard-swiper" ng-show="showMatchPhoto">
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" ng-repeat="pic in matchDetails.resultsCombat.matchPhoto track by $index">
+                <div class="matchstart-uploadpic text-uppercase">
+                  <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-button-prev scorecard-prev"><span class="fa fa-chevron-left"></span></div>
+          <div class="swiper-button-next scorecard-next"><span class="fa fa-chevron-right"></span></div>
         </div>
         <div class="matchstart-score">
-          <button type="button" class="btn btn-green-outline btn-scoring">start scoring</button>
+          <button type="button" class="btn btn-green-outline btn-scoring" ui-sref="scorecombat">start scoring</button>
         </div>
       </div>
     </div>

@@ -5,59 +5,40 @@
     <div class="modal-header">
         <div class="matchstart-header clearfix">
             <div class="pull-right">
-                <p class="m-clear">match id: <span>mu17-123456</span> </p>
+                <p class="m-clear">match id: <span>{{matchData.matchId}}</span> </p>
             </div>
-            <p class="m-clear">football - boys u-16 - round 1</p>
+            <p class="m-clear">{{matchDetails.sportsName}}</p>
         </div>
     </div>
     <div class="modal-body">
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-6 col-sm-6" ng-repeat= "player in matchDetails.players track by $index">
                 <div class="match-nomatch-player">
-                    <div class="matchplayer-card player1">
-                        <div class="matchplayer-playerid">
-                            <p>SFA ID: <span>MA-17-123456</span></p>
+                    <div class="matchplayer-card">
+                        <div class="matchplayer-playerid text-uppercase">
+                            <p>SFA ID: <span>{{player.sfaId}}</span></p>
                         </div>
                         <div class="matchplayer-image">
                             <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
+                            <!-- <img ng-src="{{player.photograph|serverimage}}" alt="" class="img-responsive"> -->
                         </div>
                         <div class="matchplayer-details">
-                            <p class="matchplayer-name">Sudharshan A Anandkumar</p>
-                            <p class="matchplayer-school">Jamnabai Narsee International School</p>
-                        </div>
-                    </div>
-
-                    <div class="match-nomatch-radio text-center">
-                        <div class="radio">
-                            <label><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>No Show</label>
-                        </div>
-                        <div class="radio">
-                            <label><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">Walkover</label>
+                            <p class="matchplayer-name">{{player.firstName}} {{player.surname}}</p>
+                            <p class="matchplayer-school">{{player.school.name| truncate:'30'}}</p>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
+          </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6" ng-repeat="player in matchDetails.resultsCombat.players track by $index">
                 <div class="match-nomatch-player">
-                    <div class="matchplayer-card player2">
-                        <div class="matchplayer-playerid">
-                            <p>SFA ID: <span>MA-17-123456</span></p>
-                        </div>
-                        <div class="matchplayer-image">
-                            <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
-                        </div>
-                        <div class="matchplayer-details">
-                            <p class="matchplayer-name">Sudharshan A Anandkumar</p>
-                            <p class="matchplayer-school">Jamnabai Narsee International School</p>
-                        </div>
-                    </div>
-
                     <div class="match-nomatch-radio text-center">
-                        <div class="radio">
-                            <label><input type="radio" name="optionsRadios1" id="optionsRadios1" value="option1" checked>No Show</label>
+                        <div class="checkbox" >
+                            <label ><input type="checkbox" ng-model="player.noShow" ng-disabled="player.walkover == true">No Show</label>
                         </div>
-                        <div class="radio">
-                            <label><input type="radio" name="optionsRadios1" id="optionsRadios2" value="option2">Walkover</label>
+                        <div class="checkbox">
+                            <label><input type="checkbox" ng-model="player.walkover" ng-disabled="player.noShow == true" >Walkover</label>
                         </div>
                     </div>
                 </div>
@@ -65,28 +46,27 @@
         </div>
         <div class="match-nomatch-buttons">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-3">
                     <button class="btn btn-green-outline btn-scoring" ng-click="$dismiss()">back</button>
                 </div>
-                <div class="col-md-3">
-                    <button class="btn btn-green-outline btn-scoring">no match</button>
+                <div class="col-md-3 col-sm-3">
+                    <button class="btn btn-green-outline btn-scoring" ng-click="setNoMatch();">no match</button>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-3">
                     <div class="match-selectwinner ">
-                        <ui-select ng-model="player" theme="bootstrap">
+                        <ui-select ng-model="matchDetails.resultsCombat.winner.player" theme="bootstrap">
                             <ui-select-match placeholder="Select Winner"> {{$select.selected.name}}</ui-select-match>
-                            <ui-select-choices repeat="player.id in players | filter: $select.search ">
-                                <div>
-                                  <p>{{player.name}}</p>
-                                </div>
+                            <ui-select-choices repeat="player._id as player in matchDetails.players  | filter: $select.search">
+                                  <p>{{player.firstName}} {{player.surname}}</p>
                             </ui-select-choices>
                         </ui-select>
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <button class="btn btn-green-outline btn-scoring"> save</button>
+                <div class="col-md-3 col-sm-3">
+                    <button class="btn btn-green-outline btn-scoring" ng-click="saveWinner();">save</button>
                 </div>
             </div>
         </div>
+        <pre>{{matchDetails.resultsCombat|json}}</pre>
     </div>
 </div>

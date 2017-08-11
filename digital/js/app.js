@@ -3,6 +3,7 @@ var myApp = angular.module('myApp', [
     'ui.router',
     'pascalprecht.translate',
     'angulartics',
+    'imageupload',
     // 'angulartics.google.analytics',
     'ui.bootstrap',
     'ngAnimate',
@@ -11,7 +12,7 @@ var myApp = angular.module('myApp', [
     'ui.swiper',
     'angularPromiseButtons',
     'toastr',
-    'ui.select'
+    'ui.select',
 ]);
 
 // Define all the routes below
@@ -27,9 +28,14 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'HomeCtrl'
         })
         .state('matchstart', {
-            url: "/match-start",
+            url: "/match-start/:id",
             templateUrl: tempateURL,
             controller: 'MatchStartCtrl'
+        })
+        .state('scorecombat', {
+            url: "/score-combat",
+            templateUrl: tempateURL,
+            controller: 'CombatScoreCtrl'
         })
         .state('form', {
             url: "/form",

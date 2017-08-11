@@ -1,18 +1,18 @@
 <div class="form-group">
   <!-- <label for="exampleInputEmail1" style="margin:5px;">Image Upload</label> -->
   <div class="img-box" ng-if="model && !isMultiple" ng-hide="noShow">
-    <a href="{{model|uploadpath}}" fancybox-box>
-      <img ng-src="{{model|uploadpath}}" class="img-responsive uploadingImage img-thumbnail" ng-if="type=='image'" />
+    <a href="{{model|serverimage}}" fancybox-box>
+      <img ng-src="{{model|serverimage}}" class="img-responsive uploadingImage img-thumbnail" ng-if="type=='image'" />
     </a>
-    <!--<iframe src="{{model|uploadpath}}" style="width:400px; height:400px;" frameborder="0" ng-if="type=='pdf'"></iframe>-->
-    <a href="{{model|uploadpath}}" target="_new">
+    <!--<iframe src="{{model|serverimage}}" style="width:400px; height:400px;" frameborder="0" ng-if="type=='pdf'"></iframe>-->
+    <a href="{{model|serverimage}}" target="_new">
       <img ng-src="../../img/pdf.png" class="img-responsive uploadingImage" ng-if="type=='pdf'" />
     </a>
   </div>
   <div class="clearfix" ng-if="model && isMultiple" ng-hide="noShow">
     <div class="img-box" style="float:left;" ng-repeat="sImage in model track by $index">
-      <a href="{{sImage|uploadpath}}" fancybox-box>
-        <img alt="" ng-src="{{sImage|uploadpath}}" class="img-responsive uploadingImage img-thumbnail" />
+      <a href="{{sImage|serverimage}}" fancybox-box>
+        <img alt="" ng-src="{{sImage|serverimage}}" class="img-responsive uploadingImage img-thumbnail" />
       </a>
     </div>
   </div>
