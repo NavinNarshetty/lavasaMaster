@@ -172,8 +172,22 @@
             <tr>
                 <td>
                     <div class="blue-footer text-center" style="background:#0a1a72;font-family: TitilliumWeb-Regular; color: #fff">
-                        <p style="padding: 3px 0;"> 1306, Panchratna Building, Opera House, Charni Road, Mumbai - 400004
-                            <br>www.sfanow.in I info@sfanow.in Contact : 7045684365/66/67</p>
+
+                        <%if(infoId == 'info@sfanow.in'){%>
+                            <p style="padding: 3px 0;"> 1306, Panchratna Building, Opera House, Charni Road, Mumbai - 400004
+                                <br>www.sfanow.in I
+                                <%=infoId%> Contact :
+                                    <%=infoNo%>
+                            </p>
+                            <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                <p style="padding: 3px 0;"> C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor, Advant Delta, Plot No. 4,
+                                    Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081. (Head Office: SFA Events
+                                    Pvt. Ltd., Panchratna Building, Opera House, Mumbai - 400004)
+                                    <br>www.sfanow.in I
+                                    <%=infoId%> Contact :
+                                        <%=infoNo%>
+                                </p>
+                                <%}%>
                     </div>
                 </td>
             </tr>

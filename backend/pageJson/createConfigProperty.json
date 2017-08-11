@@ -38,6 +38,38 @@
             "validation": ["", "trim", ""],
             "url": ""
         }, {
+            "name": "City Address",
+            "type": "text",
+            "tableRef": "cityAddress",
+            "placeholder": "Enter City Address",
+            "id": "cityAddress",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Info No.",
+            "type": "text",
+            "tableRef": "infoNo",
+            "placeholder": "Enter Info No.",
+            "id": "infoNo",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "Info Id",
+            "type": "text",
+            "tableRef": "infoId",
+            "placeholder": "Enter Info Id",
+            "id": "infoId",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "DD Favour",
+            "type": "text",
+            "tableRef": "ddFavour",
+            "placeholder": "Enter DD Favour",
+            "id": "ddFavour",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
             "name": "City",
             "type": "tags",
             "tableRef": "city",

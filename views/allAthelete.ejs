@@ -115,8 +115,14 @@
                         </p>
                         <p>Your registration process is now complete and you are<b> not </b> required to make the additional
                             payment of
-                            <i class="fa fa-inr" aria-hidden="true"></i> 400/-.</p>
-                        <p>For further queries please call us on <span style="font-family:TitilliumWeb-Bold;">7045684365/66/67</span>                            or<br> email us at <span style="font-family:TitilliumWeb-Bold;">info@sfanow.in</span></p>
+                            <i class="fa fa-inr" aria-hidden="true"></i>
+                            <%if(infoId == 'info@sfanow.in'){%>
+                                400/-.
+                                <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                    200/-.
+                                    <%}%>
+                        </p>
+                        <p>For further queries please call us on <span style="font-family:TitilliumWeb-Bold;"><%=infoNo%></span>                            or<br> email us at <span style="font-family:TitilliumWeb-Bold;">i<%=infoId%></span></p>
                         <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>
 
                     </div>

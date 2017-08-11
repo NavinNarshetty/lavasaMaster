@@ -759,7 +759,12 @@ var model = {
                     console.log("email otp");
                     var emailOtp = (Math.random() + "").substring(2, 6);
                     var emailData = {};
-                    emailData.from = "info@sfanow.in";
+                    // emailData.from = "info@sfanow.in";
+                    emailData.from = property[0].infoId;
+                    emailData.infoId = property[0].infoId;
+                    emailData.infoNo = property[0].infoNo;
+                    emailData.cityAddress = property[0].cityAddress;
+                    emailData.ddFavour = property[0].ddFavour;
                     emailData.email = data.email;
                     emailData.city = property[0].sfaCity;
                     emailData.year = property[0].year;
@@ -883,7 +888,12 @@ var model = {
                     async.parallel([
                             function (callback) {
                                 var emailData = {};
-                                emailData.from = "info@sfanow.in";
+                                // emailData.from = "info@sfanow.in";
+                                emailData.from = property[0].infoId;
+                                emailData.infoId = property[0].infoId;
+                                emailData.infoNo = property[0].infoNo;
+                                emailData.cityAddress = property[0].cityAddress;
+                                emailData.ddFavour = property[0].ddFavour;
                                 emailData.email = data.email;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
@@ -962,7 +972,12 @@ var model = {
                     async.parallel([
                             function (callback) {
                                 var emailData = {};
-                                emailData.from = "info@sfanow.in";
+                                // emailData.from = "info@sfanow.in";
+                                emailData.from = property[0].infoId;
+                                emailData.infoId = property[0].infoId;
+                                emailData.infoNo = property[0].infoNo;
+                                emailData.cityAddress = property[0].cityAddress;
+                                emailData.ddFavour = property[0].ddFavour;
                                 emailData.email = data.email;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
@@ -1038,7 +1053,12 @@ var model = {
                     async.parallel([
                             function (callback) {
                                 var emailData = {};
-                                emailData.from = "info@sfanow.in";
+                                // emailData.from = "info@sfanow.in";
+                                emailData.from = property[0].infoId;
+                                emailData.infoId = property[0].infoId;
+                                emailData.infoNo = property[0].infoNo;
+                                emailData.cityAddress = property[0].cityAddress;
+                                emailData.ddFavour = property[0].ddFavour;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
                                 emailData.type = property[0].institutionType;
@@ -1119,7 +1139,12 @@ var model = {
                     async.parallel([
                             function (callback) {
                                 var emailData = {};
-                                emailData.from = "info@sfanow.in";
+                                // emailData.from = "info@sfanow.in";
+                                emailData.from = property[0].infoId;
+                                emailData.infoId = property[0].infoId;
+                                emailData.infoNo = property[0].infoNo;
+                                emailData.cityAddress = property[0].cityAddress;
+                                emailData.ddFavour = property[0].ddFavour;
                                 emailData.email = data.email;
                                 emailData.sfaID = data.sfaID;
                                 emailData.city = property[0].sfaCity;
@@ -1200,10 +1225,15 @@ var model = {
                     async.parallel([
                             function (callback) {
                                 var emailData = {};
-                                emailData.from = "info@sfanow.in";
+                                // emailData.from = "info@sfanow.in";
+                                emailData.from = property[0].infoId;
                                 emailData.email = data.email;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
+                                emailData.infoId = property[0].infoId;
+                                emailData.infoNo = property[0].infoNo;
+                                emailData.cityAddress = property[0].cityAddress;
+                                emailData.ddFavour = property[0].ddFavour;
                                 emailData.filename = "allAthelete.ejs";
                                 emailData.subject = "SFA: Your school has officially registered for SFA " + emailData.city + " " + emailData.year;
                                 console.log("emaildata", emailData);
@@ -1306,7 +1336,12 @@ var model = {
                                         emailData.cgstPercent = property[0].cgstPercent;
                                         emailData.sgstAmout = property[0].sgstAmout;
                                         emailData.sgstPercent = property[0].cgstPercent;
-                                        emailData.from = "info@sfanow.in";
+                                        // emailData.from = "info@sfanow.in";
+                                        emailData.from = property[0].infoId;
+                                        emailData.infoId = property[0].infoId;
+                                        emailData.infoNo = property[0].infoNo;
+                                        emailData.cityAddress = property[0].cityAddress;
+                                        emailData.ddFavour = property[0].ddFavour;
                                         emailData.email1 = [{
                                             email: found.email
                                         }];
@@ -1368,7 +1403,12 @@ var model = {
                                         emailData.Date = moment().format("DD-MM-YYYY");
                                         var receipt = "SFA" + found.registerID;
                                         emailData.receiptNo = receipt;
-                                        emailData.from = "info@sfanow.in";
+                                        emailData.infoId = property[0].infoId;
+                                        emailData.infoNo = property[0].infoNo;
+                                        emailData.cityAddress = property[0].cityAddress;
+                                        emailData.ddFavour = property[0].ddFavour;
+                                        // emailData.from = "info@sfanow.in";
+                                        emailData.from = property[0].infoId;
                                         emailData.email1 = [{
                                             email: found.email
                                         }];
@@ -2380,7 +2420,12 @@ var model = {
                         console.log("days", days);
                         if (days == 5) {
                             var emailData = {};
-                            emailData.from = "info@sfanow.in";
+                            // emailData.from = "info@sfanow.in";
+                            emailData.from = data.property.infoId;
+                            emailData.infoId = data.property.infoId;
+                            emailData.infoNo = data.property.infoNo;
+                            emailData.cityAddress = data.property.cityAddress;
+                            emailData.ddFavour = data.property.ddFavour;
                             emailData.email = data.email;
                             emailData.city = data.property.sfaCity;
                             emailData.year = data.property.year;
@@ -2403,7 +2448,12 @@ var model = {
 
                         } else if (days == 10) {
                             var emailData = {};
-                            emailData.from = "info@sfanow.in";
+                            // emailData.from = "info@sfanow.in";
+                            emailData.from = data.property.infoId;
+                            emailData.infoId = data.property.infoId;
+                            emailData.infoNo = data.property.infoNo;
+                            emailData.cityAddress = data.property.cityAddress;
+                            emailData.ddFavour = data.property.ddFavour;
                             emailData.email = data.email;
                             emailData.city = data.property.sfaCity;
                             emailData.year = data.property.year;

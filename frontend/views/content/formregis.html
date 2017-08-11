@@ -814,8 +814,12 @@
                         <p ng-if="show==9" class="ft12">Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs.
                             <span ng-if="isCollege == false">12,000</span>
                             <span ng-if="isCollege == true">2,500</span> (Inclusive of all applicable taxes) by Cash/Cheque/Demand
-                            Draft in favour of ‘SFA Events Private Limited’ which is to be couriered/hand delivered to: 1306,
-                            Panchratna Building, Opera House (Next to Roxy Cinema),Charni Road, Mumbai – 400004</p>
+                            Draft in favour of ‘SFA Events Private Limited’ which is to be couriered/hand delivered to:
+                            <span ng-if="sfaCity == 'Mumbai'">1306, Panchratna Building, Opera House (Next to Roxy Cinema), Charni Road, Mumbai – 400004</span>
+                            <span ng-if="sfaCity == 'Hyderabad'">C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor, Advant Delta, Plot No. 4,
+                                    Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081. (Head Office: SFA Events
+                                    Pvt. Ltd., Panchratna Building, Opera House, Mumbai - 400004)</span>
+                        </p>
                     </div>
                     <div class="d-padd d-paddd visible-xs" ng-init="show=8">
                         <div class="">
@@ -825,7 +829,12 @@
                                 Rs. <span ng-if="isCollege == false">12,000</span>
                                 <span ng-if="isCollege == true">2,500</span> (Inclusive of all applicable taxes) by Cash/Cheque/Demand
                                 Draft in favour of ‘SFA Events Private Limited’ which is to be couriered/hand delivered to:
-                                1306, Panchratna Building, Opera House (Next to Roxy Cinema),Charni Road, Mumbai – 400004</p>
+                                <span ng-if="sfaCity == 'Mumbai'">1306, Panchratna Building, Opera House (Next
+                                to Roxy Cinema), Charni Road, Mumbai – 400004</span>
+                                <span ng-if="sfaCity == 'Hyderabad'">C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor, Advant Delta, Plot No. 4,
+                                    Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081. (Head Office: SFA Events
+                                    Pvt. Ltd., Panchratna Building, Opera House, Mumbai - 400004)</span>
+                            </p>
                         </div>
                         <div class="">
                             <input ng-model="formData.registrationFee" type="radio" id="radio03" name="radioxs" value="online PAYU" required>

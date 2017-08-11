@@ -132,8 +132,16 @@
                         <a style="   color: #0a1a72; font-weight: 600;" href="https://www.facebook.com/events/237874770032808/?active_tab=discussion"
                             target="_blank">https://www.facebook.com/events/237874770032808/?active_tab=discussion</a>
                         <p>For further details about your application or any other information you may require please contact
-                            us on <span style="font-family:TitilliumWeb-Bold;">7045684365/66/67</span> or<br> email us at
-                            <a style="font-family:TitilliumWeb-Bold; color: black;" " href="mailto:info@sfanow.in ">info@sfanow.in</a>
+                            us on <span style="font-family:TitilliumWeb-Bold;"><%=infoNo%></span> or<br> email us at
+                            <%if(infoId == 'info@sfanow.in'){%>
+                                <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">
+                                    <%=infoId%>
+                                </a>
+                                <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                    <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info.hyd@sfanow.in ">
+                                        <%=infoId%>
+                                    </a>
+                                    <%}%>
                         </p>
                         <p style="font-family:TitilliumWeb-Bold; ">Regards,<br>Team SFA</p>
 

@@ -134,14 +134,24 @@
 							<div style="display: inline-block;">
 								<div class="address">
 									<h5 class="bold" style="margin-bottom: 0px; margin-top: 0px;">SFA Events Private Limited</h5>
-									<p>1308, Pancharatna Building,Mama Parmanand Marg</p>
-									<p>Opera House,Charni Road Mumbai-400004</p>
-									<p>GSTIN/UIN:27AAWCS2792J1ZG</p>
-									<p>CIN:U74999MH2015PTC268781</p>
-									<p>Contact:7045684365/66/67</p>
-									<p>Email:account@sfanow.in<br/>www.sfanow.in/info@sfanow.in
+									<%if(infoId == 'info@sfanow.in'){%>
+										<p>1306, Pancharatna Building,Mama Parmanand Marg</p>
+										<p>Opera House,Charni Road Mumbai-400004</p>
+										<%} else if(infoId == 'info.hyd@sfanow.in'){%>
+											<p>C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor, Advant Delta,</p>
+											<p>Plot No. 4, Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081.</p>
+											<p>(Head Office: SFA Events Pvt. Ltd., Panchratna Building,</p>
+											<p> Opera House, Mumbai - 400004)</p>
+											<%}%>
+												<p>GSTIN/UIN:27AAWCS2792J1ZG</p>
+												<p>CIN:U74999MH2015PTC268781</p>
+												<p>Contact:
+													<%=infoNo%>
+												</p>
+												<p>Email:account@sfanow.in<br/>www.sfanow.in/
+													<%=infoId%>
 
-									</p>
+												</p>
 
 
 								</div>

@@ -401,8 +401,8 @@ var model = {
                         } else {
                             if (body && body.value !== false) {
                                 var helper = require('sendgrid').mail;
-
-                                from_email = new helper.Email(data.from);
+                                var name = 'no-reply';
+                                from_email = new helper.Email(data.from, name);
                                 to_email = new helper.Email(data.email);
                                 subject = data.subject;
                                 content = new helper.Content("text/html", body);
@@ -460,7 +460,7 @@ var model = {
                             console.log(err);
                             callback(err, null);
                         } else {
-                            //console.log('email else');
+                            // console.log('email else');
                             if (body && body.value !== false) {
                                 var sg = require('sendgrid')(userdata[0].name);
 
@@ -475,8 +475,8 @@ var model = {
                                             subject: data.subject
                                         }],
                                         from: {
-                                            email: data.from
-                                            // ,name: "Tagboss"
+                                            email: data.from,
+                                            name: "no-reply"
                                         },
 
                                         content: [{
