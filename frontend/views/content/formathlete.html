@@ -15,7 +15,7 @@
                         reports.
                         <br> The annual Athlete registration fees for SFA {{sfaCity}} {{year}} is Rs. <span ng-if="isCollege == false">200 <br>In the event
                         that your {{type}} does not register for SFA {{sfaCity}} {{year}} by the 30th of September an additional fees
-                        of Rs. <span class="sfaCity == 'Hyderabad'">200</span><span class="sfaCity == 'Mumbai'">400</span>/-
+                        of Rs. <span ng-if="sfaCity == 'Hyderabad'">200</span> <span ng-if="sfaCity == 'Mumbai'">400</span>/-
                         (Inclusive of all applicable taxes) will be levied.This discounted fees for registered {{type}} athletes
                         is a step to encourage {{type}}s to support their athletes and sports.</span>
                         <span ng-if="isCollege == true">300</span> (Inclusive of all applicable taxes).
