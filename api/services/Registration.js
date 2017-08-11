@@ -370,8 +370,15 @@ var model = {
                                                         callback(err, null);
                                                     } else {
                                                         var typeVal = complete[0].institutionType;
+                                                        var typeVal1 = complete[0].sfaCity;
                                                         if (_.isEmpty(datafound) && typeVal == 'school') {
-                                                            data.registerID = 1;
+                                                            if (typeVal1 == 'Mumbai') {
+                                                                data.registerID = 1;
+                                                            } else if (typeVal1 == 'Hyderabad') {
+                                                                data.registerID = 216;
+                                                            } else if (typeVal1 == 'Ahmedabad') {
+                                                                data.registerID = 101;
+                                                            }
                                                             console.log("registerID", data.registerID);
                                                             data.sfaID = prefixCity + prefixType + year + data.registerID;
                                                         } else if (_.isEmpty(datafound) && typeVal == 'college') {
@@ -1306,7 +1313,7 @@ var model = {
                                         emailData.bcc1 = [{
                                             email: "payments@sfanow.in"
                                         }, {
-                                            email: "venkatesh.rathod@sfanow.in"
+                                            email: "admin@sfanow.in"
                                         }];
                                         // emailData.email = found.email;
                                         emailData.filename = "receipt.ejs";
@@ -1368,7 +1375,7 @@ var model = {
                                         emailData.bcc1 = [{
                                             email: "payments@sfanow.in"
                                         }, {
-                                            email: "venkatesh.rathod@sfanow.in"
+                                            email: "admin@sfanow.in"
                                         }];
                                         // emailData.email = found.email;
                                         emailData.filename = "envoice.ejs";

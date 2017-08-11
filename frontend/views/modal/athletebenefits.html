@@ -21,7 +21,7 @@
     <li>Access to Hydration & Nutrition centre’s with Complimentary Energy Drinks for each athlete</li>
     <li>Scouting of talented athletes across different sports with an opportunity to win training & development scholarship along
       with complimentary mental & fitness assessment programs</li>
-    <li>Athletes can avail training in the sport of their choice with SFA’s Training & Development Programs*</li>
+    <li ng-if="sfaCity == 'Mumbai'">Athletes can avail training in the sport of their choice with SFA’s Training & Development Programs*</li>
     <li>Eligible to win Special Hampers <span ng-if="isCollege == false">& Cash Prizes</span> in the following award categories:
       <ul style="list-style-type: decimal; padding-left: 13px;">
         <li>Most promising male athlete</li>
@@ -34,7 +34,7 @@
   <h5 class="custm-font">Advanced SPORTS SESSIONS</h5>
   <p class="mgtp cutm-font-prime">Complimentary Sport sessions by leading professionals for all athletes <span ng-if="isCollege == false">of the {{type}}</span></p>
   <div class=" mgtp">
-    <label class="custm-font pdl21" ng-if="isCollege == false">In {{type | firstcapitalize}}:</label>
+    <label class="custm-font pdl21" ng-if="isCollege == false && sfaCity == 'Mumbai'">In {{type | firstcapitalize}}:</label>
     <ul class="tick mr-left">
       <li>Fitness Assessment </li>
       <li>Hydration Clinic</li>
@@ -64,7 +64,7 @@
       <li>Photo & Video Gallery capturing all the sporting action</li>
       <li>Fixtures, Draws & Match schedules to be published online prior to the championship</li>
     </ul>
-    <p>*All Training & Development Programs to be announced one month prior to the championship </p>
+    <p ng-if="sfaCity == 'Mumbai'">*All Training & Development Programs to be announced one month prior to the championship </p>
     <p>*All special awards to be announced one month prior to the championship</p>
   </div>
 </div>

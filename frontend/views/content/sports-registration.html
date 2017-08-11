@@ -23,8 +23,10 @@
           <form class="form-horizontal" name="formsports">
             <div class="text-center mb25 blue-spreg">
               <h4>The SFA ID & password has been sent to registered email ID.</h4>
-              <h4>In case you have forgotten your SFA ID,Please Call us on 7045684365/66/67 or email us at <a href="mailto:info@sfanow.in"
-                  class="blue-spreg">info@sfanow.in</a></h4>
+              <h4>In case you have forgotten your SFA ID,Please Call us on <span ng-if="sfaCity == 'Mumbai'">7045684365/66/67 or email us at <a href="mailto:info@sfanow.in"
+                  class="blue-spreg">info@sfanow.in</a></span>
+                <span ng-if="sfaCity == 'Hyderabad'">+917738056000 or email us at <a href="mailto:info.hyd@sfanow.in"
+                  class="blue-spreg">info.hyd@sfanow.in</a></span></h4>
             </div>
             <div class="form-group para2">
               <label class="control-label place-label col-md-offset-2 col-md-3 col-sm-offset-2 col-sm-3 col-xs-12">SFA ID:</label>
