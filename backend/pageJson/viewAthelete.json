@@ -64,6 +64,13 @@
         "text": "export",
         "linkType": "admin",
         "action": "Athelete/generateExcelOld"
+    }, {
+        "name": "Upload For ABC Excel",
+        "icon": "delete",
+        "class": "btn-warning",
+        "type": "redirect",
+        "action": "excel-upload/User",
+        "linkType": "internal"
     }],
 
 

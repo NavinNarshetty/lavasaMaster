@@ -35,7 +35,10 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         'sportslist': {
-            select: '_id name sporttype drawFormat rules inactiveimage image'
+            select: '_id name sportsListSubCategory drawFormat'
+        },
+        'sportslist.sportsListSubCategory': {
+            select: '_id name'
         },
         'ageGroup': {
             select: '_id name'
@@ -49,7 +52,7 @@ schema.plugin(deepPopulate, {
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Sport', schema);
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "sportslist ageGroup weight", "sportslist ageGroup weight"));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "sportslist", "ageGroup", "weight", "sportslist", "ageGroup", "weight"));
 var model = {
 
     getAggregatePipeLine: function (data) {

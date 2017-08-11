@@ -23,11 +23,11 @@
               <a class="btn btn-success" ui-sref="detailmatches">
                  Create
               </a>
-              <a class="btn btn-success" ng-click="openExcelUpload()">
+              <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'uploadExcelMatch',view:'uploadFilter'})">
                  Upload-Excel
-              </a>
+              </span>
             </div>
-            <h3>List of Matches<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
+            <h3>List of Matches<span class=" tableTotal ">(Total : {{totalItems}}) </span></h3>
           </div>
           <div class="table-responsive ">
             <!--<div class="table-responsive " ng-show="totalItems>0 ">-->

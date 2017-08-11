@@ -239,7 +239,7 @@ var model = {
     getOne: function (data, callback) {
         async.waterfall([
                 function (callback) {
-                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId.school opponentsTeam";
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
                     Match.findOne({
                         matchId: data.matchId
                     }).lean().deepPopulate(deepSearch).exec(function (err, found) {
@@ -896,7 +896,6 @@ var model = {
 
     },
 
-
     updateResult: function (data, callback) {
         async.waterfall([
                 function (callback) {
@@ -939,6 +938,75 @@ var model = {
                     callback(err, null);
                 } else {
                     callback(null, results);
+                }
+            });
+    },
+    generateExcel: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                    Match.find().lean().deepPopulate(deepSearch).exec(function (err, match) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(match)) {
+                                callback(null, []);
+                            } else {
+                                console.log("found0", match);
+                                callback(null, match);
+                            }
+                        }
+                    });
+                },
+                function (match, callback) {
+                    console.log(match);
+                    var excelData = [];
+                    async.concatSeries(match, function (mainData, callback) {
+                            console.log("mainData", mainData);
+                            // var obj = {};
+                            // obj["MATCH ID"] = mainData.matchId;
+                            // obj["ROUND NAME"] = mainData.round;
+                            // obj.SPORT = sportData.sportslist.sportsListSubCategory.name;
+                            // if (sportData.gender == "male") {
+                            //     obj.GENDER = "Male";
+                            // } else if (sportData.gender == "Female") {
+                            //     obj.GENDER = "Female";
+                            // } else {
+                            //     obj.GENDER = "Male & Female"
+                            // }
+                            // obj["AGE GROUP"] = sportData.ageGroup.name;
+                            // obj.EVENT = sportData.sportslist.name;
+                            // if (sportData.weight) {
+                            //     obj["WEIGHT CATEGORIES"] = sportData.weight.name;
+                            // } else {
+                            //     obj["WEIGHT CATEGORIES"] = "";
+                            // }
+                            // var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
+                            // console.log("date", dateTime);
+                            // obj.DATE = dateTime;
+                            // obj.TIME = mainData.scheduleTime;
+
+                            // console.log("sportData", sportData);
+                            callback(null, mainData);
+
+                        },
+                        function (err, singleData) {
+                            // Config.generateExcelOld("TeamSport", excelData, res);
+                            callback(null, singleData);
+                        });
+
+                },
+            ],
+            function (err, excelData) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (excelData) {
+                    if (_.isEmpty(excelData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, excelData);
+                    }
                 }
             });
     },

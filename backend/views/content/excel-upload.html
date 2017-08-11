@@ -12,12 +12,18 @@
         <div class="form-elements-sec">
             <div class="sec">
                 <div class="widget-title">
-                    <div class="pull-right">
-                        <!-- <a href="mailto:chintan@wohlig.com?subject=&body=" class="btn btn-primary"><i class="fa fa-share"></i> Send Email</a> -->
-                        <a class="btn btn-success" ng-href="../importFormat/{{form.model}}.xlsx" download><i class="fa fa-table"></i> Download Excel Format </a>
+
+                    <div class="col-md-12">
+                        <div class="pull-right">
+                            <!-- <a href="mailto:chintan@wohlig.com?subject=&body=" class="btn btn-primary"><i class="fa fa-share"></i> Send Email</a> -->
+                            <a class="btn btn-success" ng-href="{{referenceFile}}" download><i class="fa fa-table"></i> Download Excel Format </a>
+                        </div>
                     </div>
-                    <h4>Upload Excel File:</h4>
-                    <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
+                    <div ng-include="view"></div>
+                    <div class="col-md-12">
+                        <h4>Upload Excel File:</h4>
+                        <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
+                    </div>
                 </div>
                 <div ng-if="data">
                     <h5>Upload Status:</h5>
@@ -26,18 +32,18 @@
                             <tr>
                                 <th width="100">Row #</th>
                                 <th>Status</th>
-                                <th width="200">Total Entries: {{data.value.length}}</th>
+                                <th width="200">Total Entries: {{data.length}}</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-repeat="d in data.value">
+                            <tr ng-repeat="d in data">
                                 <td>
-                                    <span class="success" ng-if="!d.name"><i class="fa fa-check-circle"></i> Row {{$index+2}}</span>
-                                    <span class="danger" ng-if="d.name"><i class="fa fa-times-circle"></i> Row {{$index+2}}</span>
+                                    <span class="success" ng-if="!d.error"><i class="fa fa-check-circle"></i> Row {{$index+2}}</span>
+                                    <span class="danger" ng-if="d.error"><i class="fa fa-times-circle"></i> Row {{$index+2}}</span>
                                 </td>
                                 <td colspan="2">
-                                    <span ng-if="!d.name">Entry successful!</span>
-                                    <span ng-if="d.name">
+                                    <span ng-if="!d.error">Entry successful!</span>
+                                    <span ng-if="d.error">
                                 <span>Entry failed!</span>
                                     <pre class="danger-pre"><code>{{d | json:4}}</code></pre>
                                     </span>
