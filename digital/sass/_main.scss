@@ -344,6 +344,18 @@ header {
   background-color: transparent;
 }
 
+.remove-pic {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(0,0,0,0.7);
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+}
 .matchstart-score {
     padding: 10px 0;
     margin: 20px 0;

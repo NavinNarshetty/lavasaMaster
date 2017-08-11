@@ -54,7 +54,7 @@
                 </div>
                 <div class="col-md-3 col-sm-3">
                     <div class="match-selectwinner ">
-                        <ui-select ng-model="matchDetails.resultsCombat.winner.player" theme="bootstrap">
+                        <ui-select ng-model="matchDetails.resultsCombat.winner.player" theme="bootstrap" ng-disabled="disableWinner">
                             <ui-select-match placeholder="Select Winner"> {{$select.selected.name}}</ui-select-match>
                             <ui-select-choices repeat="player._id as player in matchDetails.players  | filter: $select.search">
                                   <p>{{player.firstName}} {{player.surname}}</p>
