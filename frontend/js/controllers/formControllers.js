@@ -89,6 +89,7 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
         if ($scope.type == 'school') {
             console.log($scope.sfaCity);
             if ($scope.sfaCity == 'Mumbai') {
+                console.log('enter M');
                 $scope.schedulelist = [{
                     sport: 'Archery',
                     date1: '15',
@@ -218,6 +219,7 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                     month: ''
                 }];
             } else if ($scope.sfaCity == 'Hyderabad') {
+                console.log('enter H');
                 $scope.schedulelist = [{
                     sport: 'Archery',
                     date1: '13',
