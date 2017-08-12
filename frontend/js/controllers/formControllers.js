@@ -85,7 +85,9 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
+        console.log($scope.type);
         if ($scope.type == 'school') {
+            console.log($scope.sfaCity);
             if ($scope.sfaCity == 'Mumbai') {
                 $scope.schedulelist = [{
                     sport: 'Archery',
