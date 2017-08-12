@@ -6756,8 +6756,7 @@ h1.forgot-space {
     p {
         // color: #091a71;
         font-size: 15px;
-        font-family: Titillium Web Regular;
-        // font-style: italic;
+        font-family: Titillium Web Regular; // font-style: italic;
         margin: 0 0 10px;
     }
     h3 {
@@ -7574,11 +7573,22 @@ h1.forgot-space {
     }
     .panel-title {
         h3 {
-            color: #474547;
+            color: #0a1a72;
         }
     }
     .data-vox h4 {
         color: #0a1a72;
+    }
+    .data-vox {
+        ul {
+            li {
+                text-transform: uppercase;
+                color: #0a1a72;
+                font-weight: 600;
+                font-size: 16px;
+                line-height: 100%;
+            }
+        }
     }
     .faq-tables .lowerthead {
         background-color: #0a1a72;

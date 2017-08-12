@@ -85,11 +85,8 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
-        console.log($scope.type);
         if ($scope.type == 'school') {
-            console.log($scope.sfaCity);
             if ($scope.sfaCity == 'Mumbai') {
-                console.log('enter M');
                 $scope.schedulelist = [{
                     sport: 'Archery',
                     date1: '15',
@@ -219,7 +216,6 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                     month: ''
                 }];
             } else if ($scope.sfaCity == 'Hyderabad') {
-                console.log('enter H');
                 $scope.schedulelist = [{
                     sport: 'Archery',
                     date1: '13',
@@ -1681,6 +1677,11 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
     $scope.searchSFA = function (paramData) {
         console.log("changekeyword", paramData);
         $scope.sfaID = paramData;
+        console.log("sfaid", $scope.sfaID);
+    };
+    $scope.searchSFAHyderabad = function (paramData) {
+        console.log("changekeyword", paramData);
+        $scope.sfaID = paramData.sfaid;
         console.log("sfaid", $scope.sfaID);
     };
 
