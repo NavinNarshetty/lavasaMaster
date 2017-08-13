@@ -7513,9 +7513,10 @@ h1.forgot-space {
 }
 
 .typePlace {
-    @extend .typePlacing;
-    width: 304px;
-    left: -94px;
+    @extend .typePlacing; // width: 304px;
+    // left: -94px;
+    width: 150px;
+    left: 0;
     .typeList {
         padding: 0 10px;
         margin: 0; // vertical-align: top;

@@ -101,7 +101,7 @@
                                         <li ng-if="!registerSchool"><a ui-sref="faq">FAQs</a></li>
                                         <li ng-if="registerSchool"><a href="{{registerSchool}}/faq" target="_blank">FAQs</a></li>
                                     </ul>
-                                    <ul class="display-inline typeList">
+                                    <ul class="display-inline typeList" ng-if="selectedCity != 'hyderabad'">
                                         <li>
                                             <a>COLLEGE CHAMPIONSHIP</a></li>
                                         <!-- <li>
@@ -216,7 +216,7 @@
                                 <li ng-if="!registerSchool"><a ui-sref="faq">FAQs</a></li>
                                 <li ng-if="registerSchool"><a href="{{registerSchool}}/faq" target="_blank">FAQs</a></li>
                             </ul>
-                            <ul class="typeList">
+                            <ul class="typeList" ng-if="selectedCity != 'hyderabad'">
                                 <li>
                                     <a>COLLEGE CHAMPIONSHIP</a></li>
                                 <!-- <li>
@@ -270,7 +270,7 @@
                             <li ng-if="!registerSchool"><a ui-sref="faq">FAQs</a></li>
                             <li ng-if="registerSchool"><a href="{{registerSchool}}/faq" target="_blank">FAQs</a></li>
                         </ul>
-                        <ul class="display-inline typeList">
+                        <ul class="display-inline typeList" ng-if="selectedCity != 'hyderabad'">
                             <li>
                                 <p>COLLEGE CHAMPIONSHIP</p>
                             </li>

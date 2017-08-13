@@ -1011,7 +1011,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
             size: 'lg'
         });
     };
-    $scope.termcondition = function (type, sfaCity, year) {
+    $scope.termcondition = function (size, type, sfaCity, year) {
         $scope.type = type;
         $scope.sfaCity = sfaCity;
         $scope.year = year;
@@ -1547,7 +1547,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
         });
     };
 
-    $scope.termcondition = function (type, sfaCity, year) {
+    $scope.termcondition = function (size, type, sfaCity, year) {
         $scope.type = type;
         $scope.sfaCity = sfaCity;
         $scope.year = year;

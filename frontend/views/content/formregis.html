@@ -247,7 +247,7 @@
                     <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12">  *City:</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <select name="city" ng-model="formData.city" class="sfa-drop2 form-control" ng-options="cities for cities in city" required>
+                            <select name="cities" ng-model="formData.city" class="sfa-drop2 form-control" ng-options="cities for cities in city" required>
                             <!-- <option style="display:none"></option>
                         <option>Kalyan-Dombivali </option>
                         <option>Mira-Bhayandar</option>
@@ -259,7 +259,7 @@
                             <option>Vasai-Virar</option>
                             <option>Raigad</option> -->
                         </select>
-                            <div class="validate-col" ng-show="formRegister.city.$invalid && formRegister.city.$touched">Please Enter Your City*</div>
+                            <div class="validate-col" ng-show="formRegister.cities.$invalid && formRegister.cities.$touched">Please Enter Your City*</div>
                         </div>
                         <label class="col-md-2 col-sm-2 col-xs-12"> *Area/Locality:</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
@@ -359,7 +359,7 @@
                                     </div>
                                     <div class="col-md-5 col-sm-5 col-xs-12">
                                         <div class="kindly-up sf-list gstLiner">If you do not enter your GSTIN no. it will be considered that you are unregistered
-                                            dealer for GST.</div>
+                                            for GST.</div>
                                     </div>
                                     <div class="col-md-1 col-sm-1 hidden-xs">
 
@@ -619,7 +619,7 @@
                         <div class="checkbox-custom">
                             <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                                 id="test5" />
-                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition(type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
                             <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
                         </div>
                         <!--<p> <label class="sel-spo">Selected Sports:</label>Basketball, Football, Hockey</p>-->
@@ -712,7 +712,7 @@
                         <div class="checkbox-custom">
                             <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                                 id="test5" />
-                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition(type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
                             <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
                         </div>
                         <!--<p> <label class="sel-spo">Selected Sports:</label>Basketball, Football, Hockey</p>-->
@@ -789,7 +789,7 @@
                         <div class="checkbox-custom">
                             <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                                 id="test5" />
-                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition(type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
                             <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
                         </div>
                         <!--<p> <label class="sel-spo">Selected Sports:</label>Basketball, Football, Hockey</p>-->
