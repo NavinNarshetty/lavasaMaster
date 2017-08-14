@@ -148,8 +148,6 @@ myApp.controller('DetailAgeGroupCtrl', function ($scope, TemplateService, Naviga
     //end create
 })
 
-
-
 //Rules
 
 myApp.controller('RulesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
@@ -221,7 +219,7 @@ myApp.controller('RulesCtrl', function ($scope, TemplateService, NavigationServi
         });
     }
 
-})
+});
 //Detail Rules
 myApp.controller('DetailRulesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
     //registration filter view
@@ -807,7 +805,7 @@ myApp.controller('FirstCategoryCtrl', function ($scope, TemplateService, Navigat
             }
         });
     }
-})
+});
 
 //Detail First Category
 myApp.controller('DetailFirstCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
@@ -880,7 +878,7 @@ myApp.controller('DetailFirstCategoryCtrl', function ($scope, TemplateService, N
 
 
 
-})
+});
 
 
 //Draw format
@@ -954,7 +952,7 @@ myApp.controller('DrawFormatCtrl', function ($scope, TemplateService, Navigation
         });
     }
 
-})
+});
 
 //Detail Draw
 myApp.controller('DetailDrawCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
@@ -1026,7 +1024,7 @@ myApp.controller('DetailDrawCtrl', function ($scope, TemplateService, Navigation
     }
 
 
-})
+});
 
 //Sports list sub Category
 myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
@@ -1095,7 +1093,7 @@ myApp.controller('SportsListSubCategoryCtrl', function ($scope, TemplateService,
         });
 
     }
-})
+});
 
 //Detail Sports list sub Category
 
@@ -1235,8 +1233,8 @@ myApp.controller('DetailSportsListSubCategoryCtrl', function ($scope, TemplateSe
         $state.go(sendTo);
     }
 
-})
-//sports list Category
+});
+//s;ports list Category
 
 myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
     //registration filter view
@@ -1306,7 +1304,7 @@ myApp.controller('SportsListCategoryCtrl', function ($scope, TemplateService, Na
             }
         });
     }
-})
+});
 //Detail Sports list Category
 myApp.controller('DetailSportsListCategoryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
     //registration filter view
@@ -1452,7 +1450,7 @@ myApp.controller('SportsListCtrl', function ($scope, TemplateService, Navigation
             window.location.href = adminurl + $scope.url;
         });
     }
-})
+});
 
 //detail sports list
 
@@ -1574,7 +1572,7 @@ myApp.controller('DetailSportsListCtrl', function ($scope, TemplateService, Navi
         $state.go(sendTo);
     }
 
-})
+});
 
 //sports
 myApp.controller('SportsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
@@ -1651,7 +1649,7 @@ myApp.controller('SportsCtrl', function ($scope, TemplateService, NavigationServ
             window.location.href = adminurl + $scope.url;
         });
     }
-})
+});
 
 //Detail sports
 
@@ -1790,7 +1788,7 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
         $state.go(sendTo);
     }
 
-})
+});
 
 //team sport
 myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
@@ -1871,7 +1869,7 @@ myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationS
             window.location.href = adminurl + $scope.url;
         });
     }
-})
+});
 
 //view-team sport
 
@@ -1986,7 +1984,7 @@ myApp.controller('DetailTeamSportCtrl', function ($scope, TemplateService, Navig
         });
     };
     $scope.getOneTeamSportById();
-})
+});
 
 //student team
 
@@ -2025,7 +2023,7 @@ myApp.controller('StudentTeamCtrl', function ($scope, TemplateService, Navigatio
     }
     $scope.viewTable();
 
-})
+});
 
 //table-individualteamsport
 
@@ -2495,7 +2493,7 @@ myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationS
             window.location.href = adminurl + 'School/generateExcel';
         });
     }
-})
+});
 
 myApp.controller('ViewAthleteCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
     //old school filter view
@@ -2522,7 +2520,7 @@ myApp.controller('ViewAthleteCtrl', function ($scope, TemplateService, Navigatio
         });
     };
     $scope.getOneAthleteById();
-})
+});
 
 myApp.controller('ViewSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams) {
     //old school filter view
@@ -2540,7 +2538,7 @@ myApp.controller('ViewSchoolCtrl', function ($scope, TemplateService, Navigation
         });
     };
     $scope.getOneSchoolById();
-})
+});
 
 myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams) {
         //old school filter view
@@ -2559,6 +2557,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         };
         $scope.getOneOldSchoolById();
     })
+
 
 
     .controller('AccessController', function ($scope, TemplateService, NavigationService, $timeout, $state) {
@@ -3025,7 +3024,6 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
 
     })
-
 
     .controller('DetailCtrl', function ($scope, TemplateService, NavigationService, JsonService, $timeout, $state, $stateParams, toastr) {
         $scope.json = JsonService;
@@ -3910,21 +3908,13 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.form = {};
         $scope.url = $stateParams.controller + "/" + $stateParams.funcName;
 
-        $scope.generateExcel = function (data) {
-            $scope.qwerty = data;
-            console.log("data", data);
-            $scope.url = "match/generateExcel";
-            NavigationService.generateExcelWithData($scope.url, $scope.qwerty, function (data) {
-                window.location.href = adminurl + $scope.url;
-            });
-        }
-
         $scope.excelUploaded = function () {
             NavigationService.uploadExcel($scope.url, $scope.form, function (data) {
                 $scope.data = data.data;
             });
         };
     })
+
     .controller('DetailRoundCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("detailround");
@@ -4031,7 +4021,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             });
         }
 
-        $scope.openExcelUpload = function () {
+        $scope.openExportExcel = function () {
             $uibModal.open({
                 animation: true,
                 scope: $scope,
@@ -4053,6 +4043,15 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             });
         }
 
+        $scope.generateExcel = function (data) {
+            $scope.qwerty = data;
+            console.log("data", data);
+            $scope.url = "match/generateExcel";
+            NavigationService.generateExcelWithData($scope.url, $scope.qwerty, function (data) {
+                window.location.href = adminurl + $scope.url;
+            });
+        }
+
     })
 
     .controller('DetailMatchesCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
@@ -4062,6 +4061,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
     })
+
     .controller('MedalsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tablemedal");
@@ -4205,6 +4205,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
 
     })
+
     .controller('GalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tablegallery");

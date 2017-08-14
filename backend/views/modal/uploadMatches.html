@@ -4,7 +4,7 @@
     </div> -->
   <div class="modal-body">
     <form name="detailForm" role="form" class="sec">
-      <div class="">
+      <!--<div class="">
         <div class="col-md-12 drop-2">
           <div class="form-group">
             <label>Match-ID*</label>
@@ -12,7 +12,7 @@
             <div class="error-msg" ng-if="detailForm.rulesname.$invalid && detailForm.rulesname.$touched">Please Enter Valid Name *</div>
           </div>
         </div>
-      </div>
+      </div>-->
       <!--</div>-->
     </form>
     <div class="col-md-12 drop-1">
@@ -27,7 +27,7 @@
           <option  value="swiss-league">Swiss League</option>
         </select>
     </div>
-    <div class="col-md-12 drop-2" ng-if="form.resultType=='knockout'">
+    <!--<div class="col-md-12 drop-2" ng-if="form.resultType=='knockout'">
       <label>Knockout Range</label>
       <select class="form-control" ng-model="form.range">
           <option  value=2>2</option>
@@ -40,18 +40,9 @@
           <option  value=256>256</option>
           <option  value=512>512</option>
         </select>
-    </div>
-    <!--<form name="detailForm" role="form" class="sec" ng-if="form.resultType=='knockout'">
-      <div class="">
-        <div class="col-md-12 drop-2">
-          <div class="form-group">
-            <label>Knockout range</label>
-            <input type="number" name="range" ng-model="form.range" class="form-control" placeholder="Enter Range" required>
-            <div class="error-msg" ng-if="detailForm.rulesname.$invalid && detailForm.rulesname.$touched">Please Enter Valid Name *</div>
-          </div>
-        </div>
-      </div>
-    </form>-->
+    </div>-->
+
+    <!--</form>-->
     <div class="col-md-12 drop-2">
       <label>Sport Type</label>
       <select class="form-control" ng-model="form.playerType">
@@ -60,17 +51,11 @@
         </select>
     </div>
     <div class="col-md-12 drop-1">
-      <label>Third Place</label>
-      <select class="form-control" ng-model="form.thirdPlace">
+      <label>Plyer Specific Export?</label>
+      <select class="form-control" ng-model="form.playerSpecific">
           <option  value="yes">YES</option>
           <option  value="no">NO</option>
         </select>
-    </div>
-    <div class="">
-      <div class="col-md-12">
-        <!--<button class="btn btn-green-outline btn-scoring"> Upload Image</button>-->
-        <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
-      </div>
     </div>
 
     <div class="match-nomatch-buttons">
@@ -80,7 +65,7 @@
         </div>
 
         <div class="col-md-4">
-          <button class="btn btn-green-outline btn-scoring" ng-click="uploadExcelMatch(form)">Save</button>
+          <button class="btn btn-green-outline btn-scoring" ng-click="generateExcel(form)">Save</button>
         </div>
 
       </div>

@@ -386,11 +386,13 @@ var model = {
                         if (excelLength == sum) {
                             callback(null, importData);
                         } else {
+                            var resData = [];
+                            var obj = {};
                             err = "excel row do not match with selected range";
-                            callback(null, {
-                                error: err,
-                                success: importData
-                            });
+                            obj.error = err;
+                            obj.success = importData;
+                            resData.push(obj);
+                            callback(null, resData);
                         }
                     } else {
                         callback(null, importData);
@@ -398,7 +400,7 @@ var model = {
 
                 },
                 function (importData, callback) {
-                    if (importData.error) {
+                    if (importData[0].error) {
                         callback(null, importData);
                     } else {
                         if (data.resultType == "knockout" && data.playerType == "individual") {
@@ -965,8 +967,6 @@ var model = {
                     });
                 },
                 function (match, callback) {
-                    console.log(match);
-                    var excelData = [];
                     async.concatSeries(match, function (mainData, callback) {
                             var obj = {};
                             obj["MATCH ID"] = mainData.matchId;
@@ -987,10 +987,9 @@ var model = {
                                 obj["WEIGHT CATEGORIES"] = "";
                             }
                             var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
-                            console.log("date", dateTime);
                             obj.DATE = dateTime;
                             obj.TIME = mainData.scheduleTime;
-                            if (mainData.opponentsSingle[0]) {
+                            if (mainData.opponentsSingle.length > 0) {
                                 obj["SFAID 1"] = mainData.opponentsSingle[0].athleteId.sfaId;
                                 if (mainData.opponentsSingle[0].athleteId.middleName) {
                                     obj["PARTICIPANT 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.middleName + " " + mainData.opponentsSingle[0].athleteId.surname;
@@ -999,21 +998,24 @@ var model = {
                                 }
                                 obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
                                 if (mainData.resultsCombat) {
-                                    if (mainData.opponentsSingle[0].athleteId._id.equals(mainData.resultsCombat.winnner.player)) {
+                                    if (mainData.opponentsSingle[0].athleteId._id.equals(mainData.resultsCombat.winnner[0].player)) {
                                         obj["RESULT 1"] = "Won";
                                     } else {
                                         obj["RESULT 1"] = "Lost";
                                     }
                                     var i;
                                     for (i = 0; i < mainData.resultsCombat.players[0].sets.length; i++) {
-                                        if (i = 0) {
-                                            obj["SCORE 1"] = "Set-" + i + "-" + mainData.resultsCombat.players[0].sets[i].points;
+                                        if (i == 0) {
+                                            obj["SCORE 1"] = "Set" + i + "-" + mainData.resultsCombat.players[0].sets[i].point;
+                                            obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets[i];
 
                                         } else {
-                                            obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set-" + i + "-" + mainData.resultsCombat.players[0].sets[i].points;
+                                            obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsCombat.players[0].sets[i].point;
+                                            obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + mainData.resultsCombat.players[0].sets[i];
                                         }
+
                                     }
-                                    obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets;
+                                    // obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets;
                                 }
                             } else {
                                 obj["SFAID 1"] = "";
@@ -1021,9 +1023,10 @@ var model = {
                                 obj["SCHOOL 1"] = "";
                                 obj["RESULT 1"] = "";
                                 obj["SCORE 1"] = "";
+                                obj["DATA POINTS 1"] = "";
                             }
 
-                            if (mainData.opponentsSingle[1]) {
+                            if (mainData.opponentsSingle.length > 1) {
                                 obj["SFAID 2"] = mainData.opponentsSingle[1].athleteId.sfaId;
 
                                 if (mainData.opponentsSingle[0].athleteId.middleName) {
@@ -1034,21 +1037,22 @@ var model = {
                                 obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
                                 if (mainData.resultsCombat) {
 
-                                    if (mainData.opponentsSingle[1].athleteId._id.equals(mainData.resultsCombat.winnner.player)) {
+                                    if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsCombat.winnner[0].player) {
                                         obj["RESULT 2"] = "Won";
                                     } else {
                                         obj["RESULT 2"] = "Lost";
                                     }
                                     var i;
                                     for (i = 0; i < mainData.resultsCombat.players[1].sets.length; i++) {
-                                        if (i = 0) {
-                                            obj["SCORE 2"] = "Set-" + i + "-" + mainData.resultsCombat.players[1].sets[i].points;
-
+                                        if (i == 0) {
+                                            obj["SCORE 2"] = "Set" + i + "-" + mainData.resultsCombat.players[1].sets[i].point;
+                                            obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets[i];
                                         } else {
-                                            obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set-" + i + "-" + mainData.resultsCombat.players[1].sets[i].points;
+                                            obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + i + "-" + mainData.resultsCombat.players[1].sets[i].point;
+                                            obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + mainData.resultsCombat.players[1].sets[i];
                                         }
                                     }
-                                    obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets;
+                                    // obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets[;
                                 }
                             } else {
                                 obj["SFAID 2"] = "";
@@ -1056,16 +1060,14 @@ var model = {
                                 obj["SCHOOL 2"] = "";
                                 obj["RESULT 2"] = "";
                                 obj["SCORE 2"] = "";
+                                obj["DATA POINTS 2"] = "";
                             }
-
-                            excelData.push(obj);
-
-                            callback(null, excelData);
+                            callback(null, obj);
 
                         },
                         function (err, singleData) {
-                            // console.log("singleData", singleData);
                             Config.generateExcel("KnockoutIndividual", singleData, res);
+
                         });
 
                 },
