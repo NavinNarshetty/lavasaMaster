@@ -990,30 +990,40 @@ var model = {
                             console.log("date", dateTime);
                             obj.DATE = dateTime;
                             obj.TIME = mainData.scheduleTime;
-                            obj["SFAID 1"] = mainData.opponentsSingle[0].athleteId.sfaId;
-                            if (mainData.opponentsSingle[0].athleteId.middleName) {
-                                obj["PARTICIPANT 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.middleName + " " + mainData.opponentsSingle[0].athleteId.surname;
-                            } else {
-                                obj["PARTICIPANT 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
-                            }
-                            obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
-                            if (mainData.resultsCombat) {
-                                if (mainData.opponentsSingle[0].athleteId._id.equals(mainData.resultsCombat.winnner.player)) {
-                                    obj["RESULT 1"] = "Won";
+                            if (mainData.opponentsSingle[0]) {
+                                obj["SFAID 1"] = mainData.opponentsSingle[0].athleteId.sfaId;
+                                if (mainData.opponentsSingle[0].athleteId.middleName) {
+                                    obj["PARTICIPANT 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.middleName + " " + mainData.opponentsSingle[0].athleteId.surname;
                                 } else {
-                                    obj["RESULT 1"] = "Lost";
+                                    obj["PARTICIPANT 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
                                 }
-                                var i;
-                                for (i = 0; i < mainData.resultsCombat.players[0].sets.length; i++) {
-                                    if (i = 0) {
-                                        obj["SCORE 1"] = "Set-" + i + "-" + mainData.resultsCombat.players[0].sets[i].points;
-
+                                obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
+                                if (mainData.resultsCombat) {
+                                    if (mainData.opponentsSingle[0].athleteId._id.equals(mainData.resultsCombat.winnner.player)) {
+                                        obj["RESULT 1"] = "Won";
                                     } else {
-                                        obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set-" + i + "-" + mainData.resultsCombat.players[0].sets[i].points;
+                                        obj["RESULT 1"] = "Lost";
                                     }
-                                }
-                                obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets;
+                                    var i;
+                                    for (i = 0; i < mainData.resultsCombat.players[0].sets.length; i++) {
+                                        if (i = 0) {
+                                            obj["SCORE 1"] = "Set-" + i + "-" + mainData.resultsCombat.players[0].sets[i].points;
 
+                                        } else {
+                                            obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set-" + i + "-" + mainData.resultsCombat.players[0].sets[i].points;
+                                        }
+                                    }
+                                    obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets;
+                                }
+                            } else {
+                                obj["SFAID 1"] = "";
+                                obj["PARTICIPANT 1"] = "";
+                                obj["SCHOOL 1"] = "";
+                                obj["RESULT 1"] = "";
+                                obj["SCORE 1"] = "";
+                            }
+
+                            if (mainData.opponentsSingle[1]) {
                                 obj["SFAID 2"] = mainData.opponentsSingle[1].athleteId.sfaId;
 
                                 if (mainData.opponentsSingle[0].athleteId.middleName) {
@@ -1022,22 +1032,30 @@ var model = {
                                     obj["PARTICIPANT 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
                                 }
                                 obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
+                                if (mainData.resultsCombat) {
 
-                                if (mainData.opponentsSingle[1].athleteId._id.equals(mainData.resultsCombat.winnner.player)) {
-                                    obj["RESULT 2"] = "Won";
-                                } else {
-                                    obj["RESULT 2"] = "Lost";
-                                }
-                                var i;
-                                for (i = 0; i < mainData.resultsCombat.players[1].sets.length; i++) {
-                                    if (i = 0) {
-                                        obj["SCORE 2"] = "Set-" + i + "-" + mainData.resultsCombat.players[1].sets[i].points;
-
+                                    if (mainData.opponentsSingle[1].athleteId._id.equals(mainData.resultsCombat.winnner.player)) {
+                                        obj["RESULT 2"] = "Won";
                                     } else {
-                                        obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set-" + i + "-" + mainData.resultsCombat.players[1].sets[i].points;
+                                        obj["RESULT 2"] = "Lost";
                                     }
+                                    var i;
+                                    for (i = 0; i < mainData.resultsCombat.players[1].sets.length; i++) {
+                                        if (i = 0) {
+                                            obj["SCORE 2"] = "Set-" + i + "-" + mainData.resultsCombat.players[1].sets[i].points;
+
+                                        } else {
+                                            obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set-" + i + "-" + mainData.resultsCombat.players[1].sets[i].points;
+                                        }
+                                    }
+                                    obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets;
                                 }
-                                obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets;
+                            } else {
+                                obj["SFAID 2"] = "";
+                                obj["PARTICIPANT 2"] = "";
+                                obj["SCHOOL 2"] = "";
+                                obj["RESULT 2"] = "";
+                                obj["SCORE 2"] = "";
                             }
 
                             excelData.push(obj);
@@ -1046,8 +1064,8 @@ var model = {
 
                         },
                         function (err, singleData) {
+                            // console.log("singleData", singleData);
                             Config.generateExcel("KnockoutIndividual", singleData, res);
-                            callback(null, singleData);
                         });
 
                 },

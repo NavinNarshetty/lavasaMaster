@@ -1653,7 +1653,6 @@ myApp.controller('SportsCtrl', function ($scope, TemplateService, NavigationServ
     }
 })
 
-
 //Detail sports
 
 myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
@@ -1792,7 +1791,6 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
     }
 
 })
-
 
 //team sport
 myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr, $uibModal) {
@@ -2028,7 +2026,6 @@ myApp.controller('StudentTeamCtrl', function ($scope, TemplateService, Navigatio
     $scope.viewTable();
 
 })
-
 
 //table-individualteamsport
 
@@ -2544,7 +2541,6 @@ myApp.controller('ViewSchoolCtrl', function ($scope, TemplateService, Navigation
     };
     $scope.getOneSchoolById();
 })
-
 
 myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams) {
         //old school filter view
@@ -3902,6 +3898,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         }
 
     })
+
     .controller('ExcelUploadCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("excel-upload");
