@@ -50,8 +50,8 @@
                         not appear in the list kindly add the name of your college and proceed. </p>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    <label class="para2 sfa-padd sf-list">  SFA ID or Name:</label>
-                    <label for="" class="para2 sfa-padd sf-list" ng-if="sfaCity == 'Hyderabad'">Name:</label>
+                    <label class="para2 sfa-padd sf-list ng-if=" sfaCity=='Mumbai' "">  SFA ID or Name:</label>
+                    <label class="para2 sfa-padd sf-list" ng-if="sfaCity == 'Hyderabad'">Name:</label>
                 </div>
                 <div class="col-md-8 col-sm-8 col-xs-12" ng-if="sfaCity == 'Mumbai'">
                     <ui-select name="idSfa" id="idSfa" theme="bootstrap" ng-model="sfaId" ng-change="searchSFA($select.selected.sfaid)">
