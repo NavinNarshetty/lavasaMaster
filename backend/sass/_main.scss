@@ -888,6 +888,12 @@
      overflow-y: auto;
  }
 
+ .export-modal {
+     overflow-y: auto;
+     position: relative;
+     padding: 15px;
+ }
+
  .form-builder {
      border: 1px solid $body-color-font;
      position: relative;

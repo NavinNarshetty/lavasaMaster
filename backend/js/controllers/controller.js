@@ -4021,8 +4021,9 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             });
         }
 
+        var modal;
         $scope.openExportExcel = function () {
-            $uibModal.open({
+            modal = $uibModal.open({
                 animation: true,
                 scope: $scope,
                 backdrop: 'static',
@@ -4047,10 +4048,75 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.qwerty = data;
             console.log("data", data);
             $scope.url = "match/generateExcel";
-            NavigationService.generateExcelWithData($scope.url, $scope.qwerty, function (data) {
-                window.location.href = adminurl + $scope.url;
+
+            NavigationService.generateExcelWithData($scope.url, $scope.qwerty, modal, function (data, modal) {
+                modal.close();
             });
         }
+
+        $scope.getAllSportList = function (data) {
+            $scope.url = "SportsList/search";
+            console.log(data);
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                $scope.sportitems = data.data.results;
+
+            });
+        }
+
+        $scope.searchSportList = function (data) {
+            $scope.draws = data;
+        }
+
+        $scope.getAllAge = function (data) {
+            $scope.url = "AgeGroup/search";
+            console.log(data);
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                $scope.ageitems = data.data.results;
+
+            });
+        }
+
+        $scope.searchAge = function (data) {
+            $scope.draw = data;
+        }
+
+        $scope.getAllWeight = function (data) {
+            $scope.url = "Weight/search";
+            console.log(data);
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data.value", data);
+                $scope.weightitems = data.data.results;
+
+            });
+        }
+
+        $scope.searchWeight = function (data) {
+            $scope.drawing = data;
+        }
+
+
+        $scope.genderList = [];
+
+        $scope.genderList = [{
+            name: 'Male'
+        }, {
+            name: 'Female'
+        }]
+
+        $scope.sporttypeList = [];
+
+        $scope.ageList = [];
+
+
+        $scope.weightList = [];
 
     })
 

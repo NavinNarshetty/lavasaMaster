@@ -314,13 +314,13 @@ myApp.factory('NavigationService', function ($http) {
             });
         },
 
-        generateExcelWithData: function (url, data, callback) {
+        generateExcelWithData: function (url, data, modal, callback) {
             console.log('from Controller', data);
             $http.post(adminurl + url, data, {
                 responseType: 'arraybuffer'
             }).then(function (response) {
                 var header = response.headers('Content-Disposition')
-                var fileName = "Registration" + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
+                var fileName = "knockoutIndividual" + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
                 console.log(fileName);
 
                 var blob = new Blob([response.data], {
@@ -332,6 +332,8 @@ myApp.factory('NavigationService', function ($http) {
                     href: objectUrl,
                     download: fileName
                 })[0].click();
+                callback("", modal);
+
             })
         },
 
