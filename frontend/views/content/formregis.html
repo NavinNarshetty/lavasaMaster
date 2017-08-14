@@ -51,6 +51,7 @@
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
                     <label class="para2 sfa-padd sf-list">  SFA ID or Name:</label>
+                    <label for="" class="para2 sfa-padd sf-list" ng-if="sfaCity == 'Hyderabad'">Name:</label>
                 </div>
                 <div class="col-md-8 col-sm-8 col-xs-12" ng-if="sfaCity == 'Mumbai'">
                     <ui-select name="idSfa" id="idSfa" theme="bootstrap" ng-model="sfaId" ng-change="searchSFA($select.selected.sfaid)">
@@ -846,7 +847,7 @@
                                 <span ng-if="sfaCity == 'Mumbai'">1306, Panchratna Building, Opera House (Next
                                 to Roxy Cinema), Charni Road, Mumbai – 400004</span>
                                 <span ng-if="sfaCity == 'Hyderabad'">C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor, Advant Delta, Plot No. 4,
-                                    Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081. (Head Office: SFA Events
+                                    Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081.<br> (Head Office: SFA Events
                                     Pvt. Ltd., Panchratna Building, Opera House, Mumbai - 400004)</span>
                             </p>
                         </div>
