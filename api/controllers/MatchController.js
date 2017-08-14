@@ -85,7 +85,7 @@ var controller = {
     generateExcel: function (req, res) {
         console.log("req", req.body);
         if (req.body.resultType == "knockout" && req.body.playerType == "individual") {
-            Match.generateExcelKnockoutIndividual(req.body, res.callback);
+            Match.generateExcelKnockoutIndividual(req.body, res);
         } else {
             res.json({
                 "data": "Body not Found",
