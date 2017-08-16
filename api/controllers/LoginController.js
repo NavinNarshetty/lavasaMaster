@@ -18,6 +18,7 @@ var controller = {
             });
         }
     },
+
     logout: function (req, res) {
         if (req.body) {
             Login.tokenRemove(req.body, res.callback);

@@ -79,5 +79,16 @@ var controller = {
     generateExcel: function (req, res) {
         Sport.generateExcel(res);
     },
+
+    getOne: function (req, res) {
+        if (req.body) {
+            Sport.getOne(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
 };
 module.exports = _.assign(module.exports, controller);

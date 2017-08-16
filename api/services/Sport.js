@@ -124,6 +124,24 @@ var model = {
         return pipeline;
     },
 
+    getOne: function (data, callback) {
+        var deepSearch = "sportslist.sportsListSubCategory sport.ageGroup sport.weight ";
+        Sport.findOne({
+            _id: data._id
+        }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else {
+                if (_.isEmpty(found)) {
+                    callback(null, []);
+                } else {
+                    callback(null, found);
+                }
+            }
+        });
+
+    },
+
     getMixAggregatePipeLine: function (data) {
 
         var pipeline = [
