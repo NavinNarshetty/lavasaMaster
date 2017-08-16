@@ -21,6 +21,17 @@ $green-graph: #0edb87 !default; // COLOR VARIABLES END
 
 body {
     padding-top: 60px;
+
+    ::-webkit-scrollbar {
+      width: 10px;
+     height: 10px;
+   }
+    ::-webkit-scrollbar-track {
+     background-color: transparent;
+   }
+    ::-webkit-scrollbar-thumb {
+     background-color: $grey;
+   }
 }
 
 img.loading {
@@ -144,6 +155,10 @@ header {
     margin: 0 auto;
 }
 
+.mtb-10{
+  margin: 10px 0;
+}
+
 .p-clear {
     padding: 0;
 }
@@ -212,8 +227,10 @@ header {
 }
 // SWIPER
 .digital-swiper {
-  position: relative;
   margin: 15px 0;
+  position: relative;
+  overflow: auto;
+  white-space: nowrap;
   .swiper-slide {
     background-color: transparent;
     font-size: 14px;
@@ -261,7 +278,7 @@ header {
 }
 // BUTTONS END
 // MATCH START PAGE
-.matchstart-page {
+.matchstart-page, .racketscore-page {
     min-height: calc(100vh - 100px);
     position: relative;
 }
@@ -340,7 +357,9 @@ header {
 }
 
 .matchstart-uploadpic{
-  margin: 0;
+  margin: 10px;
+  margin-left: 0;
+  display: inline-block;
   background-color: transparent;
 }
 
@@ -481,6 +500,19 @@ header {
   margin: 20px 0;
 }
 // COMBAT-SCORE PAGE END
+// RACKET-SCORE PAGE
+.datapoint-name{
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  @include transform(translateY(-50%));
+}
+.addset{
+  margin: 20px;
+  text-align: right;
+}
+// RACKET-SCORE PAGE END
+
 // /*******************************END OF SCSSS ******************************
 // /*******************************END OF SCSSS ******************************
 // /*******************************END OF SCSSS ******************************

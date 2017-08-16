@@ -1,4 +1,4 @@
-<div class="combatscore-page">
+<div class="racketscore-page">
   <div class="matchstart-header clearfix">
     <div class="container">
       <div class="pull-right">
@@ -32,17 +32,55 @@
       </div>
       <!-- ATHLETE SCORE -->
       <div class="combatscore-sets">
+        <div class="addset">
+          <button class="btn btn-green-outline" ng-click="addSet();">Add Set</button>
+        </div>
         <div class="row">
           <div class="col-md-6 col-sm-6" ng-repeat= "player in match.players track by $index">
-            <div class="combatscore-scorecard" ng-repeat = "set in player.sets track by $index">
+            <div class="combatscore-scorecard" ng-repeat = "set in player.sets track by $index" >
               <div class="scoring-set form-group">
-                <label for="player1score" class="text-uppercase" ng-if="player.sets.length<=1">SCORE</label>
-                <label for="player1score" class="text-uppercase" ng-if="player.sets.length>1">SET <span>{{$index+1}}</span></label>
-                <!-- <pre>{{player.sets.length}}</pre> -->
-                <div class="relate">
-                  <span class="score-buttons score-decrement" ng-click="decrementScore(set,'point');"><i class="fa fa-minus"></i></span>
-                  <input type="number" ng-model="set.point" id="player1score" min="0" class="score-number display-inline form-control">
-                  <span class="score-buttons score-increment" ng-click="incrementScore(set,'point');"><i class="fa fa-plus"></i></span>
+                <label  class="text-uppercase">SET <span>{{$index+1}}</span></label>
+                <div class="datapoints-set">
+                <!-- ACE DATA POINT -->
+                <div class="relate mtb-10">
+                  <label class="datapoint-name">Ace</label>
+                  <span class="score-buttons score-decrement" ng-click="decrementScore(set,'ace');"><i class="fa fa-minus"></i></span>
+                  <input type="number" ng-model="set.ace" min="0" class="score-number display-inline form-control">
+                  <span class="score-buttons score-increment" ng-click="incrementScore(set,'ace');"><i class="fa fa-plus"></i></span>
+                </div>
+                <!-- ACE DATA POINT -->
+                <!-- WINNER DATA POINT -->
+                <div class="relate mtb-10">
+                  <label class="datapoint-name">Winner</label>
+                  <span class="score-buttons score-decrement" ng-click="decrementScore(set,'winner');"><i class="fa fa-minus"></i></span>
+                  <input type="number" ng-model="set.winner" min="0" class="score-number display-inline form-control">
+                  <span class="score-buttons score-increment" ng-click="incrementScore(set,'winner');"><i class="fa fa-plus"></i></span>
+                </div>
+                <!-- WINNER DATA POINT -->
+                <!-- UNFORCED ERROR DATA POINT -->
+                <div class="relate mtb-10">
+                  <label class="datapoint-name">Unforced Error</label>
+                  <span class="score-buttons score-decrement" ng-click="decrementScore(set,'unforcedError');"><i class="fa fa-minus"></i></span>
+                  <input type="number" ng-model="set.unforcedError" min="0" class="score-number display-inline form-control">
+                  <span class="score-buttons score-increment" ng-click="incrementScore(set,'unforcedError');"><i class="fa fa-plus"></i></span>
+                </div>
+                <!-- UNFORCED ERROR DATA POINT -->
+                <!-- SERVICE ERROR DATA POINT -->
+                <div class="relate mtb-10">
+                  <label class="datapoint-name">Service Error</label>
+                  <span class="score-buttons score-decrement" ng-click="decrementScore(set,'serviceError');"><i class="fa fa-minus"></i></span>
+                  <input type="number" ng-model="set.serviceError" min="0" class="score-number display-inline form-control">
+                  <span class="score-buttons score-increment" ng-click="incrementScore(set,'serviceError');"><i class="fa fa-plus"></i></span>
+                </div>
+                <!-- SERVICE ERROR DATA POINT -->
+                <!-- SERVICE ERROR DATA POINT -->
+                <div class="relate mtb-10">
+                  <label class="datapoint-name">Double Faults</label>
+                  <span class="score-buttons score-decrement" ng-click="decrementScore(set,'doubleFaults');"><i class="fa fa-minus"></i></span>
+                  <input type="number" ng-model="set.doubleFaults" min="0" class="score-number display-inline form-control">
+                  <span class="score-buttons score-increment" ng-click="incrementScore(set,'doubleFaults');"><i class="fa fa-plus"></i></span>
+                </div>
+                <!-- SERVICE ERROR DATA POINT -->
                 </div>
               </div>
             </div>
@@ -55,11 +93,9 @@
         <div class="combatscore-pics">
           <div class="row">
           <div class="col-md-offset-2 col-md-4 col-sm-6">
-            <div class="scorescard-swiper">  
             <div class="combatscore-uploadpic text-uppercase">
               <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
             </div>
-          </div>
           </div>
           <div class="col-md-4 col-sm-6">
             <div class="combatscore-uploadpic text-uppercase "  ng-hide="showScoreSheet">

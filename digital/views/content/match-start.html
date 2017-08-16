@@ -38,18 +38,19 @@
           <upload-image ng-model="matchDetails.resultsCombat.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
         </div>
         <div class="digital-swiper scorescard-swiper" ng-show="showMatchPhoto" ng-if="matchDetails.resultsCombat.matchPhoto.length>0">
-          <div class="swiper-container">
+          <div class="matchstart-uploadpic text-uppercase" ng-repeat= "pic in matchDetails.resultsCombat.matchPhoto track by $index">
+            <span class="remove-pic" ng-click="removeMatchScore(pic)"><i class="fa fa-times"></i></span>
+            <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
+          </div>
+          <!-- <div class="swiper-container">
             <div class="swiper-wrapper">
               <div class="swiper-slide" ng-repeat="pic in matchDetails.resultsCombat.matchPhoto track by $index">
-                <div class="matchstart-uploadpic text-uppercase">
-                  <span class="remove-pic" ng-click="removeMatchScore(pic)"><i class="fa fa-times"></i></span>
-                  <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
-                </div>
+
               </div>
             </div>
           </div>
           <div class="swiper-button-prev scorecard-prev"><span class="fa fa-chevron-left"></span></div>
-          <div class="swiper-button-next scorecard-next"><span class="fa fa-chevron-right"></span></div>
+          <div class="swiper-button-next scorecard-next"><span class="fa fa-chevron-right"></span></div> -->
         </div>
         <div class="matchstart-score">
           <button type="button" class="btn btn-green-outline btn-scoring" ui-sref="scorecombat">start scoring</button>
