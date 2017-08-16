@@ -57,7 +57,8 @@ var model = {
         async.waterfall([
             function (callback) {
                 Registration.findOne({
-                    sfaID: data.sfaid
+                    sfaID: data.sfaid,
+                    status: "Verified"
                 }).exec(function (err, found) {
                     if (err) {
                         console.log(err);
@@ -106,6 +107,7 @@ var model = {
                 console.log(data);
                 Registration.findOne({
                     sfaID: data.sfaid,
+                    status: "Verified",
                     password: data.password
                 }).exec(function (err, found) {
                     if (err) {
@@ -133,7 +135,8 @@ var model = {
         async.waterfall([
             function (callback) {
                 Athelete.findOne({
-                    sfaId: data.sfaid
+                    sfaId: data.sfaid,
+                    status: "Verified"
                 }).exec(function (err, found) {
                     if (err) {
                         console.log(err);
@@ -203,6 +206,7 @@ var model = {
                         {
                             $match: {
                                 "sfaId": data.sfaid,
+                                "status": "Verified",
                                 "password": data.password
                             }
                         }
@@ -235,6 +239,7 @@ var model = {
         if (data.type == "school" && sfatype == 'S') {
             Registration.findOne({
                 sfaID: data.sfaid,
+                status: "Verified",
                 email: {
                     $regex: data.email,
                     $options: "i"
@@ -291,6 +296,7 @@ var model = {
         } else if (data.type == "athlete" && sfatype == 'A') {
             Athelete.findOne({
                 sfaId: data.sfaid,
+                status: "Verified",
                 email: {
                     $regex: data.email,
                     $options: "i"

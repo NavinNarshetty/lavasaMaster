@@ -1100,14 +1100,7 @@ var model = {
                 callback(null, singleData);
             });
 
-    }
-
-
-
-
-
-
-
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);
