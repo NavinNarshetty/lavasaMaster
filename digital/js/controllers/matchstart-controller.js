@@ -8,6 +8,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     $scope.matchData = {};
     $scope.matchDetails = {};
     $scope.matchPics = [];
+    $scope.disableWinner = false;
     // VARIABLE INITIALISE END
 
     // INITIALSE SWIPER
@@ -37,24 +38,25 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
         NavigationService.getOneMatch($scope.matchData, function(data) {
             if (data.value == true) {
                 $scope.matchDetails = data.data;
-                // INITIALISE RESULTS
-                if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
-                    $scope.matchDetails.resultsCombat = {
-                        "players": [],
-                        "matchPhoto": [],
-                        "scoreSheet": []
-                    }
-                    _.each($scope.matchDetails.players, function(n, key) {
-                        $scope.matchDetails.resultsCombat.players[key] = {
-                            "player": n._id,
-                            "noShow": false,
-                            "walkover": false,
-                            "sets": [{
-                                point: 0,
-                            }]
+                $scope.matchDetails.matchId = $scope.matchData.matchId;
+                    // INITIALISE RESULTS
+                    if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
+                        $scope.matchDetails.resultsCombat = {
+                            "players": [],
+                            "matchPhoto": [],
+                            "scoreSheet": []
                         }
-                    })
-                }
+                        _.each($scope.matchDetails.players, function(n, key) {
+                            $scope.matchDetails.resultsCombat.players[key] = {
+                                "player": n._id,
+                                "noShow": false,
+                                "walkover": false,
+                                "sets": [{
+                                    point: 0,
+                                }]
+                            }
+                        })
+                    }
                 console.log($scope.matchDetails, 'match');
                 // INITIALISE RESULTS END
             } else {
@@ -65,8 +67,21 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     $scope.getOneMatch();
     // GET MATCH END
     // API CALLN INTEGRATION END
-
-    // NO MATCH
+    // GET MATCH SCORESHEET
+    $scope.getMatchPhoto = function(detail) {
+        console.log(detail, 'pic return');
+        $scope.showMatchPhoto = true;
+        $scope.swiperInit();
+    };
+    // GET MATCH SCORESHEET END
+    // REMOVE MATCH SCORESHEET
+    $scope.removeMatchScore = function(pic) {
+            _.remove($scope.matchDetails.resultsCombat.matchPhoto, function(n) {
+                return n.image === pic.image;
+            })
+        }
+        // REMOVE MATCH SCORESHEET END
+        // NO MATCH
     $scope.setNoMatch = function() {
             _.each($scope.matchDetails.resultsCombat.players, function(player) {
                 player.noShow = true;
@@ -77,16 +92,6 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
         // NO MATCH END
         // SAVE WINNER
         // SAVE WINNER  END
-
-    $scope.players = [{
-        id: '1',
-        name: 'Shiva Singh',
-        school: 'Jamnabai school'
-    }, {
-        id: '2',
-        name: 'Raj Shah',
-        school: 'Jamnabai school'
-    }];
     $scope.showNoMatch = function() {
         $uibModal.open({
             animation: true,
@@ -98,38 +103,5 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
             windowClass: 'match-nomatch'
         })
     }
-
-    $scope.match = {
-        id: 123,
-        sfaid: 123456,
-        sport: 'judo',
-        round: 'round 1',
-        age: 'u-16',
-        gender: 'male',
-        players: [{
-            player: '1',
-            sfaid: '1234',
-            noShow: true,
-            walkover: true,
-            color: 'blue',
-            name: 'Shiva Singh',
-            school: 'Jamnabai school',
-            sets: [{
-                point: 0,
-            }]
-        }, {
-            player: '2',
-            sfaid: '1234',
-            color: 'red',
-            noShow: true,
-            walkover: true,
-            name: 'Raj Shah',
-            school: 'Jamnabai school',
-            sets: [{
-                point: 0,
-            }]
-        }],
-        winner: {},
-    };
 
 })

@@ -1,6 +1,6 @@
 myApp.controller('CombatScoreCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal) {
         $scope.template = TemplateService.getHTML("content/score-combat.html");
-        TemplateService.title = "Sport Match"; //This is the Title of the Website
+        TemplateService.title = "Score Combat"; //This is the Title of the Website
         $scope.navigation = NavigationService.getNavigation();
 
         // VARIABLE INITIALISE
@@ -55,17 +55,25 @@ myApp.controller('CombatScoreCtrl', function ($scope, TemplateService, Navigatio
         $scope.reasons = ['WP','RSC','RSC-I','DSQ','KO','WO','NC'];
 
         // SCORE INCREMENT
-        $scope.incrementScore = function(set){
+        $scope.incrementScore = function(set, model){
           $scope.set = set;
-          $scope.set.point = $scope.set.point + 1;
+          switch (model) {
+            case 'point':
+              $scope.set.point = $scope.set.point + 1;
+            break;
+          }
           console.log("increment");
         };
         // SCORE INCREMENT END
         // SCORE DECREMENT
-        $scope.decrementScore = function(set){
+        $scope.decrementScore = function(set, model){
           $scope.set = set;
-          if($scope.set.point >0 ){
-            $scope.set.point = $scope.set.point - 1;
+          switch (model) {
+            case 'point':
+            if($scope.set.point >0 ){
+              $scope.set.point = $scope.set.point - 1;
+            }
+            break;
           }
           console.log("decrement");
         };

@@ -54,4 +54,5 @@ module.exports = [
   'digital/js/controllers/language-controller.js',
   'digital/js/controllers/matchstart-controller.js',
   'digital/js/controllers/combatscore-controller.js',
+  'digital/js/controllers/racketscore-controller.js',
 ];
