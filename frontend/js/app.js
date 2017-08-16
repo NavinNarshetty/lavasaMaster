@@ -326,6 +326,14 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         $urlRouterProvider.otherwise("/championship");
     } else if (window.location.origin == "http://mumbaicollege.sfanow.in") {
         $urlRouterProvider.otherwise("/register");
+    } else if (window.location.origin == "http://hyderabadschool.sfanow.in") {
+        $urlRouterProvider.otherwise("/championship");
+    } else if (window.location.origin == "http://hyderabadcollege.sfanow.in") {
+        $urlRouterProvider.otherwise("/register");
+    } else if (window.location.origin == "http://ahmedabadschool.sfanow.in") {
+        $urlRouterProvider.otherwise("/championship");
+    } else if (window.location.origin == "http://ahmedabadcollege.sfanow.in") {
+        $urlRouterProvider.otherwise("/register");
     } else if (window.location.origin == "http://testmumbaischool.sfanow.in") {
         $urlRouterProvider.otherwise("/championship");
     } else if (window.location.origin == "http://testmumbaicollege.sfanow.in") {

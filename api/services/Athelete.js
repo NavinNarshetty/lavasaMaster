@@ -1153,7 +1153,7 @@ var model = {
                             emailData.bcc1 = [{
                                 email: "payments@sfanow.in"
                             }, {
-                                email: "venkatesh.rathod@sfanow.in"
+                                email: "admin@sfanow.in"
                             }];
                             emailData.filename = "receiptAthelete.ejs";
                             emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.year + ".";
