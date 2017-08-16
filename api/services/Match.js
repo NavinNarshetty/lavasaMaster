@@ -49,10 +49,10 @@ schema.plugin(deepPopulate, {
             select: '_id sportslist gender ageGroup'
         },
         "opponentsSingle": {
-            select: '_id athleteId sportsListSubCategory createdBy '
+            select: '_id athleteId sportsListSubCategory createdBy'
         },
         "opponentsSingle.athleteId": {
-            select: '_id sfaId firstName middleName surname school photograph dob city '
+            select: '_id sfaId firstName middleName surname school photograph dob city'
         },
         "opponentsSingle.athleteId.school": {
             select: '_id name'
@@ -61,10 +61,10 @@ schema.plugin(deepPopulate, {
             select: '_id name teamId schoolName studentTeam createdBy sport school'
         },
         "prevMatch": {
-            select: '_id incrementalId '
+            select: '_id incrementalId'
         },
         "nextMatch": {
-            select: '_id incrementalId '
+            select: '_id incrementalId'
         },
     }
 });
@@ -78,7 +78,7 @@ schema.plugin(timestamps);
 // });
 module.exports = mongoose.model('Match', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "sport", "sport", "opponentsSingle", "opponentsSingle"));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "sport", "sport"));
 var model = {
 
     getAggregatePipeline: function (data) {
@@ -163,7 +163,7 @@ var model = {
             field: data.field,
             filters: {
                 keyword: {
-                    fields: ['matchId', 'round', 'sport'],
+                    fields: ['matchId', 'round'],
                     term: data.keyword
                 }
             },
@@ -173,67 +173,45 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        var matchObj = {};
-        if (data.keyword == "") {
-            var pipeline = Match.getAggregatePipeline(data);
-            Match.aggregate(pipeline, function (err, result) {
-                if (err) {
-                    console.log(err);
-                    callback(null, err);
-                } else {
-                    if (_.isEmpty(result)) {
-                        var count = 0;
-                        console.log("count", count);
-
-                        var data = {};
-                        data.options = options;
-
-                        data.results = result;
-                        data.total = count;
-                        callback(null, data);
-                    } else {
-                        var count = result.length;
-                        console.log("count", count);
-
-                        var data = {};
-                        data.options = options;
-                        data.results = result;
-                        data.total = count;
-                        callback(null, data);
-
+        var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+        if (_.isEmpty(data.keyword)) {
+            var matchObj = {};
+        } else {
+            var matchObj = {
+                $or: [{
+                    round: {
+                        $regex: data.keyword,
+                        $options: "i"
+                    },
+                    matchId: {
+                        $regex: data.keyword,
+                        $options: "i"
+                    },
+                    "sport.sportslist.name": {
+                        $regex: data.keyword,
+                        $options: "i"
                     }
+                }]
+            };
+        }
+        console.log("matchObj", matchObj);
+        console.log("matchObj", data.keyword);
+        Match.find(matchObj)
+            .sort({
+                createdAt: -1
+            })
+            .order(options)
+            .keyword(options)
+            .deepPopulate(deepSearch)
+            .page(options, function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback(null, "Data is empty");
+                } else {
+                    callback(null, found);
                 }
             });
-        } else {
-            var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId.school opponentsTeam";
-            matchObj = {
-                round: {
-                    $regex: data.keyword,
-                    $options: "i"
-                },
-                matchId: {
-                    $regex: data.keyword,
-                    $options: "i"
-                }
-            };
-            Match.find(matchObj)
-                .sort({
-                    createdAt: -1
-                })
-                .order(options)
-                .keyword(options)
-                .deepPopulate(deepSearch)
-                .page(options, function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback(null, "Data is empty");
-                    } else {
-                        callback(null, found);
-                    }
-                });
-
-        }
     },
 
     getOne: function (data, callback) {
@@ -767,7 +745,6 @@ var model = {
                                 async.waterfall([
                                         function (callback) {
                                             var paramData = {};
-                                            // console.log("event", singleData);
                                             paramData.name = singleData["EVENT "];
                                             paramData.age = singleData["AGE GROUP"];
                                             if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
@@ -800,7 +777,6 @@ var model = {
                                                 } else {
                                                     var paramData = {};
                                                     paramData.participant = singleData["SFA ID"];
-                                                    // console.log("paramData sfa", paramData);
                                                     paramData.sport = singleData.SPORT;
                                                     Match.getAthleteId(paramData, function (err, complete) {
                                                         if (err || _.isEmpty(complete)) {
@@ -812,7 +788,6 @@ var model = {
                                                             });
                                                         } else {
                                                             singleData["PARTICIPANT 1"] = complete._id;
-                                                            // console.log("sfa", singleData["PARTICIPANT 1"]);
                                                             callback(null, singleData);
                                                         }
                                                     });
@@ -834,13 +809,7 @@ var model = {
                                                 paramData.scheduleTime = singleData.TIME;
 
                                                 callback(null, paramData);
-                                                // Match.saveMatch(paramData, function (err, complete) {
-                                                //     if (err || _.isEmpty(complete)) {
-                                                //         callback(err, null);
-                                                //     } else {
-                                                //         callback(null, complete);
-                                                //     }
-                                                // });
+
                                             }
                                         }
                                     ],
@@ -854,7 +823,13 @@ var model = {
 
                             }, function (err, singleData) {
                                 console.log("singleData..............", paramData);
-                                callback(null, singleData);
+                                Match.saveMatch(paramData, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
                             });
 
                         }, function (err, singleData) {
@@ -1234,6 +1209,118 @@ var model = {
             },
             function (err, singleData) {
                 // Config.generateExcel("KnockoutIndividual", singleData, res);
+                callback(null, singleData);
+            });
+
+    },
+
+    generateExcelHeat: function (data, res) {
+        async.waterfall([
+                function (callback) {
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                    Match.find({
+                        sport: data.sport
+                    }).lean().deepPopulate(deepSearch).exec(function (err, match) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(match)) {
+                                callback(null, []);
+                            } else {
+                                console.log("found0", match);
+                                callback(null, match);
+                            }
+                        }
+                    });
+                },
+                function (match, callback) {
+                    if (data.playerType == "individual") {
+                        Match.generateExcelHeatIndividual(match, function (err, singleData) {
+                            Config.generateExcel("KnockoutIndividual", singleData, res);
+                        });
+                    } else {
+                        res.json({
+                            "data": "Body not Found",
+                            "value": false
+                        })
+                    }
+
+                },
+            ],
+            function (err, excelData) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (excelData) {
+                    if (_.isEmpty(excelData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, excelData);
+                    }
+                }
+            });
+    },
+
+    generateExcelHeatIndividual: function (match, callback) {
+        var count = 0;
+        var prevRound = undefined;
+        async.concatSeries(match, function (matchData, callback) {
+                if (prevRound == undefined) {
+                    count++;
+                    prevRound = matchData.round;
+                } else if (prevRound == matchData.round) {
+                    count++;
+                    prevRound = matchData.round;
+                } else {
+                    count = 1;
+                    prevRound = matchData.round;
+                }
+                var laneNo = 1;
+                async.concatSeries(matchData.opponentsSingle, function (mainData, callback) {
+                        var obj = {};
+                        obj["MATCH ID"] = matchData.matchId;
+                        var dateTime = moment(matchData.scheduleDate).format('DD-MM-YYYY');
+                        obj.DATE = dateTime;
+                        obj.TIME = matchData.scheduleTime;
+                        obj.SPORT = matchData.sport.sportslist.sportsListSubCategory.name;
+                        if (matchData.sport.gender == "male") {
+                            obj.GENDER = "Male";
+                        } else if (matchData.sport.gender == "Female") {
+                            obj.GENDER = "Female";
+                        } else {
+                            obj.GENDER = "Male & Female"
+                        }
+                        obj["AGE GROUP"] = matchData.sport.ageGroup.name;
+                        obj.EVENT = matchData.sport.sportslist.name;
+                        obj["ROUND "] = matchData.round;
+                        obj["HEAT NUMBER"] = count;
+                        obj["LANE NUMBER"] = laneNo;
+                        laneNo++;
+                        if (mainData) {
+                            obj["SFA ID"] = mainData.athleteId.sfaId;
+                            if (mainData.athleteId.middleName) {
+                                obj["NAME"] = mainData.athleteId.firstName + " " + mainData.athleteId.middleName + " " + mainData.athleteId.surname;
+                            } else {
+                                obj["NAME"] = mainData.athleteId.firstName + " " + mainData.athleteId.surname;
+                            }
+                            obj["SCHOOL"] = mainData.athleteId.school.name;
+
+                        } else {
+                            obj["SFAID 1"] = "";
+                            obj["PARTICIPANT 1"] = "";
+                            obj["SCHOOL 1"] = "";
+                            obj["RESULT 1"] = "";
+                            obj["SCORE 1"] = "";
+                            obj["DATA POINTS 1"] = "";
+                        }
+                        callback(null, obj);
+                    },
+                    function (err, singleData) {
+                        callback(null, singleData);
+                    });
+                // count++;
+            },
+            function (err, singleData) {
                 callback(null, singleData);
             });
 

@@ -112,6 +112,8 @@ var controller = {
                         req.body.sport = sportData.sportId;
                         if (req.body.resultType == "knockout") {
                             Match.generateExcelKnockout(req.body, res);
+                        } else if (req.body.resultType == "heat") {
+                            Match.generateExcelHeat(req.body, res);
                         } else {
                             res.json({
                                 "data": "Body not Found",
