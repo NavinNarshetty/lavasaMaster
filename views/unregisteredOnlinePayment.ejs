@@ -114,10 +114,14 @@
                                 <%=year%>.</p>
                         <p> Please find attached a receipt of your payment made towards the<br> registration fees.</p>
                         <p>You will receive an email confirming the status of your registration within 2 working days. </p>
-                        <p>If you do not receive an email from us within the stipulated time please<br> call us <span style="font-family:TitilliumWeb-Bold;">7045684365/66/67</span>                            or email us at
-                            <span style="font-family:TitilliumWeb-Bold;">info@sfanow.in </span> </p>
+                        <p>If you do not receive an email from us within the stipulated time please<br> call us on <span style="font-family:TitilliumWeb-Bold;"><%=infoNo%></span>                            or email us at
+                            <span style="font-family:TitilliumWeb-Bold;"><%=infoId%></span> </p>
                         <p><span style="font-family:TitilliumWeb-Bold;">In the event that your school
-                        does not register by 30. September 2017 an additional fee of <i class="fa fa-inr" aria-hidden="true"></i>400/-  will be levied.</span>                            </p>
+                        does not register by 30th September 2017 an additional fee of <i class="fa fa-inr" aria-hidden="true"></i> <%if(infoId == 'info@sfanow.in'){%>
+                                400/-.
+                                <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                    200/-.
+                                    <%}%>  will be levied.</span> </p>
                         <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>
 
                     </div>

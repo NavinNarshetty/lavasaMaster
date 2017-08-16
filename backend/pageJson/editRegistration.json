@@ -105,7 +105,7 @@
             "dropDownField": "",
             "dropDownType": "single",
             "onView": true,
-            "dropDown": ["Maharastra"]
+            "dropDown": ["Maharastra", "Telengana"]
         }, {
             "name": "District",
             "type": "tags",
@@ -127,7 +127,7 @@
             "dropDownField": "",
             "dropDownType": "single",
             "onView": true,
-            "dropDown": ["Kalyan-Dombivali", "Mira-Bhayandar", "Mumbai", "Navi Mumbai", "Panvel", "Thane", "Ulhasnagar", "Vasai-Virar", "Raigad"]
+            "dropDown": ["Kalyan-Dombivali", "Mira-Bhayandar", "Mumbai", "Navi Mumbai", "Panvel", "Thane", "Ulhasnagar", "Vasai-Virar", "Raigad", "Hyderabad"]
         }, {
             "name": "Locality",
             "type": "text",

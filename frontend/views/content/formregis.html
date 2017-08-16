@@ -50,9 +50,10 @@
                         not appear in the list kindly add the name of your college and proceed. </p>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    <label class="para2 sfa-padd sf-list">  SFA ID or Name:</label>
+                    <label class="para2 sfa-padd sf-list" ng-if="sfaCity == 'Mumbai'">  SFA ID or Name:</label>
+                    <label for="" class="para2 sfa-padd sf-list" ng-if="sfaCity == 'Hyderabad'">Name:</label>
                 </div>
-                <div class="col-md-8 col-sm-8 col-xs-12">
+                <div class="col-md-8 col-sm-8 col-xs-12" ng-if="sfaCity == 'Mumbai'">
                     <ui-select name="idSfa" id="idSfa" theme="bootstrap" ng-model="sfaId" ng-change="searchSFA($select.selected.sfaid)">
                         <ui-select-match allow-clear="true" placeholder="Select/Search SFA ID or Name">
                             {{$select.selected.sfaid}}
@@ -65,12 +66,26 @@
                         </ui-select-choices>
                     </ui-select>
                 </div>
+                <div class="col-md-8 col-sm-8 col-xs-12" ng-if="sfaCity == 'Hyderabad'">
+                    <ui-select name="idSfa" id="idSfa" theme="bootstrap" ng-model="sfaId" ng-change="searchSFAHyderabad($select.selected)">
+                        <ui-select-match allow-clear="true" placeholder="Select/Search SFA ID or Name">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices refresh-delay="0" repeat="item in schoolList | filter: $select.search" refresh="refreshSFA($select.search)">
+                            <!-- <span ng-bind-html="item.sfaid"></span><br> -->
+                            <large>
+                                {{item.name}}
+                            </large>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
+
                 <!--<div class="mar-left">-->
                 <div class="mar-left">
                     <p class="para2 t-padd sf-list" ng-if="isCollege == false && sfaCity == 'Mumbai'"><br>If you have not participated in SFA Championships before, your SFA ID will be generated<br> on successful
                         completion of registration.</p>
                     <p class="para2 t-padd sf-list" ng-if="isCollege == true"><br>Your SFA ID will be generated on successful completion of registration.</p>
-                    <p class="para2 b-padd sf-list"><br>Please Note: All fields marked with * are mandatory.</p>
+                    <p class="para2 b-padd sf-list"><br><br>Please Note: All fields marked with * are mandatory.</p>
                 </div>
                 <!--</div>-->
             </div>
@@ -233,7 +248,7 @@
                     <div class="form-group">
                         <label class="col-md-3 col-sm-3 col-xs-12">  *City:</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
-                            <select name="city" ng-model="formData.city" class="sfa-drop2 form-control" ng-options="cities for cities in city" required>
+                            <select name="cities" ng-model="formData.city" class="sfa-drop2 form-control" ng-options="cities for cities in city" required>
                             <!-- <option style="display:none"></option>
                         <option>Kalyan-Dombivali </option>
                         <option>Mira-Bhayandar</option>
@@ -245,7 +260,7 @@
                             <option>Vasai-Virar</option>
                             <option>Raigad</option> -->
                         </select>
-                            <div class="validate-col" ng-show="formRegister.city.$invalid && formRegister.city.$touched">Please Enter Your City*</div>
+                            <div class="validate-col" ng-show="formRegister.cities.$invalid && formRegister.cities.$touched">Please Enter Your City*</div>
                         </div>
                         <label class="col-md-2 col-sm-2 col-xs-12"> *Area/Locality:</label>
                         <div class="col-md-3 col-sm-3 col-xs-12">
@@ -345,7 +360,7 @@
                                     </div>
                                     <div class="col-md-5 col-sm-5 col-xs-12">
                                         <div class="kindly-up sf-list gstLiner">If you do not enter your GSTIN no. it will be considered that you are unregistered
-                                            dealer for GST.</div>
+                                            for GST.</div>
                                     </div>
                                     <div class="col-md-1 col-sm-1 hidden-xs">
 
@@ -605,7 +620,7 @@
                         <div class="checkbox-custom">
                             <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                                 id="test5" />
-                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition(type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
                             <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
                         </div>
                         <!--<p> <label class="sel-spo">Selected Sports:</label>Basketball, Football, Hockey</p>-->
@@ -698,7 +713,7 @@
                         <div class="checkbox-custom">
                             <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                                 id="test5" />
-                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition(type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
                             <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
                         </div>
                         <!--<p> <label class="sel-spo">Selected Sports:</label>Basketball, Football, Hockey</p>-->
@@ -775,7 +790,7 @@
                         <div class="checkbox-custom">
                             <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                                 id="test5" />
-                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition(type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
                             <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
                         </div>
                         <!--<p> <label class="sel-spo">Selected Sports:</label>Basketball, Football, Hockey</p>-->
@@ -814,8 +829,12 @@
                         <p ng-if="show==9" class="ft12">Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs.
                             <span ng-if="isCollege == false">12,000</span>
                             <span ng-if="isCollege == true">2,500</span> (Inclusive of all applicable taxes) by Cash/Cheque/Demand
-                            Draft in favour of ‘SFA Events Private Limited’ which is to be couriered/hand delivered to: 1306,
-                            Panchratna Building, Opera House (Next to Roxy Cinema),Charni Road, Mumbai – 400004</p>
+                            Draft in favour of ‘SFA Events Private Limited’ which is to be couriered/hand delivered to:
+                            <span ng-if="sfaCity == 'Mumbai'">1306, Panchratna Building, Opera House (Next to Roxy Cinema), Charni Road, Mumbai – 400004</span>
+                            <span ng-if="sfaCity == 'Hyderabad'">‘SFA Events Private Limited’ C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor, Advant Delta, Plot No. 4,
+                                    Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081.<br><span style="font-size:12px">(Head Office: SFA Events
+                                    Pvt. Ltd., Panchratna Building, Opera House, Mumbai - 400004)</span></span>
+                        </p>
                     </div>
                     <div class="d-padd d-paddd visible-xs" ng-init="show=8">
                         <div class="">
@@ -825,7 +844,12 @@
                                 Rs. <span ng-if="isCollege == false">12,000</span>
                                 <span ng-if="isCollege == true">2,500</span> (Inclusive of all applicable taxes) by Cash/Cheque/Demand
                                 Draft in favour of ‘SFA Events Private Limited’ which is to be couriered/hand delivered to:
-                                1306, Panchratna Building, Opera House (Next to Roxy Cinema),Charni Road, Mumbai – 400004</p>
+                                <span ng-if="sfaCity == 'Mumbai'">1306, Panchratna Building, Opera House (Next
+                                to Roxy Cinema), Charni Road, Mumbai – 400004</span>
+                                <span ng-if="sfaCity == 'Hyderabad'">‘SFA Events Private Limited’ C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor, Advant Delta, Plot No. 4,
+                                    Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081.<br><span style="font-size:12px">(Head Office: SFA Events
+                                    Pvt. Ltd., Panchratna Building, Opera House, Mumbai - 400004)</span></span>
+                            </p>
                         </div>
                         <div class="">
                             <input ng-model="formData.registrationFee" type="radio" id="radio03" name="radioxs" value="online PAYU" required>

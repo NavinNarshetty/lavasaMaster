@@ -2,9 +2,9 @@
   <!-- <div class="modal-close pointer" ng-click="$dismiss()">
         <span><i class="fa fa-times"></i></span>
     </div> -->
-  <div class="modal-body">
+  <div class="export-modal">
     <form name="detailForm" role="form" class="sec">
-      <div class="">
+      <!--<div class="">
         <div class="col-md-12 drop-2">
           <div class="form-group">
             <label>Match-ID*</label>
@@ -12,9 +12,61 @@
             <div class="error-msg" ng-if="detailForm.rulesname.$invalid && detailForm.rulesname.$touched">Please Enter Valid Name *</div>
           </div>
         </div>
-      </div>
+      </div>-->
       <!--</div>-->
     </form>
+
+    <div class="col-md-12 drop-1">
+      <label>Gender</label>
+      <select name="selectgender" class="form-control" ng-model="form.gender" placeholder="Enter Gender" required>
+                   <option style="display:none" >Enter Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="both">Male&Female</option>
+                  </select>
+      <div class="error-msg" ng-if="detailForm.selectgender.$invalid && detailForm.selectgender.$touched">Please Enter Gender*</div>
+    </div>
+
+    <div class="col-md-12 drop-1">
+      <label>Sports List</label>
+      <ui-select name="selectsportslist" id="selectsportslist" theme="bootstrap" ng-model="form.sportslist" ng-change="searchSportList($select.selected._id)"
+        required>
+        <ui-select-match placeholder="Enter Sports List" allow-clear="true">
+          {{$select.selected.name}}
+        </ui-select-match>
+        <ui-select-choices refresh.delay="0" repeat="item in sportitems | filter:$select.search" refresh="getAllSportList($select.search)">
+          <span ng-bind-html="item.name"></span>
+        </ui-select-choices>
+      </ui-select>
+      <div class="error-msg" ng-if="detailForm.selectsportslist.$invalid && detailForm.selectsportslist.$touched">Please Enter Sport List *</div>
+    </div>
+
+    <div class="col-md-12 drop-1">
+      <label>Age Group</label>
+      <ui-select name="selectSchoolName" id="selectSchoolName" theme="bootstrap" ng-model="form.ageGroup" ng-change="searchAge($select.selected._id)"
+        required>
+        <ui-select-match placeholder="Enter Age Group" allow-clear="true">
+          {{$select.selected.name}}
+        </ui-select-match>
+        <ui-select-choices refresh.delay="0" repeat="item in ageitems | filter:$select.search" refresh="getAllAge($select.search)">
+          <span ng-bind-html="item.name"></span>
+        </ui-select-choices>
+      </ui-select>
+      <div class="error-msg" ng-if="detailForm.selectSchoolName.$invalid && detailForm.selectSchoolName.$touched">Please Enter Age Group *</div>
+    </div>
+    <div class="col-md-12 drop-1">
+      <label>Weight</label>
+      <ui-select name="selectweight" id="selectweight" theme="bootstrap" ng-model="form.weight" ng-change="searchWeight($select.selected._id)">
+        <ui-select-match placeholder="Enter Weight" allow-clear="true">
+          {{$select.selected.name}}
+        </ui-select-match>
+        <ui-select-choices refresh.delay="0" repeat="item in weightitems | filter:$select.search" refresh="getAllWeight($select.search)">
+          <span ng-bind-html="item.name"></span>
+        </ui-select-choices>
+      </ui-select>
+      <div class="error-msg" ng-if="detailForm.selectweight.$invalid && detailForm.selectweight.$touched">Please Enter Valid Weight *</div>
+    </div>
+
     <div class="col-md-12 drop-1">
       <label>Draw Formats</label>
       <select class="form-control" ng-model="form.resultType">
@@ -27,7 +79,7 @@
           <option  value="swiss-league">Swiss League</option>
         </select>
     </div>
-    <div class="col-md-12 drop-2" ng-if="form.resultType=='knockout'">
+    <!--<div class="col-md-12 drop-2" ng-if="form.resultType=='knockout'">
       <label>Knockout Range</label>
       <select class="form-control" ng-model="form.range">
           <option  value=2>2</option>
@@ -40,18 +92,9 @@
           <option  value=256>256</option>
           <option  value=512>512</option>
         </select>
-    </div>
-    <!--<form name="detailForm" role="form" class="sec" ng-if="form.resultType=='knockout'">
-      <div class="">
-        <div class="col-md-12 drop-2">
-          <div class="form-group">
-            <label>Knockout range</label>
-            <input type="number" name="range" ng-model="form.range" class="form-control" placeholder="Enter Range" required>
-            <div class="error-msg" ng-if="detailForm.rulesname.$invalid && detailForm.rulesname.$touched">Please Enter Valid Name *</div>
-          </div>
-        </div>
-      </div>
-    </form>-->
+    </div>-->
+
+    <!--</form>-->
     <div class="col-md-12 drop-2">
       <label>Sport Type</label>
       <select class="form-control" ng-model="form.playerType">
@@ -60,17 +103,11 @@
         </select>
     </div>
     <div class="col-md-12 drop-1">
-      <label>Third Place</label>
-      <select class="form-control" ng-model="form.thirdPlace">
+      <label>Plyer Specific Export?</label>
+      <select class="form-control" ng-model="form.playerSpecific">
           <option  value="yes">YES</option>
           <option  value="no">NO</option>
         </select>
-    </div>
-    <div class="">
-      <div class="col-md-12">
-        <!--<button class="btn btn-green-outline btn-scoring"> Upload Image</button>-->
-        <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
-      </div>
     </div>
 
     <div class="match-nomatch-buttons">
@@ -80,7 +117,7 @@
         </div>
 
         <div class="col-md-4">
-          <button class="btn btn-green-outline btn-scoring" ng-click="uploadExcelMatch(form)">Save</button>
+          <button class="btn btn-green-outline btn-scoring" ng-click="generateExcel(form)">Save</button>
         </div>
 
       </div>

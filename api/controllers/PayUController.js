@@ -93,7 +93,7 @@ var controller = {
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/paymentSuccess");
 
-                        res.redirect("http://testhyderabadschool.sfanow.in/paymentSuccess");
+                        // res.redirect("http://testhyderabadschool.sfanow.in/paymentSuccess");
 
                         // res.redirect("http://testhyderabadcollege.sfanow.in/paymentSuccess");
 
@@ -103,7 +103,15 @@ var controller = {
 
                         // res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
 
-                        // res.redirect("http://mumbaicollege.sfanow.in/paymentSuccess");
+                        res.redirect("http://mumbaicollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://hyderabadschool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://hyderabadcollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://ahmedabadschool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://ahmedabadcollege.sfanow.in/paymentSuccess");
 
                         // res.redirect("https://sfanow.in/paymentSuccess");
                     }
@@ -132,13 +140,21 @@ var controller = {
 
                                 // res.redirect("http://mumbaischool.sfanow.in/paymentFailure");
 
-                                // res.redirect("http://mumbaicollege.sfanow.in/paymentFailure");
+                                res.redirect("http://mumbaicollege.sfanow.in/paymentFailure");
+
+                                // res.redirect("http://hyderabadschool.sfanow.in/paymentFailure");
+
+                                // res.redirect("http://hyderabadcollege.sfanow.in/paymentFailure");
+
+                                // res.redirect("http://ahmedabadschool.sfanow.in/paymentFailure");
+
+                                // res.redirect("http://ahmedabadcollege.sfanow.in/paymentFailure");
 
                                 // res.redirect("http://testmumbaischool.sfanow.in/paymentFailure");
 
                                 // res.redirect("http://testmumbaicollege.sfanow.in/paymentFailure");
 
-                                res.redirect("http://testhyderabadschool.sfanow.in/paymentFailure");
+                                // res.redirect("http://testhyderabadschool.sfanow.in/paymentFailure");
 
                                 // res.redirect("http://testhyderabadcollege.sfanow.in/paymentFailure");
 
@@ -189,13 +205,21 @@ var controller = {
                     } else {
                         // res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
 
-                        // res.redirect("http://mumbaicollege.sfanow.in/paymentSuccess");
+                        res.redirect("http://mumbaicollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://hyderabadschool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://hyderabadcollege.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://ahmedabadschool.sfanow.in/paymentSuccess");
+
+                        // res.redirect("http://ahmedabadcollege.sfanow.in/paymentSuccess");
 
                         // res.redirect("http://testmumbaischool.sfanow.in/paymentSuccess");
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/paymentSuccess");
 
-                        res.redirect("http://testhyderabadschool.sfanow.in/paymentSuccess");
+                        // res.redirect("http://testhyderabadschool.sfanow.in/paymentSuccess");
 
                         // res.redirect("http://testhyderabadcollege.sfanow.in/paymentSuccess");
 
@@ -232,19 +256,27 @@ var controller = {
 
                                 // res.redirect("http://mumbaischool.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://mumbaicollege.sfanow.in/sorryAthelete");
+                                res.redirect("http://mumbaicollege.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://testmumbaicollege.sfanow.in/sorryAthelete");
+                                // res.redirect("http://hyderabadcollege.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
+                                // res.redirect("http://hyderabadschool.sfanow.in/sorryAthelete");
+
+                                // res.redirect("http://ahmedabadcollege.sfanow.in/sorryAthelete");
+
+                                // res.redirect("http://ahmedabadschool.sfanow.in/sorryAthelete");
 
                                 // res.redirect("http://testhyderabadcollege.sfanow.in/sorryAthelete");
 
-                                res.redirect("http://testhyderabadschool.sfanow.in/sorryAthelete");
+                                // res.redirect("http://testhyderabadschool.sfanow.in/sorryAthelete");
 
                                 // res.redirect("http://testahmedabadcollege.sfanow.in/sorryAthelete");
 
                                 // res.redirect("http://testahmedabadschool.sfanow.in/sorryAthelete");
+
+                                // res.redirect("http://testmumbaicollege.sfanow.in/sorryAthelete");
+
+                                // res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
 
                                 // res.redirect("https://sfanow.in/sorryAthelete");
                             }

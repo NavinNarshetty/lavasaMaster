@@ -13,10 +13,10 @@
                         us to create a personalized sporting experience for you on our website www.sfanow.in to highlight
                         your performances in sport by way of profiles, records maintenance, match videos, statistics and
                         reports.
-                        <br> The annual Athlete registration fees for SFA {{sfaCity}} {{year}} is Rs. <span ng-if="isCollege == false">200 <br>In the event
-                        that your {{type}} does not register for SFA {{sfaCity}} {{year}} by the 30th of September an additional fees
+                        <br> The annual Athlete registration fee for SFA {{sfaCity}} {{year}} is Rs. <span ng-if="isCollege == false">200 <br>In the event
+                        that your {{type}} does not register for SFA {{sfaCity}} {{year}} by the 30th of September an additional fee
                         of Rs. <span ng-if="sfaCity == 'Hyderabad'">200</span> <span ng-if="sfaCity == 'Mumbai'">400</span>/-
-                        (Inclusive of all applicable taxes) will be levied.This discounted fees for registered {{type}} athletes
+                        (Inclusive of all applicable taxes) will be levied. This discounted fee for registered {{type}} athletes
                         is a step to encourage {{type}}s to support their athletes and sports.</span>
                         <span ng-if="isCollege == true">300</span> (Inclusive of all applicable taxes).
                         <br>
@@ -358,19 +358,18 @@
                     </div>
                     <div class="form-group ">
                         <label class="col-md-3 col-sm-3 col-xs-12 sf-list ">*Upload Photograph:</label>
-                        <div class="col-md-9 col-sm-9 col-xs-12 " ng-init="show=0 ">
+                        <div class="col-md-9 col-sm-9 col-xs-12" ng-init="show=0 ">
                             <!--<a class="btn btn-default myupload ">Upload </a>-->
-                            <div class="dirctive-op pl13 ">
-                                <upload-image2 class="up-img photoGraph ng-isolate-scope " ng-model="formData.photograph
-                            " file-types=" 'image/jpeg,image/png' " ng-disabled="type.disabled " ng-click="show=1 " ng-callback="changeitPhotograph "
-                                    no-view></upload-image2>
+                            <div class="dirctive-op pl13">
+                                <upload-image2 class="up-img photoGraph ng-isolate-scope" ng-model="formData.photograph" file-types="'image/jpeg,image/png'"
+                                    ng-disabled="type.disabled" ng-click="show=1 " ng-callback="changeitPhotograph" no-view></upload-image2>
                             </div>
-                            <div class="display-inline padd-l38 ">
-                                <div class="w150 " ng-if="show==1 && formData.photograph ">
+                            <div class="display-inline padd-l38" ng-if="show==1 && formData.photograph">
+                                <div class="w150 ">
                                     <img src="{{formData.photograph |serverimage2}} " class="img-resopnsive w100 ">
                                 </div>
                             </div>
-                            <div class="hover-img " ng-if="show==1 && formData.photograph ">
+                            <div class="hover-img " ng-if="show==1 && formData.photograph">
                                 <img src="img/icon/x.png " alt="logo " ng-click="removePhoto(formData.photograph,
                             'photoGraph') " class="img-responsive myicon ">
                             </div>
@@ -380,6 +379,10 @@
                                     <p>This photograph will be displayed on your SFA Athlete profile.</p>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="col-md-3 col-sm-3 col-xs-12"></div>
+                        <div class="col-md-9 col-sm-9 col-xs-12">
                             <label class="kindly-up up-m175 sf-list ">Kindly upload only .jpg or .png format. Maximum file size 5 MB.</label>
                         </div>
                     </div>
@@ -788,7 +791,7 @@
                         <div class="checkbox-custom">
                             <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                                 id="test5" />
-                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition(type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('',type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
                             <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
                         </div>
                         <div class="box2" ng-repeat="x in formData.parentDetails track by $index">
@@ -894,8 +897,9 @@
                                 Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs.
                                 <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">300</span> (Inclusive
                                 of all applicable taxes) by Cash/Cheque/Demand Draft in favour of ‘SFA Events Private Limited’
-                                which is to be couriered/hand delivered to: 1306, Panchratna Building, Opera House (Next
-                                to Roxy Cinema), Charni Road, Mumbai – 400004</p>
+                                which is to be couriered/hand delivered to: <span ng-if="sfaCity == 'Mumbai'">1306, Panchratna Building, Opera House (Next
+                                to Roxy Cinema), Charni Road, Mumbai – 400004</span><span ng-if="sfaCity == 'Hyderabad'">‘SFA Events Private Limited’ C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor, Advant Delta, Plot No. 4, Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081.<br><span style="font-size:12px">(Head Office: SFA Events Pvt. Ltd., Panchratna Building, Opera House, Mumbai - 400004)</span></span>
+                            </p>
                         </div>
                         <div class="form-group visible-xs">
                             <div class="">
@@ -904,8 +908,9 @@
                                 <p ng-if="show==5" class="ft12">
                                     Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs.
                                     <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">300</span>                                    (Inclusive of all applicable taxes) by Cash/Cheque/Demand Draft in favour of ‘SFA Events
-                                    Private Limited’ which is to be couriered/hand delivered to: 1306, Panchratna Building,
-                                    Opera House (Next to Roxy Cinema), Charni Road, Mumbai – 400004</p>
+                                    Private Limited’ which is to be couriered/hand delivered to: <span ng-if="sfaCity == 'Mumbai'">1306, Panchratna Building, Opera House (Next
+                                to Roxy Cinema), Charni Road, Mumbai – 400004</span><span ng-if="sfaCity == 'Hyderabad'">‘SFA Events Private Limited’ C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor, Advant Delta, Plot No. 4, Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081.<br><span style="font-size:12px">(Head Office: SFA Events Pvt. Ltd., Panchratna Building, Opera House, Mumbai - 400004)</span></span>
+                                </p>
                             </div>
                             <div class="">
                                 <input ng-model="formData.registrationFee" type="radio" id="radio13" name="radioxs" value="online PAYU">

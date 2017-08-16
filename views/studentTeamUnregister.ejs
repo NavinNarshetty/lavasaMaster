@@ -249,47 +249,58 @@
             <tr>
                 <td>
                     <div style="padding: 0px 54px; text-align: justify;">
-                        <p style="margin-bottom: 0px;"> 1) To make any changes regarding the above information email us at <a style="font-family:TitilliumWeb-Bold; color: black;"
-                                " href="mailto:info@sfanow.in ">info@sfanow.in</a>. No changes can be made after 30th November <%=year%> (Changes to a Football Team can be made only up to 30th October <%=year%>)</p>
+                        <p style="margin-bottom: 0px;"> 1) To make any changes regarding the above information email us at
+                            <%if(infoId == 'info@sfanow.in'){%>
+                                <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">
+                                    <%=infoId%>
+                                </a>
+                                <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                    <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info.hyd@sfanow.in ">
+                                        <%=infoId%>
+                                    </a>
+                                    <%}%>. No changes can be made after 30th November
+                                        <%=year%> (Changes to a Football Team can be made only up to 30th October
+                                            <%=year%>)</p>
                     </div>
                 </td>
             </tr>
-                                    <tr>
+            <tr>
                 <td>
-                    <div style="padding: 0px 54px; text-align: justify; " >
-                        <p style="margin-bottom: 0px; "> 2) Draws and Schedules will be published on our website by 20th November <%=year%> (Draws and Schedules for Football will be published by 30th September <%=year%>)</p>
+                    <div style="padding: 0px 54px; text-align: justify; ">
+                        <p style="margin-bottom: 0px; "> 2) Draws and Schedules will be published on our website by 20th November
+                            <%=year%> (Draws and Schedules for Football will be published by 30th September
+                                <%=year%>)</p>
                     </div>
                 </td>
             </tr>
-                                    <tr>
+            <tr>
                 <td>
-                     <div style="padding: 0px 54px; text-align: justify; ">
-                          <%if(linkSportName != 'Athletics 4x50m Relay' && linkSportName != 'athletics 4x50m relay' && linkSportName != 'Athletics 4x100m Relay' && linkSportName != 'athletics 4x100m relay' && linkSportName != 'Athletics Medley Relay' && linkSportName != 'athletics medley relay' && linkSportName != 'Badminton Doubles' && linkSportName != 'badminton doubles' && linkSportName != 'Table Tennis Doubles' && linkSportName != 'table tennis doubles' && linkSportName != 'Tennis Mixed Doubles' && linkSportName != 'tennis mixed doubles' && linkSportName != 'Tennis Doubles' && linkSportName != 'tennis doubles' && linkSportName != 'Karate Team Kumite' && linkSportName != 'karate team kumite' && linkSportName != 'Swimming 4x50m Medley Relay' && linkSportName != 'swimming 4x50m medley relay' && linkSportName != 'Swimming 4x50m Freestyle Relay' && linkSportName != 'swimming 4x50m freestyle relay'){%>
+                    <div style="padding: 0px 54px; text-align: justify; ">
+                        <%if(linkSportName != 'Athletics 4x50m Relay' && linkSportName != 'athletics 4x50m relay' && linkSportName != 'Athletics 4x100m Relay' && linkSportName != 'athletics 4x100m relay' && linkSportName != 'Athletics Medley Relay' && linkSportName != 'athletics medley relay' && linkSportName != 'Badminton Doubles' && linkSportName != 'badminton doubles' && linkSportName != 'Table Tennis Doubles' && linkSportName != 'table tennis doubles' && linkSportName != 'Tennis Mixed Doubles' && linkSportName != 'tennis mixed doubles' && linkSportName != 'Tennis Doubles' && linkSportName != 'tennis doubles' && linkSportName != 'Karate Team Kumite' && linkSportName != 'karate team kumite' && linkSportName != 'Swimming 4x50m Medley Relay' && linkSportName != 'swimming 4x50m medley relay' && linkSportName != 'Swimming 4x50m Freestyle Relay' && linkSportName != 'swimming 4x50m freestyle relay'){%>
                             <p style="margin-bottom: 0px; "> 4) Click on the following link to view
-                                <%=linkSportName%> Rules and Regulations: <a href="https://sfanow.in/sport/<%=linkSportName%>"
-                            target="_new">https://sfanow.in/sport/
+                                <%=linkSportName%> Rules and Regulations: <a href="https://sfanow.in/sport/<%=linkSportName%>" target="_new">https://sfanow.in/sport/
                             <%=linkSportName%>
                                 </a>
-                        </p>
-                        <%} else if(linkSportName == 'Athletics 4x50m Relay' || linkSportName == 'athletics 4x50m relay' || linkSportName == 'Athletics 4x100m Relay' || linkSportName == 'athletics 4x100m relay' || linkSportName == 'Athletics Medley Relay' || linkSportName == 'athletics medley relay'){%>
-                            <p style="margin-bottom: 0px; "> 4) Click on the following link to view Athletics Rules and Regulations: <a href="https://sfanow.in/sport/Athletics"
-                                    target="_new">https://sfanow.in/sport/Athletics</a></p>
-                            <%} else if(linkSportName == 'Badminton Doubles' || linkSportName == 'badminton doubles'){%>
-                                <p style="margin-bottom: 0px; "> 4) Click on the following link to view Badminton Rules and Regulations: <a href="https://sfanow.in/sport/Badminton"
-                                        target="_new">https://sfanow.in/sport/Badminton</a></p>
-                                <%} else if(linkSportName == 'Table Tennis Doubles' || linkSportName == 'table tennis doubles'){%>
-                                    <p style="margin-bottom: 0px; "> 4) Click on the following link to view Table Tennis Rules and Regulations: <a href="https://sfanow.in/sport/Table Tennis"
-                                            target="_new">https://sfanow.in/sport/Table Tennis</a></p>
-                                    <%} else if(linkSportName == 'Tennis Mixed Doubles' || linkSportName == 'tennis mixed doubles' || linkSportName == 'Tennis Doubles' || linkSportName == 'tennis doubles'){%>
-                                        <p style="margin-bottom: 0px; "> 4) Click on the following link to view Tennis Rules and Regulations: <a href="https://sfanow.in/sport/Tennis"
-                                                target="_new">https://sfanow.in/sport/Tennis</a></p>
-                                        <%} else if(linkSportName == 'Karate Team Kumite' || linkSportName == 'karate team kumite'){%>
-                                            <p style="margin-bottom: 0px; "> 4) Click on the following link to view Karate Rules and Regulations:
-                                                <a href="https://sfanow.in/sport/Karate" target="_new">https://sfanow.in/sport/Karate</a></p>
-                                            <%} else if(linkSportName == 'Swimming 4x50m Medley Relay' || linkSportName == 'swimming 4x50m medley relay' || linkSportName == 'Swimming 4x50m Freestyle Relay' || linkSportName == 'swimming 4x50m freestyle relay'){%>
-                                                <p style="margin-bottom: 0px;"> 4) Click on the following link to view Swimming Rules and Regulations:
-                                                    <a href="https://sfanow.in/sport/Swimming" target="_new">https://sfanow.in/sport/Swimming</a></p>
-                                                <%}%>
+                            </p>
+                            <%} else if(linkSportName == 'Athletics 4x50m Relay' || linkSportName == 'athletics 4x50m relay' || linkSportName == 'Athletics 4x100m Relay' || linkSportName == 'athletics 4x100m relay' || linkSportName == 'Athletics Medley Relay' || linkSportName == 'athletics medley relay'){%>
+                                <p style="margin-bottom: 0px; "> 4) Click on the following link to view Athletics Rules and Regulations: <a href="https://sfanow.in/sport/Athletics"
+                                        target="_new">https://sfanow.in/sport/Athletics</a></p>
+                                <%} else if(linkSportName == 'Badminton Doubles' || linkSportName == 'badminton doubles'){%>
+                                    <p style="margin-bottom: 0px; "> 4) Click on the following link to view Badminton Rules and Regulations: <a href="https://sfanow.in/sport/Badminton"
+                                            target="_new">https://sfanow.in/sport/Badminton</a></p>
+                                    <%} else if(linkSportName == 'Table Tennis Doubles' || linkSportName == 'table tennis doubles'){%>
+                                        <p style="margin-bottom: 0px; "> 4) Click on the following link to view Table Tennis Rules and Regulations: <a href="https://sfanow.in/sport/Table Tennis"
+                                                target="_new">https://sfanow.in/sport/Table Tennis</a></p>
+                                        <%} else if(linkSportName == 'Tennis Mixed Doubles' || linkSportName == 'tennis mixed doubles' || linkSportName == 'Tennis Doubles' || linkSportName == 'tennis doubles'){%>
+                                            <p style="margin-bottom: 0px; "> 4) Click on the following link to view Tennis Rules and Regulations: <a href="https://sfanow.in/sport/Tennis"
+                                                    target="_new">https://sfanow.in/sport/Tennis</a></p>
+                                            <%} else if(linkSportName == 'Karate Team Kumite' || linkSportName == 'karate team kumite'){%>
+                                                <p style="margin-bottom: 0px; "> 4) Click on the following link to view Karate Rules and Regulations:
+                                                    <a href="https://sfanow.in/sport/Karate" target="_new">https://sfanow.in/sport/Karate</a></p>
+                                                <%} else if(linkSportName == 'Swimming 4x50m Medley Relay' || linkSportName == 'swimming 4x50m medley relay' || linkSportName == 'Swimming 4x50m Freestyle Relay' || linkSportName == 'swimming 4x50m freestyle relay'){%>
+                                                    <p style="margin-bottom: 0px;"> 4) Click on the following link to view Swimming Rules and Regulations:
+                                                        <a href="https://sfanow.in/sport/Swimming" target="_new">https://sfanow.in/sport/Swimming</a></p>
+                                                    <%}%>
                     </div>
                 </td>
             </tr>
@@ -310,23 +321,37 @@
                         <p style="margin-bottom: 0px;"> 5) In the event that your
                             <%=type%> <span style="font-weight: bold;">DOES NOT </span>register for SFA
                                 <%=city%>
-                                    <%=year%> by the <span style="font-weight: bold;">30th September <%=year%> an additional fee of Rs. 400/-(inclusive of all applicable taxes) </span>will
-                                        be levied <span style="font-weight: bold;">PER ATHLETE</span>. The date and mode
-                                        for the balance payment will be communicated to you soon via email and SMS. </p>
+                                    <%=year%> by the <span style="font-weight: bold;">30th September <%=year%> an additional fee of Rs.  <%if(infoId == 'info@sfanow.in'){%>
+                                400/-.
+                                <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                    200/-.
+                                    <%}%>(inclusive of all applicable taxes) </span>will be levied <span style="font-weight: bold;">PER ATHLETE</span>.
+                                        The date and mode for the balance payment will be communicated to you soon via email
+                                        and SMS. </p>
                     </div>
                 </td>
             </tr>
             <tr>
                 <td>
                     <div style="padding: 0px 54px; text-align: justify;">
-                        <p style="margin-bottom: 0px;"> 6) For further details please contact us on: 7045684365/66/67 or email us at
-                            <a style="font-family:TitilliumWeb-Bold; color: black;" " href="mailto:info@sfanow.in ">info@sfanow.in</a> </p>
+                        <p style="margin-bottom: 0px;"> 6) For further details please contact us on:
+                            <%=infoNo%> or email us at
+                                <%if(infoId == 'info@sfanow.in'){%>
+                                    <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">
+                                        <%=infoId%>
+                                    </a>
+                                    <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                        <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info.hyd@sfanow.in ">
+                                            <%=infoId%>
+                                        </a>
+                                        <%}%>
+                        </p>
                     </div>
                 </td>
             </tr>
-                                                                        <tr>
+            <tr>
                 <td>
-                    <div style="padding: 0px 54px; " >
+                    <div style="padding: 0px 54px; ">
                         <p style="margin-top: 20px; "> Ab Jeetega India! </p>
                         <p style="font-family:TitilliumWeb-Bold; ">Regards,<br>Team SFA</p>
                     </div>

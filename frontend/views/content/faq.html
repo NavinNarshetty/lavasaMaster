@@ -10,7 +10,7 @@
                         <uib-accordion-heading>
                             <h3 class="margin0 display-inline color-blue font-semi text-up font-semi mob-sec">{{faq.name}}</h3> <i class="pull-right fa" ng-class="{'fa-angle-down': status.isFirstOpen, 'fa-angle-right': !status.isFirstOpen}"></i>
                         </uib-accordion-heading>
-                        <div ng-bind-html="faq.relatedContentOne" ng-if="faq.relatedContentOne">
+                        <div class="data-vox" ng-bind-html="faq.relatedContentOne" ng-if="faq.relatedContentOne">
                         </div>
                         <faqtable ng-if="faq.tableContent1" class="ruleDirective" value="faq.tableContent1">
                         </faqtable>
@@ -32,7 +32,7 @@
                         </faqtable>
                         <faqtable ng-if="faq.tableContent10" class="ruleDirective" value="faq.tableContent10">
                         </faqtable>
-                        <div ng-bind-html="faq.relatedContentTwo" ng-if="faq.relatedContentTwo">
+                        <div class="data-vox" ng-bind-html="faq.relatedContentTwo" ng-if="faq.relatedContentTwo">
                         </div>
                     </div>
 </section>

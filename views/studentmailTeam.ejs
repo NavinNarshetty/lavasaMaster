@@ -266,10 +266,18 @@
             <tr>
                 <td>
                     <div style="padding: 0px 54px; text-align: justify;">
-                        <p style="margin-bottom: 0px;"> 1) To make any changes regarding the above information email us at <a style="font-family:TitilliumWeb-Bold; color: black;"
-                                href="mailto:info@sfanow.in ">info@sfanow.in</a>. No changes can be made after 30th November
-                            <%=year%> (Changes to a Football Team can be made only up to 30th October
-                                <%=year%>)</p>
+                        <p style="margin-bottom: 0px;"> 1) To make any changes regarding the above information email us at
+                            <%if(infoId == 'info@sfanow.in'){%>
+                                <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">
+                                    <%=infoId%>
+                                </a>
+                                <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                    <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info.hyd@sfanow.in ">
+                                        <%=infoId%>
+                                    </a>
+                                    <%}%>. No changes can be made after 30th November
+                                        <%=year%> (Changes to a Football Team can be made only up to 30th October
+                                            <%=year%>)</p>
                     </div>
                 </td>
             </tr>
@@ -278,8 +286,8 @@
                     <div style="padding: 0px 54px; text-align: justify; ">
                         <p style="margin-bottom: 0px; "> 2) Registrations for SFA
                             <%=city%>
-                                <%=year%> will close on 30" September
-                                    <%=year%> (Registrations for Football will close on 30 " August
+                                <%=year%> will close on 30th September
+                                    <%=year%> (Registrations for Football will close on 30th August
                                         <%=year%>)</p>
                     </div>
                 </td>
@@ -338,8 +346,17 @@
                 <td>
                     <div style="padding: 0px 54px; text-align: justify; ">
                         <p style="margin-bottom: 0px;
-                                "> 6) For further details please contact us on: 7045684365/66/67 or email us at
-                            <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">info@sfanow.in</a>
+                                "> 6) For further details please contact us on:
+                            <%=infoNo%> or email us at
+                                <%if(infoId == 'info@sfanow.in'){%>
+                                    <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">
+                                        <%=infoId%>
+                                    </a>
+                                    <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                        <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info.hyd@sfanow.in ">
+                                            <%=infoId%>
+                                        </a>
+                                        <%}%>
                         </p>
                     </div>
                 </td>

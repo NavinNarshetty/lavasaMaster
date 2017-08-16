@@ -5,6 +5,10 @@ var schema = new Schema({
     },
     state: String,
     sfaCity: String,
+    cityAddress: String,
+    infoNo: String,
+    infoId: String,
+    ddFavour: String,
     city: [{
         type: String
     }],
@@ -81,6 +85,10 @@ var model = {
                     finalData.sfaCity = property[0].sfaCity;
                     finalData.amount = property[0].totalAmountType;
                     finalData.athleteAmount = property[0].totalAmountAthlete;
+                    finalData.cityAddress = property[0].cityAddress;
+                    finalData.infoNo = property[0].infoNo;
+                    finalData.infoId = property[0].infoId;
+                    finalData.ddFavour = property[0].ddFavour;
                     callback(null, finalData);
                 }
             }

@@ -12,10 +12,14 @@ module.exports = mongoose.model('Config', schema);
 // var requrl = "http://sfa2.wohlig.co.in/api/";
 // var requrl = "https://sfa.wohlig.co.in/api/";
 // var requrl = "http://mumbaischool.sfanow.in/api/";
-// var requrl = "http://mumbaicollege.sfanow.in/api/";
+var requrl = "http://mumbaicollege.sfanow.in/api/";
+// var requrl = "http://hyderabadschool.sfanow.in/api/";
+// var requrl = "http://hyderabadcollege.sfanow.in/api/";
+// var requrl = "http://ahmedabadschool.sfanow.in/api/";
+// var requrl = "http://ahmedabadcollege.sfanow.in/api/";
 // var requrl = "http://testmumbaischool.sfanow.in/api/";
 // var requrl = "http://testmumbaicollege.sfanow.in/api/";
-var requrl = "http://testhyderabadschool.sfanow.in/api/";
+// var requrl = "http://testhyderabadschool.sfanow.in/api/";
 // var requrl = "http://testhyderabadcollege.sfanow.in/api/";
 // var requrl = "http://testahmedabadschool.sfanow.in/api/";
 // var requrl = "http://testahmedabadcollege.sfanow.in/api/";
@@ -401,8 +405,8 @@ var model = {
                         } else {
                             if (body && body.value !== false) {
                                 var helper = require('sendgrid').mail;
-
-                                from_email = new helper.Email(data.from);
+                                var name = 'no-reply';
+                                from_email = new helper.Email(data.from, name);
                                 to_email = new helper.Email(data.email);
                                 subject = data.subject;
                                 content = new helper.Content("text/html", body);
@@ -460,7 +464,7 @@ var model = {
                             console.log(err);
                             callback(err, null);
                         } else {
-                            //console.log('email else');
+                            // console.log('email else');
                             if (body && body.value !== false) {
                                 var sg = require('sendgrid')(userdata[0].name);
 
@@ -475,8 +479,8 @@ var model = {
                                             subject: data.subject
                                         }],
                                         from: {
-                                            email: data.from
-                                            // ,name: "Tagboss"
+                                            email: data.from,
+                                            name: "no-reply"
                                         },
 
                                         content: [{

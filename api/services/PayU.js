@@ -56,8 +56,16 @@ var models = {
                 firstname: firstname,
                 // surl: 'http://mumbaischool.sfanow.in/api/payU/successErrorSchool',
                 // furl: 'http://mumbaischool.sfanow.in/api/payU/successErrorSchool',
-                // surl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorSchool',
-                // furl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorSchool',
+                surl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorSchool',
+                furl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorSchool',
+                // surl: 'http://hyderabadschool.sfanow.in/api/payU/successErrorSchool',
+                // furl: 'http://hyderabadschool.sfanow.in/api/payU/successErrorSchool',
+                // surl: 'http://hyderabadcollege.sfanow.in/api/payU/successErrorSchool',
+                // furl: 'http://hyderabadcollege.sfanow.in/api/payU/successErrorSchool',
+                // surl: 'http://ahmedabadschool.sfanow.in/api/payU/successErrorSchool',
+                // furl: 'http://ahmedabadschool.sfanow.in/api/payU/successErrorSchool',
+                // surl: 'http://ahmedabadcollege.sfanow.in/api/payU/successErrorSchool',
+                // furl: 'http://ahmedabadcollege.sfanow.in/api/payU/successErrorSchool',
                 email: email,
                 phone: phone,
                 // surl: 'http://sfa2.wohlig.co.in/api/payU/successErrorSchool',
@@ -68,8 +76,8 @@ var models = {
                 // furl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorSchool',
                 // surl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorSchool',
                 // furl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorSchool',
-                surl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorSchool',
-                furl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorSchool',
+                // surl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorSchool',
+                // furl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorSchool',
                 // surl: 'http://testhyderabadcollege.sfanow.in/api/payU/successErrorSchool',
                 // furl: 'http://testhyderabadcollege.sfanow.in/api/payU/successErrorSchool',
                 // surl: 'http://testahmedabadschool.sfanow.in/api/payU/successErrorSchool',
@@ -106,8 +114,8 @@ var models = {
         var city = found.city;
         var country = "India";
         var state = found.state;
-        var athleteAddress1 = data.address;
-        var athleteAddress2 = data.addressLine2;
+        var athleteAddress1 = found.address;
+        var athleteAddress2 = found.addressLine2;
         var email = found.email;
         var phone = found.mobile;
         var productinfo = "Athelete registeration to SFA";
@@ -125,8 +133,16 @@ var models = {
                 email: email,
                 // surl: 'http://mumbaischool.sfanow.in/api/payU/successErrorAthelete',
                 // furl: 'http://mumbaischool.sfanow.in/api/payU/successErrorAthelete',
-                // surl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorAthelete',
-                // furl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorAthelete',
+                surl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorAthelete',
+                furl: 'http://mumbaicollege.sfanow.in/api/payU/successErrorAthelete',
+                // surl: 'http://hyderabadschool.sfanow.in/api/payU/successErrorAthelete',
+                // furl: 'http://hyderabadschool.sfanow.in/api/payU/successErrorAthelete',
+                // surl: 'http://hyderabadcollege.sfanow.in/api/payU/successErrorAthelete',
+                // furl: 'http://hyderabadcollege.sfanow.in/api/payU/successErrorAthelete',
+                // surl: 'http://ahmedabadschool.sfanow.in/api/payU/successErrorAthelete',
+                // furl: 'http://ahmedabadschool.sfanow.in/api/payU/successErrorAthelete',
+                // surl: 'http://ahmedabadcollege.sfanow.in/api/payU/successErrorAthelete',
+                // furl: 'http://ahmedabadcollege.sfanow.in/api/payU/successErrorAthelete',
                 phone: phone,
                 // surl: 'http://sfa2.wohlig.co.in/api/payU/successErrorAthelete',
                 // furl: 'http://sfa2.wohlig.co.in/api/payU/successErrorAthelete',
@@ -136,8 +152,8 @@ var models = {
                 // furl: 'http://testmumbaischool.sfanow.in/api/payU/successErrorAthelete',
                 // surl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorAthelete',
                 // furl: 'http://testmumbaicollege.sfanow.in/api/payU/successErrorAthelete',
-                surl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorAthelete',
-                furl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorAthelete',
+                // surl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorAthelete',
+                // furl: 'http://testhyderabadschool.sfanow.in/api/payU/successErrorAthelete',
                 // surl: 'http://testhyderabadcollege.sfanow.in/api/payU/successErrorAthelete',
                 // furl: 'http://testhyderabadcollege.sfanow.in/api/payU/successErrorAthelete',
                 // surl: 'http://testahmedabadschool.sfanow.in/api/payU/successErrorAthelete',

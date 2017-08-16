@@ -314,9 +314,31 @@ myApp.factory('NavigationService', function ($http) {
             });
         },
 
+        generateExcelWithData: function (url, data, modal, callback) {
+            console.log('from Controller', data);
+            $http.post(adminurl + url, data, {
+                responseType: 'arraybuffer'
+            }).then(function (response) {
+                var header = response.headers('Content-Disposition')
+                var fileName = "knockoutIndividual" + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
+                console.log(fileName);
+
+                var blob = new Blob([response.data], {
+                    type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation;charset=UTF-8'
+                });
+                var objectUrl = (window.URL || window.webkitURL).createObjectURL(blob);
+                var link = angular.element('<a/>');
+                link.attr({
+                    href: objectUrl,
+                    download: fileName
+                })[0].click();
+                callback("", modal);
+
+            })
+        },
+
         generateOldSchoolExcel: function (callback) {
             $http.post(adminurl + 'School/generateExcel').then(function (data) {
-                // data = data.data;
                 callback(data);
             });
         },

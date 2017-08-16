@@ -50,13 +50,13 @@ var controller = {
     },
 
     uploadExcelMatch: function (req, res) {
-        if (req.body) {
+        if (req.body.resultType && req.body.playerType && req.body.matchId || req.body.thirdPlace || req.body.range) {
             Match.uploadExcelMatch(req.body, res.callback);
         } else {
-            res.json({
-                "data": "Body not Found",
-                "value": false
-            })
+            var data = [{
+                error: "All Fields Required !"
+            }];
+            res.callback(null, data);
         }
     },
 
@@ -83,16 +83,57 @@ var controller = {
     },
 
     generateExcel: function (req, res) {
-        if (req.body) {
-            Match.generateExcel(req.body, res.callback);
-        } else {
-            res.json({
-                "data": "Body not Found",
-                "value": false
-            })
-        }
+        async.waterfall([
+                function (callback) {
+                    var paramData = {};
+                    paramData.name = req.body.sportslist.name;
+                    paramData.age = req.body.ageGroup.name;
+                    paramData.gender = req.body.gender;
+                    Match.getSportId(paramData, function (err, sportData) {
+                        if (err || _.isEmpty(sportData)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: sportData
+                            });
+                        } else {
+                            callback(null, sportData);
+                        }
+                    });
+                },
+                function (sportData, callback) {
+                    if (sportData.error) {
+                        res.json({
+                            "data": sportData.error,
+                            "value": false
+                        })
+                    } else {
+                        console.log("sports", sportData);
+                        req.body.sport = sportData.sportId;
+                        if (req.body.resultType == "knockout") {
+                            Match.generateExcelKnockout(req.body, res);
+                        } else {
+                            res.json({
+                                "data": "Body not Found",
+                                "value": false
+                            })
+                        }
+                    }
+                }
+            ],
+            function (err, excelData) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (excelData) {
+                    if (_.isEmpty(excelData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, excelData);
+                    }
+                }
+            });
     },
-
 
 
 };
