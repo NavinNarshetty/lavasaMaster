@@ -94,6 +94,11 @@
               <p class="m-clear " ng-if="card.date">
                 {{card.date}}
               </p>
+              <div class="knockout-videoholder" ng-if="card.matchcenter==true">
+                <a href="">
+                  <img src="img/sf-play.png" alt="play" class="img-responsive">
+                </a>
+              </div>
               <p class="m-clear" ng-if="card.matchcenter==true">
                 Match Center
               </p>
@@ -120,6 +125,11 @@
                   <p class="m-clear " ng-if="card.date">
                     {{card.date}}
                   </p>
+                  <div class="knockout-videoholder" ng-if="card.matchcenter==true">
+                    <a href="">
+                      <img src="img/sf-play.png" alt="play" class="img-responsive">
+                    </a>
+                  </div>
                   <p class="m-clear" ng-if="card.matchcenter==true">
                     Match Center
                   </p>
@@ -147,6 +157,14 @@
                 <div class="knockout-card-content ">
                   <p class="m-clear ">
                     {{card.date}}
+                  </p>
+                  <div class="knockout-videoholder" ng-if="card.matchcenter==true">
+                    <a href="">
+                      <img src="img/sf-play.png" alt="play" class="img-responsive">
+                    </a>
+                  </div>
+                  <p class="m-clear" ng-if="card.matchcenter==true">
+                    Match Center
                   </p>
                 </div>
               </div>

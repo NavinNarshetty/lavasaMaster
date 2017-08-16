@@ -354,6 +354,7 @@ $sport-table-grey:#efeeee !default;
 // *******************QUALIFYING+ FINAL ROUND************************
 .qualifying-final-round {
   min-height: 100vh;
+  padding-bottom: 50px;
   .qf-final-event-holder {
     border: 1px solid $sport-grey-year;
     padding: 25px;
@@ -509,6 +510,7 @@ $sport-table-grey:#efeeee !default;
 //*********************** QUALIFYING + KNOCKOUT ******************
 .qualifying-knockout-round {
   min-height: 100vh;
+  padding-bottom: 50px;
   .qf-knockout-sportname {
     margin: 30px 40px;
     border-bottom: 1px solid $sport-grey-year;
@@ -536,6 +538,7 @@ $sport-table-grey:#efeeee !default;
 // **********************TIME TRIAL ROUND *************************
 .time-trial-round {
   min-height: 100vh;
+  padding-bottom: 50px;
   .time-trial-sportname {
     margin: 30px 40px;
   }
@@ -601,6 +604,7 @@ $sport-table-grey:#efeeee !default;
 // **********************HEATS ROUNDS*************************
 .heat-rounds {
   min-height: 100vh;
+  padding-bottom: 50px;
   .heat-sportname {
     margin: 30px 40px;
   }
@@ -636,6 +640,7 @@ $sport-table-grey:#efeeee !default;
 //*********************** LEAGUE CUM KNOCKOUT ***************
 .league-knockout-round {
   min-height: 100vh;
+  padding-bottom: 50px;
   .league-knockout-sportname {
     margin: 30px 40px;
   }
@@ -758,6 +763,11 @@ $sport-table-grey:#efeeee !default;
   bottom: 0;
   background-color: #0a1a72;
   color: #fff;
+  .knockout-videoholder {
+    width: 18px;
+    height: 18px;
+    float: right;
+  }
 }
 
 .knockout-cardplayername {

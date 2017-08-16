@@ -22,7 +22,8 @@
     <li>Scouting of talented athletes across different sports with an opportunity to win training & development scholarship along
       with complimentary mental & fitness assessment programs</li>
     <li ng-if="sfaCity == 'Mumbai'">Athletes can avail training in the sport of their choice with SFA’s Training & Development Programs*</li>
-    <li>Eligible to win Special Hampers <span ng-if="isCollege == false">& Cash Prizes</span> in the following award categories:
+    <li>Eligible to win Special Hampers <span ng-if="isCollege == false && sfaCity == 'Mumbai'">& Cash Prizes</span> in the following
+      award categories:
       <ul style="list-style-type: decimal; padding-left: 13px;">
         <li>Most promising male athlete</li>
         <li>Most promising female athlete</li>
@@ -32,10 +33,14 @@
     <li>No entry fees applicable to parents or other visitors accompanying an athlete from a registered {{type}}.</li>
   </ul>
   <h5 class="custm-font">Advanced SPORTS SESSIONS</h5>
-  <p class="mgtp cutm-font-prime">Complimentary Sport sessions by leading professionals for all athletes <span ng-if="isCollege == false">of the {{type}}</span></p>
+  <p class="mgtp cutm-font-prime">Complimentary Sport sessions by leading professionals for all athletes <span ng-if="isCollege == false">of the {{type}}</span>
+    <span ng-if="sfaCity == 'Hyderabad'">
+      (Athletes &amp; Non-Athletes)
+      </span>
+  </p>
   <div class=" mgtp">
     <label class="custm-font pdl21" ng-if="isCollege == false && sfaCity == 'Mumbai'">In {{type | firstcapitalize}}:</label>
-    <ul class="tick mr-left">
+    <ul class="tick mr-left" ng-if="sfaCity=='Mumbai'">
       <li>Fitness Assessment </li>
       <li>Hydration Clinic</li>
       <li>Nutrition Workshop</li>
@@ -44,12 +49,16 @@
     <ul class="tick mr-left">
       <li>Sports Workshops & Fitness Clinics for athletes</li>
       <li>Special Sport tutorials for athletes & non-athletes (Shooting, Archery etc)</li>
-      <li>Special Days (Opening Ceremony, Girls Day, Closing Ceremony & other special days)</li>
+      <li>Special Days <span ng-if="sfaCity=='Mumbai'"> (Opening Ceremony, Girls Day, Closing Ceremony & other special days) </span></li>
     </ul>
     <div class="mod-cls">
       <h5 class=" custm-font">{{type | capitalize}} SPORTS ONLINE</h5>
-      <p class="custom-a mgtp cutm-font-prime"> Comprehensive Online {{type | firstcapitalize}} Sporting Profiles accessible on the SFA Portal<a href="https://sfanow.in/"
+      <p class="custom-a mgtp cutm-font-prime"> Comprehensive Online {{type | firstcapitalize}} Sporting Profiles accessible on the SFA Portal<a href="https://mumbai.sfanow.in/"
           target="_new" style="color: mediumblue"> (WWW.SFANOW.IN) </a></p>
+    </div>
+    <div class="mod-cls" ng-if="sfaCity=='Hyderabad'">
+      <h5 class=" custm-font">{{type | capitalize}} SPORTS ONLINE <a href="https://hyderabad.sfanow.in/" target="_new" style="color: mediumblue"> (WWW.SFANOW.IN) </a></h5>
+      <p class="custom-a mgtp cutm-font-prime"> Comprehensive Online {{type | firstcapitalize}} Sporting Profiles complete with:</p>
     </div>
     <ul class="tick mr-left">
       <li>Athlete sporting profiles comprising of:
