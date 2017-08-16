@@ -42,7 +42,7 @@
       <li>Special Sport tutorials for athletes & non-athletes (Shooting, Archery etc)</li>
       <li>Special Days <span ng-if="sfaCity == 'Hyderabad'">(Opening Ceremony, Girls Day, Closing Ceremony & other special days)</span></li>
     </ul>
-    <div class="mod-cls">
+    <div class="mod-cls" ng-if="sfaCity == 'Mumbai'">
       <h5 class=" custm-font">{{type | capitalize}} SPORTS ONLINE <span><a href="https://sfanow.in/"
           target="_new" style="color: mediumblue"> (WWW.SFANOW.IN) </a></span></h5>
       <p class="custom-a cutm-font-prime" ng-if="isCollege == false">Comprehensive Online {{type | firstcapitalize}} Sporting Profiles accessible on the SFA Portal<a href="https://sfanow.in/"
