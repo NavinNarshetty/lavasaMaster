@@ -12,14 +12,16 @@
     of SFA:
   </p>
   <h5 class="custm-font"><b>SFA Championship SFA {{sfaCity | capitalize}} {{year}}</b></h5>
-  <p class="mgtp cutm-font-prime">Be a part of the largest professional youth sporting championship<span ng-if="isCollege == false">!</span><span ng-if="isCollege == true">, where best college contingents battle it out across 15+ Sports.</span>
-    <span ng-if="sfaCity == 'Hyderabad'">, where best college contingents battle it out across 20+ Sports.</span>
+  <p class="mgtp cutm-font-prime">Be a part of the largest professional youth sporting championship<span ng-if="isCollege == false && sfaCity == 'Mumbai'">!</span>
+    <span
+      ng-if="isCollege == true">, where best college contingents battle it out across 15+ Sports.</span>
+      <span ng-if="sfaCity == 'Hyderabad'">, where best college contingents battle it out across 20+ Sports.</span>
   </p>
   <ul class="mr-left">
     <li>{{type | firstcapitalize}}s are eligible to participate across <span ng-if="isCollege == false && sfaCity == 'Mumbai'">25+</span>      <span ng-if="isCollege == false && sfaCity == 'Hyderabad'">20+</span> <span ng-if="isCollege == true">15+</span> Sports</li>
     <li>Eligible to be featured on the {{type | firstcapitalize}} Ranking Table (Ranking of {{type | firstcapitalize}}s as per
       the sporting performance)</li>
-    <li>Automatic Qualification for special awards. <span ng-if="sfaCity == 'Hyderabad'">Eligible to win Special Hampers & Cash Prizes in the following award categories</span>:
+    <li>Automatic Qualification for special awards. <span ng-if="sfaCity == 'Hyderabad'">Eligible to win Special Hampers <span ng-if="sfaCity == 'Mumbai'">& Cash Prizes</span>      in the following award categories</span>:
       <ul style="list-style-type: decimal; padding-top: 10px;">
         <li>{{type | firstcapitalize}} participating in the maximum number of sports</li>
         <li>{{type | firstcapitalize}} with maximum win%</li>
