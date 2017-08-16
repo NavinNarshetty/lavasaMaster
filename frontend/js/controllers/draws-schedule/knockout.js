@@ -201,8 +201,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
       player: 'Harshit shah',
       schoolname: 'Dhirubhai Ambani Intertional'
     }],
-    date: '27th July, 2017',
-    time: '10.30am'
+    matchcenter: true
   }, {
     players: [{
       player: 'Harshit shah',
@@ -219,8 +218,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
       player: 'Harshit shah',
       schoolname: 'Dhirubhai Ambani Intertional'
     }],
-    date: '27th July, 2017',
-    time: '10.30am'
+    matchcenter: true
   }, {
     players: [{
       player: 'Harshit shah',
