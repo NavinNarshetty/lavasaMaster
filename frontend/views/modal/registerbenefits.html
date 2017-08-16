@@ -12,7 +12,9 @@
     of SFA:
   </p>
   <h5 class="custm-font"><b>SFA Championship SFA {{sfaCity | capitalize}} {{year}}</b></h5>
-  <p class="mgtp cutm-font-prime">Be a part of the largest professional youth sporting championship<span ng-if="isCollege == false">!</span><span ng-if="isCollege == true">, where best college contingents battle it out across 15+ Sports.</span></p>
+  <p class="mgtp cutm-font-prime">Be a part of the largest professional youth sporting championship<span ng-if="isCollege == false">!</span><span ng-if="isCollege == true">, where best college contingents battle it out across 15+ Sports.</span>
+    <span ng-if="sfaCity == 'Hyderabad'">, where best college contingents battle it out across 20+ Sports.</span>
+  </p>
   <ul class="mr-left">
     <li>{{type | firstcapitalize}}s are eligible to participate across <span ng-if="isCollege == false && sfaCity == 'Mumbai'">25+</span>      <span ng-if="isCollege == false && sfaCity == 'Hyderabad'">20+</span> <span ng-if="isCollege == true">15+</span> Sports</li>
     <li>Eligible to be featured on the {{type | firstcapitalize}} Ranking Table (Ranking of {{type | firstcapitalize}}s as per
@@ -40,7 +42,7 @@
     <ul class="tick mr-left">
       <li>Sports Workshops & Fitness Clinics for athletes</li>
       <li>Special Sport tutorials for athletes & non-athletes (Shooting, Archery etc)</li>
-      <li>Special Days <span ng-if="sfaCity == 'Hyderabad'">(Opening Ceremony, Girls Day, Closing Ceremony & other special days)</span></li>
+      <li>Special Days <span ng-if="sfaCity == 'Mumbai'">(Opening Ceremony, Girls Day, Closing Ceremony & other special days)</span></li>
     </ul>
     <div class="mod-cls" ng-if="sfaCity == 'Mumbai'">
       <h5 class=" custm-font">{{type | capitalize}} SPORTS ONLINE <span><a href="https://sfanow.in/"
@@ -52,7 +54,7 @@
     <div class="mod-cls" ng-if="sfaCity == 'Hyderabad'">
       <h5 class=" custm-font">{{type | capitalize}} SPORTS ONLINE <span><a href="https://sfanow.in/"
           target="_new" style="color: mediumblue"> (WWW.SFANOW.IN) </a></span></h5>
-      <p class="custom-a cutm-font-prime" ng-if="isCollege == false">Comprehensive Online {{type | firstcapitalize}} Sporting Profiles complete with:</p>
+      <p class="custom-a cutm-font-prime">Comprehensive Online {{type | firstcapitalize}} Sporting Profiles complete with:</p>
     </div>
     <ul class="mr-left">
       <li>HD Match videos showcasing talent of the {{type}}s across disciplines.</li>
