@@ -2,9 +2,9 @@
   <div class="matchstart-header clearfix">
     <div class="container">
       <div class="pull-right">
-        <p class="m-clear">match id: <span>{{match.sfaid}}</span> </p>
+        <p class="m-clear">match id: <span>{{match.matchId}}</span> </p>
       </div>
-      <p class="m-clear"><span>{{match.sport}}</span> - <span>{{match.gender}}</span> <span>{{match.age}}</span> - <span>{{match.round}}</span></p>
+      <p class="m-clear"><span>{{match.sportsName}}</span> </p>
     </div>
   </div>
   <div class="combatscore-scoring">
@@ -16,14 +16,14 @@
             <div class="combatscore-player">
                 <div class="matchplayer-card {{player.player}}">
                     <div class="matchplayer-playerid">
-                        <p>SFA ID: <span>{{player.sfaid}}</span></p>
+                        <p>SFA ID: <span>{{player.sfaId}}</span></p>
                     </div>
                     <div class="matchplayer-image">
                         <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
                     </div>
                     <div class="matchplayer-details">
-                        <p class="matchplayer-name">{{player.name | truncate:'30'}}</p>
-                        <p class="matchplayer-school">{{player.school | truncate:'22'}}</p>
+                        <p class="matchplayer-name"><span> {{player.firstName}} </span> <span> {{player.surname}} </span></p>
+                        <p class="matchplayer-school">{{player.school.name | truncate:'22'}}</p>
                     </div>
                 </div>
             </div>
@@ -33,7 +33,7 @@
       <!-- ATHLETE SCORE -->
       <div class="combatscore-sets">
         <div class="row">
-          <div class="col-md-6 col-sm-6" ng-repeat= "player in match.players track by $index">
+          <div class="col-md-6 col-sm-6" ng-repeat= "player in match.resultsCombat.players track by $index">
             <div class="combatscore-scorecard" ng-repeat = "set in player.sets track by $index">
               <div class="scoring-set form-group">
                 <label for="player1score" class="text-uppercase" ng-if="player.sets.length<=1">SCORE</label>
@@ -55,20 +55,28 @@
         <div class="combatscore-pics">
           <div class="row">
           <div class="col-md-offset-2 col-md-4 col-sm-6">
-            <div class="scorescard-swiper">  
-            <div class="combatscore-uploadpic text-uppercase">
-              <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
+            <div class="matchstart-uploadholder text-uppercase ">
+              <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Picture</button>
+              <upload-image ng-model="match.resultsCombat.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+            </div>
+            <div class=" digital-swiper">
+            <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultsCombat.matchPhoto">
+              <span class="remove-pic" ng-click="removeMatchScore(pic,'matchPhoto')"><i class="fa fa-times"></i></span>
+              <img ng-src="{{pic.image}}" alt="" class="img-responsive">
             </div>
           </div>
           </div>
           <div class="col-md-4 col-sm-6">
-            <div class="combatscore-uploadpic text-uppercase "  ng-hide="showScoreSheet">
-              <p class="get-center ">Upload Scorecard</p>
-              <upload-image ng-model="match.scoreSheet" ng-callback="getMatchScoreSheet(data);" allow-type="application/pdf" no-view class="pointer upload-scorecard"></upload-image>
+            <div class="matchstart-uploadholder text-uppercase ">
+              <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Scorecard</button>
+              <upload-image ng-model="match.resultsCombat.scoreSheet" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
             </div>
-            <div class="combatscore-uploadpic text-uppercase " ng-show = "showScoreSheet">
-              <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
+            <div class="digital-swiper">
+            <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultsCombat.scoreSheet">
+              <span class="remove-pic" ng-click="removeMatchScore(pic,'scoreSheet')"><i class="fa fa-times"></i></span>
+              <img ng-src="{{pic.image}}" alt="" class="img-responsive">
             </div>
+          </div>
           </div>
         </div>
         </div>
@@ -78,8 +86,8 @@
             <div class="match-selectwinner text-left">
               <label for="matchWinnerPlayer" class="text-uppercase">Select Winner</label>
               <!-- SELECT -->
-              <select class="form-control" ng-model="match.winner.player" ng-init="match.winner.player=''">
-                <option ng-repeat="player in match.players track by $index">{{player.name}}</option>
+              <select class="form-control" ng-model="match.resultsCombat.winner.player" ng-init="match.winner.player=''">
+                <option ng-repeat="player in match.players track by $index">{{player.firstName}} {{player.surname}}</option>
               </select>
               <!-- SELECT  END-->
               <!-- UI SELECT -->
@@ -123,6 +131,10 @@
           <div class="col-md-4 col-sm-4">
               <button class="btn btn-green-outline btn-scoring"> complete</button>
           </div>
+        </div>
+
+        <div class="row" style="text-align: left;">
+          <pre>{{match|json}}</pre>
         </div>
       </div>
     </div>

@@ -33,7 +33,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'MatchStartCtrl'
         })
         .state('scorecombat', {
-            url: "/score-combat",
+            url: "/score-combat/:id",
             templateUrl: tempateURL,
             controller: 'CombatScoreCtrl'
         })
