@@ -136,8 +136,7 @@ myApp.controller('ForgotPasswordCtrl', function ($scope, TemplateService, Naviga
     });
     $scope.formData = {};
     $scope.formData.type = $.jStorage.get("userType");
-    $scope.typeFirst = $filter('firstcapitalize', $.jStorage.get("IsColg"));
-    console.log($scope.typeFirst);
+    $scope.typeFirst = $filter('firstcapitalize')($.jStorage.get("IsColg"));
     $scope.forgotPasswordFunction = function (formData, url) {
         NavigationService.forgotPassword(formData, url, function (data) {
             errorService.errorCode(data, function (allData) {

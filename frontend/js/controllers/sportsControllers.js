@@ -10,6 +10,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
         $scope.type = data.type;
     });
     selectService.reset();
+    $scope.sportsschool = true;
     $scope.sportsregistered = false;
     $scope.classactive = 'blue-active';
     $scope.classinactive = '';
@@ -25,10 +26,8 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
         });
         if ($.jStorage.get("userType") !== null && $.jStorage.get("userDetails") !== null) {
             if ($.jStorage.get("userType") === "school") {
-                $scope.sportsschool = false;
                 $scope.constraints.schoolToken = $.jStorage.get("userDetails").accessToken;
             } else {
-                $scope.sportsschool = true;
                 $scope.constraints.athleteToken = $.jStorage.get("userDetails").accessToken;
             }
         }
@@ -97,7 +96,9 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     $scope.sptabchange = function (data) {
         if (data == 1) {
             $scope.sportsregistered = false;
+            $scope.sportsschool = true;
         } else {
+            $scope.sportsschool = false;
             $scope.sportsregistered = true;
             $scope.getAllRegisteredSport();
         }
