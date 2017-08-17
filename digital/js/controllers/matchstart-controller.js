@@ -2,7 +2,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     $scope.template = TemplateService.getHTML("content/match-start.html");
     TemplateService.title = "Sport Match"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
-
+    $scope.matchId=$stateParams.id;
     // VARIABLE INITIALISE
     $scope.showMatchPhoto = false;
     $scope.matchData = {};
@@ -61,6 +61,11 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                 // INITIALISE RESULTS END
             } else {
                 console.log("ERROR IN getOneMatch");
+                //redirect back to sportselection page
+
+                    // $state.go("sport-selection");
+
+
             }
         })
     };

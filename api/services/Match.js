@@ -234,24 +234,29 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    var finalData = {};
-                    finalData.players = [];
-                    finalData.sportsName = found.sport.sportslist.name + "-" + found.sport.ageGroup.name + "-" + found.sport.gender;
-                    finalData.sportType = found.sport.sportslist.sportsListSubCategory.sportsListCategory.name;
-                    _.each(found.opponentsSingle, function (n) {
-                        finalData.players.push(n.athleteId);
-                    });
-                    if (_.isEmpty(found.resultsCombat)) {
-                        finalData.resultsCombat = "";
+                    if (_.isEmpty(found)) {
+                        callback(null,"Wrong MatchId");
                     } else {
-                        finalData.resultsCombat = found.resultsCombat;
+                        var finalData = {};
+                        finalData.players = [];
+                        finalData.sportsName = found.sport.sportslist.name + "-" + found.sport.ageGroup.name + "-" + found.sport.gender;
+                        finalData.sportType = found.sport.sportslist.sportsListSubCategory.sportsListCategory.name;
+                        _.each(found.opponentsSingle, function (n) {
+                            finalData.players.push(n.athleteId);
+                        });
+                        if (_.isEmpty(found.resultsCombat)) {
+                            finalData.resultsCombat = "";
+                        } else {
+                            finalData.resultsCombat = found.resultsCombat;
+                        }
+                        if (_.isEmpty(found.resultsRacquet)) {
+                            finalData.resultsRacquet = "";
+                        } else {
+                            finalData.resultsRacquet = found.resultsRacquet;
+                        }
+                        callback(null, finalData);
                     }
-                    if (_.isEmpty(found.resultsRacquet)) {
-                        finalData.resultsRacquet = "";
-                    } else {
-                        finalData.resultsRacquet = found.resultsRacquet;
-                    }
-                    callback(null, finalData);
+
 
                 }
             ],
@@ -260,6 +265,7 @@ var model = {
                     console.log(err);
                     callback(null, []);
                 } else if (data2) {
+                    console.log(data2);
                     if (_.isEmpty(data2)) {
                         callback(null, []);
                     } else {

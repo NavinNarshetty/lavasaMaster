@@ -17,11 +17,11 @@ var controller = {
     },
 
     getOne: function (req, res) {
-        if (req.body) {
+        if (req.body && req.body.matchId) {
             Match.getOne(req.body, res.callback);
         } else {
             res.json({
-                "data": "Body not Found",
+                "data": "Match Id not Found",
                 "value": false
             })
         }

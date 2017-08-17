@@ -2,7 +2,7 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     $scope.template = TemplateService.getHTML("content/score-combat.html");
     TemplateService.title = "Score Combat"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
-
+    $scope.matchId=$stateParams.id;
     // VARIABLE INITIALISE
     $scope.showScoreSheet = false;
     $scope.showMatchPhoto = false;
