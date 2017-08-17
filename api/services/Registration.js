@@ -1055,14 +1055,14 @@ var model = {
                                 var emailData = {};
                                 // emailData.from = "info@sfanow.in";
                                 emailData.from = property[0].infoId;
-                                emailData.infoId = property[0].infoId;
-                                emailData.infoNo = property[0].infoNo;
-                                emailData.cityAddress = property[0].cityAddress;
-                                emailData.ddFavour = property[0].ddFavour;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
                                 emailData.type = property[0].institutionType;
                                 emailData.email = data.email;
+                                emailData.infoId = property[0].infoId;
+                                emailData.infoNo = property[0].infoNo;
+                                emailData.cityAddress = property[0].cityAddress;
+                                emailData.ddFavour = property[0].ddFavour;
                                 emailData.sfaID = data.sfaID;
                                 emailData.password = data.password;
                                 emailData.filename = "successVerification.ejs";
@@ -1335,7 +1335,9 @@ var model = {
                                         emailData.cgstAmout = property[0].cgstAmout;
                                         emailData.cgstPercent = property[0].cgstPercent;
                                         emailData.sgstAmout = property[0].sgstAmout;
-                                        emailData.sgstPercent = property[0].cgstPercent;
+                                        emailData.sgstPercent = property[0].sgstPercent;
+                                        emailData.igstAmout = property[0].igstAmout;
+                                        emailData.igstPercent = property[0].igstPercent;
                                         // emailData.from = "info@sfanow.in";
                                         emailData.from = property[0].infoId;
                                         emailData.infoId = property[0].infoId;
@@ -1385,9 +1387,13 @@ var model = {
                                         emailData.schoolAddress = found.schoolAddress;
                                         if (found.panNo) {
                                             emailData.panNo = found.panNo;
+                                        } else {
+                                            emailData.panNo = "";
                                         }
                                         if (found.gstNo) {
                                             emailData.gstNo = found.gstNo;
+                                        } else {
+                                            emailData.gstNo = "";
                                         }
                                         emailData.city = property[0].sfaCity;
                                         emailData.year = property[0].year;
@@ -1398,9 +1404,11 @@ var model = {
                                         emailData.cgstAmout = property[0].cgstAmout;
                                         emailData.cgstPercent = property[0].cgstPercent;
                                         emailData.sgstAmout = property[0].sgstAmout;
-                                        emailData.sgstPercent = property[0].cgstPercent;
+                                        emailData.sgstPercent = property[0].sgstPercent;
                                         emailData.transactionID = found.transactionID;
                                         emailData.Date = moment().format("DD-MM-YYYY");
+                                        emailData.igstAmout = property[0].igstAmout;
+                                        emailData.igstPercent = property[0].igstPercent;
                                         var receipt = "SFA" + found.registerID;
                                         emailData.receiptNo = receipt;
                                         emailData.infoId = property[0].infoId;

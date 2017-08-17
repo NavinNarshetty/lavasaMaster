@@ -37,24 +37,27 @@
             <div class="sp-head-tab">
                 <p>
                     Kindly Note, the following sports will not be available for selection if you log in as an athlete:</p>
-                <p class="highlight"> Basketball, Football, Handball, Hockey ,Kabaddi, Kho Kho, Throwball, Volleyball, Water Polo.</strong>
+                <p class="highlight">Basketball, Football, Handball, Hockey ,Kabaddi, Kho Kho, Throwball, Volleyball, Water Polo.
                 </p>
-
-
-                <p> This DOES NOT mean that you cannot participate in these sports. It is your School who will make the team using the login ID and Password provided to them upon School Registration.</p>
-                <p> In the event that a team from an unregistered school would like participate in any of the above mentioned sports they will have to email us at <a href="mailto:info@sfanow.in" ng-if="sfaCity === 'Mumbai'">info@sfanow.in</a> <a href="mailto:info.hyd@sfanow.in"
-                        ng-if="sfaCity === 'Hyderabad'">info.hyd@sfanow.in</a> with the following information:</p>
-                <p class="highlight"> Sport , Gender , Event Category , Names of all team members (Should be from the same school) , SFA ID’s of all team members.</strong>
+                <p>This DOES NOT mean that you cannot participate in these sports. It is your school which will make the team(s)
+                    using the login ID and Password provided upon School Registration.</p>
+                <p> If you are from an unregistered school and wish to register a team(s) in any of the above mentioned sports,
+                    kindly email us at <a href="mailto:info@sfanow.in" ng-if="sfaCity == 'Mumbai'">info@sfanow.in</a>
+                    <a href="mailto:info.hyd@sfanow.in" ng-if="sfaCity == 'Hyderabad'">info.hyd@sfanow.in</a> with the following
+                    information:
+                </p>
+                <p class="highlight">Sport, Gender, Age Group, Names of ALL team members(Should be from the same school), SFA IDs of all team
+                    members.
                 </p>
                 <p> We will respond to you within a maximum of 5 working days of receiving your email.
                 </p>
-
             </div>
 
             <div class="sp-head-tab" ng-if="allSportsListSubCatArr.length>0">
                 <!-- <p>Athletes need to register themselves via to be available</p>
         <p>for selection in a team. Kindly ensure all the athletes are registered to form your team.</p> -->
-                <p>Please note: Only athletes which have registered for SFA {{sfaCity}} 2017 will be available in the selection box for all sports.
+                <p>Please note: Only athletes which have registered for SFA {{sfaCity}} 2017 will be available in the selection
+                    box for all sports.
                 </p>
             </div>
             <div class="text-center sp-head-tab" ng-if="allSportsListSubCatArr.length == 0">
@@ -71,7 +74,8 @@
                         <button class="btn btn-default " ng-if="value.name != 'Tennis Mixed Doubles'" type="button" ng-click="redirectTo(value);setTeamIdNull();">{{value.name}}</button>
                         <!-- <button class="btn btn-default " ng-if="value.name == 'Tennis Mixed Doubles' && !detail.mixAccess" type="button" ng-click="messageForTennisMixedDoubles()">{{value.name}}</button> -->
                         <!-- && detail.mixAccess -->
-                        <button class="btn btn-default " ng-if="value.name == 'Tennis Mixed Doubles'" type="button" ui-sref="sports-rules({id:value._id})" ng-click="setTeamIdNull();">{{value.name}}</button>
+                        <button class="btn btn-default " ng-if="value.name == 'Tennis Mixed Doubles'" type="button" ui-sref="sports-rules({id:value._id})"
+                            ng-click="setTeamIdNull();">{{value.name}}</button>
                     </li>
 
                 </ul>

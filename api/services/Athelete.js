@@ -1140,6 +1140,8 @@ var model = {
                             emailData.cgstPercent = property[0].cgstPercentAthlete;
                             emailData.sgstAmout = property[0].sgstAmoutAthlete;
                             emailData.sgstPercent = property[0].sgstPercentAthlete;
+                            emailData.igstAmout = property[0].igstAmoutAthlete;
+                            emailData.igstPercent = property[0].igstPercentAthlete;
 
                             // emailData.from = "info@sfanow.in";
                             emailData.from = property[0].infoId;

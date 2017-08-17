@@ -125,36 +125,54 @@
                                     <%=amountWithoutTax%>
                                 </td>
                             </tr>
-                            <tr>
-                                <td style="padding: 0 10px;">CGST @
-                                    <%=cgstPercent%>%</td>
-                                <td style="padding: 0 10px;">
-                                    <%=cgstAmout%>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td style="padding: 0 10px 60px;">SGST @
-                                    <%=sgstPercent%>% </td>
-                                <td style="padding: 0 10px 60px;">
-                                    <%=sgstAmout%>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td><b> On Account Of :</b><br> Being registration fees received from<br>
-                                    <%=schoolName%>
-                                </td>
-                                <td></td>
-                            </tr>
-                            <tr>
-                                <td style="padding:5px 10px 15px 10px;"><b>Transaction Details</b><br><span><%=transactionID%></span></td>
-                                <td style="padding:5px 10px 15px 10px;"></td>
-                            </tr>
-                            <tr>
-                                <td style="padding:0 10px 15px 10px;"><b>Amount (In Words) :</b> <br>INR <span> <%=amountInWords%> </span> </td>
-                                <td style="padding: 0 10px 0px 10px;border-top: 1px solid black;"><i class="fa fa-inr" aria-hidden="true"></i>
-                                    <%=typeAmount%>
-                                </td>
-                            </tr>
+                            <%if(city == 'Mumbai'){%>
+                                <tr>
+                                    <td style="padding: 0 10px;">CGST @
+                                        <%=cgstPercent%>%</td>
+                                    <td style="padding: 0 10px;">
+                                        <%=cgstAmout%>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 0 10px 60px;">SGST @
+                                        <%=sgstPercent%>% </td>
+                                    <td style="padding: 0 10px 60px;">
+                                        <%=sgstAmout%>
+                                    </td>
+                                </tr>
+                                <%} else if(city == 'Hyderabad'){%>
+                                    <tr>
+                                        <td style="padding: 0 10px 60px;">IGST @
+                                            <%=igstPercent%>% </td>
+                                        <td style="padding: 0 10px 60px;">
+                                            <%=igstAmout%>
+                                        </td>
+                                    </tr>
+                                    <%} else if(city == 'Ahmedabad'){%>
+                                        <tr>
+                                            <td style="padding: 0 10px 60px;">IGST @
+                                                <%=igstPercent%>% </td>
+                                            <td style="padding: 0 10px 60px;">
+                                                <%=igstAmout%>
+                                            </td>
+                                        </tr>
+                                        <%}%>
+                                            <tr>
+                                                <td><b> On Account Of :</b><br> Being registration fees received from<br>
+                                                    <%=schoolName%>
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:5px 10px 15px 10px;"><b>Transaction Details</b><br><span><%=transactionID%></span></td>
+                                                <td style="padding:5px 10px 15px 10px;"></td>
+                                            </tr>
+                                            <tr>
+                                                <td style="padding:0 10px 15px 10px;"><b>Amount (In Words) :</b> <br>INR <span> <%=amountInWords%> </span> </td>
+                                                <td style="padding: 0 10px 0px 10px;border-top: 1px solid black;"><i class="fa fa-inr" aria-hidden="true"></i>
+                                                    <%=typeAmount%>
+                                                </td>
+                                            </tr>
                         </table>
                     </div>
                     <tr>

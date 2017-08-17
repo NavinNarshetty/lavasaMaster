@@ -329,14 +329,48 @@
 											<%=amountWithoutTax%>0</p>
 									</td>
 								</tr>
-								<tr>
-									<div>
+
+
+								<%if(city == 'Mumbai'){%>
+									<tr>
+										<div>
+											<td>
+												2.
+											</td>
+											<td>
+												<p class="bold">CGST @
+													<%=cgstPercent%>%
+														<p>
+
+											</td>
+											<td>
+												<p>
+													<p>
+											</td>
+											<td>
+
+											</td>
+											<td>
+												<p style="text-align: right;">
+													<%=cgstPercent%>
+												</p>
+											</td>
+											<td>
+												<p>%</p>
+											</td>
+											<td>
+												<p class="bold">
+													<%=cgstAmout%>
+												</p>
+											</td>
+									</tr>
+									<tr>
 										<td>
-											2.
+											3.
 										</td>
 										<td>
-											<p class="bold">CGST @
-												<%=cgstPercent%>%
+											<p class="bold">SGST @
+												<%=sgstPercent%>%
 													<p>
 
 										</td>
@@ -349,7 +383,7 @@
 										</td>
 										<td>
 											<p style="text-align: right;">
-												<%=cgstPercent%>
+												<%=sgstPercent%>
 											</p>
 										</td>
 										<td>
@@ -357,221 +391,251 @@
 										</td>
 										<td>
 											<p class="bold">
-												<%=cgstAmout%>
+												<%=sgstAmout%>
 											</p>
 										</td>
-								</tr>
-								<tr>
-									<td>
-										3.
-									</td>
-									<td>
-										<p class="bold">SGST @
-											<%=sgstPercent%>%
+									</tr>
+									<%} else if(city == 'Hyderabad'){%>
+										<tr>
+											<td>
+												2.
+											</td>
+											<td>
+												<p class="bold">IGST @
+													<%=igstPercent%>%
+														<p>
+											</td>
+											<td>
 												<p>
-
-									</td>
-									<td>
-										<p>
-											<p>
-									</td>
-									<td>
-
-									</td>
-									<td>
-										<p style="text-align: right;">
-											<%=sgstPercent%>
-										</p>
-									</td>
-									<td>
-										<p>%</p>
-									</td>
-									<td>
-										<p class="bold">
-											<%=sgstAmout%>
-										</p>
-									</td>
-								</tr>
-								<tr>
-									<td></td>
-									<td>
-										<p style="float: right;">Total</p>
-									</td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td></td>
-									<td>
-										<p class="bold">
-											<%=typeAmount%>
-										</p>
-									</td>
-								</tr>
-								<tr style="border-bottom:1px solid #ddd; ">
-									<td colspan="7">
-										<div style="display: inline-block; float: left;">
-											<p>
-												Amount Chargeable (in words)
-											</p>
-											<p class="bold" style="margin-top: 5px;">
-												INR
-												<%=amountInWords%>
-											</p>
-										</div>
-										<div style="display: inline-block; float: right;">
-											<p>E. & O.E</p>
-										</div>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2">
-										<p>HSN/SAC</p>
-
-									</td>
-									<td colspan="">
-										<p>Taxable Value</p>
-
-
-									</td>
-									<td colspan="2" style="vertical-align: top; padding: 0px;">
-										<table style="border: none;">
+													<p>
+											</td>
+											<td>
+											</td>
+											<td>
+												<p style="text-align: right;">
+													<%=igstPercent%>
+												</p>
+											</td>
+											<td>
+												<p>%</p>
+											</td>
+											<td>
+												<p class="bold">
+													<%=igstAmout%>
+												</p>
+											</td>
+										</tr>
+										<%} else if(city == 'Ahmedabad'){%>
 											<tr>
-												<td colspan="2">
-													<p style="text-align: center;">Central Tax</p>
+												<td>
+													2.
 												</td>
-
+												<td>
+													<p class="bold">IGST @
+														<%=igstPercent%>%
+															<p>
+												</td>
+												<td>
+													<p>
+														<p>
+												</td>
+												<td>
+												</td>
+												<td>
+													<p style="text-align: right;">
+														<%=igstPercent%>
+													</p>
+												</td>
+												<td>
+													<p>%</p>
+												</td>
+												<td>
+													<p class="bold">
+														<%=igstAmout%>
+													</p>
+												</td>
 											</tr>
-											<tr>
-												<td style="border-top: 1px solid
+											<%}%>
+												<tr>
+													<td></td>
+													<td>
+														<p style="float: right;">Total</p>
+													</td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td>
+														<p class="bold">
+															<%=typeAmount%>
+														</p>
+													</td>
+												</tr>
+												<tr style="border-bottom:1px solid #ddd; ">
+													<td colspan="7">
+														<div style="display: inline-block; float: left;">
+															<p>
+																Amount Chargeable (in words)
+															</p>
+															<p class="bold" style="margin-top: 5px;">
+																INR
+																<%=amountInWords%>
+															</p>
+														</div>
+														<div style="display: inline-block; float: right;">
+															<p>E. & O.E</p>
+														</div>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2">
+														<p>HSN/SAC</p>
+
+													</td>
+													<td colspan="">
+														<p>Taxable Value</p>
+
+
+													</td>
+													<td colspan="2" style="vertical-align: top; padding: 0px;">
+														<table style="border: none;">
+															<tr>
+																<td colspan="2">
+																	<p style="text-align: center;">Central Tax</p>
+																</td>
+
+															</tr>
+															<tr>
+																<td style="border-top: 1px solid
 											#ddd; border-right: 1px solid #ddd; border-bottom:1px solid #ddd;width:63px;">
-													<p>Rate</p>
-												</td>
-												<td style="border-bottom:1px solid #ddd;">
-													<p>Amount</p>
-												</td>
-											</tr>
-										</table>
+																	<p>Rate</p>
+																</td>
+																<td style="border-bottom:1px solid #ddd;">
+																	<p>Amount</p>
+																</td>
+															</tr>
+														</table>
 
-									</td>
-									<td colspan="2" style="vertical-align: top; padding: 0px;">
-										<table style="border: none;">
-											<tr>
-												<td colspan="2">
-													<p style="text-align: center;">State Tax</p>
-												</td>
+													</td>
+													<td colspan="2" style="vertical-align: top; padding: 0px;">
+														<table style="border: none;">
+															<tr>
+																<td colspan="2">
+																	<p style="text-align: center;">State Tax</p>
+																</td>
 
-											</tr>
-											<tr>
-												<td style="border-top: 1px solid
+															</tr>
+															<tr>
+																<td style="border-top: 1px solid
 											#ddd; border-right: 1px solid #ddd;border-bottom:1px solid #ddd; width: 49px;">
-													<p>Rate</p>
-												</td>
-												<td style="border-bottom:1px solid #ddd;">
-													<p>Amount</p>
-												</td>
-											</tr>
-										</table>
+																	<p>Rate</p>
+																</td>
+																<td style="border-bottom:1px solid #ddd;">
+																	<p>Amount</p>
+																</td>
+															</tr>
+														</table>
 
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2" style="border-top: 1px solid #ddd">
-										<p style="text-align: left;">00440197</p>
-									</td>
-									<td style="border-top: 1px solid #ddd">
-										<p>
-											<%=amountWithoutTax%>
-										</p>
-									</td>
-									<td style="width: 50px;">
-										<p>
-											<%=cgstPercent%>%</p>
-									</td>
-									<td>
-										<p>
-											<%=cgstAmout%>
-										</p>
-									</td>
-									<td style="width: 50px;">
-										<p>
-											<%=sgstPercent%>%</p>
-									</td>
-									<td>
-										<p>
-											<%=sgstAmout%>
-										</p>
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2" style="border-top: 1px solid #ddd">
-										<p class="bold" style="float: right;">Total</p>
-									</td>
-									<td style="border-top: 1px solid #ddd">
-										<p class="bold">
-											<%=amountWithoutTax%>
-										</p>
-									</td>
-									<td style="width: 50px; border-top: 1px solid #ddd">
-										<p></p>
-									</td>
-									<td style="border-top: 1px solid #ddd">
-										<p class="bold">
-											<%=cgstAmout%>
-										</p>
-									</td>
-									<td style="width: 50px; border-top: 1px solid #ddd">
-										<p></p>
-									</td>
-									<td style="border-top: 1px solid #ddd">
-										<p class="bold">
-											<%=sgstAmout%>
-										</p>
-									</td>
-								</tr>
-								<tr style="border-top: 1px solid #ddd">
-									<td colspan="7">
-										<div>
-											<p> Tax Amount (in words): <span class="bold">INR <%=taxTotalAmountInWords%></span></p>
-										</div>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" style="border-top: 1px solid #ddd">
+														<p style="text-align: left;">00440197</p>
+													</td>
+													<td style="border-top: 1px solid #ddd">
+														<p>
+															<%=amountWithoutTax%>
+														</p>
+													</td>
+													<td style="width: 50px;">
+														<p>
+															<%=cgstPercent%>%</p>
+													</td>
+													<td>
+														<p>
+															<%=cgstAmout%>
+														</p>
+													</td>
+													<td style="width: 50px;">
+														<p>
+															<%=sgstPercent%>%</p>
+													</td>
+													<td>
+														<p>
+															<%=sgstAmout%>
+														</p>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2" style="border-top: 1px solid #ddd">
+														<p class="bold" style="float: right;">Total</p>
+													</td>
+													<td style="border-top: 1px solid #ddd">
+														<p class="bold">
+															<%=amountWithoutTax%>
+														</p>
+													</td>
+													<td style="width: 50px; border-top: 1px solid #ddd">
+														<p></p>
+													</td>
+													<td style="border-top: 1px solid #ddd">
+														<p class="bold">
+															<%=cgstAmout%>
+														</p>
+													</td>
+													<td style="width: 50px; border-top: 1px solid #ddd">
+														<p></p>
+													</td>
+													<td style="border-top: 1px solid #ddd">
+														<p class="bold">
+															<%=sgstAmout%>
+														</p>
+													</td>
+												</tr>
+												<tr style="border-top: 1px solid #ddd">
+													<td colspan="7">
+														<div>
+															<p> Tax Amount (in words): <span class="bold">INR <%=taxTotalAmountInWords%></span></p>
+														</div>
 
-									</td>
-								</tr>
-								<tr>
-									<td colspan="7">
-										<!-- 	<div>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="7">
+														<!-- 	<div>
 									<p>GST IN :<span class="bold">27AAWCS2792J1ZG</span></p>
 									<p style="margin-top: 5px;">Company's pan:<span class="bold">AAWCS2792J</span></p>
 								</div> -->
-										<div style="display: inline-block;">
-											<p> GST IN</p>
-											<p>Company's pan</p>
-										</div>
-										<div style="display: inline-block;">
-											<p>:</p>
-											<p>:</p>
-										</div>
-										<div style="display: inline-block;">
-											<p class="bold">27AAWCS2792J1ZG</p>
-											<p class="bold">AAWCS2792J</p>
-										</div>
+														<div style="display: inline-block;">
+															<p> GST IN</p>
+															<p>Company's pan</p>
+														</div>
+														<div style="display: inline-block;">
+															<p>:</p>
+															<p>:</p>
+														</div>
+														<div style="display: inline-block;">
+															<p class="bold">27AAWCS2792J1ZG</p>
+															<p class="bold">AAWCS2792J</p>
+														</div>
 
-									</td>
-								</tr>
-								<tr>
-									<td colspan="2"></td>
-									<td colspan="5" class="pa0" style="border-top: 1px solid #ddd;">
-										<table style="border: none;">
-											<tr>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2"></td>
+													<td colspan="5" class="pa0" style="border-top: 1px solid #ddd;">
+														<table style="border: none;">
+															<tr>
 
-												<td style="text-align: right;     padding: 0px 10px 25px 0px;"><span class="bold">for SFA Events Private Limited</span></td>
-											</tr>
-											<tr>
+																<td style="text-align: right;     padding: 0px 10px 25px 0px;"><span class="bold">for SFA Events Private Limited</span></td>
+															</tr>
+															<tr>
 
-												<td style="text-align: right; padding: 0 10px 0px 0px;">Authorised Signatory</td>
-											</tr>
-										</table>
-									</td>
-								</tr>
+																<td style="text-align: right; padding: 0 10px 0px 0px;">Authorised Signatory</td>
+															</tr>
+														</table>
+													</td>
+												</tr>
 							</table>
 							</div>
 					</tr>
