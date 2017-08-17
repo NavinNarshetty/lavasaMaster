@@ -12,15 +12,15 @@
 // var globalLinkSchoolRegister = "http://hyderabadschool.sfanow.in";
 // var globalLinkCollegeRegister = "http://hyderabadcollege.sfanow.in";
 // var globalLinkForAll = "https://hyderabad.sfanow.in/";
-var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
-var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
-var globalLinkForAll = "http://testmumbai.sfanow.in/";
+// var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
+// var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
+// var globalLinkForAll = "http://testmumbai.sfanow.in/";
+var globalLinkSchoolRegister = "http://testhyderabadschool.sfanow.in";
+var globalLinkCollegeRegister = "http://testhyderabadcollege.sfanow.in";
+var globalLinkForAll = "http://testhyderabad.sfanow.in/";
 // var globalLinkSchoolRegister = "http://testahmedabadschool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testahmedabadcollege.sfanow.in";
 // var globalLinkForAll = "http://testahmedabad.sfanow.in/";
-// var globalLinkSchoolRegister = "http://testhyderabadschool.sfanow.in";
-// var globalLinkCollegeRegister = "http://testhyderabadcollege.sfanow.in";
-// var globalLinkForAll = "http://testhyderabad.sfanow.in/";
 myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
