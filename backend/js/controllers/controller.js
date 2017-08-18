@@ -2564,7 +2564,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         if ($.jStorage.get("accessToken")) {
 
         } else {
-            // $state.go("login");
+            $state.go("login");
         }
     })
 
