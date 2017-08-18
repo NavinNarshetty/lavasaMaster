@@ -214,11 +214,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'ViewIndividualSportCtrl'
         })
-        .state('login', {
-            url: "/login",
-            templateUrl: "views/login.html",
-            controller: 'LoginCtrl'
-        })
+
         .state('page', {
             url: "/page/:id/{page:.*}/{keyword:.*}",
             templateUrl: "views/template.html",
@@ -229,9 +225,8 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         //     templateUrl: "views/template.html",
         //     controller: 'PageJsonCtrl'
         // })
-
-        .state('loginapp', {
-            url: "/login/:id",
+        .state('login', {
+            url: "/login",
             templateUrl: "views/login.html",
             controller: 'LoginCtrl'
         })
@@ -335,6 +330,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/jagz",
             templateUrl: "views/jagz.html",
             controller: 'JagzCtrl'
+        })
+
+        .state('loginapp', {
+            url: "/login/:id",
+            templateUrl: "views/login.html",
+            controller: 'LoginCtrl'
         });
 
     $urlRouterProvider.otherwise("/dashboard");

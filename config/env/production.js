@@ -42,7 +42,7 @@ module.exports = {
   // realHost: "http://testahmedabadcollege.sfanow.in",
 
   // realHost: "https://sfa.wohlig.co.in",
-  emails: ["chintan@wohlig.com", "jagruti@wohlig.com", "tushar@wohlig.com", "chirag@wohlig.com", "harsh@wohlig.com"]
+  emails: ["chintan@wohlig.com", "jagruti@wohlig.com", "tushar@wohlig.com", "chirag@wohlig.com", "harsh@wohlig.com", "raj@wohlig.com"]
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
