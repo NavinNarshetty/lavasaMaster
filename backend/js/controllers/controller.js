@@ -3262,12 +3262,16 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         //Used to name the .html file
         $scope.menutitle = NavigationService.makeactive("Login");
         TemplateService.title = $scope.menutitle;
+        $scope.template = TemplateService;
         $scope.currentHost = window.location.origin;
         if ($stateParams.id) {
+            console.log("Temp is here");
             if ($stateParams.id === "AccessNotAvailable") {
                 toastr.error("You do not have access for the Backend.");
             } else {
+                console.log("Demo 1234");
                 NavigationService.parseAccessToken($stateParams.id, function () {
+                    console.log("reached Herre");
                     NavigationService.profile(function () {
                         $state.go("dashboard");
                     }, function () {
