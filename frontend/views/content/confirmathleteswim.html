@@ -104,8 +104,8 @@
                                 <td ng-init="validate=(selectService.sportName=='Athletics')?true:false">
                                   <!--||{{validate}}||{{validate && athelete.sport.length>=2}}-->
                                   <div class="custom-uiselect">
-                                    <ui-select name="selectfilter" multiple="" id="selectfilter" theme="bootstrap" ng-model="athelete.sport" ng-change="selectService.isValidSelection(athelete)"
-                                      ng-init="selectService.isValidSelection(athelete)">
+                                    <ui-select name="selectfilter" title="Select Event or Events" multiple="" id="selectfilter" theme="bootstrap" ng-model="athelete.sport"
+                                      ng-change="selectService.isValidSelection(athelete)" ng-init="selectService.isValidSelection(athelete)">
                                       <ui-select-match placeholder="Select Events">
                                         {{$item.eventName}}
                                       </ui-select-match>
