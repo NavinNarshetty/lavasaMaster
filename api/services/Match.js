@@ -747,7 +747,8 @@ var model = {
                     async.concatSeries(importData, function (mainData, callback) {
                         async.concatSeries(mainData, function (arrData, callback) {
                             var paramData = {};
-                            paramData.opponentsSingle = [];
+                            paramData.success = {};
+                            paramData.success.opponentsSingle = [];
                             async.eachSeries(arrData, function (singleData, callback) {
                                 var date = Math.round((singleData.DATE - 25569) * 86400 * 1000);
                                 date = new Date(date);
@@ -780,9 +781,11 @@ var model = {
                                         function (singleData, callback) {
                                             if (singleData.error) {
                                                 countError++;
+                                                paramData = singleData;
                                                 callback(null, singleData);
                                             } else {
                                                 if (_.isEmpty(singleData["SFA ID"])) {
+                                                    paramData = singleData;
                                                     callback(null, singleData);
                                                 } else {
                                                     var paramData = {};
@@ -807,16 +810,19 @@ var model = {
                                         function (singleData, callback) {
                                             if (singleData.error) {
                                                 countError++;
-                                                callback(null, singleData);
+                                                paramData = singleData;
+                                                callback(null, paramData);
                                             } else {
-                                                paramData.matchId = data.matchId;
-                                                paramData.round = singleData["ROUND "];
+                                                paramData.error = null;
+                                                paramData.success.matchId = data.matchId;
+                                                paramData.success.round = singleData["ROUND "];
                                                 if (!_.isEmpty(singleData["PARTICIPANT 1"])) {
-                                                    paramData.opponentsSingle.push(singleData["PARTICIPANT 1"]);
+
+                                                    paramData.success.opponentsSingle.push(singleData["PARTICIPANT 1"]);
                                                 }
-                                                paramData.sport = singleData.SPORT;
-                                                paramData.scheduleDate = singleData.DATE;
-                                                paramData.scheduleTime = singleData.TIME;
+                                                paramData.success.sport = singleData.SPORT;
+                                                paramData.success.scheduleDate = singleData.DATE;
+                                                paramData.success.scheduleTime = singleData.TIME;
 
                                                 callback(null, paramData);
 
@@ -832,14 +838,19 @@ var model = {
                                     });
 
                             }, function (err, singleData) {
-                                console.log("singleData..............", paramData);
-                                Match.saveMatch(paramData, function (err, complete) {
-                                    if (err || _.isEmpty(complete)) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, complete);
-                                    }
-                                });
+                                console.log("paramData..............", paramData);
+                                if (paramData.error) {
+                                    countError++;
+                                    callback(null, paramData);
+                                } else {
+                                    Match.saveMatch(paramData.success, function (err, complete) {
+                                        if (err || _.isEmpty(complete)) {
+                                            callback(err, null);
+                                        } else {
+                                            callback(null, complete);
+                                        }
+                                    });
+                                }
                             });
 
                         }, function (err, singleData) {
