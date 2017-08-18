@@ -235,7 +235,7 @@ var model = {
                 },
                 function (found, callback) {
                     if (_.isEmpty(found)) {
-                        callback(null,"Wrong MatchId");
+                        callback(null, "Wrong MatchId");
                     } else {
                         var finalData = {};
                         finalData.players = [];
@@ -673,8 +673,12 @@ var model = {
                                         paramData.opponentsSingle = [];
                                         paramData.matchId = data.matchId;
                                         paramData.round = singleData["ROUND NAME"];
-                                        if (_.isEmpty(singleData["PARTICIPANT 1"]) || _.isEmpty(singleData["PARTICIPANT 2"])) {
+                                        if (_.isEmpty(singleData["PARTICIPANT 1"]) && _.isEmpty(singleData["PARTICIPANT 2"])) {
                                             paramData.opponentsSingle = "";
+                                        } else if (_.isEmpty(singleData["PARTICIPANT 1"])) {
+                                            paramData.opponentsSingle.push(singleData["PARTICIPANT 2"]);
+                                        } else if (_.isEmpty(singleData["PARTICIPANT 2"])) {
+                                            paramData.opponentsSingle.push(singleData["PARTICIPANT 1"]);
                                         } else {
                                             paramData.opponentsSingle.push(singleData["PARTICIPANT 1"]);
                                             paramData.opponentsSingle.push(singleData["PARTICIPANT 2"]);
