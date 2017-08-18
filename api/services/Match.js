@@ -239,7 +239,9 @@ var model = {
                     } else {
                         var finalData = {};
                         finalData.players = [];
-                        finalData.sportsName = found.sport.sportslist.name + "-" + found.sport.ageGroup.name + "-" + found.sport.gender;
+                        finalData.sportsName = found.sport.sportslist.name;
+                        finalData.age = found.sport.ageGroup.name;
+                        finalData.gender = found.sport.gender;
                         finalData.sportType = found.sport.sportslist.sportsListSubCategory.sportsListCategory.name;
                         _.each(found.opponentsSingle, function (n) {
                             finalData.players.push(n.athleteId);
@@ -747,8 +749,8 @@ var model = {
                     async.concatSeries(importData, function (mainData, callback) {
                         async.concatSeries(mainData, function (arrData, callback) {
                             var paramData = {};
-                            paramData.success = {};
-                            paramData.success.opponentsSingle = [];
+                            // paramData.success = {};
+                            paramData.opponentsSingle = [];
                             async.eachSeries(arrData, function (singleData, callback) {
                                 var date = Math.round((singleData.DATE - 25569) * 86400 * 1000);
                                 date = new Date(date);
@@ -814,15 +816,15 @@ var model = {
                                                 callback(null, paramData);
                                             } else {
                                                 paramData.error = null;
-                                                paramData.success.matchId = data.matchId;
-                                                paramData.success.round = singleData["ROUND "];
+                                                paramData.matchId = data.matchId;
+                                                paramData.round = singleData["ROUND "];
                                                 if (!_.isEmpty(singleData["PARTICIPANT 1"])) {
-
-                                                    paramData.success.opponentsSingle.push(singleData["PARTICIPANT 1"]);
+                                                    console.log("*****data****", singleData["PARTICIPANT 1"]);
+                                                    paramData.opponentsSingle.push(singleData["PARTICIPANT 1"]);
                                                 }
-                                                paramData.success.sport = singleData.SPORT;
-                                                paramData.success.scheduleDate = singleData.DATE;
-                                                paramData.success.scheduleTime = singleData.TIME;
+                                                paramData.sport = singleData.SPORT;
+                                                paramData.scheduleDate = singleData.DATE;
+                                                paramData.scheduleTime = singleData.TIME;
 
                                                 callback(null, paramData);
 
@@ -1007,7 +1009,7 @@ var model = {
                 async.concatSeries(singleData, function (n, callback) {
                         console.log("n", n);
                         if (countError != 0 && n.error == null) {
-                            console.log("inside", n.success._id, "count", countError);
+                            console.log("inside", n._id, "count", countError);
                             Match.remove({
                                 _id: n.success._id
                             }).exec(function (err, found) {
