@@ -4,7 +4,7 @@
       <div class="pull-right">
         <p class="m-clear">match id: <span>{{match.matchId}}</span> </p>
       </div>
-      <p class="m-clear"><span>{{match.sportsName}}</span> </p>
+      <p class="m-clear"><span>{{match.sportsName}} {{match.age}} {{match.gender}}</span> </p>
     </div>
   </div>
   <div class="combatscore-scoring">
@@ -19,7 +19,7 @@
                         <p>SFA ID: <span>{{player.sfaId}}</span></p>
                     </div>
                     <div class="matchplayer-image">
-                        <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
+                        <img ng-src="{{player.photograph|serverimage}}" alt="{player.firstName}} {{player.surname}}" class="img-responsive">
                     </div>
                     <div class="matchplayer-details">
                         <p class="matchplayer-name"><span> {{player.firstName}} </span> <span> {{player.surname}} </span></p>
@@ -33,7 +33,7 @@
       <!-- ATHLETE SCORE -->
       <div class="combatscore-sets">
         <div class="row">
-          <div class="col-md-6 col-sm-6" ng-repeat= "player in match.resultsCombat.players track by $index">
+          <div class="col-md-6 col-sm-6" ng-repeat="player in match.resultsCombat.players track by $index">
             <div class="combatscore-scorecard" ng-repeat = "set in player.sets track by $index">
               <div class="scoring-set form-group">
                 <label for="player1score" class="text-uppercase" ng-if="player.sets.length<=1">SCORE</label>
@@ -60,9 +60,9 @@
               <upload-image ng-model="match.resultsCombat.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
             </div>
             <div class=" digital-swiper">
-            <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultsCombat.matchPhoto">
+            <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultsCombat.matchPhoto track by $index">
               <span class="remove-pic" ng-click="removeMatchScore(pic,'matchPhoto')"><i class="fa fa-times"></i></span>
-              <img ng-src="{{pic.image}}" alt="" class="img-responsive">
+              <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
             </div>
           </div>
           </div>
@@ -74,7 +74,7 @@
             <div class="digital-swiper">
             <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultsCombat.scoreSheet">
               <span class="remove-pic" ng-click="removeMatchScore(pic,'scoreSheet')"><i class="fa fa-times"></i></span>
-              <img ng-src="{{pic.image}}" alt="" class="img-responsive">
+              <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
             </div>
           </div>
           </div>
@@ -87,7 +87,7 @@
               <label for="matchWinnerPlayer" class="text-uppercase">Select Winner</label>
               <!-- SELECT -->
               <select class="form-control" ng-model="match.resultsCombat.winner.player" ng-init="match.winner.player=''">
-                <option ng-repeat="player in match.players track by $index">{{player.firstName}} {{player.surname}}</option>
+                <option ng-repeat="player in match.players track by $index" value="{{player._id}}">{{player.firstName}} {{player.surname}}</option>
               </select>
               <!-- SELECT  END-->
               <!-- UI SELECT -->
@@ -100,12 +100,12 @@
               <!-- UI SELECT END -->
             </div>
           </div>
-          <div class="col-md-4 col-sm-6">
+          <div class="col-md-4 col-sm-6" ng-if="match.sportsName=='Boxing'">
             <div class="match-winreason text-left">
               <label for="matchWinnerReason" class="text-uppercase">won by</label>
               <!-- SELECT -->
-              <select class="form-control" ng-init="match.winner.reason=''" ng-model="match.winner.reason" ng-options="reason for reason in reasons track by $index">
-                <!-- <option ng-repeat="reason in reasons track by $index">{{reason}}</option> -->
+              <select class="form-control" ng-init="match.winner.reason=''" ng-model="match.resultsCombat.winner.reason">
+                <option ng-repeat="reason in reasons track by $index" value="{{reason}}">{{reason}}</option>
               </select>
               <!-- SELECT  END-->
               <!-- UI SELECT -->
@@ -126,16 +126,16 @@
               <button class="btn btn-green-outline btn-scoring" ui-sref="matchstart({'id':matchId})">back</button>
           </div>
           <div class="col-md-4 col-sm-4">
-              <button class="btn btn-green-outline btn-scoring" promise-btn = "yourPromise" ng-click="">Save</button>
+              <button class="btn btn-green-outline btn-scoring" promise-btn = "yourPromise" ng-click="saveResult(match)">Save</button>
           </div>
           <div class="col-md-4 col-sm-4">
-              <button class="btn btn-green-outline btn-scoring"> complete</button>
+              <button class="btn btn-green-outline btn-scoring" ng-click="matchComplete();">complete</button>
           </div>
         </div>
 
-        <div class="row" style="text-align: left;">
-          <pre>{{match|json}}</pre>
-        </div>
+        <!-- <div class="row" style="text-align: left;">
+          <pre>{{match.resultsCombat|json}}</pre>
+        </div> -->
       </div>
     </div>
   </div>

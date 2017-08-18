@@ -28,7 +28,6 @@ myApp.factory('NavigationService', function ($http) {
             return navigation;
         },
         getOneMatch: function(formData, callback){
-          console.log(formData, "getOneMatch");
           $http({
               url: adminurl + "match/getOne",
               method: "POST",
@@ -38,7 +37,7 @@ myApp.factory('NavigationService', function ($http) {
           });
         },
         saveMatch: function(formData, callback){
-          console.log(formData, 'saveMatch');
+          // console.log(formData, 'saveMatch');
           $http({
               url: adminurl + "match/updateResult",
               method: "POST",

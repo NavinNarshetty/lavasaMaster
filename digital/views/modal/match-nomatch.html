@@ -31,7 +31,7 @@
             </div>
           </div>
         <div class="row">
-            <div class="col-md-6 col-sm-6" ng-repeat="player in matchDetails.resultsCombat.players track by $index">
+            <div class="col-md-6 col-sm-6" ng-repeat="player in formData.players track by $index">
                 <div class="match-nomatch-player">
                     <div class="match-nomatch-radio text-center">
                         <div class="checkbox" >
@@ -54,8 +54,8 @@
                 </div>
                 <div class="col-md-3 col-sm-3">
                     <div class="match-selectwinner ">
-                        <ui-select ng-model="matchDetails.resultsCombat.winner.player" theme="bootstrap" ng-disabled="disableWinner">
-                            <ui-select-match placeholder="Select Winner"> {{$select.selected.name}}</ui-select-match>
+                        <ui-select ng-model="formData.winner.player" theme="bootstrap" ng-disabled="disableWinner">
+                            <ui-select-match placeholder="Select Winner"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
                             <ui-select-choices repeat="player._id as player in matchDetails.players  | filter: $select.search">
                                   <p>{{player.firstName}} {{player.surname}}</p>
                             </ui-select-choices>
@@ -63,10 +63,17 @@
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-green-outline btn-scoring" ng-click="saveWinner();">save</button>
+                    <button class="btn btn-green-outline btn-scoring" ng-click="saveWinner(formData)">save</button>
                 </div>
             </div>
         </div>
-        <pre>{{matchDetails.resultsCombat|json}}</pre>
+        <!-- <div class="">
+          formData
+          <pre>{{formData|json}}</pre>
+        </div>
+        <div class="">
+          resultsCombat
+          <pre>{{matchDetails.resultsCombat|json}}</pre>
+        </div> -->
     </div>
 </div>

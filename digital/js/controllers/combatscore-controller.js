@@ -1,4 +1,4 @@
-myApp.controller('CombatScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams) {
+myApp.controller('CombatScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, $interval) {
     $scope.template = TemplateService.getHTML("content/score-combat.html");
     TemplateService.title = "Score Combat"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -25,6 +25,48 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     };
     $scope.getOneMatch();
     // GET MATCH END
+    // SAVE RESULT
+    $scope.saveResult = function(formData){
+      $scope.matchResult = {
+        resultsCombat : formData.resultsCombat,
+        matchId: $scope.matchData.matchId
+      }
+      NavigationService.saveMatch($scope.matchResult, function(data){
+        if(data.value == true){
+          console.log('save success');
+        } else{
+          alert('fail save');
+        }
+      });
+    }
+    // SAVE RESULT END
+    // AUTO SAVE FUNCTION
+    $scope.autoSave = function(){
+      $scope.$on('$viewContentLoaded', function(event) {
+        $interval(function () {
+          $scope.saveResult($scope.match);
+        }, 10000);
+      })
+    }
+    $scope.autoSave();
+    // AUTO SAVE FUNCTION END
+    // MATCH COMPLETE
+    $scope.matchComplete = function(){
+        $scope.matchResult = {
+          resultsCombat : $scope.match.resultsCombat,
+          matchId: $scope.matchData.matchId
+        }
+        NavigationService.saveMatch($scope.matchResult, function(data){
+          if(data.value == true){
+            $state.go('home');
+            console.log('save success');
+          } else{
+            alert('fail save');
+          }
+        });
+        console.log($scope.matchResult, 'result#');
+    }
+    // MATCH COMPLETE END
     // API CALLN INTEGRATION END
 
     // MATCH JSON

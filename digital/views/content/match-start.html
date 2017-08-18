@@ -4,7 +4,7 @@
       <div class="pull-right">
         <p class="m-clear">match id: <span>{{matchData.matchId}}</span> </p>
       </div>
-      <p class="m-clear">{{matchDetails.sportsName}}</p>
+      <p class="m-clear">{{matchDetails.sportsName}} {{matchDetails.age}} {{matchDetails.gender}}</p>
     </div>
   </div>
   <div class="matchstart-section get-center">
@@ -17,8 +17,8 @@
               <p>SFA ID: <span class="text-uppercase">{{player.sfaId}}</span></p>
             </div>
             <div class="matchplayer-image">
-              <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
-              <!-- <img ng-src="{{player.photograph|serverimage}}" alt="" class="img-responsive"> -->
+              <!-- <img src="img/dishapatani1.jpg" alt="" class="img-responsive"> -->
+              <img ng-src="{{player.photograph|serverimage}}" alt="{{player.firstName}} {{player.surname}}" class="img-responsive">
             </div>
             <div class="matchplayer-details">
               <p class="matchplayer-name">{{player.firstName}} {{player.surname}}</p>
@@ -35,10 +35,10 @@
       <div class="col-md-2 col-sm-3">
         <div class="matchstart-uploadholder text-uppercase ">
           <button class="btn btn-green-outline btn-scoring">Upload Picture</button>
-          <upload-image ng-model="matchDetails.resultsCombat.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+          <upload-image ng-model="formData.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
         </div>
-        <div class="digital-swiper scorescard-swiper" ng-show="showMatchPhoto" ng-if="matchDetails.resultsCombat.matchPhoto.length>0">
-          <div class="matchstart-uploadpic text-uppercase" ng-repeat= "pic in matchDetails.resultsCombat.matchPhoto track by $index">
+        <div class="digital-swiper scorescard-swiper" ng-if="formData.matchPhoto.length>0">
+          <div class="matchstart-uploadpic text-uppercase" ng-repeat= "pic in formData.matchPhoto track by $index">
             <span class="remove-pic" ng-click="removeMatchScore(pic)"><i class="fa fa-times"></i></span>
             <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
           </div>
@@ -53,10 +53,14 @@
           <div class="swiper-button-next scorecard-next"><span class="fa fa-chevron-right"></span></div> -->
         </div>
         <div class="matchstart-score">
-          <button type="button" class="btn btn-green-outline btn-scoring" ui-sref="scorecombat({'id':matchId})">start scoring</button>
+          <button type="button" class="btn btn-green-outline btn-scoring" ng-click="saveResult(formData)" >start scoring</button>
+          <!-- ui-sref="scorecombat({'id':matchId})" -->
         </div>
       </div>
     </div>
+    <!-- <div class="row">
+      <pre>{{matchDetails|json}}</pre>
+    </div> -->
     </div>
   </div>
 </div>

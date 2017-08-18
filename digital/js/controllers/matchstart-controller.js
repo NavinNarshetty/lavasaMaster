@@ -1,4 +1,4 @@
-myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams) {
+myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state) {
     $scope.template = TemplateService.getHTML("content/match-start.html");
     TemplateService.title = "Sport Match"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -31,7 +31,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     // INITIALSE SWIPER END
     $scope.mySlides = ['1', '2', '3', '4', '5'];
 
-    // API CALLN INTEGRATION
+    //INTEGRATION
     // GET MATCH
     $scope.getOneMatch = function() {
         $scope.matchData.matchId = $stateParams.id;
@@ -41,13 +41,14 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                 $scope.matchDetails.matchId = $scope.matchData.matchId;
                     // INITIALISE RESULTS
                     if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
-                        $scope.matchDetails.resultsCombat = {
+                      $scope.matchDetails.resultsCombat = {};
+                        $scope.formData = {
                             "players": [],
                             "matchPhoto": [],
                             "scoreSheet": []
                         }
                         _.each($scope.matchDetails.players, function(n, key) {
-                            $scope.matchDetails.resultsCombat.players[key] = {
+                            $scope.formData.players[key] = {
                                 "player": n._id,
                                 "noShow": false,
                                 "walkover": false,
@@ -56,22 +57,19 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                                 }]
                             }
                         })
+                    } else{
+                      $scope.formData = $scope.matchDetails.resultsCombat;
                     }
-                console.log($scope.matchDetails, 'match');
                 // INITIALISE RESULTS END
             } else {
                 console.log("ERROR IN getOneMatch");
                 //redirect back to sportselection page
-
                     // $state.go("sport-selection");
-
-
             }
         })
     };
     $scope.getOneMatch();
     // GET MATCH END
-    // API CALLN INTEGRATION END
     // GET MATCH SCORESHEET
     $scope.getMatchPhoto = function(detail) {
         console.log(detail, 'pic return');
@@ -81,32 +79,73 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     // GET MATCH SCORESHEET END
     // REMOVE MATCH SCORESHEET
     $scope.removeMatchScore = function(pic) {
-            _.remove($scope.matchDetails.resultsCombat.matchPhoto, function(n) {
-                return n.image === pic.image;
-            })
-        }
-        // REMOVE MATCH SCORESHEET END
-        // NO MATCH
-    $scope.setNoMatch = function() {
-            _.each($scope.matchDetails.resultsCombat.players, function(player) {
-                player.noShow = true;
-                player.walkover = false;
-            })
-            console.log($scope.matchDetails.resultsCombat.players, 'player');
-        }
-        // NO MATCH END
-        // SAVE WINNER
-        // SAVE WINNER  END
-    $scope.showNoMatch = function() {
-        $uibModal.open({
-            animation: true,
-            scope: $scope,
-            backdrop: 'static',
-            keyboard: false,
-            templateUrl: 'views/modal/match-nomatch.html',
-            size: 'lg',
-            windowClass: 'match-nomatch'
-        })
+      _.remove($scope.formData.matchPhoto, function(n) {
+        return n.image === pic.image;
+      })
     }
+    // REMOVE MATCH SCORESHEET END
+    // NO MATCH
+    $scope.setNoMatch = function() {
+      _.each($scope.formData.players, function(player) {
+          player.noShow = true;
+          player.walkover = false;
+      })
+      console.log($scope.matchDetails.resultsCombat.players, 'player');
+    }
+    // NO MATCH END
+    // SAVE RESULT
+    $scope.saveResult = function(formData){
+      $scope.matchResult = {
+        resultsCombat : formData,
+        matchId: $scope.matchData.matchId
+      }
+      NavigationService.saveMatch($scope.matchResult, function(data){
+        if(data.value == true){
+          $state.go("scorecombat",{
+            id: $scope.matchData.matchId
+          });
+        } else{
+          alert('fail save');
+        }
+      });
+      console.log($scope.matchResult, 'result#');
+    }
+    // SAVE RESULT END
+    // SAVE WINNER
+    $scope.saveWinner = function(){
+      if($scope.formData.players[0].noShow == true && $scope.formData.players[1].noShow == true){
+        $scope.formData.isNoMatch = true;
+      } else {
+        $scope.formData.isNoMatch = false;
+      }
+      $scope.matchResult = {
+        resultsCombat : $scope.formData,
+        matchId: $scope.matchData.matchId
+      }
+      NavigationService.saveMatch($scope.matchResult, function(data){
+        if(data.value == true){
+          $state.go("home");
+        } else{
+          alert('fail save');
+        }
+      });
+      // $state.go("home");
+    }
+    // SAVE WINNER  END
+    // INTEGRATION END
+
+    // OPEN MATCH-NO MATCH MODAL
+    $scope.showNoMatch = function() {
+      $uibModal.open({
+        animation: true,
+        scope: $scope,
+        backdrop: 'static',
+        keyboard: false,
+        templateUrl: 'views/modal/match-nomatch.html',
+        size: 'lg',
+        windowClass: 'match-nomatch'
+      })
+    }
+    // OPEN MATCH-NO MATCH MODAL
 
 })
