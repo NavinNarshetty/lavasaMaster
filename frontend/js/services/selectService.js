@@ -10,8 +10,6 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     this.isValidForm = true;
     this.showMissingFields = false;
     this.disableNextOnRules = false;
-    this.isDisabled = false;
-    console.log(this.isDisabled);
     this.initialFun = function () {
         loginService.loginGet(function (data) {
             detail = data;
@@ -429,28 +427,20 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
         } else {
             obj.athleteToken = accessToken;
         }
-        this.isDisabled = true;
         console.log(formData);
         $http({
             'method': 'POST',
             'url': adminUrl2 + 'individualSport/saveInIndividual',
             'data': obj
         }).then(function (data) {
-            alert('hi');
-            this.isDisabled = false;
-            console.log(this.isDisabled);
             errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
                     if (allData.value) {
-                        this.isDisabled = false;
                         toastr.success("Successfully Confirmed", 'Success Message');
                         $state.go("individual-congrats");
-                    } else {
-                        this.isDisabled = false;
                     }
                 } else {
                     toastr.error(allData.message, 'Error Message');
-                    this.isDisabled = false;
                 }
             });
         });
