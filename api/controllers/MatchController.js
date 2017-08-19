@@ -140,7 +140,7 @@ var controller = {
     getSportSpecificRounds: function (req, res) {
         if (req.body) {
             console.log(req.body);
-            if (req.body && req.body.sport) {
+            if (req.body) {
                 Match.getSportSpecificRounds(req.body, res.callback);
             } else {
                 res.json({

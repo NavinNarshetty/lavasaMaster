@@ -1474,17 +1474,36 @@ var model = {
     },
 
     getSportSpecificRounds: function (data, callback) {
+        // console.log("data", data);
         async.waterfall([
             function (callback) {
-                var matchObj = {
-                    "sport": data.sport,
-                    "gender": data.gender,
-                    "ageGroup": data.ageGroup
+                if (_.isEmpty(data.weight)) {
+                    var matchObj = {
+                        sportslist: data.sport,
+                        gender: data.gender,
+                        ageGroup: data.ageGroup,
+                    }
+                } else {
+                    console.log("inside", data);
+                    var matchObj = {
+                        sportslist: data.sport,
+                        gender: data.gender,
+                        ageGroup: data.ageGroup,
+                        weight: data.weight
+                    }
                 }
                 Sport.findOne(matchObj).exec(function (err, sportDetails) {
-                    callback(null, sportDetails);
+                    if (err) {
+                        console.log(err);
+                        callback(err, null);
+                    } else if (sportDetails) {
+                        if (_.isEmpty(sportDetails)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, sportDetails);
+                        }
+                    }
                 });
-
             },
             function (sportDetails, callback) {
                 console.log(sportDetails);
@@ -1506,7 +1525,6 @@ var model = {
                                 }
                             }
                         },
-
                         // Stage 3
                         {
                             $sort: {
@@ -1530,13 +1548,16 @@ var model = {
                     });
             }
         ], function (err, result) {
-            callback(null, result);
+            if (err) {
+                callback(null, err);
+            } else {
+                if (_.isEmpty(result)) {
+                    callback(null, result);
+                } else {
+                    callback(null, result);
+                }
+            }
         });
-
-
-
-
-
     }
 
 };
