@@ -384,6 +384,7 @@ myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, Navigat
         $scope.type = data.type;
     });
     $scope.selectService = selectService;
+    console.log(selectService.isDisabled);
     $scope.formData = {};
     loginService.loginGet(function (data) {
         $scope.detail = data;

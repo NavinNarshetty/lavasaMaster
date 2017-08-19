@@ -486,6 +486,7 @@ myApp.controller('ConfirmTeamCtrl', function ($scope, TemplateService, Navigatio
     });
     $scope.teamMembers = selectService.team;
     $scope.selectService = selectService;
+    $scope.isDisabledConfirm = false;
     // NavigationService.setSportTeamMembers($scope.teamMembers);
     $scope.formData = {};
     $scope.tempStrArr = [];
@@ -574,6 +575,7 @@ myApp.controller('ConfirmTeamCtrl', function ($scope, TemplateService, Navigatio
     };
     $scope.confirmTeamToGo = function (confirmTeamObject) {
         console.log("confirmTeamObject", confirmTeamObject);
+        $scope.isDisabledConfirm = true;
         NavigationService.teamConfirm(confirmTeamObject, function (data) {
             errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
@@ -581,9 +583,12 @@ myApp.controller('ConfirmTeamCtrl', function ($scope, TemplateService, Navigatio
                         toastr.success("Successfully Confirmed", 'Success Message');
                         NavigationService.setSportId(null);
                         $state.go("team-congrats");
+                    } else {
+                        $scope.isDisabledConfirm = false;
                     }
                 } else {
                     toastr.error(allData.message, 'Error Message');
+                    $scope.isDisabledConfirm = false;
                 }
             });
         });

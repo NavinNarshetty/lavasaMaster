@@ -207,13 +207,13 @@
                   <div class="form-group ">
                     <div class="col-md-offset-3 col-md-6 col-sm-offset-2 col-sm-8 col-xs-12 ">
                       <div class="col-md-6 col-sm-6 col-xs-12 " ng-if="detail.userType === 'school'">
-                        <button class="btn btn-default sub-mit form-control " ng-disabled="isDisabled==true " type="button" ng-click="selectService.editTeam('individual-selection');">Edit</button>
+                        <button class="btn btn-default sub-mit form-control " ng-disabled="isDisabled==true" type="button" ng-click="selectService.editTeam('individual-selection');">Edit</button>
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 " ng-if="detail.userType === 'athlete'">
-                        <button class="btn btn-default sub-mit form-control " ng-disabled="isDisabled==true " type="button" ui-sref="sports-selection">Back</button>
+                        <button class="btn btn-default sub-mit form-control " ng-disabled="isDisabled==true" type="button" ui-sref="sports-selection">Back</button>
                       </div>
                       <div class="col-md-6 col-sm-6 col-xs-12 ">
-                        <button class="btn btn-default sub-mit form-control " ng-disabled="isDisabled==true " type="button" ng-click="selectService.confirmSelection(formData)"
+                        <button class="btn btn-default sub-mit form-control " ng-disabled="selectService.isDisabled==true" type="button" ng-click="selectService.confirmSelection(formData)"
                           promise-btn="yourPromise">Confirm</button>
                         <!--ng-click="saveIt(selectService.team)"-->
                       </div>
