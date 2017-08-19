@@ -52,7 +52,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'GridCtrl'
         });
-    $urlRouterProvider.otherwise("/score-racket");
+    $urlRouterProvider.otherwise("/");
     $locationProvider.html5Mode(isproduction);
 });
 
