@@ -7,6 +7,7 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     $scope.showScoreSheet = false;
     $scope.showMatchPhoto = false;
     $scope.matchData = {};
+    var promise;
     // $scope.matchData = {};
     // VARIABLE INITIALISE END
 
@@ -43,13 +44,21 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     // AUTO SAVE FUNCTION
     $scope.autoSave = function(){
       $scope.$on('$viewContentLoaded', function(event) {
-        $interval(function () {
+        promise = $interval(function () {
           $scope.saveResult($scope.match);
         }, 10000);
       })
     }
     $scope.autoSave();
     // AUTO SAVE FUNCTION END
+    // DESTROY AUTO SAVE
+    // $scope.destroyAutoSave = function(){
+      $scope.$on('$destroy', function(){
+        console.log('destroy');
+        $interval.cancel(promise);
+      })
+    // }
+    // DESTROY AUTO SAVE END
     // MATCH COMPLETE
     $scope.matchComplete = function(){
         $scope.matchResult = {

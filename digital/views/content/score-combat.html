@@ -40,9 +40,9 @@
                 <label for="player1score" class="text-uppercase" ng-if="player.sets.length>1">SET <span>{{$index+1}}</span></label>
                 <!-- <pre>{{player.sets.length}}</pre> -->
                 <div class="relate">
-                  <span class="score-buttons score-decrement" ng-click="decrementScore(set,'point');"><i class="fa fa-minus"></i></span>
+                  <button class="btn score-buttons score-decrement" ng-click="decrementScore(set,'point');"><i class="fa fa-minus"></i></button>
                   <input type="number" ng-model="set.point" id="player1score" min="0" class="score-number display-inline form-control">
-                  <span class="score-buttons score-increment" ng-click="incrementScore(set,'point');"><i class="fa fa-plus"></i></span>
+                  <button class="btn score-buttons score-increment" ng-click="incrementScore(set,'point');"><i class="fa fa-plus"></i></button>
                 </div>
               </div>
             </div>
@@ -54,7 +54,7 @@
       <div class="combatscore-uploads text-center">
         <div class="combatscore-pics">
           <div class="row">
-          <div class="col-md-offset-2 col-md-4 col-sm-6">
+          <div class="col-md-offset-1 col-md-5 col-sm-6">
             <div class="matchstart-uploadholder text-uppercase ">
               <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Picture</button>
               <upload-image ng-model="match.resultsCombat.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
@@ -66,7 +66,7 @@
             </div>
           </div>
           </div>
-          <div class="col-md-4 col-sm-6">
+          <div class="col-md-5 col-sm-6">
             <div class="matchstart-uploadholder text-uppercase ">
               <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Scorecard</button>
               <upload-image ng-model="match.resultsCombat.scoreSheet" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
