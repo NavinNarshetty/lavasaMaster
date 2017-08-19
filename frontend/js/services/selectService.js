@@ -10,6 +10,7 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
     this.isValidForm = true;
     this.showMissingFields = false;
     this.disableNextOnRules = false;
+    this.isDisabled = false;
     this.initialFun = function () {
         loginService.loginGet(function (data) {
             detail = data;
@@ -427,12 +428,15 @@ myApp.service('selectService', function ($http, TemplateService, $state, toastr,
         } else {
             obj.athleteToken = accessToken;
         }
+        this.isDisabled = true;
+        var ref = this;
         console.log(formData);
         $http({
             'method': 'POST',
             'url': adminUrl2 + 'individualSport/saveInIndividual',
             'data': obj
         }).then(function (data) {
+            ref.isDisabled = false;
             errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
                     if (allData.value) {
