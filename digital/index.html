@@ -3,7 +3,7 @@
 
 <head ng-controller="headerCtrl">
     <meta charset="utf-8">
-    <base href="/">
+    <base href="/digital/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,7 +13,7 @@
     <meta name="googlebot" content="noindex">
     <link rel="shortcut icon" href="img/favicon.ico" />
 
-    <title ng-bind="'Digital Scoring SFA | '+template.title"></title>
+    <title ng-bind="'Sport For All | '+template.title"></title>
 
     <!--[if IE]> <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script> <![endif]-->
     <!--[if IE]> <script src="https://cdn.jsdelivr.net/html5shiv/3.7.2/html5shiv.min.js"></script> <script src="https://cdn.jsdelivr.net/respond/1.4.2/respond.min.js"></script> <![endif]-->
@@ -23,10 +23,10 @@
     <div class="repeated-item" ui-view></div>
 
 
-    <link rel="stylesheet" type="text/css" href="css/import.css" />
+    <link rel="stylesheet" type="text/css" href="css/production.css" />
 
     <script>
-        var adminurl = "http://wohlig.io:1337/api/";
+        var adminurl = "http://testhyderabadschool.sfanow.in/api/";
         var isproduction = true;
         var chintan = function(content) {
             console.log("%c ---------------------------------------", 'background: #222; color: #bada55');
@@ -34,79 +34,7 @@
             console.log("%c ---------------------------------------", 'background: #222; color: #bada55');
         };
     </script>
-    
-        <script src="bower_components/jquery/dist/jquery.min.js"></script>
-        
-        <script src="bower_components/bootstrap-sass/assets/javascripts/bootstrap.min.js"></script>
-        
-        <script src="bower_components/flexslider/jquery.flexslider-min.js"></script>
-        
-        <script src="bower_components/fancyBox/source/jquery.fancybox.js"></script>
-        
-        <script src="bower_components/smart-app-banner/smart-app-banner.js"></script>
-        
-        <script src="bower_components/moment/min/moment.min.js"></script>
-        
-        <script src="bower_components/swiper/dist/js/swiper.jquery.js"></script>
-        
-        <script src="bower_components/angular/angular.js"></script>
-        
-        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-        
-        <script src="bower_components/angular-animate/angular-animate.min.js"></script>
-        
-        <script src="bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
-        
-        <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
-        
-        <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
-        
-        <script src="bower_components/angular-flexslider/angular-flexslider.js"></script>
-        
-        <script src="bower_components/angular-translate/angular-translate.js"></script>
-        
-        <script src="bower_components/angularjs-imageupload-directive/public/javascripts/imageupload.js"></script>
-        
-        <script src="bower_components/lodash/lodash.js"></script>
-        
-        <script src="bower_components/angulartics/dist/angulartics.min.js"></script>
-        
-        <script src="bower_components/angular-ui-swiper/dist/angular-ui-swiper.js"></script>
-        
-        <script src="bower_components/angular-toastr/dist/angular-toastr.js"></script>
-        
-        <script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
-        
-        <script src="bower_components/angular-promise-buttons/dist/angular-promise-buttons.js"></script>
-        
-        <script src="bower_components/angular-ui-select/dist/select.min.js"></script>
-        
-        <script src="digital/js/app.js"></script>
-        
-        <script src="digital/js/languages/language.js"></script>
-        
-        <script src="digital/js/directives/directive.js"></script>
-        
-        <script src="digital/js/filters/filter.js"></script>
-        
-        <script src="digital/js/services/template.js"></script>
-        
-        <script src="digital/js/factories/navigation.js"></script>
-        
-        <script src="digital/js/factories/api.js"></script>
-        
-        <script src="digital/js/controllers/controller.js"></script>
-        
-        <script src="digital/js/controllers/header-controller.js"></script>
-        
-        <script src="digital/js/controllers/language-controller.js"></script>
-        
-        <script src="digital/js/controllers/matchstart-controller.js"></script>
-        
-        <script src="digital/js/controllers/combatscore-controller.js"></script>
-        
-        <script src="digital/js/controllers/racketscore-controller.js"></script>
-        
+    <script src="js/production.min.js"></script>
 </body>
 
 </html>
