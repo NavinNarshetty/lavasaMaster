@@ -460,9 +460,17 @@ header {
     margin: 0px 5px;
     border: 1px solid $dark-grey;
     border-radius: 100%;
-    font-size: 21px;
-    cursor: pointer;
     box-shadow: 2px 2px 5px #a0a0a0;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 21px;
+    line-height: 1;
+
+    &:active, &:focus, &:hover{
+      outline: 0;
+      outline-offset: 0;
+      box-shadow: 2px 2px 5px #a0a0a0;
+    }
 }
 
 .combatscore-uploads {

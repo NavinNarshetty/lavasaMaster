@@ -137,6 +137,43 @@ var controller = {
             });
     },
 
+    getSportSpecificRounds: function (req, res) {
+        if (req.body) {
+            console.log(req.body);
+            if (req.body && req.body.sport) {
+                Match.getSportSpecificRounds(req.body, res.callback);
+            } else {
+                res.json({
+                    data: "Sport Not Found",
+                    value: false
+                });
+            }
+        } else {
+            res.json({
+                data: "Body Not Found",
+                value: false
+            });
+        }
+    },
+
+    knockoutMatchesByRound: function (req, res) {
+        if (req.body) {
+            if (req.body && req.body.round) {
+                Match.knockoutMatchesByRound(req.body, res.callback);
+            } else {
+                res.json({
+                    data: "Round Not Found",
+                    value: false
+                });
+            }
+        } else {
+            res.json({
+                data: "Body Not Found",
+                value: false
+            });
+        }
+    }
+
 
 };
 module.exports = _.assign(module.exports, controller);

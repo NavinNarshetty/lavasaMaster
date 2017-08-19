@@ -1473,5 +1473,71 @@ var model = {
 
     },
 
+    getSportSpecificRounds: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                var matchObj = {
+                    "sport": data.sport,
+                    "gender": data.gender,
+                    "ageGroup": data.ageGroup
+                }
+                Sport.findOne(matchObj).exec(function (err, sportDetails) {
+                    callback(null, sportDetails);
+                });
+
+            },
+            function (sportDetails, callback) {
+                console.log(sportDetails);
+                Match.aggregate(
+                    [
+                        // Stage 1
+                        {
+                            $match: {
+                                "sport": ObjectId(sportDetails._id)
+                            }
+                        },
+
+                        // Stage 2
+                        {
+                            $group: {
+                                "_id": "$round",
+                                "matches": {
+                                    $push: "$$ROOT"
+                                }
+                            }
+                        },
+
+                        // Stage 3
+                        {
+                            $sort: {
+                                "matches.createdAt": 1
+                            }
+                        },
+
+                    ],
+                    function (err, matches) {
+                        console.log("matches : ", matches);
+                        if (err) {
+                            console.log(err);
+                            callback(null, err);
+                        } else {
+                            if (_.isEmpty(matches)) {
+                                callback(null, matches);
+                            } else {
+                                callback(null, matches);
+                            }
+                        }
+                    });
+            }
+        ], function (err, result) {
+            callback(null, result);
+        });
+
+
+
+
+
+    }
+
 };
 module.exports = _.assign(module.exports, exports, model);
