@@ -36,6 +36,11 @@ module.exports = function (grunt) {
                 cwd: './frontend',
                 src: ['**'],
                 dest: '.tmp/public'
+            }, {
+                expand: true,
+                cwd: './digital',
+                src: ['**'],
+                dest: '.tmp/public'
             }]
         },
         copyBackend: {
@@ -53,6 +58,11 @@ module.exports = function (grunt) {
                 cwd: './frontend',
                 src: ['fonts/**', 'img/**', 'views/**'],
                 dest: '.tmp/public'
+            }, {
+                expand: true,
+                cwd: './digital',
+                src: ['fonts/**', 'img/**', 'views/**'],
+                dest: '.tmp/public'
             }]
         },
         developmentFont: {
@@ -61,6 +71,11 @@ module.exports = function (grunt) {
                 cwd: './frontend',
                 src: ['fonts/**'],
                 dest: '.tmp/public/frontend'
+            }, {
+                expand: true,
+                cwd: './digital',
+                src: ['fonts/**'],
+                dest: '.tmp/public/digital'
             }]
         },
         developmentImg: {
@@ -69,6 +84,11 @@ module.exports = function (grunt) {
                 cwd: './frontend',
                 src: ['img/**'],
                 dest: '.tmp/public/frontend'
+            }, {
+                expand: true,
+                cwd: './digital',
+                src: ['img/**'],
+                dest: '.tmp/public/digital'
             }]
         },
         developmentViews: {
@@ -77,6 +97,11 @@ module.exports = function (grunt) {
                 cwd: './frontend',
                 src: ['views/**'],
                 dest: '.tmp/public/frontend'
+            }, {
+                expand: true,
+                cwd: './digital',
+                src: ['views/**'],
+                dest: '.tmp/public/digital'
             }]
         },
         backendDevelopment: {
@@ -124,6 +149,10 @@ module.exports = function (grunt) {
                 expand: true,
                 src: require('../../frontend/files.js'),
                 dest: '.tmp/public/frontend/js'
+            }, {
+                expand: true,
+                src: require('../../digital/files.js'),
+                dest: '.tmp/public/digital/js'
             }]
         },
         jsBackendDevelopment: {
@@ -139,6 +168,11 @@ module.exports = function (grunt) {
                 cwd: './frontend',
                 src: ['fonts/**', 'img/**'],
                 dest: '.tmp/public/frontend'
+            }, {
+                expand: true,
+                cwd: './digital',
+                src: ['fonts/**', 'img/**'],
+                dest: '.tmp/public/digital'
             }]
         },
         upload: {
@@ -148,6 +182,17 @@ module.exports = function (grunt) {
                 dest: '.tmp/uploads'
             }]
         },
+
+        //Start Digital
+        // digital: {
+        //     files: [{
+        //         expand: true,
+        //         cwd: './digital',
+        //         src: ['**'],
+        //         dest: '.tmp/public'
+        //     }]
+        // },
+        //End Digital
     });
 
     grunt.loadNpmTasks('grunt-contrib-copy');

@@ -1,7 +1,6 @@
 module.exports = function (grunt) {
-
+    var folderName = grunt.option('target') || "frontend";
     grunt.config.set('postcss', {
-
         options: {
             map: false,
             processors: [
@@ -10,7 +9,7 @@ module.exports = function (grunt) {
             writeDest: true
         },
         dist: {
-            src: 'frontend/css/*.css'
+            src: folderName + '/css/*.css'
         }
     });
 

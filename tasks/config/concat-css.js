@@ -1,12 +1,12 @@
-module.exports = function(grunt) {
-
+module.exports = function (grunt) {
+    var folderName = grunt.option('target') || "frontend";
     grunt.config.set('concat_css', {
         options: {
             sourceMap: true
         },
         all: {
-            src: ["frontend/sass/main.css"],
-            dest: "frontend/sass/complete.css"
+            src: [folderName + "/sass/main.css"],
+            dest: folderName + "/sass/complete.css"
         },
     });
 
