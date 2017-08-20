@@ -1496,6 +1496,13 @@ var model = {
                                 emailData.from = property[0].infoId;
                                 emailData.email = n.email;
                                 emailData.city = property[0].sfaCity;
+                                if (property[0].sfaCity == 'Mumbai') {
+                                    emailData.urls = "https://mumbai.sfanow.in";
+                                } else if (property[0].sfaCity == 'Hyderabad') {
+                                    emailData.urls = "https://hyderabad.sfanow.in";
+                                } else if (property[0].sfaCity == 'Ahmedabad') {
+                                    emailData.urls = "https://ahmedabad.sfanow.in";
+                                }
                                 emailData.type = property[0].institutionType;
                                 emailData.year = property[0].year;
                                 emailData.infoId = property[0].infoId;
@@ -1626,6 +1633,13 @@ var model = {
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.email = data.email;
                                 emailData.city = property[0].sfaCity;
+                                if (property[0].sfaCity == 'Mumbai') {
+                                    emailData.urls = "https://mumbai.sfanow.in";
+                                } else if (property[0].sfaCity == 'Hyderabad') {
+                                    emailData.urls = "https://hyderabad.sfanow.in";
+                                } else if (property[0].sfaCity == 'Ahmedabad') {
+                                    emailData.urls = "https://ahmedabad.sfanow.in";
+                                }
                                 emailData.year = property[0].year;
                                 emailData.type = property[0].institutionType;
                                 emailData.filename = "schoolindividual.ejs";
@@ -1735,6 +1749,13 @@ var model = {
                                 emailData.from = property[0].infoId;
                                 emailData.email = n.email;
                                 emailData.city = property[0].sfaCity;
+                                if (property[0].sfaCity == 'Mumbai') {
+                                    emailData.urls = "https://mumbai.sfanow.in";
+                                } else if (property[0].sfaCity == 'Hyderabad') {
+                                    emailData.urls = "https://hyderabad.sfanow.in";
+                                } else if (property[0].sfaCity == 'Ahmedabad') {
+                                    emailData.urls = "https://ahmedabad.sfanow.in";
+                                }
                                 emailData.year = property[0].year;
                                 emailData.type = property[0].institutionType;
                                 emailData.infoId = property[0].infoId;

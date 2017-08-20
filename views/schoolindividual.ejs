@@ -287,7 +287,11 @@
                   <td colspan="3 ">
                     <div style="text-align:justify; ">
                       <p style="margin-bottom: 0px; "> 4) Click on the following link to view
-                        <%=completeSportInfo[0].sportName%> Rules and Regulations: <a href="https://sfanow.in/sport/<%=completeSportInfo[0].sportName%>" target="_new">https://sfanow.in/sport/<%=completeSportInfo[0].sportName%></a>
+                        <%=completeSportInfo[0].sportName%> Rules and Regulations:
+                          <a href="<%=urls%>/sport/<%=completeSportInfo[0].sportName%>" target="_new">
+                            <%=urls%>/sport/
+                              <%=completeSportInfo[0].sportName%>
+                          </a>
                       </p>
                     </div>
                   </td>

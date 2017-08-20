@@ -410,6 +410,13 @@ var model = {
                         emailData.ddFavour = data.property.ddFavour;
                         emailData.email = found.email;
                         emailData.city = data.property.sfaCity;
+                        if (data.property.sfaCity == 'Mumbai') {
+                            emailData.urls = "https://mumbai.sfanow.in";
+                        } else if (data.property.sfaCity == 'Hyderabad') {
+                            emailData.urls = "https://hyderabad.sfanow.in";
+                        } else if (data.property.sfaCity == 'Ahmedabad') {
+                            emailData.urls = "https://ahmedabad.sfanow.in";
+                        }
                         emailData.year = data.property.year;
                         emailData.type = data.property.institutionType;
                         emailData.filename = "teamSport.ejs";
@@ -609,6 +616,13 @@ var model = {
                     emailData.email = n.email;
                     emailData.name = n.firstName;
                     emailData.city = data.property.sfaCity;
+                    if (data.property.sfaCity == 'Mumbai') {
+                        emailData.urls = "https://mumbai.sfanow.in";
+                    } else if (data.property.sfaCity == 'Hyderabad') {
+                        emailData.urls = "https://hyderabad.sfanow.in";
+                    } else if (data.property.sfaCity == 'Ahmedabad') {
+                        emailData.urls = "https://ahmedabad.sfanow.in";
+                    }
                     emailData.year = data.property.year;
                     emailData.type = data.property.institutionType;
                     emailData.filename = data.emailfile;
@@ -1569,6 +1583,13 @@ var model = {
                         emailData.year = data.property.year;
                         emailData.infoId = data.property.infoId;
                         emailData.infoNo = data.property.infoNo;
+                        if (data.property.sfaCity == 'Mumbai') {
+                            emailData.urls = "https://mumbai.sfanow.in";
+                        } else if (data.property.sfaCity == 'Hyderabad') {
+                            emailData.urls = "https://hyderabad.sfanow.in";
+                        } else if (data.property.sfaCity == 'Ahmedabad') {
+                            emailData.urls = "https://ahmedabad.sfanow.in";
+                        }
                         emailData.cityAddress = data.property.cityAddress;
                         emailData.ddFavour = data.property.ddFavour;
                         emailData.name = totals[0].studentId.firstName;
@@ -1716,6 +1737,13 @@ var model = {
                             email: "raj@wohlig.com"
                         }];
                         emailData.city = data.property.sfaCity;
+                        if (data.property.sfaCity == 'Mumbai') {
+                            emailData.urls = "https://mumbai.sfanow.in";
+                        } else if (data.property.sfaCity == 'Hyderabad') {
+                            emailData.urls = "https://hyderabad.sfanow.in";
+                        } else if (data.property.sfaCity == 'Ahmedabad') {
+                            emailData.urls = "https://ahmedabad.sfanow.in";
+                        }
                         emailData.year = data.property.year;
                         emailData.type = data.property.institutionType;
                         emailData.infoId = data.property.infoId;
@@ -1925,6 +1953,13 @@ var model = {
                                     // emailData.email = n.email;
                                     emailData.name = n.firstName;
                                     emailData.city = data.property.sfaCity;
+                                    if (data.property.sfaCity == 'Mumbai') {
+                                        emailData.urls = "https://mumbai.sfanow.in";
+                                    } else if (data.property.sfaCity == 'Hyderabad') {
+                                        emailData.urls = "https://hyderabad.sfanow.in";
+                                    } else if (data.property.sfaCity == 'Ahmedabad') {
+                                        emailData.urls = "https://ahmedabad.sfanow.in";
+                                    }
                                     emailData.year = data.property.year;
                                     emailData.type = data.property.institutionType;
                                     // emailData.filename = data.emailfile;
@@ -1982,6 +2017,13 @@ var model = {
                                     emailData.email = n.email;
                                     emailData.name = n.firstName;
                                     emailData.city = data.property.sfaCity;
+                                    if (data.property.sfaCity == 'Mumbai') {
+                                        emailData.urls = "https://mumbai.sfanow.in";
+                                    } else if (data.property.sfaCity == 'Hyderabad') {
+                                        emailData.urls = "https://hyderabad.sfanow.in";
+                                    } else if (data.property.sfaCity == 'Ahmedabad') {
+                                        emailData.urls = "https://ahmedabad.sfanow.in";
+                                    }
                                     emailData.year = data.property.year;
                                     emailData.type = data.property.institutionType;
                                     emailData.filename = data.emailfile;
@@ -2067,6 +2109,13 @@ var model = {
                             emailData.name = n.name;
                             emailData.city = n.city;
                             emailData.year = n.year;
+                            if (data.property.sfaCity == 'Mumbai') {
+                                emailData.urls = "https://mumbai.sfanow.in";
+                            } else if (data.property.sfaCity == 'Hyderabad') {
+                                emailData.urls = "https://hyderabad.sfanow.in";
+                            } else if (data.property.sfaCity == 'Ahmedabad') {
+                                emailData.urls = "https://ahmedabad.sfanow.in";
+                            }
                             emailData.type = data.property.institutionType;
                             emailData.filename = "studentEditTeamRemove.ejs";
                             emailData.teamId = n.teamId

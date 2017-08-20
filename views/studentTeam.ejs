@@ -296,25 +296,46 @@
                     <div style="padding: 0px 54px; ">
                         <%if(linkSportName != 'Athletics 4x50m Relay' && linkSportName != 'athletics 4x50m relay' && linkSportName != 'Athletics 4x100m Relay' && linkSportName != 'athletics 4x100m relay' && linkSportName != 'Athletics Medley Relay' && linkSportName != 'athletics medley relay' && linkSportName != 'Badminton Doubles' && linkSportName != 'badminton doubles' && linkSportName != 'Table Tennis Doubles' && linkSportName != 'table tennis doubles' && linkSportName != 'Tennis Mixed Doubles' && linkSportName != 'tennis mixed doubles' && linkSportName != 'Tennis Doubles' && linkSportName != 'tennis doubles' && linkSportName != 'Karate Team Kumite' && linkSportName != 'karate team kumite' && linkSportName != 'Swimming 4x50m Medley Relay' && linkSportName != 'swimming 4x50m medley relay' && linkSportName != 'Swimming 4x50m Freestyle Relay' && linkSportName != 'swimming 4x50m freestyle relay'){%>
                             <p style="margin-bottom: 0px;"> 3) Click on the following link to view
-                                <%=linkSportName%> Rules and Regulations: <a href="https://sfanow.in/sport/<%=linkSportName%>" target="_new">https://sfanow.in/sport/<%=linkSportName%></a></p>
+                                <%=linkSportName%> Rules and Regulations:
+                                    <a href="<%=urls%>/sport/<%=linkSportName%>" target="_new">
+                                        <%=urls%>/sport/
+                                            <%=linkSportName%>
+                                    </a>
+                            </p>
                             <%} else if(linkSportName == 'Athletics 4x50m Relay' || linkSportName == 'athletics 4x50m relay' || linkSportName == 'Athletics 4x100m Relay' || linkSportName == 'athletics 4x100m relay' || linkSportName == 'Athletics Medley Relay' || linkSportName == 'athletics medley relay'){%>
-                                <p style="margin-bottom: 0px; "> 3) Click on the following link to view Athletics Rules and Regulations: <a href="https://sfanow.in/sport/Athletics"
-                                        target="_new">https://sfanow.in/sport/Athletics</a></p>
+                                <p style="margin-bottom: 0px; "> 3) Click on the following link to view Athletics Rules and Regulations:
+                                    <a href="<%=urls%>/sport/Athletics"
+                                        target="_new">
+                                        <%=urls%>/sport/Athletics</a>
+                                </p>
                                 <%} else if(linkSportName == 'Badminton Doubles' || linkSportName == 'badminton doubles'){%>
-                                    <p style="margin-bottom: 0px; "> 3) Click on the following link to view Badminton Rules and Regulations: <a href="https://sfanow.in/sport/Badminton"
-                                            target="_new">https://sfanow.in/sport/Badminton</a></p>
+                                    <p style="margin-bottom: 0px; "> 3) Click on the following link to view Badminton Rules and Regulations:
+                                        <a href="<%=urls%>/sport/Badminton"
+                                            target="_new">
+                                            <%=urls%>/sport/Badminton</a>
+                                    </p>
                                     <%} else if(linkSportName == 'Table Tennis Doubles' || linkSportName == 'table tennis doubles'){%>
-                                        <p style="margin-bottom: 0px; "> 3) Click on the following link to view Table Tennis Rules and Regulations: <a href="https://sfanow.in/sport/Table Tennis"
-                                                target="_new">https://sfanow.in/sport/Table Tennis</a></p>
+                                        <p style="margin-bottom: 0px; "> 3) Click on the following link to view Table Tennis Rules and Regulations:
+                                            <a href="<%=urls%>/sport/Table Tennis"
+                                                target="_new">
+                                                <%=urls%>/sport/Table Tennis</a>
+                                        </p>
                                         <%} else if(linkSportName == 'Tennis Mixed Doubles' || linkSportName == 'tennis mixed doubles' || linkSportName == 'Tennis Doubles' || linkSportName == 'tennis doubles'){%>
-                                            <p style="margin-bottom: 0px; "> 3) Click on the following link to view Tennis Rules and Regulations: <a href="https://sfanow.in/sport/Tennis"
-                                                    target="_new">https://sfanow.in/sport/Tennis</a></p>
+                                            <p style="margin-bottom: 0px; "> 3) Click on the following link to view Tennis Rules and Regulations:
+                                                <a href="<%=urls%>/sport/Tennis"
+                                                    target="_new">
+                                                    <%=urls%>/sport/Tennis</a>
+                                            </p>
                                             <%} else if(linkSportName == 'Karate Team Kumite' || linkSportName == 'karate team kumite'){%>
                                                 <p style="margin-bottom: 0px; "> 3) Click on the following link to view Karate Rules and Regulations:
-                                                    <a href="https://sfanow.in/sport/Karate" target="_new">https://sfanow.in/sport/Karate</a></p>
+                                                    <a href="<%=urls%>/sport/Karate" target="_new">
+                                                        <%=urls%>/sport/Karate</a>
+                                                </p>
                                                 <%} else if(linkSportName == 'Swimming 4x50m Medley Relay' || linkSportName == 'swimming 4x50m medley relay' || linkSportName == 'Swimming 4x50m Freestyle Relay' || linkSportName == 'swimming 4x50m freestyle relay'){%>
                                                     <p style="margin-bottom: 0px;"> 3) Click on the following link to view Swimming Rules and Regulations:
-                                                        <a href="https://sfanow.in/sport/Swimming" target="_new">https://sfanow.in/sport/Swimming</a></p>
+                                                        <a href="<%=urls%>/sport/Swimming" target="_new">
+                                                            <%=urls%>/sport/Swimming</a>
+                                                    </p>
                                                     <%}%>
                     </div>
                 </td>
