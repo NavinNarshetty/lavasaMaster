@@ -1473,91 +1473,108 @@ var model = {
 
     },
 
-    getSportSpecificRounds: function (data, callback) {
-        // console.log("data", data);
+    getQuickSportId: function (matchObj, callback) {
+        var sendObj = {};
         async.waterfall([
             function (callback) {
-                if (_.isEmpty(data.weight)) {
-                    var matchObj = {
-                        sportslist: data.sport,
-                        gender: data.gender,
-                        ageGroup: data.ageGroup,
+                console.log("Finding DrawFormat");
+                SportsList.findOne({
+                    "_id": matchObj.sportslist
+                }).deepPopulate("drawFormat").exec(function (err, sportslist) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(sportslist)) {
+                        sendObj.drawFormat = sportslist.drawFormat.name;
+                        callback(null, sportslist);
+                    } else {
+                        callback(err, null);
                     }
-                } else {
-                    console.log("inside", data);
-                    var matchObj = {
-                        sportslist: data.sport,
-                        gender: data.gender,
-                        ageGroup: data.ageGroup,
-                        weight: data.weight
-                    }
-                }
+                });
+            },
+            function (sportslist, callback) {
+                console.log("Finding sportId");
                 Sport.findOne(matchObj).exec(function (err, sportDetails) {
                     if (err) {
-                        console.log(err);
                         callback(err, null);
                     } else if (sportDetails) {
                         if (_.isEmpty(sportDetails)) {
                             callback(null, []);
                         } else {
-                            callback(null, sportDetails);
+                            sendObj.sport = sportDetails._id;
+                            callback(null, sendObj);
                         }
                     }
                 });
-            },
-            function (sportDetails, callback) {
-                console.log(sportDetails);
-                Match.aggregate(
-                    [
-                        // Stage 1
-                        {
-                            $match: {
-                                "sport": ObjectId(sportDetails._id)
-                            }
-                        },
-
-                        // Stage 2
-                        {
-                            $group: {
-                                "_id": "$round",
-                                "matches": {
-                                    $push: "$$ROOT"
-                                }
-                            }
-                        },
-                        // Stage 3
-                        {
-                            $sort: {
-                                "matches.createdAt": 1
-                            }
-                        },
-
-                    ],
-                    function (err, matches) {
-                        console.log("matches : ", matches);
-                        if (err) {
-                            console.log(err);
-                            callback(null, err);
-                        } else {
-                            if (_.isEmpty(matches)) {
-                                callback(null, matches);
-                            } else {
-                                callback(null, matches);
-                            }
-                        }
-                    });
             }
         ], function (err, result) {
+            console.log("Final Callback");
             if (err) {
-                callback(null, err);
+                callback(err, null);
             } else {
-                if (_.isEmpty(result)) {
-                    callback(null, result);
-                } else {
-                    callback(null, result);
-                }
+                callback(null, result);
             }
         });
+    },
+
+    getSportSpecificRounds: function (data, callback) {
+        // console.log("data", data);
+
+        Match.aggregate(
+            [
+                // Stage 1
+                {
+                    $match: {
+                        "sport": ObjectId(data.sport)
+                    }
+                },
+
+                // Stage 2
+                {
+                    $group: {
+                        "_id": "$round",
+                        "matches": {
+                            $push: "$$ROOT"
+                        }
+                    }
+                },
+                // Stage 3
+                {
+                    $sort: {
+                        "matches.createdAt": 1
+                    }
+                },
+
+            ],
+            function (err, matches) {
+                console.log("matches : ", matches);
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(matches)) {
+                        callback(null, []);
+                    } else {
+                        var sendObj = {};
+                        sendObj.roundsListName = _.map(matches, '_id');
+                        sendObj.roundsList = matches;
+                        if (data.round) {
+                            var index = _.findIndex(matches, function (n) {
+                                return n._id == data.round
+                            });
+
+                            if (index != -1) {
+                                sendObj.roundsList = _.slice(matches, index, index + 3);
+                                callback(null, sendObj);
+                            } else {
+                                callback(null, sendObj);
+                            }
+
+                        } else {
+                            callback(null, sendObj);
+                        }
+                    }
+                }
+            });
     }
 
 };

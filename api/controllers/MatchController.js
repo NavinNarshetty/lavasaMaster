@@ -140,7 +140,7 @@ var controller = {
     getSportSpecificRounds: function (req, res) {
         if (req.body) {
             console.log(req.body);
-            if (req.body) {
+            if (req.body && req.body.sport) {
                 Match.getSportSpecificRounds(req.body, res.callback);
             } else {
                 res.json({
@@ -163,6 +163,32 @@ var controller = {
             } else {
                 res.json({
                     data: "Round Not Found",
+                    value: false
+                });
+            }
+        } else {
+            res.json({
+                data: "Body Not Found",
+                value: false
+            });
+        }
+    },
+
+    getQuickSportId: function (req, res) {
+        if (req.body) {
+            if (req.body && req.body.sportslist && req.body.gender && req.body.ageGroup) {
+                var matchObj = {
+                    sportslist: req.body.sportslist,
+                    gender: req.body.gender,
+                    ageGroup: req.body.ageGroup,
+                }
+                if (!_.isEmpty(req.body.weight)) {
+                    matchObj.weight = req.body.weight;
+                }
+                Match.getQuickSportId(matchObj, res.callback);
+            } else {
+                res.json({
+                    data: "Some Fields are Missing",
                     value: false
                 });
             }
