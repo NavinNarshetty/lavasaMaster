@@ -141,7 +141,8 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-5 col-sm-5 col-xs-12 sf-list">*Upload {{type | firstcapitalize}} ID Card OR Report Card:</label>
+                        <label class="col-md-5 col-sm-5 col-xs-12 sf-list" ng-if="isCollege == false">*Upload {{type | firstcapitalize}} ID Card OR Report Card:</label>
+                        <label class="col-md-5 col-sm-5 col-xs-12 sf-list" ng-if="isCollege == true">*Upload {{type | firstcapitalize}} ID Card:</label>
                         <div class="col-md-5 col-sm-7 col-xs-12" ng-init="show=0">
                             <!--<a class="btn btn-default myupload">Upload </a>-->
                             <div class="dirctive-op pl13">
