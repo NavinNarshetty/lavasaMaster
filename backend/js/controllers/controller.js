@@ -1668,8 +1668,8 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
             $scope.constraints._id = $stateParams.id;
             NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
                 $scope.formData = data.data;
-                var toDates = $filter('date')(data.data.toDate, 'yyyy-MM-dd');
-                var fromDates = $filter('date')(data.data.fromDate, 'yyyy-MM-dd');
+                var toDates = $filter('date')(data.data.toDate, 'dd-MM-yyyy');
+                var fromDates = $filter('date')(data.data.fromDate, 'dd-MM-yyyy');
                 $scope.formData.toDate = new Date(toDates);
                 $scope.formData.fromDate = new Date(fromDates);
             });
