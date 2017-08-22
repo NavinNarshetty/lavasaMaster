@@ -375,13 +375,27 @@ var model = {
                                                             if (typeVal1 == 'Mumbai') {
                                                                 data.registerID = 1;
                                                             } else if (typeVal1 == 'Hyderabad') {
-                                                                data.registerID = 216;
+                                                                data.registerID = 217;
                                                             } else if (typeVal1 == 'Ahmedabad') {
                                                                 data.registerID = 101;
                                                             }
                                                             console.log("registerID", data.registerID);
                                                             data.sfaID = prefixCity + prefixType + year + data.registerID;
                                                         } else if (_.isEmpty(datafound) && typeVal == 'college') {
+                                                            data.registerID = 101;
+                                                            console.log("registerID", data.registerID);
+                                                            data.sfaID = prefixCity + prefixType + year + data.registerID;
+                                                        } else if (datafound.registerID == 0 && typeVal == 'school') {
+                                                            if (typeVal1 == 'Mumbai') {
+                                                                data.registerID = 1;
+                                                            } else if (typeVal1 == 'Hyderabad') {
+                                                                data.registerID = 217;
+                                                            } else if (typeVal1 == 'Ahmedabad') {
+                                                                data.registerID = 101;
+                                                            }
+                                                            console.log("registerID", data.registerID);
+                                                            data.sfaID = prefixCity + prefixType + year + data.registerID;
+                                                        } else if (datafound.registerID == 0 && typeVal == 'college') {
                                                             data.registerID = 101;
                                                             console.log("registerID", data.registerID);
                                                             data.sfaID = prefixCity + prefixType + year + data.registerID;
