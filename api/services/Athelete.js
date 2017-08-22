@@ -2368,6 +2368,31 @@ var model = {
                                 // }
                                 obj.receiptNo = "SFA" + n.receiptId;
                                 obj.school = schoolData;
+                                if (n.university) {
+                                    obj.university = n.university;
+                                } else {
+                                    obj.university = "";
+                                }
+                                if (n.faculty) {
+                                    obj.faculty = n.faculty;
+                                } else {
+                                    obj.faculty = "";
+                                }
+                                if (n.course) {
+                                    obj.course = n.course;
+                                } else {
+                                    obj.course = "";
+                                }
+                                if (n.year) {
+                                    obj.collegeYear = n.collegeYear;
+                                } else {
+                                    obj.collegeYear = "";
+                                }
+                                if (n.degree) {
+                                    obj.degree = n.degree;
+                                } else {
+                                    obj.degree = "";
+                                }
                                 var parentInfo;
                                 var countParent = 0;
                                 var levelInfo;
@@ -2536,6 +2561,31 @@ var model = {
                     },
                     function (schoolData, callback) {
                         obj.school = schoolData;
+                        if (n.university) {
+                            obj.university = n.university;
+                        } else {
+                            obj.university = "";
+                        }
+                        if (n.faculty) {
+                            obj.faculty = n.faculty;
+                        } else {
+                            obj.faculty = "";
+                        }
+                        if (n.course) {
+                            obj.course = n.course;
+                        } else {
+                            obj.course = "";
+                        }
+                        if (n.year) {
+                            obj.collegeYear = n.collegeYear;
+                        } else {
+                            obj.collegeYear = "";
+                        }
+                        if (n.degree) {
+                            obj.degree = n.degree;
+                        } else {
+                            obj.degree = "";
+                        }
                         // console.log("obj", obj.school);
                         var parentInfo;
                         var countParent = 0;

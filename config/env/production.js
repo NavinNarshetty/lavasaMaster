@@ -35,14 +35,14 @@ module.exports = {
   // realHost: "http://ahmedabadschool.sfanow.in",
   // realHost: "http://ahmedabadcollege.sfanow.in",
   // realHost: "http://testmumbaischool.sfanow.in",
-  realHost: "http://testmumbaicollege.sfanow.in",
-  // realHost: "http://testhyderabadschool.sfanow.in",
+  // realHost: "http://testmumbaicollege.sfanow.in",
+  realHost: "http://testhyderabadschool.sfanow.in",
   // realHost: "http://testhyderabadcollege.sfanow.in",
   // realHost: "http://testahmedabadschool.sfanow.in",
   // realHost: "http://testahmedabadcollege.sfanow.in",
 
   // realHost: "https://sfa.wohlig.co.in",
-  emails: ["chintan@wohlig.com", "raj@wohlig.com", "supriya.bhartiya@wohlig.com", "rahi.shah@sfanow.in", "shiva.singh@sfanow.in", "sunil.rathod@sfanow.in", "venkatesh.rathod@sfanow.in", "neeraj.jaiswal@sfanow.in", "suksha.khodake@wohlig.com", "pratik.patel@wohlig.com", "sagar.mulchandani@wohlig.com", "navin.narshetty@wohlig.com", "rahul.singh@sfanow.in"]
+  emails: ["chintan@wohlig.com", "raj@wohlig.com", "rahi.shah@sfanow.in", "shiva.singh@sfanow.in", "sunil.rathod@sfanow.in", "venkatesh.rathod@sfanow.in", "neeraj.jaiswal@sfanow.in", "rahul.singh@sfanow.in"]
 
   /***************************************************************************
    * Set the log level in production environment to "silent"                 *
