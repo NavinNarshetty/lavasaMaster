@@ -271,8 +271,10 @@ var model = {
                             var teamid = "M" + "T" + year + 1;
                             callback(null, teamid);
                         } else {
+                            console.log("autoID", team.autoID);
                             var year = new Date().getFullYear().toString().substr(2, 2);
                             var teamid = "M" + "T" + year + ++team.autoID;
+                            console.log("teamid", teamid);
                             callback(null, teamid);
 
                         }

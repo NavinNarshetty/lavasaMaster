@@ -4100,6 +4100,16 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             });
         }
 
+        $scope.updateExcelMatch = function (data) {
+            $scope.url = "Match/updateExcelMatch";
+            $scope.constraints = {};
+            $scope.constraints = data;
+            console.log("form", $scope.constraints);
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data upload", data);
+            });
+        }
+
         $scope.generateExcel = function (data) {
             $scope.qwerty = data;
             console.log("data", data);

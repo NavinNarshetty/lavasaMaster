@@ -82,6 +82,55 @@ var controller = {
         }
     },
 
+    updateExcelMatch: function (req, res) {
+        if (req.body) {
+            async.waterfall([
+                    function (callback) {
+                        Config.importGS(req.body.file, function (err, importData) {
+                            if (err || _.isEmpty(importData)) {
+                                callback(err, null);
+                            } else {
+                                callback(null, importData);
+                            }
+                        });
+                    },
+                    function (importData, callback) {
+                        if (importData[0].error) {
+                            callback(null, importData);
+                        } else {
+                            if (req.body.resultType == "heat" && req.body.playerType == "individual") {
+                                var roundTypes = _.groupBy(importData, 'ROUND ');
+                                _.each(roundTypes, function (roundType, key) {
+                                    roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
+                                });
+                                Match.UpdateHeatIndividual(roundTypes, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+                            } else {
+                                callback(null, importData);
+                            }
+                        }
+                    }
+                ],
+                function (err, results) {
+                    if (err || _.isEmpty(results)) {
+                        res.callback(results, null);
+                    } else {
+                        res.callback(null, results);
+                    }
+                });
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
     generateExcel: function (req, res) {
         async.waterfall([
                 function (callback) {
