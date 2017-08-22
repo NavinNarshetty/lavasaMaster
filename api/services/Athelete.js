@@ -774,7 +774,6 @@ var model = {
 
     //genarate sfa when status changes to verified and sfaid is blank
     generateAtheleteSfaID: function (data, callback) {
-        console.log(data);
         //find and first time atheleteID idea is for string id generation if required
         async.waterfall([
                 function (callback) {
@@ -923,7 +922,6 @@ var model = {
     },
 
     saveVerify: function (data, found, callback) {
-        console.log('Updated Data', data);
         Athelete.saveData(data, function (err, athleteData) { //saves data to database collection
             console.log("athleteData", athleteData);
             if (err) {
