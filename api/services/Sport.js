@@ -125,7 +125,7 @@ var model = {
     },
 
     getOne: function (data, callback) {
-        var deepSearch = "sportslist.sportsListSubCategory sport.ageGroup sport.weight ";
+        var deepSearch = "sportslist.sportsListSubCategory ageGroup weight ";
         Sport.findOne({
             _id: data._id
         }).lean().deepPopulate(deepSearch).exec(function (err, found) {

@@ -1,0 +1,33 @@
+var individual = {
+    players: [{
+        player: id,
+        noShow: true,
+        walkover: true,
+        color: "Blue/Red",
+        sets: [{
+            point: 22,
+        }]
+    }, {
+        player: id,
+        noShow: true,
+        walkover: true,
+        color: "Blue/Red",
+        sets: [{
+            point: 23,
+            time:
+            distance:
+            height:
+        }]
+        
+    }],
+    isNoMatch: true,
+    isDraw: true,
+    winnner: [{
+        player: id,
+        reason: "",
+        rank: 012,
+    }],
+    matchPhoto: "6732673862837342323423.jpg",
+    status: "IsLive,IsPending,IsCompleted",
+    scoreSheet: "588372837289379283789.jpg"
+};
