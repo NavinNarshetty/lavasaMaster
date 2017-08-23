@@ -348,17 +348,20 @@ var model = {
     },
 
     getSportId: function (data, callback) {
-        console.log("data", data);
+        // console.log("data", datsa);
         var sport = {};
         async.waterfall([
                 function (callback) {
                     SportsList.findOne({
                         name: data.name
                     }).lean().deepPopulate("sportsListSubCategory").exec(function (err, found) {
-                        console.log(found, "found");
+                        // console.log(found, "found");
                         if (err || _.isEmpty(found)) {
                             sport.sportslist = found._id;
-                            callback(null, sport);
+                            callback(err, {
+                                error: "No SportsList found!",
+                                success: data
+                            });
                         } else {
                             sport.sportslist = found._id;
                             sport.sportsListSubCategory = found.sportsListSubCategory._id;
@@ -372,8 +375,10 @@ var model = {
                         name: data.age
                     }).lean().exec(function (err, found) {
                         if (err || _.isEmpty(found)) {
-                            sport.age = null;
-                            callback(null, sport);
+                            callback(err, {
+                                error: "No Age found!",
+                                success: data
+                            });
                         } else {
                             sport.age = found._id;
                             callback(null, sport);
@@ -388,8 +393,10 @@ var model = {
                             name: data.weight
                         }).lean().exec(function (err, found) {
                             if (err || _.isEmpty(found)) {
-                                sport.weight = found._id;
-                                callback(null, sport);
+                                callback(err, {
+                                    error: "No Weight found!",
+                                    success: data
+                                });
                             } else {
                                 sport.weight = found._id;
                                 callback(null, sport);
@@ -398,32 +405,35 @@ var model = {
                     }
                 },
                 function (sport, callback) {
-                    console.log("allsport", sport);
-                    var matchObj = {};
-                    matchObj.gender = data.gender;
-                    matchObj.sportslist = sport.sportslist;
-                    matchObj.ageGroup = sport.age;
-                    if (sport.weight) {
-                        matchObj.weight = sport.weight;
-                    }
-                    // console.log("matchObj", matchObj);
-                    Sport.findOne(matchObj).lean().exec(function (err, found) {
-                        if (err || _.isEmpty(found)) {
-                            callback(err, {
-                                error: "No Sport found!",
-                                success: data
-                            });
-                        } else {
-                            sport.sportId = found._id;
-                            callback(null, sport);
+                    if (sport.error) {
+                        callback(null, sport);
+                    } else {
+                        var matchObj = {};
+                        matchObj.gender = data.gender;
+                        matchObj.sportslist = sport.sportslist;
+                        matchObj.ageGroup = sport.age;
+                        if (sport.weight) {
+                            matchObj.weight = sport.weight;
                         }
-                    });
+                        // console.log("matchObj", matchObj);
+                        Sport.findOne(matchObj).lean().exec(function (err, found) {
+                            if (err || _.isEmpty(found)) {
+                                callback(err, {
+                                    error: "No Sport found!",
+                                    success: data
+                                });
+                            } else {
+                                sport.sportId = found._id;
+                                callback(null, sport);
+                            }
+                        });
+                    }
                 }
 
             ],
             function (err, results) {
                 if (err || _.isEmpty(results)) {
-                    callback(results, null);
+                    callback(null, results);
                 } else {
                     callback(null, results);
                 }
