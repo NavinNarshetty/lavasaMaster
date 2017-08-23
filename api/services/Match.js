@@ -495,7 +495,10 @@ var model = {
                         sport: data.sport
                     }).lean().exec(function (err, found) {
                         if (err || _.isEmpty(found)) {
-                            callback(err, null);
+                            callback(err, {
+                                error: "No Team found!",
+                                success: data
+                            });
                         } else {
                             callback(null, found);
                         }
@@ -505,7 +508,7 @@ var model = {
             function (err, results) {
                 console.log("results", results);
                 if (err || _.isEmpty(results)) {
-                    callback(results, null);
+                    callback(null, results);
                 } else {
                     callback(null, results);
                 }
