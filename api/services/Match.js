@@ -235,6 +235,7 @@ var model = {
                         });
                     } else {
                         var finalData = {};
+                        finalData.isTeam = found.sport.sportslist.sportsListSubCategory.isTeam;
                         finalData.players = [];
                         finalData.sportsName = found.sport.sportslist.name;
                         finalData.age = found.sport.ageGroup.name;

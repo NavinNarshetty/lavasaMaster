@@ -38,7 +38,7 @@ schema.plugin(deepPopulate, {
             select: '_id name sportsListSubCategory drawFormat'
         },
         'sportslist.sportsListSubCategory': {
-            select: '_id name'
+            select: '_id name isTeam'
         },
         'ageGroup': {
             select: '_id name'
