@@ -58,7 +58,7 @@
                                         </div>
                                         <div class="col-md-11 col-sm-11 col-xs-12">
                                             <p class="note" ng-if="selectService.sportName == 'Athletics' || selectService.sportName == 'athletics'">1. An athlete can select a maximum of 2 events.</p>
-                                            <p class="note" ng-if="selectService.sportName == 'Shooting' || selectService.sportName == 'shooting'">1. Can participate in all events.</p>
+                                            <p class="note" ng-if="selectService.sportName == 'Shooting' || selectService.sportName == 'shooting'">1. An athlete can participate in any ONE event ( Open Sight or Peep Sight or Air Pistol ) across multiple age groups.</p>
                                             <p class="note" ng-if="selectService.sportName == 'Swimming' || selectService.sportName == 'swimming'">1. Can select any or all events from the list, and in case of relay kindly register for different type of swimming relay separately.</p>
                                             <p class="note">2. An athlete can participate in an age category as per the cut-off dates mentioned in the rules and regulations.
                                             </p>
@@ -123,7 +123,7 @@
                                                                     <fieldset ng-disabled="athelete.disablepistol">
                                                                         <div class="custom-uiselect">
                                                                             <ui-select name="selectfilter" title="Select Event or Events" multiple="" id="selectfilter" theme="bootstrap" ng-model="athelete.pistol" ng-change="selectService.isValidSelection(athelete);disableFunction('Pistol',athelete.pistol,$index)" ng-init="selectService.isValidSelection(athelete)">
-                                                                                <ui-select-match placeholder="Select Events">
+                                                                                <ui-select-match placeholder="Select Air Pistol">
                                                                                     {{$item.ageId|formatEvent:athelete.airRiflePistol[0].eventName}}
                                                                                 </ui-select-match>
                                                                                 <ui-select-choices repeat="age.sport as age in athelete.airRiflePistol | filter:{ageId:$select.search} |orderBy:'ageId' track by $index">
@@ -139,7 +139,7 @@
                                                                     <fieldset ng-disabled="athelete.disablepeep">
                                                                         <div class="custom-uiselect">
                                                                             <ui-select name="selectfilter" title="Select Event or Events" multiple="" id="selectfilter" theme="bootstrap" ng-model="athelete.peep" ng-change="selectService.isValidSelection(athelete);disableFunction('Peep',athelete.peep,$index)" ng-init="selectService.isValidSelection(athelete)">
-                                                                                <ui-select-match placeholder="Select Events">
+                                                                                <ui-select-match placeholder="Select Air Rifle Peep">
                                                                                     {{$item.ageId |formatEvent:athelete.airRiflePeep[0].eventName}}
                                                                                 </ui-select-match>
                                                                                 <ui-select-choices repeat="age.sport as age in athelete.airRiflePeep | filter:{ageId:$select.search} |orderBy:'ageId' track by $index">
@@ -153,7 +153,7 @@
                                                                     <fieldset ng-disabled="athelete.disableopen">
                                                                         <div class="custom-uiselect">
                                                                             <ui-select name="selectfilter" title="Select Event or Events" multiple="" id="selectfilter" theme="bootstrap" ng-model="athelete.open" ng-change="selectService.isValidSelection(athelete);disableFunction('Open',athelete.open,$index)" ng-init="selectService.isValidSelection(athelete)">
-                                                                                <ui-select-match placeholder="Select Events">
+                                                                                <ui-select-match placeholder="Select Air Rifle Open">
                                                                                     {{$item.ageId |formatEvent:athelete.airRifleOpen[0].eventName}}
                                                                                 </ui-select-match>
                                                                                 <ui-select-choices repeat="age.sport as age in athelete.airRifleOpen | filter:{ageId:$select.search} |orderBy:'ageId' track by $index">
