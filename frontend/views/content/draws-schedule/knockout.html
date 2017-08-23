@@ -1,37 +1,37 @@
 <div class="knockout-round">
-  <div class="container">
-    <!--SPORT NAME-->
-    <div class="knockout-sportname text-center">
-      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>athletics</span> |
-        <span>girls</span> |
-        <span> U-14</span></h3>
-      <div class="draws-downloadpdf draws-a">
-        <a href="#">Download the schedule in pdf format</a>
-      </div>
-    </div>
-    <!--END SPORT NAME-->
+    <div class="container">
+        <!--SPORT NAME-->
+        <div class="knockout-sportname text-center">
+            <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>athletics</span> |
+                <span>girls</span> |
+                <span> U-14</span></h3>
+            <div class="draws-downloadpdf draws-a">
+                <a href="#">Download the schedule in pdf format</a>
+            </div>
+        </div>
+        <!--END SPORT NAME-->
 
-    <!--SWIPER BUTTON DIV-->
+        <!--SWIPER BUTTON DIV-->
 
-    <div class="knockout-eventtype singles text-center">
-      <!--EVENT TYPE-->
-      <h3 class="d-fjalla-one text-uppercase sport-color-primary">
-        Singles
-      </h3>
-      <!--EVENT TYPE END-->
-    </div>
-    <!--SWIPER-->
-    <div class="row">
-      <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
-        <div class="knockout-swiper-holder">
-          <div class="swiper-container">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide">
-                <div class="knockout-viewmore">
-                  <button class="btn sport-btn-blue-outline">Round 1</button>
-                </div>
-              </div>
-              <div class="swiper-slide">
+        <div class="knockout-eventtype singles text-center">
+            <!--EVENT TYPE-->
+            <h3 class="d-fjalla-one text-uppercase sport-color-primary">
+                Singles
+            </h3>
+            <!--EVENT TYPE END-->
+        </div>
+        <!--SWIPER-->
+        <div class="row">
+            <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
+                <div class="knockout-swiper-holder">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide" ng-repeat="roundName in roundsListName">
+                                <div class="knockout-viewmore" ng-click="getSportSpecificRounds(roundName)">
+                                    <button class="btn sport-btn-blue-outline">{{roundName}}</button>
+                                </div>
+                            </div>
+                            <!-- <div class="swiper-slide">
                 <div class="knockout-viewmore">
                   <button class="btn sport-btn-blue-outline">Round 2</button>
                 </div>
@@ -55,11 +55,11 @@
                 <div class="knockout-viewmore">
                   <button class="btn sport-btn-blue-outline">Final</button>
                 </div>
-              </div>
-            </div>
-            <!-- Add Arrows -->
-          </div>
-          <div class="swiper-button-next"><span class="fa fa-chevron-right"></div>
+              </div> -->
+                        </div>
+                        <!-- Add Arrows -->
+                    </div>
+                    <div class="swiper-button-next"><span class="fa fa-chevron-right"></div>
           <div class="swiper-button-prev"><span class="fa fa-chevron-left"></div>
         </div>
       </div>
@@ -72,20 +72,24 @@
     <!--OUTER DIV -->
     <div class="knockout-schedulecardsholder">
       <!--ROUNDS HEAD-->
-      <div class="row">
-        <div class="col-md-3 col-sm-4 col-xs-12" ng-repeat="round in roundName track by $index">
+      <!-- <div class="row">
+        <div class="col-md-3 col-sm-4 col-xs-12" ng-repeat="round in roundsListName |limitTo:3 track by $index">
           <div class="text-center text-uppercase">
-            <h3 class="sport-success d-fjalla-one">{{round.roundname}}
+            <h3 class="sport-success d-fjalla-one">{{round}}
             </h3>
           </div>
         </div>
-      </div>
+      </div> -->
       <!--ROUNDS HEAD END-->
       <div class="row">
         <!--ROUND 1-->
         <div class="col-md-3 col-sm-4 col-xs-12">
-          <div class="knockout-cardholder" ng-repeat="card in knockoutMatch track by $index">
-            <div class="knockout-card" ng-repeat="player  in card.players track by $index" ng-class="{'knockout-winnercard':player.winner==true}">
+
+              <div> 
+             <h3 class="sport-success d-fjalla-one text-center text-uppercase">{{ roundsList[0]._id}}
+            </h3>  
+          <div class="knockout-cardholder" ng-repeat="card in roundsList[0].matches track by $index">
+            <div class="knockout-card" ng-repeat="player  in card.matches track by $index" ng-class="{'knockout-winnercard':player.winner==true}">
               <div class="knockout-cardimage display-inline ver-mid">
                 <img src="/img/dishapatani1.jpg" alt="" class="img-responsive">
               </div>
@@ -108,12 +112,14 @@
               </p>
             </div>
           </div>
+             </div> 
         </div>
         <!--END ROUND 1-->
 
         <!--ROUND 2-->
         <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs">
-          <div class="knockout-cardholder-round2 relate" ng-repeat="card in round2 track by $index">
+          <h3 class="sport-success d-fjalla-one text-center text-uppercase"> {{roundsList[1]._id}} </h3>
+          <div class="knockout-cardholder-round2 relate" ng-repeat="card in roundsList[1].matches track by $index">
             <div class="get-center knockout-round-width">
               <div class=" knockout-cardholder">
                 <div class="knockout-card " ng-repeat="player in card.players track by $index " ng-class="{'knockout-winnercard':player.winner==true}">
@@ -146,7 +152,8 @@
 
         <!--ROUND 3-->
         <div class="col-md-3 col-sm-4 col-xs-12 hidden-sm hidden-xs">
-          <div class="knockout-cardholder-round3 relate" ng-repeat="card in round2 | limitTo:1 track by $index">
+          <h3 class="sport-success d-fjalla-one text-center text-uppercase"> {{roundsList[2]._id}} </h3>
+          <div class="knockout-cardholder-round3 relate" ng-repeat="card in roundsList[2].matches track by $index">
             <div class="get-center knockout-round-width">
               <div class=" knockout-cardholder">
                 <div class="knockout-card " ng-repeat="player in card.players track by $index" ng-class="{'knockout-winnercard':player.winner==true}">

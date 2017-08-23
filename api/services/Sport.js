@@ -55,7 +55,7 @@ module.exports = mongoose.model('Sport', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "sportslist", "ageGroup", "weight", "sportslist", "ageGroup", "weight"));
 var model = {
 
-    getAggregatePipeLine: function (data) {
+    getAggregatePipeLine: function(data) {
 
         var pipeline = [
             // Stage 1
@@ -124,11 +124,11 @@ var model = {
         return pipeline;
     },
 
-    getOne: function (data, callback) {
+    getOne: function(data, callback) {
         var deepSearch = "sportslist.sportsListSubCategory ageGroup weight ";
         Sport.findOne({
             _id: data._id
-        }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+        }).lean().deepPopulate(deepSearch).exec(function(err, found) {
             if (err) {
                 callback(err, null);
             } else {
@@ -142,7 +142,7 @@ var model = {
 
     },
 
-    getMixAggregatePipeLine: function (data) {
+    getMixAggregatePipeLine: function(data) {
 
         var pipeline = [
             // Stage 1
@@ -210,7 +210,7 @@ var model = {
         return pipeline;
     },
 
-    getSearchPipeLine: function (data) {
+    getSearchPipeLine: function(data) {
 
         var pipeline = [
             // Stage 1
@@ -265,7 +265,7 @@ var model = {
         return pipeline;
     },
 
-    getSportPipeLine: function () {
+    getSportPipeLine: function() {
 
         var pipeline = [
             // Stage 1
@@ -326,7 +326,7 @@ var model = {
         return pipeline;
     },
 
-    getShootingPipeLine: function (data) {
+    getShootingPipeLine: function(data) {
 
         var pipeline = [
             // Stage 1
@@ -456,7 +456,7 @@ var model = {
         return pipeline;
     },
 
-    getShootingPipeLine1: function (data) {
+    getShootingPipeLine1: function(data) {
 
         var pipeline = [{
                 $match: {
@@ -590,7 +590,7 @@ var model = {
         return pipeline;
     },
 
-    getStudentTeamPipeline: function (data) {
+    getStudentTeamPipeline: function(data) {
 
         var pipeline = [
             // Stage 1
@@ -639,11 +639,11 @@ var model = {
         return pipeline;
     },
     //For team
-    getAthletePerSchool: function (data, callback) {
+    getAthletePerSchool: function(data, callback) {
         console.log("data", data);
         // console.log("foundfront", found);
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     var pipeLine = Sport.getSportPipeLine();
                     var newPipeLine = _.cloneDeep(pipeLine);
                     newPipeLine.push({
@@ -651,7 +651,7 @@ var model = {
                             _id: objectid(data.sport)
                         }
                     });
-                    Sport.aggregate(newPipeLine, function (err, found) {
+                    Sport.aggregate(newPipeLine, function(err, found) {
                         if (err) {
                             callback(err, "error in mongoose");
                         } else {
@@ -675,14 +675,14 @@ var model = {
                         }
                     });
                 },
-                function (data, callback) {
+                function(data, callback) {
                     console.log("data", data);
                     if ((data.sportName.toLowerCase() == "shooting air pistol team") || (data.sportName.toLowerCase() == "shooting air rifle open team") || (data.sportName.toLowerCase() == "shooting air rifle peep team")) {
                         console.log("sports IndividualSport check");
                         if (data.athleteToken) {
                             data.athlete = data.found._id;
                         }
-                        Sport.allShootingAthelete(data, function (err, complete) {
+                        Sport.allShootingAthelete(data, function(err, complete) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -696,7 +696,7 @@ var model = {
                                     var final = {};
                                     final.data = [];
                                     // console.log("complete", complete);
-                                    _.each(complete.results, function (n) {
+                                    _.each(complete.results, function(n) {
                                         console.log("n", n);
                                         final.data.push(n.athleteId);
                                     });
@@ -708,7 +708,7 @@ var model = {
                             }
                         });
                     } else {
-                        Sport.allAthelete(data, function (err, complete) {
+                        Sport.allAthelete(data, function(err, complete) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -726,18 +726,18 @@ var model = {
                         });
                     }
                 },
-                function (complete, callback) {
+                function(complete, callback) {
                     // console.log("complete next", complete.results);
                     if (data.sportName.includes("Doubles") || data.sportName.includes("doubles")) {
                         console.log("doubles");
                         var results = {};
                         var finalData = [];
                         // console.log("total", complete.total);
-                        async.eachSeries(complete.results, function (n, callback) {
+                        async.eachSeries(complete.results, function(n, callback) {
                                 data.athlete = n._id;
                                 // console.log("n", data.athlete);
                                 var pipeLine = Sport.getStudentTeamPipeline(data);
-                                StudentTeam.aggregate(pipeLine, function (err, found) {
+                                StudentTeam.aggregate(pipeLine, function(err, found) {
                                     if (err) {
                                         callback(err, "error in mongoose");
                                     } else {
@@ -774,7 +774,7 @@ var model = {
                                     }
                                 });
                             },
-                            function (err) {
+                            function(err) {
                                 if (err) {
                                     callback(err, null);
                                 } else if (_.isEmpty(results)) {
@@ -787,11 +787,11 @@ var model = {
                         var results = {};
                         var finalData = [];
                         // console.log("complete", complete);
-                        async.each(complete.data, function (n, callback) {
+                        async.each(complete.data, function(n, callback) {
                                 // console.log("n------", n);
                                 data.athlete = n._id;
                                 var pipeLine = Sport.getStudentTeamPipeline(data);
-                                StudentTeam.aggregate(pipeLine, function (err, found) {
+                                StudentTeam.aggregate(pipeLine, function(err, found) {
                                     if (err) {
                                         callback(err, "error in mongoose");
                                     } else {
@@ -831,7 +831,7 @@ var model = {
                                     }
                                 });
                             },
-                            function (err) {
+                            function(err) {
                                 if (err) {
                                     callback(err, null);
                                 } else if (_.isEmpty(results)) {
@@ -845,12 +845,12 @@ var model = {
                         var finalData = [];
                         // console.log("total.....", complete.total);
                         // console.log("complete......", complete.results);
-                        async.eachSeries(complete.results, function (n, callback) {
+                        async.eachSeries(complete.results, function(n, callback) {
                             // console.log("n", n);
                             StudentTeam.find({
                                 studentId: n._id,
                                 sport: data.sport
-                            }).lean().exec(function (err, found) {
+                            }).lean().exec(function(err, found) {
                                 if (_.isEmpty(found)) {
                                     var athlete = {};
                                     athlete = n;
@@ -873,7 +873,7 @@ var model = {
                                     callback(null, results);
                                 }
                             });
-                        }, function (err) {
+                        }, function(err) {
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(results)) {
@@ -886,7 +886,7 @@ var model = {
                     }
                 }
             ],
-            function (err, results) {
+            function(err, results) {
                 if (err) {
                     console.log(err);
                     callback(null, results);
@@ -907,12 +907,12 @@ var model = {
 
     },
 
-    getAthlete: function (data, callback) {
+    getAthlete: function(data, callback) {
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     Athelete.findOne({
                         accessToken: data.athleteToken
-                    }).exec(function (err, found) {
+                    }).exec(function(err, found) {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(found)) {
@@ -923,12 +923,12 @@ var model = {
                         }
                     });
                 },
-                function (found, callback) {
+                function(found, callback) {
                     if (found.atheleteSchoolName) {
                         console.log("name school", found.atheleteSchoolName);
                         Registration.findOne({
                             schoolName: found.atheleteSchoolName
-                        }).exec(function (err, complete) {
+                        }).exec(function(err, complete) {
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(complete)) {
@@ -942,10 +942,10 @@ var model = {
                     } else {
                         console.log("school", found.school);
                         async.waterfall([
-                                function (callback) {
+                                function(callback) {
                                     School.findOne({
                                         _id: found.school
-                                    }).exec(function (err, complete) {
+                                    }).exec(function(err, complete) {
                                         if (err) {
                                             callback(err, null);
                                         } else if (_.isEmpty(complete)) {
@@ -979,7 +979,7 @@ var model = {
                                 //     });
                                 // }
                             ],
-                            function (err, data2) {
+                            function(err, data2) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, []);
@@ -993,8 +993,8 @@ var model = {
                             });
                     }
                 },
-                function (data, callback) {
-                    Sport.getAthletePerSchool(data, function (err, complete) {
+                function(data, callback) {
+                    Sport.getAthletePerSchool(data, function(err, complete) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -1008,7 +1008,7 @@ var model = {
                     });
                 },
             ],
-            function (err, complete) {
+            function(err, complete) {
                 if (err) {
                     console.log(err);
                     callback(null, err);
@@ -1022,9 +1022,9 @@ var model = {
             });
     },
 
-    allAthelete: function (data, callback) {
+    allAthelete: function(data, callback) {
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     console.log("school", data.school);
                     var maxRow = 9;
                     var page = 1;
@@ -1034,7 +1034,7 @@ var model = {
                     var start = (page - 1) * maxRow;
                     console.log("options", start);
                     if (data.page == 1 && _.isEmpty(data.sfaid) && data.athleteToken) {
-                        Sport.athleteData(data, start, maxRow, function (err, complete1) {
+                        Sport.athleteData(data, start, maxRow, function(err, complete1) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -1042,7 +1042,7 @@ var model = {
                             }
                         });
                     } else if (data.page == 1 && _.isEmpty(data.sfaid) && data.schoolToken) {
-                        Sport.athleteData1(data, start, maxRow, function (err, complete1) {
+                        Sport.athleteData1(data, start, maxRow, function(err, complete1) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -1050,7 +1050,7 @@ var model = {
                             }
                         });
                     } else if (_.isEmpty(data.sfaid) && data.page != 1) {
-                        Sport.athleteData1(data, start, maxRow, function (err, complete1) {
+                        Sport.athleteData1(data, start, maxRow, function(err, complete1) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -1059,7 +1059,7 @@ var model = {
                         });
 
                     } else {
-                        Sport.atheleteDataIncludingSfa(data, start, maxRow, function (err, complete1) {
+                        Sport.atheleteDataIncludingSfa(data, start, maxRow, function(err, complete1) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -1070,7 +1070,7 @@ var model = {
                     }
                 }
             ],
-            function (err, data2) {
+            function(err, data2) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
@@ -1085,14 +1085,14 @@ var model = {
 
     },
 
-    totalAthlete: function (data, callback) {
+    totalAthlete: function(data, callback) {
         if (_.isEmpty(data.sfaid)) {
             if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
                 var pipeLine = Sport.getMixAggregatePipeLine(data);
             } else {
                 var pipeLine = Sport.getAggregatePipeLine(data);
             }
-            Athelete.aggregate(pipeLine, function (err, totals) {
+            Athelete.aggregate(pipeLine, function(err, totals) {
                 if (err) {
                     console.log(err);
                     callback(err, "error in mongoose");
@@ -1130,7 +1130,7 @@ var model = {
                     ]
                 },
             });
-            Athelete.aggregate(newPipeLine, function (err, totals) {
+            Athelete.aggregate(newPipeLine, function(err, totals) {
                 if (err) {
                     console.log(err);
                     callback(err, "error in mongoose");
@@ -1148,7 +1148,7 @@ var model = {
     },
 
     //page1 without sfa
-    athleteData: function (data, start, maxRow, callback) {
+    athleteData: function(data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
             var pipeLine = Sport.getMixAggregatePipeLine(data);
         } else {
@@ -1156,10 +1156,10 @@ var model = {
         }
         console.log("pipeLine", pipeLine);
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     var dataFinal = {};
                     dataFinal.results = [];
-                    Sport.totalAthlete(data, function (err, complete1) {
+                    Sport.totalAthlete(data, function(err, complete1) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -1177,7 +1177,7 @@ var model = {
 
                     });
                 },
-                function (dataFinal, callback) {
+                function(dataFinal, callback) {
                     var newPipeLine = _.cloneDeep(pipeLine);
                     newPipeLine.push(
                         // Stage 6
@@ -1186,7 +1186,7 @@ var model = {
                         }, {
                             '$limit': maxRow
                         });
-                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                    Athelete.aggregate(newPipeLine, function(err, totals) {
                         if (err) {
                             console.log(err);
                             callback(err, "error in mongoose");
@@ -1202,7 +1202,7 @@ var model = {
                         }
                     });
                 },
-                function (dataFinal, callback) {
+                function(dataFinal, callback) {
                     // var dataFinal = {};
                     var newPipeLine = _.cloneDeep(pipeLine);
                     newPipeLine.push({
@@ -1210,7 +1210,7 @@ var model = {
                             accessToken: data.athleteToken
                         }
                     });
-                    Athelete.aggregate(newPipeLine, function (err, totals1) {
+                    Athelete.aggregate(newPipeLine, function(err, totals1) {
                         if (err) {
                             console.log(err);
                             callback(err, "error in mongoose");
@@ -1227,7 +1227,7 @@ var model = {
                 },
 
             ],
-            function (err, data2) {
+            function(err, data2) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
@@ -1241,7 +1241,7 @@ var model = {
             });
     },
     //except page1 without sfa
-    athleteData1: function (data, start, maxRow, callback) {
+    athleteData1: function(data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
             var pipeLine = Sport.getMixAggregatePipeLine(data);
         } else {
@@ -1249,9 +1249,9 @@ var model = {
         }
         console.log("pipeLine", pipeLine);
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     var dataFinal = {};
-                    Sport.totalAthlete(data, function (err, complete1) {
+                    Sport.totalAthlete(data, function(err, complete1) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -1275,7 +1275,7 @@ var model = {
 
                     });
                 },
-                function (dataFinal, callback) {
+                function(dataFinal, callback) {
                     var newPipeLine = _.cloneDeep(pipeLine);
                     newPipeLine.push(
                         // Stage 6
@@ -1284,7 +1284,7 @@ var model = {
                         }, {
                             '$limit': maxRow
                         });
-                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                    Athelete.aggregate(newPipeLine, function(err, totals) {
                         if (err) {
                             console.log(err);
                             callback(err, "error in mongoose");
@@ -1302,7 +1302,7 @@ var model = {
                 }
 
             ],
-            function (err, data2) {
+            function(err, data2) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
@@ -1316,16 +1316,16 @@ var model = {
             });
     },
     //with sfa
-    atheleteDataIncludingSfa: function (data, start, maxRow, callback) {
+    atheleteDataIncludingSfa: function(data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
             var pipeLine = Sport.getMixAggregatePipeLine(data);
         } else {
             var pipeLine = Sport.getAggregatePipeLine(data);
         }
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     var dataFinal = {};
-                    Sport.totalAthlete(data, function (err, complete1) {
+                    Sport.totalAthlete(data, function(err, complete1) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -1341,7 +1341,7 @@ var model = {
                         }
                     });
                 },
-                function (dataFinal, callback) {
+                function(dataFinal, callback) {
                     var newPipeLine = _.cloneDeep(pipeLine);
                     newPipeLine.push({
                         $match: {
@@ -1368,7 +1368,7 @@ var model = {
                         }, {
                             '$limit': maxRow
                         });
-                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                    Athelete.aggregate(newPipeLine, function(err, totals) {
                         if (err) {
                             console.log(err);
                             callback(err, "error in mongoose");
@@ -1385,7 +1385,7 @@ var model = {
                 }
 
             ],
-            function (err, data2) {
+            function(err, data2) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
@@ -1399,9 +1399,9 @@ var model = {
             });
     },
 
-    allShootingAthelete: function (data, callback) {
+    allShootingAthelete: function(data, callback) {
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     var maxRow = 9;
                     var page = 1;
                     if (data.page) {
@@ -1412,9 +1412,9 @@ var model = {
                         console.log("inside shooting");
                         var pipeLine = Sport.getShootingPipeLine(data);
                         async.waterfall([
-                                function (callback) {
+                                function(callback) {
                                     var pipeLine = Sport.getShootingPipeLine1(data);
-                                    IndividualSport.aggregate(pipeLine, function (err, athleteData) {
+                                    IndividualSport.aggregate(pipeLine, function(err, athleteData) {
                                         if (err) {
                                             callback(err, "error in mongoose");
                                         } else {
@@ -1428,9 +1428,9 @@ var model = {
                                         }
                                     });
                                 },
-                                function (athleteData, callback) {
+                                function(athleteData, callback) {
                                     async.waterfall([
-                                            function (callback) {
+                                            function(callback) {
                                                 var dataFinal = {};
                                                 dataFinal.results = [];
                                                 if (_.isEmpty(athleteData)) {
@@ -1448,7 +1448,7 @@ var model = {
                                                         }, {
                                                             '$limit': maxRow
                                                         });
-                                                    IndividualSport.aggregate(newPipeLine, function (err, totals) {
+                                                    IndividualSport.aggregate(newPipeLine, function(err, totals) {
                                                         if (err) {
                                                             console.log(err);
                                                             callback(err, "error in mongoose");
@@ -1467,8 +1467,8 @@ var model = {
                                                 }
 
                                             },
-                                            function (dataFinal, callback) {
-                                                Sport.totalShootingAthlete(data, function (err, complete1) {
+                                            function(dataFinal, callback) {
+                                                Sport.totalShootingAthlete(data, function(err, complete1) {
                                                     if (err) {
                                                         callback(err, null);
                                                     } else {
@@ -1489,7 +1489,7 @@ var model = {
                                                 });
                                             },
                                         ],
-                                        function (err, data2) {
+                                        function(err, data2) {
                                             if (err) {
                                                 console.log(err);
                                                 callback(null, []);
@@ -1506,7 +1506,7 @@ var model = {
                                 }
 
                             ],
-                            function (err, data2) {
+                            function(err, data2) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, []);
@@ -1522,11 +1522,12 @@ var model = {
                             });
 
                     } else if (_.isEmpty(data.sfaid && data.page == 1 && data.schoolToken)) {
+                        console.log("indise schoolToken");
                         var pipeLine = Sport.getShootingPipeLine(data);
                         async.waterfall([
-                                function (callback) {
+                                function(callback) {
                                     var dataFinal = {};
-                                    Sport.totalShootingAthlete(data, function (err, complete1) {
+                                    Sport.totalShootingAthlete(data, function(err, complete1) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
@@ -1544,7 +1545,7 @@ var model = {
 
                                     });
                                 },
-                                function (dataFinal, callback) {
+                                function(dataFinal, callback) {
                                     var newPipeLine = _.cloneDeep(pipeLine);
                                     newPipeLine.push(
                                         // Stage 6
@@ -1553,7 +1554,7 @@ var model = {
                                         }, {
                                             '$limit': maxRow
                                         });
-                                    IndividualSport.aggregate(newPipeLine, function (err, totals) {
+                                    IndividualSport.aggregate(newPipeLine, function(err, totals) {
                                         if (err) {
                                             console.log(err);
                                             callback(err, "error in mongoose");
@@ -1571,7 +1572,7 @@ var model = {
                                 }
 
                             ],
-                            function (err, data2) {
+                            function(err, data2) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, []);
@@ -1587,9 +1588,9 @@ var model = {
                     } else if (_.isEmpty(data.sfaid && data.page != 1)) {
                         var pipeLine = Sport.getShootingPipeLine(data);
                         async.waterfall([
-                                function (callback) {
+                                function(callback) {
                                     var dataFinal = {};
-                                    Sport.totalShootingAthlete(data, function (err, complete1) {
+                                    Sport.totalShootingAthlete(data, function(err, complete1) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
@@ -1607,7 +1608,7 @@ var model = {
 
                                     });
                                 },
-                                function (dataFinal, callback) {
+                                function(dataFinal, callback) {
                                     var newPipeLine = _.cloneDeep(pipeLine);
                                     newPipeLine.push(
                                         // Stage 6
@@ -1616,7 +1617,7 @@ var model = {
                                         }, {
                                             '$limit': maxRow
                                         });
-                                    IndividualSport.aggregate(newPipeLine, function (err, totals) {
+                                    IndividualSport.aggregate(newPipeLine, function(err, totals) {
                                         if (err) {
                                             console.log(err);
                                             callback(err, "error in mongoose");
@@ -1634,7 +1635,7 @@ var model = {
                                 }
 
                             ],
-                            function (err, data2) {
+                            function(err, data2) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, []);
@@ -1650,9 +1651,9 @@ var model = {
                     } else {
                         var pipeLine = Sport.getShootingPipeLine(data);
                         async.waterfall([
-                                function (callback) {
+                                function(callback) {
                                     var dataFinal = {};
-                                    Sport.totalShootingAthlete(data, function (err, complete1) {
+                                    Sport.totalShootingAthlete(data, function(err, complete1) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
@@ -1668,7 +1669,7 @@ var model = {
                                         }
                                     });
                                 },
-                                function (dataFinal, callback) {
+                                function(dataFinal, callback) {
                                     var newPipeLine = _.cloneDeep(pipeLine);
                                     newPipeLine.push({
                                         $match: {
@@ -1683,7 +1684,7 @@ var model = {
                                         }, {
                                             '$limit': maxRow
                                         });
-                                    IndividualSport.aggregate(newPipeLine, function (err, totals) {
+                                    IndividualSport.aggregate(newPipeLine, function(err, totals) {
                                         if (err) {
                                             console.log(err);
                                             callback(err, "error in mongoose");
@@ -1700,7 +1701,7 @@ var model = {
                                 }
 
                             ],
-                            function (err, data2) {
+                            function(err, data2) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, []);
@@ -1715,7 +1716,7 @@ var model = {
                     }
                 }
             ],
-            function (err, data2) {
+            function(err, data2) {
                 if (err) {
                     console.log(err);
                     callback(err, null);
@@ -1729,10 +1730,10 @@ var model = {
             });
     },
 
-    totalShootingAthlete: function (data, callback) {
+    totalShootingAthlete: function(data, callback) {
         if (_.isEmpty(data.sfaid)) {
             var pipeLine = Sport.getShootingPipeLine(data);
-            IndividualSport.aggregate(pipeLine, function (err, totals) {
+            IndividualSport.aggregate(pipeLine, function(err, totals) {
                 if (err) {
                     console.log(err);
                     callback(err, "error in mongoose");
@@ -1755,7 +1756,7 @@ var model = {
                 },
                 // Stage 6
             });
-            IndividualSport.aggregate(newPipeLine, function (err, totals) {
+            IndividualSport.aggregate(newPipeLine, function(err, totals) {
                 if (err) {
                     console.log(err);
                     callback(err, "error in mongoose");
@@ -1772,7 +1773,7 @@ var model = {
         }
     },
 
-    search: function (data, callback) {
+    search: function(data, callback) {
         var Model = this;
         var Const = this(data);
         var maxRow = Config.maxRow;
@@ -1800,17 +1801,17 @@ var model = {
             var deepSearch = "sportslist ageGroup weight";
             var Search = Model.find(data.keyword)
 
-                .order(options)
+            .order(options)
                 .deepPopulate(deepSearch)
                 .keyword(options)
                 .page(options, callback);
 
         } else {
             async.waterfall([
-                    function (callback) {
+                    function(callback) {
                         var dataFinal = {};
                         var pipeLine = Sport.getSearchPipeLine(data);
-                        Sport.aggregate(pipeLine, function (err, totals) {
+                        Sport.aggregate(pipeLine, function(err, totals) {
                             if (err) {
                                 console.log(err);
                                 callback(err, "error in mongoose");
@@ -1826,7 +1827,7 @@ var model = {
                         });
 
                     },
-                    function (dataFinal, callback) {
+                    function(dataFinal, callback) {
                         var pipeLine = Sport.getSearchPipeLine(data);
                         var newPipeLine = _.cloneDeep(pipeLine);
                         newPipeLine.push(
@@ -1836,7 +1837,7 @@ var model = {
                             }, {
                                 '$limit': maxRow
                             });
-                        Sport.aggregate(newPipeLine, function (err, totals) {
+                        Sport.aggregate(newPipeLine, function(err, totals) {
                             if (err) {
                                 console.log(err);
                                 callback(err, "error in mongoose");
@@ -1854,7 +1855,7 @@ var model = {
                     }
 
                 ],
-                function (err, data2) {
+                function(err, data2) {
                     if (err) {
                         console.log(err);
                         callback(null, []);
@@ -1871,7 +1872,7 @@ var model = {
 
     },
 
-    saveSport: function (data, callback) {
+    saveSport: function(data, callback) {
         if (_.isEmpty(data.weight)) {
             data.weight = undefined;
         }
@@ -1881,7 +1882,7 @@ var model = {
         if (_.isEmpty(data.sportslist)) {
             data.sportslist = undefined;
         }
-        Sport.saveData(data, function (err, sportData) {
+        Sport.saveData(data, function(err, sportData) {
             if (err) {
                 console.log("err", err);
                 callback("There was an error while saving", null);
@@ -1895,11 +1896,11 @@ var model = {
         });
     },
 
-    generateExcel: function (res) {
+    generateExcel: function(res) {
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     var pipeLine = Sport.getSportPipeLine();
-                    Sport.aggregate(pipeLine, function (err, complete) {
+                    Sport.aggregate(pipeLine, function(err, complete) {
                         if (err) {
                             callback(err, "error in mongoose");
                         } else {
@@ -1912,9 +1913,9 @@ var model = {
                     });
 
                 },
-                function (complete, callback) {
+                function(complete, callback) {
                     var excelData = [];
-                    _.each(complete, function (n) {
+                    _.each(complete, function(n) {
                         var obj = {};
                         obj.sportsList = n.sportslist.name;
                         obj.ageGroup = n.ageGroup.name;
@@ -1939,7 +1940,7 @@ var model = {
                     Config.generateExcelOld("Sport", excelData, res);
                 }
             ],
-            function (err, data2) {
+            function(err, data2) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
@@ -1953,12 +1954,12 @@ var model = {
             });
     },
 
-    athleteRegistedCheck: function (data, callback) {
+    athleteRegistedCheck: function(data, callback) {
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     School.findOne({
                         _id: found.school
-                    }).exec(function (err, complete) {
+                    }).exec(function(err, complete) {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(complete)) {
@@ -1971,10 +1972,10 @@ var model = {
                         }
                     });
                 },
-                function (data, callback) {
+                function(data, callback) {
                     Registration.findOne({
                         schoolName: data.school
-                    }).exec(function (err, complete) {
+                    }).exec(function(err, complete) {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(complete)) {
@@ -1988,7 +1989,7 @@ var model = {
                     });
                 }
             ],
-            function (err, data2) {
+            function(err, data2) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
@@ -2004,7 +2005,7 @@ var model = {
 
     //--------------------------Edit functions--------------------------------------------------
 
-    getEditAggregatePipeLine: function (data) {
+    getEditAggregatePipeLine: function(data) {
 
         var pipeline = [
             // Stage 1
@@ -2094,7 +2095,7 @@ var model = {
         return pipeline;
     },
 
-    getEditMixAggregatePipeLine: function (data) {
+    getEditMixAggregatePipeLine: function(data) {
 
         var pipeline = [
             // Stage 1
@@ -2186,9 +2187,9 @@ var model = {
         return pipeline;
     },
 
-    editAthletePerSchool: function (data, callback) {
+    editAthletePerSchool: function(data, callback) {
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     var pipeLine = Sport.getSportPipeLine();
                     var newPipeLine = _.cloneDeep(pipeLine);
                     newPipeLine.push({
@@ -2196,7 +2197,7 @@ var model = {
                             _id: objectid(data.sport)
                         }
                     });
-                    Sport.aggregate(newPipeLine, function (err, found) {
+                    Sport.aggregate(newPipeLine, function(err, found) {
                         if (err) {
                             callback(err, "error in mongoose");
                         } else {
@@ -2220,14 +2221,14 @@ var model = {
                         }
                     });
                 },
-                function (data, callback) {
+                function(data, callback) {
                     // console.log("data", data);
                     if ((data.sportName.toLowerCase() == "shooting air pistol team") || (data.sportName.toLowerCase() == "shooting air rifle open team") || (data.sportName.toLowerCase() == "shooting air rifle peep team")) {
                         console.log("sports IndividualSport check");
                         if (data.athleteToken) {
                             data.athlete = data.found._id;
                         }
-                        Sport.editAllShootingAthelete(data, function (err, complete) {
+                        Sport.editAllShootingAthelete(data, function(err, complete) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -2241,7 +2242,7 @@ var model = {
                                     var final = {};
                                     final.data = [];
                                     console.log("complete", complete);
-                                    _.each(complete.results, function (n) {
+                                    _.each(complete.results, function(n) {
                                         console.log("n", n);
                                         if (n.athleteId != undefined) {
                                             final.data.push(n.athleteId);
@@ -2257,7 +2258,7 @@ var model = {
                             }
                         });
                     } else {
-                        Sport.editAllAthelete(data, function (err, complete) {
+                        Sport.editAllAthelete(data, function(err, complete) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -2274,18 +2275,18 @@ var model = {
                         });
                     }
                 },
-                function (complete, callback) {
+                function(complete, callback) {
                     console.log("complete next", complete.results);
                     if (data.sportName.includes("Doubles") || data.sportName.includes("doubles")) {
                         console.log("doubles");
                         var results = {};
                         var finalData = [];
                         // console.log("total", complete.total);
-                        async.eachSeries(complete.results, function (n, callback) {
+                        async.eachSeries(complete.results, function(n, callback) {
                                 data.athlete = n._id;
                                 //  console.log("n", data.athlete);
                                 var pipeLine = Sport.getStudentTeamPipeline(data);
-                                StudentTeam.aggregate(pipeLine, function (err, found) {
+                                StudentTeam.aggregate(pipeLine, function(err, found) {
                                     if (err) {
                                         callback(err, "error in mongoose");
                                     } else {
@@ -2322,7 +2323,7 @@ var model = {
                                     }
                                 });
                             },
-                            function (err) {
+                            function(err) {
                                 if (err) {
                                     callback(err, null);
                                 } else if (_.isEmpty(results)) {
@@ -2335,11 +2336,11 @@ var model = {
                         var results = {};
                         var finalData = [];
                         console.log("complete", complete);
-                        async.each(complete.data, function (n, callback) {
+                        async.each(complete.data, function(n, callback) {
                                 console.log("n------", n);
                                 data.athlete = n._id;
                                 var pipeLine = Sport.getStudentTeamPipeline(data);
-                                StudentTeam.aggregate(pipeLine, function (err, found) {
+                                StudentTeam.aggregate(pipeLine, function(err, found) {
                                     if (err) {
                                         callback(err, "error in mongoose");
                                     } else {
@@ -2379,7 +2380,7 @@ var model = {
                                     }
                                 });
                             },
-                            function (err) {
+                            function(err) {
                                 if (err) {
                                     callback(err, null);
                                 } else if (_.isEmpty(results)) {
@@ -2393,12 +2394,12 @@ var model = {
                         var finalData = [];
                         // console.log("total.....", complete.total);
                         // console.log("complete......", complete.results);
-                        async.eachSeries(complete.results, function (n, callback) {
+                        async.eachSeries(complete.results, function(n, callback) {
                             console.log("n", n);
                             StudentTeam.find({
                                 studentId: n._id,
                                 sport: data.sport
-                            }).lean().exec(function (err, found) {
+                            }).lean().exec(function(err, found) {
                                 if (_.isEmpty(found)) {
                                     var athlete = {};
                                     athlete = n;
@@ -2421,7 +2422,7 @@ var model = {
                                     callback(null, results);
                                 }
                             });
-                        }, function (err) {
+                        }, function(err) {
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(results)) {
@@ -2434,7 +2435,7 @@ var model = {
                     }
                 }
             ],
-            function (err, results) {
+            function(err, results) {
                 if (err) {
                     console.log(err);
                     callback(null, results);
@@ -2455,12 +2456,12 @@ var model = {
 
     },
 
-    getEditAthlete: function (data, callback) {
+    getEditAthlete: function(data, callback) {
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     Athelete.findOne({
                         accessToken: data.athleteToken
-                    }).exec(function (err, found) {
+                    }).exec(function(err, found) {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(found)) {
@@ -2471,12 +2472,12 @@ var model = {
                         }
                     });
                 },
-                function (found, callback) {
+                function(found, callback) {
                     if (found.atheleteSchoolName) {
                         console.log("name school", found.atheleteSchoolName);
                         Registration.findOne({
                             schoolName: found.atheleteSchoolName
-                        }).exec(function (err, complete) {
+                        }).exec(function(err, complete) {
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(complete)) {
@@ -2490,10 +2491,10 @@ var model = {
                     } else {
                         console.log("school", found.school);
                         async.waterfall([
-                                function (callback) {
+                                function(callback) {
                                     School.findOne({
                                         _id: found.school
-                                    }).exec(function (err, complete) {
+                                    }).exec(function(err, complete) {
                                         if (err) {
                                             callback(err, null);
                                         } else if (_.isEmpty(complete)) {
@@ -2505,7 +2506,7 @@ var model = {
                                     });
                                 }
                             ],
-                            function (err, data2) {
+                            function(err, data2) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, []);
@@ -2519,8 +2520,8 @@ var model = {
                             });
                     }
                 },
-                function (data, callback) {
-                    Sport.editAthletePerSchool(data, function (err, complete) {
+                function(data, callback) {
+                    Sport.editAthletePerSchool(data, function(err, complete) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -2534,7 +2535,7 @@ var model = {
                     });
                 },
             ],
-            function (err, complete) {
+            function(err, complete) {
                 if (err) {
                     console.log(err);
                     callback(null, err);
@@ -2548,9 +2549,9 @@ var model = {
             });
     },
 
-    editAllAthelete: function (data, callback) {
+    editAllAthelete: function(data, callback) {
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     console.log("school", data.school);
                     var maxRow = 9;
                     var page = 1;
@@ -2560,7 +2561,7 @@ var model = {
                     var start = (page - 1) * maxRow;
                     console.log("options", start);
                     if (data.page == 1 && _.isEmpty(data.sfaid)) {
-                        Sport.editAthleteData(data, start, maxRow, function (err, complete1) {
+                        Sport.editAthleteData(data, start, maxRow, function(err, complete1) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -2568,7 +2569,7 @@ var model = {
                             }
                         });
                     } else if (_.isEmpty(data.sfaid) && data.page != 1) {
-                        Sport.editAthleteData1(data, start, maxRow, function (err, complete1) {
+                        Sport.editAthleteData1(data, start, maxRow, function(err, complete1) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -2577,7 +2578,7 @@ var model = {
                         });
 
                     } else {
-                        Sport.editAtheleteDataIncludingSfa(data, start, maxRow, function (err, complete1) {
+                        Sport.editAtheleteDataIncludingSfa(data, start, maxRow, function(err, complete1) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -2588,7 +2589,7 @@ var model = {
                     }
                 }
             ],
-            function (err, data2) {
+            function(err, data2) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
@@ -2603,14 +2604,14 @@ var model = {
 
     },
 
-    editTotalAthlete: function (data, callback) {
+    editTotalAthlete: function(data, callback) {
         if (_.isEmpty(data.sfaid)) {
             if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
                 var pipeLine = Sport.getMixAggregatePipeLine(data);
             } else {
                 var pipeLine = Sport.getAggregatePipeLine(data);
             }
-            Athelete.aggregate(pipeLine, function (err, totals) {
+            Athelete.aggregate(pipeLine, function(err, totals) {
                 if (err) {
                     console.log(err);
                     callback(err, "error in mongoose");
@@ -2648,7 +2649,7 @@ var model = {
                     ]
                 },
             });
-            Athelete.aggregate(newPipeLine, function (err, totals) {
+            Athelete.aggregate(newPipeLine, function(err, totals) {
                 if (err) {
                     console.log(err);
                     callback(err, "error in mongoose");
@@ -2666,7 +2667,7 @@ var model = {
     },
 
     //page1 without sfa
-    editAthleteData: function (data, start, maxRow, callback) {
+    editAthleteData: function(data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
             var pipeLine = Sport.getMixAggregatePipeLine(data);
         } else {
@@ -2674,10 +2675,10 @@ var model = {
         }
         // console.log("pipeLine", pipeLine);
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     var dataFinal = {};
                     dataFinal.results = [];
-                    Sport.editTotalAthlete(data, function (err, complete1) {
+                    Sport.editTotalAthlete(data, function(err, complete1) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -2695,7 +2696,7 @@ var model = {
 
                     });
                 },
-                function (dataFinal, callback) {
+                function(dataFinal, callback) {
                     // console.log("dataempty", dataFinal);
                     var newPipeLine = _.cloneDeep(pipeLine);
                     newPipeLine.push(
@@ -2705,7 +2706,7 @@ var model = {
                         }, {
                             '$limit': maxRow
                         });
-                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                    Athelete.aggregate(newPipeLine, function(err, totals) {
                         if (err) {
                             console.log(err);
                             callback(err, "error in mongoose");
@@ -2721,14 +2722,14 @@ var model = {
                         }
                     });
                 },
-                function (dataFinal, callback) {
+                function(dataFinal, callback) {
                     if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
                         var pipeLine = Sport.getEditMixAggregatePipeLine(data);
                     } else {
                         var pipeLine = Sport.getEditAggregatePipeLine(data);
                     }
 
-                    StudentTeam.aggregate(pipeLine, function (err, totals1) {
+                    StudentTeam.aggregate(pipeLine, function(err, totals1) {
                         if (err) {
                             console.log(err);
                             callback(err, "error in mongoose");
@@ -2738,7 +2739,7 @@ var model = {
                                 callback(null, []);
                             } else {
                                 console.log("dataa...", totals1);
-                                _.each(totals1, function (n) {
+                                _.each(totals1, function(n) {
                                     dataFinal.results.push(n.studentId);
                                 });
                                 // studentId.push(tota)
@@ -2750,7 +2751,7 @@ var model = {
                 },
 
             ],
-            function (err, data2) {
+            function(err, data2) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
@@ -2764,7 +2765,7 @@ var model = {
             });
     },
     //except page1 without sfa
-    editAthleteData1: function (data, start, maxRow, callback) {
+    editAthleteData1: function(data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
             var pipeLine = Sport.getMixAggregatePipeLine(data);
         } else {
@@ -2772,9 +2773,9 @@ var model = {
         }
         console.log("pipeLine", pipeLine);
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     var dataFinal = {};
-                    Sport.editTotalAthlete(data, function (err, complete1) {
+                    Sport.editTotalAthlete(data, function(err, complete1) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -2792,7 +2793,7 @@ var model = {
 
                     });
                 },
-                function (dataFinal, callback) {
+                function(dataFinal, callback) {
                     var newPipeLine = _.cloneDeep(pipeLine);
                     newPipeLine.push(
                         // Stage 6
@@ -2801,7 +2802,7 @@ var model = {
                         }, {
                             '$limit': maxRow
                         });
-                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                    Athelete.aggregate(newPipeLine, function(err, totals) {
                         if (err) {
                             console.log(err);
                             callback(err, "error in mongoose");
@@ -2818,7 +2819,7 @@ var model = {
                 }
 
             ],
-            function (err, data2) {
+            function(err, data2) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
@@ -2832,16 +2833,16 @@ var model = {
             });
     },
     //with sfa
-    editAtheleteDataIncludingSfa: function (data, start, maxRow, callback) {
+    editAtheleteDataIncludingSfa: function(data, start, maxRow, callback) {
         if (data.sportName.includes("Mix") || data.sportName.includes("mix")) {
             var pipeLine = Sport.getMixAggregatePipeLine(data);
         } else {
             var pipeLine = Sport.getAggregatePipeLine(data);
         }
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     var dataFinal = {};
-                    Sport.editTotalAthlete(data, function (err, complete1) {
+                    Sport.editTotalAthlete(data, function(err, complete1) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -2857,7 +2858,7 @@ var model = {
                         }
                     });
                 },
-                function (dataFinal, callback) {
+                function(dataFinal, callback) {
                     var newPipeLine = _.cloneDeep(pipeLine);
                     newPipeLine.push({
                         $match: {
@@ -2884,7 +2885,7 @@ var model = {
                         }, {
                             '$limit': maxRow
                         });
-                    Athelete.aggregate(newPipeLine, function (err, totals) {
+                    Athelete.aggregate(newPipeLine, function(err, totals) {
                         if (err) {
                             console.log(err);
                             callback(err, "error in mongoose");
@@ -2901,7 +2902,7 @@ var model = {
                 }
 
             ],
-            function (err, data2) {
+            function(err, data2) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
@@ -2915,9 +2916,9 @@ var model = {
             });
     },
 
-    editAllShootingAthelete: function (data, callback) {
+    editAllShootingAthelete: function(data, callback) {
         async.waterfall([
-                function (callback) {
+                function(callback) {
                     var maxRow = 9;
                     var page = 1;
                     if (data.page) {
@@ -2928,9 +2929,9 @@ var model = {
                         console.log("inside shooting");
                         var pipeLine = Sport.getShootingPipeLine(data);
                         async.waterfall([
-                                function (callback) {
+                                function(callback) {
                                     var pipeLine = Sport.getEditAggregatePipeLine(data);
-                                    StudentTeam.aggregate(pipeLine, function (err, athleteData) {
+                                    StudentTeam.aggregate(pipeLine, function(err, athleteData) {
                                         if (err) {
                                             callback(err, "error in mongoose");
                                         } else {
@@ -2944,9 +2945,9 @@ var model = {
                                         }
                                     });
                                 },
-                                function (athleteData, callback) {
+                                function(athleteData, callback) {
                                     async.waterfall([
-                                            function (callback) {
+                                            function(callback) {
                                                 var dataFinal = {};
                                                 dataFinal.results = [];
                                                 if (_.isEmpty(athleteData)) {
@@ -2964,7 +2965,7 @@ var model = {
                                                         }, {
                                                             '$limit': maxRow
                                                         });
-                                                    IndividualSport.aggregate(newPipeLine, function (err, totals) {
+                                                    IndividualSport.aggregate(newPipeLine, function(err, totals) {
                                                         if (err) {
                                                             console.log(err);
                                                             callback(err, "error in mongoose");
@@ -2974,7 +2975,7 @@ var model = {
                                                             } else {
                                                                 console.log("totals", totals);
                                                                 dataFinal.results = totals;
-                                                                _.each(athleteData, function (n) {
+                                                                _.each(athleteData, function(n) {
                                                                     dataFinal.results.push(n);
                                                                 });
                                                                 console.log("dataFinal", dataFinal);
@@ -2985,8 +2986,8 @@ var model = {
                                                 }
 
                                             },
-                                            function (dataFinal, callback) {
-                                                Sport.editTotalShootingAthlete(data, function (err, complete1) {
+                                            function(dataFinal, callback) {
+                                                Sport.editTotalShootingAthlete(data, function(err, complete1) {
                                                     if (err) {
                                                         callback(err, null);
                                                     } else {
@@ -3007,7 +3008,7 @@ var model = {
                                                 });
                                             },
                                         ],
-                                        function (err, data2) {
+                                        function(err, data2) {
                                             if (err) {
                                                 console.log(err);
                                                 callback(null, []);
@@ -3024,7 +3025,7 @@ var model = {
                                 }
 
                             ],
-                            function (err, data2) {
+                            function(err, data2) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, []);
@@ -3042,9 +3043,9 @@ var model = {
                     } else if (_.isEmpty(data.sfaid && data.page != 1)) {
                         var pipeLine = Sport.getShootingPipeLine(data);
                         async.waterfall([
-                                function (callback) {
+                                function(callback) {
                                     var dataFinal = {};
-                                    Sport.editTotalShootingAthlete(data, function (err, complete1) {
+                                    Sport.editTotalShootingAthlete(data, function(err, complete1) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
@@ -3062,7 +3063,7 @@ var model = {
 
                                     });
                                 },
-                                function (dataFinal, callback) {
+                                function(dataFinal, callback) {
                                     var newPipeLine = _.cloneDeep(pipeLine);
                                     newPipeLine.push(
                                         // Stage 6
@@ -3071,7 +3072,7 @@ var model = {
                                         }, {
                                             '$limit': maxRow
                                         });
-                                    IndividualSport.aggregate(newPipeLine, function (err, totals) {
+                                    IndividualSport.aggregate(newPipeLine, function(err, totals) {
                                         if (err) {
                                             console.log(err);
                                             callback(err, "error in mongoose");
@@ -3089,7 +3090,7 @@ var model = {
                                 }
 
                             ],
-                            function (err, data2) {
+                            function(err, data2) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, []);
@@ -3105,9 +3106,9 @@ var model = {
                     } else {
                         var pipeLine = Sport.getShootingPipeLine(data);
                         async.waterfall([
-                                function (callback) {
+                                function(callback) {
                                     var dataFinal = {};
-                                    Sport.editTotalShootingAthlete(data, function (err, complete1) {
+                                    Sport.editTotalShootingAthlete(data, function(err, complete1) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
@@ -3123,7 +3124,7 @@ var model = {
                                         }
                                     });
                                 },
-                                function (dataFinal, callback) {
+                                function(dataFinal, callback) {
                                     var newPipeLine = _.cloneDeep(pipeLine);
                                     newPipeLine.push({
                                         $match: {
@@ -3138,7 +3139,7 @@ var model = {
                                         }, {
                                             '$limit': maxRow
                                         });
-                                    IndividualSport.aggregate(newPipeLine, function (err, totals) {
+                                    IndividualSport.aggregate(newPipeLine, function(err, totals) {
                                         if (err) {
                                             console.log(err);
                                             callback(err, "error in mongoose");
@@ -3155,7 +3156,7 @@ var model = {
                                 }
 
                             ],
-                            function (err, data2) {
+                            function(err, data2) {
                                 if (err) {
                                     console.log(err);
                                     callback(null, []);
@@ -3170,7 +3171,7 @@ var model = {
                     }
                 }
             ],
-            function (err, data2) {
+            function(err, data2) {
                 if (err) {
                     console.log(err);
                     callback(err, null);
@@ -3184,10 +3185,10 @@ var model = {
             });
     },
 
-    editTotalShootingAthlete: function (data, callback) {
+    editTotalShootingAthlete: function(data, callback) {
         if (_.isEmpty(data.sfaid)) {
             var pipeLine = Sport.getShootingPipeLine(data);
-            IndividualSport.aggregate(pipeLine, function (err, totals) {
+            IndividualSport.aggregate(pipeLine, function(err, totals) {
                 if (err) {
                     console.log(err);
                     callback(err, "error in mongoose");
@@ -3210,7 +3211,7 @@ var model = {
                 },
                 // Stage 6
             });
-            IndividualSport.aggregate(newPipeLine, function (err, totals) {
+            IndividualSport.aggregate(newPipeLine, function(err, totals) {
                 if (err) {
                     console.log(err);
                     callback(err, "error in mongoose");
