@@ -375,6 +375,26 @@ myApp.factory('NavigationService', function ($http) {
             });
 
         },
+        getOneMatch: function (formData, callback) {
+            $http({
+                url: adminurl + "match/getOne",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                console.log(data, "nav");
+                callback(data)
+            });
+        },
+        saveMatch: function (formData, callback) {
+            // console.log(formData, 'saveMatch');
+            $http({
+                url: adminurl + "match/save",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
 
     };
 });
