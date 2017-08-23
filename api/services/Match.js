@@ -432,7 +432,7 @@ var model = {
 
             ],
             function (err, results) {
-                if (err || _.isEmpty(results)) {
+                if (results.error) {
                     callback(null, []);
                 } else {
                     callback(null, results);
