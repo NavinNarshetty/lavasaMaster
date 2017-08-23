@@ -358,7 +358,7 @@ var model = {
                         // console.log(found, "found");
                         if (err || _.isEmpty(found)) {
                             sport.sportslist = found._id;
-                            callback(err, {
+                            callback(null, {
                                 error: "No SportsList found!",
                                 success: data
                             });
@@ -375,7 +375,7 @@ var model = {
                         name: data.age
                     }).lean().exec(function (err, found) {
                         if (err || _.isEmpty(found)) {
-                            callback(err, {
+                            callback(null, {
                                 error: "No Age found!",
                                 success: data
                             });
@@ -393,7 +393,7 @@ var model = {
                             name: data.weight
                         }).lean().exec(function (err, found) {
                             if (err || _.isEmpty(found)) {
-                                callback(err, {
+                                callback(null, {
                                     error: "No Weight found!",
                                     success: data
                                 });
@@ -418,7 +418,7 @@ var model = {
                         // console.log("matchObj", matchObj);
                         Sport.findOne(matchObj).lean().exec(function (err, found) {
                             if (err || _.isEmpty(found)) {
-                                callback(err, {
+                                callback(null, {
                                     error: "No Sport found!",
                                     success: data
                                 });
