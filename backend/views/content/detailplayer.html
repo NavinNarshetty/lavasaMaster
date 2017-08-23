@@ -24,8 +24,9 @@
 
                 <!-- MATCH ID -->
                 <div class="form-group">
+                  <pre>{{formData}}</pre>
                   <label>Match Id*</label>
-                  <input type="text" name="incrementalId" ng-model="formData.incrementalId" class="form-control" placeholder="Enter Name" readonly>
+                  <input type="text" name="incrementalId" ng-model="formData.matchId" class="form-control" placeholder="Enter Name" readonly>
                   <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
                 </div>
                 <!-- END MATCH ID -->
@@ -33,7 +34,7 @@
                 <!-- ROUND -->
                 <div class="form-group">
                   <label>Round</label>
-                  <input type="text" name="round" ng-model="formData.round" class="form-control" placeholder="Enter Round" readonly>
+                  <input type="text" name="round" ng-model="formData.sportType" class="form-control" placeholder="Enter Round" readonly>
                   <div class="error-msg" ng-if="detailForm.round.$invalid && detailForm.round.$touched">Please Enter Valid Round *</div>
                 </div>
                 <!-- END ROUND -->
@@ -48,7 +49,7 @@
                       <span ng-bind-html="item.name"></span>
                     </ui-select-choices>
                   </ui-select> -->
-                  <input type="text" name="sportname" ng-model="formData.sport" class="form-control" placeholder="Enter Sport" readonly>
+                  <input type="text" name="sportname" ng-model="formData.sportsName" class="form-control" placeholder="Enter Sport" readonly>
                   <div class="error-msg" ng-if="detailForm.sportname.$invalid && detailForm.sportname.$touched">Please Enter Filter*</div>
                 </div>
                 <!-- END SPORT NAME -->
@@ -63,35 +64,54 @@
                 <!-- TIME -->
                 <div class="form-group">
                   <label>Schedule Time</label>
-                  <input type="text" name="schTime" ng-model="formData.nextMatch" class="form-control" placeholder="Enter Schedule Time" required>
+                  <!-- <input type="text" name="schTime" ng-model="formData.nextMatch" class="form-control" placeholder="Enter Schedule Time"> -->
+                  <div uib-timepicker ng-model="formData.scheduleTime" hour-step="1" minute-step="1" show-meridian="true"></div>
                   <div class="error-msg" ng-if="detailForm.schTime.$invalid && detailForm.schTime.$touched">Please Enter Schedule Time *</div>
                 </div>
                 <!-- END TIME -->
 
-                <!-- STATUS -->
-                <div class="form-group">
-                  <label>Status</label>
-                  <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.status" required>
+                <!-- COMBAT STATUS -->
+                <div class="form-group" ng-if="formData.sportType=='Combat Sports' && formData.isTeam==false">
+                  <label>Status</label>{{formData.resultsCombat.status}}
+                  <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultsCombat.status">
                     <ui-select-match placeholder="Please Enter Status">
-                      {{$select.selected.status}}
+                      {{$select.selected}}
+                      <!-- {{formData.resultsCombat.status.status}} -->
                     </ui-select-match>
-                    <ui-select-choices repeat="item in statusList | filter:{status:$select.search}">
-                      <span ng-bind-html="item.status"></span>
+                    <ui-select-choices repeat="status in statusList | filter:{status:$select.search}">
+                      <span ng-bind-html="status"></span>
                     </ui-select-choices>
                   </ui-select>
 
                   <div class="error-msg" ng-if="detailForm.status.$invalid && detailForm.status.$touched">Please Enter Status*</div>
                 </div>
-                <!-- STATUS END -->
+                <!-- COMBAT STATUS END -->
+
+                <!-- RACQUET STATUS -->
+                <div class="form-group">
+                  <label>Status</label>{{formData.resultsRacquet.status}}
+                  <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultsRacquet.status" required>
+                    <ui-select-match placeholder="Please Enter Status">
+                      {{$select.selected}}
+                      <!-- {{formData.resultsCombat.status.status}} -->
+                    </ui-select-match>
+                    <ui-select-choices repeat="status in statusList | filter: $select.search track by $index">
+                      <span ng-bind-html="status"></span>
+                    </ui-select-choices>
+                  </ui-select>
+
+                  <div class="error-msg" ng-if="detailForm.status.$invalid && detailForm.status.$touched">Please Enter Status*</div>
+                </div>
+                <!-- RACQUET STATUS END -->
 
                 <!-- CHECKBOX -->
                 <div class="checkbox from-group">
                   <div class="row">
-                    <div class="col-md-6">
-                      <label><input type="checkbox" ng-model="formData.isdraw"> isdraw</label>
+                    <div class="col-md-6">{{formData.resultsCombat.isDraw}}
+                      <label><input type="checkbox" ng-model="formData.resultsCombat.isDraw" value="formData.resultsCombat.isdraw"> isdraw</label>
                     </div>
-                    <div class="col-md-6">
-                      <label><input type="checkbox"ng-model="formData.isnoMatch"> isNoMatch</label>
+                    <div class="col-md-6">{{formData.resultsCombat.isNoMatch}}
+                      <label><input type="checkbox" ng-model="formData.resultsCombat.isNoMatch" value="formData.resultsCombat.isNoMatch"> isNoMatch</label>
                     </div>
                   </div>
                 </div>
@@ -100,14 +120,14 @@
                 <!-- SCORE CARD -->
                 <div class="form-group" fields>
                   <label>Score Card <span ng-show="type.required">*</span></label>
-                  <upload-image ng-model="formData.scorecard" multiple></upload-image>
+                  <upload-image ng-model="formData.scorecard" multiple inObj></upload-image>
                 </div>
                 <!-- END SCORE CARD -->
 
                 <!-- MATCH PHOTO -->
                 <div class="form-group">
                   <label>Match<span ng-show="type.required">*</span></label>
-                  <upload-image ng-model="formData.match" multiple></upload-image>
+                  <upload-image ng-model="formData.resultsCombat.matchPhoto" multiple inObj></upload-image>
                 </div>
                 <!-- END MATCH PHOTO -->
 
@@ -120,69 +140,129 @@
                 </div>
                 <!-- END PLAYER HEAD -->
 
-                <!-- PLAYER NAME -->
-                <div class="form-group">
-                  <label for="">Name</label>
-                  <input type="text" name="playername" ng-model="formData.player" class="form-control" placeholder="Enter Name" readonly>
-                  <div class="error-msg" ng-if="detailForm.playername.$invalid && detailForm.playername.$touched">Please Enter Valid Name *</div>
-                </div>
-                <!-- PLAYER NAME ENDs -->
+                <!-- PLAYER COMBAT -->
+                <pre>{{formData.sportType}} {{formData.isTeam}}</pre>
+                <div class="test" ng-if="formData.sportType=='Combat Sports' && formData.isTeam==false" ng-repeat="player in formData.resultsCombat.players track by $index">
+                  <div class="form-group">
+                    <h6 class="text-center">Player {{$index+1}}</h6>
+                  </div>
+                  <!-- PLAYER NAME -->
+                  <div class="form-group">
+                    <label for="">Name</label>
+                    <input type="text" name="playername" ng-model="formData.players[$index].fullName" class="form-control" placeholder="Enter Name"
+                      readonly>
+                    <div class="error-msg" ng-if="detailForm.playername.$invalid && detailForm.playername.$touched">Please Enter Valid Name *</div>
+                  </div>
+                  <!-- PLAYER NAME ENDs -->
 
-                <!-- SCHOOL NAME -->
-                <div class="form-group">
-                  <label for="">School Name</label>
-                  <input type="text" name="schoolname" ng-model="formData.name" class="form-control" placeholder="Enter Name School Name" readonly>
-                  <div class="error-msg" ng-if="detailForm.schoolname.$invalid && detailForm.schoolname.$touched">Please Enter Valid School Name *</div>
-                </div>
-                <!-- SCHOOL NAME END -->
+                  <!-- SCHOOL NAME -->
+                  <div class="form-group">
+                    <label for="">School Name</label>
+                    <input type="text" name="schoolname" ng-model="formData.players[$index].school.name" class="form-control" placeholder="Enter Name School Name"
+                      readonly>
+                    <div class="error-msg" ng-if="detailForm.schoolname.$invalid && detailForm.schoolname.$touched">Please Enter Valid School Name *</div>
+                  </div>
+                  <!-- SCHOOL NAME END -->
 
-                <!-- CHECKBOX -->
-                <div class="checkbox form-group">
-                  <div class="row">
-                    <div class="col-md-6">
-                      <label><input type="checkbox" ng-model="formData.noShow"> noShow</label>
-                    </div>
-                    <div class="col-md-6">
-                      <label><input type="checkbox" ng-model="formData.walkover"> walkover</label>
+                  <!-- CHECKBOX -->
+                  <div class="checkbox form-group">
+                    <div class="row">
+                      <div class="col-md-6">{{player.noShow}}
+                        <label><input type="checkbox" ng-model="player.noShow"> noShow</label>
+                      </div>
+                      <div class="col-md-6">
+                        <label><input type="checkbox" ng-model="player.walkover"> walkover</label>
+                      </div>
                     </div>
                   </div>
-                </div>
-                <!-- CHECKBOX END -->
+                  <!-- CHECKBOX END -->
 
-                <!-- SETS -->
-                <div class="form-group">
-                  <h5>SET</h5>
-                  <div class="row">
-                    <div class="col-md-2">
-                      <label for=""> Points</label>
-                      <input type="text" name="points" ng-model="formData.point" class="form-control" placeholder="Enter Point">
-                    </div>
-                    <div class="col-md-2">
-                      <label for=""> Ace</label>
-                      <input type="text" name="ace" ng-model="formData.ace" class="form-control" placeholder="Enter Ace">
-                    </div>
-                    <div class="col-md-2">
-                      <label for=""> Winner</label>
-                      <input type="text" name="winner" ng-model="formData.winner" class="form-control" placeholder="Enter Winner">
-                    </div>
-                    <div class="col-md-2">
-                      <label for=""> unforcedError</label>
-                      <input type="text" name="unforcedError" ng-model="formData.unforcedError" class="form-control" placeholder="Enter Unforced Error">
-                    </div>
-                    <div class="col-md-2">
-                      <label for=""> serviceError</label>
-                      <input type="text" name="serviceError" ng-model="formData.serviceError" class="form-control" placeholder="Enter Service Error">
-                    </div>
-                    <div class="col-md-2">
-                      <label for=""> doubleFaults</label>
-                      <input type="text" name="doubleFaults" ng-model="formData.doubleFaults" class="form-control" placeholder="Enter Double Faults">
+                  <!-- SETS -->
+                  <div class="form-group" ng-repeat="set in player.sets track by $index">
+                    <h5>SET</h5>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <label for=""> Points</label>
+                        <input type="text" name="points" ng-model="set.point" class="form-control" placeholder="Enter Point">
+                      </div>
+
                     </div>
                   </div>
+                  <!-- SETS END -->
                 </div>
-                <!-- SETS END -->
+                <!-- PLAYER COMBAT END -->
+                <!-- PLAYER RAQUET -->
+                <div class="test" ng-if="formData.sportType=='Racquet Sports' && formData.isTeam==false" ng-repeat="player in formData.resultsRacquet.players track by $index">
+                  <div class="form-group">
+                    <h6 class="text-center">Player {{$index+1}}</h6>
+                  </div>
+                  <!-- PLAYER NAME -->
+                  <div class="form-group">
+                    <label for="">Name</label>
+                    <input type="text" name="playername" ng-model="formData.players[$index].fullName" class="form-control" placeholder="Enter Name"
+                      readonly>
+                    <div class="error-msg" ng-if="detailForm.playername.$invalid && detailForm.playername.$touched">Please Enter Valid Name *</div>
+                  </div>
+                  <!-- PLAYER NAME ENDs -->
+
+                  <!-- SCHOOL NAME -->
+                  <div class="form-group">
+                    <label for="">School Name</label>
+                    <input type="text" name="schoolname" ng-model="formData.players[$index].school.name" class="form-control" placeholder="Enter Name School Name"
+                      readonly>
+                    <div class="error-msg" ng-if="detailForm.schoolname.$invalid && detailForm.schoolname.$touched">Please Enter Valid School Name *</div>
+                  </div>
+                  <!-- SCHOOL NAME END -->
+
+                  <!-- CHECKBOX -->
+                  <div class="checkbox form-group">
+                    <div class="row">
+                      <div class="col-md-6">{{player.noShow}}
+                        <label><input type="checkbox" ng-model="player.noShow"> noShow</label>
+                      </div>
+                      <div class="col-md-6">
+                        <label><input type="checkbox" ng-model="player.walkover"> walkover</label>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- CHECKBOX END -->
+
+                  <!-- SETS -->
+                  <div class="form-group" ng-repeat="set in player.sets track by $index">
+                    <h5>SET</h5>
+                    <div class="row">
+                      <div class="col-md-2">
+                        <label for=""> Points</label>
+                        <input type="text" name="points" ng-model="set.point" class="form-control" placeholder="Enter Point">
+                      </div>
+                      <div class="col-md-2">
+                        <label for=""> Ace</label>
+                        <input type="text" name="ace" ng-model="set.ace" class="form-control" placeholder="Enter Ace">
+                      </div>
+                      <div class="col-md-2">
+                        <label for=""> Winner</label>
+                        <input type="text" name="winner" ng-model="set.winner" class="form-control" placeholder="Enter Winner">
+                      </div>
+                      <div class="col-md-2">
+                        <label for=""> unforcedError</label>
+                        <input type="text" name="unforcedError" ng-model="set.unforcedError" class="form-control" placeholder="Enter Unforced Error">
+                      </div>
+                      <div class="col-md-2">
+                        <label for=""> serviceError</label>
+                        <input type="text" name="serviceError" ng-model="set.serviceError" class="form-control" placeholder="Enter Service Error">
+                      </div>
+                      <div class="col-md-2">
+                        <label for=""> doubleFaults</label>
+                        <input type="text" name="doubleFaults" ng-model="set.doubleFaults" class="form-control" placeholder="Enter Double Faults">
+                      </div>
+                    </div>
+                  </div>
+                  <!-- SETS END -->
+                </div>
+                <!-- PLAYER RAQUET -->
 
                 <div class="text-center mt20 odd-even-button">
-                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Save</button>
+                  <button class="btn btn-default" type="submit" ng-click="saveDataMatch(formData)">Save</button>
                   <button class="btn btn-default" ui-sref='matches'>Cancel</button>
                 </div>
               </div>

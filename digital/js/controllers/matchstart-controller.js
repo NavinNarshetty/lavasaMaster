@@ -1,4 +1,4 @@
-myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state) {
+myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, toastr) {
     $scope.template = TemplateService.getHTML("content/match-start.html");
     TemplateService.title = "Sport Match"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -9,6 +9,8 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     $scope.matchDetails = {};
     $scope.matchPics = [];
     $scope.disableWinner = false;
+    $scope.matchError = "";
+    $scope.showError = false;
     // VARIABLE INITIALISE END
 
     // INITIALSE SWIPER
@@ -37,6 +39,11 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
         $scope.matchData.matchId = $stateParams.id;
         NavigationService.getOneMatch($scope.matchData, function(data) {
             if (data.value == true) {
+              if(data.data.error){
+                $scope.matchError = data.data.error;
+                console.log($scope.matchError,'error');
+                toastr.error('Invalid MatchID. Please check the MatchID entered.', 'Error');
+              }
                 $scope.matchDetails = data.data;
                 $scope.matchDetails.matchId = $scope.matchData.matchId;
                 // INITIALISE RESULTS
@@ -123,38 +130,55 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     // NO MATCH END
     // SAVE RESULT
     $scope.saveResult = function(formData){
-      $scope.matchResult = {
-        matchId: $scope.matchData.matchId
-      }
-      switch ($scope.matchDetails.sportType) {
-        case "Combat Sports":
-          $scope.matchResult.resultsCombat = formData;
-          $scope.matchResult.resultsCombat.status = "IsLive";
-        break;
-        case "Racquet Sports":
-          $scope.matchResult.resultsRacquet = formData;
-          $scope.matchResult.resultsRacquet.status = "IsLive";
-        break;
-      }
-      NavigationService.saveMatch($scope.matchResult, function(data){
-        if(data.value == true){
-          switch ($scope.matchDetails.sportType) {
-            case "Combat Sports":
-              $state.go("scorecombat",{
-                id: $scope.matchData.matchId
-              });
-            break;
-            case "Racquet Sports":
-              $state.go("scoreracquet",{
-                id: $scope.matchData.matchId
-              });
-            break;
-          }
-        } else{
-          alert('fail save');
+      if(formData){
+        $scope.matchResult = {
+          matchId: $scope.matchData.matchId
         }
-      });
-      console.log($scope.matchResult, 'result#');
+        switch ($scope.matchDetails.sportType) {
+          case "Combat Sports":
+            $scope.matchResult.resultsCombat = formData;
+            $scope.matchResult.resultsCombat.status = "IsLive";
+          break;
+          case "Racquet Sports":
+            $scope.matchResult.resultsRacquet = formData;
+            $scope.matchResult.resultsRacquet.status = "IsLive";
+          break;
+        }
+        NavigationService.saveMatch($scope.matchResult, function(data){
+          if(data.value == true){
+            switch ($scope.matchDetails.sportType) {
+              case "Combat Sports":
+              if($scope.matchDetails.isTeam==false){
+                $state.go("scorecombat",{
+                  id: $scope.matchData.matchId
+                });
+              } else if ($scope.matchDetails.isTeam==true) {
+                $state.go("scorecombatteam",{
+                  id: $scope.matchData.matchId
+                });
+              }
+
+              break;
+              case "Racquet Sports":
+              if($scope.matchDetails.isTeam==false){
+                $state.go("scoreracquet",{
+                  id: $scope.matchData.matchId
+                });
+              } else if ($scope.matchDetails.isTeam==true) {
+                $state.go("scoreracquetdoubles",{
+                  id: $scope.matchData.matchId
+                });
+              }
+
+              break;
+            }
+          } else{
+            toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
+          }
+        });
+      } else{
+        toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
+      }
     }
     // SAVE RESULT END
     // SAVE WINNER
@@ -191,15 +215,20 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
 
     // OPEN MATCH-NO MATCH MODAL
     $scope.showNoMatch = function() {
-      $uibModal.open({
-        animation: true,
-        scope: $scope,
-        backdrop: 'static',
-        keyboard: false,
-        templateUrl: 'views/modal/match-nomatch.html',
-        size: 'lg',
-        windowClass: 'match-nomatch'
-      })
+      if($scope.formData){
+        $uibModal.open({
+          animation: true,
+          scope: $scope,
+          backdrop: 'static',
+          keyboard: false,
+          templateUrl: 'views/modal/match-nomatch.html',
+          size: 'lg',
+          windowClass: 'match-nomatch'
+        })
+      }else{
+        toastr.error('No player data to enter.', 'Error');
+      }
+
     }
     // OPEN MATCH-NO MATCH MODAL
 

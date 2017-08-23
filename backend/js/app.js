@@ -290,7 +290,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         //detailplayer
         .state('detailplayer', {
-            url: "/detailplayer",
+            url: "/detailplayer/:id",
             templateUrl: "views/template.html",
             controller: 'DetailPlayerCtrl'
         })
