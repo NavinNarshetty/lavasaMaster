@@ -9,13 +9,13 @@
 </div>
 
 
-<div class="panel-content" ng-if="!showMatch">
+<div class="panel-content hide" ng-if="!showMatch">
   <div class="row">
     <div class="col-md-12">
       <div class="widget">
         <div class="form-elements-sec">
           <!-- BUTTONS -->
-          <div class="col-md-6">
+          <!-- <div class="col-md-6">
             <span class="btn btn-success" ng-click="openExportExcel()">
                 Export-Excel
               </span>
@@ -28,18 +28,18 @@
                 </a> <a class="btn btn-success" target="_blank" ui-sref="excel-upload({controller:'match',funcName:'uploadExcelMatch',view:'uploadFilter'})">
                   <i class="fa fa-pencil"></i> Upload & Update
                 </a>
-          </div>
+          </div> -->
           <!-- BUTTONS END -->
           <form name="detailForm" role="form" class="sec">
             <div class="row">
               <div class="col-md-12">
                 <!-- SEARCH BAR -->
-                <div class="col-md-offset-8 col-md-4 text-right">
+                <!-- <div class="col-md-offset-8 col-md-4 text-right">
                   <div class="form-group mt20">
                     <input type="text " class="form-control" ng-change="searchInTable(search)" placeholder="Search Here...
                             " ng-model="search" />
                   </div>
-                </div>
+                </div> -->
 
                 <!-- SEARCH BAR END -->
                 <!-- GENDER -->
@@ -155,32 +155,26 @@
     </div>
   </div>
   <!-- <div class="match-nomatch-buttons">
-      <div class="">
-        <div class="col-md-4">
-          <button class="btn btn-green-outline btn-scoring" ng-click="$dismiss()">back</button>
-        </div>
-  
-        <div class="col-md-4">
-          <button class="btn btn-green-outline btn-scoring" ng-click="generateExcel(form)">Save</button>
-        </div>
-  
+    <div class="">
+      <div class="col-md-4">
+        <button class="btn btn-green-outline btn-scoring" ng-click="$dismiss()">back</button>
       </div>
-    </div> -->
+      
+      <div class="col-md-4">
+        <button class="btn btn-green-outline btn-scoring" ng-click="generateExcel(form)">Save</button>
+      </div>
+      
+    </div>
+  </div> -->
 </div>
 
-
+<!-- 
 </div>
-</div>
-
-
-
-
-
-
-
+</div> -->
 
 <!--Table-->
-<div class=" panel-content" ng-if="showMatch">
+<!-- <div class=" panel-content" ng-if="showMatch"> -->
+<div class=" panel-content">
   <div class="row ">
     <div class="col-md-12 ">
       <div class="widget ">
