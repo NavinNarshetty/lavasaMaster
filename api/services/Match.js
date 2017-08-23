@@ -357,7 +357,8 @@ var model = {
                     }).lean().deepPopulate("sportsListSubCategory").exec(function (err, found) {
                         console.log(found, "found");
                         if (err || _.isEmpty(found)) {
-                            callback(null, []);
+                            sport.sportslist = found._id;
+                            callback(null, sport);
                         } else {
                             sport.sportslist = found._id;
                             sport.sportsListSubCategory = found.sportsListSubCategory._id;
@@ -404,7 +405,10 @@ var model = {
                     // console.log("matchObj", matchObj);
                     Sport.findOne(matchObj).lean().exec(function (err, found) {
                         if (err || _.isEmpty(found)) {
-                            callback(err, null);
+                            callback(err, {
+                                error: "No Sport found!",
+                                success: data
+                            });
                         } else {
                             sport.sportId = found._id;
                             callback(null, sport);
@@ -449,7 +453,10 @@ var model = {
                             athleteId: found._id
                         }).lean().exec(function (err, athleteData) {
                             if (err || _.isEmpty(athleteData)) {
-                                callback(null, []);
+                                callback(err, {
+                                    error: "No Athelete found!",
+                                    success: data
+                                });
                             } else {
                                 callback(null, athleteData);
                             }
