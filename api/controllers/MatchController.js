@@ -39,6 +39,7 @@ var controller = {
     },
 
     uploadExcelMatch: function (req, res) {
+        console.log('******req.body******', req.body);
         if (req.body.resultType && req.body.playerType && req.body.matchId || req.body.thirdPlace || req.body.range) {
             async.waterfall([
                     function (callback) {
