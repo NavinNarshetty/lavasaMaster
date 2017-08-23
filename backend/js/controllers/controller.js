@@ -4176,6 +4176,9 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.drawing = data;
         }
 
+        $scope.viewMatch = function () {
+            $scope.showMatch = !$scope.showMatch;
+        }
 
         $scope.genderList = [];
 
