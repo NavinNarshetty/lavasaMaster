@@ -434,7 +434,12 @@ header {
 }
 
 .combatscore-scorecard {
-    text-align: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  &:last-child{
+    border-bottom: none;
+  }
 }
 
 .scoring-set {
@@ -499,7 +504,9 @@ header {
 
 .combatscore-uploadpic {
     width: 110px;
-    height: 110px;
+    height: auto;
+    padding: 2px;
+    border: 1px solid #ccc;
     margin: 0px 10px 10px 0;
     display: inline-block;
     position: relative;
@@ -508,6 +515,7 @@ header {
     overflow: hidden;
     text-align: center;
     text-transform: uppercase;
+    vertical-align: middle;
 }
 .combatscore-pics, .combatscore-selects{
   margin: 20px 0;
@@ -516,13 +524,32 @@ header {
 // RACKET-SCORE PAGE
 .datapoint-name{
   position: absolute;
-  top: 50%;
-  left: 20px;
+  top: 20%;
+  left: 0px;
   @include transform(translateY(-50%));
 }
+.showhide-set{
+  padding: 10px 0;
+  .form-group{
+    margin: 0;
+  }
+}
 .addset{
-  margin: 20px;
-  text-align: right;
+  float: right;
+}
+.setshow-element{
+  margin: 0px 10px;
+}
+.racquet-setscore{
+  margin: 20px 0;
+  text-align: center;
+}
+.setpoint-element{
+  display: inline-block;
+  vertical-align: middle;
+  label{
+    display: block;
+  }
 }
 // RACKET-SCORE PAGE END
 

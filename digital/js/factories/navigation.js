@@ -33,6 +33,7 @@ myApp.factory('NavigationService', function ($http) {
               method: "POST",
               data: formData
           }).success(function (data) {
+            console.log(data,"nav");
               callback(data)
           });
         },

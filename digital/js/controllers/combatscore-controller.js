@@ -4,6 +4,7 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     $scope.navigation = NavigationService.getNavigation();
     $scope.matchId=$stateParams.id;
     // VARIABLE INITIALISE
+    $scope.match={};
     $scope.showScoreSheet = false;
     $scope.showMatchPhoto = false;
     $scope.matchData = {};
@@ -61,6 +62,7 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     // DESTROY AUTO SAVE END
     // MATCH COMPLETE
     $scope.matchComplete = function(){
+      $scope.match.resultsCombat.status = "IsCompleted";
         $scope.matchResult = {
           resultsCombat : $scope.match.resultsCombat,
           matchId: $scope.matchData.matchId
@@ -79,53 +81,53 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     // API CALLN INTEGRATION END
 
     // MATCH JSON
-    $scope.match = {
-        id: 123,
-        matchId: 123456,
-        sportsName: 'judo-u-16-male-round 1',
-        players: [{
-            _id: 1,
-            sfaId: 1234,
-            firstName: 'Shivveeraj',
-            surname: 'ShikaWat',
-            school: {
-                name: 'Jamnabai Shivveeraj Singh ShikaWat school'
-            },
-        }, {
-            _id: 2,
-            sfaId: 1234,
-            firstName: 'Shivveeraj',
-            surname: 'ShikaWat',
-            school: {
-                name: 'Jamnabai Shivveeraj Singh ShikaWat school'
-            },
-            sets: [{
-                point: 0,
-            }]
-        }],
-        resultsCombat: {
-            players: [{
-                _id: 1,
-                sets: [{
-                    point: 0
-                }]
-            }, {
-                _id: 2,
-                sets: [{
-                    point: 0
-                }]
-            }],
-            matchPhoto: [{
-                image: 'img/dishapatani1.jpg'
-            }, {
-                image: 'img/dishapatani1.jpg'
-            }, {
-                image: 'img/dishapatani1.jpg'
-            }],
-            scoreSheet: [],
-            winner: {}
-        }
-    };
+    // $scope.match = {
+    //     id: 123,
+    //     matchId: 123456,
+    //     sportsName: 'judo-u-16-male-round 1',
+    //     players: [{
+    //         _id: 1,
+    //         sfaId: 1234,
+    //         firstName: 'Shivveeraj',
+    //         surname: 'ShikaWat',
+    //         school: {
+    //             name: 'Jamnabai Shivveeraj Singh ShikaWat school'
+    //         },
+    //     }, {
+    //         _id: 2,
+    //         sfaId: 1234,
+    //         firstName: 'Shivveeraj',
+    //         surname: 'ShikaWat',
+    //         school: {
+    //             name: 'Jamnabai Shivveeraj Singh ShikaWat school'
+    //         },
+    //         sets: [{
+    //             point: 0,
+    //         }]
+    //     }],
+    //     resultsCombat: {
+    //         players: [{
+    //             _id: 1,
+    //             sets: [{
+    //                 point: 0
+    //             }]
+    //         }, {
+    //             _id: 2,
+    //             sets: [{
+    //                 point: 0
+    //             }]
+    //         }],
+    //         matchPhoto: [{
+    //             image: 'img/dishapatani1.jpg'
+    //         }, {
+    //             image: 'img/dishapatani1.jpg'
+    //         }, {
+    //             image: 'img/dishapatani1.jpg'
+    //         }],
+    //         scoreSheet: [],
+    //         winner: {}
+    //     }
+    // };
     // MATCH JSON END
 
     $scope.reasons = ['WP', 'RSC', 'RSC-I', 'DSQ', 'KO', 'WO', 'NC'];

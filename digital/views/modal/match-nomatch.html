@@ -35,10 +35,10 @@
                 <div class="match-nomatch-player">
                     <div class="match-nomatch-radio text-center">
                         <div class="checkbox" >
-                            <label ><input type="checkbox" ng-model="player.noShow" ng-disabled="player.walkover == true">No Show</label>
+                            <label ><input type="checkbox" ng-model="player.noShow" ng-disabled="player.walkover == true" class="">No Show</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" ng-model="player.walkover" ng-disabled="player.noShow == true" >Walkover</label>
+                            <label><input type="checkbox" ng-model="player.walkover" ng-disabled="player.noShow == true"  class="">Walkover</label>
                         </div>
                     </div>
                 </div>
@@ -70,8 +70,8 @@
         <!-- <div class="">
           formData
           <pre>{{formData|json}}</pre>
-        </div>
-        <div class="">
+        </div> -->
+        <!-- <div class="">
           resultsCombat
           <pre>{{matchDetails.resultsCombat|json}}</pre>
         </div> -->

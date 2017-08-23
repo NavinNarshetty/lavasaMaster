@@ -39,28 +39,57 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
             if (data.value == true) {
                 $scope.matchDetails = data.data;
                 $scope.matchDetails.matchId = $scope.matchData.matchId;
-                    // INITIALISE RESULTS
-                    if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
-                      $scope.matchDetails.resultsCombat = {};
-                        $scope.formData = {
-                            "players": [],
-                            "matchPhoto": [],
-                            "scoreSheet": []
-                        }
-                        _.each($scope.matchDetails.players, function(n, key) {
-                            $scope.formData.players[key] = {
-                                "player": n._id,
-                                "noShow": false,
-                                "walkover": false,
-                                "sets": [{
-                                    point: 0,
-                                }]
-                            }
-                        })
-                    } else{
-                      $scope.formData = $scope.matchDetails.resultsCombat;
-                    }
-                // INITIALISE RESULTS END
+                // INITIALISE RESULTS
+                if ($scope.matchDetails.sportType == "Combat Sports") {
+                  if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
+                    $scope.matchDetails.resultsCombat = {};
+                      $scope.formData = {
+                          "players": [],
+                          "matchPhoto": [],
+                          "scoreSheet": []
+                      }
+                      _.each($scope.matchDetails.players, function(n, key) {
+                          $scope.formData.players[key] = {
+                              "player": n._id,
+                              "noShow": false,
+                              "walkover": false,
+                              "sets": [{
+                                  point: 0,
+                              }]
+                          }
+                      })
+                  } else{
+                    $scope.formData = $scope.matchDetails.resultsCombat;
+                  }
+            } else if ($scope.matchDetails.sportType == "Racquet Sports") {
+              if ($scope.matchDetails.resultsRacquet == null || $scope.matchDetails.resultsRacquet == "" || $scope.matchDetails.resultsRacquet == undefined) {
+                $scope.matchDetails.resultsRacquet = {};
+                  $scope.formData = {
+                      "players": [],
+                      "matchPhoto": [],
+                      "scoreSheet": []
+                  }
+                  _.each($scope.matchDetails.players, function(n, key) {
+                      $scope.formData.players[key] = {
+                          "player": n._id,
+                          "noShow": false,
+                          "walkover": false,
+                          "sets": [{
+                              point: 0,
+                              ace: 0,
+                              winner: 0,
+                              unforcedError: 0,
+                              serviceError: 0,
+                              doubleFaults: 0
+                          }]
+                      }
+                  })
+              } else{
+                $scope.formData = $scope.matchDetails.resultsRacquet;
+              }
+            }
+
+            // INITIALISE RESULTS END
             } else {
                 console.log("ERROR IN getOneMatch");
                 //redirect back to sportselection page
@@ -90,20 +119,37 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
           player.noShow = true;
           player.walkover = false;
       })
-      console.log($scope.matchDetails.resultsCombat.players, 'player');
     }
     // NO MATCH END
     // SAVE RESULT
     $scope.saveResult = function(formData){
       $scope.matchResult = {
-        resultsCombat : formData,
         matchId: $scope.matchData.matchId
+      }
+      switch ($scope.matchDetails.sportType) {
+        case "Combat Sports":
+          $scope.matchResult.resultsCombat = formData;
+          $scope.matchResult.resultsCombat.status = "IsLive";
+        break;
+        case "Racquet Sports":
+          $scope.matchResult.resultsRacquet = formData;
+          $scope.matchResult.resultsRacquet.status = "IsLive";
+        break;
       }
       NavigationService.saveMatch($scope.matchResult, function(data){
         if(data.value == true){
-          $state.go("scorecombat",{
-            id: $scope.matchData.matchId
-          });
+          switch ($scope.matchDetails.sportType) {
+            case "Combat Sports":
+              $state.go("scorecombat",{
+                id: $scope.matchData.matchId
+              });
+            break;
+            case "Racquet Sports":
+              $state.go("scoreracquet",{
+                id: $scope.matchData.matchId
+              });
+            break;
+          }
         } else{
           alert('fail save');
         }
@@ -115,12 +161,22 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     $scope.saveWinner = function(){
       if($scope.formData.players[0].noShow == true && $scope.formData.players[1].noShow == true){
         $scope.formData.isNoMatch = true;
+        $scope.formData.winner.player = "";
       } else {
         $scope.formData.isNoMatch = false;
       }
       $scope.matchResult = {
-        resultsCombat : $scope.formData,
         matchId: $scope.matchData.matchId
+      }
+      switch ($scope.matchDetails.sportType) {
+        case "Combat Sports":
+          $scope.matchResult.resultsCombat = $scope.formData;
+          $scope.matchResult.resultsCombat.status = "IsCompleted";
+        break;
+        case "Racquet Sports":
+          $scope.matchResult.resultsRacquet = $scope.formData;
+          $scope.matchResult.resultsRacquet.status = "IsCompleted";
+        break;
       }
       NavigationService.saveMatch($scope.matchResult, function(data){
         if(data.value == true){
@@ -129,7 +185,6 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
           alert('fail save');
         }
       });
-      // $state.go("home");
     }
     // SAVE WINNER  END
     // INTEGRATION END
