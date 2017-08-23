@@ -288,6 +288,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailMatchesCtrl'
         })
+        //detailplayer
+        .state('detailplayer', {
+            url: "/detailplayer",
+            templateUrl: "views/template.html",
+            controller: 'DetailPlayerCtrl'
+        })
         //medals
         .state('medals', {
             url: "/medals",

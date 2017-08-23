@@ -7,8 +7,180 @@
     </div>
   </div>
 </div>
+
+
+<div class="panel-content" ng-if="!showMatch">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <!-- BUTTONS -->
+          <div class="col-md-6">
+            <span class="btn btn-success" ng-click="openExportExcel()">
+                Export-Excel
+              </span>
+          </div>
+          <div class="col-md-6 text-right">
+            <a class="btn btn-success" target="_blank" ui-sref="detailagegroup({id:item._id})">
+                   <i class="fa fa-pencil"></i> Genrate
+                 </a> <a class="btn btn-success" target="_blank" ui-sref="excel-upload({controller:'match',funcName:'uploadExcelMatch',view:'uploadFilter'})">
+                   <i class="fa fa-pencil"></i> Upload
+                </a> <a class="btn btn-success" target="_blank" ui-sref="excel-upload({controller:'match',funcName:'uploadExcelMatch',view:'uploadFilter'})">
+                  <i class="fa fa-pencil"></i> Upload & Update
+                </a>
+          </div>
+          <!-- BUTTONS END -->
+          <form name="detailForm" role="form" class="sec">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- SEARCH BAR -->
+                <div class="col-md-offset-8 col-md-4 text-right">
+                  <div class="form-group mt20">
+                    <input type="text " class="form-control" ng-change="searchInTable(search)" placeholder="Search Here...
+                            " ng-model="search" />
+                  </div>
+                </div>
+
+                <!-- SEARCH BAR END -->
+                <!-- GENDER -->
+                <div class="form-group">
+                  <label>Gender</label>
+                  <select name="selectgender" class="form-control" ng-model="form.gender" placeholder="Enter Gender" required>
+                        <option style="display:none" >Enter Gender</option>
+                         <option value="male">Male</option>
+                         <option value="female">Female</option>
+                         <option value="both">Male&Female</option>
+                        </select>
+                  <div class="error-msg" ng-if="detailForm.selectgender.$invalid && detailForm.selectgender.$touched">Please Enter Gender*</div>
+                </div>
+                <!-- END GENDER -->
+
+                <!-- SPORT LIST -->
+                <div class="form-group">
+                  <label>Sports List</label>
+                  <ui-select name="selectsportslist" id="selectsportslist" theme="bootstrap" ng-model="form.sportslist" ng-change="searchSportList($select.selected._id)"
+                    required>
+                    <ui-select-match placeholder="Enter Sports List" allow-clear="true">
+                      {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices refresh.delay="0" repeat="item in sportitems | filter:$select.search" refresh="getAllSportList($select.search)">
+                      <span ng-bind-html="item.name"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-msg" ng-if="detailForm.selectsportslist.$invalid && detailForm.selectsportslist.$touched">Please Enter Sport List *</div>
+                </div>
+                <!-- SPORT LIST END -->
+                <!-- AGE GROUP -->
+                <div class="form-group">
+                  <label>Age Group</label>
+                  <ui-select name="selectSchoolName" id="selectSchoolName" theme="bootstrap" ng-model="form.ageGroup" ng-change="searchAge($select.selected._id)"
+                    required>
+                    <ui-select-match placeholder="Enter Age Group" allow-clear="true">
+                      {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices refresh.delay="0" repeat="item in ageitems | filter:$select.search" refresh="getAllAge($select.search)">
+                      <span ng-bind-html="item.name"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-msg" ng-if="detailForm.selectSchoolName.$invalid && detailForm.selectSchoolName.$touched">Please Enter Age Group *</div>
+                </div>
+                <!-- AGE GROUP END -->
+
+                <!-- WEIGHT -->
+                <div class="form-group">
+                  <label>Weight</label>
+                  <ui-select name="selectWeight" id="selectWeight" theme="bootstrap" ng-model="form.weight" ng-change="searchWeight($select.selected._id)"
+                    required>
+                    <ui-select-match placeholder="Enter Weight" allow-clear="true">
+                      {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices refresh.delay="0" repeat="item in weightitems | filter:$select.search" refresh="getAllWeight($select.search)">
+                      <span ng-bind-html="item.name"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-msg" ng-if="detailForm.selectWeight.$invalid && detailForm.selectWeight.$touched">Please Enter Weight *</div>
+                </div>
+                <!-- WEIGHT END -->
+
+                <!-- DRAW FORMAT -->
+                <div class="form-group">
+                  <label>Draw Formats</label>
+                  <select name="selectDraws" class="form-control" ng-model="form.resultType" required>
+                        <option  value="knockout">Knockout</option>
+                        <option  value="heat">Heat</option>
+                        <option  value="league">League</option>
+                        <option  value="league-cum-knockout">League cum Knockout</option>
+                        <option  value="qualifying-knockout">Qualifying Knockout</option>
+                        <option  value="qualifying-round">Qualifying Round</option>
+                        <option  value="swiss-league">Swiss League</option>
+                    </select>
+                  <div class="error-msg" ng-if="detailForm.selectDraws.$invalid && detailForm.selectDraws.$touched">Please Enter Valid Draw *</div>
+                </div>
+                <!-- DRAW FORMAT END -->
+
+                <!-- SPORT TYPE -->
+                <div class="form-group">
+                  <label>Sport Type</label>
+                  <select name="selectplayer" class="form-control" ng-model="form.playerType" required>
+                        <option  value="team">Team</option>
+                        <option  value="individual">Individual</option>
+                    </select>
+                  <div class="error-msg" ng-if="detailForm.selectplayer.$invalid && detailForm.selectplayer.$touched">Please Enter Valid Player Type *</div>
+                </div>
+                <!-- SPORT TYPE END -->
+
+                <!-- PLAYER SPECIFIC EXPORT -->
+                <div class="form-group">
+                  <label>Player Specific Export ?</label>
+                  <select name="playerSpecific" class="form-control" ng-model="form.playerSpecific" required>
+                            <option  value="yes">YES</option>
+                            <option  value="no">NO</option>
+                      </select>
+                  <div class="error-msg" ng-if="detailForm.playerSpecific.$invalid && detailForm.playerSpecific.$touched">Please Enter Valid Export *</div>
+                </div>
+                <!-- PLAYER SPECIFIC EXPORT END -->
+                {{showMatch}}
+                <!-- BUTTONS -->
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-info" ng-click="viewMatch()" ng-disabled="detailForm.$invalid"><i class="fa fa-eye"></i> View</button>
+                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Generate Excel</button>
+                </div>
+                <!-- BUTTONS END -->
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="match-nomatch-buttons">
+      <div class="">
+        <div class="col-md-4">
+          <button class="btn btn-green-outline btn-scoring" ng-click="$dismiss()">back</button>
+        </div>
+  
+        <div class="col-md-4">
+          <button class="btn btn-green-outline btn-scoring" ng-click="generateExcel(form)">Save</button>
+        </div>
+  
+      </div>
+    </div> -->
+</div>
+
+
+</div>
+</div>
+
+
+
+
+
+
+
+
 <!--Table-->
-<div class=" panel-content ">
+<div class=" panel-content" ng-if="showMatch">
   <div class="row ">
     <div class="col-md-12 ">
       <div class="widget ">
@@ -18,20 +190,20 @@
               <!--<div class="pull-right">-->
               <form class="search-form mr-form ">
                 <input type="text " ng-change="searchInTable(search)" placeholder="Search Here...
-                             " ng-model="search" />
+                               " ng-model="search" />
               </form>
               <a class="btn btn-success" ui-sref="detailmatches">
-                 Create
-              </a>
+                   Create
+                </a>
               <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'uploadExcelMatch',view:'uploadFilter'})">
-                 Upload-Excel
-              </span>
+                   Upload-Excel
+                </span>
               <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'updateExcelMatch',view:'updateExcelResult'})">
-                 Update-Excel-Score
-              </span>
+                   Update-Excel-Score
+                </span>
               <span class="btn btn-success" ng-click="openExportExcel()">
-                 Export-Excel
-              </span>
+                   Export-Excel
+                </span>
             </div>
             <h3>List of Matches<span class=" tableTotal ">(Total : {{totalItems}}) </span></h3>
           </div>
@@ -61,17 +233,17 @@
                   <td>{{item.round}}</td>
                   <td>
                     <a class="btn btn-primary" target="_blank" ui-sref="detailagegroup({id:item._id})">
-                      <i class="fa fa-pencil"></i> Edit
-                    </a>
+                        <i class="fa fa-pencil"></i> Edit
+                      </a>
                     <a class="btn btn-danger" ng-click="confDel(item._id)">
-                      <i class="fa fa-trash"></i> Delete
-                    </a>
+                        <i class="fa fa-trash"></i> Delete
+                      </a>
                   </td>
                   <!--<td ng-repeat="but in json.json.action">
-                                        <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
-                                            <i class="fa" ng-class="but.icon"></i>{{but.name}}
-                                        </a>
-                                    </td>-->
+                                          <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
+                                              <i class="fa" ng-class="but.icon"></i>{{but.name}}
+                                          </a>
+                                      </td>-->
                 </tr>
               </tbody>
             </table>

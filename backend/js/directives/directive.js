@@ -508,7 +508,9 @@ myApp.directive('inputDate', function ($compile, $parse) {
                 changeMonth: true,
                 yearRange: "1900:2050"
             };
-            if (!_.isEmpty($scope.value)) {
+            if ($scope.value == undefined) {
+                $scope.data.dob = '';
+            } else {
                 $scope.data.dob = moment($scope.value).toDate();
             }
             $scope.changeDate = function (data) {

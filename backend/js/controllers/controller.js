@@ -1668,12 +1668,12 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
             $scope.constraints._id = $stateParams.id;
             NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
                 $scope.formData = data.data;
-                $scope.toDates = $filter('date')(data.data.toDate, 'dd-MM-yyyy');
-                $scope.fromDates = $filter('date')(data.data.fromDate, 'dd-MM-yyyy');
-                console.log($scope.fromDates);
-                console.log($scope.toDates);
-                $scope.formData.toDate = new Date($scope.toDates);
-                $scope.formData.fromDate = new Date($scope.fromDates);
+                $scope.formData.toDate = new Date($scope.formData.toDate);
+                $scope.formData.fromDate = new Date($scope.formData.fromDate);
+                // $scope.toDates = new Date($scope.formData.toDate);
+                // $scope.fromDates = new Date($scope.formData.fromDate);
+                // $scope.formData.toDate = $filter('date')($scope.toDates, 'dd/MM/yyyy');
+                // $scope.formData.fromDate = $filter('date')($scope.fromDates, 'dd/MM/yyyy');
             });
         };
         $scope.getOneOldSchoolById();
@@ -1703,6 +1703,7 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
     } else {
         $scope.title = "Create";
         $scope.saveData = function (data, formvalid) {
+            console.log(data);
             if (data) {
                 if (data.maxTeamPlayers >= data.minTeamPlayers) {
 
@@ -1782,7 +1783,8 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
         name: 'Male'
     }, {
         name: 'Female'
-    }]
+    }];
+
     $scope.sporttypeList = [];
 
     $scope.ageList = [];
@@ -4199,6 +4201,28 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
     })
+
+    // EDIT PLAYER
+    .controller('DetailPlayerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
+        //Used to name the .html file
+        $scope.template = TemplateService.changecontent("detailplayer");
+        $scope.menutitle = NavigationService.makeactive("Edit Player");
+        TemplateService.title = $scope.menutitle;
+        $scope.navigation = NavigationService.getnav();
+        $scope.formData = {};
+        $scope.formData.scorecard = [];
+
+        // STATUS LIST
+        $scope.statusList = [{
+            status: "IsLive"
+        }, {
+            status: "IsPending"
+        }, {
+            status: "IsCompleted"
+        }]
+        // STATUS LIST END
+    })
+    // END EDIT PLAYER
 
     .controller('MedalsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
         //Used to name the .html file
