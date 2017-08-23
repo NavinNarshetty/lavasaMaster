@@ -348,13 +348,14 @@ var model = {
     },
 
     getSportId: function (data, callback) {
+        console.log("data", data);
         var sport = {};
         async.waterfall([
                 function (callback) {
                     SportsList.findOne({
                         name: data.name
                     }).lean().deepPopulate("sportsListSubCategory").exec(function (err, found) {
-                        // console.log(found, "found");
+                        console.log(found, "found");
                         if (err || _.isEmpty(found)) {
                             callback(null, []);
                         } else {
@@ -611,7 +612,9 @@ var model = {
                                 function (singleData, callback) {
                                     console.log("singleData", singleData);
                                     var paramData = {};
-                                    paramData.name = singleData["EVENT "];
+                                    paramData.name = singleData.EVENT;
+                                    console.log("para,", paramData.name);
+                                    // paramData.name = singleData["EVENT "];
                                     paramData.age = singleData["AGE GROUP"];
                                     if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
                                         paramData.gender = "male";
