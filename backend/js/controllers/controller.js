@@ -4213,17 +4213,58 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
         $scope.formData = {};
+        $scope.matchData = {};
         $scope.formData.scorecard = [];
 
         // STATUS LIST
-        $scope.statusList = [{
-            status: "IsLive"
-        }, {
-            status: "IsPending"
-        }, {
-            status: "IsCompleted"
-        }]
+        $scope.statusList = ["IsLive", "IsPending", "IsCompleted"];
         // STATUS LIST END
+        $scope.getOneMatch = function () {
+            $scope.matchData.matchId = $stateParams.id;
+            NavigationService.getOneMatch($scope.matchData, function (data) {
+                if (data.value == true) {
+                    $scope.matchDetails = data.data;
+                    $scope.matchDetails.matchId = $scope.matchData.matchId;
+                    $scope.formData = data.data;
+                    $scope.formData.scheduleTime = new Date();
+                    _.each($scope.formData.players, function (key) {
+                        console.log($scope.formData.players, 'plr');
+                        key.fullName = key.firstName + ' ' + key.surname;
+                        _.each($scope.formData.resultsCombat.players, function (value) {
+                            key.noShow = value.noShow;
+                            key.walkover = value.walkover;
+                            _.each(value.sets, function (data) {
+                                key.point = data.point;
+                            })
+                        })
+                    })
+
+                    console.log($scope.formData)
+
+                } else {
+                    console.log("ERROR IN getOneMatch");
+                    //redirect back to sportselection page
+                    // $state.go("sport-selection");
+                }
+            })
+        };
+        $scope.getOneMatch();
+        console.log($scope.formData, "last");
+        // GET MATCH END
+
+        // SAVE
+        $scope.saveDataMatch = function () {
+            console.log($scope.formData, "save");
+            NavigationService.saveMatch($scope.formData, function (data) {
+                if (data.value == true) {
+                    toastr.success("Data saved successfully", 'Success');
+                } else {
+                    toastr.error("Data save failed ,please try again or check your internet connection", 'Save error');
+                }
+            })
+
+        }
+        // SAVEEND
     })
     // END EDIT PLAYER
 
