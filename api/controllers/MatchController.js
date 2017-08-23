@@ -100,7 +100,6 @@ var controller = {
                                     }
                                 });
                             } else if (req.body.resultType == "heat" && req.body.playerType == "individual") {
-
                                 var roundTypes = _.groupBy(importData, 'ROUND ');
                                 _.each(roundTypes, function (roundType, key) {
                                     roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
@@ -115,6 +114,22 @@ var controller = {
                                 });
                                 // console.log(roundTypes, "---------------------");
                                 // callback(null, importData);
+                            } else if (req.body.resultType == "qualifying-round" && req.body.playerType == "individual") {
+                                Match.saveQualifyingRoundIndividual(importData, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+                            } else if (req.body.resultType == "qualifying-knockout" && req.body.playerType == "individual") {
+                                Match.saveQualifyingRoundFinalIndividual(importData, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
                             } else {
                                 callback(null, importData);
                             }
