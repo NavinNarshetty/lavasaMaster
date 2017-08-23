@@ -1,4 +1,4 @@
-myApp.controller('CombatScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, $interval) {
+myApp.controller('CombatScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, $interval, toastr) {
     $scope.template = TemplateService.getHTML("content/score-combat.html");
     TemplateService.title = "Score Combat"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -18,6 +18,11 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
         $scope.matchData.matchId = $stateParams.id;
         NavigationService.getOneMatch($scope.matchData, function(data) {
             if (data.value == true) {
+              if(data.data.error){
+                $scope.matchError = data.data.error;
+                console.log($scope.matchError,'error');
+                toastr.error('Invalid MatchID. Please check the MatchID entered.', 'Error');
+              }
                 $scope.match = data.data;
                 $scope.match.matchId = $scope.matchData.matchId;
             } else {
@@ -62,73 +67,28 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     // DESTROY AUTO SAVE END
     // MATCH COMPLETE
     $scope.matchComplete = function(){
-      $scope.match.resultsCombat.status = "IsCompleted";
-        $scope.matchResult = {
-          resultsCombat : $scope.match.resultsCombat,
-          matchId: $scope.matchData.matchId
-        }
-        NavigationService.saveMatch($scope.matchResult, function(data){
-          if(data.value == true){
-            $state.go('home');
-            console.log('save success');
-          } else{
-            alert('fail save');
+      if ($scope.match.resultsCombat) {
+        $scope.match.resultsCombat.status = "IsCompleted";
+          $scope.matchResult = {
+            resultsCombat : $scope.match.resultsCombat,
+            matchId: $scope.matchData.matchId
           }
-        });
-        console.log($scope.matchResult, 'result#');
+          NavigationService.saveMatch($scope.matchResult, function(data){
+            if(data.value == true){
+              $state.go('home');
+              console.log('save success');
+            } else{
+              // alert('fail save');
+              toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
+            }
+          });
+          console.log($scope.matchResult, 'result#');
+      } else {
+        toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
+      }
     }
     // MATCH COMPLETE END
     // API CALLN INTEGRATION END
-
-    // MATCH JSON
-    // $scope.match = {
-    //     id: 123,
-    //     matchId: 123456,
-    //     sportsName: 'judo-u-16-male-round 1',
-    //     players: [{
-    //         _id: 1,
-    //         sfaId: 1234,
-    //         firstName: 'Shivveeraj',
-    //         surname: 'ShikaWat',
-    //         school: {
-    //             name: 'Jamnabai Shivveeraj Singh ShikaWat school'
-    //         },
-    //     }, {
-    //         _id: 2,
-    //         sfaId: 1234,
-    //         firstName: 'Shivveeraj',
-    //         surname: 'ShikaWat',
-    //         school: {
-    //             name: 'Jamnabai Shivveeraj Singh ShikaWat school'
-    //         },
-    //         sets: [{
-    //             point: 0,
-    //         }]
-    //     }],
-    //     resultsCombat: {
-    //         players: [{
-    //             _id: 1,
-    //             sets: [{
-    //                 point: 0
-    //             }]
-    //         }, {
-    //             _id: 2,
-    //             sets: [{
-    //                 point: 0
-    //             }]
-    //         }],
-    //         matchPhoto: [{
-    //             image: 'img/dishapatani1.jpg'
-    //         }, {
-    //             image: 'img/dishapatani1.jpg'
-    //         }, {
-    //             image: 'img/dishapatani1.jpg'
-    //         }],
-    //         scoreSheet: [],
-    //         winner: {}
-    //     }
-    // };
-    // MATCH JSON END
 
     $scope.reasons = ['WP', 'RSC', 'RSC-I', 'DSQ', 'KO', 'WO', 'NC'];
 
@@ -171,5 +131,5 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
         break;
       }
     }
-        // REMOVE MATCH SCORESHEET END
+    // REMOVE MATCH SCORESHEET END
 })

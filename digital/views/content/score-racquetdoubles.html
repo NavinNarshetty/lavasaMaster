@@ -1,0 +1,211 @@
+<div class="racketscore-page racketscore-doublespage">
+  <div class="matchstart-header clearfix">
+    <div class="container">
+      <pre>{{match|json}}</pre>
+      <!-- <div class="row">
+        <pre>{{match|json}}</pre>
+      </div> -->
+      <div class="pull-right">
+        <p class="m-clear">match id: <span>{{match.matchId}}</span> </p>
+      </div>
+      <p class="m-clear"><span>{{match.sportsName}}</span> - <span>{{match.age}}</span> <span>{{match.gender}}</span> <span>{{match.round}}</span></p>
+      <!-- <p style="color:red">{{match.resultsRacquet.status}}</p> -->
+    </div>
+  </div>
+  <div class="combatscore-scoring">
+    <div class="container">
+      <div class="row">
+        <!-- ATHlETE -->
+        <div class="col-md-6 col-sm-6" ng-repeat="player in match.players track by $index">
+            <div class="combatscore-player">
+                <div class="matchplayer-card {{player.player}}">
+                    <div class="matchplayer-playerid">
+                        <p>SFA ID: <span>{{player.sfaId}}</span></p>
+                    </div>
+                    <div class="matchplayer-image">
+                        <img ng-src="{{player.photograph|serverimage}}" alt="{player.firstName}} {{player.surname}}" class="img-responsive">
+                    </div>
+                    <div class="matchplayer-details">
+                        <p class="matchplayer-name"><span> {{player.firstName}} </span> <span> {{player.surname}} </span></p>
+                        <p class="matchplayer-school">{{player.school.name | truncate:'22'}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- ATHlETE END -->
+      </div>
+      <!-- ATHLETE SCORE -->
+      <div class="combatscore-sets">
+        <div class="showhide-set clearfix">
+          <div class="addset">
+            <button class="btn btn-green-outline" ng-click="addSet();">Add Set</button>
+            <button class="btn btn-green-outline" ng-click="removeSet();">Remove Set</button>
+          </div>
+          <ul class="list-inline">
+            <li class="setshow-element" ng-repeat="length in setLength track by $index">
+              <div class="form-group" >
+                <label for="set{{$index}}"><input type="checkbox" ng-model="length.setShow" id="set{{$index}}"> Set {{$index + 1}}</label>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+        <div class="row">
+          <div class="col-md-6 col-sm-6" ng-repeat= "player in match.resultsRacquet.players track by $index">
+            <div class="combatscore-scorecard" ng-repeat = "set in player.sets track by $index" >
+              <div class="scoring-set form-group">
+                <label  class="text-uppercase">SET <span>{{$index+1}}</span></label>
+                <!-- <pre>{{$index && showSet}}</pre> -->
+                <!-- <div class="datapoints-set" ng-show="$index && showSet"> -->
+                <div class="datapoints-set" ng-if= "setLength[$index].setShow">
+                <!-- ACE DATA POINT -->
+                <div class="relate mtb-10" ng-if="match.sportsName=='Tennis Singles'">
+                  <label class="datapoint-name">Ace</label>
+                  <button class="btn score-buttons score-decrement" ng-click="decrementScore(set,'ace');"><i class="fa fa-minus"></i></button>
+                  <input type="number" ng-model="set.ace" min="0" class="score-number display-inline form-control">
+                  <button class="btn score-buttons score-increment" ng-click="incrementScore(set,'ace');"><i class="fa fa-plus"></i></button>
+                </div>
+                <!-- ACE DATA POINT -->
+                <!-- WINNER DATA POINT -->
+                <div class="relate mtb-10">
+                  <label class="datapoint-name">Winner</label>
+                  <button class="btn score-buttons score-decrement" ng-click="decrementScore(set,'winner');"><i class="fa fa-minus"></i></button>
+                  <input type="number" ng-model="set.winner" min="0" class="score-number display-inline form-control">
+                  <button class="btn score-buttons score-increment" ng-click="incrementScore(set,'winner');"><i class="fa fa-plus"></i></button>
+                </div>
+                <!-- WINNER DATA POINT -->
+                <!-- UNFORCED ERROR DATA POINT -->
+                <div class="relate mtb-10">
+                  <label class="datapoint-name">Unforced Error</label>
+                  <button class="btn score-buttons score-decrement" ng-click="decrementScore(set,'unforcedError');"><i class="fa fa-minus"></i></button>
+                  <input type="number" ng-model="set.unforcedError" min="0" class="score-number display-inline form-control">
+                  <button class="btn score-buttons score-increment" ng-click="incrementScore(set,'unforcedError');"><i class="fa fa-plus"></i></button>
+                </div>
+                <!-- UNFORCED ERROR DATA POINT -->
+                <!-- SERVICE ERROR DATA POINT -->
+                <div class="relate mtb-10" ng-if="match.sportsName=='Badminton Singles' || match.sportsName == 'Table Tennis Singles' || match.sportsName == 'Squash'">
+                  <label class="datapoint-name">Service Error</label>
+                  <button class="btn score-buttons score-decrement" ng-click="decrementScore(set,'serviceError');"><i class="fa fa-minus"></i></button>
+                  <input type="number" ng-model="set.serviceError" min="0" class="score-number display-inline form-control">
+                  <button class="btn score-buttons score-increment" ng-click="incrementScore(set,'serviceError');"><i class="fa fa-plus"></i></button>
+                </div>
+                <!-- SERVICE ERROR DATA POINT -->
+                <!-- DOUBLE FAULTS DATA POINT -->
+                <div class="relate mtb-10" ng-if="match.sportsName=='Tennis Singles'">
+                  <label class="datapoint-name">Double Faults</label>
+                  <button class="btn score-buttons score-decrement" ng-click="decrementScore(set,'doubleFaults');"><i class="fa fa-minus"></i></button>
+                  <input type="number" ng-model="set.doubleFaults" min="0" class="score-number display-inline form-control">
+                  <button class="btn score-buttons score-increment" ng-click="incrementScore(set,'doubleFaults');"><i class="fa fa-plus"></i></button>
+                </div>
+                <!-- DOUBLE FAULTS DATA POINT -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- ATHLETE SCORE END -->
+      <!-- SET SCORE UPLOADS -->
+      <div class="racquet-setscore">
+        <div class="scoring-set form-group" ng-repeat="player in match.resultsRacquet.players track by $index">
+          <div class="matchplayer-image" title="{{match.players[$index].firstName}} {{match.players[$index].surname}} | {{match.players[$index].sfaId}}">
+              <img ng-src="{{match.players[$index].photograph|serverimage}}" alt="{{match.players[$index].firstName}} {{match.players[$index].surname}}" class="img-responsive">
+          </div>
+          <div class="relate setpoint-element" ng-repeat="set in player.sets track by $index">
+            <label for="player1score" class="text-uppercase" >SET <span>{{$index+1}}</span></label>
+            <input type="number" ng-model="set.point" id="player1score" min="0" class="score-number display-inline form-control">
+          </div>
+        </div>
+      </div>
+      <!-- SET SCORE UPLOADS END -->
+      <!-- FINAL UPLOADS -->
+      <div class="combatscore-uploads text-center">
+        <div class="combatscore-pics">
+          <div class="row">
+          <div class="col-md-offset-1 col-md-5 col-sm-6">
+            <div class="matchstart-uploadholder text-uppercase ">
+              <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Picture</button>
+              <upload-image ng-model="match.resultsRacquet.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+            </div>
+            <div class=" digital-swiper">
+            <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultsRacquet.matchPhoto track by $index">
+              <span class="remove-pic" ng-click="removeMatchScore(pic,'matchPhoto')"><i class="fa fa-times"></i></span>
+              <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
+            </div>
+          </div>
+          </div>
+          <div class="col-md-5 col-sm-6">
+            <div class="matchstart-uploadholder text-uppercase ">
+              <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Scorecard</button>
+              <upload-image ng-model="match.resultsRacquet.scoreSheet" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+            </div>
+            <div class="digital-swiper">
+            <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultsRacquet.scoreSheet">
+              <span class="remove-pic" ng-click="removeMatchScore(pic,'scoreSheet')"><i class="fa fa-times"></i></span>
+              <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
+            </div>
+          </div>
+          </div>
+        </div>
+        </div>
+        <div class="combatscore-selects">
+          <div class="row">
+          <div class="col-md-offset-2 col-md-4 col-sm-6">
+            <div class="match-selectwinner text-left">
+              <label for="matchWinnerPlayer" class="text-uppercase">Select Winner</label>
+              <!-- SELECT -->
+              <select class="form-control" ng-model="match.resultsRacquet.winner.player" ng-init="match.winner.player=''">
+                <option ng-repeat="player in match.players track by $index" value="{{player._id}}">{{player.firstName}} {{player.surname}}</option>
+              </select>
+              <!-- SELECT  END-->
+              <!-- UI SELECT -->
+              <!-- <ui-select id="matchWinnerPlayer" ng-model="match.winner.player" theme="bootstrap">
+                  <ui-select-match placeholder="Select Winner"> {{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="player.player as player in match.players | filter: $select.search">
+                        <p>{{player.name}}</p>
+                  </ui-select-choices>
+              </ui-select> -->
+              <!-- UI SELECT END -->
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6" ng-if="match.sportsName=='Boxing'">
+            <div class="match-winreason text-left">
+              <label for="matchWinnerReason" class="text-uppercase">won by</label>
+              <!-- SELECT -->
+              <select class="form-control" ng-init="match.winner.reason=''" ng-model="match.resultsCombat.winner.reason">
+                <option ng-repeat="reason in reasons track by $index" value="{{reason}}">{{reason}}</option>
+              </select>
+              <!-- SELECT  END-->
+              <!-- UI SELECT -->
+              <!-- <ui-select id="matchWinnerReason" ng-model="match.winner.reason" theme="bootstrap">
+                  <ui-select-match placeholder="Won By"> {{$select.selected}}</ui-select-match>
+                  <ui-select-choices repeat="reason as reason in reasons | filter: $select.search">
+                        <p>{{reason}}</p>
+                  </ui-select-choices>
+              </ui-select> -->
+              <!-- UI SELECT END -->
+            </div>
+          </div>
+        </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 col-sm-4">
+              <button class="btn btn-green-outline btn-scoring" ui-sref="matchstart({'id':matchData.matchId})">back</button>
+          </div>
+          <div class="col-md-4 col-sm-4">
+              <button class="btn btn-green-outline btn-scoring" promise-btn = "yourPromise" ng-click="saveResult(match)">Save</button>
+          </div>
+          <div class="col-md-4 col-sm-4">
+              <button class="btn btn-green-outline btn-scoring" ng-click="matchComplete();">complete</button>
+          </div>
+        </div>
+
+        <!-- <div class="row" style="text-align: left;">
+          <pre>{{match.resultsCombat|json}}</pre>
+        </div> -->
+      </div>
+      <!-- FINAL UPLOADS END -->
+    </div>
+  </div>
+</div>

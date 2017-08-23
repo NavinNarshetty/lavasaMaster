@@ -1,6 +1,6 @@
-myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal,$stateParams, $state, $interval, toastr) {
-    $scope.template = TemplateService.getHTML("content/score-racquet.html");
-    TemplateService.title = "Score Racquet"; //This is the Title of the Website
+myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal,$stateParams, $state, $interval, toastr) {
+    $scope.template = TemplateService.getHTML("content/score-racquetdoubles.html");
+    TemplateService.title = "Score Racquet Doubles"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
 
     // VARIABLE INITIALISE
@@ -57,13 +57,11 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
     // SAVE RESULT END
     // AUTO SAVE FUNCTION
     $scope.autoSave = function(){
-      if($scope.match){
-        $scope.$on('$viewContentLoaded', function(event) {
-          promise = $interval(function () {
-            $scope.saveResult($scope.match);
-          }, 10000);
-        })
-      }
+      $scope.$on('$viewContentLoaded', function(event) {
+        promise = $interval(function () {
+          $scope.saveResult($scope.match);
+        }, 10000);
+      })
     }
     $scope.autoSave();
     // AUTO SAVE FUNCTION END

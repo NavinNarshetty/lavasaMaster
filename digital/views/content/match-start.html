@@ -6,13 +6,14 @@
       </div>
       <p class="m-clear">{{matchDetails.sportsName}} {{matchDetails.age}} {{matchDetails.gender}}</p>
       <!-- <p style="color:red">{{matchDetails.resultsCombat.status}} {{matchDetails.resultsRacquet.status}}</p> -->
+      <!-- <pre>{{formData}}</pre> -->
     </div>
   </div>
   <div class="matchstart-section get-center">
   <div class="container">
     <div class="row">
       <div class="col-md-offset-1 col-md-6 col-sm-6">
-        <div class="matchstart-players">
+        <div class="matchstart-players" ng-if="matchDetails.isTeam==false">
           <div class="matchplayer-card" ng-repeat = "player in matchDetails.players track by $index">
             <div class="matchplayer-playerid">
               <p>SFA ID: <span class="text-uppercase">{{player.sfaId}}</span></p>
