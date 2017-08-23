@@ -1,17 +1,6 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
 
-    getOneMatch: function (req, res) {
-        if (req.body) {
-            Match.getOneMatch(req.body, res.callback);
-        } else {
-            res.json({
-                "data": "Body not Found",
-                "value": false
-            })
-        }
-    },
-
     getAll: function (req, res) {
         Match.getAll(req.body, res.callback);
     },
@@ -51,7 +40,93 @@ var controller = {
 
     uploadExcelMatch: function (req, res) {
         if (req.body.resultType && req.body.playerType && req.body.matchId || req.body.thirdPlace || req.body.range) {
-            Match.uploadExcelMatch(req.body, res.callback);
+            async.waterfall([
+                    function (callback) {
+                        Config.importGS(req.body.file, function (err, importData) {
+                            if (err || _.isEmpty(importData)) {
+                                callback(err, null);
+                            } else {
+                                callback(null, importData);
+                            }
+                        });
+                    },
+                    function (importData, callback) {
+                        if (req.body.resultType == "knockout") {
+                            var excelLength = importData.length;
+                            var range = req.body.range;
+                            var sum = 0;
+                            while (range >= 1) {
+                                sum = parseInt(sum) + range;
+                                range = range / 2;
+                            }
+                            if (req.body.thirdPlace == "yes") {
+                                sum = sum + 1;
+                            }
+                            if (excelLength == sum) {
+                                callback(null, importData);
+                            } else {
+                                var resData = [];
+                                var obj = {};
+                                err = "excel row do not match with selected range";
+                                obj.error = err;
+                                obj.success = importData;
+                                resData.push(obj);
+                                callback(null, resData);
+                            }
+                        } else {
+                            callback(null, importData);
+                        }
+
+                    },
+                    function (importData, callback) {
+                        if (importData[0].error) {
+                            callback(null, importData);
+                        } else {
+                            if (req.body.resultType == "knockout" && req.body.playerType == "individual") {
+                                Match.saveKnockoutIndividual(importData, req.body, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+                            } else if (req.body.resultType == "knockout" && req.body.playerType == "team") {
+                                Match.saveKnockoutTeam(importData, req.body, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+                            } else if (req.body.resultType == "heat" && req.body.playerType == "individual") {
+
+                                var roundTypes = _.groupBy(importData, 'ROUND ');
+                                _.each(roundTypes, function (roundType, key) {
+                                    roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
+                                    // console.log(heatType, "---------------------");
+                                });
+                                Match.saveHeatIndividual(roundTypes, req.body, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+                                // console.log(roundTypes, "---------------------");
+                                // callback(null, importData);
+                            } else {
+                                callback(null, importData);
+                            }
+                        }
+                    }
+                ],
+                function (err, results) {
+                    if (err || _.isEmpty(results)) {
+                        res.callback(results, null);
+                    } else {
+                        res.callback(null, results);
+                    }
+                });
         } else {
             var data = [{
                 error: "All Fields Required !"
@@ -127,7 +202,7 @@ var controller = {
             res.json({
                 "data": "Body not Found",
                 "value": false
-            })
+            });
         }
     },
 
