@@ -362,6 +362,7 @@ var model = {
                         } else {
                             sport.sportslist = found._id;
                             sport.sportsListSubCategory = found.sportsListSubCategory._id;
+                            console.log("sport", sport);
                             callback(null, sport);
                         }
                     });
@@ -395,6 +396,7 @@ var model = {
                     }
                 },
                 function (sport, callback) {
+                    console.log("allsport", sport);
                     var matchObj = {};
                     matchObj.gender = data.gender;
                     matchObj.sportslist = sport.sportslist;
