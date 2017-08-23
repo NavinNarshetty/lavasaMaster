@@ -1300,5 +1300,9 @@
      padding: 50px;
  }
 
+ .match-border {
+     border-bottom: 3px solid #000;
+ }
+
  @import "fancybox-override";
  @import "other/mobile";
