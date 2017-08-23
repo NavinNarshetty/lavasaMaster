@@ -372,7 +372,8 @@ var model = {
                         name: data.age
                     }).lean().exec(function (err, found) {
                         if (err || _.isEmpty(found)) {
-                            callback(err, null);
+                            sport.age = null;
+                            callback(null, sport);
                         } else {
                             sport.age = found._id;
                             callback(null, sport);
@@ -387,7 +388,8 @@ var model = {
                             name: data.weight
                         }).lean().exec(function (err, found) {
                             if (err || _.isEmpty(found)) {
-                                callback(err, null);
+                                sport.weight = found._id;
+                                callback(null, sport);
                             } else {
                                 sport.weight = found._id;
                                 callback(null, sport);
