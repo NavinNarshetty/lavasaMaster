@@ -52,11 +52,11 @@
         <div class="row">
           <div class="col-md-6 col-sm-6" ng-repeat= "player in match.resultsRacquet.players track by $index">
             <div class="combatscore-scorecard" ng-repeat = "set in player.sets track by $index" >
-              <div class="scoring-set form-group">
+              <div class="scoring-set form-group" ng-if= "setLength[$index].setShow">
                 <label  class="text-uppercase">SET <span>{{$index+1}}</span></label>
                 <!-- <pre>{{$index && showSet}}</pre> -->
                 <!-- <div class="datapoints-set" ng-show="$index && showSet"> -->
-                <div class="datapoints-set" ng-if= "setLength[$index].setShow">
+                <div class="datapoints-set">
                 <!-- ACE DATA POINT -->
                 <div class="relate mtb-10" ng-if="match.sportsName=='Tennis Singles'">
                   <label class="datapoint-name">Ace</label>

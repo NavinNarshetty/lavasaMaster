@@ -12,33 +12,31 @@
     </div>
     <div class="modal-body">
         <div class="row">
-            <div class="col-md-6 col-sm-6" ng-repeat= "player in matchDetails.players track by $index">
+            <div class="col-md-6 col-sm-6" ng-repeat= "team in matchDetails.teams track by $index">
                 <div class="match-nomatch-player">
                     <div class="matchplayer-card">
                         <div class="matchplayer-playerid text-uppercase">
-                            <p>SFA ID: <span>{{player.sfaId}}</span></p>
+                            <p>team ID: <span>{{team.teamId}}</span></p>
                         </div>
-                        <div class="matchplayer-image">
-                            <!-- <img src="img/dishapatani1.jpg" alt="" class="img-responsive"> -->
-                            <img ng-src="{{player.photograph|serverimage}}" alt="" class="img-responsive">
+                        <div class="matchplayer-image" >
+                            <img ng-src="{{team.photograph|serverimage}}" alt="" class="img-responsive">
                         </div>
                         <div class="matchplayer-details">
-                            <p class="matchplayer-name">{{player.firstName}} {{player.surname}}</p>
-                            <p class="matchplayer-school">{{player.school.name| truncate:'30'}}</p>
+                            <p class="matchplayer-name">{{team.schoolName}}</p>
                         </div>
                     </div>
                 </div>
             </div>
           </div>
         <div class="row">
-            <div class="col-md-6 col-sm-6" ng-repeat="player in formData.players track by $index">
+            <div class="col-md-6 col-sm-6" ng-repeat="team in formData.teams track by $index">
                 <div class="match-nomatch-player">
                     <div class="match-nomatch-radio text-center">
                         <div class="checkbox" >
-                            <label ><input type="checkbox" ng-model="player.noShow" ng-disabled="player.walkover == true" class="">No Show</label>
+                            <label ><input type="checkbox" ng-model="team.noShow" ng-disabled="team.walkover == true" class="">No Show</label>
                         </div>
                         <div class="checkbox">
-                            <label><input type="checkbox" ng-model="player.walkover" ng-disabled="player.noShow == true"  class="">Walkover</label>
+                            <label><input type="checkbox" ng-model="team.walkover" ng-disabled="team.noShow == true"  class="">Walkover</label>
                         </div>
                     </div>
                 </div>
@@ -50,20 +48,20 @@
                     <button class="btn btn-green-outline btn-scoring" ng-click="$dismiss()">back</button>
                 </div>
                 <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-green-outline btn-scoring" ng-click="setNoMatch();">no match</button>
+                    <button class="btn btn-green-outline btn-scoring" ng-click="setTeamNoMatch();">no match</button>
                 </div>
                 <div class="col-md-3 col-sm-3">
                     <div class="match-selectwinner ">
-                        <ui-select ng-model="formData.winner.player" theme="bootstrap" ng-disabled="disableWinner">
-                            <ui-select-match placeholder="Select Winner"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
-                            <ui-select-choices repeat="player._id as player in matchDetails.players  | filter: $select.search">
-                                  <p>{{player.firstName}} {{player.surname}}</p>
+                        <ui-select ng-model="formData.winner.team" theme="bootstrap" ng-disabled="disableWinner">
+                            <ui-select-match placeholder="Select Winner"> {{$select.selected.schoolName}}</ui-select-match>
+                            <ui-select-choices repeat="team._id as team in matchDetails.teams  | filter: $select.search">
+                                  <p>{{team.schoolName}}</p>
                             </ui-select-choices>
                         </ui-select>
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-3">
-                    <button class="btn btn-green-outline btn-scoring" ng-click="saveWinner(formData)">save</button>
+                    <button class="btn btn-green-outline btn-scoring" ng-click="saveTeamWinner(formData)">save</button>
                 </div>
             </div>
         </div>

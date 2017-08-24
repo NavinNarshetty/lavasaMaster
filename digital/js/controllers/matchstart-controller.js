@@ -165,6 +165,14 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
       })
     }
     // NO MATCH END
+    // TEAM NO MATCH
+    $scope.setTeamNoMatch = function() {
+      _.each($scope.formData.teams, function(team) {
+          team.noShow = true;
+          team.walkover = false;
+      })
+    }
+    // TEAM NO MATCH END
     // SAVE RESULT
     $scope.saveResult = function(formData){
       if(formData){
@@ -248,20 +256,63 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
       });
     }
     // SAVE WINNER  END
+    // SAVE TEAM WINNER
+    $scope.saveTeamWinner = function(){
+      if($scope.formData.teams[0].noShow == true && $scope.formData.teams[1].noShow == true){
+        $scope.formData.isNoMatch = true;
+        $scope.formData.winner.team = "";
+      } else {
+        $scope.formData.isNoMatch = false;
+      }
+      $scope.matchResult = {
+        matchId: $scope.matchData.matchId
+      }
+      switch ($scope.matchDetails.sportType) {
+        case "Combat Sports":
+          $scope.matchResult.resultsCombat = $scope.formData;
+          $scope.matchResult.resultsCombat.status = "IsCompleted";
+        break;
+        case "Racquet Sports":
+          $scope.matchResult.resultsRacquet = $scope.formData;
+          $scope.matchResult.resultsRacquet.status = "IsCompleted";
+        break;
+      }
+      NavigationService.saveMatch($scope.matchResult, function(data){
+        if(data.value == true){
+          $state.go("home");
+        } else{
+          alert('fail save');
+        }
+      });
+    }
+    // SAVE TEAM WINNER END
     // INTEGRATION END
 
     // OPEN MATCH-NO MATCH MODAL
     $scope.showNoMatch = function() {
       if($scope.formData){
-        $uibModal.open({
-          animation: true,
-          scope: $scope,
-          backdrop: 'static',
-          keyboard: false,
-          templateUrl: 'views/modal/match-nomatch.html',
-          size: 'lg',
-          windowClass: 'match-nomatch'
-        })
+        if ($scope.matchDetails.isTeam == false) {
+          $uibModal.open({
+            animation: true,
+            scope: $scope,
+            backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'views/modal/match-nomatch.html',
+            size: 'lg',
+            windowClass: 'match-nomatch'
+          })
+        } else if ($scope.matchDetails.isTeam == true) {
+          $uibModal.open({
+            animation: true,
+            scope: $scope,
+            backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'views/modal/team-match-nomatch.html',
+            size: 'lg',
+            windowClass: 'match-nomatch'
+          })
+        }
+
       }else{
         toastr.error('No player data to enter.', 'Error');
       }

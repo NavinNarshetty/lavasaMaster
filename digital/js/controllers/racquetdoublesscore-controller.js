@@ -25,7 +25,7 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
               }
                 $scope.match = data.data;
                 $scope.match.matchId = $scope.matchData.matchId;
-                _.each($scope.match.resultsRacquet.players[0].sets, function(n,key){
+                _.each($scope.match.resultsRacquet.teams[0].sets, function(n,key){
                   $scope.setLength[key] = {
                     setShow : true
                   }
@@ -155,7 +155,7 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
     // SCORE DECREMENT END
     // ADD SET
     $scope.addSet = function(){
-      _.each($scope.match.resultsRacquet.players, function(n){
+      _.each($scope.match.resultsRacquet.teams, function(n){
         n.sets.push({
               point: 0,
               ace: 0,
@@ -165,7 +165,7 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
               doubleFaults: 0
         });
       })
-      _.each($scope.match.resultsRacquet.players[0].sets, function(n,key){
+      _.each($scope.match.resultsRacquet.teams[0].sets, function(n,key){
         $scope.setLength[key] = {
           setShow : true
         }
@@ -174,7 +174,7 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
     // ADD SET END
     // REMOVE SET
     $scope.removeSet = function(){
-      _.each($scope.match.resultsRacquet.players, function(n){
+      _.each($scope.match.resultsRacquet.teams, function(n){
         if(n.sets.length>1){
           var length = n.sets.length - 1;
           _.remove(n.sets,function(m,index){
@@ -187,7 +187,7 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
         }
       });
       $scope.setLength = [];
-      _.each($scope.match.resultsRacquet.players[0].sets, function(n,key){
+      _.each($scope.match.resultsRacquet.teams[0].sets, function(n,key){
         $scope.setLength[key] = {
           setShow : true
         }

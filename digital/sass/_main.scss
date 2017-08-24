@@ -146,84 +146,68 @@ header {
 // /*******************************START OF SCSSS ******************************
 // /*******************************START OF SCSSS ******************************
 // COMMON CLASSES
-
 .m-clear {
     margin: 0;
 }
-
 .m-auto {
     margin: 0 auto;
 }
-
 .mtb-10{
   margin: 10px 0;
 }
-
 .p-clear {
     padding: 0;
 }
-
 .display-inline {
     display: inline;
 }
-
 .relate {
     position: relative;
 }
-
 .static {
     position: static;
 }
-
 .absolute {
     position: absolute;
 }
-
 .fixed {
     position: fixed;
 }
-
 .display-block {
     display: block !important;
 }
-
 .inline-block {
     display: inline-block;
 }
-
 .v-top {
     vertical-align: top;
 }
-
 .v-mid {
     vertical-align: middle;
 }
-
 .v-bottom {
     vertical-align: bottom;
 }
-
 .text-uppercase {
     text-transform: uppercase;
 }
-
 .text-capitalise {
     text-transform: capitalize;
 }
-
 .no-textdecoration {
     text-decoration: none;
 }
-
 .get-center {
     position: absolute;
     top: 50%;
     left: 50%;
     @include transform(translate(-50%, -50%));
 }
-
 .pointer {
     cursor: pointer;
+}
+.no-border{
+  border: none !important;
 }
 // SWIPER
 .digital-swiper {
@@ -257,7 +241,6 @@ header {
     left: -20px;
   }
 }
-
 // END SWIPER
 // COMMON CLASSES END
 // BUTTONS
@@ -375,6 +358,7 @@ header {
     font-size: 16px;
     line-height: 20px;
 }
+
 .matchstart-score {
     padding: 10px 0;
     margin: 20px 0;
@@ -386,7 +370,6 @@ header {
 }
 // MATCH START PAGE END
 // MATCH NO MATCH MODAL
-
 .match-nomatch {
     padding: 0;
     margin-top: 30px;
@@ -433,12 +416,17 @@ header {
     min-height: calc(100vh - 60px);
 }
 
-.combatscore-scorecard {
+.scoring-set{
   padding: 10px 0;
   border-bottom: 1px solid #ccc;
+}
+
+.combatscore-scorecard {
   text-align: center;
   &:last-child{
-    border-bottom: none;
+    .scoring-set{
+      border-bottom: none;
+    }
   }
 }
 
@@ -552,6 +540,37 @@ header {
   }
 }
 // RACKET-SCORE PAGE END
+// RACKET DOUBLE-SCORE PAGE
+.teamcard {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin: 20px 0;
+
+    .teamcard-header{
+      padding: 10px;
+      background-color: #ccc;
+    }
+
+    .matchplayer-card{
+      margin: 0;
+      box-shadow: none;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .combatscore-player{
+      &:last-child{
+      .matchplayer-card{
+          border: none;
+        }
+      }
+    }
+
+    .matchplayer-image{
+      width: 60px;
+      height: 60px;
+    }
+}
+// RACKET DOUBLE-SCORE PAGE END
 
 // /*******************************END OF SCSSS ******************************
 // /*******************************END OF SCSSS ******************************
