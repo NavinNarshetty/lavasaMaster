@@ -277,8 +277,12 @@
                                         <%=infoId%>
                                     </a>
                                     <%}%>. No changes can be made after 30th November
-                                        <%=year%> (Changes to a Football Team can be made only up to 30th October
-                                            <%=year%>)</p>
+                                        <%=year%>
+                                            <%if(type == 'school'){%>
+                                                (Changes to a Football Team can be made only up to 30th October
+                                                <%=year%>)
+                                                    <%}%>
+                        </p>
                     </div>
                 </td>
             </tr>
@@ -304,26 +308,22 @@
                             </p>
                             <%} else if(linkSportName == 'Athletics 4x50m Relay' || linkSportName == 'athletics 4x50m relay' || linkSportName == 'Athletics 4x100m Relay' || linkSportName == 'athletics 4x100m relay' || linkSportName == 'Athletics Medley Relay' || linkSportName == 'athletics medley relay'){%>
                                 <p style="margin-bottom: 0px; "> 3) Click on the following link to view Athletics Rules and Regulations:
-                                    <a href="<%=urls%>/sport/Athletics"
-                                        target="_new">
+                                    <a href="<%=urls%>/sport/Athletics" target="_new">
                                         <%=urls%>/sport/Athletics</a>
                                 </p>
                                 <%} else if(linkSportName == 'Badminton Doubles' || linkSportName == 'badminton doubles'){%>
                                     <p style="margin-bottom: 0px; "> 3) Click on the following link to view Badminton Rules and Regulations:
-                                        <a href="<%=urls%>/sport/Badminton"
-                                            target="_new">
+                                        <a href="<%=urls%>/sport/Badminton" target="_new">
                                             <%=urls%>/sport/Badminton</a>
                                     </p>
                                     <%} else if(linkSportName == 'Table Tennis Doubles' || linkSportName == 'table tennis doubles'){%>
                                         <p style="margin-bottom: 0px; "> 3) Click on the following link to view Table Tennis Rules and Regulations:
-                                            <a href="<%=urls%>/sport/Table Tennis"
-                                                target="_new">
+                                            <a href="<%=urls%>/sport/Table Tennis" target="_new">
                                                 <%=urls%>/sport/Table Tennis</a>
                                         </p>
                                         <%} else if(linkSportName == 'Tennis Mixed Doubles' || linkSportName == 'tennis mixed doubles' || linkSportName == 'Tennis Doubles' || linkSportName == 'tennis doubles'){%>
                                             <p style="margin-bottom: 0px; "> 3) Click on the following link to view Tennis Rules and Regulations:
-                                                <a href="<%=urls%>/sport/Tennis"
-                                                    target="_new">
+                                                <a href="<%=urls%>/sport/Tennis" target="_new">
                                                     <%=urls%>/sport/Tennis</a>
                                             </p>
                                             <%} else if(linkSportName == 'Karate Team Kumite' || linkSportName == 'karate team kumite'){%>

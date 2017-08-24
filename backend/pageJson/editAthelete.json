@@ -184,7 +184,7 @@
             "dropDownField": "",
             "dropDownType": "single",
             "onView": true,
-            "dropDown": ["AB+", "AB-", "A+", "A-", "O+", "O-", "B+", "B-"]
+            "dropDown": [" ", "AB+", "AB-", "A+", "A-", "O+", "O-", "B+", "B-"]
         }, {
             "name": "Photograph",
             "type": "image",

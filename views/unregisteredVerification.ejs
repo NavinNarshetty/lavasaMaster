@@ -109,16 +109,27 @@
                         <p>i. SFA ID: 12345 <br>ii. SFA Password: abRD233 (To be kept confidential)</p>
                         <p> We will inform you via Email/SMS, once the Sports Registrations are
                             <br>open.</p>
-                        <p>The Sports Registration forms will be available on</p>
-                        <p><a href="https://sfanow.in/register" target="_new" style="color:#fff;text-decoration: none;">https://sfanow.in/register</a></p>
-                        <p> For further queries please call us on <span style="font-family:TitilliumWeb-Bold;"><%=infoNo%></span><br>                            or email us at <span style="font-family:TitilliumWeb-Bold;"><%=infoId%></span></p>
-                        <p><span style="font-family:TitilliumWeb-Bold;">In the event that your school does not register by 30th September 2017 an additional fee of <i class="fa fa-inr"
+                        <%if(type == 'college'){%>
+                            <p>The Sports Registration forms will be available on <a href="http://mumbaicollege.sfanow.in/sports-registration"
+                                    target="_new" style="color:#000;text-decoration: none;">http://mumbaicollege.sfanow.in/sports-registration</a></p>
+                            <%} else {%>
+                                <%if(city == 'Mumbai'){%>
+                                    <p>The Sports Registration forms will be available on <a href="http://mumbaischool.sfanow.in/sports-registration"
+                                            target="_new" style="color:#000;text-decoration: none;">http://mumbaischool.sfanow.in/sports-registration</a></p>
+                                    <%} else {%>
+                                        <p>The Sports Registration forms will be available on <a href="http://hyderabadschool.sfanow.in/register"
+                                                target="_new" style="color:#000;text-decoration: none;">http://hyderabadschool.sfanow.in/register</a></p>
+                                        <%}%>
+                                            <%}%>
+
+                                                <p> For further queries please call us on <span style="font-family:TitilliumWeb-Bold;"><%=infoNo%></span><br>                                                    or email us at <span style="font-family:TitilliumWeb-Bold;"><%=infoId%></span></p>
+                                                <p><span style="font-family:TitilliumWeb-Bold;">In the event that your school does not register by 30th September 2017 an additional fee of <i class="fa fa-inr"
                                 aria-hidden="true"></i> <%if(infoId == 'info@sfanow.in'){%>
                                 400/-.
                                 <%} else if(infoId == 'info.hyd@sfanow.in'){%>
                                     200/-.
                                     <%}%> will be levied.</span> </p>
-                        <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>
+                                                <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>
                     </div>
                 </td>
             </tr>

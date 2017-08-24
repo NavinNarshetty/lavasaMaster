@@ -64,7 +64,9 @@
                 <div class="col-md-10 col-sm-10 col-xs-12">
                   <div class="pl5 pull-left">
                     <h4>{{sport.info[0].gender | firstcapitalize}} {{" "+sport.info[0].age}}</h4>
-                    <h4>Created By: {{sport.info[0].createdBy}}</h4>
+                    <h4 ng-if="isCollege == false">Created By: {{sport.info[0].createdBy}}</h4>
+                    <h4 ng-if="isCollege == true && sport.info[0].createdBy == 'School'">Created By: College</h4>
+                    <h4 ng-if="isCollege == true && sport.info[0].createdBy != 'School'">Created By: {{sport.info[0].createdBy}}</h4>
                   </div>
                   <div class="pull-right" ng-if="detail.userType == (sport.info[0].createdBy).toLowerCase()" style="margin-right: 15px;" ng-click="setTeamid(sport._id);selectService.team =[];">
                     <a class="btn btn-default" ui-sref="team-selection({id:stateId})">Edit</a>

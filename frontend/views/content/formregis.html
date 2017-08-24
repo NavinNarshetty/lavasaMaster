@@ -50,10 +50,11 @@
                         not appear in the list kindly add the name of your college and proceed. </p>
                 </div>
                 <div class="col-md-3 col-sm-3 col-xs-12">
-                    <label class="para2 sfa-padd sf-list" ng-if="sfaCity == 'Mumbai'">  SFA ID or Name:</label>
+                    <label class="para2 sfa-padd sf-list" ng-if="sfaCity == 'Mumbai' && isCollege == false">  SFA ID or Name:</label>
+                    <label class="para2 sfa-padd sf-list" ng-if="sfaCity == 'Mumbai' && isCollege == true">Name:</label>
                     <label for="" class="para2 sfa-padd sf-list" ng-if="sfaCity == 'Hyderabad'">Name:</label>
                 </div>
-                <div class="col-md-8 col-sm-8 col-xs-12" ng-if="sfaCity == 'Mumbai'">
+                <div class="col-md-8 col-sm-8 col-xs-12" ng-if="sfaCity == 'Mumbai' && isCollege == false">
                     <ui-select name="idSfa" id="idSfa" theme="bootstrap" ng-model="sfaId" ng-change="searchSFA($select.selected.sfaid)">
                         <ui-select-match allow-clear="true" placeholder="Select/Search SFA ID or Name">
                             {{$select.selected.sfaid}}
@@ -66,9 +67,22 @@
                         </ui-select-choices>
                     </ui-select>
                 </div>
+                <div class="col-md-8 col-sm-8 col-xs-12" ng-if="sfaCity == 'Mumbai' && isCollege == true">
+                    <ui-select name="idSfa" id="idSfa" theme="bootstrap" ng-model="sfaId" ng-change="searchSFACollege($select.selected)">
+                        <ui-select-match allow-clear="true" placeholder="Select/Search Name">
+                            {{$select.selected.name}}
+                        </ui-select-match>
+                        <ui-select-choices refresh-delay="0" repeat="item in schoolList | filter: $select.search" refresh="refreshSFA($select.search)">
+                            <!-- <span ng-bind-html="item.sfaid"></span><br> -->
+                            <large>
+                                {{item.name}}
+                            </large>
+                        </ui-select-choices>
+                    </ui-select>
+                </div>
                 <div class="col-md-8 col-sm-8 col-xs-12" ng-if="sfaCity == 'Hyderabad'">
                     <ui-select name="idSfa" id="idSfa" theme="bootstrap" ng-model="sfaId" ng-change="searchSFAHyderabad($select.selected)">
-                        <ui-select-match allow-clear="true" placeholder="Select/Search SFA ID or Name">
+                        <ui-select-match allow-clear="true" placeholder="Select/Search Name">
                             {{$select.selected.name}}
                         </ui-select-match>
                         <ui-select-choices refresh-delay="0" repeat="item in schoolList | filter: $select.search" refresh="refreshSFA($select.search)">

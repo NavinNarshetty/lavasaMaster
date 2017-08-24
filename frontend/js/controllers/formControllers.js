@@ -1679,6 +1679,11 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
         $scope.sfaID = paramData;
         console.log("sfaid", $scope.sfaID);
     };
+    $scope.searchSFACollege = function (paramData) {
+        console.log("changekeyword", paramData);
+        $scope.sfaID = paramData.sfaid;
+        console.log("sfaid", $scope.sfaID);
+    };
     $scope.searchSFAHyderabad = function (paramData) {
         console.log("changekeyword", paramData);
         $scope.sfaID = paramData.sfaid;

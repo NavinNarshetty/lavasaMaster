@@ -509,7 +509,7 @@
                             <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
                             from their school registrations. </p>-->
                             <p class="custom-a mb-33" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
-                            <p class="custom-a mb-75" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
+                            <p class="custom-a mb91" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
                         </div>
                         <div class="text-center mb-20 "><a ui-sref="formathlete"><button class="btn-category orange "> Click here for Athlete Registration Form</button></a></div>
                     </div>
@@ -532,8 +532,8 @@
                                 <p>Once the athlete / {{type}} registration is complete, log in using your SFA ID and password
                                     to register for your sport/sports of interest.
                                 </p>
-                                <p ng-if="isCollege==false">
-                                    If you do not have an SFA ID and Password, kindly register yourself as an athlete / school by clicking the relevant option.
+                                <p>
+                                    If you do not have an SFA ID and Password, kindly register yourself as an athlete / {{type}} by clicking the relevant option.
                                 </p>
                                 <!-- <p class="custom-a " ng-if="isCollege==false"><a href="http://{{sfaCity}}school.sfanow.in/formregis
                             " target="_new ">Click here for {{type |firstcapitalize}} Registration Form</a>
@@ -541,19 +541,21 @@
                             <p class="mb-75 custom-a " ng-if="isCollege==false"><a href="http://mumbaischool.sfanow.in/formathlete
                             " target="_new "><strong>Click here for Athlete Registration Form</strong></a>
                             </p> -->
-                                <p class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:<br><a href="http://{{sfaCity}}school.sfanow.in/formregis "
-                                        target="_new ">http://mumbaischool.sfanow.in/formregis</a>
+                                <p class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:<br><a href="http://mumbaischool.sfanow.in/formregis" target="_new">http://mumbaischool.sfanow.in/formregis</a>
                                 </p>
-                                <p class="mb91 custom-a" ng-if="isCollege==false">For Athlete:<br><a href="http://mumbaischool.sfanow.in/formathlete
-                            " target="_new "><strong>http://mumbaischool.sfanow.in/formathlete</strong></a>
+                                <p class="mb91 custom-a" ng-if="isCollege==false">For Athlete:<br><a href="http://mumbaischool.sfanow.in/formathlete" target="_new"><strong>http://mumbaischool.sfanow.in/formathlete</strong></a>
                                 </p>
-                                <p class="mb-33" ng-if="isCollege==true">All registered {{type}}s and athletes will be notified when registration for sports will
+                                <p class="custom-a" ng-if="isCollege==true">For {{type | firstcapitalize}}:<br><a href="http://mumbaicollege.sfanow.in/formregis" target="_new">http://mumbaicollege.sfanow.in/formregis</a>
+                                </p>
+                                <p class="mb91 custom-a" ng-if="isCollege==true">For Athlete:<br><a href="http://mumbaicollege.sfanow.in/formathlete" target="_new"><strong>http://mumbaicollege.sfanow.in/formathlete</strong></a>
+                                </p>
+                                <!-- <p class="mb-33" ng-if="isCollege==true">All registered {{type}}s and athletes will be notified when registration for sports will
                                     be open!
-                                </p>
+                                </p> -->
                             </div>
                             <!--<div class="text-center mb-20 "><button class="btn-category blue-light ">Sports Registration Form</button></div>-->
-                            <div class="text-center mb-20" ng-if="isCollege==false"><a ui-sref="sports-registration"><button class="btn-category blue-light " >Click here for Sports Registration</button></a></div>
-                            <div class="text-center mb-20" ng-if="isCollege==true"><button class="com-category blue-light">Opening shortly</button></div>
+                            <div class="text-center mb-20"><a ui-sref="sports-registration"><button class="btn-category blue-light " >Click here for Sports Registration</button></a></div>
+                            <!-- <div class="text-center mb-20" ng-if="isCollege==true"><button class="com-category blue-light">Opening shortly</button></div> -->
                             <!-- <div class="text-center mb-20 "><a ui-sref="sports-registration "><button class="com-category
                             blue-light " >Opening shortly</button></a></div> -->
                         </div>
@@ -648,7 +650,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="text-center">*SFA shall keep you informed in-case there is any change of dates. </p>
+                            <p class="text-center" ng-if="isCollege==false">*SFA shall keep you informed in-case there is any change of dates. </p>
+                            <p class="text-center mb-180" ng-if="isCollege==true">*SFA shall keep you informed in-case there is any change of dates. </p>
                             <p class="text-center" ng-if="isCollege==false">*Football qualifiers will be held in November. Dates will be announced soon.</p>
                             <!--<div class="text-center mb-20 "><button class="btn-category blue-light ">Sports Registration Form</button></div>-->
                             <!--<div class="text-center mb-20 "><button class="com-category blue-light ">Opening shortly</button></div>-->

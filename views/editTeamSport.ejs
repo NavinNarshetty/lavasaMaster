@@ -275,8 +275,12 @@
                                         <%=infoId%>
                                     </a>
                                     <%}%>. No changes can be made after 30th November
-                                        <%=year%> (Changes to a Football Team can be made only up to 30th October
-                                            <%=year%>)</p>
+                                        <%=year%>
+                                            <%if(type == 'school'){%>
+                                                (Changes to a Football Team can be made only up to 30th October
+                                                <%=year%>)
+                                                    <%}%>
+                        </p>
                     </div>
                 </td>
             </tr>
@@ -285,9 +289,16 @@
                     <div style="padding: 0px 54px; text-align: justify; ">
                         <p style="margin-bottom: 0px; "> 2) Registrations for SFA
                             <%=city%>
-                                <%=year%> will close on 30th September
-                                    <%=year%> (Registrations for Football will close on 30th August
-                                        <%=year%>)</p>
+                                <%=year%> will close on
+                                    <%if(type == 'school'){%>
+                                        30th September
+                                        <%=year%> (Registrations for Football will close on 30th August
+                                            <%=year%>)
+                                                <%} else {%>
+                                                    30th October
+                                                    <%=year%>
+                                                        <%}%>
+                        </p>
                     </div>
                 </td>
             </tr>
@@ -295,8 +306,12 @@
                 <td>
                     <div style="padding: 0px 54px; text-align: justify; ">
                         <p style="margin-bottom: 0px; "> 3) Draws and Schedules will be published on our website by 20th November
-                            <%=year%> (Draws and Schedules for Football will be published by 30th September
-                                <%=year%>)</p>
+                            <%=year%>
+                                <%if(type == 'school'){%>
+                                    (Draws and Schedules for Football will be published by 30th September
+                                    <%=year%>)
+                                        <%}%>
+                        </p>
                     </div>
                 </td>
             </tr>

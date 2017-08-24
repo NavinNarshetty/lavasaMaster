@@ -77,7 +77,10 @@
                       <div class="sportdetail-td" ng-if="sport.info[0].middlename">{{sport.info[0].sfaid}} - {{sport.info[0].firstname}}&nbsp;{{sport.info[0].middlename}}&nbsp;{{sport.info[0].lastname}}</div>
                       <div class="sportdetail-td" ng-if="!sport.info[0].middlename">{{sport.info[0].sfaid}} - {{sport.info[0].firstname}}&nbsp;{{sport.info[0].lastname}}</div>
                     </h4>
-                    <h4>Created By: {{sport.info[0].createdBy}}</h4>
+                    <!-- <h4>Created By: {{sport.info[0].createdBy}}</h4> -->
+                    <h4 ng-if="isCollege == false">Created By: {{sport.info[0].createdBy}}</h4>
+                    <h4 ng-if="isCollege == true && sport.info[0].createdBy == 'School'">Created By: College</h4>
+                    <h4 ng-if="isCollege == true && sport.info[0].createdBy != 'School'">Created By: {{sport.info[0].createdBy}}</h4>
                   </div>
                 </div>
               </div>

@@ -72,7 +72,7 @@
             "onView": true,
             "dropDown": ["Central Board of Secondary Education (CBSE)", "International Baccalaureate (IB)", "Indian Certificate of Secondary Education (ICSE )",
                 "International General Certificate of Secondary Education (IGCSE)", "National Institute of Open Schooling (NIOS)",
-                "Secondary School Certificate (SSC)", "A Level"
+                "Secondary School Certificate (SSC)", "A Level", "Mumbai University", "Other"
             ]
         }, {
             "name": "School Logo",
@@ -283,7 +283,7 @@
                 "validation": ["", "trim", ""],
                 "dropDownField": "",
                 "dropDownType": "single",
-                "dropDown": ["Basketball", "Handball", "Hockey", "Kabaddi", "Kho Kho", "Throwball", "Volleyball"]
+                "dropDown": ["Football", "Basketball", "Handball", "Hockey", "Kabaddi", "Kho Kho", "Throwball", "Volleyball"]
             }]
         }, {
             "name": "Racquet Sports",

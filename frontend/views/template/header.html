@@ -104,25 +104,25 @@
                                     <ul class="display-inline typeList" ng-if="selectedCity != 'hyderabad'">
                                         <li>
                                             <a>COLLEGE CHAMPIONSHIP</a></li>
-                                        <!-- <li>
-                                            <a ui-sref="championship">ABOUT CHAMPIONSHIP</a></li> -->
-                                        <li class="text-center">
-                                            <a>COMING SOON</a></li>
-                                        <!-- <li ng-if="!registerCollege"><a ui-sref="register"> REGISTER</a></li>
-                                        <li ng-if="registerCollege"><a href="{{registerCollege}}/register" target="_blank"> REGISTER</a></li> -->
-                                        <!--    <li ng-if="!registerSchool"><a ui-sref="championshipschedules">CHAMPIONSHIP SCHEDULE</a></li>
-                                        <li ng-if="registerSchool"><a href="{{registerSchool}}/championship-schedule" target="_blank">CHAMPIONSHIP SCHEDULE</a></li>
-                                        <li><a ui-sref="faq">SPECIAL EVENTS</a></li>
-                                        <li><a ui-sref="faq">VENUE</a></li>
-                                        <li><a ui-sref="faq">FAQs</a></li> -->
+                                        <li>
+                                            <li ng-if="!registerCollege"><a ui-sref="championship"> ABOUT CHAMPIONSHIP</a></li>
+                                            <li ng-if="registerCollege"><a href="{{registerCollege}}/championship" target="_blank"> ABOUT CHAMPIONSHIP</a></li>
+                                            <li ng-if="!registerCollege"><a ui-sref="register"> REGISTER</a></li>
+                                            <li ng-if="registerCollege"><a href="{{registerCollege}}/register" target="_blank"> REGISTER</a></li>
+                                            <li ng-if="!registerCollege"><a ui-sref="championshipschedules">CHAMPIONSHIP SCHEDULE</a></li>
+                                            <li ng-if="registerCollege"><a href="{{registerCollege}}/championship-schedule" target="_blank">CHAMPIONSHIP SCHEDULE</a></li>
+                                            <!-- <li><a ui-sref="faq">SPECIAL EVENTS</a></li>
+                                            <li><a ui-sref="faq">VENUE</a></li> -->
+                                            <li ng-if="!registerCollege"><a ui-sref="faq">FAQs</a></li>
+                                            <li ng-if="registerCollege"><a href="{{registerCollege}}/faq" target="_blank">FAQs</a></li>
                                     </ul>
                                     <!-- <li>
                                         <a ui-sref="championship">ABOUT CHAMPIONSHIP</a></li>
                                     <li><a ui-sref="register"> REGISTER</a></li>
                                     <li><a ui-sref="faq">FAQs</a></li> -->
                                 </ul>
-                            </li>
-                            <!--</li>-->
+                                </li>
+                                <!--</li>-->
                         </ul>
 
                         <ul class="margin0 padding0 prs hidden-lg hidden-md hidden-sm mn-list nav navbar-nav">
@@ -219,18 +219,17 @@
                             <ul class="typeList" ng-if="selectedCity != 'hyderabad'">
                                 <li>
                                     <a>COLLEGE CHAMPIONSHIP</a></li>
-                                <!-- <li>
-                                    <a ui-sref="championship">ABOUT CHAMPIONSHIP</a></li> -->
-                                <li class="text-center">
-                                    <a>COMING SOON</a></li>
-                                <!-- <li ng-if="!registerCollege"><a ui-sref="register"> REGISTER</a></li>
-                                <li ng-if="registerCollege"><a href="{{registerCollege}}/register" target="_blank"> REGISTER</a></li> -->
+                                <li ng-if="!registerCollege"><a ui-sref="championship"> ABOUT CHAMPIONSHIP</a></li>
+                                <li ng-if="registerCollege"><a href="{{registerCollege}}/championship" target="_blank"> ABOUT CHAMPIONSHIP</a></li>
+                                <li ng-if="!registerCollege"><a ui-sref="register"> REGISTER</a></li>
+                                <li ng-if="registerCollege"><a href="{{registerCollege}}/register" target="_blank"> REGISTER</a></li>
 
-                                <!--    <li ng-if="!registerSchool"><a ui-sref="championshipschedules">CHAMPIONSHIP SCHEDULE</a></li>
-                                        <li ng-if="registerSchool"><a href="{{registerSchool}}/championship-schedule" target="_blank">CHAMPIONSHIP SCHEDULE</a></li>
-                                <li><a ui-sref="faq">SPECIAL EVENTS</a></li>
-                                <li><a ui-sref="faq">VENUE</a></li>
-                                <li><a ui-sref="faq">FAQs</a></li> -->
+                                <li ng-if="!registerCollege"><a ui-sref="championshipschedules">CHAMPIONSHIP SCHEDULE</a></li>
+                                <li ng-if="registerCollege"><a href="{{registerCollege}}/championship-schedule" target="_blank">CHAMPIONSHIP SCHEDULE</a></li>
+                                <!-- <li><a ui-sref="faq">SPECIAL EVENTS</a></li>
+                                <li><a ui-sref="faq">VENUE</a></li> -->
+                                <li ng-if="!registerCollege"><a ui-sref="faq">FAQs</a></li>
+                                <li ng-if="registerCollege"><a href="{{registerCollege}}/faq" target="_blank">FAQs</a></li>
                             </ul>
                         </ul>
                     </div>
@@ -274,17 +273,16 @@
                             <li>
                                 <p>COLLEGE CHAMPIONSHIP</p>
                             </li>
-                            <!-- <li>
-                                <a ui-sref="championship">ABOUT CHAMPIONSHIP</a></li> -->
-                            <li class="text-center">
-                                <a>COMING SOON</a></li>
-                            <!-- <li ng-if="!registerCollege"><a ui-sref="register"> REGISTER</a></li>
-                            <li ng-if="registerCollege"><a href="{{registerCollege}}/register" target="_blank"> REGISTER</a></li> -->
-                            <!--    <li ng-if="!registerSchool"><a ui-sref="championshipschedules">CHAMPIONSHIP SCHEDULE</a></li>
-                                        <li ng-if="registerSchool"><a href="{{registerSchool}}/championship-schedule" target="_blank">CHAMPIONSHIP SCHEDULE</a></li>
-                            <li><a ui-sref="faq">SPECIAL EVENTS</a></li>
-                            <li><a ui-sref="faq">VENUE</a></li>
-                            <li><a ui-sref="faq">FAQs</a></li> -->
+                            <li ng-if="!registerCollege"><a ui-sref="championship"> ABOUT CHAMPIONSHIP</a></li>
+                            <li ng-if="registerCollege"><a href="{{registerCollege}}/championship" target="_blank"> ABOUT CHAMPIONSHIP</a></li>
+                            <li ng-if="!registerCollege"><a ui-sref="register"> REGISTER</a></li>
+                            <li ng-if="registerCollege"><a href="{{registerCollege}}/register" target="_blank"> REGISTER</a></li>
+                            <li ng-if="!registerSchool"><a ui-sref="championshipschedules">CHAMPIONSHIP SCHEDULE</a></li>
+                            <li ng-if="registerCollege"><a href="{{registerCollege}}/championship-schedule" target="_blank">CHAMPIONSHIP SCHEDULE</a></li>
+                            <!-- <li><a ui-sref="faq">SPECIAL EVENTS</a></li>
+                            <li><a ui-sref="faq">VENUE</a></li> -->
+                            <li ng-if="!registerCollege"><a ui-sref="faq">FAQs</a></li>
+                            <li ng-if="registerCollege"><a href="{{registerCollege}}/faq" target="_blank">FAQs</a></li>
                         </ul>
                         <!-- <li>
                                 <a ui-sref="championship">ABOUT CHAMPIONSHIP</a>
