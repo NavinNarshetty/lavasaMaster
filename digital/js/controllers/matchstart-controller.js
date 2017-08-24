@@ -47,55 +47,92 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                 $scope.matchDetails = data.data;
                 $scope.matchDetails.matchId = $scope.matchData.matchId;
                 // INITIALISE RESULTS
-                if ($scope.matchDetails.sportType == "Combat Sports") {
-                  if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
-                    $scope.matchDetails.resultsCombat = {};
-                      $scope.formData = {
-                          "players": [],
-                          "matchPhoto": [],
-                          "scoreSheet": []
-                      }
-                      _.each($scope.matchDetails.players, function(n, key) {
-                          $scope.formData.players[key] = {
-                              "player": n._id,
-                              "noShow": false,
-                              "walkover": false,
-                              "sets": [{
-                                  point: 0,
-                              }]
+                switch ($scope.matchDetails.sportType) {
+                  case "Combat Sports":
+                    if ($scope.matchDetails.isTeam == false) {
+                      console.log("COMBAT SINGLE!");
+                      if ($scope.matchDetails.resultsCombat == null || $scope.matchDetails.resultsCombat == "" || $scope.matchDetails.resultsCombat == undefined) {
+                        $scope.matchDetails.resultsCombat = {};
+                          $scope.formData = {
+                              "players": [],
+                              "matchPhoto": [],
+                              "scoreSheet": []
                           }
-                      })
-                  } else{
-                    $scope.formData = $scope.matchDetails.resultsCombat;
-                  }
-            } else if ($scope.matchDetails.sportType == "Racquet Sports") {
-              if ($scope.matchDetails.resultsRacquet == null || $scope.matchDetails.resultsRacquet == "" || $scope.matchDetails.resultsRacquet == undefined) {
-                $scope.matchDetails.resultsRacquet = {};
-                  $scope.formData = {
-                      "players": [],
-                      "matchPhoto": [],
-                      "scoreSheet": []
-                  }
-                  _.each($scope.matchDetails.players, function(n, key) {
-                      $scope.formData.players[key] = {
-                          "player": n._id,
-                          "noShow": false,
-                          "walkover": false,
-                          "sets": [{
-                              point: 0,
-                              ace: 0,
-                              winner: 0,
-                              unforcedError: 0,
-                              serviceError: 0,
-                              doubleFaults: 0
-                          }]
+                          _.each($scope.matchDetails.players, function(n, key) {
+                              $scope.formData.players[key] = {
+                                  "team": n._id,
+                                  "noShow": false,
+                                  "walkover": false,
+                                  "sets": [{
+                                      point: 0,
+                                  }]
+                              }
+                          })
+                      } else{
+                        $scope.formData = $scope.matchDetails.resultsCombat;
                       }
-                  })
-              } else{
-                $scope.formData = $scope.matchDetails.resultsRacquet;
-              }
-            }
-
+                    } else if ($scope.matchDetails.isTeam == true) {
+                      console.log("COMBAT TEAM!");
+                    }
+                  break;
+                  case "Racquet Sports":
+                    if ($scope.matchDetails.isTeam == false) {
+                      console.log("RACQUET SINGLE!");
+                      if ($scope.matchDetails.resultsRacquet == null || $scope.matchDetails.resultsRacquet == "" || $scope.matchDetails.resultsRacquet == undefined) {
+                        $scope.matchDetails.resultsRacquet = {};
+                          $scope.formData = {
+                              "players": [],
+                              "matchPhoto": [],
+                              "scoreSheet": []
+                          }
+                          _.each($scope.matchDetails.players, function(n, key) {
+                              $scope.formData.players[key] = {
+                                  "player": n._id,
+                                  "noShow": false,
+                                  "walkover": false,
+                                  "sets": [{
+                                      point: 0,
+                                      ace: 0,
+                                      winner: 0,
+                                      unforcedError: 0,
+                                      serviceError: 0,
+                                      doubleFaults: 0
+                                  }]
+                              }
+                          })
+                      } else{
+                        $scope.formData = $scope.matchDetails.resultsRacquet;
+                      }
+                    } else if ($scope.matchDetails.isTeam == true) {
+                      console.log("RACQUET TEAMS!");
+                      if ($scope.matchDetails.resultsRacquet == null || $scope.matchDetails.resultsRacquet == "" || $scope.matchDetails.resultsRacquet == undefined) {
+                        $scope.matchDetails.resultsRacquet = {};
+                          $scope.formData = {
+                              "teams": [],
+                              "matchPhoto": [],
+                              "scoreSheet": []
+                          }
+                          _.each($scope.matchDetails.teams, function(n, key) {
+                              $scope.formData.teams[key] = {
+                                  "team": n._id,
+                                  "noShow": false,
+                                  "walkover": false,
+                                  "sets": [{
+                                      point: 0,
+                                      ace: 0,
+                                      winner: 0,
+                                      unforcedError: 0,
+                                      serviceError: 0,
+                                      doubleFaults: 0
+                                  }]
+                              }
+                          })
+                      } else{
+                        $scope.formData = $scope.matchDetails.resultsRacquet;
+                      }
+                    }
+                  break;
+                }
             // INITIALISE RESULTS END
             } else {
                 console.log("ERROR IN getOneMatch");

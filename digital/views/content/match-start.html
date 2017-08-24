@@ -13,6 +13,7 @@
   <div class="container">
     <div class="row">
       <div class="col-md-offset-1 col-md-6 col-sm-6">
+        <!-- FOR INDIVIDUALS CARD -->
         <div class="matchstart-players" ng-if="matchDetails.isTeam==false">
           <div class="matchplayer-card" ng-repeat = "player in matchDetails.players track by $index">
             <div class="matchplayer-playerid">
@@ -28,6 +29,23 @@
             </div>
           </div>
         </div>
+        <!-- FOR INDIVIDUALS END CARD-->
+        <!-- FOR TEAM CARD -->
+        <div class="matchstart-players" ng-if="matchDetails.isTeam==true">
+          <div class="matchplayer-card" ng-repeat = "team in matchDetails.teams track by $index">
+            <div class="matchplayer-playerid">
+              <p class="text-uppercase">TEAM ID: <span>{{team.teamId}}</span></p>
+            </div>
+            <div class="matchplayer-image">
+              <!-- <img src="img/dishapatani1.jpg" alt="" class="img-responsive"> -->
+              <img ng-src="{{team.photograph|serverimage}}" alt="{{team.schoolName}}" class="img-responsive">
+            </div>
+            <div class="matchplayer-details">
+              <p class="matchplayer-name">{{team.schoolName}}</p>
+            </div>
+          </div>
+        </div>
+        <!-- FOR TEAM CARD END -->
       </div>
       <div class="col-md-2 col-sm-3">
         <div class="matchstart-noshow pointer" ng-click="showNoMatch();">
@@ -59,9 +77,11 @@
         </div>
       </div>
     </div>
-    <!-- <div class="row">
-      <pre>{{matchDetails|json}}</pre>
-    </div> -->
+    <div class="row">
+      <!-- <pre>{{matchDetails|json}}</pre> -->
+      <pre>formData
+        {{formData|json}}</pre>
+    </div>
     </div>
   </div>
 </div>
