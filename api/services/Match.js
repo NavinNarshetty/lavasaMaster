@@ -61,8 +61,8 @@ schema.plugin(deepPopulate, {
         "opponentsTeam": {
             select: '_id name teamId schoolName studentTeam createdBy sport school'
         },
-        "opponentsTeam.studentTeam.studentId":{
-            select:'_id sfaId firstName middleName surname school photograph dob city'
+        "opponentsTeam.studentTeam.studentId": {
+            select: '_id sfaId firstName middleName surname school photograph dob city'
         },
         "prevMatch": {
             select: '_id incrementalId'
@@ -563,64 +563,63 @@ var model = {
     },
 
     getSportSpecificRounds: function (data, callback) {
-        // console.log("data", data);
-
-        Match.aggregate(
-            [
-                // Stage 1
-                {
-                    $match: {
-                        "sport": ObjectId(data.sport)
-                    }
-                },
-
-                // Stage 2
-                {
-                    $group: {
-                        "_id": "$round",
-                        "matches": {
-                            $push: "$$ROOT"
-                        }
-                    }
-                },
-                // Stage 3
-                {
-                    $sort: {
-                        "matches.createdAt": 1
-                    }
-                },
-
-            ],
-            function (err, matches) {
-                console.log("matches : ", matches);
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else {
-                    if (_.isEmpty(matches)) {
-                        callback(null, []);
+        var matchData = [];
+        async.waterfall([
+            function (callback) {
+                var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                Match.find({
+                    sport: data.sport
+                    // round: data.round
+                }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
                     } else {
-                        var sendObj = {};
-                        sendObj.roundsListName = _.map(matches, '_id');
-                        sendObj.roundsList = matches;
-                        if (data.round) {
-                            var index = _.findIndex(matches, function (n) {
-                                return n._id == data.round
-                            });
-
-                            if (index != -1) {
-                                sendObj.roundsList = _.slice(matches, index, index + 3);
-                                callback(null, sendObj);
-                            } else {
-                                callback(null, sendObj);
-                            }
-
+                        if (_.isEmpty(found)) {
+                            callback(null, []);
                         } else {
-                            callback(null, sendObj);
+                            var matches = _.groupBy(found, 'round');
+                            callback(null, matches);
                         }
                     }
+                });
+            },
+            function (matches, callback) {
+                // var arr = _.keys(matches);
+                // _.each(matches, function (n) {
+                //     console.log(n);
+                //     matchData.push(n);
+                // });
+                // callback(null, matchData);
+                var sendObj = {};
+                sendObj.roundsListName = _.keys(matches);
+                sendObj.roundsList = matches;
+
+                if (data.round) {
+                    var index = _.findIndex(matches, function (n, key) {
+                        return key == data.round
+                    });
+                    console.log("index", index);
+
+                    if (index != -1) {
+                        sendObj.roundsList = _.slice(matchData, index, index + 3);
+                        callback(null, sendObj);
+                    } else {
+                        callback(null, sendObj);
+                    }
+
+                } else {
+                    callback(null, sendObj);
                 }
-            });
+            }
+        ], function (err, result) {
+            console.log("Final Callback");
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+
     },
 
     //-----------------------------SAVE Excel ---------------------------------------------
@@ -1339,7 +1338,6 @@ var model = {
         });
 
     },
-
 
     //-----------------------------Generate Excel-----------------------------------------
 

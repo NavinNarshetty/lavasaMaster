@@ -1,33 +1,320 @@
-var individual = {
-    players: [{
+var KnockoutTeam = {
+    team[{
+        teamId: _id,
+        teamResults:{
+        goalPoints:[{
+              goal:20,
+        }],
+        finalGoalPoints:22,
+        penalityPoints:10,
+        shotsOnGoal: 2,
+        totalShots:2,
+        penalityCorners:2,
+        penality:1,
+        penalityStroke:1,
+        saves:1,
+        fouls:1,
+        spike:1,
+        block:1,
+        superTackle:1,
+        allOut:1
+        }
+        players: [{
         player: id,
         noShow: true,
         walkover: true,
         color: "Blue/Red",
-        sets: [{
-            point: 22,
-        }]
-    }, {
+        playerPoints: {
+            goal:[{
+                points:1,
+                time:11am
+            }],
+            assist:[{
+                count:1,
+                time:11am
+            }],
+            redCard:[{
+                time:11am
+            }],
+            yellowCard:[{
+                time:11am
+            }],
+            greenCard:[{
+                time:11am
+            }],
+            penalityPoint:[{
+                count:1
+            }]
+            freeThrow:[{
+                count:1,
+                time:11am
+            }],
+            2Points:[{
+                 count:1,
+                time:11am
+
+                }],
+            3Points:[{
+                count:1,
+                time:11am
+            }],
+            personalFoul:[{
+                count:1,
+                time:11am
+            }],
+            technicalFoul:[{
+                count:1,
+                time:11am
+            }],
+            raids:[{
+                count:1,
+                time:11am
+            }],
+            bonusPoint:[{
+                count:1,
+                time:11am
+            }],
+            superRaid:[{
+                count:1,
+                time:11am
+            }],
+            tackel:[{
+                count:1,
+                time:11am
+            }],
+            in:[{
+                time:11am
+            }],
+            out:[{
+                time:11am
+            }]
+        }
+       }]
+        },{
+        teamId: _id,
+        teamResults:{
+        goalPoints:[{
+              goal:20,
+        }],
+        finalGoalPoints:22,
+        penalityPoints:10,
+        shotsOnGoal: 2,
+        totalShots:2,
+        penalityCorners:2,
+        penality:1,
+        penalityStroke:1,
+        saves:1,
+        fouls:1,
+        spike:1,
+        block:1,
+        superTackle:1,
+        allOut:1
+        }
+        players: [{
         player: id,
         noShow: true,
         walkover: true,
         color: "Blue/Red",
-        sets: [{
-            point: 23,
-            time:
-            distance:
-            height:
-        }]
-        
-    }],
+        playerPoints: {
+            goal:[{
+                points:1,
+                time:11am
+            }],
+            assist:[{
+                count:1,
+                time:11am
+            }],
+            redCard:[{
+                time:11am
+            }],
+            yellowCard:[{
+                time:11am
+            }],
+            greenCard:[{
+                time:11am
+            }],
+            penalityPoint:[{
+                count:1
+            }]
+            freeThrow:[{
+                count:1,
+                time:11am
+            }],
+            2Points:[{
+                 count:1,
+                time:11am
+
+                }],
+            3Points:[{
+                count:1,
+                time:11am
+            }],
+            personalFoul:[{
+                count:1,
+                time:11am
+            }],
+            technicalFoul:[{
+                count:1,
+                time:11am
+            }],
+            raids:[{
+                count:1,
+                time:11am
+            }],
+            bonusPoint:[{
+                count:1,
+                time:11am
+            }],
+            superRaid:[{
+                count:1,
+                time:11am
+            }],
+            tackel:[{
+                count:1,
+                time:11am
+            }],
+            in:[{
+                time:11am
+            }],
+            out:[{
+                time:11am
+            }]
+        }
+    }]}]
+    
     isNoMatch: true,
     isDraw: true,
     winnner: [{
-        player: id,
+        team: id,
         reason: "",
-        rank: 012,
     }],
-    matchPhoto: "6732673862837342323423.jpg",
+    matchPhoto: [{"6732673862837342323423.jpg"}],
     status: "IsLive,IsPending,IsCompleted",
-    scoreSheet: "588372837289379283789.jpg"
+    scoreSheet: [{"588372837289379283789.jpg"}]
+};//except khokho and throwball
+
+var leagueKnockoutTeam = {
+   team[{
+        teamId: _id,
+        teamResults:{
+        halfPoints:10,
+        finalPoints:22,
+        penalityPoints:1,
+        shotsOnGoal: 2,
+        totalShots:2,
+        corners:2,
+        penality:1,
+        saves:1,
+        fouls:1,
+        offSide:1
+        cleanSheet:1,
+        superTackle:1,   
+        }
+        players: [{
+        player: id,
+        noShow: true,
+        walkover: true,
+        color: "Blue/Red",
+        playerPoints: {
+            goal:[{
+                points:1,
+                time:11am
+            }],
+            assist:[{
+                count:1,
+                time:11am
+            }],
+            redCard:[{
+                time:11am
+            }],
+            yellowCard:[{
+                time:11am
+            }],
+            penalityPoint:[{
+                count:1
+            }],
+            in:[{
+                time:11am
+            }],
+            out:[{
+                time:11am
+            }]
+        }
+       }]
+        },{
+        teamId: _id,
+        teamResults:{
+        halfPoints:10,
+        finalPoints:22,
+        penalityPoints:1,
+        shotsOnGoal: 2,
+        totalShots:2,
+        corners:2,
+        penality:1,
+        saves:1,
+        fouls:1,
+        offSide:1
+        cleanSheet:1,
+        superTackle:1,   
+        }
+        players: [{
+        player: id,
+        noShow: true,
+        walkover: true,
+        color: "Blue/Red",
+        playerPoints: {
+            goal:[{
+                points:1,
+                time:11am
+            }],
+            assist:[{
+                count:1,
+                time:11am
+            }],
+            redCard:[{
+                time:11am
+            }],
+            yellowCard:[{
+                time:11am
+            }],
+            penalityPoint:[{
+                count:1
+            }],
+            in:[{
+                time:11am
+            }],
+            out:[{
+                time:11am
+            }]
+        }
+       }]
+        }]   
+    isNoMatch: true,
+    isDraw: true,
+    winnner: [{
+        team: id,
+        reason: "",
+    }],
+    matchPhoto: [{"6732673862837342323423.jpg"}],
+    status: "IsLive,IsPending,IsCompleted",
+    scoreSheet: [{"588372837289379283789.jpg"}]
 };
+
+var qualifyingRound = {
+    players: {
+        player: id,
+        noShow:true/false,
+        attempt: [{
+            distance: 22m,
+            height:11m
+            foul:'X'   
+        }],
+        finalScore:12
+        result:qualified/notqualified/1/2/3,
+        rank:1
+    },   
+    matchPhoto: [{"6732673862837342323423.jpg"}],
+    status: "IsLive,IsPending,IsCompleted",
+    scoreSheet: [{"588372837289379283789.jpg"}]
+};
+
