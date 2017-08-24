@@ -61,6 +61,9 @@ schema.plugin(deepPopulate, {
         "opponentsTeam": {
             select: '_id name teamId schoolName studentTeam createdBy sport school'
         },
+        "opponentsTeam.studentTeam.studentId":{
+            select:'_id sfaId firstName middleName surname school photograph dob city'
+        },
         "prevMatch": {
             select: '_id incrementalId'
         },
@@ -236,18 +239,19 @@ var model = {
                     } else {
                         var finalData = {};
                         finalData.isTeam = found.sport.sportslist.sportsListSubCategory.isTeam;
-                        finalData.players = [];
                         finalData.sportsName = found.sport.sportslist.name;
                         finalData.age = found.sport.ageGroup.name;
                         finalData.gender = found.sport.gender;
                         finalData.sportType = found.sport.sportslist.sportsListSubCategory.sportsListCategory.name;
-                        if (found.opponentsSingle) {
+                        if (!_.isEmpty(found.opponentsSingle)) {
+                            finalData.players = [];
                             _.each(found.opponentsSingle, function (n) {
                                 finalData.players.push(n.athleteId);
                             });
                         } else {
-                            _.each(found.opponentsSingle.studentTeam, function (n) {
-                                finalData.players.push(n.studentId);
+                            finalData.teams = [];
+                            _.each(found.opponentsTeam, function (n) {
+                                finalData.teams.push(n);
                             });
                         }
                         if (_.isEmpty(found.resultsCombat)) {
@@ -260,8 +264,6 @@ var model = {
                         } else {
                             finalData.resultsRacquet = found.resultsRacquet;
                         }
-                        finalData.scheduleDate = found.scheduleDate;
-                        finalData.scheduleTime = found.scheduleTime;
                         callback(null, finalData);
                     }
 
@@ -530,7 +532,8 @@ var model = {
                         sendObj.drawFormat = sportslist.drawFormat.name;
                         callback(null, sportslist);
                     } else {
-                        callback(err, null);
+                        console.log(matchObj.sportslist, "SportList Not Found");
+                        callback("No Data Found", null);
                     }
                 });
             },
@@ -539,14 +542,14 @@ var model = {
                 Sport.findOne(matchObj).exec(function (err, sportDetails) {
                     if (err) {
                         callback(err, null);
-                    } else if (sportDetails) {
-                        if (_.isEmpty(sportDetails)) {
-                            callback(null, []);
-                        } else {
-                            sendObj.sport = sportDetails._id;
-                            callback(null, sendObj);
-                        }
+                    } else if (!_.isEmpty(sportDetails)) {
+                        sendObj.sport = sportDetails._id;
+                        callback(null, sendObj);
+                    } else {
+                        console.log(matchObj, "Sport Not Found with this selection");
+                        callback(null, "No Data Found");
                     }
+
                 });
             }
         ], function (err, result) {
