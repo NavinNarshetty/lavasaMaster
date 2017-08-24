@@ -41,14 +41,6 @@
                 <!-- SPORT NAME -->
                 <div class="form-group">
                   <label>Sport Name</label>
-                  <!-- <ui-select name="sportname" multiple="" id="sportname" theme="bootstrap" ng-model="formData.sport" readonly>
-                    <ui-select-match placeholder="Please Enter Sport Name">
-                      {{$select.selected[$index].name}}
-                    </ui-select-match>
-                    <ui-select-choices repeat="item in sportList | filter:{name:$select.search}">
-                      <span ng-bind-html="item.name"></span>
-                    </ui-select-choices>
-                  </ui-select> -->
                   <input type="text" name="sportname" ng-model="formData.sportsName" class="form-control" placeholder="Enter Sport" readonly>
                   <div class="error-msg" ng-if="detailForm.sportname.$invalid && detailForm.sportname.$touched">Please Enter Filter*</div>
                 </div>

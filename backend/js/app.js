@@ -296,7 +296,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         // detailteam
         .state('detailteam', {
-            url: "/detailteam",
+            url: "/detailteam/:id",
             templateUrl: "views/template.html",
             controller: 'DetailTeamCtrl'
         })
