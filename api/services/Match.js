@@ -563,13 +563,13 @@ var model = {
     },
 
     getSportSpecificRounds: function (data, callback) {
+        // var finalData = [];
         var matchData = [];
         async.waterfall([
             function (callback) {
                 var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
                 Match.find({
                     sport: data.sport
-                    // round: data.round
                 }).lean().deepPopulate(deepSearch).exec(function (err, found) {
                     if (err) {
                         callback(err, null);
@@ -584,21 +584,26 @@ var model = {
                 });
             },
             function (matches, callback) {
-                // var arr = _.keys(matches);
-                // _.each(matches, function (n) {
-                //     console.log(n);
-                //     matchData.push(n);
-                // });
-                // callback(null, matchData);
+                var i = 0;
+                var dummy = [];
+                var arr = _.keys(matches);
+                _.each(matches, function (n) {
+                    dummy.push(n);
+                });
+                while (i != arr.length) {
+                    var match = {};
+                    match.name = arr[i];
+                    match.match = dummy[i];
+                    matchData.push(match);
+                    i++;
+                }
                 var sendObj = {};
                 sendObj.roundsListName = _.keys(matches);
-                sendObj.roundsList = matches;
-
+                sendObj.roundsList = matchData;
                 if (data.round) {
-                    var index = _.findIndex(matches, function (n, key) {
-                        return key == data.round
+                    var index = _.findIndex(matchData, function (n) {
+                        return n.name == data.round
                     });
-                    console.log("index", index);
 
                     if (index != -1) {
                         sendObj.roundsList = _.slice(matchData, index, index + 3);
