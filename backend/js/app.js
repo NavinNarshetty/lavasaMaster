@@ -294,6 +294,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailPlayerCtrl'
         })
+        // detailteam
+        .state('detailteam', {
+            url: "/detailteam",
+            templateUrl: "views/template.html",
+            controller: 'DetailTeamCtrl'
+        })
         //medals
         .state('medals', {
             url: "/medals",

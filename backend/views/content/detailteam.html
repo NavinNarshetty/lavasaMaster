@@ -1,0 +1,103 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2 class="text-uppercase">Matches</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailForm" role="form" class="sec">
+            <div class="row">
+              <div class="col-md-12">
+                <!-- MATCH HEAD -->
+                <div class="form-group">
+                  <h5 class="text-center">MATCH DETAILS</h5>
+                </div>
+                <!-- MATCH HEAD END -->
+
+                <pre>{{formData | json}}</pre>
+                <!-- TEAM CARDS -->
+
+                <div class="team-card-holder" ng-repeat="team in formData.teams track by $index">
+                  <!-- TEAM ID -->
+                  <div class="form-group">
+                    <div class="team-card">
+                      <label>Team Id*</label>
+                      <input type="text" name="incrementalId" ng-model="formData.teams[$index].teamId" class="form-control" placeholder="Enter Name"
+                        readonly>
+                      <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
+                    </div>
+                  </div>
+                  <!-- END TEAM ID -->
+
+                  <!-- NAME WITH AGE -->
+                  <div class="form-group">
+                    <div class="team-card">
+                      <label>Name*</label>
+                      <input type="text" name="name" ng-model="formData.teams[$index].name" class="form-control" placeholder="Enter Sport" readonly>
+                      <div class="error-msg" ng-if="detailForm.name.$invalid && detailForm.name.$touched">Please Enter Filter*</div>
+                    </div>
+                  </div>
+                  <!-- NAME WITH AGE END -->
+
+                  <!-- SCHOOL NAME -->
+                  <div class="form-group">
+                    <div class="team-card">
+                      <label>School Name*</label>
+                      <input type="text" name="schoolName" ng-model="formData.teams[$index].schoolName" class="form-control" placeholder="Enter Sport"
+                        readonly>
+                      <div class="error-msg" ng-if="detailForm.schoolName.$invalid && detailForm.schoolName.$touched">Please Enter Filter*</div>
+                    </div>
+                  </div>
+                  <!-- SCHOOL NAME END -->
+
+                  <!-- PLAYER NAME -->
+                  <div class="form-group " ng-repeat="player in team.studentTeam track by $index">
+                    <div class="player-card col-md-4">
+                      <label for="">First Name</label>
+                      <input type="text" name="playername" ng-model="player.studentId.firstName" class="form-control" placeholder="Enter Name"
+                        readonly>
+                      <div class="error-msg" ng-if="detailForm.playername.$invalid && detailForm.playername.$touched">Please Enter Valid Name *</div>
+                    </div>
+
+                    <!-- END PLAYER NAME -->
+
+                    <!-- SURNAME -->
+                    <div class="player-card col-md-4">
+                      <label for="">SurName</label>
+                      <input type="text" name="playername" ng-model="player.studentId.surname" class="form-control" placeholder="Enter Name" readonly>
+                      <div class="error-msg" ng-if="detailForm.playername.$invalid && detailForm.playername.$touched">Please Enter Valid Name *</div>
+                    </div>
+                    <!-- SURNAME -->
+
+                    <!-- SFA ID -->
+                    <div class="player-card col-md-4">
+                      <label for="">Sfa-Id</label>
+                      <input type="text" name="playername" ng-model="player.studentId.sfaId" class="form-control" placeholder="Enter Name" readonly>
+                      <div class="error-msg" ng-if="detailForm.playername.$invalid && detailForm.playername.$touched">Please Enter Valid Name *</div>
+                    </div>
+                    <!-- SFA ID END -->
+                  </div>
+                </div>
+
+
+
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-default" type="submit" ng-click="saveDataMatch(formData)">Save</button>
+                  <button class="btn btn-default" ui-sref='matches'>Cancel</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
