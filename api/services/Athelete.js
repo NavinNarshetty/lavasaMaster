@@ -1741,7 +1741,7 @@ var model = {
                                 // emailData.sfaID = data.sfaID;
                                 // emailData.password = data.password;
                                 emailData.filename = "unregisteredOnlinePayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA" + emailData.city + " " + emailData.year + ".";
+                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.year + ".";
                                 console.log("emaildata", emailData);
 
                                 Config.email(emailData, function (err, emailRespo) {
