@@ -1,6 +1,6 @@
 apps:
   - script: "app.js"
-    name: "SFA Form Backend - 878"
-  # name: "SFA Form Backend Test - 1337"
+  # name: "SFA Form Backend - 878"
+    name: "SFA Form Backend Test - 1337"
     watch: false
     args: "--prod"
