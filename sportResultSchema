@@ -1,23 +1,18 @@
-var KnockoutTeam = {
+var resultHockey = {
     team[{
         teamId: _id,
         teamResults:{
         goalPoints:[{
               goal:20,
         }],
-        finalGoalPoints:22,
-        penalityPoints:10,
+        finalGoalPoints:22,   
         shotsOnGoal: 2,
         totalShots:2,
+        penalityPoints:10,
         penalityCorners:2,
-        penality:1,
         penalityStroke:1,
         saves:1,
         fouls:1,
-        spike:1,
-        block:1,
-        superTackle:1,
-        allOut:1
         }
         players: [{
         player: id,
@@ -44,7 +39,42 @@ var KnockoutTeam = {
             }],
             penalityPoint:[{
                 count:1
+            }],
+            in:[{
+                time:11am
+            }],
+            out:[{
+                time:11am
             }]
+        }
+       }]}]
+    
+    isNoMatch: true,
+    isDraw: true,
+    winnner: [{
+        team: id,
+        reason: "",
+    }],
+    matchPhoto: [{"6732673862837342323423.jpg"}],
+    status: "IsLive,IsPending,IsCompleted",
+    scoreSheet: [{"588372837289379283789.jpg"}]
+};
+
+var resultBasketBall = {
+    team[{
+        teamId: _id,
+        teamResults:{
+        quarterPoints:[{
+              basket:20,
+        }],
+        finalGoalPoints:22,
+        }
+        players: [{
+        player: id,
+        noShow: true,
+        walkover: true,
+        color: "Blue/Red",
+        playerPoints: {
             freeThrow:[{
                 count:1,
                 time:11am
@@ -66,6 +96,170 @@ var KnockoutTeam = {
                 count:1,
                 time:11am
             }],
+        }
+       }]
+        }]
+    
+    isNoMatch: true,
+    isDraw: true,
+    winnner: [{
+        team: id,
+        reason: "",
+    }],
+    matchPhoto: [{"6732673862837342323423.jpg"}],
+    status: "IsLive,IsPending,IsCompleted",
+    scoreSheet: [{"588372837289379283789.jpg"}]
+};
+
+var resultVollyBall = {
+    team[{
+        teamId: _id,
+        teamResults:{
+        set:[{
+              points:20,
+        }],
+        fouls:1,
+        spike:1,
+        block:1,
+        }
+        players: [{
+        player: id,
+        noShow: true,
+        walkover: true,
+        color: "Blue/Red",
+        playerPoints: {
+            in:[{
+                time:11am
+            }],
+            out:[{
+                time:11am
+            }]
+        }
+       }]
+        }],
+    isNoMatch: true,
+    isDraw: true,
+    winnner: [{
+        team: id,
+        reason: "",
+    }],
+    matchPhoto: [{"6732673862837342323423.jpg"}],
+    status: "IsLive,IsPending,IsCompleted",
+    scoreSheet: [{"588372837289379283789.jpg"}]
+};
+
+var resultHandBall = {
+    team[{
+        teamId: _id,
+        teamResults:{
+        goalPoints:[{
+              goal:20,
+        }],
+        finalGoalPoints:22,   
+        shotsOnGoal: 2,
+        penality:10,
+        saves:1,
+        }
+        players: [{
+        player: id,
+        noShow: true,
+        walkover: true,
+        color: "Blue/Red",
+        playerPoints: {
+            goal:[{
+                points:1,
+                time:11am
+            }],
+            yellowCard:[{
+                time:11am
+            }],
+            greenCard:[{
+                time:11am
+            }],
+            in:[{
+                time:11am
+            }],
+            out:[{
+                time:11am
+            }]
+        }
+       }]}]
+    
+    isNoMatch: true,
+    isDraw: true,
+    winnner: [{
+        team: id,
+        reason: "",
+    }],
+    matchPhoto: [{"6732673862837342323423.jpg"}],
+    status: "IsLive,IsPending,IsCompleted",
+    scoreSheet: [{"588372837289379283789.jpg"}]
+};
+
+var resultWaterPolo = {
+    team[{
+        teamId: _id,
+        teamResults:{
+        quarterPoints:[{
+              points:20,
+        }],
+        finalGoalPoints:22,   
+        shotsOnGoal: 2,
+        totalShots:2,
+        penalityPoints:10,
+        penality:0,
+        saves:1,
+        }
+        players: [{
+        player: id,
+        noShow: true,
+        walkover: true,
+        color: "Blue/Red",
+        playerPoints: {
+            goal:[{
+                points:1,
+                time:11am
+            }],
+            penalityPoint:[{
+                count:1
+            }],
+            in:[{
+                time:11am
+            }],
+            out:[{
+                time:11am
+            }]
+        }
+       }]}]
+    
+    isNoMatch: true,
+    isDraw: true,
+    winnner: [{
+        team: id,
+        reason: "",
+    }],
+    matchPhoto: [{"6732673862837342323423.jpg"}],
+    status: "IsLive,IsPending,IsCompleted",
+    scoreSheet: [{"588372837289379283789.jpg"}]
+};
+
+var resultKabaddi = {
+    team[{
+        teamId: _id,
+        teamResults:{
+        goalPoints:[{
+              goal:20,
+        }],
+        finalGoalPoints:22,
+        superTackle:1,
+        allOut:1
+        }
+        players: [{
+        player: id,
+        noShow: true,
+        walkover: true,
+        color: "Blue/Red",
+        playerPoints: {
             raids:[{
                 count:1,
                 time:11am
@@ -78,7 +272,7 @@ var KnockoutTeam = {
                 count:1,
                 time:11am
             }],
-            tackel:[{
+            tackle:[{
                 count:1,
                 time:11am
             }],
@@ -90,97 +284,7 @@ var KnockoutTeam = {
             }]
         }
        }]
-        },{
-        teamId: _id,
-        teamResults:{
-        goalPoints:[{
-              goal:20,
         }],
-        finalGoalPoints:22,
-        penalityPoints:10,
-        shotsOnGoal: 2,
-        totalShots:2,
-        penalityCorners:2,
-        penality:1,
-        penalityStroke:1,
-        saves:1,
-        fouls:1,
-        spike:1,
-        block:1,
-        superTackle:1,
-        allOut:1
-        }
-        players: [{
-        player: id,
-        noShow: true,
-        walkover: true,
-        color: "Blue/Red",
-        playerPoints: {
-            goal:[{
-                points:1,
-                time:11am
-            }],
-            assist:[{
-                count:1,
-                time:11am
-            }],
-            redCard:[{
-                time:11am
-            }],
-            yellowCard:[{
-                time:11am
-            }],
-            greenCard:[{
-                time:11am
-            }],
-            penalityPoint:[{
-                count:1
-            }]
-            freeThrow:[{
-                count:1,
-                time:11am
-            }],
-            2Points:[{
-                 count:1,
-                time:11am
-
-                }],
-            3Points:[{
-                count:1,
-                time:11am
-            }],
-            personalFoul:[{
-                count:1,
-                time:11am
-            }],
-            technicalFoul:[{
-                count:1,
-                time:11am
-            }],
-            raids:[{
-                count:1,
-                time:11am
-            }],
-            bonusPoint:[{
-                count:1,
-                time:11am
-            }],
-            superRaid:[{
-                count:1,
-                time:11am
-            }],
-            tackel:[{
-                count:1,
-                time:11am
-            }],
-            in:[{
-                time:11am
-            }],
-            out:[{
-                time:11am
-            }]
-        }
-    }]}]
     
     isNoMatch: true,
     isDraw: true,
@@ -191,9 +295,9 @@ var KnockoutTeam = {
     matchPhoto: [{"6732673862837342323423.jpg"}],
     status: "IsLive,IsPending,IsCompleted",
     scoreSheet: [{"588372837289379283789.jpg"}]
-};//except khokho and throwball
+};
 
-var leagueKnockoutTeam = {
+var resultFootball = {
    team[{
         teamId: _id,
         teamResults:{
@@ -308,12 +412,15 @@ var qualifyingRound = {
             height:11m
             foul:'X'   
         }],
-        finalScore:12
+        finalScore:12,
         result:qualified/notqualified/1/2/3,
-        rank:1
+        rank:1,
     },   
     matchPhoto: [{"6732673862837342323423.jpg"}],
     status: "IsLive,IsPending,IsCompleted",
     scoreSheet: [{"588372837289379283789.jpg"}]
 };
+
+
+
 
