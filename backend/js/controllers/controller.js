@@ -4043,7 +4043,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.url = "Match/search"
             $scope.formData.page = $scope.formData.page++;
             NavigationService.apiCall($scope.url, $scope.formData, function (data) {
-                console.log("data.value", data);
+                console.log("data.value search", data);
                 $scope.items = data.data.results;
                 $scope.totalItems = data.data.total;
                 $scope.maxRow = data.data.options.count;
@@ -4134,7 +4134,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.constraints = {};
             $scope.constraints.keyword = data;
             NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-                console.log("data.value", data);
+                console.log("data.value sportlist", data);
                 $scope.sportitems = data.data.results;
 
             });
@@ -4150,7 +4150,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.constraints = {};
             $scope.constraints.keyword = data;
             NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-                console.log("data.value", data);
+                console.log("data.value age", data);
                 $scope.ageitems = data.data.results;
 
             });
@@ -4166,7 +4166,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.constraints = {};
             $scope.constraints.keyword = data;
             NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-                console.log("data.value", data);
+                console.log("data.value weight", data);
                 $scope.weightitems = data.data.results;
 
             });
@@ -4179,6 +4179,30 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.viewMatch = function () {
             $scope.showMatch = !$scope.showMatch;
         }
+
+        $scope.specificFormat = function (draw, matchid, team) {
+            console.log("click")
+            console.log(team)
+            if (team == false) {
+                console.log("team fasle")
+                if (draw == "Combat Sports" || "Racquet Sports") {
+                    $state.go('detailplayer', {
+                        id: matchid
+                    });
+                } else {
+                    toastr.error("Something went wrong")
+                }
+            } else if (team == true) {
+                if (draw == "Combat Sports" || "Racquet Sports") {
+                    $state.go('detailteam', {
+                        id: matchid
+                    });
+                } else {
+                    toastr.error("team error")
+                }
+            }
+        }
+
 
         $scope.genderList = [];
 

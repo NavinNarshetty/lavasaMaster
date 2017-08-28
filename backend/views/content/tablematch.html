@@ -9,38 +9,14 @@
 </div>
 
 
-<div class="panel-content hide" ng-if="!showMatch">
+<div class="panel-content" ng-if="!showMatch">
   <div class="row">
     <div class="col-md-12">
       <div class="widget">
         <div class="form-elements-sec">
-          <!-- BUTTONS -->
-          <!-- <div class="col-md-6">
-            <span class="btn btn-success" ng-click="openExportExcel()">
-                Export-Excel
-              </span>
-          </div>
-          <div class="col-md-6 text-right">
-            <a class="btn btn-success" target="_blank" ui-sref="detailagegroup({id:item._id})">
-                   <i class="fa fa-pencil"></i> Genrate
-                 </a> <a class="btn btn-success" target="_blank" ui-sref="excel-upload({controller:'match',funcName:'uploadExcelMatch',view:'uploadFilter'})">
-                   <i class="fa fa-pencil"></i> Upload
-                </a> <a class="btn btn-success" target="_blank" ui-sref="excel-upload({controller:'match',funcName:'uploadExcelMatch',view:'uploadFilter'})">
-                  <i class="fa fa-pencil"></i> Upload & Update
-                </a>
-          </div> -->
-          <!-- BUTTONS END -->
           <form name="detailForm" role="form" class="sec">
             <div class="row">
               <div class="col-md-12">
-                <!-- SEARCH BAR -->
-                <!-- <div class="col-md-offset-8 col-md-4 text-right">
-                  <div class="form-group mt20">
-                    <input type="text " class="form-control" ng-change="searchInTable(search)" placeholder="Search Here...
-                            " ng-model="search" />
-                  </div>
-                </div> -->
-
                 <!-- SEARCH BAR END -->
                 <!-- GENDER -->
                 <div class="form-group">
@@ -89,8 +65,7 @@
                 <!-- WEIGHT -->
                 <div class="form-group">
                   <label>Weight</label>
-                  <ui-select name="selectWeight" id="selectWeight" theme="bootstrap" ng-model="form.weight" ng-change="searchWeight($select.selected._id)"
-                    required>
+                  <ui-select name="selectWeight" id="selectWeight" theme="bootstrap" ng-model="form.weight" ng-change="searchWeight($select.selected._id)">
                     <ui-select-match placeholder="Enter Weight" allow-clear="true">
                       {{$select.selected.name}}
                     </ui-select-match>
@@ -142,8 +117,8 @@
                 {{showMatch}}
                 <!-- BUTTONS -->
                 <div class="text-center mt20 odd-even-button">
-                  <button class="btn btn-info" ng-click="viewMatch()" ng-disabled="detailForm.$invalid"><i class="fa fa-eye"></i> View</button>
-                  <button class="btn btn-default" type="submit" ng-click="saveData(formData)">Generate Excel</button>
+                  <button class="btn btn-info" ng-click="viewMatch()"><i class="fa fa-eye"></i> View</button>
+                  <button class="btn btn-default" type="submit" ng-click="generateExcel(form)" ng-disabled="detailForm.$invalid">Generate Excel</button>
                 </div>
                 <!-- BUTTONS END -->
               </div>
@@ -174,34 +149,48 @@
 
 <!--Table-->
 <!-- <div class=" panel-content" ng-if="showMatch"> -->
-<div class=" panel-content">
+<div class=" panel-content" ng-if="showMatch">
   <div class="row ">
     <div class="col-md-12 ">
       <div class="widget ">
         <div class="table-area ">
           <div class="widget-title ">
-            <div class="pull-right">
-              <!--<div class="pull-right">-->
-              <form class="search-form mr-form ">
-                <input type="text " ng-change="searchInTable(search)" placeholder="Search Here...
-                               " ng-model="search" />
-              </form>
-              <a class="btn btn-success" ui-sref="detailmatches">
-                   Create
-                </a>
-              <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'uploadExcelMatch',view:'uploadFilter'})">
-                   Upload-Excel
-                </span>
-              <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'updateExcelMatch',view:'updateExcelResult'})">
-                   Update-Excel-Score
-                </span>
-              <span class="btn btn-success" ng-click="openExportExcel()">
-                   Export-Excel
-                </span>
+
+
+            <div class="row match-head-holder">
+              <div class="col-md-8">
+                <h3 class="m-clear">List of Matches<span class=" tableTotal ">(Total : {{totalItems}}) </span></h3>
+              </div>
+              <div class="col-md-4">
+                <form class="search-form mr-form">
+                  <input type="text" class="form-control" ng-change="searchInTable(search)" placeholder="Search Here...
+                                     " ng-model="search" />
+                </form>
+              </div>
             </div>
-            <h3>List of Matches<span class=" tableTotal ">(Total : {{totalItems}}) </span></h3>
+            <div class="row">
+              <div class="match-button-holder text-right">
+                <div class="col-md-2">
+                  <div class="btn btn-success form-control" ng-click="openExportExcel()">
+                    Filter
+                  </div>
+                </div>
+                <div class="col-md-10">
+                  <a class="btn btn-success" ui-sref="detailmatches">
+                      Create
+                   </a>
+                  <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'uploadExcelMatch',view:'uploadFilter'})">
+                      Upload-Excel
+                   </span>
+                  <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'updateExcelMatch',view:'updateExcelResult'})">
+                      Update-Excel-Score
+                   </span>
+                </div>
+              </div>
+            </div>
+
           </div>
-          <div class="table-responsive ">
+          <div class="table-responsive">
             <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
             <table class="table">
               <thead>
@@ -224,9 +213,13 @@
                   <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                   <!--<td>{{($index + 1)}}</td>-->
                   <td>{{item.matchId}}</td>
-                  <td>{{item.round}}</td>
+                  <td>{{item.round}}
+                    <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
+                    <pre>{{item.matchId}}</pre>
+                    <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
+                  </td>
                   <td>
-                    <a class="btn btn-primary" target="_blank" ui-sref="detailplayer({id:item.matchId})">
+                    <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item.sport.sportslist.sportslistSubCategory.sportsListCategory,item.matchId,item.sport.sportslist.sportsListSubCategory.isTeam)">
                         <i class="fa fa-pencil"></i> Edit
                       </a>
                     <a class="btn btn-danger" ng-click="confDel(item._id)">
