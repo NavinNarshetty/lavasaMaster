@@ -319,8 +319,10 @@ myApp.factory('NavigationService', function ($http) {
             $http.post(adminurl + url, data, {
                 responseType: 'arraybuffer'
             }).then(function (response) {
+                var fname = data.resultType + data.playerType + "-" + data.sportslist.name + " " + data.ageGroup.name + " " + data.gender;
+
                 var header = response.headers('Content-Disposition')
-                var fileName = "knockoutIndividual" + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
+                var fileName = fname + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
                 console.log(fileName);
 
                 var blob = new Blob([response.data], {
@@ -342,12 +344,14 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data);
             });
         },
+
         getOneOldSchoolById: function (url, formData, callback) {
             $http.post(adminurl + url, formData).then(function (data) {
                 data = data.data;
                 callback(data);
             });
         },
+
         getOneCountry: function (id, callback) {
             $http.post(adminurl + 'country/getOne', {
                 _id: id
@@ -357,6 +361,7 @@ myApp.factory('NavigationService', function ($http) {
 
             });
         },
+
         getLatLng: function (address, i, callback) {
             $http({
                 url: "https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyC62zlixVsjaq4zDaL4cefNCubjCgxkte4",
@@ -367,6 +372,7 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data, i);
             });
         },
+
         uploadExcel: function (url, form, callback) {
             $http.post(adminurl + url, form).then(function (data) {
                 data = data.data;
@@ -375,6 +381,7 @@ myApp.factory('NavigationService', function ($http) {
             });
 
         },
+
         getOneMatch: function (formData, callback) {
             $http({
                 url: adminurl + "match/getOne",
@@ -385,6 +392,7 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data)
             });
         },
+
         saveMatch: function (formData, callback) {
             // console.log(formData, 'saveMatch');
             $http({

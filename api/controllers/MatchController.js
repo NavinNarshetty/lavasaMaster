@@ -115,7 +115,7 @@ var controller = {
                                 // console.log(roundTypes, "---------------------");
                                 // callback(null, importData);
                             } else if (req.body.resultType == "qualifying-round" && req.body.playerType == "individual") {
-                                Match.saveQualifyingRoundIndividual(importData, function (err, complete) {
+                                Match.saveQualifyingRoundIndividual(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
                                     } else {
@@ -123,7 +123,7 @@ var controller = {
                                     }
                                 });
                             } else if (req.body.resultType == "qualifying-knockout" && req.body.playerType == "individual") {
-                                Match.saveQualifyingRoundFinalIndividual(importData, function (err, complete) {
+                                Match.saveQualifyingRoundFinalIndividual(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
                                     } else {
@@ -254,6 +254,8 @@ var controller = {
                             Match.generateExcelKnockout(req.body, res);
                         } else if (req.body.resultType == "heat") {
                             Match.generateExcelHeat(req.body, res);
+                        } else if (req.body.resultType == "qualifying-round") {
+                            Match.generateExcelQualifyingRound(req.body, res);
                         } else {
                             res.json({
                                 "data": "Body not Found",
