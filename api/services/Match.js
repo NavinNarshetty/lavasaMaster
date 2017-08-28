@@ -809,6 +809,8 @@ var model = {
                         async.concatSeries(mainData, function (arrData, callback) {
                             var paramData = {};
                             paramData.opponentsSingle = [];
+                            var result = {};
+                            result.players = [];
                             async.concatSeries(arrData, function (singleData, callback) {
                                 var date = Math.round((singleData.DATE - 25569) * 86400 * 1000);
                                 date = new Date(date);
@@ -905,12 +907,21 @@ var model = {
                                         paramData.sport = n.success.SPORT;
                                         paramData.scheduleDate = n.success.DATE;
                                         paramData.scheduleTime = n.success.TIME;
-                                        callback(null, paramData)
+                                        var player = {};
+                                        player.id = n.success["PARTICIPANT 1"];
+                                        player.laneNo = n.success["LANE NUMBER"];
+                                        result.players.push(player);
+                                        paramData.resultHeat = result;
+                                        callback(null, paramData);
                                     }
                                 }, function (err) {
                                     Match.saveMatch(paramData, function (err, complete) {
                                         if (err || _.isEmpty(complete)) {
-                                            callback(err, null);
+                                            err = "Save Failed !";
+                                            callback(null, {
+                                                error: err,
+                                                success: complete
+                                            });
                                         } else {
                                             arrMathes.push(complete);
                                             callback(null, singleData);
@@ -1581,7 +1592,7 @@ var model = {
                     count = 1;
                     prevRound = matchData.round;
                 }
-                var laneNo = 1;
+                var i = 0;
                 async.concatSeries(matchData.opponentsSingle, function (mainData, callback) {
                         var obj = {};
                         obj["MATCH ID"] = matchData.matchId;
@@ -1600,8 +1611,7 @@ var model = {
                         obj.EVENT = matchData.sport.sportslist.name;
                         obj["ROUND "] = matchData.round;
                         obj["HEAT NUMBER"] = count;
-                        obj["LANE NUMBER"] = laneNo;
-                        laneNo++;
+                        obj["LANE NUMBER"] = matchData.resultHeat.players[i].laneNo;
                         if (mainData) {
                             obj["SFA ID"] = mainData.athleteId.sfaId;
                             if (mainData.athleteId.middleName) {
@@ -1610,21 +1620,30 @@ var model = {
                                 obj["NAME"] = mainData.athleteId.firstName + " " + mainData.athleteId.surname;
                             }
                             obj["SCHOOL"] = mainData.athleteId.school.name;
+                            if (matchData.resultHeat.players[i].time) {
+                                obj["TIMING"] = matchData.resultHeat.players[i].time;
+                            } else {
+                                obj["TIMING"] = " ";
+                            }
+                            if (matchData.resultHeat.players[i].result) {
+                                obj["RESULT"] = matchData.resultHeat.players[i].result;
+                            } else {
+                                obj["RESULT"] = " ";
+                            }
 
                         } else {
-                            obj["SFAID 1"] = "";
-                            obj["PARTICIPANT 1"] = "";
-                            obj["SCHOOL 1"] = "";
-                            obj["RESULT 1"] = "";
-                            obj["SCORE 1"] = "";
-                            obj["DATA POINTS 1"] = "";
+                            obj["SFA ID"] = " ";
+                            obj["NAME"] = " ";
+                            obj["SCHOOL"] = "";
+                            obj["TIMING"] = " ";
+                            obj["RESULT"] = " ";
                         }
+                        i++;
                         callback(null, obj);
                     },
                     function (err, singleData) {
                         callback(null, singleData);
                     });
-                // count++;
             },
             function (err, singleData) {
                 callback(null, singleData);
@@ -1974,10 +1993,6 @@ var model = {
                                     async.concatSeries(arrData, function (singleData, callback) {
                                         var date = moment(singleData.DATE, "DD-MM-YYYY");
                                         singleData.DATE = date;
-                                        // var date = Math.round((singleData.DATE - 25569) * 86400 * 1000);
-                                        // console.log('date', date, "singleData", singleData);
-                                        // date = new Date(date);
-                                        // singleData.DATE = date.toISOString();
                                         async.waterfall([
                                                 function (callback) {
                                                     var paramData = {};
@@ -2070,6 +2085,7 @@ var model = {
                                                     player.id = n.success["PARTICIPANT 1"];
                                                     player.time = n.success["TIMING"];
                                                     player.result = n.success["RESULT"];
+                                                    player.laneNo = n.success["LANE NUMBER"];
                                                     result.players.push(player);
                                                 }
                                                 paramData.sport = n.success.SPORT;
