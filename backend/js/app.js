@@ -300,6 +300,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailTeamCtrl'
         })
+        // detailteamsport
+        .state('detailtsport-team', {
+            url: "/detailsport-team",
+            templateUrl: "views/template.html",
+            controller: 'DetailSportTeamCtrl'
+        })
         //medals
         .state('medals', {
             url: "/medals",

@@ -27,6 +27,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'HomeCtrl'
         })
+        .state('digital-home', {
+            url: "/digital-home",
+            templateUrl: tempateURL,
+            controller: 'DigitalHomeCtrl'
+        })
         .state('matchstart', {
             url: "/match-start/:id",
             templateUrl: tempateURL,

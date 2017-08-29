@@ -103,6 +103,7 @@ myApp.controller('DetailTeamCtrl', function ($scope, TemplateService, Navigation
   // END GET ONE
   // SAVE
   $scope.saveDataMatch = function () {
+    $scope.matchData.matchId = $stateParams.id;
     console.log($scope.formData, "save");
     NavigationService.saveMatch($scope.formData, function (data) {
       if (data.value == true) {
@@ -118,3 +119,83 @@ myApp.controller('DetailTeamCtrl', function ($scope, TemplateService, Navigation
 
 })
 // EDIT TEAM END
+
+// DETAIL TEAM SPORT
+myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
+  //Used to name the .html file
+  $scope.template = TemplateService.changecontent("detailsport-team");
+  $scope.menutitle = NavigationService.makeactive("Detail Team Sport");
+  TemplateService.title = $scope.menutitle;
+  $scope.navigation = NavigationService.getnav();
+
+  // ACCORDIAN
+
+  $scope.oneAtATime = true;
+  $scope.status = {
+    isCustomHeaderOpen: false,
+    isFirstOpen: true,
+    isFirstDisabled: false
+  };
+  // END ACCORDIAN
+
+  $scope.heatsTable = [{
+    sfaId: "Ma1234",
+    name: "Jamnabai Narsee School",
+    fullName: "Shiva Singh"
+  }, {
+    sfaId: "Ma1234",
+    name: "Jamnabai Narsee School",
+    fullName: "Shiva Singh"
+  }, {
+    sfaId: "Ma1234",
+    name: "Jamnabai Narsee School",
+    fullName: "Shiva Singh"
+  }, {
+    sfaId: "Ma1234",
+    name: "Jamnabai Narsee School",
+    fullName: "Shiva Singh"
+  }, {
+    sfaId: "Ma1234",
+    name: "Jamnabai Narsee School",
+    fullName: "Shiva Singh"
+  }, {
+    sfaId: "Ma1234",
+    name: "Jamnabai Narsee School",
+    fullName: "Shiva Singh"
+  }, {
+    sfaId: "Ma1234",
+    name: "Jamnabai Narsee School",
+    fullName: "Shiva Singh"
+  }, {
+    sfaId: "Ma1234",
+    name: "Jamnabai Narsee School",
+    fullName: "Shiva Singh"
+  }, {
+    sfaId: "Ma1234",
+    name: "Jamnabai Narsee School",
+    fullName: "Shiva Singh"
+  }, {
+    sfaId: "Ma1234",
+    name: "Jamnabai Narsee School",
+    fullName: "Shiva Singh"
+  }, {
+    sfaId: "Ma1234",
+    name: "Jamnabai Narsee School",
+    fullName: "Shiva Singh"
+  }]
+
+  var modal;
+  $scope.editPlayer = function () {
+    modal = $uibModal.open({
+      animation: true,
+      scope: $scope,
+      // backdrop: 'static',
+      keyboard: false,
+      templateUrl: 'views/modal/editteamplayer.html',
+      size: 'lg',
+      windowClass: 'backmodal'
+    })
+  }
+})
+
+// DETAIL TEAM SPORT
