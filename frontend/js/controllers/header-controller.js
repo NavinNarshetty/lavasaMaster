@@ -6,12 +6,12 @@
 //     $.fancybox.close(true);
 // });
 
-var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in";
-var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
-var globalLinkForAll = "https://mumbai.sfanow.in/";
-// var globalLinkSchoolRegister = "http://hyderabadschool.sfanow.in";
-// var globalLinkCollegeRegister = "http://hyderabadcollege.sfanow.in";
-// var globalLinkForAll = "https://hyderabad.sfanow.in/";
+// var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in";
+// var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
+// var globalLinkForAll = "https://mumbai.sfanow.in/";
+var globalLinkSchoolRegister = "http://hyderabadschool.sfanow.in";
+var globalLinkCollegeRegister = "http://hyderabadcollege.sfanow.in";
+var globalLinkForAll = "https://hyderabad.sfanow.in/";
 // var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
 // var globalLinkForAll = "http://testmumbai.sfanow.in/";
