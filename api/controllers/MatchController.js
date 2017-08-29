@@ -340,6 +340,32 @@ var controller = {
                 value: false
             });
         }
+    },
+
+    getPerSport: function (req, res) {
+        if (req.body) {
+            if (req.body && req.body.sportslist && req.body.gender && req.body.ageGroup) {
+                var matchObj = {
+                    sportslist: req.body.sportslist,
+                    gender: req.body.gender,
+                    ageGroup: req.body.ageGroup,
+                }
+                if (!_.isEmpty(req.body.weight)) {
+                    matchObj.weight = req.body.weight;
+                }
+                Match.getPerSport(matchObj, res.callback);
+            } else {
+                res.json({
+                    data: "Some Fields are Missing",
+                    value: false
+                });
+            }
+        } else {
+            res.json({
+                data: "Body Not Found",
+                value: false
+            });
+        }
     }
 
 

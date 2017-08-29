@@ -157,6 +157,47 @@ var model = {
         });
     },
 
+    getPerSport: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                Sport.findOne(data).exec(function (err, sportDetails) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(sportDetails)) {
+                        callback(null, sportDetails);
+                    } else {
+                        callback(null, "No Data Found");
+                    }
+
+                });
+            },
+            function (sportDetails, callback) {
+                var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId.school opponentsTeam";
+                Match.find({
+                    sport: sportDetails._id
+                }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            console.log("found0", found);
+                            callback(null, found);
+                        }
+                    }
+                });
+            }
+        ], function (err, result) {
+            console.log("Final Callback");
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+    },
+
     search: function (data, callback) {
         var maxRow = Config.maxRow;
 

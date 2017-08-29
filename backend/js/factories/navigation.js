@@ -314,17 +314,13 @@ myApp.factory('NavigationService', function ($http) {
             });
         },
 
-        generateExcelWithData: function (url, data, modal, callback) {
-            console.log('from Controller', data);
+        generateExcelWithData: function (url, data, callback) {
             $http.post(adminurl + url, data, {
                 responseType: 'arraybuffer'
             }).then(function (response) {
                 var fname = data.resultType + data.playerType + "-" + data.sportslist.name + " " + data.ageGroup.name + " " + data.gender;
-
                 var header = response.headers('Content-Disposition')
                 var fileName = fname + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
-                console.log(fileName);
-
                 var blob = new Blob([response.data], {
                     type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation;charset=UTF-8'
                 });
@@ -334,8 +330,7 @@ myApp.factory('NavigationService', function ($http) {
                     href: objectUrl,
                     download: fileName
                 })[0].click();
-                callback("", modal);
-
+                callback(null, fileName);
             })
         },
 

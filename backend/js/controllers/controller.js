@@ -4033,13 +4033,14 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.formData.page = 1;
             if (data.length >= 2) {
                 $scope.formData.keyword = data;
-                $scope.viewTable();
+                $scope.viewTable($scope.form);
             } else if (data.length == '') {
                 $scope.formData.keyword = data;
-                $scope.viewTable();
+                $scope.viewTable($scope.form);
             }
         }
-        $scope.viewTable = function () {
+        $scope.viewTable = function (formValue) {
+            console.log("data in table", formValue);
             $scope.url = "Match/search"
             $scope.formData.page = $scope.formData.page++;
             NavigationService.apiCall($scope.url, $scope.formData, function (data) {
@@ -4120,11 +4121,13 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
         $scope.generateExcel = function (data) {
             $scope.qwerty = data;
-            console.log("data", data);
+            console.log("data..................", data);
             $scope.url = "match/generateExcel";
 
-            NavigationService.generateExcelWithData($scope.url, $scope.qwerty, modal, function (data, modal) {
-                modal.close();
+            NavigationService.generateExcelWithData($scope.url, $scope.qwerty, function (data) {
+                // console.log("............data", data);
+                // $window.scrollTop(0);
+                $state.reload();
             });
         }
 
@@ -4176,8 +4179,10 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.drawing = data;
         }
 
-        $scope.viewMatch = function () {
+        $scope.viewMatch = function (data) {
+            console.log(data);
             $scope.showMatch = !$scope.showMatch;
+            $scope.viewTable(data);
         }
 
         $scope.specificFormat = function (draw, matchid, team) {
