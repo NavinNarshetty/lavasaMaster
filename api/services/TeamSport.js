@@ -1731,13 +1731,13 @@ var model = {
                         emailData.schoolSFA = found.sfaID;
                         // emailData.from = "info@sfanow.in";
                         emailData.from = data.property.infoId;
-                        // emailData.email = found.email;
-                        emailData.email1 = [{
-                            email: found.email
-                        }];
-                        emailData.bcc1 = [{
-                            email: "raj@wohlig.com"
-                        }];
+                        emailData.email = found.email;
+                        // emailData.email1 = [{
+                        //     email: found.email
+                        // }];
+                        // emailData.bcc1 = [{
+                        //     email: "raj@wohlig.com"
+                        // }];
                         emailData.city = data.property.sfaCity;
                         if (data.property.sfaCity == 'Mumbai') {
                             emailData.urls = "https://mumbai.sfanow.in";
@@ -1759,7 +1759,7 @@ var model = {
                         emailData.subject = "SFA: Successful Team Sport Registered";
                         console.log("emaildata", emailData);
 
-                        Config.emailTo(emailData, function (err, emailRespo) {
+                        Config.email(emailData, function (err, emailRespo) {
                             if (err) {
                                 console.log(err);
                                 callback(null, err);
@@ -1952,7 +1952,7 @@ var model = {
                                     emailData.infoNo = data.property.infoNo;
                                     emailData.cityAddress = data.property.cityAddress;
                                     emailData.ddFavour = data.property.ddFavour;
-                                    // emailData.email = n.email;
+                                    emailData.email = n.email;
                                     emailData.name = n.firstName;
                                     emailData.city = data.property.sfaCity;
                                     if (data.property.sfaCity == 'Mumbai') {
@@ -1974,13 +1974,13 @@ var model = {
                                     console.log("email", n.email);
                                     if (creatorMail === n.email) {
                                         emailData.filename = data.emailfile;
-                                        emailData.email1 = [{
-                                            email: n.email
-                                        }];
-                                        emailData.bcc1 = [{
-                                            email: "raj@wohlig.com"
-                                        }];
-                                        Config.emailTo(emailData, function (err, emailRespo) {
+                                        // emailData.email1 = [{
+                                        //     email: n.email
+                                        // }];
+                                        // emailData.bcc1 = [{
+                                        //     email: "raj@wohlig.com"
+                                        // }];
+                                        Config.email(emailData, function (err, emailRespo) {
                                             if (err) {
                                                 console.log(err);
                                                 callback(null, err);
