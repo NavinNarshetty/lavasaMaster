@@ -22,7 +22,7 @@ var myApp = angular.module('myApp', [
 ]);
 
 // Define all the routes below
-myApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, cfpLoadingBarProvider, angularPromiseButtonsProvider) {
+myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider, cfpLoadingBarProvider, angularPromiseButtonsProvider) {
     var tempateURL = "views/template/template.html"; //Default Template URL
 
     // for http request with session
@@ -65,197 +65,197 @@ myApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locati
     cfpLoadingBarProvider.includeBar = true;
     // cfpLoadingBarProvider.spinnerTemplate = '<div class="loaderHeader"><img src="img/load.gif" alt="" /></div>';
     $stateProvider
-    // .state('home', {
-    //     url: "/",
-    //     templateUrl: tempateURL,
-    //     controller: 'HomeCtrl'
-    // })
+        // .state('home', {
+        //     url: "/",
+        //     templateUrl: tempateURL,
+        //     controller: 'HomeCtrl'
+        // })
 
         .state('form', {
-        url: "/form",
-        templateUrl: tempateURL,
-        controller: 'FormCtrl'
-    })
+            url: "/form",
+            templateUrl: tempateURL,
+            controller: 'FormCtrl'
+        })
 
-    .state('championship', {
-        url: "/championship",
-        templateUrl: tempateURL,
-        controller: 'ChampionshipCtrl'
-    })
+        .state('championship', {
+            url: "/championship",
+            templateUrl: tempateURL,
+            controller: 'ChampionshipCtrl'
+        })
 
-    .state('register', {
-        url: "/register",
-        templateUrl: tempateURL,
-        controller: 'RegisterCtrl'
-    })
+        .state('register', {
+            url: "/register",
+            templateUrl: tempateURL,
+            controller: 'RegisterCtrl'
+        })
 
-    .state('venue', {
-        url: "/venue",
-        templateUrl: tempateURL,
-        controller: 'VenueCtrl'
-    })
+        .state('venue', {
+            url: "/venue",
+            templateUrl: tempateURL,
+            controller: 'VenueCtrl'
+        })
 
-    .state('champions', {
-        url: "/champions",
-        templateUrl: tempateURL,
-        controller: 'ChampionsCtrl'
-    })
+        .state('champions', {
+            url: "/champions",
+            templateUrl: tempateURL,
+            controller: 'ChampionsCtrl'
+        })
 
-    .state('faq', {
-        url: "/faq",
-        templateUrl: tempateURL,
-        controller: 'FaqCtrl'
-    })
+        .state('faq', {
+            url: "/faq",
+            templateUrl: tempateURL,
+            controller: 'FaqCtrl'
+        })
 
-    .state('terms-condition', {
-        url: "/terms-condition",
-        templateUrl: tempateURL,
-        controller: 'TermsConditionCtrl'
-    })
-
-
-
-
-    //Form Registration
-
-    .state('formathlete', {
-        url: "/formathlete",
-        templateUrl: tempateURL,
-        controller: 'FormathleteCtrl'
-    })
-
-    .state('formregis', {
-        url: "/formregis",
-        templateUrl: tempateURL,
-        controller: 'FormregisCtrl'
-    })
-
-    .state('paymentSuccess', {
-        url: "/paymentSuccess",
-        templateUrl: tempateURL,
-        controller: 'PaymentSuccessCtrl'
-    })
-
-    .state('sorryAthelete', {
-        url: "/sorryAthelete",
-        templateUrl: tempateURL,
-        controller: 'SorryAtheleteCtrl'
-    })
-
-    .state('paymentFailure', {
-        url: "/paymentFailure",
-        templateUrl: tempateURL,
-        controller: 'PaymentFailureCtrl'
-    })
+        .state('terms-condition', {
+            url: "/terms-condition",
+            templateUrl: tempateURL,
+            controller: 'TermsConditionCtrl'
+        })
 
 
 
 
-    //SPORTS REGISTRATION MODULE
+        //Form Registration
 
-    .state('sports-registration', {
-        url: "/sports-registration",
-        templateUrl: tempateURL,
-        controller: 'SportsRegistrationCtrl'
-    })
+        .state('formathlete', {
+            url: "/formathlete",
+            templateUrl: tempateURL,
+            controller: 'FormathleteCtrl'
+        })
 
-    .state('forgot-password', {
-        url: "/forgot-password",
-        templateUrl: tempateURL,
-        controller: 'ForgotPasswordCtrl'
-    })
+        .state('formregis', {
+            url: "/formregis",
+            templateUrl: tempateURL,
+            controller: 'FormregisCtrl'
+        })
 
-    .state('change-password', {
-        url: "/change-password",
-        templateUrl: tempateURL,
-        controller: 'ChangePasswordCtrl'
-    })
+        .state('paymentSuccess', {
+            url: "/paymentSuccess",
+            templateUrl: tempateURL,
+            controller: 'PaymentSuccessCtrl'
+        })
 
-    .state('sports-rules', {
-        url: "/sports-rules/:id",
-        templateUrl: tempateURL,
-        controller: 'SportsRulesCtrl'
-    })
+        .state('sorryAthelete', {
+            url: "/sorryAthelete",
+            templateUrl: tempateURL,
+            controller: 'SorryAtheleteCtrl'
+        })
 
-    .state('team-congrats', {
-        url: "/team-congrats",
-        templateUrl: tempateURL,
-        controller: 'TeamCongratsCtrl'
-    })
+        .state('paymentFailure', {
+            url: "/paymentFailure",
+            templateUrl: tempateURL,
+            controller: 'PaymentFailureCtrl'
+        })
 
-    .state('individual-congrats', {
-        url: "/individual-congrats",
-        templateUrl: tempateURL,
-        controller: 'IndividualCongratsCtrl'
-    })
 
-    .state('sports-selection', {
-        url: "/sports-selection",
-        templateUrl: tempateURL,
-        controller: 'SportsSelectionCtrl'
-    })
 
-    .state('sports-selection-', {
-        url: "/sports-selection/:userType/:id",
-        templateUrl: tempateURL,
-        controller: 'SportsSelectionCtrl'
-    })
 
-    .state('team-selection', {
-        url: "/team-selection/:id",
-        templateUrl: tempateURL,
-        controller: 'TeamSelectionCtrl'
-    })
+        //SPORTS REGISTRATION MODULE
 
-    .state('individual-selection', {
-        url: "/individual-selection/:id",
-        templateUrl: tempateURL,
-        controller: 'IndividualSelectionCtrl'
-    })
+        .state('sports-registration', {
+            url: "/sports-registration",
+            templateUrl: tempateURL,
+            controller: 'SportsRegistrationCtrl'
+        })
 
-    .state('confirmteam', {
-        url: "/confirm1/:name",
-        templateUrl: tempateURL,
-        controller: 'ConfirmTeamCtrl'
-    })
+        .state('forgot-password', {
+            url: "/forgot-password",
+            templateUrl: tempateURL,
+            controller: 'ForgotPasswordCtrl'
+        })
 
-    .state('confirm-individual', {
-        url: "/confirm2/:name",
-        templateUrl: tempateURL,
-        controller: 'ConfirmIndividualCtrl'
-    })
+        .state('change-password', {
+            url: "/change-password",
+            templateUrl: tempateURL,
+            controller: 'ChangePasswordCtrl'
+        })
 
-    .state('confirm-fencing', {
-        url: "/confirm3/:name",
-        templateUrl: tempateURL,
-        controller: 'ConfirmFencingCtrl'
-    })
+        .state('sports-rules', {
+            url: "/sports-rules/:id",
+            templateUrl: tempateURL,
+            controller: 'SportsRulesCtrl'
+        })
 
-    .state('confirm-karate', {
-        url: "/confirm4/:name",
-        templateUrl: tempateURL,
-        controller: 'ConfirmKarateCtrl'
-    })
+        .state('team-congrats', {
+            url: "/team-congrats",
+            templateUrl: tempateURL,
+            controller: 'TeamCongratsCtrl'
+        })
 
-    .state('confirm-athleteswim', {
-        url: "/confirm5/:name",
-        templateUrl: tempateURL,
-        controller: 'ConfirmAthSwmCtrl'
-    })
+        .state('individual-congrats', {
+            url: "/individual-congrats",
+            templateUrl: tempateURL,
+            controller: 'IndividualCongratsCtrl'
+        })
 
-    .state('test', {
-        url: "/test",
-        templateUrl: tempateURL,
-        controller: 'DummyCtrl'
-    })
+        .state('sports-selection', {
+            url: "/sports-selection",
+            templateUrl: tempateURL,
+            controller: 'SportsSelectionCtrl'
+        })
 
-    .state('sport-individualdetail', {
-        url: "/sport-individualdetail/:id",
-        templateUrl: tempateURL,
-        controller: 'SportIndividualCtrl'
-    })
+        .state('sports-selection-', {
+            url: "/sports-selection/:userType/:id",
+            templateUrl: tempateURL,
+            controller: 'SportsSelectionCtrl'
+        })
 
-    .state('sport-teamdetail', {
+        .state('team-selection', {
+            url: "/team-selection/:id",
+            templateUrl: tempateURL,
+            controller: 'TeamSelectionCtrl'
+        })
+
+        .state('individual-selection', {
+            url: "/individual-selection/:id",
+            templateUrl: tempateURL,
+            controller: 'IndividualSelectionCtrl'
+        })
+
+        .state('confirmteam', {
+            url: "/confirm1/:name",
+            templateUrl: tempateURL,
+            controller: 'ConfirmTeamCtrl'
+        })
+
+        .state('confirm-individual', {
+            url: "/confirm2/:name",
+            templateUrl: tempateURL,
+            controller: 'ConfirmIndividualCtrl'
+        })
+
+        .state('confirm-fencing', {
+            url: "/confirm3/:name",
+            templateUrl: tempateURL,
+            controller: 'ConfirmFencingCtrl'
+        })
+
+        .state('confirm-karate', {
+            url: "/confirm4/:name",
+            templateUrl: tempateURL,
+            controller: 'ConfirmKarateCtrl'
+        })
+
+        .state('confirm-athleteswim', {
+            url: "/confirm5/:name",
+            templateUrl: tempateURL,
+            controller: 'ConfirmAthSwmCtrl'
+        })
+
+        .state('test', {
+            url: "/test",
+            templateUrl: tempateURL,
+            controller: 'DummyCtrl'
+        })
+
+        .state('sport-individualdetail', {
+            url: "/sport-individualdetail/:id",
+            templateUrl: tempateURL,
+            controller: 'SportIndividualCtrl'
+        })
+
+        .state('sport-teamdetail', {
             url: "/sport-teamdetail/:id",
             templateUrl: tempateURL,
             controller: 'SportTeamCtrl'
@@ -282,7 +282,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locati
             controller: 'ChampionshipScheduleCtrl'
         })
         .state('heats', {
-            url: "/heats",
+            url: "/heats/:id",
             templateUrl: tempateURL,
             controller: 'HeatsCtrl'
         })
@@ -351,7 +351,7 @@ myApp.config(function($stateProvider, $urlRouterProvider, $httpProvider, $locati
 });
 
 // For Language JS
-myApp.config(function($translateProvider) {
+myApp.config(function ($translateProvider) {
     $translateProvider.translations('en', LanguageEnglish);
     $translateProvider.translations('hi', LanguageHindi);
     $translateProvider.preferredLanguage('en');

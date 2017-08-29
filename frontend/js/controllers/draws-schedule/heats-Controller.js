@@ -74,39 +74,110 @@ myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, Navigat
       time: "10s:09ms",
       result: "did not qualify"
     }]
-  }, {
-    round: "Qualifying",
-    tablecontent: [{
-      name: "manav mehta",
-      schoolname: "dirubhai ambani internationational school",
-      time: "10s:09ms",
-      result: "did not qualify"
-    }, {
-      name: "manav mehta",
-      schoolname: "dirubhai ambani internationational school",
-      time: "10s:09ms",
-      result: "did not qualify"
-    }, {
-      name: "manav mehta",
-      schoolname: "dirubhai ambani internationational school",
-      time: "10s:09ms",
-      result: "did not qualify"
-    }, {
-      name: "manav mehta",
-      schoolname: "dirubhai ambani internationational school",
-      time: "10s:09ms",
-      result: "did not qualify"
-    }, {
-      name: "manav mehta",
-      schoolname: "dirubhai ambani internationational school",
-      time: "10s:09ms",
-      result: "did not qualify"
-    }, {
-      name: "manav mehta",
-      schoolname: "dirubhai ambani internationational school",
-      time: "10s:09ms",
-      result: "did not qualify"
-    }]
-  }, ];
+  }
+    // {
+    //   round: "Qualifying",
+    //   tablecontent: [{
+    //     name: "manav mehta",
+    //     schoolname: "dirubhai ambani internationational school",
+    //     time: "10s:09ms",
+    //     result: "did not qualify"
+    //   }, {
+    //     name: "manav mehta",
+    //     schoolname: "dirubhai ambani internationational school",
+    //     time: "10s:09ms",
+    //     result: "did not qualify"
+    //   }, {
+    //     name: "manav mehta",
+    //     schoolname: "dirubhai ambani internationational school",
+    //     time: "10s:09ms",
+    //     result: "did not qualify"
+    //   }, {
+    //     name: "manav mehta",
+    //     schoolname: "dirubhai ambani internationational school",
+    //     time: "10s:09ms",
+    //     result: "did not qualify"
+    //   }, {
+    //     name: "manav mehta",
+    //     schoolname: "dirubhai ambani internationational school",
+    //     time: "10s:09ms",
+    //     result: "did not qualify"
+    //   }, {
+    //     name: "manav mehta",
+    //     schoolname: "dirubhai ambani internationational school",
+    //     time: "10s:09ms",
+    //     result: "did not qualify"
+    //   }]
+    // },
+  ];
+
+
+
+
+  $scope.constraints = {};
+  $scope.getSportSpecificRounds = function (roundName) {
+    if ($stateParams.id) {
+      if (roundName) {
+        $scope.constraints.round = roundName;
+      }
+      $scope.constraints.sport = $stateParams.id;
+      NavigationService.getSportSpecificRounds($scope.constraints, function (data) {
+        errorService.errorCode(data, function (allData) {
+          if (!allData.message) {
+            if (allData.value) {
+              $scope.roundsListName = allData.data.roundsListName;
+              $scope.roundsList = allData.data.roundsList;
+              if ($scope.roundsListName.length === 0 && $scope.roundsList.length === 0) {
+                toastr.error("No Data Found", 'Error Message');
+              }
+              $scope.roundsList = $scope.roundsList.reverse();
+              _.each($scope.roundsList, function (key) {
+                _.each(key.match, function (value) {
+                  _.each(value.opponentsSingle, function (obj, index1) {
+                    obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                    obj.result = value.resultHeat.players[index1].result;
+                    obj.laneNo = value.resultHeat.players[index1].laneNo;
+                    obj.time = value.resultHeat.players[index1].time;
+                  });
+
+                });
+              });
+              console.log($scope.roundsListName, " $scope.roundsListName ");
+              console.log($scope.roundsList, " $scope.roundsList ");
+            }
+          } else {
+            toastr.error(allData.message, 'Error Message');
+          }
+        });
+      });
+    }
+  };
+  $scope.getSportSpecificRounds();
+  // for showing More Or Less data
+  $scope.limitValue = 3;
+  $scope.heatLImit = 6;
+  $scope.showMore = true;
+  $scope.showHeat = true;
+  $scope.showMoreData = function (bool, roundName) {
+    if (roundName === 'heat') {
+      if (bool === true) {
+        $scope.heatLImit = 2000;
+        $scope.showHeat = false;
+      } else {
+        $scope.heatLImit = 6;
+        $scope.showHeat = true;
+      }
+
+    } else if (roundName === 'semi-final') {
+      if (bool === true) {
+        $scope.limitValue = 2000;
+        $scope.showMore = false;
+      } else {
+        $scope.limitValue = 3;
+        $scope.showMore = true;
+      }
+    }
+  };
+
 
 });

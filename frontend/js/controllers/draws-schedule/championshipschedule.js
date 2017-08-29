@@ -1,4 +1,4 @@
-myApp.controller('ChampionshipScheduleCtrl', function($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
+myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
     $scope.template = TemplateService.getHTML("content/draws-schedule/championship-schedule.html");
     TemplateService.title = "Direct Final"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -137,8 +137,8 @@ myApp.controller('ChampionshipScheduleCtrl', function($scope, TemplateService, $
     $scope.formData = {};
 
 
-    NavigationService.getAllSpotsList(function(data) {
-        errorService.errorCode(data, function(allData) {
+    NavigationService.getAllSpotsList(function (data) {
+        errorService.errorCode(data, function (allData) {
             if (!allData.message) {
                 if (allData.value) {
                     $scope.sportList = allData.data;
@@ -148,8 +148,8 @@ myApp.controller('ChampionshipScheduleCtrl', function($scope, TemplateService, $
             }
         });
     });
-    NavigationService.getAllAgeGroups(function(data) {
-        errorService.errorCode(data, function(allData) {
+    NavigationService.getAllAgeGroups(function (data) {
+        errorService.errorCode(data, function (allData) {
             if (!allData.message) {
                 if (allData.value) {
                     $scope.ageGroups = allData.data;
@@ -159,8 +159,8 @@ myApp.controller('ChampionshipScheduleCtrl', function($scope, TemplateService, $
             }
         });
     });
-    NavigationService.getAllWeights(function(data) {
-        errorService.errorCode(data, function(allData) {
+    NavigationService.getAllWeights(function (data) {
+        errorService.errorCode(data, function (allData) {
             if (!allData.message) {
                 if (allData.value) {
                     $scope.allWeights = allData.data;
@@ -171,15 +171,22 @@ myApp.controller('ChampionshipScheduleCtrl', function($scope, TemplateService, $
         });
     });
 
-    $scope.viewDraw = function(formData) {
-        NavigationService.getQuickSportId(formData, function(data) {
-            errorService.errorCode(data, function(allData) {
+    $scope.viewDraw = function (formData) {
+        NavigationService.getQuickSportId(formData, function (data) {
+            errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
                     if (allData.value) {
                         $scope.drawDetails = allData.data;
+                        if ($scope.drawDetails === 'No Data Found') {
+                            toastr.error('No Event Found', 'Error Message');
+                        }
                         console.log($scope.drawDetails, " $scope.drawDetails");
                         if ($scope.drawDetails.drawFormat === 'Knockout') {
                             $state.go('knockout', {
+                                id: $scope.drawDetails.sport
+                            });
+                        } else if ($scope.drawDetails.drawFormat === 'Heats') {
+                            $state.go('heats', {
                                 id: $scope.drawDetails.sport
                             });
                         }
@@ -191,7 +198,7 @@ myApp.controller('ChampionshipScheduleCtrl', function($scope, TemplateService, $
         });
     };
 
-    $scope.sportName = function(sportName) {
+    $scope.sportName = function (sportName) {
         if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA') {
             $scope.showWeight = true;
         } else {
