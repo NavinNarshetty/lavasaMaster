@@ -4041,16 +4041,18 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         }
         $scope.viewTable = function (formValue) {
             console.log("data in table", formValue);
-            $scope.url = "Match/search"
+            $scope.url = "Match/getPerSport"
+            // $scope.formData = formValue;
             $scope.formData.page = $scope.formData.page++;
-            NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            $scope.form.page = $scope.formData;
+            NavigationService.apiCall($scope.url, $scope.form, function (data) {
                 console.log("data.value search", data);
                 $scope.items = data.data.results;
                 $scope.totalItems = data.data.total;
                 $scope.maxRow = data.data.options.count;
             });
         }
-        $scope.viewTable();
+        // $scope.viewTable();
 
 
         $scope.confDel = function (data) {

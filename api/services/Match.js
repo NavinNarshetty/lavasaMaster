@@ -158,6 +158,27 @@ var model = {
     },
 
     getPerSport: function (data, callback) {
+        var maxRow = Config.maxRow;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['matchId', 'round'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                asc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
         async.waterfall([
             function (callback) {
                 Sport.findOne(data).exec(function (err, sportDetails) {
@@ -174,19 +195,25 @@ var model = {
             function (sportDetails, callback) {
                 var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId.school opponentsTeam";
                 Match.find({
-                    sport: sportDetails._id
-                }).lean().deepPopulate(deepSearch).exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(found)) {
-                            callback(null, []);
+                        sport: sportDetails._id
+                    }).lean().sort({
+                        createdAt: -1
+                    })
+                    .order(options)
+                    .keyword(options)
+                    .deepPopulate(deepSearch)
+                    .page(options, function (err, found) {
+                        if (err) {
+                            callback(err, null);
                         } else {
-                            console.log("found0", found);
-                            callback(null, found);
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                console.log("found0", found);
+                                callback(null, found);
+                            }
                         }
-                    }
-                });
+                    });
             }
         ], function (err, result) {
             console.log("Final Callback");
