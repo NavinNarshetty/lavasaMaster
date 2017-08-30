@@ -201,6 +201,14 @@ var controller = {
                                         callback(null, complete);
                                     }
                                 });
+                            } else if (req.body.resultType == "qualifying-round" && req.body.playerType == "individual") {
+                                Match.updateQualifyingRoundIndividual(importData, req.body, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
                             } else {
                                 callback(null, importData);
                             }
