@@ -4028,14 +4028,17 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.formData.type = '';
         $scope.formData.keyword = '';
         $scope.form = {};
+        $scope.form.page = 1;
+        $scope.form.type = '';
+        $scope.form.keyword = '';
 
         $scope.searchInTable = function (data) {
-            $scope.formData.page = 1;
+            $scope.form.page = 1;
             if (data.length >= 2) {
-                $scope.formData.keyword = data;
+                $scope.form.keyword = data;
                 $scope.viewTable($scope.form);
             } else if (data.length == '') {
-                $scope.formData.keyword = data;
+                $scope.form.keyword = data;
                 $scope.viewTable($scope.form);
             }
         }
@@ -4043,8 +4046,9 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             console.log("data in table", formValue);
             $scope.url = "Match/getPerSport"
             // $scope.formData = formValue;
-            $scope.formData.page = $scope.formData.page++;
-            $scope.form.page = $scope.formData;
+            $scope.form.page = $scope.form.page++;
+            // $scope.form.page = $scope.formData;
+            console.log("form......", $scope.form);
             NavigationService.apiCall($scope.url, $scope.form, function (data) {
                 console.log("data.value search", data);
                 $scope.items = data.data.results;

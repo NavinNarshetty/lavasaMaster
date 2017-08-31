@@ -158,30 +158,17 @@ var model = {
     },
 
     getPerSport: function (data, callback) {
-        var maxRow = Config.maxRow;
-
-        var page = 1;
-        if (data.page) {
-            page = data.page;
-        }
-        var field = data.field;
-        var options = {
-            field: data.field,
-            filters: {
-                keyword: {
-                    fields: ['matchId', 'round'],
-                    term: data.keyword
-                }
-            },
-            sort: {
-                asc: 'createdAt'
-            },
-            start: (page - 1) * maxRow,
-            count: maxRow
-        };
         async.waterfall([
             function (callback) {
-                Sport.findOne(data).exec(function (err, sportDetails) {
+                var matchObj = {
+                    sportslist: data.sportslist,
+                    gender: data.gender,
+                    ageGroup: data.ageGroup,
+                }
+                if (!_.isEmpty(data.weight)) {
+                    matchObj.weight = data.weight;
+                }
+                Sport.findOne(matchObj).exec(function (err, sportDetails) {
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(sportDetails)) {
@@ -193,6 +180,27 @@ var model = {
                 });
             },
             function (sportDetails, callback) {
+                console.log("paramData", data);
+                var maxRow = Config.maxRow;
+                var page = 1;
+                if (data.page) {
+                    page = data.page;
+                }
+                var field = data.field;
+                var options = {
+                    field: data.field,
+                    filters: {
+                        keyword: {
+                            fields: ['matchId', 'round'],
+                            term: data.keyword
+                        }
+                    },
+                    sort: {
+                        asc: 'createdAt'
+                    },
+                    start: (page - 1) * maxRow,
+                    count: maxRow
+                };
                 var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId.school opponentsTeam";
                 Match.find({
                         sport: sportDetails._id
@@ -667,6 +675,7 @@ var model = {
                     var match = {};
                     match.name = arr[i];
                     match.match = dummy[i];
+                    // match.sportType = match.match[0].sport.sportslist.sportsListSubCategory.sportsListCategory.name
                     matchData.push(match);
                     i++;
                 }

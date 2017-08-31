@@ -353,15 +353,15 @@ var controller = {
     getPerSport: function (req, res) {
         if (req.body) {
             if (req.body && req.body.sportslist && req.body.gender && req.body.ageGroup) {
-                var matchObj = {
-                    sportslist: req.body.sportslist,
-                    gender: req.body.gender,
-                    ageGroup: req.body.ageGroup,
-                }
-                if (!_.isEmpty(req.body.weight)) {
-                    matchObj.weight = req.body.weight;
-                }
-                Match.getPerSport(matchObj, res.callback);
+                // var matchObj = {
+                //     sportslist: req.body.sportslist,
+                //     gender: req.body.gender,
+                //     ageGroup: req.body.ageGroup,
+                // }
+                // if (!_.isEmpty(req.body.weight)) {
+                //     matchObj.weight = req.body.weight;
+                // }
+                Match.getPerSport(req.body, res.callback);
             } else {
                 res.json({
                     data: "Some Fields are Missing",
