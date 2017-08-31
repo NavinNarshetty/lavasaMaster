@@ -46,6 +46,39 @@ myApp.factory('NavigationService', function ($http) {
           }).success(function (data) {
               callback(data)
           });
+        },
+        getAllSportsList: function(callback) {
+            $http({
+                url: adminurl + 'SportsList/getAll',
+                method: 'POST'
+            }).then(callback);
+        },
+        getAllAgeGroups: function(callback) {
+            $http({
+                url: adminurl + 'AgeGroup/getAll',
+                method: 'POST'
+            }).then(callback);
+        },
+        getAllWeights: function(callback) {
+            $http({
+                url: adminurl + 'Weight/getAll',
+                method: 'POST'
+            }).then(callback);
+        },
+        getQuickSportId: function(request, callback) {
+            $http({
+                url: adminurl + 'match/getQuickSportId',
+                method: 'POST',
+                data: request
+            }).then(callback);
+        },
+        getSportSpecificRounds: function(request, callback) {
+
+            $http({
+                url: adminurl + 'match/getSportSpecificRounds',
+                method: 'POST',
+                data: request
+            }).then(callback);
         }
     };
 });

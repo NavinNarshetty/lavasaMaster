@@ -86,3 +86,11 @@ myApp.filter('capitalize', function () {
         }) : '';
     };
 });
+
+myApp.filter('englishNumeralDate', function () {
+    return function (value) {
+        if (value) {
+            return moment(new Date(value)).format("Do MMMM YYYY");
+        }
+    };
+});

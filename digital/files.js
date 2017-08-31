@@ -43,6 +43,7 @@ module.exports = [
 
   // Services
   'digital/js/services/template.js',
+  'digital/js/services/errorService.js',
 
   //Factories
   'digital/js/factories/navigation.js',
@@ -57,4 +58,5 @@ module.exports = [
   'digital/js/controllers/racquetscore-controller.js',
   'digital/js/controllers/racquetdoublesscore-controller.js',
   'digital/js/controllers/digitalhome.js',
+  'digital/js/controllers/knockout.js',
 ];

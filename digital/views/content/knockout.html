@@ -1,0 +1,240 @@
+<div class="knockout-round">
+  <div class="container">
+    <!--SPORT NAME-->
+    <div class="knockout-sportname text-center">
+      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>{{roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name}}</span> |
+        <span>{{roundsList[0].match[0].sport.gender}}</span> |
+        <span>{{roundsList[0].match[0].sport.ageGroup.name}}</span></h3>
+      <div class="draws-downloadpdf draws-a">
+        <a href="#">Download the schedule in pdf format</a>
+      </div>
+    </div>
+    <!--END SPORT NAME-->
+
+    <!--SWIPER BUTTON DIV-->
+
+    <div class="knockout-eventtype singles text-center">
+      <!--EVENT TYPE-->
+      <h3 class="d-fjalla-one text-uppercase sport-color-primary">
+        {{roundsList[0].match[0].sport.sportslist.name}}
+      </h3>
+      <!--EVENT TYPE END-->
+    </div>
+    <!--SWIPER-->
+    <div class="row">
+      <div class="col-md-offset-3 col-md-6 col-sm-offset-3 col-sm-6 col-xs-12">
+        <div class="knockout-swiper-holder">
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" ng-repeat="roundName in roundsListName">
+                <div class="knockout-viewmore" ng-click="getSportSpecificRounds(roundName)">
+                  <button class="btn sport-btn-blue-outline">{{roundName}}</button>
+                </div>
+              </div>
+              <!-- <div class="swiper-slide">
+                <div class="knockout-viewmore">
+                  <button class="btn sport-btn-blue-outline">Round 2</button>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="knockout-viewmore">
+                  <button class="btn sport-btn-blue-outline">Round 3</button>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="knockout-viewmore">
+                  <button class="btn sport-btn-blue-outline">Quater-Final</button>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="knockout-viewmore">
+                  <button class="btn sport-btn-blue-outline">Semi-Final</button>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <div class="knockout-viewmore">
+                  <button class="btn sport-btn-blue-outline">Final</button>
+                </div>
+              </div> -->
+            </div>
+            <!-- Add Arrows -->
+          </div>
+          <div class="swiper-button-next"><span class="fa fa-chevron-right"></div>
+          <div class="swiper-button-prev"><span class="fa fa-chevron-left"></div>
+        </div>
+      </div>
+    </div>
+
+    <!--SWIPER-->
+    <!--SWIPER BUTTON DIV END-->
+
+
+    <!--OUTER DIV -->
+    <div class="knockout-schedulecardsholder">
+      <!--ROUNDS HEAD-->
+      <!-- <div class="row">
+        <div class="col-md-3 col-sm-4 col-xs-12" ng-repeat="round in roundsListName |limitTo:3 track by $index">
+          <div class="text-center text-uppercase">
+            <h3 class="sport-success d-fjalla-one">{{round}}
+            </h3>
+          </div>
+        </div>
+      </div> -->
+      <!--ROUNDS HEAD END-->
+      <div class="row">
+        <!--ROUND 1-->
+        <div class="col-md-3 col-sm-4 col-xs-12">
+
+              <div>
+             <h3 class="sport-success d-fjalla-one text-center text-uppercase">{{roundsList[0].name}}
+            </h3>
+          <div class="knockout-cardholder" ng-repeat="card in roundsList[0].match track by $index">
+            <div class="knockout-card"  ng-if="card.opponentsSingle.length>0" ng-repeat="player  in card.opponentsSingle track by $index" ng-class="{'knockout-winnercard':player.winner==true}">
+              <div class="knockout-cardimage inline-block ver-mid">
+                <img ng-src="{{player.athleteId.photograph|serverimage:50:50:'cover'}}" alt="" class="img-responsive">
+              </div>
+
+              <div class="inline-block knockout-cardplayername ver-mid">
+                <p class="m-clear knockout-winner-name" title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'25'}}</p>
+                <p class="m-clear" title="{{player.athleteId.school.name}}">{{player.athleteId.school.name | truncate:'25'}}</p>
+              </div>
+            </div>
+            <div ng-if="card.opponentsSingle.length ===1">-</div>
+            <div ng-if="card.opponentsSingle.length===0">
+              <div class="knockout-card" style="height:50%">
+               -
+              </div>
+              <div class=""  style="height:50%">
+                -
+               </div>
+            </div>
+            <div class="knockout-card-content" ng-class="{'classsName':!card.scheduleDate}">
+              <div class="knockout-startscoring">
+                <!-- <div class="knockout-videoholder" ng-if="card.matchcenter==true"> -->
+                <a ng-click="startScoring(card);">
+                    <span>Start Scoring</span>
+                  </a>
+              </div>
+              <p class="m-clear knockout-timedetail" ng-if="card.scheduleDate">
+                {{card.scheduleDate|englishNumeralDate}} | <span>  {{card.scheduleTime}}</span>
+            </p>
+
+            <p class="m-clear" ng-if="card.matchcenter">
+
+              {{card.matchcenter}}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--END ROUND 1-->
+
+    <!--ROUND 2-->
+    <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs">
+      <h3 class="sport-success d-fjalla-one text-center text-uppercase"> {{roundsList[1].name}} </h3>
+      <div class="knockout-cardholder-round2 relate" ng-repeat="card in roundsList[1].match track by $index">
+        <div class="get-center knockout-round-width">
+          <div class=" knockout-cardholder">
+            <div class="knockout-card " ng-if="card.opponentsSingle.length>0" ng-repeat="player in card.opponentsSingle track by $index "
+              ng-class="{'knockout-winnercard':player.winner==true}">
+              <div class="knockout-cardimage inline-block ver-mid ">
+                <img ng-src="{{player.athleteId.photograph|serverimage:50:50:'cover'}}" alt=" " class="img-responsive ">
+              </div>
+              <div class="inline-block knockout-cardplayername ver-mid ">
+                <p class="m-clear knockout-winner-name" title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'25'}}</p>
+                <p class="m-clear" title="{{player.athleteId.school.name}}">{{player.athleteId.school.name | truncate:'25'}}</p>
+              </div>
+            </div>
+            <div ng-if="card.opponentsSingle.length ===1">-</div>
+            <div ng-if="card.opponentsSingle.length===0">
+              <div class="knockout-card" style="height:50%">
+                -
+              </div>
+              <div class="" style="height:50%">
+                -
+              </div>
+            </div>
+
+            <div class="knockout-card-content ">
+              <div class="knockout-startscoring">
+                <a ng-click="startScoring(card);">
+                      <span>Start Scoring</span>
+                    </a>
+              </div>
+              <p class="m-clear knockout-timedetail" ng-if="card.scheduleDate">
+              {{card.scheduleDate|englishNumeralDate}} | <span> {{card.scheduleTime}}</span>
+              </p>
+              <p class="m-clear" ng-if="card.matchcenter">
+                {{card.matchcenter}}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--END ROUND 2-->
+
+    <!--ROUND 3-->
+    <div class="col-md-3 col-sm-4 col-xs-12 hidden-sm hidden-xs">
+      <h3 class="sport-success d-fjalla-one text-center text-uppercase"> {{roundsList[2].name}} </h3>
+      <div class="knockout-cardholder-round3 relate" ng-repeat="card in roundsList[2].match track by $index">
+        <div class="get-center knockout-round-width">
+          <div class=" knockout-cardholder">
+            <div class="knockout-card " ng-repeat="player in card.opponentsSingle track by $index" ng-class="{'knockout-winnercard':player.winner==true}">
+              <div class="knockout-cardimage inline-block ver-mid ">
+                <img ng-src="{{player.athleteId.photograph|serverimage:50:50:'cover'}}" alt=" " class="img-responsive ">
+              </div>
+              <div class="inline-block knockout-cardplayername ver-mid ">
+                <p class="m-clear knockout-winner-name " title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'25'}}</p>
+                <p class="m-clear " title="{{player.athleteId.school.name}}">{{player.athleteId.school.name | truncate:'25'}}</p>
+              </div>
+            </div>
+            <div ng-if="card.opponentsSingle.length ===1">-</div>
+            <div ng-if="card.opponentsSingle.length===0">
+              <div class="knockout-card" style="height:50%">
+                -
+              </div>
+              <div class="" style="height:50%">
+                -
+              </div>
+            </div>
+            <div class="knockout-card-content">
+              <div class="knockout-startscoring" >
+                <a ng-click="startScoring(card);">
+                      <span>Start Scoring</span>
+                    </a>
+              </div>
+              <p class="m-clear knockout-timedetail">
+                {{card.scheduleDate|englishNumeralDate}} | <span>  {{card.scheduleTime}}</span>
+              </p>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--ROUND 3-->
+
+    <!--WINNERS-->
+    <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs">
+      <div class="knockout-winnercardholder" ng-repeat="winner in winnersCard track by $index">
+        <div class="inline-block knockout-winnercardname">
+          <div class="knockout-winnercardimgage inline-block">
+            <img src="/img/dishapatani1.jpg" alt="image" class="img-responsive">
+          </div>
+          <div class="knockout-winnercardplayername inline-block">
+            <p class="m-clear">{{winner.player}}</p>
+            <p class="m-clear">{{winner.schoolname | truncate:25}}</p>
+          </div>
+        </div>
+        <div class="inline-block knockout-winnermedalholder">
+          <img ng-src="/img/medal-icon/{{winner.medal}}-blue.png" alt="" class="img-responsive">
+        </div>
+      </div>
+    </div>
+    <!--END WINNERS-->
+  </div>
+</div>
+<!--END OUTER DIV-->
+</div>
+</div>

@@ -1,0 +1,861 @@
+// COLOR VARIABLES
+$sport-primary: #0a1a72!default; //blue
+$sport-success: #27b465 !default; //green
+$sport-warning: #ffb026 !default; //yellow
+$sport-danger: #da495b !default; //red
+$sport-info: #000072 !default; //lighter-blue
+$sport-base: #1a1a1a !default; //black
+$sport-white: #fff !default;
+$sport-grey: #e1e1e1 !default;
+$sport-dark-grey: #757575 !default;
+$sport-light-grey: #e5e5e5 !default;
+$sport-other-blue: #2a45d4 !default;
+$sport-light-green:#bcd200 !default;
+$sport-bg-table: #f2f2f2 !default;
+$sport-grey-year: #c0c0c0 !default;
+$sport-green-graph: #0edb87 !default;
+$sport-green-table:#5aeba4 !default;
+$sport-blue-table:#7fdfff !default;
+$sport-table-knockout:#f5f4f4 !default;
+$sport-type-head:#fb7700 !default;
+$sport-table-grey:#efeeee !default;
+// COLOR VARIABLES END
+// FONT IMPORTS
+@font-face {
+  font-family: "Fjalla One";
+  src: url('../fonts/FJALLAONE-REGULAR_1.OTF');
+}
+
+@font-face {
+  font-family: "Opensans Semibold";
+  src: url('../fonts/OPENSANS-SEMIBOLD_3.TTF');
+}
+
+@font-face {
+  font-family: "Opensans Regular";
+  src: url('../fonts/OPENSANS-REGULAR_3.TTF');
+}
+
+@font-face {
+  font-family: "Teko";
+  src: url('../fonts/Teko-Regular_0.ttf');
+}
+
+@font-face {
+  font-family: "Teko Semibold";
+  src: url('../fonts/Teko-SemiBold_0.ttf');
+}
+
+.d-fjalla-one {
+  font-family: "Fjalla One";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.d-opensans-semibold {
+  font-family: "Opensans Semibold";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.d-opensans-regular {
+  font-family: "Opensans Regular";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.d-teko {
+  font-family: "Teko";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.d-teko-semibold {
+  font-family: "Teko Semibold";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// END FONT FAMILY IMPORTS
+// COMMON CLASS
+.sport-type-head {
+  color: $sport-type-head;
+}
+
+.sport-color-primary {
+  color: $sport-primary;
+}
+
+.sport-color-warning {
+  color: $sport-warning;
+}
+
+.sport-success {
+  color: $sport-success;
+}
+
+.sport-green-table {
+  color: $sport-green-table;
+}
+
+.sport-blue-table {
+  color: $sport-blue-table;
+}
+
+.draws-a {
+  a {
+    color: $sport-primary;
+    text-decoration: underline;
+    &:active,
+    &:focus,
+    &:hover,
+    &.active {
+      color: $sport-primary;
+    }
+  }
+}
+
+.get-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  @include transform(translate(-50%,
+  -50%));
+}
+
+.relate {
+  position: relative;
+}
+
+.m-clear {
+  margin: 0px;
+}
+
+.sport-btn-blue-outline {
+  border: 1px solid $sport-primary;
+  background-color: transparent;
+  color: $sport-primary;
+  &:hover,
+  &:active,
+  &:focus {
+    border: 1px solid $sport-primary;
+    background-color: transparent;
+    color: $sport-primary;
+    outline: none;
+  }
+}
+
+// ********************COMMON TABLE FOR ALL SCHEDULE *************
+.table-draws-schedule {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 20px;
+  border-collapse: separate;
+  border-spacing: 0px 5px;
+  thead {
+    tr {
+      th {
+        border: 1px solid #000;
+        padding: 8px;
+        line-height: 1.428571429;
+        text-align: center;
+        text-transform: uppercase;
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        border: 1px solid #000;
+        padding: 8px;
+        line-height: 1.428571429;
+        text-align: center;
+      }
+    }
+  }
+}
+
+// *******************END COMMON TABLE FOR SCHEDULE ****************
+// *******************TABLE FOUR *******************
+.table-four {
+  thead {
+    tr {
+      th {
+        &:nth-child(-n+3) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        &:nth-child(-n+3) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+}
+
+// *******************END TABLE FOUR ****************
+// *******************TABLE FIVE ********************
+.table-five {
+  thead {
+    tr {
+      th {
+        &:nth-child(-n+4) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        &:nth-child(-n+4) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+}
+
+// *******************TABLE FIVE END  *********************
+// ******************TABLE SIX ************************
+.table-six {
+  thead {
+    tr {
+      th {
+        &:nth-child(-n+5) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        &:nth-child(-n+5) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+}
+
+// ******************END TABLE SIX *********************
+// *******************TABLE SEVEN ***************
+.table-seven {
+  thead {
+    tr {
+      th {
+        &:nth-child(-n+6) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+  tbody {
+    tr {
+      td {
+        &:nth-child(-n+6) {
+          border-right: none;
+        }
+        &:nth-child(n+2) {
+          border-left: none;
+        }
+      }
+    }
+  }
+}
+
+// *******************END TABLE SEVEN **************
+// ********************BLUE TABLE ******************
+.q-blue-table {
+  .table-draws-schedule {
+    thead {
+      tr {
+        background-color: $sport-blue-table;
+        border: none;
+        th {
+          border: none;
+          h4 {
+            color: $sport-primary;
+            @extend .d-fjalla-one;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          border: none;
+          background-color: $sport-table-grey;
+          @extend .d-opensans-regular;
+        }
+      }
+    }
+  }
+}
+
+// ********************END BLUE TABLE*****************
+// ********************ORANGE TABLE *******************
+.q-orange-table {
+  .table-draws-schedule {
+    thead {
+      tr {
+        background-color: $sport-warning;
+        border: none;
+        th {
+          border: none;
+          h4 {
+            color: $sport-primary;
+            @extend .d-fjalla-one;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          border: none;
+          background-color: $sport-table-grey;
+          @extend .d-opensans-regular;
+        }
+      }
+    }
+  }
+}
+
+// ********************END ORANGE TABLE ***************
+// END COMMON CLASS
+// *******************QUALIFYING+ FINAL ROUND************************
+.qualifying-final-round {
+  min-height: 100vh;
+  padding-bottom: 50px;
+  .qf-final-event-holder {
+    border: 1px solid $sport-grey-year;
+    padding: 25px;
+  }
+  .qf-final-finalround {
+    border-bottom: 2px solid $sport-primary;
+  }
+  .qf-final-qualifyinground {
+    margin: 25px 0px;
+  }
+  .qf-final-viewmore {
+    text-align: right;
+  }
+  .qf-final-sportname {
+    margin: 40px;
+    border-bottom: 1px solid $sport-grey-year;
+  }
+  .draws-downloadpdf {
+    margin-bottom: 30px;
+  }
+}
+
+// FINAL ROUND TABLE
+.qf-final-finaltable,
+.qf-final-qualifyinground {
+  margin-bottom: 10px;
+  .table-draws-schedule {
+    thead {
+      tr {
+        background-color: $sport-blue-table;
+        border: none;
+        th {
+          border: none;
+          h4 {
+            color: $sport-primary;
+            @extend .d-fjalla-one;
+          }
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          border: none;
+          background-color: $sport-table-grey;
+          @extend .d-opensans-regular;
+        }
+      }
+    }
+  }
+}
+
+// END FINAL ROUND TABLE
+// *******************END QUALIFYING + FINAL ROUND********************
+// CHAMPIONSHIP SCHEDULE PAGE
+.chamionshipschedule-page {
+  padding: 40px 0;
+}
+
+.championshipdraw-card-form {
+  border: 1px solid $sport-dark-grey;
+  padding: 30px;
+}
+
+// .championshipdraw-cardrow {
+//   padding-bottom: 30px;
+//   border-bottom: 1px solid $sport-primary;
+// }
+.championship-drawstitle {
+  padding: 20px 0;
+  text-align: center;
+  p {
+    font-size: 16px;
+  }
+}
+
+.championshipdraw-card-lable {
+  width: 25%;
+  padding: 8px;
+  color: $sport-primary;
+  vertical-align: middle;
+  font-size: 14px;
+  text-align: right;
+  @extend .d-opensans-semibold;
+}
+
+.championshipdraw-card-dropdown {
+  width: 50%;
+  vertical-align: middle;
+}
+
+.championshipdraw-card-btn {
+  width: 100%;
+  background-color: $sport-warning;
+  color: #fff;
+  font-size: 14px;
+  text-transform: uppercase;
+}
+
+.championship-scheduletitle {
+  padding: 50px 0px 30px 0px;
+  border-top: 2px solid $sport-primary;
+  h2 {
+    color: #0eda85;
+  }
+}
+
+.championshipdraw-card {
+  padding-bottom: 50px;
+}
+
+.championship-schedule-tablefooter {
+  padding-left: 70px;
+}
+
+// CHAMPIONS TABLE
+.championshipschedule-tableholder {
+  table {
+    thead {
+      tr {
+        th {
+          background-color: #0eda85;
+          border-right: 1px solid #fff;
+          color: #fff;
+          text-align: center;
+          text-transform: uppercase;
+          @extend .d-opensans-regular;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          border-right: 1px solid #fff;
+          @extend .d-opensans-regular;
+        }
+      }
+    }
+  }
+  .table-striped>tbody>tr:nth-of-type(odd) {
+    background-color: $sport-grey;
+  }
+  .table-striped>tbody>tr:nth-of-type(even) {
+    background-color: #fff;
+  }
+  .table-striped>tbody>tr:nth-last-child(1) {
+    // opacity: 0;
+  }
+}
+
+// END CHAMPIONS TABLE
+// CHAMPIONSHIP SCHEDULE PAGE END
+//*********************** QUALIFYING + KNOCKOUT ******************
+.qualifying-knockout-round {
+  min-height: 100vh;
+  padding-bottom: 50px;
+  .qf-knockout-sportname {
+    margin: 30px 40px;
+    border-bottom: 1px solid $sport-grey-year;
+  }
+  .qf-knockout-sporteventname {
+    margin: 30px 0;
+  }
+  .draws-downloadpdf {
+    padding-bottom: 25px;
+  }
+  .qf-knockout-holder {
+    border: 1px solid $sport-grey-year;
+    padding: 25px;
+  }
+  .qf-knockout-viewmore {
+    padding-bottom: 25px;
+    border-bottom: 2px solid $sport-primary;
+  }
+  .qf-knockout-qualifyinghead {
+    padding-top: 40px;
+  }
+}
+
+//  *********************END QUALIFYING + KNOCKOUT ***************
+// **********************TIME TRIAL ROUND *************************
+.time-trial-round {
+  min-height: 100vh;
+  padding-bottom: 50px;
+  .time-trial-sportname {
+    margin: 30px 40px;
+  }
+  .draws-downloadpdf {
+    padding-bottom: 25px;
+    border-bottom: 1px solid $sport-grey-year;
+  }
+  .time-trial-winnerholder {
+    border: 1px solid $sport-grey-year;
+    padding: 25px;
+  }
+  .time-trial-eventname {
+    padding-bottom: 25px;
+  }
+  .time-trial-winnerhead {
+    padding-bottom: 30px;
+  }
+  .time-trial-winnertable {
+    padding-bottom: 25px;
+    border-bottom: 2px solid $sport-primary;
+  }
+  .time-trial-timehead {
+    padding-top: 40px;
+  }
+}
+
+// ACCORDIAN
+.time-trial-accordian {
+  .panel-default>.panel-heading {
+    background-color: $sport-blue-table;
+  }
+  .panel-heading {
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+  }
+  .panel-default {
+    border-color: #fff;
+  }
+}
+
+.time-trial-accordioncontent {
+  .q-blue-table {
+    .table-draws-schedule {
+      thead {
+        tr {
+          background-color: #dbdbdb;
+          border: none;
+          th {
+            border: none;
+            h4 {
+              color: $sport-primary;
+              @extend .d-fjalla-one;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// END ACCORDIAN
+// **********************END TIME TRIAL ROUND *********************
+// **********************HEATS ROUNDS*************************
+.heat-rounds {
+  min-height: 100vh;
+  padding-bottom: 50px;
+  .heat-sportname {
+    margin: 30px 40px;
+  }
+  .draws-downloadpdf {
+    padding-bottom: 25px;
+    border-bottom: 1px solid $sport-grey-year;
+  }
+  .heats-finalrounds-holder {
+    border: 1px solid $sport-grey-year;
+    padding: 25px;
+  }
+  .heats-semifinalhead {
+    padding-top: 30px;
+  }
+  .heats-final-table {
+    padding-bottom: 25px;
+    border-bottom: 2px solid $sport-primary;
+  }
+  .heat-eventname {
+    padding-bottom: 25px;
+  }
+}
+
+// ACCORDIAN
+.heat-trial-accordian {
+  .panel-default>.panel-heading {
+    background-color: $sport-green-table;
+  }
+}
+
+// END ACCORDIAN
+// **********************END HEATS ROUNDS ********************
+//*********************** LEAGUE CUM KNOCKOUT ***************
+.league-knockout-round {
+  min-height: 100vh;
+  padding-bottom: 50px;
+  .league-knockout-sportname {
+    margin: 30px 40px;
+  }
+  .league-knockout-outerholder {
+    padding: 25px;
+    border: 1px solid $sport-grey-year;
+  }
+  .league-knockout-table,
+  .league-knockout-accordian,
+  .league-knockout-pointsviewmore {
+    padding-bottom: 25px;
+    border-bottom: 2px solid $sport-primary;
+  }
+  .league-knockout-pointshead {
+    padding-top: 25px;
+  }
+}
+
+.league-knockout-pointsaccordian {
+  .panel-default>.panel-heading {
+    background-color: $sport-green-table;
+  }
+}
+
+// **********************END LEAUGE CUM KNOCKOUT ************
+// **********************KNOCKOUT **************************
+.knockout-round {
+  min-height: 100vh;
+}
+
+.knockout-swiper-holder {
+  margin: 20px 0px;
+  .knockout-viewmore {
+    width: 100%;
+    margin: 0px 5px;
+  }
+  .sport-btn-blue-outline {
+    width: 100%;
+  }
+  .swiper-button-next {
+    right: -25px;
+  }
+  .swiper-button-prev {
+    left: -25px;
+  }
+}
+
+.knockout-viewmore {
+  .sport-btn-blue-outline {
+    font-size: 18px;
+  }
+}
+
+// Custom SWiper
+.knockout-swiper-holder {
+  .swiper-button-prev,
+  .swiper-button-next,
+  .swiper-container-rtl .swiper-button-prev,
+  .swiper-container-rtl .swiper-button-next {
+    background-image: none;
+    width: auto;
+    height: auto;
+    padding: 5px;
+    margin: -15px;
+  }
+}
+
+// End Custom Swiper
+// KNOCKOUT CARD
+.knockout-schedulecardsholder {
+  margin: 20px 0;
+  border-top: 1px solid $sport-grey-year;
+}
+
+.knockout-cardholder {
+  min-height: 175px;
+  box-shadow: 0 0 10px $sport-grey-year; // border: 1px solid $sport-grey-year;
+  margin-bottom: 15px;
+  position: relative;
+  .knockout-card {
+    &:nth-child(2) {
+      border-bottom: none;
+    }
+  }
+}
+
+.knockout-card {
+  padding: 11px 5px;
+  border-bottom: 1px solid $sport-grey-year;
+  border-left: 10px solid transparent;
+}
+
+.knockout-winner-name {
+  color: $sport-primary;
+}
+
+.knockout-winnercard {
+  border-left: 10px solid $sport-success;
+  .knockout-winner-name {
+    color: $sport-success;
+  }
+}
+
+.knockout-cardimage {
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.knockout-round-width {
+  width: 100%;
+}
+
+.knockout-card-content {
+  width: 100%;
+  padding: 5px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background-color: #0a1a72;
+  color: #fff;
+  .knockout-startscoring {
+    color: #fff;
+    a{
+      color: #fff;
+    }
+    float: right;
+  }
+}
+
+.knockout-cardplayername {
+  width: calc(100% - 55px);
+  @extend .d-opensans-regular;
+}
+
+.knockout-cardholder-round2 {
+  min-height: 380px;
+}
+
+.knockout-cardholder-round3 {
+  min-height: 760px;
+}
+
+// END KNOCKOUT CARD
+// WINNER CARD
+.knockout-winnercardholder {
+  box-shadow: 0 0 10px $sport-grey-year; // border: 1px solid $sport-grey-year;
+  padding: 5px;
+  margin: 5px 0px;
+}
+
+.knockout-winnercardname {
+  width: calc(100% - 35px);
+  vertical-align: middle;
+}
+
+.knockout-winnercardimgage {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.knockout-winnercardplayername {
+  width: calc(100% - 45px);
+  vertical-align: middle;
+}
+
+.knockout-winnermedalholder {
+  width: 30px;
+  vertical-align: middle;
+}
+
+// END WINNER CARD
+// **********************END KNOCKOUT **********************
+// **********************KNOCKOUT DOUBLES*******************
+.knockout-doubles-round {
+  min-height: 100vh;
+}
+
+.knockout-doubles-cardholder {
+  min-height: 280px;
+  box-shadow: 0 0 10px $sport-grey-year; // border: 1px solid $sport-grey-year;
+  margin-bottom: 15px;
+  position: relative;
+  .knockout-card {
+    &:nth-child(even) {
+      border-bottom: none;
+    }
+    &:nth-child(2) {
+      border-bottom: 3px solid $sport-primary;
+    }
+  }
+  .knockout-cardimage {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.knockout-doubles-cardholder-round2 {
+  min-height: 560px;
+}
+
+.knockout-doubles-cardholder-round3 {
+  min-height: 1120px;
+}
+.knockout-timedetail{
+  font-size: 12px;
+}
+// WINNER CARD
+.knockout-winnercardname-holder {
+  margin: 0 0 5px;
+}
+
+// WINNER CARD END
+// **********************KNOCKOUT DOUBLES END*******************
