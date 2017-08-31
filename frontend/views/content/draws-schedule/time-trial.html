@@ -5,9 +5,9 @@
     <!--SPORT NAME-->
     <div class="time-trial-sportname text-center">
       <h3 class="d-fjalla-one text-uppercase sport-type-head">
-        <span>Swimming</span> |
-        <span>girls</span> |
-        <span> U-14</span></h3>
+        <span>{{roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name}}</span> |
+        <span>{{roundsList[0].match[0].sport.gender}}</span> |
+        <span>{{roundsList[0].match[0].sport.ageGroup.name}}</span></h3>
       <div class="draws-downloadpdf draws-a">
         <a href="#">Download the schedule in pdf format</a>
       </div>
@@ -16,7 +16,7 @@
 
     <!--EVENT SPORT NAME-->
     <div class="time-trial-eventname text-center">
-      <h3 class="d-fjalla-one text-capitalize sport-color-primary m-clear">50m. Butterfly </h3>
+      <h3 class="d-fjalla-one text-capitalize sport-color-primary m-clear">{{roundsList[0].match[0].sport.sportslist.name}} </h3>
     </div>
     <!--END EVENT SPORT NAME-->
 
@@ -84,10 +84,10 @@
 
       <!--TIME TRIAL HEAD-->
       <div class="time-trial-timehead">
-        <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">time trial</h3>
-        <p class="sport-color-primary"><span>17th August,</span>
-          <span>2017</span> |
-          <span>10.30am</span></p>
+        <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">{{roundsList[0].name}}</h3>
+        <p class="sport-color-primary"><span>{{roundsList[0].match[0].scheduleDate |englishNumeralDate}}</span>
+          <span>|</span>
+          <span>{{roundsList[0].match[0].scheduleTime }}</span></p>
       </div>
       <!--END TIME TRIAL HEAD-->
 
@@ -95,7 +95,7 @@
 
       <div class="time-trial-accordian">
         <uib-accordion close-others="oneAtATime">
-          <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="s in timeTable  track by $index">
+          <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="s in roundsList[0].match |limitTo:limitValue track by $index">
             <uib-accordion-heading class="clearfix">
               <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
               <a href="">
@@ -137,25 +137,25 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr ng-repeat="qualify in timeTable track by $index">
+                    <tr ng-repeat="qualify in s.opponentsSingle track by $index">
                       <td>
                         <div class="text-capitalize">
-                          {{$index+1}}
+                          {{qualify.laneNo}}
                         </div>
                       </td>
                       <td>
                         <div class="text-capitalize">
-                          {{qualify.name}}
+                          {{qualify.athleteId.fullName}}
                         </div>
                       </td>
                       <td>
                         <div class="text-capitalize">
-                          {{qualify.schoolname}}
+                          {{qualify.athleteId.school.name}}
                         </div>
                       </td>
                       <td>
                         <div class="text-capitalize">
-                          {{qualify.position}}
+                          {{qualify.result}}
                         </div>
                       </td>
                       <td>
@@ -173,9 +173,14 @@
           </div>
         </uib-accordion>
       </div>
-      <div class="time-trial-viewmore text-right ">
+      <div class="time-trial-viewmore text-right " ng-click="showMoreData(true)" ng-if="showHeat && roundsList[1].match.length>8">
         <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
       </div>
+      <div class="time-trial-viewmore text-right" ng-click="showMoreData(false)" ng-if="!showHeat">
+        <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
+      </div>
+
+
       <!--END ACCORDIAN-->
     </div>
     <!--END OUTER DIV HOLDER-->

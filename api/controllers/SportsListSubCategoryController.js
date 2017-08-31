@@ -13,7 +13,7 @@ var controller = {
     },
 
     getAllSport: function (req, res) {
-        if (req.body) {
+        if (req) {
             SportsListSubCategory.getAllSport(res.callback);
         } else {
             res.json({

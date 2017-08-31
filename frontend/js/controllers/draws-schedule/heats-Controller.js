@@ -127,8 +127,9 @@ myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, Navigat
             if (allData.value) {
               $scope.roundsListName = allData.data.roundsListName;
               $scope.roundsList = allData.data.roundsList;
-              if ($scope.roundsListName.length === 0 && $scope.roundsList.length === 0) {
+              if ($scope.roundsListName.length === 0 || $scope.roundsList.length === 0) {
                 toastr.error("No Data Found", 'Error Message');
+                $state.go('championshipschedule');
               }
               $scope.roundsList = $scope.roundsList.reverse();
               _.each($scope.roundsList, function (key) {

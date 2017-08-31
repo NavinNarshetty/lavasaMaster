@@ -4,7 +4,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
     $scope.navigation = NavigationService.getNavigation();
 
     $scope.sportList = ['football', 'Basketball', 'tennis', 'chess'];
-    $scope.genderList = ['male', 'female'];
+    $scope.genderList = ['male', 'female', 'mixed'];
     $scope.schedulelist = [{
         sport: 'Archery',
         date1: '15',
@@ -142,6 +142,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
             if (!allData.message) {
                 if (allData.value) {
                     $scope.sportList = allData.data;
+                    console.log("$scope.sportList", $scope.sportList);
                 }
             } else {
                 toastr.error(allData.message, 'Error Message');
@@ -170,8 +171,37 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
             }
         });
     });
+    $scope.nameOfSport = {};
+    $scope.requestObj = {};
+    $scope.sportName = function (sportName, sportId) {
+        console.log("sportId", sportId);
+        $scope.nameOfSport = sportName;
+        console.log("$scope.nameOfSport", $scope.nameOfSport);
+        if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA') {
+            $scope.showWeight = true;
+        } else {
+            $scope.showWeight = false;
+        }
+        $scope.requestObj._id = sportId;
+        NavigationService.getAllBySport($scope.requestObj, function (data) {
+
+            errorService.errorCode(data, function (allData) {
+                if (!allData.message) {
+                    if (allData.value) {
+                        console.log("  allData.data;", allData.data);
+                        $scope.getAllBySport = allData.data;
+                    }
+                } else {
+                    toastr.error(allData.message, 'Error Message');
+                }
+            });
+
+        });
+
+    };
 
     $scope.viewDraw = function (formData) {
+        console.log("$scope.viewDraw", $scope.nameOfSport);
         NavigationService.getQuickSportId(formData, function (data) {
             errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
@@ -186,9 +216,19 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                                 id: $scope.drawDetails.sport
                             });
                         } else if ($scope.drawDetails.drawFormat === 'Heats') {
-                            $state.go('heats', {
-                                id: $scope.drawDetails.sport
-                            });
+                            console.log("$scope.nameOfSport", $scope.nameOfSport);
+                            if ($scope.nameOfSport === '50m Freestyle' || $scope.nameOfSport === '50m Backstroke' || $scope.nameOfSport === '50m Breaststroke' || $scope.nameOfSport === '50m Butterfly' || $scope.nameOfSport === '100m Freestyle' || $scope.nameOfSport === '100m Backstroke' || $scope.nameOfSport === '100m Breaststroke' || $scope.nameOfSport === '100m Butterfly' || $scope.nameOfSport === '200m Individual Medley' || $scope.nameOfSport === 'Swimming 4x50m Freestyle Relay' || $scope.nameOfSport === 'Swimming 4x50m Medley Relay') {
+                                $state.go('time-trial', {
+                                    id: $scope.drawDetails.sport
+
+                                });
+                            } else {
+                                console.log("im in else");
+                                $state.go('heats', {
+                                    id: $scope.drawDetails.sport
+                                });
+                            }
+
                         }
                     }
                 } else {
@@ -198,13 +238,6 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
         });
     };
 
-    $scope.sportName = function (sportName) {
-        if (sportName === 'Boxing' || sportName === 'Judo' || sportName === 'Kumite' || sportName === 'Taekwondo' || sportName === 'Sport MMA') {
-            $scope.showWeight = true;
-        } else {
-            $scope.showWeight = false;
-        }
 
-    }
 
 });
