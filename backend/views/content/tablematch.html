@@ -14,6 +14,29 @@
     <div class="col-md-12">
       <div class="widget">
         <div class="form-elements-sec">
+          <div class="button-matched-holder">
+            <div class="row match-head-holder">
+              <div class="col-md-8">
+                <!-- <h3 class="m-clear">List of Matches<span class=" tableTotal ">(Total : {{totalItems}}) </span></h3> -->
+                <a class="btn btn-success" ui-sref="detailmatches">
+                    Create
+                 </a>
+                <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'uploadExcelMatch',view:'uploadFilter'})">
+                    Upload-Excel
+                 </span>
+                <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'updateExcelMatch',view:'updateExcelResult'})">
+                    Update-Excel-Score
+                 </span>
+
+              </div>
+              <div class="col-md-4">
+                <form class="search-form mr-form">
+                  <input type="text" class="form-control" ng-change="searchInTable(search)" placeholder="Search Here...
+                                         " ng-model="search" />
+                </form>
+              </div>
+            </div>
+          </div>
           <form name="detailForm" role="form" class="sec">
             <div class="row">
               <div class="col-md-12">
@@ -208,7 +231,8 @@
               </thead>
               <tbody>
                 <!--<tr ng-repeat="item in items">-->
-                <tr ng-repeat="item in items">
+                <!-- <tr ng-repeat="item in items"> -->
+                <tr ng-repeat="item in items|filter:item.matchId">
                   <!--<tr>-->
                   <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                   <!--<td>{{($index + 1)}}</td>-->
