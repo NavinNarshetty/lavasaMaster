@@ -309,8 +309,14 @@
                         special days and all other announcements with regards to SFA
                         <%=city%>
                           <%=year%>, by following our Facebook event page:
-                            <a style=" color: #0a1a72; font-style: italic; font-weight: 600; " href="https://www.facebook.com/events/237874770032808/?active_tab=discussion
-                      " target="_blank ">https://www.facebook.com/events/237874770032808/?active_tab=discussion</a>
+                            <%if(city == 'Mumbai'){%>
+                              <a style=" color: #0a1a72; font-style: italic; font-weight: 600; " href="https://www.facebook.com/events/237874770032808/?active_tab=discussion
+                            " target="_blank ">https://www.facebook.com/events/237874770032808/?active_tab=discussion</a>
+                              <%} else if(city == 'Hyderabad'){%>
+                                <a style=" color: #0a1a72; font-style: italic; font-weight: 600; " href="https://www.facebook.com/sportsforallnow/" target="_blank ">https://www.facebook.com/sportsforallnow/</a>
+                                <%} else if(city == 'Ahmedabad'){%>
+                                  <a style=" color: #0a1a72; font-style: italic; font-weight: 600; " href="https://www.facebook.com/sportsforallnow/" target="_blank ">https://www.facebook.com/sportsforallnow/</a>
+                                  <%}%>
                       </p>
                     </div>
                   </td>

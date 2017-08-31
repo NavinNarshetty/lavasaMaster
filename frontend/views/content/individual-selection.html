@@ -92,8 +92,8 @@
                                                 <div class="hover-img margin0 col-xs-4">
                                                     <img src="img/icon/icon.png" alt="logo" class="img-responsive myicon pull-right">
                                                     <div class="iconinfo sf-list">
-                                                        <p>Only athlete which have registered for sfa mumbai 2017 from your
-                                                            {{type}} will be displayed below.
+                                                        <p>Only athlete which have registered for sfa <span ng-if="sfaCity == 'Mumbai'">mumbai</span>
+                                                            <span ng-if="sfaCity == 'Hyderabad'">hyderabad</span><span ng-if="sfaCity == 'Ahmedabad'">ahmedabad</span>                                                            {{year}} from your {{type}} will be displayed below.
                                                         </p>
                                                     </div>
                                                 </div>
@@ -111,7 +111,7 @@
                                             </div>
                                             <div ng-if="listOfAthelete.length <= 0 && isLoading === false && getAthletePerSchoolObj.sfaid" class="mt15 text-center">
                                                 <h4>The SFA ID is invalid or Athlete name is not found. Kindly Check if the Athlete
-                                                    is registered for SFA Mumbai 2017.</h4>
+                                                    is registered for SFA {{sfaCity}} {{year}}.</h4>
                                             </div>
                                             <div ng-if="listOfAthelete.length <= 0 && isLoading === false && !getAthletePerSchoolObj.sfaid" class="mt15 text-center">
                                                 <h4>No Athlete Found</h4>

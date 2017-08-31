@@ -129,21 +129,27 @@
                         <p style="margin-bottom: 0px">Stay updated with announcements with regards to SFA
                             <%=city%>
                                 <%=year%>, by following our Facebook event page:</p>
-                        <a style="   color: #0a1a72; font-weight: 600;" href="https://www.facebook.com/events/237874770032808/?active_tab=discussion"
-                            target="_blank">https://www.facebook.com/events/237874770032808/?active_tab=discussion</a>
-                        <p>For further details about your application or any other information you may require please contact
-                            us on <span style="font-family:TitilliumWeb-Bold;"><%=infoNo%></span> or<br> email us at
-                            <%if(infoId == 'info@sfanow.in'){%>
-                                <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">
-                                    <%=infoId%>
-                                </a>
-                                <%} else if(infoId == 'info.hyd@sfanow.in'){%>
-                                    <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info.hyd@sfanow.in ">
-                                        <%=infoId%>
-                                    </a>
+                        <%if(city == 'Mumbai'){%>
+                            <a style=" color: #0a1a72; font-style: italic; font-weight: 600; " href="https://www.facebook.com/events/237874770032808/?active_tab=discussion
+                                    " target="_blank ">https://www.facebook.com/events/237874770032808/?active_tab=discussion</a>
+                            <%} else if(city == 'Hyderabad'){%>
+                                <a style=" color: #0a1a72; font-style: italic; font-weight: 600; " href="https://www.facebook.com/sportsforallnow/" target="_blank ">https://www.facebook.com/sportsforallnow/</a>
+                                <%} else if(city == 'Ahmedabad'){%>
+                                    <a style=" color: #0a1a72; font-style: italic; font-weight: 600; " href="https://www.facebook.com/sportsforallnow/" target="_blank ">https://www.facebook.com/sportsforallnow/</a>
                                     <%}%>
-                        </p>
-                        <p style="font-family:TitilliumWeb-Bold; ">Regards,<br>Team SFA</p>
+                                        <p>For further details about your application or any other information you may require
+                                            please contact us on <span style="font-family:TitilliumWeb-Bold;"><%=infoNo%></span>                                            or<br> email us at
+                                            <%if(infoId == 'info@sfanow.in'){%>
+                                                <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">
+                                                    <%=infoId%>
+                                                </a>
+                                                <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                                    <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info.hyd@sfanow.in ">
+                                                        <%=infoId%>
+                                                    </a>
+                                                    <%}%>
+                                        </p>
+                                        <p style="font-family:TitilliumWeb-Bold; ">Regards,<br>Team SFA</p>
 
                     </div>
                 </td>
