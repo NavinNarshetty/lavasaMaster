@@ -10,7 +10,17 @@ var controller = {
                 data: "Invalid Request"
             });
         }
+    },
 
+    getAllSport: function (req, res) {
+        if (req.body) {
+            SportsListSubCategory.getAllSport(res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
     },
 
     getOneSport: function (req, res) {
@@ -87,6 +97,7 @@ var controller = {
             });
         }
     },
+
 
     getRules: function (req, res) {
         if (req.body) {

@@ -139,6 +139,18 @@ var model = {
 
     },
 
+    getAllSport: function (callback) {
+        SportsListSubCategory.find().exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, []);
+            } else {
+                callback(null, found);
+            }
+        });
+    },
+
     //get one sport when Athelete login
     getSchoolPerAthlete: function (data, callback) {
         async.waterfall([

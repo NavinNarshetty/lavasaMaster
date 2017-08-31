@@ -1054,7 +1054,7 @@ var model = {
             });
     },
 
-     saveHeatTeam: function (importData, data, callback) {
+    saveHeatTeam: function (importData, data, callback) {
         var countError = 0;
         var arrMathes = [];
         async.waterfall([
@@ -1578,7 +1578,7 @@ var model = {
                 obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
                 if (mainData.sport.gender == "male") {
                     obj.GENDER = "Male";
-                } else if (mainData.sport.gender == "Female") {
+                } else if (mainData.sport.gender == "female") {
                     obj.GENDER = "Female";
                 } else {
                     obj.GENDER = "Male & Female"
@@ -1685,7 +1685,7 @@ var model = {
                 obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
                 if (mainData.sport.gender == "male") {
                     obj.GENDER = "Male";
-                } else if (mainData.sport.gender == "Female") {
+                } else if (mainData.sport.gender == "female") {
                     obj.GENDER = "Female";
                 } else {
                     obj.GENDER = "Male & Female"
@@ -1802,7 +1802,7 @@ var model = {
                         Match.generateExcelHeatTeam(match, function (err, singleData) {
                             Config.generateExcel("KnockoutTeam", singleData, res);
                         });
-                    }else {
+                    } else {
                         res.json({
                             "data": "Body not Found",
                             "value": false
@@ -1849,7 +1849,7 @@ var model = {
                         obj.SPORT = matchData.sport.sportslist.sportsListSubCategory.name;
                         if (matchData.sport.gender == "male") {
                             obj.GENDER = "Male";
-                        } else if (matchData.sport.gender == "Female") {
+                        } else if (matchData.sport.gender == "female") {
                             obj.GENDER = "Female";
                         } else {
                             obj.GENDER = "Male & Female"
@@ -1919,11 +1919,11 @@ var model = {
                         var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
                         obj.DATE = dateTime;
                         obj.TIME = matchData.scheduleTime;
-                        console.log("sport",matchData.sport.sportslist.sportsListSubCategory.name);
+                        console.log("sport", matchData.sport.sportslist.sportsListSubCategory.name);
                         obj.SPORT = matchData.sport.sportslist.sportsListSubCategory.name;
                         if (matchData.sport.gender == "male") {
                             obj.GENDER = "Male";
-                        } else if (matchData.sport.gender == "Female") {
+                        } else if (matchData.sport.gender == "female") {
                             obj.GENDER = "Female";
                         } else {
                             obj.GENDER = "Male & Female"
@@ -1936,9 +1936,9 @@ var model = {
                         laneNo++;
                         if (mainData) {
                             obj["TEAM ID"] = mainData.teamId;
-                           
+
                             obj["NAME"] = mainData.name;
-                            
+
                             obj["SCHOOL"] = mainData.schoolName;
 
                         } else {
@@ -2017,7 +2017,7 @@ var model = {
                 obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
                 if (mainData.sport.gender == "male") {
                     obj.GENDER = "Male";
-                } else if (mainData.sport.gender == "Female") {
+                } else if (mainData.sport.gender == "female") {
                     obj.GENDER = "Female";
                 } else {
                     obj.GENDER = "Male & Female"
@@ -2170,7 +2170,7 @@ var model = {
                 obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
                 if (mainData.sport.gender == "male") {
                     obj.GENDER = "Male";
-                } else if (mainData.sport.gender == "Female") {
+                } else if (mainData.sport.gender == "female") {
                     obj.GENDER = "Female";
                 } else {
                     obj.GENDER = "Male & Female"

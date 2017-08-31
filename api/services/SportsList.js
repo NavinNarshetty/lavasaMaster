@@ -31,7 +31,7 @@ module.exports = mongoose.model('SportsList', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "rules drawFormat sportsListSubCategory", "rules drawFormat sportsListSubCategory"));
 var model = {
 
-    getAllSportByType: function(data, callback) {
+    getAllSportByType: function (data, callback) {
         var results = {};
         results.teamSports = [];
         results.combatSports = [];
@@ -40,11 +40,11 @@ var model = {
         results.racquetSports = [];
         results.targetSports = [];
         async.waterfall([
-                function(callback) {
+                function (callback) {
                     SportsList.find({
                         sporttype: "Team"
                     }).lean().exec(
-                        function(err, found) {
+                        function (err, found) {
                             if (err) {
                                 console.log(err);
                                 callback(err, null);
@@ -56,11 +56,11 @@ var model = {
                             }
                         });
                 },
-                function(results, callback) {
+                function (results, callback) {
                     SportsList.find({
                         sporttype: "Combat"
                     }).lean().exec(
-                        function(err, found) {
+                        function (err, found) {
                             if (err) {
                                 console.log(err);
                                 callback(err, null);
@@ -72,11 +72,11 @@ var model = {
                             }
                         });
                 },
-                function(results, callback) {
+                function (results, callback) {
                     SportsList.find({
                         sporttype: "Acquatics"
                     }).lean().exec(
-                        function(err, found) {
+                        function (err, found) {
                             if (err) {
                                 console.log(err);
                                 callback(err, null);
@@ -88,11 +88,11 @@ var model = {
                             }
                         });
                 },
-                function(results, callback) {
+                function (results, callback) {
                     SportsList.find({
                         sporttype: "Individual"
                     }).lean().exec(
-                        function(err, found) {
+                        function (err, found) {
                             if (err) {
                                 console.log(err);
                                 callback(err, null);
@@ -104,11 +104,11 @@ var model = {
                             }
                         });
                 },
-                function(results, callback) {
+                function (results, callback) {
                     SportsList.find({
                         sporttype: "Target"
                     }).lean().exec(
-                        function(err, found) {
+                        function (err, found) {
                             if (err) {
                                 console.log(err);
                                 callback(err, null);
@@ -120,11 +120,11 @@ var model = {
                             }
                         });
                 },
-                function(results, callback) {
+                function (results, callback) {
                     SportsList.find({
                         sporttype: "Racquet"
                     }).lean().exec(
-                        function(err, found) {
+                        function (err, found) {
                             if (err) {
                                 console.log(err);
                                 callback(err, null);
@@ -137,7 +137,7 @@ var model = {
                         });
                 }
             ],
-            function(err, data2) {
+            function (err, data2) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
@@ -152,13 +152,13 @@ var model = {
 
     },
 
-    generateExcel: function(res) {
+    generateExcel: function (res) {
         async.waterfall([
-                function(callback) {
+                function (callback) {
                     SportsList.find().deepPopulate("sportsListSubCategory drawFormat").lean().sort({
                         createdAt: -1
                     }).exec(
-                        function(err, complete) {
+                        function (err, complete) {
                             if (err) {
                                 console.log(err);
                                 callback(err, null);
@@ -169,9 +169,9 @@ var model = {
                             }
                         });
                 },
-                function(complete, callback) {
+                function (complete, callback) {
                     var excelData = [];
-                    _.each(complete, function(n) {
+                    _.each(complete, function (n) {
                         var obj = {};
                         var dateTime = moment.utc(n.createdAt).utcOffset("+05:30").format('YYYY-MM-DD HH:mm');
                         obj.date = dateTime;
@@ -184,7 +184,7 @@ var model = {
                     Config.generateExcelOld("SportsList", excelData, res);
                 }
             ],
-            function(err, data2) {
+            function (err, data2) {
                 if (err) {
                     console.log(err);
                     callback(null, []);
@@ -197,9 +197,8 @@ var model = {
                 }
             });
     },
-    getAll: function(data, callback) {
-
-        SportsList.find().lean().exec(function(err, found) {
+    getAll: function (data, callback) {
+        SportsList.find().lean().exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else {
@@ -212,6 +211,21 @@ var model = {
             }
         });
     },
+
+    getAllBySport: function (data, callback) {
+        SportsList.find({
+            sportsListSubCategory: data._id
+        }).lean().exec(
+            function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (found) {
+                    callback(null, found);
+                } else {
+                    callback("Invalid data", null);
+                }
+            });
+    }
 
 };
 module.exports = _.assign(module.exports, exports, model);
