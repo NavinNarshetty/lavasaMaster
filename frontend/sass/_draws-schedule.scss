@@ -881,3 +881,21 @@ $sport-table-grey:#efeeee !default;
 
 // WINNER CARD END
 // **********************KNOCKOUT DOUBLES END*******************
+// ***********************SWISS LEAGUE **************************
+.swiss-league-holder {
+  border: 1px solid $sport-grey-year;
+  padding: 25px;
+}
+
+.swiss-league-round {
+  .swissleague-standingholder {
+    width: 18px;
+    margin: 0 auto;
+  }
+}
+
+.swiss-league-sportname {
+  margin-bottom: 30px;
+}
+
+// ***********************SWISS LEAGUE END*************************

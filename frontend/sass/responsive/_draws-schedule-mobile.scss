@@ -61,6 +61,10 @@
   .championship-schedule-tablefooter {
     padding-left: 0;
   } // CHAMPIONSHIP_SCHEDULE END
+  // SWISS LEAGUE
+  .swiss-league-round {
+    margin-top: 92px;
+  } // SWISS LEAGUE END
 }
 
 @media screen and (max-width: 767px) {
@@ -119,6 +123,10 @@
   .championsip-draws {
     margin-top: 10px;
   } // CHAMPIONSHIP_SCHEDULE END
+  // SWISS LEAGUE
+  .swiss-league-round {
+    margin-top: 40px;
+  } // SWISS LEAGUE END
 }
 
 @media screen and (max-width: 480px) {
@@ -186,4 +194,13 @@
       font-size: 12px;
     }
   } // CHAMPIONSHIP SCHEDULE END
+  // SWISS LEAGUE
+  .swiss-league-round {
+    margin-top: 30px;
+  } // SWISS LEAGUE END
+  .swiss-league-sportname {
+    h3 {
+      font-size: 21px;
+    }
+  }
 }

@@ -1,0 +1,177 @@
+<div class="swiss-league-round">
+  <div class="container">
+    <!--SPORT NAME  -->
+    <div class="swiss-league-sportname text-center">
+      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>Chess</span> |
+        <span>girls</span> |
+        <span> U-14</span></h3>
+      <div class="draws-downloadpdf draws-a">
+        <a href="#">Download the schedule in pdf format</a>
+      </div>
+    </div>
+    <!--SPORT NAME END  -->
+
+    <!-- OUTER HOLDER DIV  -->
+    <div class="swiss-league-holder">
+      <!-- FINAL STANDING TABLE -->
+      <div class="swiss-league-finaltable q-orange-table">
+        <div class="table-responsive">
+          <!--SWISS LEAGUE HEAD-->
+          <div class="swiss-league-finalhead">
+            <h3 class="d-fjalla-one text-uppercase sport-type-head">Final standing</h3>
+          </div>
+          <!--SWISS LEAGUE HEAD-->
+
+          <table class="table-draws-schedule table-four ">
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <h4 class="m-clear ">Standing</h4>
+                  </div>
+                </th>
+                <th>
+                  <div class="text-center ">
+                    <h4 class="m-clear ">Name</h4>
+                  </div>
+                </th>
+                <th>
+                  <div class="text-center ">
+                    <h4 class="m-clear ">School</h4>
+                  </div>
+                </th>
+                <th>
+                  <div class="text-center">
+                    <h4 class="m-clear ">Points</h4>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="final in swissTable | limitTo :3 track by $index ">
+                <td>
+                  <div class="text-capitalize swissleague-standingholder">
+                    <img src="img/medal-icon/gold-blue.png" alt="" class="img-responsive">
+                  </div>
+                </td>
+                <td>
+                  <div class="text-center ">
+                    <p class="m-clear text-capitalize ">{{final.name}}</p>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-center">
+                    <p class="m-clear text-capitalize ">{{final.schoolname}}</p>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    {{final.points}}
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- VIEW MORE -->
+        <div class="swiss-league-viewmore text-right ">
+          <button class="btn sport-btn-blue-outline text-uppercase ">View More</button>
+        </div>
+        <!-- VIEW MORE END -->
+      </div>
+
+      <!-- FINAL STANDING TABLE END -->
+
+      <!-- ROUNDS TABLE -->
+      <div class="swiss-league-roundtable q-orange-table table-responsive ">
+        <div class="table-responsive">
+          <!--SWISS LEAGUE HEAD-->
+          <div class="swiss-league-finalhead">
+            <h3 class="d-fjalla-one text-uppercase sport-color-primary ">Round</h3>
+          </div>
+          <!--SWISS LEAGUE HEAD-->
+          <table class="table-draws-schedule table-six ">
+            <thead>
+              <tr>
+                <th>
+                  <div>
+                    <h4 class="m-clear ">Standing</h4>
+                  </div>
+                </th>
+                <th>
+                  <div class="text-left ">
+                    <h4 class="m-clear ">Name</h4>
+                  </div>
+                </th>
+                <th>
+                  <div class="text-center ">
+                    <h4 class="m-clear ">Points</h4>
+                  </div>
+                </th>
+                <th>
+                  <div class="text-center">
+                    <h4 class="m-clear ">Standing</h4>
+                  </div>
+                </th>
+                <th>
+                  <div class="text-left">
+                    <h4 class="m-clear ">Name</h4>
+                  </div>
+                </th>
+                <th>
+                  <div class="text-center">
+                    <h4 class="m-clear ">Points</h4>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="round in swissroundTable | limitTo :3 track by $index ">
+                <td>
+                  <div class="text-center">
+                    {{round.player1.standing}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-left ">
+                    <p class="m-clear text-capitalize ">{{round.player1.name}}</p>
+                    <p class="m-clear text-capitalize ">{{round.player1.schoolname}}</p>
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    {{round.player1.points}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-center">
+                    {{round.player2.standing}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-left ">
+                    <p class="m-clear text-capitalize ">{{round.player2.name}}</p>
+                    <p class="m-clear text-capitalize ">{{round.player2.schoolname}}</p>
+                  </div>
+                </td>
+                <td>
+                  <div class="text-center">
+                    {{round.player2.points}}
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- VIEW MORE -->
+        <div class="swiss-league-viewmore text-right ">
+          <button class="btn sport-btn-blue-outline text-uppercase ">View More</button>
+        </div>
+        <!-- VIEW MORE END -->
+      </div>
+
+      <!-- ROUNDS TABLE END -->
+    </div>
+    <!-- OUTER HOLDER DIV END  -->
+  </div>
+</div>

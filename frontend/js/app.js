@@ -301,6 +301,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'qfFinalCtrl'
         })
+        .state('swiss-league', {
+            url: "/swiss-league",
+            templateUrl: tempateURL,
+            controller: 'swissLeagueCtrl'
+        })
         .state('league-knockout', {
             url: "/league-knockout",
             templateUrl: tempateURL,
