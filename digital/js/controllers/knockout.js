@@ -38,6 +38,8 @@
     $scope.startScoring = function(card){
       console.log(card,'startScoring');
       $state.go("matchstart",{
+        drawFormat: $stateParams.drawFormat,
+        sport: $stateParams.id,
         id: card.matchId
       });
     }

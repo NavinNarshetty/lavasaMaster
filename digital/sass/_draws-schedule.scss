@@ -411,6 +411,7 @@ $sport-table-grey:#efeeee !default;
 // *******************END QUALIFYING + FINAL ROUND********************
 // CHAMPIONSHIP SCHEDULE PAGE
 .chamionshipschedule-page {
+  min-height: calc(100vh - 100px);
   padding: 40px 0;
 }
 

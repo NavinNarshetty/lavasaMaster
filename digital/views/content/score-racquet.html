@@ -43,7 +43,7 @@
           <ul class="list-inline">
             <li class="setshow-element" ng-repeat="length in setLength track by $index">
               <div class="form-group" >
-                <label for="set{{$index}}"><input type="checkbox" ng-model="length.setShow" id="set{{$index}}"> Set {{$index + 1}}</label>
+                <label for="set{{$index}}" class="pointer"><input type="radio" name="setShowRadio" id="set{{$index}}" ng-value="$index" ng-model="setDisplay.value"> Set {{$index + 1}}</label>
               </div>
             </li>
           </ul>
@@ -52,7 +52,8 @@
         <div class="row">
           <div class="col-md-6 col-sm-6" ng-repeat= "player in match.resultsRacquet.players track by $index">
             <div class="combatscore-scorecard" ng-repeat = "set in player.sets track by $index" >
-              <div class="scoring-set form-group" ng-if= "setLength[$index].setShow">
+              <div class="scoring-set form-group" ng-if= "setDisplay.value == $index">
+
                 <label  class="text-uppercase">SET <span>{{$index+1}}</span></label>
                 <!-- <pre>{{$index && showSet}}</pre> -->
                 <!-- <div class="datapoints-set" ng-show="$index && showSet"> -->
@@ -190,7 +191,7 @@
 
         <div class="row">
           <div class="col-md-4 col-sm-4">
-              <button class="btn btn-green-outline btn-scoring" ui-sref="matchstart({'id':matchData.matchId})">back</button>
+              <button class="btn btn-green-outline btn-scoring" ui-sref="matchstart({'drawFormat': stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchData.matchId})">back</button>
           </div>
           <div class="col-md-4 col-sm-4">
               <button class="btn btn-green-outline btn-scoring" promise-btn = "yourPromise" ng-click="saveResult(match)">Save</button>

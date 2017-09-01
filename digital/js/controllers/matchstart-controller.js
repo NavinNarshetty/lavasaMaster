@@ -195,10 +195,14 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
               case "Combat Sports":
               if($scope.matchDetails.isTeam==false){
                 $state.go("scorecombat",{
+                  drawFormat: $stateParams.drawFormat,
+                  sport: $stateParams.sport,
                   id: $scope.matchData.matchId
                 });
               } else if ($scope.matchDetails.isTeam==true) {
                 $state.go("scorecombatteam",{
+                  drawFormat: $stateParams.drawFormat,
+                  sport: $stateParams.sport,
                   id: $scope.matchData.matchId
                 });
               }
@@ -207,10 +211,14 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
               case "Racquet Sports":
               if($scope.matchDetails.isTeam==false){
                 $state.go("scoreracquet",{
+                  drawFormat: $stateParams.drawFormat,
+                  sport: $stateParams.sport,
                   id: $scope.matchData.matchId
                 });
               } else if ($scope.matchDetails.isTeam==true) {
                 $state.go("scoreracquetdoubles",{
+                  drawFormat: $stateParams.drawFormat,
+                  sport: $stateParams.sport,
                   id: $scope.matchData.matchId
                 });
               }
@@ -249,7 +257,17 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
       }
       NavigationService.saveMatch($scope.matchResult, function(data){
         if(data.value == true){
-          $state.go("home");
+          if ($stateParams.drawFormat === 'Knockout') {
+              $state.go('knockout', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+          } else if ($stateParams.drawFormat === 'Heats') {
+              $state.go('heats', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+          }
         } else{
           alert('fail save');
         }

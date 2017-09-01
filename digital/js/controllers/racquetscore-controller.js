@@ -8,8 +8,12 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
     $scope.matchData = {};
     var promise;
     $scope.showSet = true;
+    $scope.setDisplay = {
+      value: 0
+    };
     $scope.setLength  = [];
     $scope.matchError = "";
+    $scope.stateParam = $stateParams;
     // VARIABLE INITIALISE END
 
     // API CALLN INTEGRATION
@@ -83,7 +87,17 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
       }
       NavigationService.saveMatch($scope.matchResult, function(data){
         if(data.value == true){
-          $state.go('home');
+          if ($stateParams.drawFormat === 'Knockout') {
+              $state.go('knockout', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+          } else if ($stateParams.drawFormat === 'Heats') {
+              $state.go('heats', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+          }
           console.log('save success');
         } else{
           // alert('fail save');

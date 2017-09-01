@@ -9,8 +9,10 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     $scope.showMatchPhoto = false;
     $scope.matchData = {};
     var promise;
+    $scope.stateParam = $stateParams;
     // $scope.matchData = {};
     // VARIABLE INITIALISE END
+
 
     // API CALLN INTEGRATION
     // GET MATCH
@@ -75,7 +77,17 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
           }
           NavigationService.saveMatch($scope.matchResult, function(data){
             if(data.value == true){
-              $state.go('home');
+              if ($stateParams.drawFormat === 'Knockout') {
+                  $state.go('knockout', {
+                    drawFormat: $stateParams.drawFormat,
+                    id: $stateParams.sport
+                  });
+              } else if ($stateParams.drawFormat === 'Heats') {
+                  $state.go('heats', {
+                    drawFormat: $stateParams.drawFormat,
+                    id: $stateParams.sport
+                  });
+              }
               console.log('save success');
             } else{
               // alert('fail save');

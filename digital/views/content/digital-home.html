@@ -40,7 +40,7 @@
                                     <div class="inline-block championshipdraw-card-dropdown">
                                         <!-- <ui-select ng-model="item.selected" theme="bootstrap"> -->
                                         <ui-select ng-model="formData.gender" name="selectgender" theme="bootstrap" required>
-                                            <ui-select-match placeholder="Select Sport">{{$select.selected|firstcapitalize}}</ui-select-match>
+                                            <ui-select-match placeholder="Select Gender">{{$select.selected|firstcapitalize}}</ui-select-match>
                                             <ui-select-choices repeat="item in genderList | filter: $select.search">
                                                 <div>
                                                     <p>{{item |firstcapitalize}}</p>
@@ -59,7 +59,7 @@
 
                                     <div class="inline-block championshipdraw-card-dropdown">
                                         <ui-select name="selectagegroup" ng-model="formData.ageGroup" theme="bootstrap" required>
-                                            <ui-select-match placeholder="Select Sport">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-match placeholder="Select Age Group">{{$select.selected.name}}</ui-select-match>
                                             <ui-select-choices repeat="age._id  as age in ageGroups | filter: $select.search">
                                                 <div>
                                                     <p>{{age.name}}</p>
@@ -80,7 +80,7 @@
                                     </div>
                                     <div class="inline-block championshipdraw-card-dropdown">
                                         <ui-select name="selectweight" ng-model="formData.weight" theme="bootstrap" required>
-                                            <ui-select-match placeholder="Select Sport">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-match placeholder="Select Weight">{{$select.selected.name}}</ui-select-match>
                                             <ui-select-choices repeat="weight._id as weight in allWeights | filter: $select.search">
                                                 <div>
                                                     <p>{{weight.name}}</p>
@@ -112,7 +112,7 @@
     </section>
     <!-- VIEW DRAW FORM CARD END -->
     <!-- CHAMPIONSHIP SCHEDULE -->
-    <section>
+    <section hidden>
         <div class="championship-schedule championship-schedule-line">
             <div class="container">
                 <div class="row">

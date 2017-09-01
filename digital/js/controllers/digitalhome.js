@@ -183,11 +183,13 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, Navigatio
                       console.log($scope.drawDetails, " $scope.drawDetails");
                       if ($scope.drawDetails.drawFormat === 'Knockout') {
                           $state.go('knockout', {
-                              id: $scope.drawDetails.sport
+                            drawFormat: $scope.drawDetails.drawFormat,
+                            id: $scope.drawDetails.sport
                           });
                       } else if ($scope.drawDetails.drawFormat === 'Heats') {
                           $state.go('heats', {
-                              id: $scope.drawDetails.sport
+                            drawFormat: $scope.drawDetails.drawFormat,
+                            id: $scope.drawDetails.sport
                           });
                       }
                   }

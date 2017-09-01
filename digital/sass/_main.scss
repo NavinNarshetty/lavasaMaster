@@ -435,7 +435,7 @@ header {
 
 .scoring-set {
     padding: 10px 0;
-    border-bottom: 1px solid #ccc;
+    // border-bottom: 1px solid #ccc;
 }
 
 .combatscore-scorecard {
@@ -555,6 +555,10 @@ header {
 .racquet-setscore {
     margin: 20px 0;
     text-align: center;
+
+    .scoring-set{
+      border: none;
+    }
 }
 
 .setpoint-element {
