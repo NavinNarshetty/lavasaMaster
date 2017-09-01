@@ -37,9 +37,7 @@ var resultHockey = {
             greenCard:[{
                 time:11am
             }],
-            penalityPoint:[{
-                count:1
-            }],
+            penalityPoint:1,
             in:[{
                 time:11am
             }],

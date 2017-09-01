@@ -716,8 +716,8 @@ $sport-table-grey:#efeeee !default;
 }
 
 .knockout-cardholder {
-  min-height: 175px;
-  box-shadow: 0 0 10px $sport-grey-year; // border: 1px solid $sport-grey-year;
+  min-height: 160px; // box-shadow: 0 0 10px $sport-grey-year; 
+  border: 1px solid #c6c6c6;
   margin-bottom: 15px;
   position: relative;
   .knockout-card {
@@ -729,12 +729,27 @@ $sport-table-grey:#efeeee !default;
 
 .knockout-card {
   padding: 11px 5px;
-  border-bottom: 1px solid $sport-grey-year;
+  border-bottom: 1px solid #c6c6c6;
   border-left: 10px solid transparent;
 }
 
 .knockout-winner-name {
   color: $sport-primary;
+  font-weight: 600;
+}
+
+.knockout-winner-school {
+  font-size: 12px;
+  @extend .d-opensans-regular;
+}
+
+.winner-knockout-school {
+  font-size: 12px;
+}
+
+.winner-knockout-player {
+  color: $sport-primary;
+  font-weight: 600;
 }
 
 .knockout-winnercard {
@@ -745,8 +760,8 @@ $sport-table-grey:#efeeee !default;
 }
 
 .knockout-cardimage {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   border-radius: 100%;
   overflow: hidden;
 }
@@ -757,7 +772,7 @@ $sport-table-grey:#efeeee !default;
 
 .knockout-card-content {
   width: 100%;
-  padding: 5px;
+  padding: 8px;
   position: absolute;
   left: 0;
   bottom: 0;
@@ -772,27 +787,29 @@ $sport-table-grey:#efeeee !default;
 
 .knockout-cardplayername {
   width: calc(100% - 55px);
+  padding-left: 5px;
   @extend .d-opensans-regular;
 }
 
 .knockout-cardholder-round2 {
-  min-height: 380px;
+  min-height: 350px;
 }
 
 .knockout-cardholder-round3 {
-  min-height: 760px;
+  min-height: 700px;
 }
 
 // END KNOCKOUT CARD
 // WINNER CARD
 .knockout-winnercardholder {
-  box-shadow: 0 0 10px $sport-grey-year; // border: 1px solid $sport-grey-year;
+  // box-shadow: 0 0 10px $sport-grey-year;
+  border: 1px solid #c6c6c6;
   padding: 5px;
-  margin: 5px 0px;
+  margin: 5px 8px;
 }
 
 .knockout-winnercardname {
-  width: calc(100% - 35px);
+  width: calc(100% - 30px);
   vertical-align: middle;
 }
 
@@ -810,7 +827,7 @@ $sport-table-grey:#efeeee !default;
 }
 
 .knockout-winnermedalholder {
-  width: 30px;
+  width: 25px;
   vertical-align: middle;
 }
 

@@ -138,6 +138,8 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
   };
   // END ACCORDIAN
 
+  $scope.data = [1, 2, 3, 4, 5, 6];
+
   $scope.heatsTable = [{
     sfaId: "Ma1234",
     name: "Jamnabai Narsee School",
