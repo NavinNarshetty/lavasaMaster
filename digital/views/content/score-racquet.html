@@ -154,17 +154,17 @@
             <div class="match-selectwinner text-left">
               <label for="matchWinnerPlayer" class="text-uppercase">Select Winner</label>
               <!-- SELECT -->
-              <select class="form-control" ng-model="match.resultsRacquet.winner.player" ng-init="match.winner.player=''">
-                <option ng-repeat="player in match.players track by $index" value="{{player._id}}">{{player.firstName}} {{player.surname}}</option>
-              </select>
+              <!-- <select class="form-control" ng-model="match.resultsRacquet.winner.player" ng-init="match.winner.player=''">
+                <option ng-repeat="player in match.players track by $index" value="{{player._id}}" ng-click="match.winner.opponentsSingle=match.opponentsSingle[$index]">{{player.firstName}} {{player.surname}}</option>
+              </select> -->
               <!-- SELECT  END-->
               <!-- UI SELECT -->
-              <!-- <ui-select id="matchWinnerPlayer" ng-model="match.winner.player" theme="bootstrap">
-                  <ui-select-match placeholder="Select Winner"> {{$select.selected.name}}</ui-select-match>
-                  <ui-select-choices repeat="player.player as player in match.players | filter: $select.search">
-                        <p>{{player.name}}</p>
+              <ui-select id="matchWinnerPlayer" ng-model="match.resultsRacquet.winner.player" theme="bootstrap">
+                  <ui-select-match placeholder="Select Winner"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+                  <ui-select-choices repeat="player._id as player in match.players | filter: $select.search">
+                        <p class="opponentsingle-selector" ng-click="match.resultsRacquet.winner.opponentsSingle=match.opponentsSingle[$index]">{{player.firstName}} {{player.surname}}</p>
                   </ui-select-choices>
-              </ui-select> -->
+              </ui-select>
               <!-- UI SELECT END -->
             </div>
           </div>
@@ -202,7 +202,8 @@
         </div>
 
         <!-- <div class="row" style="text-align: left;">
-          <pre>{{match.resultsCombat|json}}</pre>
+          <pre>{{match.resultsRacquet|json}}</pre>
+          <pre>{{match.resultsRacquet.winner|json}}</pre>
         </div> -->
       </div>
       <!-- FINAL UPLOADS END -->

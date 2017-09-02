@@ -36,6 +36,22 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
                 })
                 console.log($scope.setLength, 'setlength');
                 console.log($scope.match, 'match');
+                if($scope.match.resultsRacquet.status == 'isCompleted'){
+                  console.log('******************************');
+                  if ($stateParams.drawFormat === 'Knockout') {
+                    console.log('TOOOOOOOOOOOOOOOOOOOOOO');
+                      $state.go('knockout', {
+                        drawFormat: $stateParams.drawFormat,
+                        id: $stateParams.sport
+                      });
+                  } else if ($stateParams.drawFormat === 'Heats') {
+                    console.log('DPPPPPPPPPPPPPPPPPPPP');
+                      $state.go('heats', {
+                        drawFormat: $stateParams.drawFormat,
+                        id: $stateParams.sport
+                      });
+                  }
+                }
             } else {
                 console.log("ERROR IN getOneMatch");
             }

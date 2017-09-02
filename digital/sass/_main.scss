@@ -388,6 +388,17 @@ header {
     text-transform: uppercase;
 }
 
+.opponentsingle-selector{
+  padding: 3px 20px;
+  margin: 0;
+}
+
+.match-selectwinner{
+  .ui-select-bootstrap .ui-select-choices-row > span{
+    padding: 0;
+  }
+}
+
 // MATCH START PAGE END
 // MATCH NO MATCH MODAL
 .match-nomatch {

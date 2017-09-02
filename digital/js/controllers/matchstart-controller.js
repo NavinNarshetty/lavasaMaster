@@ -198,11 +198,15 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
         switch ($scope.matchDetails.sportType) {
           case "Combat Sports":
             $scope.matchResult.resultsCombat = formData;
-            $scope.matchResult.resultsCombat.status = "IsLive";
+            if(!$scope.matchResult.resultsCombat.status){
+              $scope.matchResult.resultsCombat.status = "IsLive";
+            }
           break;
           case "Racquet Sports":
             $scope.matchResult.resultsRacquet = formData;
-            $scope.matchResult.resultsRacquet.status = "IsLive";
+            if(!$scope.matchResult.resultsRacquet.status){
+              $scope.matchResult.resultsRacquet.status = "IsLive";
+            }
           break;
         }
         NavigationService.saveMatch($scope.matchResult, function(data){
