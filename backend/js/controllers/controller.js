@@ -2300,6 +2300,8 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
             window.location = 'http://testhyderabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
         } else if (window.location.origin == 'http://testahmedabadcollege.sfanow.in') {
             window.location = 'http://testahmedabadcollege.sfanow.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
+        } else if (window.location.origin == 'http://localhost:8080') {
+            window.location = 'http://localhost:8080/#/sports-selection/' + 'school/' + $scope.constraints.schoolId;
         }
 
         // window.location = 'http://sfa5.wohlig.co.in/sports-selection/' + 'school/' + $scope.constraints.schoolId;
@@ -2481,6 +2483,8 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
             window.location = 'http://testhyderabadcollege.sfanow.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
         } else if (window.location.origin == 'http://testahmedabadcollege.sfanow.in') {
             window.location = 'http://testahmedabadcollege.sfanow.in/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
+        } else if (window.location.origin == 'http://localhost:8081') {
+            window.location = 'http://localhost:8080/#/sports-selection/' + 'athlete/' + $scope.constraints.athleteId;
         }
         // $scope.url = "Login/editAccess"
         // NavigationService.apiCall($scope.url, $scope.constraints, function (data) {

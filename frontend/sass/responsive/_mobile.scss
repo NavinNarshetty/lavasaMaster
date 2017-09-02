@@ -253,7 +253,8 @@
         display: none;
       }
       .multi-sporting .sport-icon-championship {
-        padding: 50px 0 20px; // text-align: center;
+        padding: 50px 0 20px;
+        margin: 0; // text-align: center;
       }
       .multi-sporting {
         padding: 50px 0px;
@@ -740,11 +741,13 @@
       .multi-sporting .sport-icon-championship {
         padding: 20px 0 0px;
         li {
-          width: 11%;
-          padding: 3px;
+          // width: 11%;
+          // padding: 3px;
+          width: 10%;
+          padding: 1px;
         }
         p {
-          font-size: 5px;
+          font-size: 7px;
         }
       }
       .multi-sporting {
@@ -1252,6 +1255,11 @@
       }
       .ver-line:after {
         display: none;
+      }
+      .multi-sporting .sport-icon-championship {
+        p {
+          font-size: 6.9px;
+        }
       }
     }
 
@@ -2336,6 +2344,17 @@
         top: 46px;
         @include transform(translate(-50%, 0));
       }
+      .multi-sporting .sport-icon-championship {
+        li {
+          // width: 11%;
+          // padding: 3px;
+          width: 10%;
+          padding: 0px;
+        }
+        p {
+          font-size: 5.6px;
+        }
+      }
     }
 
     @media (max-width:400px) {
@@ -2404,6 +2423,11 @@
         padding: 0 2px;
         p {
           font-size: 7px;
+        }
+      }
+      .multi-sporting .sport-icon-championship {
+        p {
+          font-size: 4.6px;
         }
       }
     }

@@ -20,7 +20,7 @@
   }
   .hyderabad-sporticonholder .sport-icon-championship li {
     padding: 0px 1px;
-    margin: 0px 5px;
+    margin: 0px 2px;
   }
 }
 
@@ -56,11 +56,17 @@
     padding-top: 25px;
   }
   .hyderabad-sporticonholder .sport-icon-championship li {
-    padding: 0px;
-    margin: 0px 2px;
+    padding: 2px;
+    margin: 0px 0px;
   }
   .hyderabad-sporticonholder .sport-icon-championship p {
     font-size: 7px;
+  }
+}
+
+@media screen and (max-width: 525px) {
+  .hyderabad-sporticonholder .sport-icon-championship li {
+    padding: 1px;
   }
 }
 
@@ -83,10 +89,20 @@
     letter-spacing: 0px;
   }
   .hyderabad-sporticonholder .sport-icon-championship p {
-    font-size: 5px;
+    font-size: 6px;
   }
   .hyderabad-sporticonholder .sport-icon-championship li {
-    padding: 3px;
+    padding: 1px;
     margin: 0px 0px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .hyderabad-sporticonholder .sport-icon-championship p {
+    font-size: 4.6px;
+  }
+  .hyderabad-sporticonholder .sport-icon-championship li {
+    padding: 0px;
+    margin: 0px 10px;
   }
 }
