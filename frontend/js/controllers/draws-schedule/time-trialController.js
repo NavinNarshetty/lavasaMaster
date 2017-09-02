@@ -58,8 +58,7 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
     position: "8"
   }];
 
-  $scope.limitValue = 8;
-  $scope.showHeat = true;
+
   $scope.constraints = {};
   $scope.eventName = $stateParams.name;
   console.log(" $scope.eventName", $scope.eventName);
@@ -81,6 +80,8 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
               }
               $scope.roundsList = $scope.roundsList.reverse();
               _.each($scope.roundsList, function (key) {
+                key.limitValue = 8;
+                key.showHeat = true;
                 _.each(key.match, function (value) {
                   if (value.opponentsSingle.length > 0) {
                     _.each(value.opponentsSingle, function (obj, index1) {
@@ -110,13 +111,15 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
     }
   };
   $scope.getSportSpecificRounds();
-  $scope.showMoreData = function (bool) {
+  $scope.showMoreData = function (bool, index) {
     if (bool === true) {
-      $scope.limitValue = 2000;
-      $scope.showHeat = false;
+      $scope.roundsList[index].limitValue = 5000;
+      $scope.roundsList[index].showHeat = false;
+
     } else {
-      $scope.limitValue = 8;
-      $scope.showHeat = true;
+      $scope.roundsList[index].limitValue = 8;
+      $scope.roundsList[index].showHeat = true;
+
     }
   };
 

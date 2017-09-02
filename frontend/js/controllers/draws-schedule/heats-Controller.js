@@ -155,28 +155,38 @@ myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, Navigat
   };
   $scope.getSportSpecificRounds();
   // for showing More Or Less data
-  $scope.limitValue = 3;
-  $scope.heatLImit = 6;
+  $scope.limitValue = 8;
+  $scope.finalLimit = 8;
+  $scope.heatLImit = 8;
   $scope.showMore = true;
   $scope.showHeat = true;
+  $scope.showFinal = true;
   $scope.showMoreData = function (bool, roundName) {
     if (roundName === 'heat') {
       if (bool === true) {
         $scope.heatLImit = 2000;
         $scope.showHeat = false;
       } else {
-        $scope.heatLImit = 6;
+        $scope.heatLImit = 8;
         $scope.showHeat = true;
       }
-
     } else if (roundName === 'semi-final') {
       if (bool === true) {
         $scope.limitValue = 2000;
         $scope.showMore = false;
       } else {
-        $scope.limitValue = 3;
+        $scope.limitValue = 8;
         $scope.showMore = true;
       }
+    } else if (roundName === 'final') {
+      if (bool === true) {
+        $scope.finalLimit = 5000;
+        $scope.showFinal = false;
+      } else {
+        $scope.finalLimit = 8;
+        $scope.showFinal = true;
+      }
+
     }
   };
 

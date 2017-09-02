@@ -182,9 +182,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="final in data.match track by $index">
-
-
+              <tr ng-repeat="final in data.match|limitTo:data.limitValue track by $index">
                 <td>
                   <div class="text-capitalize">{{final.opponentsSingle[0].athleteId.fullName}} </div>
                 </td>
@@ -238,8 +236,11 @@
               </tr>
             </tbody>
           </table>
-          <div class="qf-final-viewmore">
+          <div class="qf-final-viewmore" ng-click="showMoreData(true,$index)" ng-if="data.showMore && data.match.length>8">
             <button class="btn sport-btn-blue-outline">View More</button>
+          </div>
+          <div class="qf-final-viewmore" ng-click="showMoreData(false,$index)" ng-if="!data.showMore">
+            <button class="btn sport-btn-blue-outline">View Less</button>
           </div>
         </div>
 

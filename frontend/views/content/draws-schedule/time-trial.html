@@ -98,7 +98,7 @@
 
       <!--ACCORDIAN-->
 
-      <div class="time-trial-accordian" ng-repeat="data in roundsList">
+      <div class="time-trial-accordian" ng-repeat="data in roundsList track by $index">
         <div class="time-trial-timehead">
           <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">{{data.name}}</h3>
           <p class="sport-color-primary"><span>{{data.match[0].scheduleDate |englishNumeralDate}}</span>
@@ -106,7 +106,7 @@
             <span>{{data.match[0].scheduleTime }}</span></p>
         </div>
         <uib-accordion close-others="oneAtATime">
-          <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="s in data.match |limitTo:limitValue track by $index">
+          <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="s in data.match |limitTo:data.limitValue track by $index">
             <uib-accordion-heading class="clearfix">
               <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
               <a href="">
@@ -211,13 +211,15 @@
 
           </div>
         </uib-accordion>
+        <div class="time-trial-viewmore text-right" ng-click="showMoreData(true,$index)" ng-if="data.match.length>8 && data.showHeat">
+          <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+        </div>
+        <div class="time-trial-viewmore text-right" ng-click="showMoreData(false,$index)" ng-if="!data.showHeat">
+          <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
+        </div>
+
       </div>
-      <div class="time-trial-viewmore text-right " ng-click="showMoreData(true)" ng-if="showHeat && roundsList[1].match.length>8">
-        <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
-      </div>
-      <div class="time-trial-viewmore text-right" ng-click="showMoreData(false)" ng-if="!showHeat">
-        <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
-      </div>
+
 
 
       <!--END ACCORDIAN-->

@@ -148,6 +148,8 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
               }
               $scope.roundsList = $scope.roundsList.reverse();
               _.each($scope.roundsList, function (key) {
+                key.limitValue = 8;
+                key.showMore = true;
                 _.each(key.match, function (value) {
                   _.each(value.opponentsSingle, function (obj, index1) {
                     obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
@@ -174,5 +176,15 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
     }
   };
   $scope.getSportSpecificRounds();
+  //for showing More Data
+  $scope.showMoreData = function (bool, index) {
+    if (bool) {
+      $scope.roundsList[index].limitValue = 5000;
+      $scope.roundsList[index].showMore = false;
+    } else {
+      $scope.roundsList[index].limitValue = 8;
+      $scope.roundsList[index].showMore = true;
+    }
+  };
 
 });

@@ -70,7 +70,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="final in roundsList[0].match[0].opponentsSingle|orderBy:'result'| limitTo:limitValue ">
+              <tr ng-repeat="final in roundsList[0].match[0].opponentsSingle|orderBy:'result'| limitTo:finalLimit ">
                 <td>
                   <div class="text-capitalize">
                     {{final.laneNo}}
@@ -102,10 +102,10 @@
               </tr>
             </tbody>
           </table>
-          <div class="heats-viewmore text-right" ng-click="showMoreData(true,'semi-final');" ng-if="showMore">
+          <div class="heats-viewmore text-right" ng-click="showMoreData(true,'final');" ng-if="showFinal && roundsList[0].match[0].opponentsSingle.length>8">
             <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
           </div>
-          <div class="heats-viewmore text-right" ng-click="showMoreData(false,'semi-final');" ng-if="!showMore">
+          <div class="heats-viewmore text-right" ng-click="showMoreData(false,'final');" ng-if="!showFinal">
             <button class="btn sport-btn-blue-outline text-uppercase" ng-click="showMoreData(false);">View Less</button>
           </div>
         </div>
@@ -129,7 +129,7 @@
         <!-- ACCORDIAN-->
         <div class="time-trial-accordian heat-trial-accordian">
           <uib-accordion close-others="oneAtATime">
-            <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="semi in roundsList[1].match track by $index">
+            <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="semi in roundsList[1].match|limitTo:limitValue track by $index">
               <!-- <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="saccordian in semi.tablecontent  track by $index"> -->
               <uib-accordion-heading class="clearfix">
                 <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
@@ -216,8 +216,11 @@
 
 
       </div>
-      <div class="heats-viewmore text-right " ng-if="roundsList[1].match.length>3">
+      <div class="heats-viewmore text-right" ng-click="showMoreData(true,'semi-final')" ng-if="showMore && roundsList[1].match.length>8">
         <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+      </div>
+      <div class="heats-viewmore text-right" ng-click="showMoreData(false,'semi-final')" ng-if="!showMore">
+        <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
       </div>
       <!-- SEMI-FINAL END -->
 
@@ -321,7 +324,7 @@
 
 
       </div>
-      <div class="heats-viewmore text-right" ng-click="showMoreData(true,'heat')" ng-if="showHeat && roundsList[2].match.length>6 ">
+      <div class="heats-viewmore text-right" ng-click="showMoreData(true,'heat')" ng-if="showHeat && roundsList[2].match.length>8">
         <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
       </div>
       <div class="heats-viewmore text-right" ng-click="showMoreData(false,'heat')" ng-if="!showHeat">
