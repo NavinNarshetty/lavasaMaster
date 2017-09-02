@@ -217,6 +217,18 @@ var controller = {
                                         callback(null, complete);
                                     }
                                 });
+                            }else if (req.body.resultType == "heat" && req.body.playerType == "team") {
+                                var roundTypes = _.groupBy(importData, 'ROUND ');
+                                _.each(roundTypes, function (roundType, key) {
+                                    roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
+                                });
+                                Match.UpdateHeatTeam(roundTypes, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
                             } else if (req.body.resultType == "qualifying-round" && req.body.playerType == "individual") {
                                 Match.updateQualifyingRoundIndividual(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
