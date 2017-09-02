@@ -37,11 +37,24 @@
     // START SCORING FUNCTION
     $scope.startScoring = function(card){
       console.log(card,'startScoring');
-      $state.go("matchstart",{
-        drawFormat: $stateParams.drawFormat,
-        sport: $stateParams.id,
-        id: card.matchId
-      });
+      if(card.resultsRacquet){
+        if (card.resultsRacquet.status == 'IsCompleted') {
+          toastr.warning("This match has already been scored.", 'Scoring Completed');
+        } else{
+          $state.go("matchstart",{
+            drawFormat: $stateParams.drawFormat,
+            sport: $stateParams.id,
+            id: card.matchId
+          });
+        }
+      } else{
+        $state.go("matchstart",{
+          drawFormat: $stateParams.drawFormat,
+          sport: $stateParams.id,
+          id: card.matchId
+        });
+      }
+
     }
     // START SCORING FUNCTION END
 

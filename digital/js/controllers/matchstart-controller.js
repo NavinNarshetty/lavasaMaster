@@ -14,6 +14,9 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     // VARIABLE INITIALISE END
 
     // INITIALSE SWIPER
+    $scope.tp=function(a){
+      alert(a);
+    };
     $scope.swiperInit = function() {
         $scope.$on('$viewContentLoaded', function(event) {
             $timeout(function() {
@@ -70,6 +73,19 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                           })
                       } else{
                         $scope.formData = $scope.matchDetails.resultsCombat;
+                        if($scope.matchDetails.resultsCombat.status == 'IsCompleted'){
+                          if ($stateParams.drawFormat === 'Knockout') {
+                              $state.go('knockout', {
+                                drawFormat: $stateParams.drawFormat,
+                                id: $stateParams.sport
+                              });
+                          } else if ($stateParams.drawFormat === 'Heats') {
+                              $state.go('heats', {
+                                drawFormat: $stateParams.drawFormat,
+                                id: $stateParams.sport
+                              });
+                          }
+                        }
                       }
                     } else if ($scope.matchDetails.isTeam == true) {
                       console.log("COMBAT TEAM!");

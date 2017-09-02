@@ -282,7 +282,8 @@ header {
 // BUTTONS END
 // MATCH START PAGE
 .matchstart-page,
-.racketscore-page {
+.racketscore-page,
+.scorefootball-page {
     min-height: calc(100vh - 100px);
     position: relative;
 }
@@ -596,5 +597,45 @@ header {
         height: 60px;
     }
 }
-
 // RACKET DOUBLE-SCORE PAGE END
+
+// FOOTBALL SCORE
+.teamscore-point{
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+  }
+}
+.teamdatapoint-name{
+  display: block;
+}
+.teamscore-buttons{
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  margin: 0;
+  box-shadow: 0px 2px 5px #a0a0a0;
+  font-size: 16px;
+}
+.teamscore-number{
+  width: 40px;
+  height: 40px;
+  padding: 5px 2px;
+  font-size: 20px;
+  line-height: 1;
+}
+// FOOTBALL SCORE END
+
+.hello{
+  width: 100%;
+  height: 50px;
+  border: 1px solid #fff;
+  background-color: #ccc;
+}
+
+.hello2{
+  // height: 100px;
+  background-color: red;
+}

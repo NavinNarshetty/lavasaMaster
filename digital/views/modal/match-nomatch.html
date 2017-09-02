@@ -57,7 +57,7 @@
                         <ui-select ng-model="formData.winner.player" theme="bootstrap" ng-disabled="disableWinner">
                             <ui-select-match placeholder="Select Winner"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
                             <ui-select-choices repeat="player._id as player in matchDetails.players  | filter: $select.search">
-                                  <p>{{player.firstName}} {{player.surname}}</p>
+                                  <p ng-click="formData.winner.opponentsSingle=matchDetails.opponentsSingle[$index]">{{player.firstName}} {{player.surname}}{{$index}}</p>
                             </ui-select-choices>
                         </ui-select>
                     </div>
@@ -67,10 +67,10 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="">
+        <div class="">
           formData
           <pre>{{formData|json}}</pre>
-        </div> -->
+        </div>
         <!-- <div class="">
           resultsCombat
           <pre>{{matchDetails.resultsCombat|json}}</pre>
