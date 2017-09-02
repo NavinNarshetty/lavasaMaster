@@ -2,6 +2,8 @@ var schema = new Schema({
     name: {
         type: String,
     },
+    city: String,
+    institutionType: String,
     tournamentFormat: String,
     rulesAndRegulation: String,
     ageGroupContent: String,
