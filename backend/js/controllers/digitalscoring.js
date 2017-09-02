@@ -198,6 +198,19 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
       windowClass: 'backmodal'
     })
   }
+
+  // var modal;
+  // $scope.removeSet = function () {
+  //   modal = $uibModal.open({
+  //     animation: true,
+  //     scope: $scope,
+  //     // backdrop: 'static',
+  //     keyboard: false,
+  //     templateUrl: 'views/modal/removeset.html',
+  //     // size: 'lg',
+  //     windowClass: 'backmodal'
+  //   })
+  // }
 })
 
 // DETAIL TEAM SPORT
