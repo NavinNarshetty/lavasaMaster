@@ -21,6 +21,17 @@
                   <input type="text" name="rulesname" ng-model="formData.name" class="form-control" placeholder="Enter Name" required>
                   <div class="error-msg" ng-if="detailForm.rulesname.$invalid && detailForm.rulesname.$touched">Please Enter Valid Name *</div>
                 </div>
+                <div class="form-group">
+                  <label>City*</label>
+                  <input type="text" name="rulescity" ng-model="formData.city" class="form-control" placeholder="Enter City" required>
+                  <div class="error-msg" ng-if="detailForm.rulescity.$invalid && detailForm.rulescity.$touched">Please Enter Valid City *</div>
+                </div>
+                <div class="form-group">
+                  <label>Institution Type*</label>
+                  <input type="text" name="rulesIT" ng-model="formData.institutionType" class="form-control" placeholder="Enter Institution Type"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.rulesIT.$invalid && detailForm.rulesIT.$touched">Please Enter Valid Institution Type *</div>
+                </div>
                 <!--ageGroupTable: Schema.Types.Mixed,
     eligibilityContent: String,
     eligibilityTable: Schema.Types.Mixed,-->
