@@ -853,9 +853,9 @@ var model = {
                 },
                 function (singleData, callback) {
                     async.concatSeries(singleData, function (n, callback) {
-                            console.log("n", n);
+                            // console.log("n", n);
                             if (countError != 0 && n.error == null) {
-                                console.log("inside", n.success._id, "count", countError);
+                                // console.log("inside", n.success._id, "count", countError);
                                 Match.remove({
                                     _id: n.success._id
                                 }).exec(function (err, found) {
@@ -873,6 +873,12 @@ var model = {
                             callback(null, singleData);
                         });
 
+                },
+                function (singleData, callback) {
+                    data.sport = singleData[0].success.sport;
+                    Match.addPreviousMatch(data, function (err, sportData) {
+                        callback(null, singleData);
+                    });
                 }
             ],
             function (err, results) {
@@ -883,6 +889,7 @@ var model = {
                 }
             });
     },
+
 
     saveHeatIndividual: function (importData, data, callback) {
         var countError = 0;
@@ -1523,6 +1530,120 @@ var model = {
 
     },
 
+    addPreviousMatch: function (data, callback) {
+        var count = 0;
+        var match = {};
+        var final = {};
+        match.prev = [];
+        final.finalPrevious = [];
+        async.waterfall([
+                function (callback) {
+                    Match.find({
+                        sport: data.sport
+                    }).lean().sort({
+                        createdAt: -1
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+                function (found, callback) {
+                    final.matchData = found;
+                    async.eachSeries(found, function (singleData, callback) {
+                        if (count < 2) {
+                            match.prev.push(singleData._id);
+                            count++;
+                        }
+                        if (count == 2) {
+                            final.finalPrevious.push(match.prev);
+                            match.prev = [];
+                            count = 0;
+                        }
+                        callback(null, count);
+                    }, function (err) {
+                        callback(null, final);
+                    });
+                },
+                function (final, callback) {
+                    var range = parseInt(data.range) + 1;
+                    var rangeTotal = data.rangeTotal;
+                    var i = 0;
+                    var row = 0;
+                    var ThirdPlace = [];
+                    async.eachSeries(final.finalPrevious, function (singleData, callback) {
+                            var id = final.matchData[row]._id;
+                            var updateObj = {
+                                $set: {
+                                    prevMatch: final.finalPrevious[i]
+                                }
+                            };
+                            console.log("row", row, "rangeTotal", rangeTotal);
+                            if (final.matchData[row].round != "Third Place") {
+                                Match.update({
+                                    _id: id
+                                }, updateObj).exec(
+                                    function (err, match) {
+                                        console.log("updated");
+                                    });
+                            }
+                            i++;
+                            row++;
+                            callback(null, final);
+                        },
+                        function (err) {
+                            callback(null, final);
+                        });
+                },
+                function (final, callback) {
+                    if (data.thirdPlace == "yes") {
+                        Match.findOne({
+                            sport: data.sport,
+                            round: "Final"
+                        }).lean().exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(found)) {
+                                    callback(null, []);
+                                } else {
+
+                                    var updateObj = {
+                                        $set: {
+                                            prevMatch: found.prevMatch
+                                        }
+                                    };
+                                    Match.update({
+                                        sport: data.sport,
+                                        round: "Third Place"
+                                    }, updateObj).exec(
+                                        function (err, match) {
+                                            callback(null, final);
+                                        });
+                                }
+                            }
+                        });
+                    } else {
+                        callback(null, final);
+                    }
+                },
+            ],
+            function (err, results) {
+                if (err || _.isEmpty(results)) {
+                    callback(err, null);
+                } else {
+                    callback(null, results);
+                }
+            });
+    },
+
+
     //-----------------------------Generate Excel-----------------------------------------
 
     generateExcelKnockout: function (data, res) {
@@ -1950,7 +2071,7 @@ var model = {
                             } else {
                                 obj["TIMING"] = " ";
                             }
-                             if (matchData.resultHeat.teams[i].result) {
+                            if (matchData.resultHeat.teams[i].result) {
                                 obj["RESULT"] = matchData.resultHeat.teams[i].result;
                             } else {
                                 obj["RESULT"] = " ";
@@ -2084,7 +2205,7 @@ var model = {
                                                                     callback(null, singleData);
                                                                 }
                                                             });
-                                                            
+
                                                         }
                                                     }
                                                 },
@@ -2498,7 +2619,109 @@ var model = {
                                 }
                             }
                         });
+                },
+                function (matchObj, callback) {
+                    // var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                    Match.findOne({
+                        matchId: data.matchId
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                if (!_.isEmpty(found.opponentsSingle)) {
+                                    data.isTeam = false;
+                                } else if (!_.isEmpty(found.opponentsTeam)) {
+                                    data.isTeam = true;
+                                }
+                                data._id = found._id;
+                                data.found = found;
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+                function (found, callback) {
+                    Match.findOne({
+                        prevMatch: data._id
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+                function (found, callback) {
+                    var winPlayer = [];
+                    if (data.isTeam == false && _.isEmpty(found.opponentsSingle)) {
+                        if (data.found.resultsCombat.status == "IsCompleted") {
+                            winPlayer.push(data.found.resultsCombat.winner.player);
+                            updateObj = {
+                                $set: {
+                                    opponentsSingle: winPlayer
+                                }
+                            };
+                        } else if (!_.isEmpty(data.found.resultsRacquet.status == "IsCompleted")) {
+                            winPlayer.push(data.found.resultsRacquet.winner.player);
+                            updateObj = {
+                                $set: {
+                                    opponentsSingle: winPlayer
+                                }
+                            };
+                        }
+
+
+                    } else if (data.isTeam == false && !_.isEmpty(found.opponentsSingle)) {
+                        if (found.opponentsSingle.length == 1) {
+                            var playerId = found.opponentsSingle[0];
+                            winPlayer.push(playerId);
+                            if (data.found.resultsCombat.status == "IsCompleted") {
+                                winPlayer.push(data.found.resultsCombat.winner.player);
+                                updateObj = {
+                                    $set: {
+                                        opponentsSingle: winPlayer
+                                    }
+                                };
+                            } else if (!_.isEmpty(data.found.resultsRacquet.status == "IsCompleted")) {
+                                winPlayer.push(data.found.resultsRacquet.winner.player);
+                                updateObj = {
+                                    $set: {
+                                        opponentsSingle: winPlayer
+                                    }
+                                };
+                            }
+
+                        } else {
+                            updateObj = {};
+                        }
+                    }
+                    if (!_.isEmpty(updateObj)) {
+                        Match.update({
+                            matchId: found.matchId
+                        }, updateObj).exec(
+                            function (err, match) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (_.isEmpty(match)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, match);
+                                    }
+                                }
+                            });
+                    } else {
+                        callback(null, found);
+                    }
                 }
+
             ],
             function (err, results) {
                 if (err || _.isEmpty(results)) {
@@ -2508,6 +2731,7 @@ var model = {
                 }
             });
     },
+
 
     UpdateHeatIndividual: function (importData, callback) {
         var countError = 0;

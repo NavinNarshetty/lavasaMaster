@@ -64,6 +64,7 @@ var controller = {
                                 sum = sum + 1;
                             }
                             if (excelLength == sum) {
+                                req.body.rangeTotal = sum;
                                 callback(null, importData);
                             } else {
                                 var resData = [];
@@ -116,7 +117,7 @@ var controller = {
                                 // callback(null, importData);
                             } else if (req.body.resultType == "heat" && req.body.playerType == "team") {
                                 var roundTypes = _.groupBy(importData, 'ROUND ');
-                                    console.log(roundTypes, "Before---------------------");                                
+                                console.log(roundTypes, "Before---------------------");
                                 _.each(roundTypes, function (roundType, key) {
                                     roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
                                     console.log(roundTypes, "After---------------------");
@@ -217,7 +218,7 @@ var controller = {
                                         callback(null, complete);
                                     }
                                 });
-                            }else if (req.body.resultType == "heat" && req.body.playerType == "team") {
+                            } else if (req.body.resultType == "heat" && req.body.playerType == "team") {
                                 var roundTypes = _.groupBy(importData, 'ROUND ');
                                 _.each(roundTypes, function (roundType, key) {
                                     roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
@@ -402,7 +403,18 @@ var controller = {
                 value: false
             });
         }
-    }
+    },
+
+    addPreviousMatch: function (req, res) {
+        if (req.body) {
+            Match.addPreviousMatch(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Match Id not Found",
+                "value": false
+            })
+        }
+    },
 
 
 };

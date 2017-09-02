@@ -310,12 +310,14 @@ var resultFootball = {
         fouls:1,
         offSide:1
         cleanSheet:1, 
+        noShow: true,
+        walkover: true,
         }
         players: [{
         player: id,
-        noShow: true,
-        walkover: true,
+        isPlaying:true,
         color: "Blue/Red",
+        jerseyNo:12,
         playerPoints: {
             goal:[{
                 points:1,
