@@ -20,9 +20,53 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
         $.jStorage.set("teamId", null);
         NavigationService.editTeamId(null);
     };
+
+    // ==========getAllSportsListSubCategory==============
+    // $scope.allSportsListSubCatArr = [];
+    var tempObj = {};
+    tempObj.tempArr = [];
+    $scope.getAllSport = function () {
+        NavigationService.getAllSportsListSubCategory(function (data) {
+            $scope.allSportsListSubCatArr = undefined;
+            errorService.errorCode(data, function (allData) {
+                if (!allData.message) {
+                    if (allData.value) {
+                        $scope.allSportsListSubCatArr = [];
+                        $scope.allSportsListSubCat = allData.data;
+                        _.each($scope.allSportsListSubCat, function (key, value) {
+                            tempObj.sportName = value;
+                            tempObj.tempArr = _.cloneDeep(key);
+                            _.each(tempObj.tempArr, function (sport) {
+                                console.log("athlete", $scope.detail);
+                                if ($scope.detail.userType === "athlete" && !$scope.detail.mixAccess && $.jStorage.get("IsColg") === 'school' &&
+                                    sport.name === 'Water Polo') {
+                                    sport.isVisibleSport = true;
+                                } else {
+                                    sport.isVisibleSport = false;
+                                }
+                            });
+
+                            if ($scope.detail.userType === "athlete" && !$scope.detail.mixAccess && $.jStorage.get("IsColg") === 'school' && tempObj.sportName === 'Team Sports') {
+                                tempObj.hideTeamSport = true;
+                            } else {
+                                tempObj.hideTeamSport = false;
+                            }
+                            $scope.allSportsListSubCatArr.push(tempObj);
+                            tempObj = {};
+                        });
+                    }
+                } else {
+                    $scope.isDisabled = false;
+                    toastr.error(allData.message, 'Error Message');
+                }
+            });
+        });
+    }
+
     $scope.callLogin = function () {
         loginService.loginGet(function (data) {
             $scope.detail = data;
+            console.log($scope.detail);
         });
         if ($.jStorage.get("userType") !== null && $.jStorage.get("userDetails") !== null) {
             if ($.jStorage.get("userType") === "school") {
@@ -31,6 +75,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                 $scope.constraints.athleteToken = $.jStorage.get("userDetails").accessToken;
             }
         }
+        $scope.getAllSport();
     };
 
 
@@ -132,44 +177,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
             });
         }
     };
-    // ==========getAllSportsListSubCategory==============
-    // $scope.allSportsListSubCatArr = [];
-    var tempObj = {};
-    tempObj.tempArr = [];
-    NavigationService.getAllSportsListSubCategory(function (data) {
-        $scope.allSportsListSubCatArr = undefined;
-        errorService.errorCode(data, function (allData) {
-            if (!allData.message) {
-                if (allData.value) {
-                    $scope.allSportsListSubCatArr = [];
-                    $scope.allSportsListSubCat = allData.data;
-                    _.each($scope.allSportsListSubCat, function (key, value) {
-                        tempObj.sportName = value;
-                        tempObj.tempArr = _.cloneDeep(key);
-                        _.each(tempObj.tempArr, function (sport) {
-                            if ($scope.detail.userType === 'athlete' && $.jStorage.get("IsColg") === 'school' &&
-                                sport.name === 'Water Polo') {
-                                sport.isVisibleSport = true;
-                            } else {
-                                sport.isVisibleSport = false;
-                            }
-                        });
 
-                        if ($scope.detail.userType === 'athlete' && $.jStorage.get("IsColg") === 'school' && tempObj.sportName === 'Team Sports') {
-                            tempObj.hideTeamSport = true;
-                        } else {
-                            tempObj.hideTeamSport = false;
-                        }
-                        $scope.allSportsListSubCatArr.push(tempObj);
-                        tempObj = {};
-                    });
-                }
-            } else {
-                $scope.isDisabled = false;
-                toastr.error(allData.message, 'Error Message');
-            }
-        });
-    });
 
     $scope.messageForTennisMixedDoubles = function () {
         $scope.uploadSizeInstances = $uibModal.open({
