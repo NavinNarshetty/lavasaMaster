@@ -61,6 +61,8 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
   $scope.limitValue = 8;
   $scope.showHeat = true;
   $scope.constraints = {};
+  $scope.eventName = $stateParams.name;
+  console.log(" $scope.eventName", $scope.eventName);
   $scope.getSportSpecificRounds = function (roundName) {
     if ($stateParams.id) {
       if (roundName) {
@@ -80,13 +82,21 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
               $scope.roundsList = $scope.roundsList.reverse();
               _.each($scope.roundsList, function (key) {
                 _.each(key.match, function (value) {
-                  _.each(value.opponentsSingle, function (obj, index1) {
-                    obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
-                    obj.result = value.resultHeat.players[index1].result;
-                    obj.laneNo = value.resultHeat.players[index1].laneNo;
-                    obj.time = value.resultHeat.players[index1].time;
-                  });
-
+                  if (value.opponentsSingle.length > 0) {
+                    _.each(value.opponentsSingle, function (obj, index1) {
+                      obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                      obj.result = value.resultHeat.players[index1].result;
+                      obj.laneNo = value.resultHeat.players[index1].laneNo;
+                      obj.time = value.resultHeat.players[index1].time;
+                    });
+                  }
+                  if (value.opponentsTeam.length > 0) {
+                    _.each(value.opponentsTeam, function (obj, index1) {
+                      obj.result = value.resultHeat.players[index1].result;
+                      obj.laneNo = value.resultHeat.players[index1].laneNo;
+                      obj.time = value.resultHeat.players[index1].time;
+                    });
+                  }
                 });
               });
               console.log($scope.roundsListName, " $scope.roundsListName ");

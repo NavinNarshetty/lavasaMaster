@@ -287,7 +287,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'HeatsCtrl'
         })
         .state('time-trial', {
-            url: "/time-trial",
+            url: "/time-trial/:id/:name",
             templateUrl: tempateURL,
             controller: 'TimeTrialCtrl'
         })
@@ -297,7 +297,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'DirectFinalCtrl'
         })
         .state('qf-final', {
-            url: "/qf-final",
+            url: "/qf-final/:id/:name",
             templateUrl: tempateURL,
             controller: 'qfFinalCtrl'
         })

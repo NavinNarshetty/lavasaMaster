@@ -219,7 +219,8 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                             console.log("$scope.nameOfSport", $scope.nameOfSport);
                             if ($scope.nameOfSport === '50m Freestyle' || $scope.nameOfSport === '50m Backstroke' || $scope.nameOfSport === '50m Breaststroke' || $scope.nameOfSport === '50m Butterfly' || $scope.nameOfSport === '100m Freestyle' || $scope.nameOfSport === '100m Backstroke' || $scope.nameOfSport === '100m Breaststroke' || $scope.nameOfSport === '100m Butterfly' || $scope.nameOfSport === '200m Individual Medley' || $scope.nameOfSport === 'Swimming 4x50m Freestyle Relay' || $scope.nameOfSport === 'Swimming 4x50m Medley Relay') {
                                 $state.go('time-trial', {
-                                    id: $scope.drawDetails.sport
+                                    id: $scope.drawDetails.sport,
+                                    name: $scope.nameOfSport
 
                                 });
                             } else {
@@ -229,6 +230,12 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                                 });
                             }
 
+                        } else if ($scope.drawDetails.drawFormat === 'Qualifying Round') {
+                            $state.go('qf-final', {
+                                id: $scope.drawDetails.sport,
+                                name: $scope.nameOfSport
+
+                            });
                         }
                     }
                 } else {

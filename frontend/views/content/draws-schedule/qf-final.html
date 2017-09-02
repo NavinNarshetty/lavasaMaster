@@ -2,9 +2,9 @@
   <div class="container">
     <!--SPORT NAME-->
     <div class="qf-final-sportname text-center">
-      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>athletics</span> |
-        <span>girls</span> |
-        <span> U-14</span></h3>
+      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>{{roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name}}</span> |
+        <span>{{roundsList[0].match[0].sport.gender}}</span> |
+        <span> {{roundsList[0].match[0].sport.ageGroup.name}}</span></h3>
       <div class="draws-downloadpdf draws-a">
         <a href="#">Download the schedule in pdf format</a>
       </div>
@@ -12,35 +12,109 @@
     <!--END SPORT NAME-->
     <!--SPORT EVENT NAME-->
     <div class="qf-final-sporteventname text-center">
-      <h3 class="d-fjalla-one text-uppercase sport-color-primary">long jump</h3>
+      <h3 class="d-fjalla-one text-uppercase sport-color-primary">{{roundsList[0].match[0].sport.sportslist.name}}</h3>
     </div>
     <!--END SPORT EVENT NAME-->
+
 
     <!--EVENT HOLDER -->
     <div class="qf-final-event-holder">
       <!--FINAL ROUND HOLDER-->
       <div class="qf-final-finalround">
-        <!--FINAL HEAD-->
-        <div class="qf-final-finalround-head">
-          <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Final</h3>
-          <p class="sport-color-primary"><span>17th August,</span>
-            <span>2017</span> |
-            <span>10.30am</span></p>
+        <div class="time-trial-winnerhead">
+          <h3 class="d-fjalla-one sport-type-head text-uppercase m-clear">Winners</h3>
         </div>
-        <!--END FINAL HEAD-->
-        <!--FINAL TABLE-->
-        <div class="qf-final-finaltable table-responsive">
-          <table class="table-draws-schedule table-five">
+        <!--END WINNER HEAD-->
+        <!--WINNER TABLE-->
+        <div class="time-trial-winnertable border-line-qf-final q-orange-table table-responsive">
+          <table class="table-draws-schedule table-four">
             <thead>
               <tr>
                 <th>
                   <div>
-                    <h4 class="m-clear">Result</h4>
+                    <h4 class="m-clear">name</h4>
+                  </div>
+                </th>
+
+                <th>
+                  <div>
+                    <h4 class="m-clear">School</h4>
                   </div>
                 </th>
                 <th>
                   <div>
-                    <h4 class="m-clear"> name</h4>
+                    <h4 class="m-clear">Best attempt</h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="m-clear">Position</h4>
+                  </div>
+                </th>
+                <th>
+                  <div>
+                    <h4 class="m-clear">Video</h4>
+                  </div>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="win in timeTable | limitTo:3 track by $index">
+                <td>
+                  <div class="text-capitalize">
+                    {{win.name}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize">
+                    {{win.schoolname}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize">
+                    {{win.bestattempt}}
+                  </div>
+                </td>
+                <td>
+                  <div class="text-capitalize">
+                    {{win.position}}
+                  </div>
+                </td>
+                <td>
+                  <div>
+                    <a href="">
+                            <img src="img/sf-play.png" alt="">
+                          </a>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!--END WINNER TABLE-->
+        <!--FINAL HEAD-->
+        <!-- <div class="qf-final-finalround-head">
+          <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">{{roundsList[0].name}}</h3>
+          <p class="sport-color-primary"><span>{{roundsList[0].match[0].scheduleDate |englishNumeralDate}}</span>
+            <span>|</span>
+            <span>{{roundsList[0].match[0].scheduleTime }}</span></p>
+        </div> -->
+        <!--END FINAL HEAD-->
+        <!--FINAL TABLE-->
+        <div class="qf-final-finaltable table-responsive" ng-repeat="data in roundsList track by $index">
+          <div class="qf-final-finalround-head">
+            <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">{{data.name}}</h3>
+            <p class="sport-color-primary"><span>{{data.match[0].scheduleDate |englishNumeralDate}}</span>
+              <span>|</span>
+              <span>{{data.match[0].scheduleTime }}</span></p>
+          </div>
+          <table class="table-draws-schedule table-five">
+            <thead>
+              <tr>
+
+                <th>
+                  <div>
+                    <h4 class="m-clear">name</h4>
                   </div>
                 </th>
                 <th>
@@ -50,10 +124,53 @@
                     </h4>
                   </div>
                 </th>
-                <th>
+                <th ng-if="roundsList[0].match[0].sport.sportslist.name!='High jump' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!='Shooting' ">
                   <div>
                     <h4 class="m-clear">
-                      best attempt
+                      Best Attempt
+                    </h4>
+                  </div>
+                </th>
+
+                <th ng-if="data.name === 'Final'&& roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!=='Shooting'">
+                  <div>
+                    <h4 class="m-clear">
+                      Position
+                    </h4>
+                  </div>
+                </th>
+                <th ng-if=" data.name !== 'Final' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!=='Shooting' && roundsList[0].match[0].sport.sportslist.name!=='High jump'">
+                  <div>
+                    <h4 class="m-clear">
+                      Result
+                    </h4>
+                  </div>
+                </th>
+                <th ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
+                  <div>
+                    <h4 class="m-clear">
+                      No.Of Jumps
+                    </h4>
+                  </div>
+                </th>
+                <th ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
+                  <div>
+                    <h4 class="m-clear">
+                      Score
+                    </h4>
+                  </div>
+                </th>
+                <th ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
+                  <div>
+                    <h4 class="m-clear">
+                      Result
+                    </h4>
+                  </div>
+                </th>
+                <th ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
+                  <div>
+                    <h4 class="m-clear">
+                      Position
                     </h4>
                   </div>
                 </th>
@@ -65,21 +182,50 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="final in Qffinal track by $index">
+              <tr ng-repeat="final in data.match track by $index">
+
+
                 <td>
-                  <div>{{$index+1}}</div>
-                </td>
-                <td>
-                  <div class="text-capitalize">{{final.name}} </div>
+                  <div class="text-capitalize">{{final.opponentsSingle[0].athleteId.fullName}} </div>
                 </td>
                 <td>
                   <div class="text-capitalize">
-                    {{final.schoolname}}
+                    {{final.opponentsSingle[0].athleteId.school.name}}
                   </div>
                 </td>
-                <td>
+                <td ng-if="roundsList[0].match[0].sport.sportslist.name!='High jump' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!='Shooting' ">
                   <div>
-                    {{final.bestattempt}}
+                    {{final.opponentsSingle[0].bestattempt}}
+                  </div>
+                </td>
+                <td ng-if="data.name === 'Final' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!== 'Shooting'">
+                  <div>
+                    {{final.opponentsSingle[0].result}}
+                  </div>
+                </td>
+                <td ng-if=" data.name !== 'Final' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!=='Shooting' && roundsList[0].match[0].sport.sportslist.name!=='High jump'">
+                  <div>
+                    {{final.opponentsSingle[0].result}}
+                  </div>
+                </td>
+                <td ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
+                  <div>
+                    {{final.opponentsSingle[0].noOfJumps}}
+                  </div>
+                </td>
+                <td ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
+                  <div>
+                    {{final.opponentsSingle[0].score}}
+                  </div>
+                </td>
+                <td ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
+                  <div>
+                    {{final.opponentsSingle[0].result}}
+                  </div>
+                </td>
+                <td ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
+                  <div>
+                    {{final.opponentsSingle[0].result}}
                   </div>
                 </td>
                 <td>
@@ -92,7 +238,11 @@
               </tr>
             </tbody>
           </table>
+          <div class="qf-final-viewmore">
+            <button class="btn sport-btn-blue-outline">View More</button>
+          </div>
         </div>
+
         <!--END FINAL TABLE-->
       </div>
       <!--END FINAL ROUND HOLDER-->
@@ -100,15 +250,15 @@
       <!--QUALIFYING ROUND HOLDER-->
       <div class="qf-final-qualifyinground">
         <!--QUALIFYING HEAD-->
-        <div class="qf-final-qualifyingroundhead">
+        <!-- <div class="qf-final-qualifyingroundhead">
           <h3 class="text-uppercase d-fjalla-one sport-color-primary m-clear">Qualifying</h3>
           <p class="sport-color-primary"><span>17th August,</span>
             <span>2017</span> |
             <span>10.30am</span></p>
-        </div>
+        </div> -->
         <!--END QUALIFYING HEAD-->
         <!--QUALIFYING TABLE-->
-        <div class="qf-final-qualifyingroundtable table-responsive">
+        <!-- <div class="qf-final-qualifyingroundtable table-responsive">
           <table class="table-draws-schedule table-six">
             <thead>
               <tr>
@@ -185,7 +335,7 @@
         </div>
         <div class="qf-final-viewmore">
           <button class="btn sport-btn-blue-outline">View More</button>
-        </div>
+        </div> -->
         <!--END QUALIFYING TABLE-->
       </div>
       <!--END QUALIFYING HOLDER-->
