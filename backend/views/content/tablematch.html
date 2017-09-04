@@ -234,7 +234,7 @@
                 <!-- <tr ng-repeat="item in items"> -->
                 <tr ng-repeat="item in items|filter:item.matchId">
                   <!--<tr>-->
-                  <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
+                  <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
                   <!--<td>{{($index + 1)}}</td>-->
                   <td>{{item.matchId}}</td>
                   <td>{{item.round}}
@@ -265,7 +265,7 @@
           <div class="tableData " ng-show="totalItems===undefined ">
             <h5>Loading Data</h5>
           </div>
-          <ul ng-if="totalItems" ng-change="viewTable(form)" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
+          <ul ng-if="totalItems" ng-change="viewTable()" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="form.page"
             max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
         </div>
       </div>

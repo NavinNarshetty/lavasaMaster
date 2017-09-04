@@ -4040,18 +4040,17 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.form.page = 1;
             if (data.length >= 2) {
                 $scope.form.keyword = data;
-                $scope.viewTable($scope.form);
+                $scope.viewTable();
             } else if (data.length == '') {
                 $scope.form.keyword = data;
-                $scope.viewTable($scope.form);
+                $scope.viewTable();
             }
         }
-        $scope.viewTable = function (formValue) {
-            console.log("data in table", formValue);
+        $scope.viewTable = function () {
+            // console.log("data in table", formValue);
             $scope.url = "Match/getPerSport"
             // $scope.formData = formValue;
             $scope.form.page = $scope.form.page++;
-            // $scope.form.page = $scope.formData;
             console.log("form......", $scope.form);
             NavigationService.apiCall($scope.url, $scope.form, function (data) {
                 console.log("data.value search", data);
