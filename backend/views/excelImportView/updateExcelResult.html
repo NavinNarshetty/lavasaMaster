@@ -37,6 +37,14 @@
           <option  value=512>512</option>
         </select>
     </div>
+    <div class="col-md-12 drop-2" ng-if="form.resultType=='qualifying-knockout'">
+        <label>Excel Type</label>
+        <select class="form-control" ng-model="form.excelType">
+                        <option  value="qualifying">Qualifying</option>
+                        <option  value="knockout">Knockout</option>
+                    </select>
+    </div>
+
     <!--<form name="detailForm" role="form" class="sec" ng-if="form.resultType=='knockout'">
       <div class="">
         <div class="col-md-12 drop-2">

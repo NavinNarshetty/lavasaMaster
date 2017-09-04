@@ -326,6 +326,8 @@ var model = {
                         finalData.sportsName = found.sport.sportslist.name;
                         finalData.age = found.sport.ageGroup.name;
                         finalData.gender = found.sport.gender;
+                        finalData.minTeamPlayers = found.sport.minTeamPlayers;
+                        finalData.maxTeamPlayers = found.sport.maxTeamPlayers;
                         finalData.sportType = found.sport.sportslist.sportsListSubCategory.sportsListCategory.name;
                         if (!_.isEmpty(found.opponentsSingle)) {
                             finalData.players = [];
