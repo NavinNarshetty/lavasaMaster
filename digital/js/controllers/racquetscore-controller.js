@@ -36,16 +36,15 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
                 })
                 console.log($scope.setLength, 'setlength');
                 console.log($scope.match, 'match');
-                if($scope.match.resultsRacquet.status == 'isCompleted'){
-                  console.log('******************************');
+                if($scope.match.resultsRacquet.status == 'IsCompleted'){
                   if ($stateParams.drawFormat === 'Knockout') {
-                    console.log('TOOOOOOOOOOOOOOOOOOOOOO');
+                    toastr.warning("This match has already been scored.", 'Scoring Completed');
                       $state.go('knockout', {
                         drawFormat: $stateParams.drawFormat,
                         id: $stateParams.sport
                       });
                   } else if ($stateParams.drawFormat === 'Heats') {
-                    console.log('DPPPPPPPPPPPPPPPPPPPP');
+                    toastr.warning("This match has already been scored.", 'Scoring Completed');
                       $state.go('heats', {
                         drawFormat: $stateParams.drawFormat,
                         id: $stateParams.sport
@@ -222,6 +221,27 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
       _.each($scope.match.resultsRacquet.players[0].sets, function(n,key){
         $scope.setLength[key] = {
           setShow : true
+        }
+      });
+    }
+
+    $scope.removeSets = function(){
+      var modal;
+        modal = $uibModal.open({
+          animation: true,
+          scope: $scope,
+          // backdrop: 'static',
+          keyboard: false,
+          templateUrl: 'views/modal/removeset.html',
+          windowClass: 'removeset-modal'
+        })
+    }
+    $scope.deleteSet = function(index){
+      _.each($scope.match.resultsRacquet.players, function(n){
+        if (n.sets.length>1) {
+          delete n.sets[index];
+        } else{
+          toastr.warning('Minimum 1 Set required');
         }
       });
     }

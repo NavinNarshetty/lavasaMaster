@@ -118,6 +118,21 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                           })
                       } else{
                         $scope.formData = $scope.matchDetails.resultsRacquet;
+                        if($scope.matchDetails.resultsRacquet.status == 'IsCompleted'){
+                          if ($stateParams.drawFormat === 'Knockout') {
+                            toastr.warning("This match has already been scored.", 'Scoring Completed');
+                              $state.go('knockout', {
+                                drawFormat: $stateParams.drawFormat,
+                                id: $stateParams.sport
+                              });
+                          } else if ($stateParams.drawFormat === 'Heats') {
+                            toastr.warning("This match has already been scored.", 'Scoring Completed');
+                              $state.go('heats', {
+                                drawFormat: $stateParams.drawFormat,
+                                id: $stateParams.sport
+                              });
+                          }
+                        }
                       }
                     } else if ($scope.matchDetails.isTeam == true) {
                       console.log("RACQUET TEAMS!");
@@ -145,6 +160,19 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                           })
                       } else{
                         $scope.formData = $scope.matchDetails.resultsRacquet;
+                        if($scope.matchDetails.resultsRacquet.status == 'IsCompleted'){
+                          if ($stateParams.drawFormat === 'Knockout') {
+                              $state.go('knockout', {
+                                drawFormat: $stateParams.drawFormat,
+                                id: $stateParams.sport
+                              });
+                          } else if ($stateParams.drawFormat === 'Heats') {
+                              $state.go('heats', {
+                                drawFormat: $stateParams.drawFormat,
+                                id: $stateParams.sport
+                              });
+                          }
+                        }
                       }
                     }
                   break;
