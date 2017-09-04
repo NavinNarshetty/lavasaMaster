@@ -2591,7 +2591,7 @@ var model = {
 
                     } else {
                         console.log("in found", found, "data", data);
-                        if (data.isTeam == false && _.isEmpty(found.opponentsSingle)) {
+                        if (data.isTeam == false && _.isEmpty(found[0].opponentsSingle)) {
                             if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted') {
                                 winPlayer.push(data.found.resultsCombat.winner.opponentsSingle);
                                 updateObj = {
@@ -2608,10 +2608,52 @@ var model = {
                                     }
                                 };
                             }
-                        } else if (data.isTeam == false && !_.isEmpty(found.opponentsSingle)) {
+                        } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle)) {
                             console.log("updating match", data.found);
-                            if (found.opponentsSingle.length == 1) {
-                                var playerId = found.opponentsSingle[0];
+                            if (found[0].opponentsSingle.length == 1) {
+                                var playerId = found[0].opponentsSingle[0];
+                                winPlayer.push(playerId);
+                                if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted') {
+                                    winPlayer.push(data.found.resultsCombat.winner.opponentsSingle);
+                                    console.log("player", winPlayer);
+                                    updateObj = {
+                                        $set: {
+                                            opponentsSingle: winPlayer
+                                        }
+                                    };
+                                } else if (data.found.resultsRacquet && data.found.resultsRacquet.status == "IsCompleted") {
+                                    winPlayer.push(data.found.resultsRacquet.winner.opponentsSingle);
+                                    console.log("player", winPlayer);
+                                    updateObj = {
+                                        $set: {
+                                            opponentsSingle: winPlayer
+                                        }
+                                    };
+                                }
+                            } else {
+                                updateObj = {};
+                            }
+                        } else if (data.isTeam == true && _.isEmpty(found[0].opponentsTeam)) {
+                            if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted') {
+                                winPlayer.push(data.found.resultsCombat.winner.opponentsSingle);
+                                updateObj = {
+                                    $set: {
+                                        opponentsSingle: winPlayer
+                                    }
+                                };
+                            } else if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted') {
+                                winPlayer.push(data.found.resultsRacquet.winner.opponentsSingle);
+                                console.log("player", winPlayer);
+                                updateObj = {
+                                    $set: {
+                                        opponentsSingle: winPlayer
+                                    }
+                                };
+                            }
+                        } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam)) {
+                            console.log("updating match", data.found);
+                            if (found[0].opponentsTeam.length == 1) {
+                                var playerId = found[0].opponentsSingle[0];
                                 winPlayer.push(playerId);
                                 if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted') {
                                     winPlayer.push(data.found.resultsCombat.winner.opponentsSingle);
