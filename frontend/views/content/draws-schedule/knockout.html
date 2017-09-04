@@ -110,7 +110,7 @@
             </div>
             <div class="knockout-card-content" ng-class="{'classsName':!card.scheduleDate}">
               <p class="m-clear " ng-if="card.scheduleDate">
-                {{card.scheduleDate|englishNumeralDate}}  <span class="pull-right">  {{card.scheduleTime}}</span>
+               <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}}</span>
             </p>
             <div class="knockout-videoholder" ng-if="card.video">
               <!-- <div class="knockout-videoholder" ng-if="card.matchcenter==true"> -->
@@ -156,7 +156,7 @@
 
             <div class="knockout-card-content ">
               <p class="m-clear " ng-if="card.scheduleDate">
-                {{card.scheduleDate|englishNumeralDate}} <span class="pull-right">  {{card.scheduleTime}}</span>
+                <span>Date: {{card.scheduleDate|englishNumeralDate}} </span> <span class="pull-right">  {{card.scheduleTime}}</span>
               </p>
               <div class="knockout-videoholder" ng-if="card.matchcenter">
                 <a href="">
@@ -199,7 +199,7 @@
             </div>
             <div class="knockout-card-content">
               <p class="m-clear">
-                {{card.scheduleDate|englishNumeralDate}} <span class="pull-right">  {{card.scheduleTime}}</span>
+                <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}}</span>
               </p>
               <div class="knockout-videoholder" ng-if="card.matchcenter==true">
                 <a href="">

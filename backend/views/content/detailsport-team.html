@@ -794,7 +794,7 @@
                 <!-- ****************HANDBALL HOLDER END ********************** -->
 
                 <!-- ****************WATER POLO ******************************** -->
-                <div class="team-water-polo-holder">
+                <div class="team-water-polo-holder" hidden>
                   <!-- TEAM CARDS -->
                   <div class="team-header">
                     <h5 class="text-uppercase text-center">Team Details </h5>
@@ -823,47 +823,37 @@
                       <div class="team-data-points-1">
                         <label for="">Goal</label>
                         <div class="row mb15">
-                          <div class="col-md-6" ng-repeat="hockey in data | limitTo:2 track by $index">
-                            <label for="">{{$index + 1}}-HALF</label>
+                          <div class="col-md-3" ng-repeat="hockey in data | limitTo:4 track by $index">
+                            <label for="">Quarter {{$index + 1}}</label>
                             <input type="text" name="finalgoalPoints" ng-model="formData.goal" class="form-control" placeholder="Enter  goal points">
                           </div>
                         </div>
                         <div class="row mb15">
                           <!-- FINAL GOAL POINTS -->
-                          <div class="col-md-3">
+                          <div class="col-md-2">
                             <label for=""> Final Goal-Points</label>
                             <input type="text" name="finalgoalPoints" ng-model="formData.finalGoalPoints" class="form-control" placeholder="Enter Final goal points">
                           </div>
                           <!-- FINAL GOAL POINTS END -->
-                          <div class="col-md-3">
+                          <div class="col-md-2">
                             <label for=""> ShotsOn Goal</label>
                             <input type="text" name="shotsongoal" ng-model="formData.shotsOnGoal" class="form-control" placeholder="Enter shots on goal">
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-md-2">
                             <label for=""> Total Shots</label>
                             <input type="text" name="totalshots" ng-model="formData.totalShots" class="form-control" placeholder="Enter Total Shots">
                           </div>
-                          <div class="col-md-3">
+                          <div class="col-md-2">
                             <label for=""> Penality Points</label>
                             <input type="text" name="penalitypoints" ng-model="formData.penalityPoints" class="form-control" placeholder="Enter Penalty Points">
                           </div>
-                        </div>
-                        <div class="row">
-                          <div class="col-md-3">
-                            <label for=""> Penalty Corners</label>
-                            <input type="text" name="penaltycorners" ng-model="formData.penalityCorners" class="form-control" placeholder="Enter Penalty Corner">
+                          <div class="col-md-2">
+                            <label for=""> Penality</label>
+                            <input type="text" name="penalitypoints" ng-model="formData.penality" class="form-control" placeholder="Enter Penalty Scored">
                           </div>
-                          <div class="col-md-3">
-                            <label for=""> Penalty Stroke</label>
-                            <input type="text" name="penaltystroke" ng-model="formData.penalityStroke" class="form-control" placeholder="Enter Penalty Stroke">
-                          </div>
-                          <div class="col-md-3">
-                            <label for=""> Save</label>
-                            <input type="text" name="save" ng-model="formData.saves" class="form-control" placeholder="Enter Save">
-                          </div>
-                          <div class="col-md-3">
-                            <label for=""> Fouls</label>
-                            <input type="text" name="fouls" ng-model="formData.fouls" class="form-control" placeholder="Enter Fouls">
+                          <div class="col-md-2">
+                            <label for=""> Saves</label>
+                            <input type="text" name="penalitypoints" ng-model="formData.saves" class="form-control" placeholder="Enter Save Points">
                           </div>
                         </div>
                       </div>
@@ -907,65 +897,15 @@
                             </div>
                           </div>
                           <!-- GOAL BY PLAYER END -->
-
-                          <!-- ASSIST BY PLAYER -->
-                          <div class="edit-team-player-holder-assit form-group">
-                            <label for=""> Assist</label>
-                            <div class="row">
-                              <div class="col-md-3" ng-repeat="goal in data | limitTo:4 track by $index">
-                                <label for=""> Assist {{$index+1}}</label>
-                                <div class="input-group">
-                                  <span class="input-group-addon">Time</span>
-                                  <input type="number" class="form-control" ng-model="matchData.time" placeholder="999" aria-label="Product name">
-                                  <span class="input-group-addon">Min</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- ASSIST BY PLAYER END -->
-
-                          <!-- RED CARD -->
-                          <div class="edit-team-player-holder-red form-group">
-                            <label for=""> Red Card</label>
-                            <div class="row">
-                              <div class="col-md-3" ng-repeat="goal in data | limitTo:1 track by $index">
-                                <label for=""> RED {{$index+1}}</label>
-                                <div class="input-group">
-                                  <span class="input-group-addon">Time</span>
-                                  <input type="number" class="form-control" ng-model="matchData.time" placeholder="999" min="0" max="1" aria-label="Product name">
-                                  <span class="input-group-addon">Min</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- RED CARD END-->
-
-                          <!-- YELLOW CARD -->
-                          <div class="edit-team-player-holder-yellow form-group">
-                            <label for=""> YELLOW Card</label>
-                            <div class="row">
-                              <div class="col-md-3" ng-repeat="goal in data | limitTo:2 track by $index">
-                                <label for=""> YELLOW {{$index+1}}</label>
-                                <div class="input-group">
-                                  <span class="input-group-addon">Time</span>
-                                  <input type="number" class="form-control" ng-model="matchData.time" min="0" max="1" placeholder="999" min="0" max="1" aria-label="Product name">
-                                  <span class="input-group-addon">Min</span>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <!-- YELLOW CARD END -->
-
                           <!-- GREEN CARD -->
                           <div class="edit-team-player-holder-green form-group">
-                            <label for=""> GREEN Card</label>
                             <div class="row">
-                              <div class="col-md-3" ng-repeat="goal in data | limitTo:3 track by $index">
-                                <label for=""> GREEN {{$index+1}}</label>
+                              <div class="col-md-3" ng-repeat="goal in data | limitTo:4 track by $index">
+                                <label for=""> PENALTY POINTS</label>
                                 <div class="input-group">
-                                  <span class="input-group-addon">Time</span>
-                                  <input type="number" class="form-control" ng-model="matchData.time" min="0" max="1" placeholder="999" min="0" max="1" aria-label="Product name">
-                                  <span class="input-group-addon">Min</span>
+                                  <span class="input-group-addon">COUNT</span>
+                                  <input type="number" class="form-control" ng-model="matchData.penalityPoint" placeholder="999" aria-label="Product name">
+                                  <!-- <span class="input-group-addon">Min</span> -->
                                 </div>
                               </div>
                             </div>
@@ -975,14 +915,6 @@
                           <!-- PENALTY -->
                           <div class="edit-team-player-holder-penalty form-group">
                             <div class="row">
-                              <div class="col-md-3">
-                                <label for=""> PENALTY POINTS</label>
-                                <div class="input-group">
-                                  <span class="input-group-addon">COUNT</span>
-                                  <input type="number" class="form-control" ng-model="matchData.penalityPoint" placeholder="999" aria-label="Product name">
-                                  <!-- <span class="input-group-addon">Min</span> -->
-                                </div>
-                              </div>
                               <div class="col-md-3">
                                 <label for=""> IN</label>
                                 <div class="input-group">
@@ -1015,21 +947,204 @@
                   </div>
                   <!-- PLAYER ACCORDIAN END -->
                 </div>
-                <!-- ****************WATER POLO END ******************************** -->
+                <!-- ****************WATER POLO END ***************************** -->
 
-              </div>
+                <!-- ****************KABADDI HOLDER ***************************** -->
+                <div class="team-kabaddi-holder">
+                  <!-- TEAM CARDS -->
+                  <div class="team-header">
+                    <h5 class="text-uppercase text-center">Team Details </h5>
+                  </div>
+                  <div class="team-sports-holder">
+                    <!-- TEAM ID -->
+                    <div class="form-group">
+                      <label>Team ID</label>
+                      <input type="text" name="teamid" ng-model="formData.teamId" class="form-control" placeholder="Enter Sport" readonly>
+                      <div class="error-msg" ng-if="detailForm.teamid.$invalid && detailForm.teamid.$touched">Please Enter Team ID*</div>
+                    </div>
+                    <!-- TEAM ID END -->
+
+                    <!-- SCHOOL NAME -->
+                    <div class="form-group">
+                      <label>School Name</label>
+                      <input type="text" name="schoolname" ng-model="formData.schoolName" class="form-control" placeholder="Enter School Name"
+                        readonly>
+                      <div class="error-msg" ng-if="detailForm.schoolname.$invalid && detailForm.schoolname.$touched">Please Enter School Name*</div>
+                    </div>
+                    <!-- SCHOOL NAME END -->
+
+                    <!-- TEAM POINTS -->
+                    <div class="form-group team-data-points-holder">
+                      <h5> TEAM DATA POINTS</h5>
+                      <div class="team-data-points-1">
+                        <label for="">Score</label>
+                        <div class="row mb15">
+                          <div class="col-md-6" ng-repeat="hockey in data | limitTo:2 track by $index">
+                            <label for="">{{$index + 1}}-HALF</label>
+                            <input type="text" name="finalgoalPoints" ng-model="formData.goal" class="form-control" placeholder="Enter  goal points">
+                          </div>
+                        </div>
+                        <div class="row mb15">
+                          <!-- FINAL GOAL POINTS -->
+                          <div class="col-md-4">
+                            <label for=""> Final Goal-Points</label>
+                            <input type="text" name="finalgoalPoints" ng-model="formData.finalGoalPoints" class="form-control" placeholder="Enter Final goal points">
+                          </div>
+                          <!-- FINAL GOAL POINTS END -->
+                          <div class="col-md-4">
+                            <label for=""> Super Tackle</label>
+                            <input type="text" name="supertackle" ng-model="formData.superTackle" class="form-control" placeholder="Enter Super Tackle">
+                          </div>
+                          <div class="col-md-4">
+                            <label for="">All Out</label>
+                            <input type="text" name="allout" ng-model="formData.allOut" class="form-control" placeholder="Enter All Out">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <!-- TEAM POINTS END -->
+
+                    <!-- PLAYER DETAILS HEAD -->
+                    <div class="Player-header">
+                      <label>PLAYER DETAILS </label>
+                    </div>
+                    <!-- PLAYER DETAILS HEAD END -->
+
+                    <!-- PLAYER ACCORDIAN -->
+                    <div class="detail-teamplayer-accordian">
+                      <uib-accordion close-others="oneAtATime">
+                        <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="player in heatsTable | limitTo:1 track by $index">
+                          <uib-accordion-heading class="clearfix">
+                            <!-- <a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a> -->
+                            <span class="pull-right edit-team-button"> <i class="fa fa-pencil"></i> EDIT</span>
+                            <a href="">
+                              <p class="d-fjalla-one text-uppercase sport-color-primary m-clear">
+                                <span>{{player.sfaId}}</span> <span class="teamplayer-fullname">{{player.fullName}}</span>
+                              </p>
+                            </a>
+                          </uib-accordion-heading>
+                          <div class="edit-player-fields">
+                            <!-- <div class="extra-div"> extradiv justincase -->
+                            <!-- RAID BY PLAYER -->
+                            <div class="edit-team-player-holder-raid form-group">
+                              <label for=""> Raids</label>
+                              <div class="row">
+                                <div class="col-md-3" ng-repeat="goal in data | limitTo:4 track by $index">
+                                  <label for="">Raids{{$index+1}}</label>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">Time</span>
+                                    <input type="number" class="form-control" ng-model="matchData.time" placeholder="999" aria-label="Product name">
+                                    <span class="input-group-addon">Min</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- RAID BY PLAYER END -->
+
+                            <!-- BONUS POINT BY PLAYER -->
+                            <div class="edit-team-player-holder-assit form-group">
+                              <label for=""> Bonus-Point</label>
+                              <div class="row">
+                                <div class="col-md-3" ng-repeat="goal in data | limitTo:4 track by $index">
+                                  <label for=""> Bonus Point {{$index+1}}</label>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">Time</span>
+                                    <input type="number" class="form-control" ng-model="matchData.time" placeholder="999" aria-label="Product name">
+                                    <span class="input-group-addon">Min</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- BONUS POINT BY PLAYER END -->
+
+                            <!-- SUPER RAID -->
+                            <div class="edit-team-player-holder-red form-group">
+                              <label for=""> Super Raid</label>
+                              <div class="row">
+                                <div class="col-md-3" ng-repeat="goal in data | limitTo:3 track by $index">
+                                  <label for=""> SuperRaid {{$index+1}}</label>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">Time</span>
+                                    <input type="number" class="form-control" ng-model="matchData.time" placeholder="999" min="0" max="1" aria-label="Product name">
+                                    <span class="input-group-addon">Min</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- SUPER RAID  END-->
+
+                            <!-- TACKLE CARD -->
+                            <div class="edit-team-player-holder-yellow form-group">
+                              <label for=""> Tackle</label>
+                              <div class="row">
+                                <div class="col-md-3" ng-repeat="goal in data | limitTo:2 track by $index">
+                                  <label for=""> Tackle {{$index+1}}</label>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">Time</span>
+                                    <input type="number" class="form-control" ng-model="matchData.time" min="0" max="1" placeholder="999" min="0" max="1" aria-label="Product name">
+                                    <span class="input-group-addon">Min</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <!-- TACKLE END -->
+
+                            <!-- PENALTY -->
+                            <div class="edit-team-player-holder-penalty form-group">
+                              <div class="row">
+                                <!-- IN TIME -->
+                                <div class="col-md-3">
+                                  <label for=""> IN</label>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">TIME</span>
+                                    <input type="number" class="form-control" ng-model="matchData.time" min="0" max="120" placeholder="999" aria-label="Product name">
+                                    <span class="input-group-addon">Min</span>
+                                  </div>
+                                </div>
+                                <!-- IN TIME END -->
+
+                                <!-- OUT TIME  -->
+                                <div class="col-md-3">
+                                  <label for=""> OUT</label>
+                                  <div class="input-group">
+                                    <span class="input-group-addon">TIME</span>
+                                    <input type="number" class="form-control" ng-model="matchData.time" min="0" max="120" placeholder="999" aria-label="Product name">
+                                    <span class="input-group-addon">Min</span>
+                                  </div>
+                                </div>
+                                <!-- OUT TIME END -->
+                              </div>
+                            </div>
+                            <!-- PENALTY END -->
+
+                            <!-- IN AND OUT -->
+                            <div class="edit-team-player-holder-inout form-group">
+
+                            </div>
+                            <!-- IN AND OUT END -->
+                            <!-- </div> -->
+                          </div>
+                        </div>
+                      </uib-accordion>
+                    </div>
+                    <!-- PLAYER ACCORDIAN END -->
+                  </div>
+                  <!-- ****************KABADDI HOLDER END************************** -->
+
+                </div>
+                <!-- ****************KABADDI HOLDER END ***************************** -->
 
 
 
-              <div class=" text-center mt20 odd-even-button ">
-                <button class="btn btn-default " type="submit " ng-click="saveDataMatch(formData) ">Save</button>
-                <button class="btn btn-default " ui-sref='matches'>Cancel</button>
+                <div class=" text-center mt20 odd-even-button ">
+                  <button class="btn btn-default " type="submit " ng-click="saveDataMatch(formData) ">Save</button>
+                  <button class="btn btn-default " ui-sref='matches'>Cancel</button>
+                </div>
               </div>
             </div>
+          </form>
         </div>
-        </form>
       </div>
     </div>
   </div>
-</div>
 </div>
