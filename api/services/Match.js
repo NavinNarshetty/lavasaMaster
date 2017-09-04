@@ -454,7 +454,7 @@ var model = {
                         } else {
                             sport.sportslist = found._id;
                             sport.sportsListSubCategory = found.sportsListSubCategory._id;
-                            console.log("sport", sport);
+                            // console.log("sport", sport);
                             callback(null, sport);
                         }
                     });
@@ -550,7 +550,7 @@ var model = {
                     if (found.error) {
                         callback(null, []);
                     } else {
-                        console.log("found1", found, "data", data);
+                        // console.log("found1", found, "data", data);
                         IndividualSport.findOne({
                             sport: data.sport,
                             athleteId: found._id
@@ -892,7 +892,6 @@ var model = {
             });
     },
 
-
     saveHeatIndividual: function (importData, data, callback) {
         var countError = 0;
         var arrMathes = [];
@@ -952,7 +951,7 @@ var model = {
                                                         if (err || _.isEmpty(complete)) {
                                                             singleData["PARTICIPANT 1"] = null;
                                                             err = "SFA ID may have wrong values";
-                                                            console.log("err found");
+                                                            // console.log("err found");
                                                             callback(null, {
                                                                 error: err,
                                                                 success: singleData
@@ -987,7 +986,7 @@ var model = {
                                     });
 
                             }, function (err, singleData) {
-                                console.log("for save", singleData);
+                                // console.log("for save", singleData);
                                 async.each(singleData, function (n, callback) {
                                     if (n.error) {
                                         countError++;
@@ -1032,9 +1031,9 @@ var model = {
                 },
                 function (singleData, callback) {
                     async.each(arrMathes, function (n, callback) {
-                            console.log("n", n);
+                            // console.log("n", n);
                             if (countError != 0 && n.error == null) {
-                                console.log("inside", n.success._id, "count", countError);
+                                // console.log("inside", n.success._id, "count", countError);
                                 Match.remove({
                                     _id: n.success._id
                                 }).exec(function (err, found) {
@@ -1228,6 +1227,7 @@ var model = {
                 }
             });
     },
+
     saveQualifyingRoundIndividual: function (importData, data, callback) {
         var countError = 0;
         async.waterfall([
@@ -1786,6 +1786,24 @@ var model = {
                             }
                         }
                         // obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets[;
+                    } else if (mainData.resultsRacquet) {
+
+                        if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsRacquet.winnner[0].player) {
+                            obj["RESULT 2"] = "Won";
+                        } else {
+                            obj["RESULT 2"] = "Lost";
+                        }
+                        var i;
+                        for (i = 0; i < mainData.resultsRacquet.players[1].sets.length; i++) {
+                            if (i == 0) {
+                                obj["SCORE 2"] = "Set" + i + "-" + mainData.resultsRacquet.players[1].sets[i].point;
+                                obj["DATA POINTS 2"] = mainData.resultsRacquet.players[1].sets[i];
+                            } else {
+                                obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + i + "-" + mainData.resultsRacquet.players[1].sets[i].point;
+                                obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + mainData.resultsRacquet.players[1].sets[i];
+                            }
+                        }
+                        // obj["DATA POINTS 2"] = mainData.resultsRacquet.players[1].sets[;
                     }
                 } else {
                     obj["SFAID 2"] = "";
@@ -2653,8 +2671,9 @@ var model = {
                             }
                         });
                     } else if (!_.isEmpty(updateObj)) {
+                        console.log("update", updateObj, "found", found);
                         Match.update({
-                            matchId: found.matchId
+                            matchId: found[0].matchId
                         }, updateObj).exec(
                             function (err, match) {
                                 if (err) {

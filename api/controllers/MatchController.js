@@ -85,6 +85,7 @@ var controller = {
                             callback(null, importData);
                         } else {
                             if (req.body.resultType == "knockout" && req.body.playerType == "individual") {
+                                console.log("header", importData[0]);
                                 Match.saveKnockoutIndividual(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
@@ -101,20 +102,43 @@ var controller = {
                                     }
                                 });
                             } else if (req.body.resultType == "heat" && req.body.playerType == "individual") {
-                                var roundTypes = _.groupBy(importData, 'ROUND ');
-                                _.each(roundTypes, function (roundType, key) {
-                                    roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
-                                    // console.log(heatType, "---------------------");
-                                });
-                                Match.saveHeatIndividual(roundTypes, req.body, function (err, complete) {
-                                    if (err || _.isEmpty(complete)) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, complete);
+                                var header = [];
+                                var headerFlag = 0;
+                                header.push("DATE");
+                                header.push("EVENT ");
+                                header.push("AGE GROUP");
+                                header.push("GENDER");
+                                header.push("SPORT");
+                                header.push("SFA ID");
+                                header.push("ROUND ");
+                                header.push("HEAT NUMBER");
+                                header.push("LANE NUMBER");
+
+                                _.each(header, function (n) {
+                                    // var header = _.has(importData[0], n);
+                                    if (_.has(importData[0], n) == true) {
+                                        headerFlag++;
                                     }
                                 });
-                                // console.log(roundTypes, "---------------------");
-                                // callback(null, importData);
+                                if (headerFlag == header.length) {
+                                    var roundTypes = _.groupBy(importData, 'ROUND ');
+                                    _.each(roundTypes, function (roundType, key) {
+                                        roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
+                                        // console.log(heatType, "---------------------");
+                                    });
+                                    Match.saveHeatIndividual(roundTypes, req.body, function (err, complete) {
+                                        if (err || _.isEmpty(complete)) {
+                                            callback(err, null);
+                                        } else {
+                                            callback(null, complete);
+                                        }
+                                    });
+                                } else {
+                                    callback(null, {
+                                        error: "Headers may have wrong values. Follow Headers Below !",
+                                        success: header
+                                    });
+                                }
                             } else if (req.body.resultType == "heat" && req.body.playerType == "team") {
                                 var roundTypes = _.groupBy(importData, 'ROUND ');
                                 console.log(roundTypes, "Before---------------------");
