@@ -1521,6 +1521,12 @@ var model = {
                         callback(null, singleData);
                     });
 
+            },
+            function (singleData, callback) {
+                data.sport = singleData[0].success.sport;
+                Match.addPreviousMatch(data, function (err, sportData) {
+                    callback(null, singleData);
+                });
             }
         ], function (err, results) {
             if (err || _.isEmpty(results)) {
