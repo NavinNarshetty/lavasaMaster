@@ -369,7 +369,7 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
     $scope.sponsor_partner = [{
         "img": "img/footer/hyd/wizcraft.png",
         "href": "",
-        "game": "Wizcraft"
+        "game": "Event Partners"
     }];
 
 });
