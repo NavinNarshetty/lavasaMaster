@@ -950,7 +950,7 @@
                 <!-- ****************WATER POLO END ***************************** -->
 
                 <!-- ****************KABADDI HOLDER ***************************** -->
-                <div class="team-kabaddi-holder">
+                <div class="team-kabaddi-holder" hidden>
                   <!-- TEAM CARDS -->
                   <div class="team-header">
                     <h5 class="text-uppercase text-center">Team Details </h5>
@@ -1134,17 +1134,280 @@
                 </div>
                 <!-- ****************KABADDI HOLDER END ***************************** -->
 
+                <!-- *******************FOOTBALL HOLDER********************************* -->
+                <div class="team-football-holder">
+                  <!-- TEAM CARDS -->
+                  <div class="team-header">
+                    <h5 class="text-uppercase text-center">Team Details </h5>
+                  </div>
+                  <div class="team-sports-holder">
+                    <!-- TEAM ID -->
+                    <div class="form-group">
+                      <label>Team ID</label>
+                      <input type="text" name="teamid" ng-model="formData.teamId" class="form-control" placeholder="Enter Sport" readonly>
+                      <div class="error-msg" ng-if="detailForm.teamid.$invalid && detailForm.teamid.$touched">Please Enter Team ID*</div>
+                    </div>
+                    <!-- TEAM ID END -->
 
+                    <!-- SCHOOL NAME -->
+                    <div class="form-group">
+                      <label>School Name</label>
+                      <input type="text" name="schoolname" ng-model="formData.schoolName" class="form-control" placeholder="Enter School Name"
+                        readonly>
+                      <div class="error-msg" ng-if="detailForm.schoolname.$invalid && detailForm.schoolname.$touched">Please Enter School Name*</div>
+                    </div>
+                    <!-- SCHOOL NAME END -->
 
-                <div class=" text-center mt20 odd-even-button ">
-                  <button class="btn btn-default " type="submit " ng-click="saveDataMatch(formData) ">Save</button>
-                  <button class="btn btn-default " ui-sref='matches'>Cancel</button>
+                    <!-- TEAM POINTS -->
+                    <div class="form-group team-data-points-holder">
+                      <h5> TEAM DATA POINTS</h5>
+                      <div class="team-data-points-1">
+                        <div class="row mb15">
+                          <!-- HALF POINTS -->
+                          <div class="col-md-2">
+                            <label for="">Half Points</label>
+                            <input type="number" name="halfPoints" ng-model="formData.halfPoints" class="form-control" placeholder="Enter half points">
+                          </div>
+                          <!-- HALF POINTS END -->
+
+                          <!-- FINAL GOAL POINT -->
+                          <div class="col-md-2">
+                            <label for="">Final Points</label>
+                            <input type="number" name="finalPoints" ng-model="formData.finalPoints" class="form-control" placeholder="Enter  final points">
+                          </div>
+                          <!-- FINAL GOAL POINT END -->
+                          <!-- PENALTY POINTS -->
+                          <div class="col-md-2">
+                            <label for="">Penalty Points</label>
+                            <input type="number" name="penalityPoints" ng-model="formData.penalityPoints" class="form-control" placeholder="Enter  penalty points">
+                          </div>
+                          <!-- PENALTY POINTS END -->
+                          <!-- SHOTS ON GOAL -->
+                          <div class="col-md-2">
+                            <label for="">Shots on goal</label>
+                            <input type="number" name="shotsongoal" ng-model="formData.shotsOnGoal" class="form-control" placeholder="Enter shots on goal">
+                          </div>
+                          <!-- SHOTS ON GOAL END -->
+                          <!-- TOTAL SHOTS  -->
+                          <div class="col-md-2">
+                            <label for="">Total Shots</label>
+                            <input type="number" name="totalShots" ng-model="formData.totalShots" class="form-control" placeholder="Enter totalshots">
+                          </div>
+                          <!-- TOTAL SHOTS END -->
+                          <!-- CORNERS -->
+                          <div class="col-md-2">
+                            <label for="">Corner</label>
+                            <input type="number" name="corners" ng-model="formData.corners" class="form-control" placeholder="Enter corner">
+                          </div>
+                          <!-- CORNERS END -->
+                        </div>
+                        <div class="row">
+                          <!-- PENALTY -->
+                          <div class="col-md-2">
+                            <label for="">Penalty</label>
+                            <input type="number" name="penality" ng-model="formData.penality" class="form-control" placeholder="Enter  penalty points">
+                          </div>
+                          <!-- PENALTY -->
+                          <!-- SAVES -->
+                          <div class="col-md-2">
+                            <label for="">Saves</label>
+                            <input type="number" name="saves" ng-model="formData.saves" class="form-control" placeholder="Enter  save points">
+                          </div>
+                          <!-- SAVE END -->
+                          <!-- FOULS -->
+                          <div class="col-md-2">
+                            <label for="">Fouls</label>
+                            <input type="number" name="fouls" ng-model="formData.fouls" class="form-control" placeholder="Enter foul points">
+                          </div>
+                          <!-- FOULS END -->
+                          <!-- OFFSIDE -->
+                          <div class="col-md-2">
+                            <label for="">Offside</label>
+                            <input type="number" name="offSide" ng-model="formData.offSide" class="form-control" placeholder="Enter offside">
+                          </div>
+                          <!-- OFFSIDE END -->
+                          <!-- CLEANSHEET -->
+                          <div class="col-md-2">
+                            <label for="">Clean-sheet</label>
+                            <input type="number" name="cleanSheet" ng-model="formData.cleanSheet" class="form-control" placeholder="Enter cleansheet">
+                          </div>
+                          <!-- CLEANSHEET END -->
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- TEAM POINTS END -->
+
+                  <!-- PLAYER DETAILS HEAD -->
+                  <div class="Player-header">
+                    <label>PLAYER DETAILS </label>
+                  </div>
+                  <!-- PLAYER DETAILS HEAD END -->
+
+                  <!-- PLAYER ACCORDIAN -->
+                  <div class="detail-teamplayer-accordian">
+                    <uib-accordion close-others="oneAtATime">
+                      <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="player in heatsTable | limitTo:1 track by $index">
+                        <uib-accordion-heading class="clearfix">
+                          <!-- <a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a> -->
+                          <span class="pull-right edit-team-button"> <i class="fa fa-pencil"></i> EDIT</span>
+                          <a href="">
+                            <p class="d-fjalla-one text-uppercase sport-color-primary m-clear">
+                              <span>{{player.sfaId}}</span> <span class="teamplayer-fullname">{{player.fullName}}</span>
+                            </p>
+                          </a>
+                        </uib-accordion-heading>
+                        <div class="edit-player-fields">
+                          <!-- <div class="extra-div"> extradiv justincase -->
+                          <!-- JERSEY NO -->
+                          <div class="edit-team-player-holder-raid form-group">
+                            <label for=""> Jersey No</label>
+                            <div class="row">
+                              <div class="col-md-2">
+                                <label for="">Jersey No</label>
+                                <input type="number" name="jerseyno" ng-model="formData.jerseyNo" class="form-control" placeholder="Enter jersey no">
+                              </div>
+                            </div>
+                          </div>
+                          <!-- JERSEY NO END -->
+
+                          <!-- BONUS POINT BY PLAYER -->
+                          <div class="edit-team-player-holder-assit form-group">
+                            <button class="btn btn-dark pull-right" type="submit " ng-click="">ADD</button>
+                            <label for=""> Goal</label>
+                            <div class="row">
+                              <div class="col-md-3" ng-repeat="goal in data | limitTo:1 track by $index">
+                                <label for=""> Goal {{$index+1}}</label>
+                                <div class="input-group">
+                                  <span class="crs"><i class="fa fa-times" aria-hidden="true"></i></span>
+                                  <span class="input-group-addon">Time</span>
+                                  <input type="number" class="form-control" ng-model="matchData.time" placeholder="999" aria-label="Product name">
+                                  <span class="input-group-addon">Min</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- BONUS POINT BY PLAYER END -->
+
+                          <!-- ASSIST -->
+                          <div class="edit-team-player-holder-red form-group">
+                            <label for="">Assist</label>
+                            <div class="row">
+                              <div class="col-md-3" ng-repeat="goal in data | limitTo:3 track by $index">
+                                <label for=""> Assist {{$index+1}}</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon">Time</span>
+                                  <input type="number" class="form-control" ng-model="matchData.time" placeholder="999" min="0" max="1" aria-label="Product name">
+                                  <span class="input-group-addon">Min</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- ASSIT  END-->
+
+                          <!-- RED CARD -->
+                          <div class="edit-team-player-holder-yellow form-group">
+                            <label for=""> RED</label>
+                            <div class="row">
+                              <div class="col-md-3">
+                                <label for=""> RED</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon">Time</span>
+                                  <input type="number" class="form-control" ng-model="matchData.time" min="0" max="1" placeholder="999" min="0" max="1" aria-label="Product name">
+                                  <span class="input-group-addon">Min</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- RED END -->
+
+                          <!-- YELLOW CARD -->
+                          <div class="edit-team-player-holder-yellow form-group">
+                            <label for="">YELLOW</label>
+                            <div class="row">
+                              <div class="col-md-3" ng-repeat="y in data | limitTo:2 track by $index">
+                                <label for=""> YELLOW CARD</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon">Time</span>
+                                  <input type="number" class="form-control" ng-model="matchData.time" min="0" max="2" placeholder="999" aria-label="Product name">
+                                  <span class="input-group-addon">Min</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- YELLOW CARD END -->
+
+                          <!-- PENALTY POINTS -->
+                          <div class="edit-team-player-holder-yellow form-group">
+                            <label for="">Penalty points</label>
+                            <div class="row">
+                              <div class="col-md-3" ng-repeat="p in data | limitTo:3 track by $index">
+                                <label for=""> Penalty points</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon">Time</span>
+                                  <input type="number" class="form-control" ng-model="matchData.time" min="0" placeholder="999" aria-label="Product name">
+                                  <span class="input-group-addon">Min</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- PENALTY POINTS END -->
+
+                          <div class="edit-team-player-holder-penalty form-group">
+                            <div class="row">
+                              <!-- IN TIME -->
+                              <div class="col-md-3">
+                                <label for=""> IN</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon">TIME</span>
+                                  <input type="number" class="form-control" ng-model="matchData.time" min="0" max="120" placeholder="999" aria-label="Product name">
+                                  <span class="input-group-addon">Min</span>
+                                </div>
+                              </div>
+                              <!-- IN TIME END -->
+
+                              <!-- OUT TIME  -->
+                              <div class="col-md-3">
+                                <label for=""> OUT</label>
+                                <div class="input-group">
+                                  <span class="input-group-addon">TIME</span>
+                                  <input type="number" class="form-control" ng-model="matchData.time" min="0" max="120" placeholder="999" aria-label="Product name">
+                                  <span class="input-group-addon">Min</span>
+                                </div>
+                              </div>
+                              <!-- OUT TIME END -->
+                            </div>
+                          </div>
+                          <!-- PENALTY END -->
+
+                          <!-- IN AND OUT -->
+                          <div class="edit-team-player-holder-inout form-group">
+
+                          </div>
+                          <!-- IN AND OUT END -->
+                          <!-- </div> -->
+                        </div>
+                      </div>
+                    </uib-accordion>
+                  </div>
+                  <!-- PLAYER ACCORDIAN END -->
                 </div>
+                <!-- *******************FOOTBALL HOLDER END********************************* -->
+              </div>
+
+
+
+
+              <div class=" text-center mt20 odd-even-button ">
+                <button class="btn btn-default " type="submit " ng-click="saveDataMatch(formData) ">Save</button>
+                <button class="btn btn-default " ui-sref='matches'>Cancel</button>
               </div>
             </div>
-          </form>
         </div>
+        </form>
       </div>
     </div>
   </div>
+</div>
 </div>

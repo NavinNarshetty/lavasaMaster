@@ -1,10 +1,11 @@
-myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
+myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, $uibModal) {
     $scope.template = TemplateService.getHTML("content/draws-schedule/championship-schedule.html");
     TemplateService.title = "Direct Final"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
 
     $scope.sportList = ['football', 'Basketball', 'tennis', 'chess'];
     $scope.genderList = ['male', 'female', 'mixed'];
+    $scope.data = [1, 2, 3, 4, 5, 6, 7, 8];
     $scope.schedulelist = [{
         sport: 'Archery',
         date1: '15',
@@ -246,5 +247,26 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
     };
 
 
+
+    // MODAL
+    var modal;
+    $scope.matchCenter = function () {
+        modal = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'views/modal/matchcenter.html',
+            size: 'lg',
+            windowClass: 'matchcenter-modal'
+        })
+    }
+    // MODAL END
+    $scope.oneAtATime = true;
+    $scope.status = {
+        isCustomHeaderOpen: false,
+        isFirstOpen: true,
+        isFirstDisabled: false
+    };
 
 });

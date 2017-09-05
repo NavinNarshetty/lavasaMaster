@@ -4107,6 +4107,18 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 windowClass: 'backmodal'
             })
         }
+        var modal;
+        $scope.createExcel = function () {
+            modal = $uibModal.open({
+                animation: true,
+                scope: $scope,
+                backdrop: 'static',
+                keyboard: false,
+                templateUrl: 'views/modal/createexcel.html',
+                size: 'lg',
+                windowClass: 'backmodal'
+            })
+        }
 
         $scope.uploadExcelMatch = function (data) {
             $scope.url = "Match/uploadExcelMatch";
@@ -4127,6 +4139,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 console.log("data upload", data);
             });
         }
+
 
         $scope.generateExcel = function (data) {
             $scope.qwerty = data;
