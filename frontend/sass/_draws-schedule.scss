@@ -421,6 +421,20 @@ $sport-table-grey:#efeeee !default;
 // CHAMPIONSHIP SCHEDULE PAGE
 .chamionshipschedule-page {
   padding: 40px 0;
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    }
+    ::-webkit-scrollbar-track {
+    background-color: transparent;
+    }
+    ::-webkit-scrollbar-thumb {
+    background-color: #e1e1e1;
+    }
+    .dropdown-menu {
+    margin: 2px 0px 0px;
+    left: 0px;
+    }
 }
 
 .championshipdraw-card-form {
@@ -643,6 +657,12 @@ $sport-table-grey:#efeeee !default;
     background-color: $sport-green-table;
   }
 }
+.bluecolor-accordian {
+  .panel-default>.panel-heading {
+    background-color: #7fdfff;
+  }
+  
+}
 
 // END ACCORDIAN
 // **********************END HEATS ROUNDS ********************
@@ -768,9 +788,7 @@ $sport-table-grey:#efeeee !default;
   }
 }
 
-.knockout-winner-card-content {
-  background-color: #373737;
-}
+
 
 .knockout-cardimage {
   width: 40px;
@@ -796,6 +814,9 @@ $sport-table-grey:#efeeee !default;
     height: 18px;
     float: right;
   }
+}
+.knockout-winner-card-content {
+  background-color: #373737;
 }
 
 .knockout-cardplayername {

@@ -148,8 +148,50 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                             }
                             _.each($scope.roundsList, function (key) {
                                 _.each(key.match, function (value) {
-                                    _.each(value.opponentsSingle, function (obj) {
+                                    _.each(value.opponentsSingle, function (obj, index) {
                                         obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                                        if (value.resultsCombat) {
+                                            console.log("resultsCombat", value.resultsCombat);
+                                            console.log(" im in resultsCombat");
+                                            obj.noShow = Boolean(value.resultsCombat.players[index].noShow);
+                                            obj.walkover = Boolean(value.resultsCombat.players[index].walkover);
+                                            value.status = value.resultsCombat.status;
+                                            value.isNoMatch = value.resultsCombat.isNoMatch;
+                                            value.video = value.resultsCombat.video;
+                                            if (obj.walkover) {
+                                                value.walkover = obj.walkover;
+                                            }
+                                            if (value.resultsCombat.winner) {
+                                                if (obj.athleteId._id === value.resultsCombat.winner.player) {
+                                                    obj.isWinner = true;
+                                                    value.isWinner = obj.isWinner;
+                                                } else {
+                                                    obj.isWinner = false;
+                                                }
+                                            }
+
+                                        } else if (value.resultsRacquet) {
+                                            console.log("im in resultsRacquet");
+                                            obj.noShow = Boolean(value.resultsRacquet.players[index].noShow);
+                                            obj.walkover = Boolean(value.resultsRacquet.players[index].walkover);
+                                            value.status = value.resultsRacquet.status;
+                                            value.isNoMatch = value.resultsRacquet.isNoMatch;
+                                            value.video = value.resultsRacquet.video;
+                                            if (obj.walkover) {
+                                                value.walkover = obj.walkover;
+                                            }
+                                            if (value.resultsRacquet.winner) {
+                                                if (obj.athleteId._id === value.resultsRacquet.winner.player) {
+                                                    obj.isWinner = true;
+                                                    value.isWinner = obj.isWinner;
+                                                } else {
+                                                    obj.isWinner = false;
+                                                }
+                                            }
+
+
+                                        }
+
                                     });
 
                                 });
