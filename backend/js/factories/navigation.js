@@ -342,6 +342,30 @@ myApp.factory('NavigationService', function ($http) {
             })
         },
 
+        generateBlankExcelWithData: function (url, data, callback) {
+            $http.post(adminurl + url, data, {
+                responseType: 'arraybuffer'
+            }).then(function (response) {
+                if (!_.isEmpty(data.playerType)) {
+                    var fname = data.resultType + data.playerType;
+                } else {
+                    var fname = data.resultType;
+                }
+                var header = response.headers('Content-Disposition')
+                var fileName = fname + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
+                var blob = new Blob([response.data], {
+                    type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation;charset=UTF-8'
+                });
+                var objectUrl = (window.URL || window.webkitURL).createObjectURL(blob);
+                var link = angular.element('<a/>');
+                link.attr({
+                    href: objectUrl,
+                    download: fileName
+                })[0].click();
+                callback(null, fileName);
+            })
+        },
+
         generateOldSchoolExcel: function (callback) {
             $http.post(adminurl + 'School/generateExcel').then(function (data) {
                 callback(data);

@@ -4153,6 +4153,16 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             });
         }
 
+        $scope.blankExcel = function (data) {
+            $scope.blank = data;
+            console.log("data..................", data);
+            $scope.url = "match/generateBlankExcel";
+
+            NavigationService.generateBlankExcelWithData($scope.url, $scope.blank, function (data) {
+                $state.reload();
+            });
+        }
+
         $scope.getAllSportList = function (data) {
             $scope.url = "SportsList/search";
             console.log(data);

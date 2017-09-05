@@ -63,7 +63,7 @@
           <option  value="individual">Individual</option>
         </select>
     </div>
-    <div class="col-md-12 drop-1">
+    <div class="col-md-12 drop-1" ng-if="form.resultType=='qualifying-knockout'||form.resultType=='knockout'||form.resultType=='league-cum-knockout'">
         <label>Third Place*</label>
         <select class="form-control" ng-model="form.thirdPlace">
           <option  value="yes">YES</option>

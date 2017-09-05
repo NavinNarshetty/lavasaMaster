@@ -95,7 +95,6 @@ var controller = {
                                 header.push("WEIGHT CATEGORIES");
                                 header.push("SPORT");
                                 header.push("SFAID 1");
-                                header.push("SFAID 2");
                                 header.push("ROUND NAME");
                                 _.each(header, function (n) {
                                     if (_.has(importData[0], n) == true) {
@@ -129,7 +128,6 @@ var controller = {
                                 header.push("WEIGHT CATEGORIES");
                                 header.push("SPORT");
                                 header.push("TEAMID 1");
-                                header.push("TEAMID 2");
                                 header.push("ROUND NAME");
                                 _.each(header, function (n) {
                                     if (_.has(importData[0], n) == true) {
@@ -306,7 +304,7 @@ var controller = {
                                 //     }
                                 // });
                                 // if (headerFlag == header.length) {
-                                Match.saveQualifyingIndividual(importData, req.body, function (err, complete) {
+                                Match.saveKnockoutIndividual(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
                                     } else {
@@ -338,6 +336,18 @@ var controller = {
                 error: "All Fields Required !"
             }];
             res.callback(null, data);
+        }
+    },
+
+    generateBlankExcel: function (req, res) {
+        req.body.match = "blank";
+        if (req.body) {
+            Match.generateBlankExcel(req.body, res);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
         }
     },
 
