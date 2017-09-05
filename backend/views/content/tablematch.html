@@ -125,13 +125,13 @@
                 <!-- DRAW FORMAT END -->
 
                 <!-- SPORT TYPE -->
-                <div class="form-group">
+                <div class="form-group" ng-if="form.resultType!='qualifying-knockout'&&form.resultType!='qualifying-round'">
                   <label>Sport Type</label>
-                  <select name="selectplayer" class="form-control" ng-model="form.playerType" required>
+                  <select name="selectplayer" class="form-control" ng-model="form.playerType">
                         <option  value="team">Team</option>
                         <option  value="individual">Individual</option>
                     </select>
-                  <div class="error-msg" ng-if="detailForm.selectplayer.$invalid && detailForm.selectplayer.$touched">Please Enter Valid Player Type *</div>
+                  <!--<div class="error-msg" ng-if="detailForm.selectplayer.$invalid && detailForm.selectplayer.$touched">Please Enter Valid Player Type *</div>-->
                 </div>
                 <!-- SPORT TYPE END -->
 

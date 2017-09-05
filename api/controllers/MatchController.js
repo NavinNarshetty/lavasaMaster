@@ -226,7 +226,7 @@ var controller = {
                                         success: header
                                     }]);
                                 }
-                            } else if (req.body.resultType == "qualifying-round" && req.body.playerType == "individual") {
+                            } else if (req.body.resultType == "qualifying-round") {
                                 var header = [];
                                 var headerFlag = 0;
                                 header.push("DATE");
@@ -257,14 +257,68 @@ var controller = {
                                         success: header
                                     }]);
                                 }
-                            } else if (req.body.resultType == "qualifying-knockout" && req.body.playerType == "individual") {
-                                Match.saveQualifyingRoundFinalIndividual(importData, req.body, function (err, complete) {
+                            } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "qualifying") {
+                                var header = [];
+                                var headerFlag = 0;
+                                header.push("DATE");
+                                header.push("TIME");
+                                header.push('EVENT ');
+                                header.push("AGE GROUP");
+                                header.push("GENDER");
+                                // header.push("WEIGHT CATEGORIES");
+                                header.push("SPORT");
+                                header.push("SFA ID");
+                                header.push("ROUND ");
+                                _.each(header, function (n) {
+                                    if (_.has(importData[0], n) == true) {
+                                        headerFlag++;
+                                    }
+                                });
+                                if (headerFlag == header.length) {
+                                    Match.saveQualifyingIndividual(importData, req.body, function (err, complete) {
+                                        if (err || _.isEmpty(complete)) {
+                                            callback(err, null);
+                                        } else {
+                                            callback(null, complete);
+                                        }
+                                    });
+                                } else {
+                                    callback(null, [{
+                                        error: "Headers may have wrong values. Follow Headers Below !",
+                                        success: header
+                                    }]);
+                                }
+                            } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "knockout") {
+                                // var header = [];
+                                // var headerFlag = 0;
+                                // header.push("DATE");
+                                // header.push("TIME");
+                                // header.push('EVENT ');
+                                // header.push("AGE GROUP");
+                                // header.push("GENDER");
+                                // // header.push("WEIGHT CATEGORIES");
+                                // header.push("SPORT");
+                                // header.push("SFA ID");
+                                // header.push("ROUND ");
+                                // _.each(header, function (n) {
+                                //     if (_.has(importData[0], n) == true) {
+                                //         headerFlag++;
+                                //     }
+                                // });
+                                // if (headerFlag == header.length) {
+                                Match.saveQualifyingIndividual(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
                                     } else {
                                         callback(null, complete);
                                     }
                                 });
+                                // } else {
+                                //     callback(null, [{
+                                //         error: "Headers may have wrong values. Follow Headers Below !",
+                                //         success: header
+                                //     }]);
+                                // }
                             } else {
                                 callback(null, importData);
                             }
@@ -357,6 +411,14 @@ var controller = {
                                         callback(null, complete);
                                     }
                                 });
+                            } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "qualifying") {
+                                Match.updateQualifying(importData, req.body, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
                             } else {
                                 callback(null, importData);
                             }
@@ -412,6 +474,10 @@ var controller = {
                             Match.generateExcelHeat(req.body, res);
                         } else if (req.body.resultType == "qualifying-round") {
                             Match.generateExcelQualifyingRound(req.body, res);
+                        } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "qualifying") {
+                            Match.generateExcelQualifying(req.body, res);
+                        } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "knockout") {
+                            Match.generateExcelQualifyingKnockout(req.body, res);
                         } else {
                             res.json({
                                 "data": "Body not Found",

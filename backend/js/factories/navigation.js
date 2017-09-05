@@ -318,7 +318,15 @@ myApp.factory('NavigationService', function ($http) {
             $http.post(adminurl + url, data, {
                 responseType: 'arraybuffer'
             }).then(function (response) {
-                var fname = data.resultType + data.playerType + "-" + data.sportslist.name + " " + data.ageGroup.name + " " + data.gender;
+                if (!_.isEmpty(data.playerType)) {
+                    var fname = data.resultType + data.playerType + "-" + data.sportslist.name + " " + data.ageGroup.name + " " + data.gender;
+                } else {
+                    if (!_.isEmpty(data.excelType)) {
+                        var fname = data.resultType + "-" + data.excelType + "-" + data.sportslist.name + " " + data.ageGroup.name + " " + data.gender;
+                    } else {
+                        var fname = data.resultType + "-" + data.sportslist.name + " " + data.ageGroup.name + " " + data.gender;
+                    }
+                }
                 var header = response.headers('Content-Disposition')
                 var fileName = fname + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
                 var blob = new Blob([response.data], {
