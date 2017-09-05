@@ -130,13 +130,14 @@
                  <img src="img/sf-play.png" alt="play" class="img-responsive">
                  </a>
                 </div>
-                <p class="m-clear" ng-if="!card.resultsCombat">
+                <p class="m-clear pointer" ng-if="!card.resultsCombat" ng-click="matchCenter()">
                   <span>Match Center</span>
                 </p>
                 <p class="m-clear" ng-if="card.resultsCombat && card.opponentsSingle.length>1">
-                  <span class="s1" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point }}</span>
+                  <span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point }}</span>
                 </p>
               </div>
+
 
             </div>
 
@@ -192,11 +193,11 @@
                    <img src="img/sf-play.png" alt="play" class="img-responsive">
                    </a>
                   </div>
-                  <p class="m-clear" ng-if="!card.resultsCombat">
+                  <p class="m-clear pointer" ng-if="!card.resultsCombat" ng-click="matchCenter()">
                     <span>Match Center</span>
                   </p>
                   <p class="m-clear" ng-if="card.resultsCombat && card.opponentsSingle.length>1">
-                    <span class="s1" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point }}</span>
+                    <span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point }}</span>
                   </p>
                 </div>
               </div>
@@ -261,11 +262,11 @@
                     <img src="img/sf-play.png" alt="play" class="img-responsive">
                     </a>
                   </div>
-                  <p class="m-clear" ng-if="!card.resultsCombat">
+                  <p class="m-clear pointer" ng-if="!card.resultsCombat" ng-click="matchCenter()">
                     <span>Match Center</span>
                   </p>
                   <p class="m-clear" ng-if="card.resultsCombat && card.opponentsSingle.length>1">
-                    <span class="s1" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point }}</span>
+                    <span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point }}</span>
                   </p>
                 </div>
               </div>

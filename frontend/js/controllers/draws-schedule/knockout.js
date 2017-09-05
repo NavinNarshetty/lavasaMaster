@@ -3,6 +3,29 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
 
+    // MODAL
+    $scope.data = [1, 2, 3, 4, 5, 6, 7, 8];
+    // MODAL
+    var modal;
+    $scope.matchCenter = function () {
+        modal = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            // backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'views/modal/matchcenter.html',
+            size: 'lg',
+            windowClass: 'matchcenter-modal'
+        })
+    }
+    // MODAL END
+    $scope.oneAtATime = true;
+    $scope.status = {
+        isCustomHeaderOpen: false,
+        isFirstOpen: true,
+        isFirstDisabled: false
+    };
+    // MODAL END
     // SWIPER
     $scope.$on('$viewContentLoaded', function (event) {
 
@@ -311,7 +334,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
         }],
         date: '27th July, 2017',
         time: '10.30am'
-    },]
+    }, ]
     // END DOUBLES JSON
 
     $scope.winnersCard = [{

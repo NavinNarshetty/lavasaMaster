@@ -248,25 +248,6 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
 
 
 
-    // MODAL
-    var modal;
-    $scope.matchCenter = function () {
-        modal = $uibModal.open({
-            animation: true,
-            scope: $scope,
-            backdrop: 'static',
-            keyboard: false,
-            templateUrl: 'views/modal/matchcenter.html',
-            size: 'lg',
-            windowClass: 'matchcenter-modal'
-        })
-    }
-    // MODAL END
-    $scope.oneAtATime = true;
-    $scope.status = {
-        isCustomHeaderOpen: false,
-        isFirstOpen: true,
-        isFirstDisabled: false
-    };
+
 
 });

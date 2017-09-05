@@ -421,20 +421,20 @@ $sport-table-grey:#efeeee !default;
 // CHAMPIONSHIP SCHEDULE PAGE
 .chamionshipschedule-page {
   padding: 40px 0;
-  ::-webkit-scrollbar {
+   ::-webkit-scrollbar {
     width: 10px;
     height: 10px;
-    }
-    ::-webkit-scrollbar-track {
+  }
+   ::-webkit-scrollbar-track {
     background-color: transparent;
-    }
-    ::-webkit-scrollbar-thumb {
+  }
+   ::-webkit-scrollbar-thumb {
     background-color: #e1e1e1;
-    }
-    .dropdown-menu {
+  }
+  .dropdown-menu {
     margin: 2px 0px 0px;
     left: 0px;
-    }
+  }
 }
 
 .championshipdraw-card-form {
@@ -657,11 +657,11 @@ $sport-table-grey:#efeeee !default;
     background-color: $sport-green-table;
   }
 }
+
 .bluecolor-accordian {
   .panel-default>.panel-heading {
     background-color: #7fdfff;
   }
-  
 }
 
 // END ACCORDIAN
@@ -782,13 +782,11 @@ $sport-table-grey:#efeeee !default;
 }
 
 .knockout-winnercard {
-  border-left: 10px solid $sport-success;
+  border-left: 5px solid $sport-success;
   .knockout-winner-name {
     color: $sport-success;
   }
 }
-
-
 
 .knockout-cardimage {
   width: 40px;
@@ -799,6 +797,16 @@ $sport-table-grey:#efeeee !default;
 
 .knockout-round-width {
   width: 100%;
+}
+
+.combatscoreresult {
+  display: block;
+  line-height: 1;
+  font-size: 10px;
+  text-decoration: underline;
+  &:last-child {
+    text-decoration: none;
+  }
 }
 
 .knockout-card-content {
@@ -815,6 +823,7 @@ $sport-table-grey:#efeeee !default;
     float: right;
   }
 }
+
 .knockout-winner-card-content {
   background-color: #373737;
 }
@@ -924,3 +933,242 @@ $sport-table-grey:#efeeee !default;
 }
 
 // ***********************SWISS LEAGUE END*************************
+// MATCH CENTER MODAL
+// MATCH CENTER
+.matchcenter-modal {
+  // color: red;
+  .matchwinner-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .modal-header {
+    padding: 0px;
+  }
+  .combatscore-page {
+    min-height: calc(100vh - 60px);
+  }
+  .scoring-set {
+    padding: 10px 0; // border-bottom: 1px solid #ccc;
+  }
+  .combatscore-scorecard {
+    text-align: center;
+    &:last-child {
+      .scoring-set {
+        border-bottom: none;
+      }
+    }
+  }
+  .scoring-set {
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+    }
+  }
+  .score-number {
+    width: 60px;
+    height: 60px;
+    padding: 5px 10px;
+    margin: 0 auto;
+    font-size: 24px;
+    text-align: center;
+  }
+  .score-buttons {
+    padding: 10px 13px;
+    margin: 0px 5px;
+    border: 1px solid $dark-grey;
+    border-radius: 100%;
+    box-shadow: 2px 2px 5px #a0a0a0;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 21px;
+    line-height: 1;
+    &:active,
+    &:focus,
+    &:hover {
+      outline: 0;
+      outline-offset: 0;
+      box-shadow: 2px 2px 5px #a0a0a0;
+    }
+  }
+  .combatscore-uploads {
+    margin: 20px 0 30px;
+    text-align: center;
+  }
+  .btn-uploadscoring {
+    width: auto;
+  }
+  .matchstart-uploadholder {
+    position: relative;
+    overflow: hidden;
+  }
+  .upload-scorecard {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 2;
+  }
+  .combatscore-uploadpic {
+    width: 110px;
+    height: auto;
+    padding: 2px;
+    border: 1px solid #ccc;
+    margin: 0px 10px 10px 0;
+    display: inline-block;
+    position: relative; // background-color: #757575;
+    color: #fff;
+    overflow: hidden;
+    text-align: center;
+    text-transform: uppercase;
+    vertical-align: middle;
+  }
+  .combatscore-pics,
+  .combatscore-selects {
+    margin: 20px 0;
+  } // MATCH START PAGE
+  .matchstart-page,
+  .racketscore-page,
+  .scorefootball-page {
+    min-height: calc(100vh - 100px);
+    position: relative;
+  }
+  .matchstart-header {
+    padding: 10px 15px;
+    background-color: $brand-primary;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+  .matchplayer-card {
+    padding: 10px;
+    margin: 20px auto;
+    box-shadow: 0 0 10px #a0a0a0;
+    position: relative;
+  }
+  .player1 {
+    border-bottom: 10px solid #7fdfff;
+  }
+  .player2 {
+    border-bottom: 10px solid $brand-danger;
+  }
+  .matchplayer-playerid {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    font-size: 12px;
+  }
+  .matchplayer-image {
+    width: 60px;
+    height: 60px;
+    border: 1px solid red;
+    border-radius: 100%;
+    margin: 0 10px;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+  }
+  .matchplayer-details {
+    width: calc(100% - 125px);
+    margin-top: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    .matchplayer-name {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .matchplayer-school {
+      font-size: 14px;
+    }
+  }
+  .matchstart-noshow,
+  .matchstart-uploadpic {
+    width: 100%;
+    height: 150px;
+    margin: 50px 0 20px;
+    position: relative;
+    background-color: $dark-grey;
+    color: #fff;
+    text-align: center;
+    text-transform: uppercase;
+    p {
+      width: 100%;
+    }
+  }
+  .matchstart-uploadpic {
+    margin: 10px;
+    margin-left: 0;
+    display: inline-block;
+    background-color: transparent;
+  }
+  .remove-pic {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .matchstart-score {
+    padding: 10px 0;
+    margin: 20px 0;
+  }
+  .btn-scoring {
+    width: 100%;
+    text-transform: uppercase;
+  }
+  .opponentsingle-selector {
+    padding: 3px 20px;
+    margin: 0;
+  }
+  .match-selectwinner {
+    .ui-select-bootstrap .ui-select-choices-row>span {
+      padding: 0;
+    }
+  } // MATCH START PAGE END
+  // RACKET-SCORE PAGE
+  .datapoint-name {
+    position: absolute;
+    top: 20%;
+    left: 0px;
+    @include transform(translateY(-50%));
+  }
+  .showhide-set {
+    padding: 10px 0;
+    .form-group {
+      margin: 0;
+    }
+  }
+  .addset {
+    float: right;
+  }
+  .setshow-element {
+    margin: 0px 10px;
+  }
+  .racquet-setscore {
+    margin: 20px 0;
+    text-align: center;
+    .scoring-set {
+      border: none;
+      margin: 0px;
+    }
+  }
+  .setpoint-element {
+    display: inline-block;
+    vertical-align: middle;
+    label {
+      display: block;
+    }
+  } // RACKET-SCORE PAGE END
+}
+
+// MATCH CENTER END
+// MATCH CENTER MODAL END
