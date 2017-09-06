@@ -14,8 +14,8 @@
                         us to create a personalized sporting experience for your {{type}} on our website www.sfanow.in to
                         highlight your performances in sport by way of profiles, records maintenance, match videos, statistics
                         and reports.
-                        <br> The annual {{type}} registration fee for SFA {{sfaCity}} {{year}} is Rs. <span ng-if="isCollege == false">12,000</span>
-                        <span ng-if="isCollege == true">2,500</span> (Inclusive of all applicable taxes) <a ng-click="regisBenModal(type,sfaCity,year)"><strong>Click here</strong></a>                        to view registered {{type}} benefits for SFA {{sfaCity}} {{year}}.
+                        <br> The annual {{type}} registration fee for SFA {{sfaCity}} {{eventYear}} is Rs. <span ng-if="isCollege == false">12,000</span>
+                        <span ng-if="isCollege == true">2,500</span> (Inclusive of all applicable taxes) <a ng-click="regisBenModal(type,sfaCity,year,eventYear)"><strong>Click here</strong></a>                        to view registered {{type}} benefits for SFA {{sfaCity}} {{eventYear}}.
                     </p>
                 </div>
                 <div class=" t-padd">
@@ -151,6 +151,7 @@
                             <select name="affiliatedBoard" class="form-control sfa-drop2 sf-list drop-cust" ng-model="formData.affiliatedBoard" required>
                              <option style="display:none"></option>
                              <option>Central Board of Secondary Education (CBSE) </option>
+                             <option>Cambridge & IB</option>
                              <option>International Baccalaureate (IB)</option>
                              <option>Indian Certificate of Secondary Education (ICSE)</option>
                              <option>International General Certificate of Secondary Education (IGCSE)</option>
@@ -303,8 +304,8 @@
                             <div class="form-group">
                                 <div class=" d-padd pl13">
                                     <div class="col-md-12 col-sm-12 col-xs-12">
-                                        <p class="details-top">All communication regarding SFA {{sfaCity | capitalize}} {{year}} will be sent on
-                                            the below mentioned details.
+                                        <p class="details-top">All communication regarding SFA {{sfaCity | capitalize}} {{eventYear}} will be sent
+                                            on the below mentioned details.
                                         </p>
                                     </div>
                                     <label class="col-md-3 col-sm-3 col-xs-12"> *Contact Person:</label>
@@ -727,7 +728,7 @@
                         <div class="checkbox-custom">
                             <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                                 id="test5" />
-                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('', type, sfaCity, year,eventYear)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
                             <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
                         </div>
                         <!--<p> <label class="sel-spo">Selected Sports:</label>Basketball, Football, Hockey</p>-->
@@ -804,7 +805,7 @@
                         <div class="checkbox-custom">
                             <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                                 id="test5" />
-                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('', type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('', type, sfaCity, year, eventYear)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
                             <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
                         </div>
                         <!--<p> <label class="sel-spo">Selected Sports:</label>Basketball, Football, Hockey</p>-->

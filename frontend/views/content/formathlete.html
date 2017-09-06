@@ -13,15 +13,15 @@
                         us to create a personalized sporting experience for you on our website www.sfanow.in to highlight
                         your performances in sport by way of profiles, records maintenance, match videos, statistics and
                         reports.
-                        <br> The annual Athlete registration fee for SFA {{sfaCity}} {{year}} is Rs. <span ng-if="isCollege == false">200 <br>In the event
-                        that your {{type}} does not register for SFA {{sfaCity}} {{year}} by the 30th of September an additional fee
+                        <br> The annual Athlete registration fee for SFA {{sfaCity}} {{eventYear}} is Rs. <span ng-if="isCollege == false">200 <br>In the event
+                        that your {{type}} does not register for SFA {{sfaCity}} {{eventYear}} by the 30th of September an additional fee
                         of Rs. <span ng-if="sfaCity == 'Hyderabad'">200</span> <span ng-if="sfaCity == 'Mumbai'">400</span>/-
                         (Inclusive of all applicable taxes) will be levied. This discounted fee for registered {{type}} athletes
                         is a step to encourage {{type}}s to support their athletes and sports.</span>
                         <span ng-if="isCollege == true">300</span> (Inclusive of all applicable taxes).
                         <br>
-                        <a ng-click="athBenModal(type, sfaCity, year)"><strong>Click here</strong></a> to view registered
-                        athlete benefits for SFA {{sfaCity}} {{year}}.
+                        <a ng-click="athBenModal(type, sfaCity, year, eventYear)"><strong>Click here</strong></a> to view
+                        registered athlete benefits for SFA {{sfaCity}} {{eventYear}}.
                     </p>
                 </div>
                 <div class="t-padd">
@@ -634,10 +634,10 @@
                             <div class="iconinfo iconinfo3 sf-list">
                                 <p ng-if="isCollege == false">Kindly ensure the contact details given below are correct. A verification One Time Password
                                     (OTP) will be sent. We welcome parents to enter their details in this section. All important
-                                    details regarding SFA {{sfaCity}} {{year}} such asconfirmation of registration, draws
-                                    and schedules will besent on the same.</p>
+                                    details regarding SFA {{sfaCity}} {{eventYear}} such asconfirmation of registration,
+                                    draws and schedules will besent on the same.</p>
                                 <p ng-if="isCollege == true"> Kindly ensure that they contact details given below are correct. A verification One Time
-                                    Password (OTP) will be sent. All important details regarding SFA {{sfaCity}} {{year}}
+                                    Password (OTP) will be sent. All important details regarding SFA {{sfaCity}} {{eventYear}}
                                     such as confirmation of registration, draws and schedule will be sent on the same.</p>
                             </div>
                         </div>
@@ -663,7 +663,7 @@
                                     <div class="iconinfo iconinfo3 sf-list">
                                         <p>Kindly ensure the contact details given below are correct. A verification One Time
                                             Password (OTP) will be sent. We welcome parents to enter their details in this
-                                            section. All important details regarding SFA {{sfaCity}} {{year}} such asconfirmation
+                                            section. All important details regarding SFA {{sfaCity}} {{eventYear}} such asconfirmation
                                             of registration, draws and schedules will besent on the same.</p>
                                     </div>
                                 </div>
@@ -792,7 +792,7 @@
                         <div class="checkbox-custom">
                             <input type="checkbox" name="checkIhav" ng-checked="termsCheck(formData.termsAndCondition)" ng-model="formData.termsAndCondition"
                                 id="test5" />
-                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('',type, sfaCity, year)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
+                            <label for="test5" class="sf-list custom-a" style="padding-left: 20px;"><span></span> I have carefully read and understood the <a ng-click="termcondition('',type, sfaCity, year, eventYear)" title="Click here"><strong>terms and conditions</strong></a> of this form / disclaimer / waiver and as described in this form / disclaimer / waiver and consent to all of them.</label>
                             <div class="validate-col" ng-show="showTerm">Please accept terms and condition</div>
                         </div>
                         <div class="box2" ng-repeat="x in formData.parentDetails track by $index">

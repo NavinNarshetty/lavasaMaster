@@ -7,7 +7,7 @@
                     <div class="registration-desc">
                         <h2 ng-if="isCollege == false">BE A PART OF THE LARGEST PROFESSIONAL YOUTH SPORTING CHAMPIONSHIP</h2>
                         <h2 ng-if="isCollege == true">BE A PART OF THE FIRST PROFESSIONAL YOUTH SPORTING CHAMPIONSHIP</h2>
-                        <h3>SFA {{sfaCity | capitalize}} {{year}}</h3>
+                        <h3>SFA {{sfaCity | capitalize}} {{eventYear}}</h3>
                     </div>
                 </div>
                 <div class="col-md-9 col-sm-12 col-xs-12" ng-if="isCollege == false">
@@ -390,11 +390,11 @@
             <div>
                 <p class="f-s" ng-if="isCollege == false">Sports For All brings to you {{sfaCity}}'s ultimate inter-school sporting championship, where best school
                     contingents will battle it out to be ranked as the No.1 School for Sports. Schools & Athletes from across
-                    Mumbai City, Mumbai Suburban, Thane, Raigad and Palghar can register and compete at SFA {{sfaCity}} {{year}}.</p>
+                    Mumbai City, Mumbai Suburban, Thane, Raigad and Palghar can register and compete at SFA {{sfaCity}} {{eventYear}}.</p>
                 <p class="f-s" ng-if="isCollege == true">Sports For All brings to you {{sfaCity}}’s first inter-college professional sporting championship, where
                     college contingents will battle it out to be ranked as the No.1 College for sports. Colleges & Athletes
                     from across Mumbai City, Mumbai Suburban, Thane, Raigad and Palghar can register and compete at SFA {{sfaCity}}
-                    {{year}}.
+                    {{eventYear}}.
                 </p>
                 <p class="f-s" ng-if="isCollege == true">
                     SFA professional sporting experience includes – World class multi-sporting infrastructure, best-in-class stadium experience,
@@ -426,14 +426,14 @@
             </div>
         </div>
         <div class="categories">
-            <h1 class="text-center">Register for SFA {{sfaCity}} {{year}}</h1>
+            <h1 class="text-center">Register for SFA {{sfaCity}} {{eventYear}}</h1>
             <p class="f-s f16 text-center margin0">Every {{type |firstcapitalize}} and Athlete (participating in a team sport or individual sport) must register
                 themselves individually first.
             </p>
             <p class="f-s f16 text-center margin0">Once your individual registration process is complete, you can proceed to register yourself for the sport/sports
                 of your interest.</p>
             <p class="f-s f16 text-center margin0">Kindly go through the ‘Age Group and Event Categories’ to understand your sporting opportunities at SFA {{sfaCity}}
-                {{year}}.
+                {{eventYear}}.
             </p>
             <p class="text-center step mt35 mb25">Step 1 : {{type |firstcapitalize}} / Athlete Registration & Verification</p>
             <div class="row">
@@ -447,7 +447,7 @@
                             </div>
                         </div>
                         <div class="category-padding f-s mod-cls">
-                            <p><b>Register your {{type}} for SFA {{sfaCity}} {{year}}:</b>
+                            <p><b>Register your {{type}} for SFA {{sfaCity}} {{eventYear}}:</b>
                             </p>
                             <ul class="list-unstyled school-list">
                                 <li ng-if="isCollege == false">Fill out the online ‘{{type |firstcapitalize}} Registration Form’ & pay the registration
@@ -470,7 +470,7 @@
                                 <span ng-if="isCollege == true">15+</span> disciplines of sport at a subsidized registration
                                 fee.
                             </p>
-                            <p class="custom-a"><a ng-click="regisBenModal(type, sfaCity, year)"><strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{year}}</strong></a></p>
+                            <p class="custom-a"><a ng-click="regisBenModal(type, sfaCity, year, eventYear)"><strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
                         </div>
                         <div class="text-center mb-20 "><a ui-sref="formregis"><button class="btn-category green-btn "> Click here for {{type |firstcapitalize}} Registration Form</button></a></div>
                     </div>
@@ -490,12 +490,12 @@
                             <!--<p>Once an athlete registers with SFA, he/she can participate in as many sports as he/she chooses to
                             (basis eligibility criteria).
                         </p>-->
-                            <p><b>Register as an athlete for SFA {{sfaCity}} {{year}}:</b>
+                            <p><b>Register as an athlete for SFA {{sfaCity}} {{eventYear}}:</b>
                             </p>
                             <ul class="list-unstyled athlete-list f-s">
                                 <li ng-if="isCollege == false"> Fill out the online ‘Athlete Registration Form’ & pay the registration amount of INR 200/-
                                     (inclusive of all applicable taxes)<br>
-                                    <span class="f-14">*In the event that your school does not register for SFA {{sfaCity}} {{year}} by the 30th of September,
+                                    <span class="f-14">*In the event that your school does not register for SFA {{sfaCity}} {{eventYear}} by the 30th of September,
                                     an additional fee of INR 400/- (Inclusive of all applicable taxes) will be levied.</span>
                                 </li>
                                 <li ng-if="isCollege == true">Fill out the athlete registration form & pay the athlete registration fees.</li>
@@ -516,8 +516,8 @@
                             </ul>
                             <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
                             from their school registrations. </p>-->
-                            <p class="custom-a mb-33" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
-                            <p class="custom-a mb91" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
+                            <p class="custom-a mb-33" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year, eventYear) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
+                            <p class="custom-a mb91" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year, eventYear) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
                         </div>
                         <div class="text-center mb-20 "><a ui-sref="formathlete"><button class="btn-category orange "> Click here for Athlete Registration Form</button></a></div>
                     </div>
@@ -577,7 +577,7 @@
                                 <div class="sport-icon ">
                                     <!--<img src="img/icon/3.png " class="img-responsive ">-->
                                 </div>
-                                <p>SFA {{sfaCity}} {{year}}</p>
+                                <p>SFA {{sfaCity}} {{eventYear}}</p>
                                 <p>Championship Schedule* </p>
                             </div>
                             <div class="category-padding-sport cus-pd-lr f-s " ng-if="isCollege==false">
@@ -986,7 +986,7 @@
                     <div class="registration-desc">
                         <h2 ng-if="isCollege == false">GOT WHAT IT TAKES TO BE THE NO. 1 SCHOOL FOR SPORTS IN HYDERABAD?</h2>
                         <h2 ng-if="isCollege == true">BE A PART OF THE FIRST PROFESSIONAL YOUTH SPORTING CHAMPIONSHIP</h2>
-                        <h3>SFA {{sfaCity | capitalize}} {{year}}</h3>
+                        <h3>SFA {{sfaCity | capitalize}} {{eventYear}}</h3>
                     </div>
                 </div>
                 <div class="col-md-9 col-sm-12 col-xs-12" ng-if="isCollege == false">
@@ -1351,11 +1351,11 @@
             <div>
                 <p class="f-s" ng-if="isCollege == false">Sports For All brings to you {{sfaCity}}'s first inter-school professional sporting championship, where school
                     contingents will battle it out to be ranked as the No.1 School for Sports. Schools & Athletes from across
-                    Hyderabad City can register and compete at SFA {{sfaCity}} {{year}}.</p>
+                    Hyderabad City can register and compete at SFA {{sfaCity}} {{eventYear}}.</p>
                 <p class="f-s" ng-if="isCollege == true">Sports For All brings to you {{sfaCity}}’s first inter-college professional sporting championship, where
                     college contingents will battle it out to be ranked as the No.1 College for sports. Colleges & Athletes
                     from across Mumbai City, Mumbai Suburban, Thane, Raigad and Palghar can register and compete at SFA {{sfaCity}}
-                    {{year}}.
+                    {{eventYear}}.
                 </p>
                 <p class="f-s" ng-if="isCollege == true">
                     SFA professional sporting experience includes – World class multi-sporting infrastructure, best-in-class stadium experience,
@@ -1387,14 +1387,14 @@
             </div>
         </div>
         <div class="categories">
-            <h1 class="text-center">Register for SFA {{sfaCity}} {{year}}</h1>
+            <h1 class="text-center">Register for SFA {{sfaCity}} {{eventYear}}</h1>
             <p class="f-s f16 text-center margin0">Every {{type |firstcapitalize}} and Athlete (participating in a team sport or individual sport) must register
                 themselves individually first.
             </p>
             <p class="f-s f16 text-center margin0">Once your individual registration process is complete, you can proceed to register yourself for the sport/sports
                 of your interest.</p>
             <p class="f-s f16 text-center margin0">Kindly go through the ‘Age Group and Event Categories’ to understand your sporting opportunities at SFA {{sfaCity}}
-                {{year}}.
+                {{eventYear}}.
             </p>
             <p class="text-center step mt35 mb25">Step 1 : {{type |firstcapitalize}} / Athlete Registration & Verification</p>
             <div class="row">
@@ -1408,7 +1408,7 @@
                             </div>
                         </div>
                         <div class="category-padding f-s mod-cls">
-                            <p><b>Register your {{type}} for SFA {{sfaCity}} {{year}}:</b>
+                            <p><b>Register your {{type}} for SFA {{sfaCity}} {{eventYear}}:</b>
                             </p>
                             <ul class="list-unstyled school-list">
                                 <li ng-if="isCollege == false">Fill out the online ‘{{type |firstcapitalize}} Registration Form’ & pay the registration
@@ -1433,7 +1433,7 @@
                                 <span ng-if="isCollege == true">15+</span> disciplines of sport at a subsidized registration
                                 fee.
                             </p>
-                            <p class="custom-a"><a ng-click="regisBenModal(type, sfaCity, year)"><strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{year}}</strong></a></p>
+                            <p class="custom-a"><a ng-click="regisBenModal(type, sfaCity, year, eventYear)"><strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
                         </div>
                         <div class="text-center mb-20 "><a ui-sref="formregis"><button class="btn-category green-btn "> Click here for {{type |firstcapitalize}} Registration Form</button></a></div>
                     </div>
@@ -1453,12 +1453,12 @@
                             <!--<p>Once an athlete registers with SFA, he/she can participate in as many sports as he/she chooses to
                             (basis eligibility criteria).
                         </p>-->
-                            <p><b>Register as an athlete for SFA {{sfaCity}} {{year}}:</b>
+                            <p><b>Register as an athlete for SFA {{sfaCity}} {{eventYear}}:</b>
                             </p>
                             <ul class="list-unstyled athlete-list f-s">
                                 <li ng-if="isCollege == false"> Fill out the online ‘Athlete Registration Form’ & pay the registration amount of INR 200/-
                                     (inclusive of all applicable taxes)<br>
-                                    <span class="f-14">*In the event that your school does not register for SFA {{sfaCity}} {{year}} by the 30th of September,
+                                    <span class="f-14">*In the event that your school does not register for SFA {{sfaCity}} {{eventYear}} by the 30th of September,
                                     an additional fee of INR 200/- (Inclusive of all applicable taxes) will be levied.</span>
                                 </li>
                                 <li ng-if="isCollege == true">Fill out the athlete registration form & pay the athlete registration fees.</li>
@@ -1477,8 +1477,8 @@
                             </ul>
                             <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
                             from their school registrations. </p>-->
-                            <p class="custom-a mb-33" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
-                            <p class="custom-a mb-75" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
+                            <p class="custom-a mb-33" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year, eventYear) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
+                            <p class="custom-a mb-75" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year, eventYear) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
                         </div>
                         <div class="text-center mb-20 "><a ui-sref="formathlete"><button class="btn-category orange "> Click here for Athlete Registration Form</button></a></div>
                     </div>
@@ -1557,7 +1557,7 @@
                                 <div class="sport-icon ">
                                     <!--<img src="img/icon/3.png " class="img-responsive ">-->
                                 </div>
-                                <p>SFA {{sfaCity}} {{year}}</p>
+                                <p>SFA {{sfaCity}} {{eventYear}}</p>
                                 <p>Championship Schedule* </p>
                             </div>
                             <div class="category-padding-sport cus-pd-lr f-s " ng-if="isCollege==false">

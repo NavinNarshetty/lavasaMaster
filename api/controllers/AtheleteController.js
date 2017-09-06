@@ -129,6 +129,7 @@ var controller = {
                         req.body.propertyType = property[0].institutionType;
                         req.body.city = property[0].sfaCity;
                         req.body.year = property[0].year;
+                        req.body.eventYear = property[0].eventYear;
                         Athelete.generateEmailOTP(req.body, res.callback);
                     }
                 ],

@@ -194,6 +194,7 @@ myApp.controller('ChampionshipCtrl', function ($scope, TemplateService, Navigati
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;

@@ -1,5 +1,8 @@
 var schema = new Schema({
     year: String,
+    eventYear: String,
+    fromMonth: String,
+    toMonth: String,
     institutionType: {
         type: String,
     },
@@ -82,6 +85,9 @@ var model = {
                     finalData.type = property[0].institutionType;
                     finalData.state = property[0].state;
                     finalData.year = property[0].year;
+                    finalData.eventYear = property[0].eventYear;
+                    finalData.toMonth = property[0].toMonth;
+                    finalData.fromMonth = property[0].fromMonth;
                     finalData.sfaCity = property[0].sfaCity;
                     finalData.amount = property[0].totalAmountType;
                     finalData.athleteAmount = property[0].totalAmountAthlete;

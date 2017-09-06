@@ -5,6 +5,7 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -224,6 +225,7 @@ myApp.controller('SportsRulesCtrl', function ($scope, TemplateService, $state, N
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -334,6 +336,7 @@ myApp.controller('SportIndividualCtrl', function ($scope, TemplateService, toast
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -409,6 +412,7 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;

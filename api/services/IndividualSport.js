@@ -1505,6 +1505,7 @@ var model = {
                                 }
                                 emailData.type = property[0].institutionType;
                                 emailData.year = property[0].year;
+                                emailData.eventYear = property[0].eventYear;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
                                 emailData.cityAddress = property[0].cityAddress;
@@ -1526,7 +1527,7 @@ var model = {
                             function (callback) {
                                 var smsData = {};
                                 smsData.mobile = n.mobile;
-                                smsData.content = "SFA: Thank you for registering for Individual Sports at SFA " + property[0].year + ". For Further details Please check your registered email ID.";
+                                smsData.content = "SFA: Thank you for registering for Individual Sports at SFA " + property[0].eventYear + ". For Further details Please check your registered email ID.";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
@@ -1641,6 +1642,7 @@ var model = {
                                     emailData.urls = "https://ahmedabad.sfanow.in";
                                 }
                                 emailData.year = property[0].year;
+                                emailData.eventYear = property[0].eventYear;
                                 emailData.type = property[0].institutionType;
                                 emailData.filename = "schoolindividual.ejs";
                                 emailData.subject = "SFA: Individual Sport Selection List";
@@ -1658,7 +1660,7 @@ var model = {
                             function (callback) {
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                smsData.content = "SFA: Thank you for registering for Individual Sports at SFA " + property[0].year + ". For Further details Please check your registered email ID.";
+                                smsData.content = "SFA: Thank you for registering for Individual Sports at SFA " + property[0].eventYear + ". For Further details Please check your registered email ID.";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
@@ -1757,6 +1759,7 @@ var model = {
                                     emailData.urls = "https://ahmedabad.sfanow.in";
                                 }
                                 emailData.year = property[0].year;
+                                emailData.eventYear = property[0].eventYear;
                                 emailData.type = property[0].institutionType;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
@@ -1778,7 +1781,7 @@ var model = {
                             function (callback) {
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                smsData.content = "SFA: Thank you for registering for Individual Sports at SFA " + property[0].year + ". For Further details Please check your registered email ID.";
+                                smsData.content = "SFA: Thank you for registering for Individual Sports at SFA " + property[0].eventYear + ". For Further details Please check your registered email ID.";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {

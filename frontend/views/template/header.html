@@ -70,7 +70,7 @@
                             </li>
                             <!--<li class="hidden-md hidden-lg">-->
                             <!--<a ng-mouseenter="optionss=!optionss" ng-model="checkboxs">
-                            SFA {{selectedCity | capitalize}} 2017
+                            SFA {{selectedCity | capitalize}} {{eventYear}}
                             </a>-->
                             <li class="hidden-md hidden-lg dropdown">
                                 <div class="display-inline forCityPlacingSm">
@@ -84,7 +84,7 @@
                                     </div>
                                 </div>
                                 <a class="dropdown-toggle mb25" data-toggle="dropdown" ng-mouseenter="optionss=!optionss" ng-model="checkboxs">
-                            SFA {{selectedCity | capitalize}} 2017
+                            SFA {{selectedCity | capitalize}} {{eventYear}}
                             </a>
                                 <ul class="dropdown-menu cl-pr forSm typePlace">
                                     <ul class="display-inline typeList">
@@ -190,14 +190,14 @@
                         </div>
                     </div>
                     <div class="sfa-mum">
-                        <button type="button" name="button" class="btn btn-sfatop" ng-mouseenter="optionss=!optionss" ng-model="checkboxs">SFA {{selectedCity | capitalize}} 2017</button>
+                        <button type="button" name="button" class="btn btn-sfatop" ng-mouseenter="optionss=!optionss" ng-model="checkboxs">SFA {{selectedCity | capitalize}} {{eventYear}}</button>
                     </div>
                 </div>
                 <div class="visible-xs">
                     <div class="">
                         <a class="dropdown-toggle mb25" data-toggle="dropdown">
                             <div class="sfa-mum sfa-mum-m">
-                                <button type="button" name="button" class="btn btn-sfatop margin0" ng-mouseenter="optionss=!optionss">SFA {{selectedCity | capitalize}} 2017</button>
+                                <button type="button" name="button" class="btn btn-sfatop margin0" ng-mouseenter="optionss=!optionss">SFA {{selectedCity | capitalize}} {{eventYear}}</button>
                             </div>
                         </a>
                         <ul class="dropdown-menu text-center cl-pr placingDrop typePlacing">
@@ -243,7 +243,7 @@
                         </div>
                     </div>
                     <div class="sfa-mum sfa-mum-m hide">
-                        <button type="button" name="button" class="btn btn-sfatop" ng-mouseenter="optionss=!optionss" ng-model="checkboxs">SFA {{selectedCity | capitalize}} 2017</button>
+                        <button type="button" name="button" class="btn btn-sfatop" ng-mouseenter="optionss=!optionss" ng-model="checkboxs">SFA {{selectedCity | capitalize}} {{eventYear}}</button>
                     </div>
                 </div>
                 <div class="on-mouse-hover hidden-xs hidden-sm specialCase" ng-mouseenter="optionss=true" ng-mouseleave="optionss=false"

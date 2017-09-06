@@ -1139,6 +1139,7 @@ var model = {
                             emailData.receiptNo = "SFA" + found.receiptId;
                             emailData.city = property[0].sfaCity;
                             emailData.year = property[0].year;
+                            emailData.eventYear = property[0].eventYear;
                             emailData.athleteAmount = property[0].totalAmountAthlete;
                             emailData.amountInWords = property[0].totalAmountInWordsAthlete;
                             emailData.amountWithoutTax = property[0].amoutWithoutTaxAthlete;
@@ -1164,7 +1165,7 @@ var model = {
                                 email: "admin@sfanow.in"
                             }];
                             emailData.filename = "receiptAthelete.ejs";
-                            emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.year + ".";
+                            emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.eventYear + ".";
                             console.log("emaildata", emailData);
                             Config.emailTo(emailData, function (err, emailRespo) {
                                 if (err) {
@@ -1222,6 +1223,7 @@ var model = {
         // emailData.name = data.firstName;
         emailData.city = data.city;
         emailData.year = data.year;
+        emailData.eventYear = data.eventYear;
         emailData.email = data.email;
         emailData.otp = emailOtp;
         emailData.filename = "emailOtp.ejs";
@@ -1388,6 +1390,7 @@ var model = {
                                 emailData.email = data.email;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
+                                emailData.eventYear = property[0].eventYear;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
                                 emailData.cityAddress = property[0].cityAddress;
@@ -1410,7 +1413,7 @@ var model = {
 
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].year + ". For further details please check your registered email ID.";
+                                smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
@@ -1472,13 +1475,14 @@ var model = {
                                 emailData.name = data.firstName;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
+                                emailData.eventYear = property[0].eventYear;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.athleteAmount = property[0].totalAmountAthlete;
                                 emailData.filename = "atheleteCashPayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.year;
+                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear;
                                 console.log("emaildata", emailData);
 
                                 Config.email(emailData, function (err, emailRespo) {
@@ -1495,7 +1499,7 @@ var model = {
                             function (callback) {
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].year + ". For further details please check your registered email ID.";
+                                smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
@@ -1563,9 +1567,10 @@ var model = {
                                 emailData.name = data.firstName;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
+                                emailData.eventYear = property[0].eventYear;
                                 emailData.type = property[0].institutionType;
                                 emailData.filename = "registeredVerification.ejs";
-                                emailData.subject = "SFA: You are now a verified Athlete for SFA " + emailData.city + " " + emailData.year;
+                                emailData.subject = "SFA: You are now a verified Athlete for SFA " + emailData.city + " " + emailData.eventYear;
                                 console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
@@ -1650,9 +1655,10 @@ var model = {
                                 emailData.password = data.password;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
+                                emailData.eventYear = property[0].eventYear;
                                 emailData.type = property[0].institutionType;
                                 emailData.filename = "rejection.ejs";
-                                emailData.subject = "SFA: Rejection of Your Application for SFA " + emailData.city + " " + emailData.year;
+                                emailData.subject = "SFA: Rejection of Your Application for SFA " + emailData.city + " " + emailData.eventYear;
                                 console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
@@ -1671,7 +1677,8 @@ var model = {
                                 smsData.mobile = data.mobile;
                                 var city = property[0].sfaCity;
                                 var year = property[0].year;
-                                smsData.content = "We regret to inform you that your application has been rejected for SFA " + city + " " + year + ". For further queries please email us at info@sfanow.in";
+                                var eventYear = property[0].eventYear;
+                                smsData.content = "We regret to inform you that your application has been rejected for SFA " + city + " " + eventYear + ". For further queries please email us at info@sfanow.in";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
@@ -1737,11 +1744,12 @@ var model = {
                                 emailData.name = data.firstName;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
+                                emailData.eventYear = property[0].eventYear;
                                 emailData.athleteAmount = property[0].totalAmountAthlete;
                                 // emailData.sfaID = data.sfaID;
                                 // emailData.password = data.password;
                                 emailData.filename = "unregisteredOnlinePayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.year + ".";
+                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear + ".";
                                 console.log("emaildata", emailData);
 
                                 Config.email(emailData, function (err, emailRespo) {
@@ -1761,7 +1769,8 @@ var model = {
                                 smsData.mobile = data.mobile;
                                 var city = property[0].sfaCity;
                                 var year = property[0].year;
-                                smsData.content = "Thank you for registering for SFA " + city + " " + year + ". For further details please check your registered email ID.";
+                                var eventYear = property[0].eventYear;
+                                smsData.content = "Thank you for registering for SFA " + city + " " + eventYear + ". For further details please check your registered email ID.";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
@@ -1827,9 +1836,10 @@ var model = {
                                 emailData.name = data.firstName;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
+                                emailData.eventYear = property[0].eventYear;
                                 emailData.athleteAmount = property[0].totalAmountAthlete;
                                 emailData.filename = "unregistercashpayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.year + ".";
+                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear + ".";
                                 console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
@@ -1848,7 +1858,8 @@ var model = {
                                 smsData.mobile = data.mobile;
                                 var city = property[0].sfaCity;
                                 var year = property[0].year;
-                                smsData.content = "Thank you for registering for SFA " + city + " " + year + ". For further details please check your registered email ID.";
+                                var eventYear = property[0].eventYear;
+                                smsData.content = "Thank you for registering for SFA " + city + " " + eventYear + ". For further details please check your registered email ID.";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
@@ -2730,12 +2741,13 @@ var model = {
                             emailData.ddFavour = data.property.ddFavour;
                             emailData.city = data.property.sfaCity;
                             emailData.year = data.property.year;
+                            emailData.eventYear = data.property.eventYear;
                             emailData.type = data.property.institutionType;
                             emailData.athleteAmount = data.property.totalAmountAthlete;
                             emailData.name = data1.firstName;
                             emailData.email = data1.email;
                             emailData.filename = "paymentReminderAthlete.ejs";
-                            emailData.subject = "SFA: Your Payment Reminder for SFA " + emailData.city + " " + emailData.year;
+                            emailData.subject = "SFA: Your Payment Reminder for SFA " + emailData.city + " " + emailData.eventYear;
                             console.log("emaildata", emailData);
 
                             Config.email(emailData, function (err, emailRespo) {
@@ -2759,12 +2771,13 @@ var model = {
                             emailData.ddFavour = data.property.ddFavour;
                             emailData.city = data.property.sfaCity;
                             emailData.year = data.property.year;
+                            emailData.eventYear = data.property.eventYear;
                             emailData.type = data.property.institutionType;
                             emailData.athleteAmount = data.property.totalAmountAthlete;
                             emailData.name = data1.firstName;
                             emailData.email = data1.email;
                             emailData.filename = "paymentReminderAthlete.ejs";
-                            emailData.subject = "SFA: Your Payment Reminder for SFA " + emailData.city + " " + emailData.year;
+                            emailData.subject = "SFA: Your Payment Reminder for SFA " + emailData.city + " " + emailData.eventYear;
                             console.log("emaildata", emailData);
 
                             Config.email(emailData, function (err, emailRespo) {

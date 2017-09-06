@@ -21,6 +21,8 @@ var globalLinkForAll = "http://testhyderabad.sfanow.in/";
 // var globalLinkSchoolRegister = "http://testahmedabadschool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testahmedabadcollege.sfanow.in";
 // var globalLinkForAll = "http://testahmedabad.sfanow.in/";
+
+var eventYear = '2017-18';
 myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr) {
     $scope.template = TemplateService;
     $scope.$on('$stateChangeSuccess', function (event, toState, toParams, fromState, fromParams) {
@@ -279,7 +281,7 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
     }
     $scope.linkForAll = globalLinkForAll;
     $scope.linkForAllSports = globalLinkForAll + "sport/";
-
+    $scope.eventYear = eventYear;
     $scope.games = [{
         "img": "img/footer/n1.jpg",
         "href": "http://madeofgreat.tatamotors.com/tiago/",
@@ -365,11 +367,23 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
         "img": "img/footer/hyd/government.png",
         "href": "",
         "game": "Government of Telangana"
+    }, {
+        "img": "img/footer/hyd/authority.png",
+        "href": "",
+        "game": "Sports Authority of Telangana"
     }];
     $scope.sponsor_partner = [{
+        "img": "img/footer/p4.jpg",
+        "href": "",
+        "game": "Hydration partner"
+    }, {
         "img": "img/footer/hyd/wizcraft.png",
         "href": "",
-        "game": "Event Partners"
+        "game": "Event Partner"
+    }, {
+        "img": "img/footer/hyd/tv5.png",
+        "href": "",
+        "game": "TV Support Partner"
     }];
 
 });

@@ -5,6 +5,7 @@ myApp.controller('TeamSelectionCtrl', function ($scope, TemplateService, $state,
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -480,6 +481,7 @@ myApp.controller('ConfirmTeamCtrl', function ($scope, TemplateService, Navigatio
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -652,6 +654,7 @@ myApp.controller('TeamCongratsCtrl', function ($scope, TemplateService, toastr, 
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;

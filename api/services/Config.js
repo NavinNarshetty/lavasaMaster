@@ -405,7 +405,7 @@ var model = {
                         } else {
                             if (body && body.value !== false) {
                                 var helper = require('sendgrid').mail;
-                                var name = 'no-reply';
+                                var name = 'No-reply';
                                 from_email = new helper.Email(data.from, name);
                                 to_email = new helper.Email(data.email);
                                 subject = data.subject;
@@ -480,7 +480,7 @@ var model = {
                                         }],
                                         from: {
                                             email: data.from,
-                                            name: "no-reply"
+                                            name: "No-reply"
                                         },
 
                                         content: [{

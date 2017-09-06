@@ -14,6 +14,30 @@
             "validation": ["", "trim", ""],
             "url": ""
         }, {
+            "name": "eventYear",
+            "type": "text",
+            "tableRef": "eventYear",
+            "placeholder": "Enter Event Year",
+            "id": "eventYear",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "fromMonth",
+            "type": "text",
+            "tableRef": "fromMonth",
+            "placeholder": "Enter fromMonth",
+            "id": "fromMonth",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
+            "name": "toMonth",
+            "type": "text",
+            "tableRef": "toMonth",
+            "placeholder": "Enter toMonth",
+            "id": "toMonth",
+            "validation": ["", "trim", ""],
+            "url": ""
+        }, {
             "name": "Institution Type",
             "type": "text",
             "tableRef": "institutionType",

@@ -70,7 +70,7 @@
             "dropDownField": "",
             "dropDownType": "single",
             "onView": true,
-            "dropDown": ["Central Board of Secondary Education (CBSE)", "International Baccalaureate (IB)", "Indian Certificate of Secondary Education (ICSE )",
+            "dropDown": ["Central Board of Secondary Education (CBSE)", "Cambridge & IB", "International Baccalaureate (IB)", "Indian Certificate of Secondary Education (ICSE )",
                 "International General Certificate of Secondary Education (IGCSE)", "National Institute of Open Schooling (NIOS)",
                 "Secondary School Certificate (SSC)", "A Level", "Mumbai University", "Other"
             ]

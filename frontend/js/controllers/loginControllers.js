@@ -5,6 +5,7 @@ myApp.controller('SportsRegistrationCtrl', function ($scope, selectService, Temp
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -130,6 +131,7 @@ myApp.controller('ForgotPasswordCtrl', function ($scope, TemplateService, Naviga
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -191,6 +193,7 @@ myApp.controller('ChangePasswordCtrl', function ($scope, TemplateService, Naviga
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;

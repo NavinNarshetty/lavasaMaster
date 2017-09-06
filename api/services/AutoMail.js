@@ -53,6 +53,7 @@ var model = {
                             }];
                             emailData.city = data.property.sfaCity;
                             emailData.year = data.property.year;
+                            emailData.eventYear = data.property.eventYear;
                             emailData.infoId = data.property.infoId;
                             emailData.infoNo = data.property.infoNo;
                             emailData.cityAddress = data.property.cityAddress;
@@ -136,6 +137,7 @@ var model = {
                             }];
                             emailData.city = data.property.sfaCity;
                             emailData.year = data.property.year;
+                            emailData.eventYear = data.property.eventYear;
                             emailData.type = data.property.institutionType;
                             emailData.infoId = data.property.infoId;
                             emailData.infoNo = data.property.infoNo;

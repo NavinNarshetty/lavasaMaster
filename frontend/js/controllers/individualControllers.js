@@ -1,10 +1,11 @@
-myApp.controller('IndividualSelectionCtrl', function($scope, TemplateService, errorService, $state, NavigationService, $stateParams, toastr, $timeout, loginService, selectService, configService) {
+myApp.controller('IndividualSelectionCtrl', function ($scope, TemplateService, errorService, $state, NavigationService, $stateParams, toastr, $timeout, loginService, selectService, configService) {
     $scope.template = TemplateService.getHTML("content/individual-selection.html");
     TemplateService.title = "Individual Selection";
     $scope.navigation = NavigationService.getNavigation();
-    configService.getDetail(function(data) {
+    configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -27,7 +28,7 @@ myApp.controller('IndividualSelectionCtrl', function($scope, TemplateService, er
     $scope.isLoading = true;
     $scope.busy = false;
 
-    loginService.loginGet(function(data) {
+    loginService.loginGet(function (data) {
         $scope.detail = data;
     });
 
@@ -52,7 +53,7 @@ myApp.controller('IndividualSelectionCtrl', function($scope, TemplateService, er
 
     NavigationService.getSportDetails({
         '_id': $stateParams.id
-    }, function(data) {
+    }, function (data) {
         console.log(data);
         $scope.basicSportDetails = data.data;
         $scope.selectService.sportName = data.data.sportName;
@@ -66,8 +67,8 @@ myApp.controller('IndividualSelectionCtrl', function($scope, TemplateService, er
         $state.go('sports-selection');
     }
 
-    $scope.logoutCandidate = function() {
-        loginService.logoutCandidate(function(data) {
+    $scope.logoutCandidate = function () {
+        loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
                 $state.go('sports-registration');
@@ -79,9 +80,9 @@ myApp.controller('IndividualSelectionCtrl', function($scope, TemplateService, er
 
 
 
-    $scope.getAllAges = function() {
-        NavigationService.getEvents($scope.getEventObj, function(data) {
-            errorService.errorCode(data, function(allData) {
+    $scope.getAllAges = function () {
+        NavigationService.getEvents($scope.getEventObj, function (data) {
+            errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
                     $scope.getEvents = allData.data;
                     // $scope.sportTitle = allData.data.sportName;
@@ -96,7 +97,7 @@ myApp.controller('IndividualSelectionCtrl', function($scope, TemplateService, er
 
     $scope.getAllAges();
 
-    $scope.sortGenderWise = function(gender) {
+    $scope.sortGenderWise = function (gender) {
         $scope.getEvents = [];
         $scope.getAllAges();
         if (gender) {
@@ -110,16 +111,16 @@ myApp.controller('IndividualSelectionCtrl', function($scope, TemplateService, er
 
 
 
-    $scope.getAllAthletes = function(getAthletePerSchoolObj) {
+    $scope.getAllAthletes = function (getAthletePerSchoolObj) {
         if ($scope.busy) return;
         $scope.busy = true;
-        NavigationService.getIndividualAthlete(getAthletePerSchoolObj, function(data) {
-            errorService.errorCode(data, function(allData) {
+        NavigationService.getIndividualAthlete(getAthletePerSchoolObj, function (data) {
+            errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
                     if (allData.value) {
                         $scope.isLoading = false;
                         if (allData.data.total >= getAthletePerSchoolObj.page) {
-                            _.each(allData.data.data, function(value) {
+                            _.each(allData.data.data, function (value) {
                                 value.fullNameWithsfaId = value.sfaId + " - " + value.firstName + " " + value.surname;
                                 $scope.selectAthlete.push(value);
                                 $scope.busy = false;
@@ -138,7 +139,7 @@ myApp.controller('IndividualSelectionCtrl', function($scope, TemplateService, er
     $scope.getAllAthletes($scope.getAthletePerSchoolObj);
 
     // *****search by sfaId*****
-    $scope.searchaBysfaId = function(serach) {
+    $scope.searchaBysfaId = function (serach) {
         $scope.selectAthlete = [];
         $scope.listOfAthelete = [];
         $scope.busy = false;
@@ -147,13 +148,13 @@ myApp.controller('IndividualSelectionCtrl', function($scope, TemplateService, er
     };
     // *****for loading more data *****
 
-    $scope.loadMore = function() {
+    $scope.loadMore = function () {
         $scope.getAthletePerSchoolObj.page++;
         console.log("$scope.getAthletePerSchoolObj", $scope.getAthletePerSchoolObj);
         $scope.getAllAthletes($scope.getAthletePerSchoolObj);
     };
     //***** for getting age group *****
-    $scope.filterAge = function(ageId) {
+    $scope.filterAge = function (ageId) {
         $scope.getAthletePerSchoolObj.page = 1;
         $scope.selectAthlete = [];
         $scope.listOfAthelete = [];
@@ -173,22 +174,23 @@ myApp.controller('IndividualSelectionCtrl', function($scope, TemplateService, er
 
 
 //Confirm-Fencing
-myApp.controller('ConfirmFencingCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
+myApp.controller('ConfirmFencingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
     $scope.template = TemplateService.getHTML("content/confirmfencing.html");
     TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
     $scope.navigation = NavigationService.getNavigation();
-    configService.getDetail(function(data) {
+    configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
     });
     $scope.selectService = selectService;
     $scope.formData = {};
-    loginService.loginGet(function(data) {
+    loginService.loginGet(function (data) {
         $scope.detail = data;
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
@@ -217,8 +219,8 @@ myApp.controller('ConfirmFencingCtrl', function($scope, TemplateService, Navigat
 
     configureVariables();
 
-    $scope.logoutCandidate = function() {
-        loginService.logoutCandidate(function(data) {
+    $scope.logoutCandidate = function () {
+        loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
                 $state.go('sports-registration');
@@ -228,21 +230,22 @@ myApp.controller('ConfirmFencingCtrl', function($scope, TemplateService, Navigat
         });
     };
 
-    $scope.tp = function(event) {
+    $scope.tp = function (event) {
         console.log(event);
     };
 });
 
 //Confirm-Individual
-myApp.controller('ConfirmIndividualCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
+myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
     $scope.template = TemplateService.getHTML("content/confirmindividual.html");
     TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
     $scope.navigation = NavigationService.getNavigation();
-    configService.getDetail(function(data) {
+    configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -298,7 +301,7 @@ myApp.controller('ConfirmIndividualCtrl', function($scope, TemplateService, Navi
 
 
     $scope.formData = {};
-    loginService.loginGet(function(data) {
+    loginService.loginGet(function (data) {
         $scope.detail = data;
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
@@ -307,8 +310,8 @@ myApp.controller('ConfirmIndividualCtrl', function($scope, TemplateService, Navi
         $state.go('sports-registration');
     }
 
-    $scope.logoutCandidate = function() {
-        loginService.logoutCandidate(function(data) {
+    $scope.logoutCandidate = function () {
+        loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
                 $state.go('sports-registration');
@@ -318,11 +321,11 @@ myApp.controller('ConfirmIndividualCtrl', function($scope, TemplateService, Navi
         });
     };
 
-    $scope.tp = function(data) {
+    $scope.tp = function (data) {
         console.log(data);
     };
 
-    $scope.saveIt = function(team) {
+    $scope.saveIt = function (team) {
         console.log(team);
     };
 
@@ -331,22 +334,23 @@ myApp.controller('ConfirmIndividualCtrl', function($scope, TemplateService, Navi
 
 //Confirm-karate
 
-myApp.controller('ConfirmKarateCtrl', function($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
+myApp.controller('ConfirmKarateCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, loginService, errorService, selectService, toastr, $stateParams, $filter, configService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
     $scope.template = TemplateService.getHTML("content/confirmkarate.html");
     TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
     $scope.navigation = NavigationService.getNavigation();
-    configService.getDetail(function(data) {
+    configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
     });
     $scope.formData = {};
     $scope.selectService = selectService;
-    loginService.loginGet(function(data) {
+    loginService.loginGet(function (data) {
         $scope.detail = data;
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
@@ -355,8 +359,8 @@ myApp.controller('ConfirmKarateCtrl', function($scope, TemplateService, Navigati
         $state.go('sports-registration');
     }
 
-    $scope.logoutCandidate = function() {
-        loginService.logoutCandidate(function(data) {
+    $scope.logoutCandidate = function () {
+        loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
                 $state.go('sports-registration');
@@ -370,22 +374,23 @@ myApp.controller('ConfirmKarateCtrl', function($scope, TemplateService, Navigati
 
 //Confirm-athlete-swimming
 
-myApp.controller('ConfirmAthSwmCtrl', function($scope, TemplateService, NavigationService, loginService, $timeout, $state, selectService, toastr, $stateParams, $filter, configService, errorService) {
+myApp.controller('ConfirmAthSwmCtrl', function ($scope, TemplateService, NavigationService, loginService, $timeout, $state, selectService, toastr, $stateParams, $filter, configService, errorService) {
     //Used to name the .html file
     $scope.sportTab = $filter('firstcapitalize')($stateParams.name);
     $scope.template = TemplateService.getHTML("content/confirmathleteswim.html");
     TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
     $scope.navigation = NavigationService.getNavigation();
-    configService.getDetail(function(data) {
+    configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
     });
     $scope.selectService = selectService;
     $scope.formData = {};
-    loginService.loginGet(function(data) {
+    loginService.loginGet(function (data) {
         $scope.detail = data;
         $scope.formData.schoolName = $scope.detail.schoolName;
     });
@@ -394,8 +399,8 @@ myApp.controller('ConfirmAthSwmCtrl', function($scope, TemplateService, Navigati
         $state.go('sports-registration');
     }
 
-    $scope.logoutCandidate = function() {
-        loginService.logoutCandidate(function(data) {
+    $scope.logoutCandidate = function () {
+        loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
                 $state.go('sports-registration');
@@ -405,11 +410,11 @@ myApp.controller('ConfirmAthSwmCtrl', function($scope, TemplateService, Navigati
         });
     };
 
-    $scope.tp = function(team) {
+    $scope.tp = function (team) {
         console.log(team);
     };
 
-    $scope.disableFunction = function(event, eventArr, index) {
+    $scope.disableFunction = function (event, eventArr, index) {
         if (event === 'Pistol') {
             selectService.team[index].disablepeep = true;
             selectService.team[index].disableopen = true;
@@ -433,19 +438,20 @@ myApp.controller('ConfirmAthSwmCtrl', function($scope, TemplateService, Navigati
 });
 
 
-myApp.controller('IndividualCongratsCtrl', function($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService, configService) {
+myApp.controller('IndividualCongratsCtrl', function ($scope, TemplateService, toastr, NavigationService, $timeout, $state, $stateParams, loginService, errorService, configService) {
     $scope.template = TemplateService.getHTML("content/individual-congrats.html");
     TemplateService.title = "Confirm" + ' ' + $scope.sportTab;
     $scope.navigation = NavigationService.getNavigation();
-    configService.getDetail(function(data) {
+    configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
     });
     // $scope.formData = {};
-    loginService.loginGet(function(data) {
+    loginService.loginGet(function (data) {
         $scope.detail = data;
     });
 
@@ -453,8 +459,8 @@ myApp.controller('IndividualCongratsCtrl', function($scope, TemplateService, toa
         $state.go('sports-registration');
     }
 
-    $scope.logoutCandidate = function() {
-        loginService.logoutCandidate(function(data) {
+    $scope.logoutCandidate = function () {
+        loginService.logoutCandidate(function (data) {
             if (data.isLoggedIn === false) {
                 toastr.success('Successfully Logged Out', 'Logout Message');
                 $state.go('sports-registration');

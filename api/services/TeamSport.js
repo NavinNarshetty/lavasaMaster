@@ -420,6 +420,7 @@ var model = {
                             emailData.urls = "https://ahmedabad.sfanow.in";
                         }
                         emailData.year = data.property.year;
+                        emailData.eventYear = data.property.eventYear;
                         emailData.type = data.property.institutionType;
                         emailData.filename = "teamSport.ejs";
                         emailData.teamId = total.teamSport.teamId;
@@ -444,7 +445,7 @@ var model = {
                     function (callback) {
                         var smsData = {};
                         smsData.mobile = found.mobile;
-                        smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.year + ". For Further details Please check your registered email ID.";
+                        smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.eventYear + ". For Further details Please check your registered email ID.";
                         console.log("smsdata", smsData);
                         Config.sendSms(smsData, function (err, smsRespo) {
                             if (err) {
@@ -626,6 +627,7 @@ var model = {
                         emailData.urls = "https://ahmedabad.sfanow.in";
                     }
                     emailData.year = data.property.year;
+                    emailData.eventYear = data.property.eventYear;
                     emailData.type = data.property.institutionType;
                     emailData.filename = data.emailfile;
                     emailData.teamId = total.teamSport.teamId;
@@ -647,7 +649,7 @@ var model = {
                 function (callback) {
                     var smsData = {};
                     smsData.mobile = data.mobile;
-                    smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.year + ". For Further details Please check your rehistered email ID.";
+                    smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.eventYear + ". For Further details Please check your rehistered email ID.";
                     console.log("smsdata", smsData);
                     // callback(null, smsData);
                     Config.sendSms(smsData, function (err, smsRespo) {
@@ -842,6 +844,7 @@ var model = {
                         emailData.email = totals[0].studentId.email;
                         emailData.city = data.property.sfaCity;
                         emailData.year = data.property.year;
+                        emailData.eventYear = data.property.eventYear;
                         emailData.type = data.property.institutionType;
                         emailData.name = totals[0].studentId.firstName;
                         emailData.filename = "rejectionTeam.ejs";
@@ -1583,6 +1586,7 @@ var model = {
                         emailData.email = totals[0].studentId.email;
                         emailData.city = data.property.sfaCity;
                         emailData.year = data.property.year;
+                        emailData.eventYear = data.property.eventYear;
                         emailData.infoId = data.property.infoId;
                         emailData.infoNo = data.property.infoNo;
                         if (data.property.sfaCity == 'Mumbai') {
@@ -1747,6 +1751,7 @@ var model = {
                             emailData.urls = "https://ahmedabad.sfanow.in";
                         }
                         emailData.year = data.property.year;
+                        emailData.eventYear = data.property.eventYear;
                         emailData.type = data.property.institutionType;
                         emailData.infoId = data.property.infoId;
                         emailData.infoNo = data.property.infoNo;
@@ -1775,7 +1780,7 @@ var model = {
                     function (callback) {
                         var smsData = {};
                         smsData.mobile = found.mobile;
-                        smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.year + ". For Further details Please check your registered email ID.";
+                        smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.eventYear + ". For Further details Please check your registered email ID.";
                         console.log("smsdata", smsData);
                         Config.sendSms(smsData, function (err, smsRespo) {
                             if (err) {
@@ -1963,6 +1968,7 @@ var model = {
                                         emailData.urls = "https://ahmedabad.sfanow.in";
                                     }
                                     emailData.year = data.property.year;
+                                    emailData.eventYear = data.property.eventYear;
                                     emailData.type = data.property.institutionType;
                                     // emailData.filename = data.emailfile;
                                     emailData.teamId = total.teamSport.teamId;
@@ -2027,6 +2033,7 @@ var model = {
                                         emailData.urls = "https://ahmedabad.sfanow.in";
                                     }
                                     emailData.year = data.property.year;
+                                    emailData.eventYear = data.property.eventYear;
                                     emailData.type = data.property.institutionType;
                                     emailData.filename = data.emailfile;
                                     emailData.teamId = total.teamSport.teamId;
@@ -2050,7 +2057,7 @@ var model = {
                             function (callback) {
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.year + ". For Further details Please check your rehistered email ID.";
+                                smsData.content = "SFA: Thank you for registering for Team Sports at SFA " + data.property.eventYear + ". For Further details Please check your rehistered email ID.";
                                 console.log("smsdata", smsData);
                                 // callback(null, smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
@@ -2107,6 +2114,7 @@ var model = {
                             emailData.infoNo = data.property.infoNo;
                             emailData.cityAddress = data.property.cityAddress;
                             emailData.ddFavour = data.property.ddFavour;
+                            emailData.eventYear = data.property.eventYear;
                             emailData.email = n.email;
                             emailData.name = n.name;
                             emailData.city = n.city;

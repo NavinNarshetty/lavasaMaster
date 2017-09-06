@@ -11,11 +11,10 @@
   <p class="mgtp">Overall benefits that a {{type}} and its students (Athletes & Non Athletes) can avail by being a registered member {{type}}
     of SFA:
   </p>
-  <h5 class="custm-font"><b>SFA Championship SFA {{sfaCity | capitalize}} {{year}}</b></h5>
+  <h5 class="custm-font"><b>SFA Championship SFA {{sfaCity | capitalize}} {{eventYear}}</b></h5>
   <p class="mgtp cutm-font-prime">Be a part of the largest professional youth sporting championship<span ng-if="isCollege == false && sfaCity == 'Mumbai'">!</span>
-    <span
-      ng-if="isCollege == true">, where best college contingents battle it out across 15+ Sports.</span>
-      <span ng-if="sfaCity == 'Hyderabad'">, where best college contingents battle it out across 20+ Sports.</span>
+    <span ng-if="isCollege == true">, where best college contingents battle it out across 15+ Sports.</span>
+    <span ng-if="sfaCity == 'Hyderabad'">, where best college contingents battle it out across 20+ Sports.</span>
   </p>
   <ul class="mr-left">
     <li>{{type | firstcapitalize}}s are eligible to participate across <span ng-if="isCollege == false && sfaCity == 'Mumbai'">25+</span>      <span ng-if="isCollege == false && sfaCity == 'Hyderabad'">20+</span> <span ng-if="isCollege == true">15+</span> Sports</li>

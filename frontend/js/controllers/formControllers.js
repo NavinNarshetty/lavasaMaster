@@ -7,6 +7,7 @@ myApp.controller('RegisterCtrl', function ($scope, $uibModal, TemplateService, N
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -14,10 +15,11 @@ myApp.controller('RegisterCtrl', function ($scope, $uibModal, TemplateService, N
     $scope.menu = "menu-out";
     $scope.closeAge = false;
     $scope.closeReg = false;
-    $scope.regisBenModal = function (type, sfaCity, year) {
+    $scope.regisBenModal = function (type, sfaCity, year, eventYear) {
         $scope.type = type;
         $scope.sfaCity = sfaCity;
         $scope.year = year;
+        $scope.eventYear = eventYear;
         if (type == 'school') {
             $scope.isCollege = false;
         } else {
@@ -33,10 +35,11 @@ myApp.controller('RegisterCtrl', function ($scope, $uibModal, TemplateService, N
             size: 'lg'
         });
     };
-    $scope.athBenModal = function (type, sfaCity, year) {
+    $scope.athBenModal = function (type, sfaCity, year, eventYear) {
         $scope.type = type;
         $scope.sfaCity = sfaCity;
         $scope.year = year;
+        $scope.eventYear = eventYear;
         if (type == 'school') {
             $scope.isCollege = false;
         } else {
@@ -82,6 +85,7 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -432,6 +436,7 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         $scope.state = data.state;
         $scope.formData.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -993,10 +998,11 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
 
         });
     };
-    $scope.athBenModal = function (type, sfaCity, year) {
+    $scope.athBenModal = function (type, sfaCity, year, eventYear) {
         $scope.type = type;
         $scope.sfaCity = sfaCity;
         $scope.year = year;
+        $scope.eventYear = eventYear;
         if (type == 'school') {
             $scope.isCollege = false;
         } else {
@@ -1011,10 +1017,11 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
             size: 'lg'
         });
     };
-    $scope.termcondition = function (size, type, sfaCity, year) {
+    $scope.termcondition = function (size, type, sfaCity, year, eventYear) {
         $scope.type = type;
         $scope.sfaCity = sfaCity;
         $scope.year = year;
+        $scope.eventYear = eventYear;
         if (type == 'school') {
             $scope.isCollege = false;
         } else {
@@ -1187,6 +1194,7 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
         $scope.state = data.state;
         $scope.formData.state = data.state;
         $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
@@ -1300,10 +1308,11 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
             templateUrl: "views/modal/err.html"
         });
     };
-    $scope.regisBenModal = function (type, sfaCity, year) {
+    $scope.regisBenModal = function (type, sfaCity, year, eventYear) {
         $scope.type = type;
         $scope.sfaCity = sfaCity;
         $scope.year = year;
+        $scope.eventYear = eventYear;
         if (type == 'school') {
             $scope.isCollege = false;
         } else {
@@ -1547,10 +1556,11 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
         });
     };
 
-    $scope.termcondition = function (size, type, sfaCity, year) {
+    $scope.termcondition = function (size, type, sfaCity, year, eventYear) {
         $scope.type = type;
         $scope.sfaCity = sfaCity;
         $scope.year = year;
+        $scope.eventYear = eventYear;
         if (type == 'school') {
             $scope.isCollege = false;
         } else {
