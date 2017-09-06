@@ -265,6 +265,38 @@ header {
 }
 
 // END SWIPER
+// CUSTOM CHECKBOX
+.custom-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 0 auto;
+    position: relative;
+    background: transparent;
+    color: #ccc;
+    line-height: 1;
+}
+
+.custom-checkbox-checked{
+  background-color: #ccc;
+  color: #fff;
+  // border-color: #000;
+}
+// CUSTOM CHECKBOX END
+
+.link-white{
+  color: #fff;
+  font-size: 12px;
+  text-decoration: none;
+  &:active, &:hover, &:focus{
+    color: #fff;
+  }
+}
+.knockout-date {
+    font-size: 10px;
+    line-height: 1;
+}
 // COMMON CLASSES END
 // BUTTONS
 .btn-green-outline {
@@ -696,6 +728,60 @@ header {
   margin-right: 15px !important;
 }
 // PENALTY SHOOTOUT MODAL END
+// TEAM SELECTION MODAL
+.select-teamcoach{
+  padding: 5px 10px;
+  label{
+    font-size: 12px;
+    line-height: 1;
+  }
+  .form-control {
+    font-size: 12px;
+    height: initial;
+  }
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+  }
+}
+
+.teamselection-playertable{
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  .table{
+    margin: 0;
+  }
+}
+.teamselect-jersey{
+  text-align: center;
+  .teamscore-number{
+    width: 30px;
+    height: initial;
+    font-size: 14px;
+  }
+}
+.select-isplaying{
+  text-align: center;
+  vertical-align: middle;
+  .checkbox{
+    margin: 0;
+  }
+}
+.teamselection-head{
+  font-size: 12px;
+  line-height: 1;
+  text-align: center;
+}
+.teamhead-player{
+  // width: 60%;
+  text-align: left;
+}
+.teamselect-name{
+  font-size: 12px;
+}
+// TEAM SELECTION MODAL END
 
 .hello{
   width: 100%;

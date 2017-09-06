@@ -1,3 +1,9 @@
  @media (max-width: $screen-sm-max) {
      // Tablet
+
+     .teamselection-modal{
+       .modal-dialog{
+         width: 700px;
+       }
+     }
  }

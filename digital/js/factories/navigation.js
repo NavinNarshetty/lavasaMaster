@@ -79,6 +79,19 @@ myApp.factory('NavigationService', function ($http) {
                 method: 'POST',
                 data: request
             }).then(callback);
+        },
+        getAllSpotsList: function (callback) {
+            $http({
+                url: adminurl + 'SportsListSubCategory/getAllSport',
+                method: 'POST'
+            }).then(callback);
+        },
+        getAllBySport: function (request, callback) {
+            $http({
+                url: adminurl + 'SportsList/getAllBySport',
+                method: 'POST',
+                data: request
+            }).then(callback);
         }
     };
 });

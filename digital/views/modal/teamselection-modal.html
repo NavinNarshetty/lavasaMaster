@@ -14,27 +14,82 @@
                       <label for="{{team.teamId}}.coach">Enter Coach</label>
                       <input type="text" id="{{team.teamId}}.coach" placeholder="Enter Coach Name" ng-model="team.coach" class="form-control"/>
                     </div>
+                    <div class="select-teamcoach">
+                      <label for="{{team.teamId}}.formation">Enter Formation</label>
+                      <input type="text" id="{{team.teamId}}.formation" placeholder="Enter Formation" ng-model="team.formation" class="form-control"/>
+                    </div>
+                    <div class="select-teamcoach">
+                      <label for="{{team.teamId}}.captain">Select Captain</label>
+                      <ui-select id="{{team.teamId}}.captain" ng-model="team.captain" theme="bootstrap">
+                          <ui-select-match placeholder="Select Captain"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+                          <ui-select-choices repeat="player._id as player in match.teams[$index].players | filter: $select.search">
+                              <p class="opponentsingle-selector">{{player.firstName}} {{player.surname}}</p>
+                          </ui-select-choices>
+                      </ui-select>
+                    </div>
+                    <div class="select-teamcoach">
+                      <label for="{{team.teamId}}.goalKeeper">Select Goalkeeper</label>
+                      <ui-select id="{{team.teamId}}.goalKeeper" ng-model="team.goalKeeper" theme="bootstrap">
+                          <ui-select-match placeholder="Select Goalkeeper"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+                          <ui-select-choices repeat="player._id as player in match.teams[$index].players | filter: $select.search">
+                              <p class="opponentsingle-selector">{{player.firstName}} {{player.surname}}</p>
+                          </ui-select-choices>
+                      </ui-select>
+                    </div>
                 </div>
-                <div class="teamplaying">
-                    <div class="teamplaying-title">
-                        <p class="teamplaying-nametitle"><span class="pull-right">Jersey No</span><span>Players</span></p>
-                        <p class="inline-block mlr-10">Point</p>
-                    </div>
-                    <div class="team-playing" ng-repeat="player in team.players track by $index">
-                        <!-- <p ng-if="$index==0">Players</p> -->
-                        <div class="teamplayer" ng-if="player.isPlaying==true">
-                            <div class="penaltyshoot-player">
-                                <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[teamIndex].players[$index].firstName}}</span></p>
+                <div class="teamselection-playertable table-responsive">
+                  <!-- <table class="table">
+                    <tr>
+                      <td colspan="8">
+                        <div class="teamselection-head teamhead-player">Player</div>
+                      </td>
+                      <td >
+                        <div class="teamselection-head">Jersey</div>
+                      </td>
+                      <td >
+                        <div class="teamselection-head">Playing</div>
+                      </td>
+                    </tr>
+                  </table> -->
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th colspan="8">
+                          <div class="teamselection-head teamhead-player">Player</div>
+                        </th>
+                        <th >
+                          <div class="teamselection-head">Jersey</div>
+                        </th>
+                        <th >
+                          <div class="teamselection-head">Playing</div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="player in team.players track by $index">
+                        <td colspan="8">
+                          <div class="teamselect-name">
+                              <p class="clearfix m-clear">{{match.teams[teamIndex].players[$index].firstName}}</p>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="relate teamselect-jersey">
+                              <input type="number" ng-model="player.jerseyNo" min="0" max="99" class="score-number teamscore-number display-inline form-control" >
+                          </div>
+                        </td>
+                        <td >
+                          <div class="select-isplaying">
+                            <div class="custom-checkbox " ng-class="{'custom-checkbox-checked': player.isPlaying == true}" ng-model="player.isPlaying" ng-click="selectPlaying(team, player);">
+                              <span class="fa fa-check get-center"></span>
                             </div>
-                            <!-- PENALTY POINTS -->
-                            <div class="relate penalty-point">
-                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(player,'penalityPoint');"><i class="fa fa-minus" ></i></button>
-                                <input type="number" ng-model="player.penalityPoint" min="0" class="score-number teamscore-number display-inline form-control" >
-                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(player,'penalityPoint');"><i class="fa fa-plus"></i></button>
-                            </div>
-                            <!-- PENALTY POINTS -->
-                        </div>
-                    </div>
+                            <!-- <div class="checkbox" >
+                              <label><input type="checkbox" ng-model="player.isPlaying" id="{{player.player}}.isPlaying" ng-click="selectPlaying(team, player);"></label>
+                            </div> -->
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
             </div>
         </div>

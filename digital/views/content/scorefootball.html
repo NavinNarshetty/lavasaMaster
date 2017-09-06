@@ -154,6 +154,23 @@
                     </div>
                     <!-- TEAM 2 PLAYER DETAILS END -->
                 </div>
+                <!-- HALF TIME FULL TIME -->
+                <div class="racquet-setscore">
+                  <div class="scoring-set form-group" ng-repeat="team in match.resultFootball.teams track by $index">
+                    <div class="matchplayer-image" title="{{match.teams[$index].schoolName}} | {{match.teams[$index].sfaId}}">
+                        <img ng-src="{{match.teams[$index].photograph|serverimage}}" alt="{{match.teams[$index].schoolName}}" class="img-responsive">
+                    </div>
+                    <div class="relate setpoint-element" >
+                      <label for="player1score" class="text-uppercase" >Half Time </label>
+                      <input type="number" ng-model="team.halfPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control">
+                    </div>
+                    <div class="relate setpoint-element" >
+                      <label for="player1score" class="text-uppercase" >Full Time </label>
+                      <input type="number" ng-model="team.finalPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control">
+                    </div>
+                  </div>
+                </div>
+                <!-- HALF TIME FULL TIME END -->
             </div>
             <!-- TEAM SCORING END -->
             <!-- FINAL DETAILS SECTION -->

@@ -23,6 +23,38 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       })
     }
     // SELECT TEAM END
+    // SELECT PLAYING
+    $scope.selectPlaying = function(team, player){
+      console.log('isPlaying');
+      $scope.isPlayer = player;
+      $scope.playingTeam = team;
+      var playingCount = 0;
+      if($scope.isPlayer.isPlaying == false){
+        _.each($scope.playingTeam.players,function(n){
+          if(n.isPlaying == true){
+            playingCount = playingCount + 1;
+          }
+        });
+        if(playingCount <  $scope.match.minPlayers){
+          if($scope.isPlayer.isPlaying == true){
+            $scope.isPlayer.isPlaying = false;
+          } else{
+            $scope.isPlayer.isPlaying = true;
+          }
+        } else {
+          toastr.warning('Maximum players selected');
+        }
+      } else {
+        if($scope.isPlayer.isPlaying == true){
+          $scope.isPlayer.isPlaying = false;
+        } else{
+          $scope.isPlayer.isPlaying = true;
+        }
+      }
+      console.log(playingCount, 'playingCount');
+      console.log($scope.isPlayer, 'playa');
+    }
+    // SELECT PLAYING END
     // TEAM SCORE INCREMENT
     $scope.incrementTeamPoint = function(team, point){
       $scope.team = team;
@@ -244,6 +276,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       age: 'u-11',
       gender: 'female',
       round: 'final',
+      minPlayers: 4,
       resultFootball:{
         teams:[{
           teamId: '987654',
@@ -263,7 +296,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           players: [{
             name: 'hello',
             isPlaying: true,
-            jerseyNo: '1',
+            jerseyNo: 1,
             goals: [],
             assist: [],
             redCard: [],
@@ -274,7 +307,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           },{
             name: 'hello',
             isPlaying: true,
-            jerseyNo: '1',
+            jerseyNo: 1,
             goals: [],
             redCard: [],
             yellowCard: [],
@@ -284,7 +317,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           },{
             name: 'hello',
             isPlaying: false,
-            jerseyNo: '1',
+            jerseyNo: 1,
             goals: [],
             redCard: [],
             yellowCard: [],
@@ -294,7 +327,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           },{
             name: 'hello',
             isPlaying: true,
-            jerseyNo: '1',
+            jerseyNo: 1,
             goals:[],
             redCard: [],
             yellowCard: [],
@@ -304,7 +337,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           },{
             name: 'hello',
             isPlaying: false,
-            jerseyNo: '1',
+            jerseyNo: 1,
             goals: [],
             redCard: [],
             yellowCard: [],
@@ -330,7 +363,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           players: [{
             name: 'hello',
             isPlaying: false,
-            jerseyNo: '1',
+            jerseyNo: 1,
             goals: [],
             redCard: [],
             yellowCard: [],
@@ -340,7 +373,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           },{
             name: 'hello',
             isPlaying: true,
-            jerseyNo: '1',
+            jerseyNo: 1,
             goals: [],
             redCard: [],
             yellowCard: [],
@@ -350,7 +383,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           },{
             name: 'hello',
             isPlaying: false,
-            jerseyNo: '1',
+            jerseyNo: 1,
             goals: [],
             redCard: [],
             yellowCard: [],
@@ -360,7 +393,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           },{
             name: 'hello',
             isPlaying: false,
-            jerseyNo: '1',
+            jerseyNo: 1,
             goals: [],
             redCard: [],
             yellowCard: [],
@@ -370,7 +403,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           },{
             name: 'hello',
             isPlaying: true,
-            jerseyNo: '1',
+            jerseyNo: 1,
             goals: [],
             redCard: [],
             yellowCard: [],
@@ -385,7 +418,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
         schoolName: 'jamnabai narsee school',
         teamId: '987654',
         players: [{
-          firstName: 'hello1'
+          firstName: 'Jaiviraj singh rajputrajput singh'
         },{
           firstName: 'hello2'
         },{

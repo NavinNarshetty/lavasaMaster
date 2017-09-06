@@ -14,12 +14,12 @@
                             <form name=championshipDrawsForm class="championshipdraw-card-form">
                                 <!-- SPORT -->
                                 <div class="form-group">
-                                    <div class="inline-block text-center championshipdraw-card-lable">
+                                    <div class="inline-block championshipdraw-card-lable">
                                         <label for="">Sport</label>
                                     </div>
 
                                     <div class="inline-block championshipdraw-card-dropdown">
-                                        <ui-select name="selectsporttype" ng-model="formData.sportslist" theme="bootstrap" ng-change="sportName($select.selected.name)"
+                                        <ui-select name="selectsporttype" ng-model="formData.sportId" theme="bootstrap" ng-change="sportName($select.selected.name,formData.sportId)"
                                             required>
                                             <ui-select-match placeholder="Select Sport">{{$select.selected.name}}</ui-select-match>
                                             <ui-select-choices repeat="sport._id as sport in sportList | filter: $select.search">
@@ -32,6 +32,27 @@
                                     </div>
                                 </div>
                                 <!-- SPORT END -->
+                                <!-- EVENT start -->
+                                <div class="form-group">
+                                    <div class="inline-block championshipdraw-card-lable">
+                                        <label for="">Event</label>
+                                    </div>
+
+                                    <div class="inline-block championshipdraw-card-dropdown">
+                                        <ui-select name="eventBySport" ng-model="formData.sportslist" theme="bootstrap" ng-change="sportName($select.selected.name)"
+                                            required>
+                                            <ui-select-match placeholder="Select Event">{{$select.selected.name}}</ui-select-match>
+                                            <ui-select-choices repeat="sport._id as sport in getAllBySport | filter: $select.search">
+                                                <div>
+                                                    <p>{{sport.name}}</p>
+                                                </div>
+                                            </ui-select-choices>
+                                        </ui-select>
+                                        <!-- <div class="error-msg" ng-if="championshipDrawsForm.eventBySport.$invalid && championshipDrawsForm.eventBySport.$touched">Please Enter Event Type*</div> -->
+                                        <span class="label label-danger pull-right" ng-if="championshipDrawsForm.eventBySport.$invalid && championshipDrawsForm.eventBySport.$touched">Please Enter Event</span>
+                                    </div>
+                                </div>
+                                <!-- EVENT end -->
                                 <!-- GENDER -->
                                 <div class="form-group">
                                     <div class="inline-block championshipdraw-card-lable">
@@ -39,7 +60,7 @@
                                     </div>
                                     <div class="inline-block championshipdraw-card-dropdown">
                                         <!-- <ui-select ng-model="item.selected" theme="bootstrap"> -->
-                                        <ui-select ng-model="formData.gender" name="selectgender" theme="bootstrap" required>
+                                        <ui-select name="gender" ng-model="formData.gender" theme="bootstrap" required>
                                             <ui-select-match placeholder="Select Gender">{{$select.selected|firstcapitalize}}</ui-select-match>
                                             <ui-select-choices repeat="item in genderList | filter: $select.search">
                                                 <div>
@@ -47,7 +68,7 @@
                                                 </div>
                                             </ui-select-choices>
                                         </ui-select>
-                                        <span class="label label-danger pull-right" ng-if="championshipDrawsForm.selectgender.$invalid && championshipDrawsForm.selectgender.$touched">Please Enter Gender</span>
+                                        <span class="label label-danger pull-right" ng-if="championshipDrawsForm.gender.$invalid && championshipDrawsForm.gender.$touched">Please Enter Gender</span>
                                     </div>
                                 </div>
                                 <!-- GENDER END -->
@@ -58,7 +79,7 @@
                                     </div>
 
                                     <div class="inline-block championshipdraw-card-dropdown">
-                                        <ui-select name="selectagegroup" ng-model="formData.ageGroup" theme="bootstrap" required>
+                                        <ui-select name="agegroup" ng-model="formData.ageGroup" theme="bootstrap" required>
                                             <ui-select-match placeholder="Select Age Group">{{$select.selected.name}}</ui-select-match>
                                             <ui-select-choices repeat="age._id  as age in ageGroups | filter: $select.search">
                                                 <div>
@@ -68,7 +89,7 @@
 
                                             </ui-select-choices>
                                         </ui-select>
-                                        <span class="label label-danger pull-right" ng-if="championshipDrawsForm.selectagegroup.$invalid && championshipDrawsForm.selectagegroup.$touched">Please Enter Agegroup</span>
+                                        <span class="label label-danger pull-right" ng-if="championshipDrawsForm.agegroup.$invalid && championshipDrawsForm.agegroup.$touched">Please Enter Age</span>
                                     </div>
 
                                 </div>
@@ -79,7 +100,7 @@
                                         <label for="">Weight</label>
                                     </div>
                                     <div class="inline-block championshipdraw-card-dropdown">
-                                        <ui-select name="selectweight" ng-model="formData.weight" theme="bootstrap" required>
+                                        <ui-select name="weight" ng-model="formData.weight" theme="bootstrap" required>
                                             <ui-select-match placeholder="Select Weight">{{$select.selected.name}}</ui-select-match>
                                             <ui-select-choices repeat="weight._id as weight in allWeights | filter: $select.search">
                                                 <div>
@@ -87,7 +108,7 @@
                                                 </div>
                                             </ui-select-choices>
                                         </ui-select>
-                                        <span class="label label-danger pull-right" ng-if="championshipDrawsForm.selectweight.$invalid && championshipDrawsForm.selectweight.$touched">Please Enter Weight</span>
+                                        <span class="label label-danger pull-right" ng-if="championshipDrawsForm.weight.$invalid && championshipDrawsForm.weight.$touched">Please Enter Age</span>
                                     </div>
 
                                 </div>
@@ -112,7 +133,7 @@
     </section>
     <!-- VIEW DRAW FORM CARD END -->
     <!-- CHAMPIONSHIP SCHEDULE -->
-    <section hidden>
+    <section class="hide">
         <div class="championship-schedule championship-schedule-line">
             <div class="container">
                 <div class="row">
