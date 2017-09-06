@@ -291,6 +291,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     $scope.saveWinner = function(){
       if($scope.formData.players[0].noShow == true && $scope.formData.players[1].noShow == true){
         $scope.formData.isNoMatch = true;
+        $scope.formData.winner = {};
         $scope.formData.winner.player = "";
       } else {
         $scope.formData.isNoMatch = false;
@@ -334,7 +335,8 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     $scope.saveTeamWinner = function(){
       if($scope.formData.teams[0].noShow == true && $scope.formData.teams[1].noShow == true){
         $scope.formData.isNoMatch = true;
-        $scope.formData.winner.team = "";
+        $scope.formData.winner = {};
+        $scope.formData.winner.player = "";
       } else {
         $scope.formData.isNoMatch = false;
       }

@@ -10,6 +10,10 @@
                         <p>{{match.teams[$index].schoolName}}</p>
                         <p>Team ID: <span> {{match.teams[$index].teamId}} </span></p>
                     </div>
+                    <div class="select-teamcoach">
+                      <label for="{{team.teamId}}.coach">Enter Coach</label>
+                      <input type="text" id="{{team.teamId}}.coach" placeholder="Enter Coach Name" ng-model="team.coach" class="form-control"/>
+                    </div>
                 </div>
                 <div class="teamplaying">
                     <div class="teamplaying-title">
