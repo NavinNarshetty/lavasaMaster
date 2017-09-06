@@ -2,7 +2,7 @@
   <div class="container">
     <!--SPORT NAME-->
     <div class="knockout-sportname text-center">
-      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>{{roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name}}</span> |
+      <h3 class="d-fjalla-one text-uppercase sport-type-head"><span>{{roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name}}</span> |
         <span>{{roundsList[0].match[0].sport.gender}}</span> |
         <span>{{roundsList[0].match[0].sport.ageGroup.name}}</span></h3>
       <div class="draws-downloadpdf draws-a">
@@ -108,21 +108,24 @@
                </div>
             </div>
            
-            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true}">
-  
+            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true , 'knockout-live-foot': card.status === 'IsLive'}">
+
               <p class="m-clear " ng-if="!card.status || card.status===''">
                
-               <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
+               <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">{{card.scheduleTime}} </span>
             </p>
-            <p class="m-clear " ng-if="card.opponentsSingle.length ===1 && card.isWinner">
-              <span>Bye</span>
+            <p class="m-clear " ng-if="card.reason ==='Bye'">
+              <span class="custom-knockout-color">Bye</span>
             </p>
             <p class="m-clear " ng-if="card.walkover">
-              <span>Walkover</span>
+              <span class="custom-knockout-color">Walkover</span>
+            </p>
+            <p class="m-clear " ng-if="card.isNoMatch">
+              <span class="custom-knockout-color">No Match</span>
             </p>
             <div ng-if="!card.walkover">
-              <p class="m-clear" ng-if="card.status==='IsLive'">
-                <span>Live</span>
+              <p class="m-clear knockout-live-text pull-right" ng-if="card.status==='IsLive'">
+                <span class="knockout-dot-live"><i class="fa fa-circle"></i></span> <span>Live</span>
               </p>
               <div ng-if="card.status==='IsCompleted'">
                 <div class="knockout-videoholder" ng-if="card.video">
@@ -130,17 +133,14 @@
                  <img src="img/sf-play.png" alt="play" class="img-responsive">
                  </a>
                 </div>
-                <p class="m-clear pointer" ng-if="!card.resultsCombat" ng-click="matchCenter()">
-                  <span>Match Center</span>
+                <p class="m-clear pointer" ng-if="!card.resultsCombat && card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter()">
+                  <span class="custom-knockout-color">Match Center</span>
                 </p>
                 <p class="m-clear" ng-if="card.resultsCombat && card.opponentsSingle.length>1">
-                  <span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point }}</span>
+                  <span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point}}</span><span>{{card.reason}}</span>
                 </p>
               </div>
-
-
             </div>
-
           </div>
         </div>
       </div>
@@ -172,20 +172,22 @@
 
               </div>
             </div>
-            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true}">
-
-              <p class="m-clear " ng-if="!card.isWinner">
+            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true,'knockout-live-foot': card.status === 'IsLive'}">
+              <p class="m-clear " ng-if="!card.status || card.status===''">
                 <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
               </p>
-              <p class="m-clear " ng-if="card.opponentsSingle.length===1 && card.isWinner">
-                <span>Bye</span>
+              <p class="m-clear" ng-if="card.reason ==='Bye'">
+                <span class="custom-knockout-color">Bye</span>
               </p>
               <p class="m-clear " ng-if="card.walkover">
-                <span>Walkover</span>
+                <span class="custom-knockout-color">Walkover</span>
+              </p>
+              <p class="m-clear " ng-if="card.isNoMatch">
+                <span class="custom-knockout-color">No Match</span>
               </p>
               <div ng-if="!card.walkover">
-                <p class="m-clear" ng-if="card.status==='IsLive'">
-                  <span>Live</span>
+                <p class="m-clear knockout-live-text pull-right" ng-if="card.status==='IsLive'">
+                  <span class="knockout-dot-live"><i class="fa fa-circle"></i></span> <span>Live</span>
                 </p>
                 <div ng-if="card.status==='IsCompleted'">
                   <div class="knockout-videoholder" ng-if="card.video">
@@ -193,23 +195,15 @@
                    <img src="img/sf-play.png" alt="play" class="img-responsive">
                    </a>
                   </div>
-                  <p class="m-clear pointer" ng-if="!card.resultsCombat" ng-click="matchCenter()">
-                    <span>Match Center</span>
+                  <p class="m-clear pointer" ng-if="!card.resultsCombat && card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter()">
+                    <span class="custom-knockout-color">Match Center</span>
                   </p>
                   <p class="m-clear" ng-if="card.resultsCombat && card.opponentsSingle.length>1">
-                    <span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point }}</span>
+                    <span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point}}</span><span>{{card.reason}}</span>
                   </p>
                 </div>
               </div>
-
-
-
-
             </div>
-
-
-
-
           </div>
         </div>
       </div>
@@ -241,20 +235,23 @@
 
               </div>
             </div>
-            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true}">
+            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true ,'knockout-live-foot': card.status === 'IsLive'}">
 
-              <p class="m-clear " ng-if="card.scheduleDate && !card.isWinner">
+              <p class="m-clear " ng-if="!card.status || card.status===''">
                 <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
               </p>
-              <p class="m-clear" ng-if="card.opponentsSingle.length ===1 && card.isWinner">
-                <span>Bye</span>
+              <p class="m-clear" ng-if="card.reason === 'Bye'">
+                <span class="custom-knockout-color">Bye</span>
               </p>
               <p class="m-clear" ng-if="card.walkover">
-                <span>Walkover</span>
+                <span class="custom-knockout-color">Walkover</span>
+              </p>
+              <p class="m-clear " ng-if="card.isNoMatch">
+                <span class="custom-knockout-color">No Match</span>
               </p>
               <div ng-if="!card.walkover">
-                <p class="m-clear" ng-if="card.status==='IsLive'">
-                  <span>Live</span>
+                <p class="m-clear knockout-live-text pull-right" ng-if="card.status==='IsLive'">
+                  <span class="knockout-dot-live"><i class="fa fa-circle"></i></span> <span>Live</span>
                 </p>
                 <div ng-if="card.status==='IsCompleted'">
                   <div class="knockout-videoholder" ng-if="card.video">
@@ -262,11 +259,11 @@
                     <img src="img/sf-play.png" alt="play" class="img-responsive">
                     </a>
                   </div>
-                  <p class="m-clear pointer" ng-if="!card.resultsCombat" ng-click="matchCenter()">
-                    <span>Match Center</span>
+                  <p class="m-clear pointer" ng-if="!card.resultsCombat && card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter()">
+                    <span class="custom-knockout-color">Match Center</span>
                   </p>
                   <p class="m-clear" ng-if="card.resultsCombat && card.opponentsSingle.length>1">
-                    <span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point }}</span>
+                    <span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point }}</span><span>{{card.reason}}</span>
                   </p>
                 </div>
               </div>
