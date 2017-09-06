@@ -220,6 +220,9 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     // SAVE RESULT
     $scope.saveResult = function(formData){
       if(formData){
+        if(formData.players.length == 1){
+          toastr.error('Minimum 2 Players required to start scoring');
+        } else {
         $scope.matchResult = {
           matchId: $scope.matchData.matchId
         }
@@ -277,7 +280,8 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
             toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
           }
         });
-      } else{
+      }
+    } else{
         toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
       }
     }
@@ -289,6 +293,9 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
         $scope.formData.winner.player = "";
       } else {
         $scope.formData.isNoMatch = false;
+      }
+      if($scope.formData.players.length == 1){
+        $scope.formData.winner.reason = 'Bye';
       }
       $scope.matchResult = {
         matchId: $scope.matchData.matchId
@@ -329,6 +336,9 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
         $scope.formData.winner.team = "";
       } else {
         $scope.formData.isNoMatch = false;
+      }
+      if($scope.formData.teams.length == 1){
+        $scope.formData.winner.reason = 'Bye';
       }
       $scope.matchResult = {
         matchId: $scope.matchData.matchId

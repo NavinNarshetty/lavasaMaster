@@ -14,6 +14,9 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
     $scope.setDisplay = {
       value: 0
     };
+    $scope.setDelete = {
+      value: 0
+    };
     // VARIABLE INITIALISE END
 
     // API CALLN INTEGRATION
@@ -187,6 +190,7 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
     }
     // ADD SET END
     // REMOVE SET
+    // REMOVE LAST SET
     $scope.removeSet = function(){
       _.each($scope.match.resultsRacquet.teams, function(n){
         if(n.sets.length>1){
@@ -204,6 +208,45 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
       _.each($scope.match.resultsRacquet.teams[0].sets, function(n,key){
         $scope.setLength[key] = {
           setShow : true
+        }
+      });
+    }
+    // REMOVE LAST SET END
+
+    $scope.removeSets = function(){
+      var modalSetDelete;
+        $rootScope.modalInstance = $uibModal.open({
+          animation: true,
+          scope: $scope,
+          // backdrop: 'static',
+          keyboard: false,
+          templateUrl: 'views/modal/removeset.html',
+          windowClass: 'removeset-modal'
+        })
+    }
+    $scope.deleteSet = function(index){
+      console.log(index, 'index che');
+      _.each($scope.match.resultsRacquet.players, function(n){
+        if (n.sets.length>1) {
+          // delete n.sets[index];
+          n.sets.splice(index,1);
+          $scope.setLength = [];
+          _.each($scope.match.resultsRacquet.players[0].sets, function(n,key){
+            $scope.setLength[key] = {
+              setShow : true
+            }
+          });
+          $scope.setDisplay = {
+            value: 0
+          };
+          $scope.setDelete = {
+            value: 0
+          };
+          toastr.success('Set deleted successfully');
+          $rootScope.modalInstance.close('a');
+          console.log($scope.match.resultsRacquet, 'After delete');
+        } else{
+          toastr.warning('Minimum 1 Set required');
         }
       });
     }

@@ -156,6 +156,9 @@ header {
 .mtb-10 {
     margin: 10px 0;
 }
+.mlr-10{
+  margin: 0px 10px;
+}
 
 .p-clear {
     padding: 0;
@@ -289,7 +292,7 @@ header {
 }
 
 .matchstart-header {
-    padding: 15px 0;
+    padding: 10px 0;
     background-color: $brand-primary;
     color: #fff;
     font-size: 16px;
@@ -532,7 +535,7 @@ header {
     overflow: hidden;
     text-align: center;
     text-transform: uppercase;
-    vertical-align: middle;
+    vertical-align: top;
 }
 
 .combatscore-pics,
@@ -644,18 +647,55 @@ header {
   cursor: pointer;
 }
 .teamplaying, .teamsubstitute{
-  padding: 10px 0;
+  // padding: 10px 0;
   border: 1px solid #ccc;
+  border-radius: 5px 5px 0 0;
+  border-bottom: none;
   margin: 20px 0;
 }
-.team-playing{
-  &:last-child{
-    .teamplayer{
-      border-bottom: none;
-    }
+
+.teamplaying-title{
+  padding: 5px 10px;
+  background-color: #ccc;
+  p{
+    margin: 0;
   }
 }
+.teamscore-pointholder {
+    margin-bottom: 20px;
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+    }
+}
 // FOOTBALL SCORE END
+// PENALTY SHOOTOUT MODAL
+.penaltyshoot-player{
+  width: calc(100% - 110px);
+  display: inline-block;
+}
+.penalty-point {
+  margin-left: 10px;
+  display: inline-block;
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+  }
+  .teamscore-number{
+    height: initial;
+    font-size: 14px;
+  }
+}
+.teamplaying-nametitle{
+  display: inline-block;
+  width: calc(100% - 110px);
+  margin-right: 15px !important;
+}
+// PENALTY SHOOTOUT MODAL END
 
 .hello{
   width: 100%;

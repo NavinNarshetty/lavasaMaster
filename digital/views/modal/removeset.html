@@ -5,13 +5,14 @@
   <ul class="list-inline">
     <li class="setshow-element" ng-repeat="length in setLength track by $index">
       <div class="form-group">
-        <label for="set{{$index}}" class="pointer"><input type="radio" name="setShowRadio" id="set{{$index}}" ng-value="$index" ng-model="setDisplay.value"> Set {{$index + 1}}</label>
+        <label for="set{{$index}}" class="pointer"><input type="radio" name="setShowRadio" id="set{{$index}}" ng-value="$index" ng-model="setDelete.value"> Set {{$index + 1}}</label>
       </div>
     </li>
   </ul>
+  <!-- {{setDelete.value}} -->
   <div class="remove-set-message text-center">
     <h4 class="modal-title">Are you sure you want to delete this set?</h4>
-    <button class="btn btn-green-outline text-center" type="button" ng-click="$ctrl.ok()">Yes</button>
+    <button class="btn btn-green-outline text-center" type="button" ng-click="deleteSet(setDelete.value);">Yes</button>
     <button class="btn btn-green-outline text-center" type="button" ng-click="$dismiss()">No</button>
   </div>
 </div>

@@ -1,4 +1,4 @@
-myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal,$stateParams, $state, $interval, toastr) {
+myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal,$stateParams, $state, $interval, toastr, $rootScope) {
     $scope.template = TemplateService.getHTML("content/score-racquet.html");
     TemplateService.title = "Score Racquet"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -9,6 +9,9 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
     var promise;
     $scope.showSet = true;
     $scope.setDisplay = {
+      value: 0
+    };
+    $scope.setDelete = {
       value: 0
     };
     $scope.setLength  = [];
@@ -36,6 +39,7 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
                 })
                 console.log($scope.setLength, 'setlength');
                 console.log($scope.match, 'match');
+                // $scope.autoSave();
                 if($scope.match.resultsRacquet.status == 'IsCompleted'){
                   if ($stateParams.drawFormat === 'Knockout') {
                     toastr.warning("This match has already been scored.", 'Scoring Completed');
@@ -77,9 +81,11 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
     // AUTO SAVE FUNCTION
     $scope.autoSave = function(){
       if($scope.match){
+        console.log('auto start');
         $scope.$on('$viewContentLoaded', function(event) {
           promise = $interval(function () {
             $scope.saveResult($scope.match);
+            console.log('auto');
           }, 10000);
         })
       }
@@ -204,30 +210,32 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
     }
     // ADD SET END
     // REMOVE SET
-    $scope.removeSet = function(){
-      _.each($scope.match.resultsRacquet.players, function(n){
-        if(n.sets.length>1){
-          var length = n.sets.length - 1;
-          _.remove(n.sets,function(m,index){
-            return length==index;
-          })
-          console.log(n.sets, 'sets');
-        } else {
-          console.log('atleast 1 set');
-          toastr.warning('Minimum 1 Set required');
-        }
-      });
-      $scope.setLength = [];
-      _.each($scope.match.resultsRacquet.players[0].sets, function(n,key){
-        $scope.setLength[key] = {
-          setShow : true
-        }
-      });
-    }
+    // REMOVE LAST SET
+    // $scope.removeSet = function(){
+    //   _.each($scope.match.resultsRacquet.players, function(n){
+    //     if(n.sets.length>1){
+    //       var length = n.sets.length - 1;
+    //       _.remove(n.sets,function(m,index){
+    //         return length==index;
+    //       })
+    //       console.log(n.sets, 'sets');
+    //     } else {
+    //       console.log('atleast 1 set');
+    //       toastr.warning('Minimum 1 Set required');
+    //     }
+    //   });
+    //   $scope.setLength = [];
+    //   _.each($scope.match.resultsRacquet.players[0].sets, function(n,key){
+    //     $scope.setLength[key] = {
+    //       setShow : true
+    //     }
+    //   });
+    // }
+    // REMOVE LAST SET END
 
     $scope.removeSets = function(){
-      var modal;
-        modal = $uibModal.open({
+      var modalSetDelete;
+        $rootScope.modalInstance = $uibModal.open({
           animation: true,
           scope: $scope,
           // backdrop: 'static',
@@ -237,9 +245,26 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
         })
     }
     $scope.deleteSet = function(index){
+      console.log(index, 'index che');
       _.each($scope.match.resultsRacquet.players, function(n){
         if (n.sets.length>1) {
-          delete n.sets[index];
+          // delete n.sets[index];
+          n.sets.splice(index,1);
+          $scope.setLength = [];
+          _.each($scope.match.resultsRacquet.players[0].sets, function(n,key){
+            $scope.setLength[key] = {
+              setShow : true
+            }
+          });
+          $scope.setDisplay = {
+            value: 0
+          };
+          $scope.setDelete = {
+            value: 0
+          };
+          toastr.success('Set deleted successfully');
+          $rootScope.modalInstance.close('a');
+          console.log($scope.match.resultsRacquet, 'After delete');
         } else{
           toastr.warning('Minimum 1 Set required');
         }
