@@ -3,6 +3,29 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
 
+    // MODAL
+    $scope.data = [1, 2, 3, 4, 5, 6, 7, 8];
+    // MODAL
+    var modal;
+    $scope.matchCenter = function () {
+        modal = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            // backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'views/modal/matchcenter.html',
+            size: 'lg',
+            windowClass: 'matchcenter-modal'
+        })
+    }
+    // MODAL END
+    $scope.oneAtATime = true;
+    $scope.status = {
+        isCustomHeaderOpen: false,
+        isFirstOpen: true,
+        isFirstDisabled: false
+    };
+    // MODAL END
     // SWIPER
     $scope.$on('$viewContentLoaded', function (event) {
 
@@ -148,8 +171,50 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                             }
                             _.each($scope.roundsList, function (key) {
                                 _.each(key.match, function (value) {
-                                    _.each(value.opponentsSingle, function (obj) {
+                                    _.each(value.opponentsSingle, function (obj, index) {
                                         obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                                        if (value.resultsCombat) {
+                                            console.log("resultsCombat", value.resultsCombat);
+                                            console.log(" im in resultsCombat");
+                                            obj.noShow = Boolean(value.resultsCombat.players[index].noShow);
+                                            obj.walkover = Boolean(value.resultsCombat.players[index].walkover);
+                                            value.status = value.resultsCombat.status;
+                                            value.isNoMatch = value.resultsCombat.isNoMatch;
+                                            value.video = value.resultsCombat.video;
+                                            if (obj.walkover) {
+                                                value.walkover = obj.walkover;
+                                            }
+                                            if (value.resultsCombat.winner) {
+                                                if (obj.athleteId._id === value.resultsCombat.winner.player) {
+                                                    obj.isWinner = true;
+                                                    value.isWinner = obj.isWinner;
+                                                } else {
+                                                    obj.isWinner = false;
+                                                }
+                                            }
+
+                                        } else if (value.resultsRacquet) {
+                                            console.log("im in resultsRacquet");
+                                            obj.noShow = Boolean(value.resultsRacquet.players[index].noShow);
+                                            obj.walkover = Boolean(value.resultsRacquet.players[index].walkover);
+                                            value.status = value.resultsRacquet.status;
+                                            value.isNoMatch = value.resultsRacquet.isNoMatch;
+                                            value.video = value.resultsRacquet.video;
+                                            if (obj.walkover) {
+                                                value.walkover = obj.walkover;
+                                            }
+                                            if (value.resultsRacquet.winner) {
+                                                if (obj.athleteId._id === value.resultsRacquet.winner.player) {
+                                                    obj.isWinner = true;
+                                                    value.isWinner = obj.isWinner;
+                                                } else {
+                                                    obj.isWinner = false;
+                                                }
+                                            }
+
+
+                                        }
+
                                     });
 
                                 });
@@ -269,7 +334,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
         }],
         date: '27th July, 2017',
         time: '10.30am'
-    },]
+    }, ]
     // END DOUBLES JSON
 
     $scope.winnersCard = [{

@@ -318,7 +318,39 @@ myApp.factory('NavigationService', function ($http) {
             $http.post(adminurl + url, data, {
                 responseType: 'arraybuffer'
             }).then(function (response) {
-                var fname = data.resultType + data.playerType + "-" + data.sportslist.name + " " + data.ageGroup.name + " " + data.gender;
+                if (!_.isEmpty(data.playerType)) {
+                    var fname = data.resultType + data.playerType + "-" + data.sportslist.name + " " + data.ageGroup.name + " " + data.gender;
+                } else {
+                    if (!_.isEmpty(data.excelType)) {
+                        var fname = data.resultType + "-" + data.excelType + "-" + data.sportslist.name + " " + data.ageGroup.name + " " + data.gender;
+                    } else {
+                        var fname = data.resultType + "-" + data.sportslist.name + " " + data.ageGroup.name + " " + data.gender;
+                    }
+                }
+                var header = response.headers('Content-Disposition')
+                var fileName = fname + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
+                var blob = new Blob([response.data], {
+                    type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation;charset=UTF-8'
+                });
+                var objectUrl = (window.URL || window.webkitURL).createObjectURL(blob);
+                var link = angular.element('<a/>');
+                link.attr({
+                    href: objectUrl,
+                    download: fileName
+                })[0].click();
+                callback(null, fileName);
+            })
+        },
+
+        generateBlankExcelWithData: function (url, data, callback) {
+            $http.post(adminurl + url, data, {
+                responseType: 'arraybuffer'
+            }).then(function (response) {
+                if (!_.isEmpty(data.playerType)) {
+                    var fname = data.resultType + data.playerType;
+                } else {
+                    var fname = data.resultType;
+                }
                 var header = response.headers('Content-Disposition')
                 var fileName = fname + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
                 var blob = new Blob([response.data], {

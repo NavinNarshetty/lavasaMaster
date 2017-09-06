@@ -544,12 +544,12 @@ var model = {
                             } else {
                                 Registration.findOne({
                                     schoolName: schoolData.name
-                                }).exec(function (err, schoolData) {
+                                }).exec(function (err, schoolData1) {
                                     if (err) {
                                         callback(err, null);
-                                    } else if (_.isEmpty(schoolData)) {
+                                    } else if (_.isEmpty(schoolData1)) {
                                         data.mobile = found.mobile;
-                                        data.schoolName = found.atheleteSchoolName;
+                                        data.schoolName = schoolData.name;
                                         data.schoolSFA = "Unregistered";
                                         if (data.property.institutionType == "school") {
                                             data.emailfile = "studentTeamUnregister.ejs";
@@ -560,8 +560,8 @@ var model = {
 
                                     } else {
                                         data.mobile = found.mobile;
-                                        data.schoolName = schoolData.schoolName;
-                                        data.schoolSFA = schoolData.sfaID;
+                                        data.schoolName = schoolData1.schoolName;
+                                        data.schoolSFA = schoolData1.sfaID;
                                         data.emailfile = "studentTeam.ejs";
                                         callback(null, data);
                                     }

@@ -127,7 +127,7 @@
 
 
         <!-- ACCORDIAN-->
-        <div class="time-trial-accordian heat-trial-accordian">
+        <div class="time-trial-accordian heat-trial-accordian" ng-class="{'bluecolor-accordian':roundsList[1].name==='Heat'}">
           <uib-accordion close-others="oneAtATime">
             <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="semi in roundsList[1].match|limitTo:limitValue track by $index">
               <!-- <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="saccordian in semi.tablecontent  track by $index"> -->
@@ -238,7 +238,7 @@
 
 
         <!-- ACCORDIAN-->
-        <div class="time-trial-accordian heat-trial-accordian">
+        <div class="time-trial-accordian heat-trial-accordian" ng-class="{'bluecolor-accordian':roundsList[2].name==='Heat'}">
           <uib-accordion close-others="oneAtATime">
             <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="semi in roundsList[2].match | limitTo:heatLImit track by $index ">
               <uib-accordion-heading class="clearfix">

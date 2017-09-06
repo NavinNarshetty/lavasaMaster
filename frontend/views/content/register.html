@@ -1421,9 +1421,11 @@
                                     process may take up to 2 working days).
                                     <!--**<br><span class="f-14">** Please keep your SFA ID and password safe as you will require this to register individual and and team athletes from your school.</span>-->
                                 </li>
-                                <li>Proceed to SPORTS REGISTRATION (Opening Shortly) to register athletes from your {{type}}
+                                <li>Proceed to SPORTS REGISTRATION to register athletes from your {{type}} for their sport/sports
+                                    of interest.</li>
+                                <!-- <li>Proceed to SPORTS REGISTRATION (Opening Shortly) to register athletes from your {{type}}
                                     for their sport/sports of interest.</li>
-                                <li>You will be notified once the sports registration is open.</li>
+                                <li>You will be notified once the sports registration is open.</li> -->
                                 <!--<li>Proceed to register athletes from your school for Sports Registration</li>-->
                             </ul>
                             <p class="f-16">Successful registration will enable all athletes from your {{type}} to participate in all
@@ -1467,17 +1469,15 @@
                                     <!--**<br><span class="f-14">**Please keep your SFA ID and password safe as you will require this to register yourself for 
                             individual/team sports that you wish to participate in. </span>-->
                                 </li>
-                                <li>Proceed to SPORTS REGISTRATION (Opening Shortly) to register for you particular sport/sports.
-                                    <!--<br><span class="f-14">* You can participate in all 25+ disciplines of sport</span><br>
-                                <span class="f-14">* The sport registration will be opening soon and you will be notified once the sport registration
-                                    process begins.</span>-->
+                                <li>Proceed to SPORTS REGISTRATION to register for you particular sport/sports.</li>
+                                <!-- <li>Proceed to SPORTS REGISTRATION (Opening Shortly) to register for you particular sport/sports.
                                 </li>
-                                <li>You will be notified once the sport registration is open.</li>
+                                <li>You will be notified once the sport registration is open.</li> -->
                                 <!--<li>Proceed to register for Sports Registration</li>-->
                             </ul>
                             <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
                             from their school registrations. </p>-->
-                            <p class="custom-a" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
+                            <p class="custom-a mb-33" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
                             <p class="custom-a mb-75" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{year}}</strong></a></p>
                         </div>
                         <div class="text-center mb-20 "><a ui-sref="formathlete"><button class="btn-category orange "> Click here for Athlete Registration Form</button></a></div>
@@ -1543,9 +1543,9 @@
                                     be open!
                                 </p>
                             </div>
-                            <!-- <div class="text-center mb-20" ng-if="isCollege==false"><a ui-sref="sports-registration"><button class="btn-category blue-light " >Click here for Sports Registration</button></a></div> -->
+                            <div class="text-center mb-20"><a ui-sref="sports-registration"><button class="btn-category blue-light" >Click here for Sports Registration</button></a></div>
                             <!-- ng-if="isCollege==true" -->
-                            <div class="text-center mb-20"><button class="com-category blue-light">Opening shortly</button></div>
+                            <!-- <div class="text-center mb-20"><button class="com-category blue-light">Opening shortly</button></div> -->
                         </div>
                     </div>
                 </div>

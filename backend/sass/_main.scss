@@ -1343,5 +1343,16 @@
          margin: 10px 0px;
      }
  } //  TEAM EDIT PLAYER CARD END
+ .btn-dark {
+     color: #fff;
+     background-color: #343a40;
+     border-color: #343a40;
+     &:hover,
+     &:active,
+     &:focus {
+         color: #fff;
+     }
+ }
+
  @import "fancybox-override";
  @import "other/mobile";
