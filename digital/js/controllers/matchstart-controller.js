@@ -219,8 +219,9 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     // TEAM NO MATCH END
     // SAVE RESULT
     $scope.saveResult = function(formData){
+      console.log(formData, 'svae data');
       if(formData){
-        if(formData.players.length == 1){
+        if($scope.matchDetails.players.length == 1){
           toastr.error('Minimum 2 Players required to start scoring');
         } else {
         $scope.matchResult = {
@@ -294,7 +295,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
       } else {
         $scope.formData.isNoMatch = false;
       }
-      if($scope.formData.players.length == 1){
+      if($scope.matchDetails.players.length == 1){
         $scope.formData.winner.reason = 'Bye';
       }
       $scope.matchResult = {
