@@ -213,9 +213,16 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                         }
                         console.log($scope.drawDetails, " $scope.drawDetails");
                         if ($scope.drawDetails.drawFormat === 'Knockout') {
-                            $state.go('knockout', {
-                                id: $scope.drawDetails.sport
-                            });
+                            if ($scope.drawDetails.isTeam) {
+                                $state.go('knockout-team', {
+                                    id: $scope.drawDetails.sport
+                                });
+                            } else {
+                                $state.go('knockout', {
+                                    id: $scope.drawDetails.sport
+                                });
+                            }
+
                         } else if ($scope.drawDetails.drawFormat === 'Heats') {
                             console.log("$scope.nameOfSport", $scope.nameOfSport);
                             if ($scope.nameOfSport === '50m Freestyle' || $scope.nameOfSport === '50m Backstroke' || $scope.nameOfSport === '50m Breaststroke' || $scope.nameOfSport === '50m Butterfly' || $scope.nameOfSport === '100m Freestyle' || $scope.nameOfSport === '100m Backstroke' || $scope.nameOfSport === '100m Breaststroke' || $scope.nameOfSport === '100m Butterfly' || $scope.nameOfSport === '200m Individual Medley' || $scope.nameOfSport === 'Swimming 4x50m Freestyle Relay' || $scope.nameOfSport === 'Swimming 4x50m Medley Relay') {
