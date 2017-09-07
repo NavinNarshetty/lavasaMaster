@@ -16,9 +16,9 @@
                     </div>
                     <div class="select-teamcoach">
                       <label for="{{team.teamId}}.formation">Enter Formation</label>
-                      <input type="text" id="{{team.teamId}}.formation" placeholder="Enter Formation" ng-model="team.formation" class="form-control"/>
+                      <input type="text" id="{{team.teamId}}.formation" placeholder="Enter Formation" ng-model="team.formation" class="form-control" cleave="options.formation"/>
                     </div>
-                    <div class="select-teamcoach">
+                    <div class="select-teamcoach" hidden>
                       <label for="{{team.teamId}}.captain">Select Captain</label>
                       <ui-select id="{{team.teamId}}.captain" ng-model="team.captain" theme="bootstrap">
                           <ui-select-match placeholder="Select Captain"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
@@ -27,7 +27,7 @@
                           </ui-select-choices>
                       </ui-select>
                     </div>
-                    <div class="select-teamcoach">
+                    <div class="select-teamcoach" hidden>
                       <label for="{{team.teamId}}.goalKeeper">Select Goalkeeper</label>
                       <ui-select id="{{team.teamId}}.goalKeeper" ng-model="team.goalKeeper" theme="bootstrap">
                           <ui-select-match placeholder="Select Goalkeeper"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>

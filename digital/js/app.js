@@ -13,6 +13,7 @@ var myApp = angular.module('myApp', [
     'angularPromiseButtons',
     'toastr',
     'ui.select',
+    'cleave.js'
 ]);
 
 // Define all the routes below

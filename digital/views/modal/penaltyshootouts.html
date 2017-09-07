@@ -25,7 +25,7 @@
                             <!-- PENALTY POINTS -->
                             <div class="relate penalty-point">
                                 <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(player,'penalityPoint');"><i class="fa fa-minus" ></i></button>
-                                <input type="number" ng-model="player.penalityPoint" min="0" class="score-number teamscore-number display-inline form-control" >
+                                <input type="number" ng-model="player.playerPoints.penalityPoint" min="0" max="99" class="score-number teamscore-number display-inline form-control" >
                                 <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(player,'penalityPoint');"><i class="fa fa-plus"></i></button>
                             </div>
                             <!-- PENALTY POINTS -->

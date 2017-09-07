@@ -8,6 +8,20 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     $scope.match = {};
     // INITIALISE VARIABLES END
 
+    // CLEAVE FUNCTION OPTIONS
+    $scope.options = {
+      formation: {
+            blocks: [1, 1, 1, 1],
+            uppercase: true,
+            delimiters: ['-']
+        },
+        score: {
+          blocks: [2],
+          numeral: true
+        }
+    }
+    // CLEAVE FUNCTION OPTIONS END
+
     // FUNCTIONS
     // SELECT TEAM
     $scope.selectTeam = function(){
@@ -140,39 +154,39 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       $scope.player = player;
       switch (point) {
         case 'goals':
-          $scope.player.goals.push({
+          $scope.player.playerPoints.goals.push({
             time: 0
           });
         break;
         case 'assist':
-          $scope.player.assist.push({
+          $scope.player.playerPoints.assist.push({
             time: 0
           });
         break;
         case 'redCard':
-          $scope.player.redCard.push({
+          $scope.player.playerPoints.redCard.push({
             time: 0
           });
         break;
         case 'yellowCard':
-          $scope.player.yellowCard.push({
+          $scope.player.playerPoints.yellowCard.push({
             time: 0
           });
         break;
         case 'in':
-          $scope.player.in.push({
+          $scope.player.playerPoints.in.push({
             time: 0
           });
           $scope.player.isPlaying = true;
         break;
         case 'out':
-          $scope.player.out.push({
+          $scope.player.playerPoints.out.push({
             time: 0
           });
           $scope.player.isPlaying = false;
         break;
         case 'penalityPoint':
-          $scope.player.penalityPoint =  $scope.player.penalityPoint + 1;
+          $scope.player.playerPoints.penalityPoint =  $scope.player.penalityPoint + 1;
         break;
       }
       console.log('inPP');
@@ -183,56 +197,56 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       $scope.player = player;
       switch (point) {
         case 'goals':
-          if ($scope.player.goals.length>0) {
-            var length = $scope.player.goals.length -1;
-            _.remove($scope.player.goals, function(m,index){
+          if ($scope.player.playerPoints.goals.length>0) {
+            var length = $scope.player.playerPoints.goals.length -1;
+            _.remove($scope.player.playerPoints.goals, function(m,index){
               return length == index;
             })
           }
         break;
         case 'assist':
-          if ($scope.player.assist.length>0) {
-            var length = $scope.player.assist.length -1;
-            _.remove($scope.player.assist, function(m,index){
+          if ($scope.player.playerPoints.assist.length>0) {
+            var length = $scope.player.playerPoints.assist.length -1;
+            _.remove($scope.player.playerPoints.assist, function(m,index){
               return length == index;
             })
           }
         break;
         case 'redCard':
-          if ($scope.player.redCard.length>0) {
-            var length = $scope.player.redCard.length -1;
-            _.remove($scope.player.redCard, function(m,index){
+          if ($scope.player.playerPoints.redCard.length>0) {
+            var length = $scope.player.playerPoints.redCard.length -1;
+            _.remove($scope.player.playerPoints.redCard, function(m,index){
               return length == index;
             })
           }
         break;
         case 'yellowCard':
-          if ($scope.player.yellowCard.length>0) {
-            var length = $scope.player.yellowCard.length -1;
-            _.remove($scope.player.yellowCard, function(m,index){
+          if ($scope.player.playerPoints.yellowCard.length>0) {
+            var length = $scope.player.playerPoints.yellowCard.length -1;
+            _.remove($scope.player.playerPoints.yellowCard, function(m,index){
               return length == index;
             })
           }
         break;
         case 'in':
-          if ($scope.player.in.length>0) {
-            var length = $scope.player.in.length -1;
-            _.remove($scope.player.in, function(m,index){
+          if ($scope.player.playerPoints.in.length>0) {
+            var length = $scope.player.playerPoints.in.length -1;
+            _.remove($scope.player.playerPoints.in, function(m,index){
               return length == index;
             })
           }
         break;
         case 'out':
-          if ($scope.player.out.length>0) {
-            var length = $scope.player.out.length -1;
-            _.remove($scope.player.out, function(m,index){
+          if ($scope.player.playerPoints.out.length>0) {
+            var length = $scope.player.playerPoints.out.length -1;
+            _.remove($scope.player.playerPoints.out, function(m,index){
               return length == index;
             })
           }
         break;
         case 'penalityPoint':
-          if ($scope.player.penalityPoint>0) {
-            $scope.player.penalityPoint = $scope.player.penalityPoint - 1;
+          if ($scope.player.playerPoints.penalityPoint>0) {
+            $scope.player.playerPoints.penalityPoint = $scope.player.playerPoints.penalityPoint - 1;
           }
         break;
       }
@@ -297,53 +311,66 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
             name: 'hello',
             isPlaying: true,
             jerseyNo: 1,
-            goals: [],
-            assist: [],
-            redCard: [],
-            yellowCard: [],
-            penalityPoint: 0,
-            in: [],
-            out: []
+            playerPoints: {
+              goals: [],
+              assist: [],
+              redCard: [],
+              yellowCard: [],
+              penalityPoint: 0,
+              in: [],
+              out: []
+            }
           },{
             name: 'hello',
             isPlaying: true,
             jerseyNo: 1,
-            goals: [],
-            redCard: [],
-            yellowCard: [],
-            penalityPoint: 0,
-            in: [],
-            out: []
+            playerPoints: {
+              goals: [],
+              redCard: [],
+              yellowCard: [],
+              penalityPoint: 0,
+              in: [],
+              out: []
+            }
           },{
             name: 'hello',
             isPlaying: false,
             jerseyNo: 1,
-            goals: [],
-            redCard: [],
-            yellowCard: [],
-            penalityPoint: 0,
-            in: [],
-            out: []
+            playerPoints: {
+              goals: [],
+              assist: [],
+              redCard: [],
+              yellowCard: [],
+              penalityPoint: 0,
+              in: [],
+              out: []
+            }
           },{
             name: 'hello',
             isPlaying: true,
             jerseyNo: 1,
-            goals:[],
-            redCard: [],
-            yellowCard: [],
-            penalityPoint: 0,
-            in: [],
-            out: []
+            playerPoints: {
+              goals: [],
+              assist: [],
+              redCard: [],
+              yellowCard: [],
+              penalityPoint: 0,
+              in: [],
+              out: []
+            }
           },{
             name: 'hello',
             isPlaying: false,
             jerseyNo: 1,
-            goals: [],
-            redCard: [],
-            yellowCard: [],
-            penalityPoint: 0,
-            in: [],
-            out: []
+            playerPoints: {
+              goals: [],
+              assist: [],
+              redCard: [],
+              yellowCard: [],
+              penalityPoint: 0,
+              in: [],
+              out: []
+            }
           }]
         },{
           teamId: '54321',
@@ -364,52 +391,67 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
             name: 'hello',
             isPlaying: false,
             jerseyNo: 1,
-            goals: [],
-            redCard: [],
-            yellowCard: [],
-            penalityPoint: 0,
-            in: [],
-            out: []
+            playerPoints: {
+              goals: [],
+              assist: [],
+              redCard: [],
+              yellowCard: [],
+              penalityPoint: 0,
+              in: [],
+              out: []
+            }
           },{
             name: 'hello',
             isPlaying: true,
             jerseyNo: 1,
-            goals: [],
-            redCard: [],
-            yellowCard: [],
-            penalityPoint: 0,
-            in: [],
-            out: []
+            playerPoints: {
+              goals: [],
+              assist: [],
+              redCard: [],
+              yellowCard: [],
+              penalityPoint: 0,
+              in: [],
+              out: []
+            }
           },{
             name: 'hello',
             isPlaying: false,
             jerseyNo: 1,
-            goals: [],
-            redCard: [],
-            yellowCard: [],
-            penalityPoint: 0,
-            in: [],
-            out: []
+            playerPoints: {
+              goals: [],
+              assist: [],
+              redCard: [],
+              yellowCard: [],
+              penalityPoint: 0,
+              in: [],
+              out: []
+            }
           },{
             name: 'hello',
             isPlaying: false,
             jerseyNo: 1,
-            goals: [],
-            redCard: [],
-            yellowCard: [],
-            penalityPoint: 0,
-            in: [],
-            out: []
+            playerPoints: {
+              goals: [],
+              assist: [],
+              redCard: [],
+              yellowCard: [],
+              penalityPoint: 0,
+              in: [],
+              out: []
+            }
           },{
             name: 'hello',
             isPlaying: true,
             jerseyNo: 1,
-            goals: [],
-            redCard: [],
-            yellowCard: [],
-            penalityPoint: 0,
-            in: [],
-            out: []
+            playerPoints: {
+              goals: [],
+              assist: [],
+              redCard: [],
+              yellowCard: [],
+              penalityPoint: 0,
+              in: [],
+              out: []
+            }
           }]
         }]
       },

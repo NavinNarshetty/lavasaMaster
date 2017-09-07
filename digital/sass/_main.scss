@@ -702,6 +702,9 @@ header {
         appearance: none;
     }
 }
+.team-teampoints {
+    text-align: center;
+}
 // FOOTBALL SCORE END
 // PENALTY SHOOTOUT MODAL
 .penaltyshoot-player{
@@ -756,6 +759,12 @@ header {
 }
 .teamselect-jersey{
   text-align: center;
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
+  }
   .teamscore-number{
     width: 30px;
     height: initial;
