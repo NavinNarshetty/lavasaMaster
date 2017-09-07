@@ -20,7 +20,7 @@ schema.plugin(deepPopulate, {
             select: '_id name'
         },
         'sportsListSubCategory': {
-            select: '_id name'
+            select: '_id name isTeam'
         }
     }
 });
