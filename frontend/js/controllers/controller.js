@@ -1,3 +1,7 @@
+// var year15 = '2015-16';
+// var year16 = '2016-17';
+// // var year15 = '2015';
+// // var year16 = '2016';
 myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
         $scope.template = TemplateService.getHTML("content/home.html");
         TemplateService.title = "Home"; //This is the Title of the Website
@@ -191,6 +195,8 @@ myApp.controller('ChampionshipCtrl', function ($scope, TemplateService, Navigati
     $scope.template = TemplateService.getHTML("content/championship.html");
     TemplateService.title = "Championship"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
+    // $scope.year15 = year15;
+    // $scope.year16 = year16;
     configService.getDetail(function (data) {
         $scope.state = data.state;
         $scope.year = data.year;
