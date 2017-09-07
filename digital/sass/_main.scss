@@ -269,17 +269,17 @@ header {
 .custom-checkbox {
     width: 20px;
     height: 20px;
-    border: 1px solid #ccc;
+    border: 1px solid #a0a0a0;
     border-radius: 5px;
     margin: 0 auto;
     position: relative;
     background: transparent;
-    color: #ccc;
+    color: #a0a0a0;
     line-height: 1;
 }
 
 .custom-checkbox-checked{
-  background-color: #ccc;
+  background-color: #a0a0a0;
   color: #fff;
   // border-color: #000;
 }
@@ -653,6 +653,7 @@ header {
       -moz-appearance: none;
       appearance: none;
   }
+  text-align: center;
 }
 .teamdatapoint-name{
   display: block;
