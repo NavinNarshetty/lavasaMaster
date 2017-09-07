@@ -428,6 +428,14 @@ var controller = {
                                         callback(null, complete);
                                     }
                                 });
+                            } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "knockout") {
+                                Match.updateQualifyingKnockout(importData, req.body, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
                             } else {
                                 callback(null, importData);
                             }
