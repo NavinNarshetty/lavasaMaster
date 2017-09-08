@@ -2796,7 +2796,7 @@ var model = {
     //  ----------------------------  UPDATE SCORE RESULT  --------------------------------------
 
     //update from digital score
-    updateResult: function (data, callback) {
+   updateResult: function (data, callback) {
         var updateObj = {};
         var updateObj1 = {};
         async.waterfall([
@@ -2881,7 +2881,7 @@ var model = {
                         if (data.found.round == "Semi Final") {
                             if (data.isTeam == false && _.isEmpty(found[0].opponentsSingle) && _.isEmpty(found[1].opponentsSingle)) {
                                 // console.log("inside found", data.found.resultsCombat.status);
-                                if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted') {
+                                if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
                                     if (data.found.opponentsSingle[0].equals(data.found.resultsCombat.winner.opponentsSingle)) {
                                         lostPlayer.push(data.found.opponentsSingle[1]);
                                         winPlayer.push(data.found.resultsCombat.winner.opponentsSingle);
@@ -2901,7 +2901,7 @@ var model = {
                                             opponentsSingle: lostPlayer
                                         }
                                     };
-                                } else if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted') {
+                                } else if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted' && data.found.resultsRacquet.isNoMatch == false) {
                                     if (data.found.opponentsSingle[0].equals(data.found.resultsRacquet.winner.opponentsSingle)) {
                                         lostPlayer.push(data.found.opponentsSingle[1]);
                                         winPlayer.push(data.found.resultsRacquet.winner.opponentsSingle);
@@ -2921,6 +2921,8 @@ var model = {
                                             opponentsSingle: lostPlayer
                                         }
                                     };
+                                } else {
+                                    callback(null, data.found);
                                 }
 
 
@@ -2930,7 +2932,7 @@ var model = {
                                     var playerId1 = found[1].opponentsSingle[0];
                                     winPlayer.push(playerId);
                                     lostPlayer.push(playerId1);
-                                    if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted') {
+                                    if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
                                         if (data.found.opponentsSingle[0].equals(data.found.resultsCombat.winner.opponentsSingle)) {
                                             lostPlayer.push(data.found.opponentsSingle[1]);
                                             winPlayer.push(data.found.resultsCombat.winner.opponentsSingle);
@@ -2950,7 +2952,7 @@ var model = {
                                                 opponentsSingle: lostPlayer
                                             }
                                         };
-                                    } else if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted') {
+                                    } else if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted' && data.found.resultsRacquet.isNoMatch == false) {
                                         if (data.found.opponentsSingle[0].equals(data.found.resultsRacquet.winner.opponentsSingle)) {
                                             lostPlayer.push(data.found.opponentsSingle[1]);
                                             winPlayer.push(data.found.resultsRacquet.winner.opponentsSingle);
@@ -2970,6 +2972,8 @@ var model = {
                                                 opponentsSingle: lostPlayer
                                             }
                                         };
+                                    } else {
+                                        callback(null, data.found);
                                     }
 
                                 } else {
@@ -2977,7 +2981,7 @@ var model = {
                                 }
                             } else if (data.isTeam == true && _.isEmpty(found[0].opponentsTeam) && _.isEmpty(found[1].opponentsTeam)) {
                                 // console.log("inside found", data.found.resultsCombat.status);
-                                if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted') {
+                                if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted' && data.found.resultsRacquet.isNoMatch == false) {
                                     if (data.found.opponentsTeam[0].equals(data.found.resultsRacquet.winner.player)) {
                                         lostPlayer.push(data.found.opponentsTeam[1]);
                                         winPlayer.push(data.found.resultsRacquet.winner.player);
@@ -2997,6 +3001,8 @@ var model = {
                                             opponentsSingle: lostPlayer
                                         }
                                     };
+                                } else {
+                                    callback(null, data.found);
                                 }
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam) && !_.isEmpty(found[1].opponentsTeam)) {
                                 if (found[0].opponentsTeam.length == 1 && found[1].opponentsTeam.length == 1) {
@@ -3004,7 +3010,7 @@ var model = {
                                     var playerId1 = found[1].opponentsTeam[0];
                                     winPlayer.push(playerId);
                                     lostPlayer.push(playerId1);
-                                    if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted') {
+                                    if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted' && data.found.resultsRacquet.isNoMatch == false) {
                                         if (data.found.opponentsTeam[0].equals(data.found.resultsRacquet.winner.player)) {
                                             lostPlayer.push(data.found.opponentsTeam[1]);
                                             winPlayer.push(data.found.resultsRacquet.winner.player);
@@ -3024,6 +3030,8 @@ var model = {
                                                 opponentsSingle: lostPlayer
                                             }
                                         };
+                                    } else {
+                                        callback(null, data.found);
                                     }
 
                                 } else {
@@ -3034,14 +3042,14 @@ var model = {
                         } else {
                             console.log("in found", found, "data", data);
                             if (data.isTeam == false && _.isEmpty(found[0].opponentsSingle)) {
-                                if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted') {
+                                if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
                                     winPlayer.push(data.found.resultsCombat.winner.opponentsSingle);
                                     updateObj = {
                                         $set: {
                                             opponentsSingle: winPlayer
                                         }
                                     };
-                                } else if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted') {
+                                } else if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted' && data.found.resultsRacquet.isNoMatch == false) {
                                     winPlayer.push(data.found.resultsRacquet.winner.opponentsSingle);
                                     console.log("player", winPlayer);
                                     updateObj = {
@@ -3049,13 +3057,15 @@ var model = {
                                             opponentsSingle: winPlayer
                                         }
                                     };
+                                } else {
+                                    callback(null, data.found);
                                 }
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle)) {
                                 console.log("updating match", data.found);
                                 if (found[0].opponentsSingle.length == 1) {
                                     var playerId = found[0].opponentsSingle[0];
                                     winPlayer.push(playerId);
-                                    if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted') {
+                                    if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
                                         winPlayer.push(data.found.resultsCombat.winner.opponentsSingle);
                                         console.log("player", winPlayer);
                                         updateObj = {
@@ -3063,7 +3073,7 @@ var model = {
                                                 opponentsSingle: winPlayer
                                             }
                                         };
-                                    } else if (data.found.resultsRacquet && data.found.resultsRacquet.status == "IsCompleted") {
+                                    } else if (data.found.resultsRacquet && data.found.resultsRacquet.status == "IsCompleted" && data.found.resultsRacquet.isNoMatch == false) {
                                         winPlayer.push(data.found.resultsRacquet.winner.opponentsSingle);
                                         console.log("player", winPlayer);
                                         updateObj = {
@@ -3071,12 +3081,14 @@ var model = {
                                                 opponentsSingle: winPlayer
                                             }
                                         };
+                                    } else {
+                                        callback(null, data.found);
                                     }
                                 } else {
                                     updateObj = {};
                                 }
                             } else if (data.isTeam == true && _.isEmpty(found[0].opponentsTeam)) {
-                                if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted') {
+                                if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted' && data.found.resultsRacquet.isNoMatch == false) {
                                     winPlayer.push(data.found.resultsRacquet.winner.player);
                                     console.log("player", winPlayer);
                                     updateObj = {
@@ -3084,13 +3096,15 @@ var model = {
                                             opponentsTeam: winPlayer
                                         }
                                     };
+                                } else {
+                                    callback(null, data.found);
                                 }
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam)) {
                                 console.log("updating match", data.found);
                                 if (found[0].opponentsTeam.length == 1) {
                                     var playerId = found[0].opponentsTeam[0];
                                     winPlayer.push(playerId);
-                                    if (data.found.resultsRacquet && data.found.resultsRacquet.status == "IsCompleted") {
+                                    if (data.found.resultsRacquet && data.found.resultsRacquet.status == "IsCompleted" && data.found.resultsRacquet.isNoMatch == false) {
                                         winPlayer.push(data.found.resultsRacquet.winner.player);
                                         console.log("player", winPlayer);
                                         updateObj = {
@@ -3098,6 +3112,8 @@ var model = {
                                                 opponentsTeam: winPlayer
                                             }
                                         };
+                                    } else {
+                                        callback(null, data.found);
                                     }
                                 } else {
                                     updateObj = {};
@@ -3166,6 +3182,7 @@ var model = {
                         }
                     }
                 }
+
             ],
             function (err, results) {
                 if (err || _.isEmpty(results)) {
