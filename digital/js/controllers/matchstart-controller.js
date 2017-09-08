@@ -58,7 +58,8 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                               "players": [],
                               "matchPhoto": [],
                               "scoreSheet": [],
-                              "winner": {}
+                              "winner": {},
+                              "isNoMatch": false
                           }
                           _.each($scope.matchDetails.players, function(n, key) {
                               $scope.formData.players[key] = {
@@ -99,7 +100,8 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                               "players": [],
                               "matchPhoto": [],
                               "scoreSheet": [],
-                              "winner": {}
+                              "winner": {},
+                              "isNoMatch": false
                           }
                           _.each($scope.matchDetails.players, function(n, key) {
                               $scope.formData.players[key] = {
@@ -142,7 +144,8 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                               "teams": [],
                               "matchPhoto": [],
                               "scoreSheet": [],
-                              "winner": {}
+                              "winner": {},
+                              "isNoMatch": false
                           }
                           _.each($scope.matchDetails.teams, function(n, key) {
                               $scope.formData.teams[key] = {
@@ -188,7 +191,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                             "scoreSheet": [],
                             "status": "",
                             "winner": {},
-                            "isNoMatch": false;
+                            "isNoMatch": false
                           }
                           _.each($scope.matchDetails.teams, function(n, key) {
                               $scope.formData.teams[key] = {
