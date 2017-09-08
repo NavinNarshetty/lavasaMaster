@@ -537,6 +537,25 @@ var controller = {
         }
     },
 
+    getSportQualifyingKnockoutRounds: function (req, res) {
+        if (req.body) {
+            console.log(req.body);
+            if (req.body && req.body.sport) {
+                Match.getSportQualifyingKnockoutRounds(req.body, res.callback);
+            } else {
+                res.json({
+                    data: "Sport Not Found",
+                    value: false
+                });
+            }
+        } else {
+            res.json({
+                data: "Body Not Found",
+                value: false
+            });
+        }
+    },
+
     knockoutMatchesByRound: function (req, res) {
         if (req.body) {
             if (req.body && req.body.round) {
