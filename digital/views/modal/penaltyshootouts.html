@@ -24,9 +24,9 @@
                             </div>
                             <!-- PENALTY POINTS -->
                             <div class="relate penalty-point">
-                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(player,'penalityPoint');"><i class="fa fa-minus" ></i></button>
-                                <input type="number" ng-model="player.playerPoints.penalityPoint" min="0" max="99" class="score-number teamscore-number display-inline form-control" >
-                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(player,'penalityPoint');"><i class="fa fa-plus"></i></button>
+                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(player,'penaltyPoint');"><i class="fa fa-minus" ></i></button>
+                                <input type="number" ng-model="player.playerPoints.penaltyPoint" min="0" max="99" class="score-number teamscore-number display-inline form-control" >
+                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(player,'penaltyPoint');"><i class="fa fa-plus"></i></button>
                             </div>
                             <!-- PENALTY POINTS -->
                         </div>
@@ -34,6 +34,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="">
+      <pre>{{match.resultFootball.teams|json}}</pre>
     </div>
 </div>
 <div class="modal-footer">

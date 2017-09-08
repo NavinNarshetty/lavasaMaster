@@ -4,7 +4,7 @@
 <div class="modal-body">
     <div class="penaltyshootouts-content">
         <div class="row">
-            <div class="col-md-6 col-sm-6" ng-repeat="team in match.resultFootball.teams track by $index" ng-init="teamIndex = $index">
+            <div class="col-md-6 col-sm-6" ng-repeat="team in result.teams track by $index" ng-init="teamIndex = $index">
                 <div class="teamcard mainteamcard">
                     <div class="teamcard-header text-uppercase">
                         <p>{{match.teams[$index].schoolName}}</p>
@@ -94,6 +94,7 @@
             </div>
         </div>
     </div>
+    <pre>{{result|json}}</pre>
 </div>
 <div class="modal-footer">
     <div class="scoreplayer-save">

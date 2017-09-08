@@ -1,11 +1,19 @@
-myApp.controller('FootballScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, $interval, toastr) {
-    $scope.template = TemplateService.getHTML("content/scorefootball.html");
+myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, $interval, toastr, $rootScope) {
+    $scope.template = TemplateService.getHTML("content/scorevolleyball.html");
     TemplateService.title = "Score Football"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
     // ************
 
     // INITIALISE VARIABLES
     $scope.match = {};
+    $scope.matchData = {};
+    $scope.setLength  = [];
+    $scope.setDisplay = {
+      value: 0
+    };
+    $scope.setDelete = {
+      value: 0
+    };
     // INITIALISE VARIABLES END
 
     // CLEAVE FUNCTION OPTIONS
@@ -22,11 +30,33 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     }
     // CLEAVE FUNCTION OPTIONS END
 
+    // API CALLS
+    // GET MATCH
+    $scope.getOneMatch = function() {
+        $scope.matchData.matchId = $stateParams.id;
+        NavigationService.getOneMatch($scope.matchData, function(data) {
+            if (data.value == true) {
+              if(data.data.error){
+                $scope.matchError = data.data.error;
+                console.log($scope.matchError,'error');
+                toastr.error('Invalid MatchID. Please check the MatchID entered.', 'Error');
+              }
+                $scope.match = data.data;
+                $scope.match.matchId = $scope.matchData.matchId;
+            } else {
+                console.log("ERROR IN getOneMatch");
+            }
+        })
+    };
+    $scope.getOneMatch();
+    // GET MATCH END
+    // API CALLS END
+
     // FUNCTIONS
     // SELECT TEAM
     $scope.selectTeam = function(result){
-      $scope.result = result;
       var teamSelection;
+      $scope.result = result;
       teamSelection = $uibModal.open({
         animation: true,
         scope: $scope,
@@ -154,26 +184,6 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     $scope.incrementPlayerPoint = function(player, point){
       $scope.player = player;
       switch (point) {
-        case 'goals':
-          $scope.player.playerPoints.goals.push({
-            time: 0
-          });
-        break;
-        case 'assist':
-          $scope.player.playerPoints.assist.push({
-            time: 0
-          });
-        break;
-        case 'redCard':
-          $scope.player.playerPoints.redCard.push({
-            time: 0
-          });
-        break;
-        case 'yellowCard':
-          $scope.player.playerPoints.yellowCard.push({
-            time: 0
-          });
-        break;
         case 'in':
           $scope.player.playerPoints.in.push({
             time: 0
@@ -186,9 +196,6 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           });
           $scope.player.isPlaying = false;
         break;
-        case 'penaltyPoint':
-          $scope.player.playerPoints.penaltyPoint =  $scope.player.penaltyPoint + 1;
-        break;
       }
       console.log('inPP');
     };
@@ -197,38 +204,6 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     $scope.decrementPlayerPoint = function(player,point){
       $scope.player = player;
       switch (point) {
-        case 'goals':
-          if ($scope.player.playerPoints.goals.length>0) {
-            var length = $scope.player.playerPoints.goals.length -1;
-            _.remove($scope.player.playerPoints.goals, function(m,index){
-              return length == index;
-            })
-          }
-        break;
-        case 'assist':
-          if ($scope.player.playerPoints.assist.length>0) {
-            var length = $scope.player.playerPoints.assist.length -1;
-            _.remove($scope.player.playerPoints.assist, function(m,index){
-              return length == index;
-            })
-          }
-        break;
-        case 'redCard':
-          if ($scope.player.playerPoints.redCard.length>0) {
-            var length = $scope.player.playerPoints.redCard.length -1;
-            _.remove($scope.player.playerPoints.redCard, function(m,index){
-              return length == index;
-            })
-          }
-        break;
-        case 'yellowCard':
-          if ($scope.player.playerPoints.yellowCard.length>0) {
-            var length = $scope.player.playerPoints.yellowCard.length -1;
-            _.remove($scope.player.playerPoints.yellowCard, function(m,index){
-              return length == index;
-            })
-          }
-        break;
         case 'in':
           if ($scope.player.playerPoints.in.length>0) {
             var length = $scope.player.playerPoints.in.length -1;
@@ -245,15 +220,88 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
             })
           }
         break;
-        case 'penaltyPoint':
-          if ($scope.player.playerPoints.penaltyPoint>0) {
-            $scope.player.playerPoints.penaltyPoint = $scope.player.playerPoints.penaltyPoint - 1;
-          }
-        break;
       }
       console.log('dePP');
     };
     // PLAYER SCORE DECREMENT END
+    // TEAM SETS
+    // SCORE INCREMENT
+    $scope.incrementScore = function(set, model){
+      $scope.set = set;
+      switch (model) {
+        case 'points':
+          $scope.set.points = $scope.set.points + 1;
+        break;
+      }
+      console.log("increment");
+    };
+    // SCORE INCREMENT END
+    // SCORE DECREMENT
+    $scope.decrementScore = function(set, model){
+      $scope.set = set;
+      switch (model) {
+        case 'points':
+          if($scope.set.points>0 ){
+            $scope.set.points = $scope.set.points - 1;
+          }
+        break;
+      }
+      console.log("decrement");
+    };
+    // SCORE DECREMENT END
+    // ADD SET
+    $scope.addSet = function(){
+      _.each($scope.match.resultVolleyball.teams, function(n){
+        n.teamResults.sets.push({
+              points: 0
+        });
+      })
+      _.each($scope.match.resultVolleyball.teams[0].teamResults.sets, function(n,key){
+        $scope.setLength[key] = {
+          setShow : true
+        }
+      })
+    }
+    // ADD SET END
+    // REMOVE SET
+    $scope.removeSets = function(){
+      var modalSetDelete;
+        $rootScope.modalInstance = $uibModal.open({
+          animation: true,
+          scope: $scope,
+          keyboard: false,
+          templateUrl: 'views/modal/removeset.html',
+          windowClass: 'removeset-modal'
+        })
+    }
+    $scope.deleteSet = function(index){
+      console.log(index, 'index che');
+      _.each($scope.match.resultVolleyball.teams, function(n){
+        if (n.teamResults.sets.length>1) {
+          // delete n.sets[index];
+          n.sets.splice(index,1);
+          $scope.setLength = [];
+          _.each($scope.match.resultVolleyball.teams[0].teamResults.sets, function(n,key){
+            $scope.setLength[key] = {
+              setShow : true
+            }
+          });
+          $scope.setDisplay = {
+            value: 0
+          };
+          $scope.setDelete = {
+            value: 0
+          };
+          toastr.success('Set deleted successfully');
+          $rootScope.modalInstance.close('a');
+          console.log($scope.match.resultVolleyball, 'After delete');
+        } else{
+          toastr.warning('Minimum 1 Set required');
+        }
+      });
+    }
+    // REMOVE SET END
+    // TEAM SETS END
     // PLAYER POINTS MODAL
     $scope.addPlayerPoints = function(player, index){
       $scope.selectedPlayer = player;
@@ -264,8 +312,8 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
         // backdrop: 'static',
         keyboard: false,
         size: 'lg',
-        templateUrl: 'views/modal/scoreplayer-football.html',
-        windowClass: 'scoreplayer-football-modal'
+        templateUrl: 'views/modal/scoreplayer-volleyball.html',
+        windowClass: 'scoreplayer-volleyball-modal'
       })
     }
     // PLAYER POINTS MODAL END
@@ -287,26 +335,25 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     // JSON
     $scope.match = {
       matchId: '123456',
-      sportsName: 'Football',
+      sportsName: 'Volleyball',
       age: 'u-11',
       gender: 'female',
       round: 'final',
       minPlayers: 4,
-      resultFootball:{
+      resultVolleyball:{
         teams:[{
           teamId: '987654',
           teamResults:{
-            halfPoints:10,
-            finalPoints:22,
-            penaltyPoints:1,
-            shotsOnGoal: 2,
-            totalShots:2,
-            corners:2,
-            penalty:1,
-            saves:1,
+            block:1,
+            spike:1,
             fouls:1,
-            offSide:1,
-            cleanSheet:1
+            sets: [{
+              points: 1
+            },{
+              points: 0
+            },{
+              points: 0
+            }]
           },
           players: [{
             name: 'hello',
@@ -376,17 +423,16 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
         },{
           teamId: '54321',
           teamResults:{
-            halfPoints:10,
-            finalPoints:22,
-            penaltyPoints:1,
-            shotsOnGoal: 2,
-            totalShots:2,
-            corners:2,
-            penalty:1,
-            saves:1,
+            block:1,
+            spike:1,
             fouls:1,
-            offSide:1,
-            cleanSheet:1
+            sets: [{
+              points: 0
+            },{
+              points: 5
+            },{
+              points: 0
+            }]
           },
           players: [{
             name: 'hello',

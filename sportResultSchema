@@ -5,7 +5,7 @@ var resultHockey = {
         goalPoints:[{
               goal:20,
         }],
-        finalGoalPoints:22,   
+        finalGoalPoints:22,
         shotsOnGoal: 2,
         totalShots:2,
         penalityPoints:10,
@@ -46,7 +46,7 @@ var resultHockey = {
             }]
         }
        }]}]
-    
+
     isNoMatch: true,
     isDraw: true,
     winnner: [{
@@ -97,7 +97,7 @@ var resultBasketBall = {
         }
        }]
         }]
-    
+
     isNoMatch: true,
     isDraw: true,
     winnner: [{
@@ -122,9 +122,6 @@ var resultVollyBall = {
         }
         players: [{
         player: id,
-        noShow: true,
-        walkover: true,
-        color: "Blue/Red",
         playerPoints: {
             in:[{
                 time:11am
@@ -138,7 +135,7 @@ var resultVollyBall = {
     isNoMatch: true,
     isDraw: true,
     winnner: [{
-        team: id,
+        player: id,
         reason: "",
     }],
     matchPhoto: [{"6732673862837342323423.jpg"}],
@@ -153,7 +150,7 @@ var resultHandBall = {
         goalPoints:[{
               goal:20,
         }],
-        finalGoalPoints:22,   
+        finalGoalPoints:22,
         shotsOnGoal: 2,
         penality:10,
         saves:1,
@@ -182,7 +179,7 @@ var resultHandBall = {
             }]
         }
        }]}]
-    
+
     isNoMatch: true,
     isDraw: true,
     winnner: [{
@@ -201,7 +198,7 @@ var resultWaterPolo = {
         quarterPoints:[{
               points:20,
         }],
-        finalGoalPoints:22,   
+        finalGoalPoints:22,
         shotsOnGoal: 2,
         totalShots:2,
         penalityPoints:10,
@@ -229,7 +226,7 @@ var resultWaterPolo = {
             }]
         }
        }]}]
-    
+
     isNoMatch: true,
     isDraw: true,
     winnner: [{
@@ -283,7 +280,7 @@ var resultKabaddi = {
         }
        }]
         }],
-    
+
     isNoMatch: true,
     isDraw: true,
     winnner: [{
@@ -309,7 +306,7 @@ var resultFootball = {
         saves:1,
         fouls:1,
         offSide:1
-        cleanSheet:1, 
+        cleanSheet:1,
         noShow: true,
         walkover: true,
         }
@@ -358,7 +355,7 @@ var resultFootball = {
         fouls:1,
         offSide:1
         cleanSheet:1,
-        superTackle:1,   
+        superTackle:1,
         }
         players: [{
         player: id,
@@ -391,7 +388,7 @@ var resultFootball = {
             }]
         }
        }]
-        }]   
+        }]
     isNoMatch: true,
     isDraw: true,
     winnner: [{
@@ -410,17 +407,13 @@ var qualifyingRound = {
         attempt: [{
             distance: 22m,
             height:11m
-            foul:'X'   
+            foul:'X'
         }],
         finalScore:12,
         result:qualified/notqualified/1/2/3,
         rank:1,
-    },   
+    },
     matchPhoto: [{"6732673862837342323423.jpg"}],
     status: "IsLive,IsPending,IsCompleted",
     scoreSheet: [{"588372837289379283789.jpg"}]
 };
-
-
-
-

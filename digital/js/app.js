@@ -34,9 +34,14 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'DigitalHomeCtrl'
         })
         .state('matchstart', {
-            url: "/:drawFormat/:id/:sport",
+            url: "/match/:drawFormat/:id/:sport",
             templateUrl: tempateURL,
             controller: 'MatchStartCtrl'
+        })
+        .state('matchteam', {
+            url: "/matchteam/:drawFormat/:id/:sport",
+            templateUrl: tempateURL,
+            controller: 'MatchTeamCtrl'
         })
         .state('scorecombat', {
             url: "/scorecombat/:drawFormat/:id/:sport",
@@ -57,6 +62,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/scorefootball",
             templateUrl: tempateURL,
             controller: 'FootballScoreCtrl'
+        })
+        .state('scorevolleyball', {
+            url: "/volleyball/:drawFormat/:id/:sport",
+            templateUrl: tempateURL,
+            controller: 'VolleyballScoreCtrl'
         })
         .state('knockout', {
             url: "/:drawFormat/:id",

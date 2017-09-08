@@ -46,6 +46,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
               }
                 $scope.matchDetails = data.data;
                 $scope.matchDetails.matchId = $scope.matchData.matchId;
+                console.log($scope.matchDetails, '$scope.matchDetails');
                 // INITIALISE RESULTS
                 switch ($scope.matchDetails.sportType) {
                   case "Combat Sports":
@@ -176,6 +177,62 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                       }
                     }
                   break;
+                  case "Team Sports":
+                    switch ($scope.matchDetails.sportsName) {
+                      case "Football":
+                        if($scope.matchDetails.resultFootball == null || $scope.matchDetails.resultFootball == "" || $scope.matchDetails.resultFootball == undefined){
+                          $scope.matchDetails.resultFootball = {};
+                          $scope.formData = {
+                            "teams": [],
+                            "matchPhoto": [],
+                            "scoreSheet": [],
+                            "status": "",
+                            "winner": {}
+                          }
+                          _.each($scope.matchDetails.teams, function(n, key) {
+                              $scope.formData.teams[key] = {
+                                  "team": n._id,
+                                  "noShow": false,
+                                  "walkover": false,
+                                  "players": [],
+                                  "teamResults": {
+                                    halfPoints: 0,
+                                    finalPoints: 0,
+                                    penalityPoints: 0,
+                                    shotsOnGoal: 0,
+                                    totalShots: 0,
+                                    corners: 0,
+                                    penality: 0,
+                                    saves: 0,
+                                    fouls: 0,
+                                    offSide: 0,
+                                    cleanSheet: 0
+                                  }
+                              }
+                              _.each($scope.matchDetails.teams[key].studentTeam, function(m, mkey){
+                                $scope.formData.teams[key].players[mkey] = {
+                                  "player" : m.studentId._id,
+                                  "isPlaying": false,
+                                  "jerseyNo": 0,
+                                  "playerPoints": {
+                                    "goals": [],
+                                    "assist": [],
+                                    "redCard": [],
+                                    "yellowCard": [],
+                                    "penalityPoint": 0,
+                                    "in": [],
+                                    "out": []
+                                  }
+                                }
+                              })
+                          });
+                        } else{
+                          toastr.success('Wallah habibi');
+                        }
+                        console.log($scope.formData, 'football result');
+                      break;
+                    }
+                  break;
                 }
             // INITIALISE RESULTS END
             } else {
@@ -240,6 +297,9 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
               $scope.matchResult.resultsRacquet.status = "IsLive";
             }
           break;
+          case "Team Sports":
+
+            break;
         }
         NavigationService.saveMatch($scope.matchResult, function(data){
           if(data.value == true){
@@ -323,8 +383,16 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     $scope.saveWinner = function(){
       console.log($scope.formData, 'savedata');
       if($scope.matchDetails.players.length == 1){
-        $scope.formData.winner.reason = 'Bye';
-        $scope.updateWinnerResult();
+        if($scope.formData.winner.player =="" || !$scope.formData.winner.player){
+          toastr.warning('Please select a winner');
+        } else {
+          if ($scope.formData.players[0].isWalkover == true ) {
+            $scope.updateWinnerResult();
+          } else {
+            $scope.formData.winner.reason = 'Bye';
+            $scope.updateWinnerResult();
+          }
+        }
       } else{
         if($scope.formData.players[0].noShow == true && $scope.formData.players[1].noShow == true){
           $scope.formData.isNoMatch = true;
@@ -376,6 +444,16 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     }
     $scope.saveTeamWinner = function(){
       if($scope.matchDetails.teams.length == 1){
+        if($scope.formData.winner.player =="" || !$scope.formData.winner.player){
+          toastr.warning('Please select a winner');
+        } else {
+          if ($scope.formData.teams[0].isWalkover == true ) {
+            $scope.updateWinnerResult();
+          } else {
+            $scope.formData.winner.reason = 'Bye';
+            $scope.updateWinnerResult();
+          }
+        }
         $scope.formData.winner.reason = 'Bye';
         $scope.updateTeamWinner();
       } else{
