@@ -133,13 +133,21 @@ myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, Navigat
               }
               $scope.roundsList = $scope.roundsList.reverse();
               _.each($scope.roundsList, function (key) {
+                console.log("key", key);
                 _.each(key.match, function (value) {
+
                   _.each(value.opponentsSingle, function (obj, index1) {
-                    obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
-                    obj.result = value.resultHeat.players[index1].result;
-                    obj.laneNo = value.resultHeat.players[index1].laneNo;
-                    obj.time = value.resultHeat.players[index1].time;
+                    if (!_.isEmpty(obj.athleteId)) {
+                      obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                    }
+                    if (value.resultHeat.players[index1] !== undefined) {
+                      obj.result = value.resultHeat.players[index1].result;
+                      obj.laneNo = value.resultHeat.players[index1].laneNo;
+                      obj.time = value.resultHeat.players[index1].time;
+                    }
                   });
+
+
 
                 });
               });

@@ -312,7 +312,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'LeagueKnockoutCtrl'
         })
         .state('qf-knockout', {
-            url: "/qf-knockout",
+            url: "/qf-knockout/:id",
             templateUrl: tempateURL,
             controller: 'QfKnockoutCtrl'
         })
