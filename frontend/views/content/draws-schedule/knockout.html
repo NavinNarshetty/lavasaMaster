@@ -89,7 +89,7 @@
              <h3 class="sport-success d-fjalla-one text-center text-uppercase">{{roundsList[0].name}}
             </h3>  
           <div class="knockout-cardholder" ng-repeat="card in roundsList[0].match track by $index">
-            <div class="knockout-card"  ng-if="card.opponentsSingle.length>0" ng-repeat="player  in card.opponentsSingle track by $index" ng-class="{'knockout-winnercard':player.isWinner===true}">
+            <div class="knockout-card"  ng-if="card.opponentsSingle.length>0" ng-repeat="player in card.opponentsSingle track by $index" ng-class="{'knockout-winnercard':player.isWinner===true}">
               <div class="knockout-cardimage display-inline ver-mid">
                 <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt="" class="img-responsive">
               </div>

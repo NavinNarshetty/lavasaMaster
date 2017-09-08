@@ -54,8 +54,47 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
     round: "final",
     score: "1-5",
     qscore: "11"
-  }, ]
+  },];
 
   // END TABLE JSON
 
+  $scope.constraints = {};
+  $scope.getSportSpecificRounds = function (roundName) {
+    if ($stateParams.id) {
+      if (roundName) {
+        $scope.constraints.round = roundName;
+      }
+      $scope.constraints.sport = $stateParams.id;
+      NavigationService.getSportQualifyingKnockoutRounds($scope.constraints, function (data) {
+        errorService.errorCode(data, function (allData) {
+          if (!allData.message) {
+            if (allData.value) {
+              $scope.knockout = allData.data.knockout.roundsList;
+              $scope.qualifying = allData.data.qualifying.roundsList;
+              $scope.knockout = $scope.knockout.reverse();
+              _.each($scope.knockout, function (data, index) {
+                _.each(data.match, function (key) {
+                  _.each(key.opponentsSingle, function (obj) {
+                    obj.athleteId.fullName = obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                  });
+                });
+
+              });
+              _.each($scope.qualifying, function (data, index) {
+                _.each(data.match, function (key) {
+                  _.each(key.opponentsSingle, function (obj) {
+                    obj.athleteId.fullName = obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                  });
+                });
+              });
+              console.log("$scope.qualifying,", $scope.qualifying);
+            }
+          } else {
+            toastr.error(allData.message, 'Error Message');
+          }
+        });
+      });
+    }
+  };
+  $scope.getSportSpecificRounds();
 });

@@ -31,7 +31,7 @@
         </div>
         <!--END FINAL HEAD-->
         <!--FINAL TABLE-->
-        <div class="heats-final-table table-responsive q-orange-table table-responsive">
+        <div class="heats-final-table table-responsive q-orange-table table-responsive" ng-if="roundsList[0].match[0].opponentsSingle">
           <table class="table-draws-schedule table-six">
             <thead>
               <tr>
@@ -123,104 +123,106 @@
           <span>{{roundsList[1].match[1].scheduleTime }}</span></p>
       </div>
       <!--END HEAD-->
-      <div class="heats-semiqualifying-holder">
+      <div ng-if="roundsList[1].match">
+        <div class="heats-semiqualifying-holder">
 
 
-        <!-- ACCORDIAN-->
-        <div class="time-trial-accordian heat-trial-accordian" ng-class="{'bluecolor-accordian':roundsList[1].name==='Heat'}">
-          <uib-accordion close-others="oneAtATime">
-            <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="semi in roundsList[1].match|limitTo:limitValue track by $index">
-              <!-- <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="saccordian in semi.tablecontent  track by $index"> -->
-              <uib-accordion-heading class="clearfix">
-                <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
-                <a href="">
-                  <h4 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Heat {{$index+1}}</h4>
-                </a>
+          <!-- ACCORDIAN-->
+          <div class="time-trial-accordian heat-trial-accordian" ng-class="{'bluecolor-accordian':roundsList[1].name==='Heat'}">
+            <uib-accordion close-others="oneAtATime">
+              <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="semi in roundsList[1].match|limitTo:limitValue track by $index">
+                <!-- <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="saccordian in semi.tablecontent  track by $index"> -->
+                <uib-accordion-heading class="clearfix">
+                  <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
+                  <a href="">
+                    <h4 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Heat {{$index+1}}</h4>
+                  </a>
 
-                <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
-              </uib-accordion-heading>
-              <div class="time-trial-accordioncontent heat-trial-accordiancontent ">
-                <div class="accordian-timetrial-table q-blue-table table-responsive">
-                  <table class="table-draws-schedule table-five">
-                    <thead>
-                      <tr>
-                        <th>
-                          <div class="">
-                            <h4 class="m-clear">lane no</h4>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="">
-                            <h4 class="m-clear">name</h4>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="">
-                            <h4 class="m-clear">school</h4>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="">
-                            <h4 class="m-clear">result</h4>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="">
-                            <h4 class="m-clear">time</h4>
-                          </div>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr ng-repeat="semifinal in semi.opponentsSingle track by $index">
-                        <td>
-                          <div class="text-capitalize">
-                            {{$index+1}}
-                          </div>
-                        </td>
-                        <td>
-                          <div class="text-capitalize">
-                            {{semifinal.athleteId.fullName}}
-                          </div>
-                        </td>
-                        <td>
-                          <div class="text-capitalize">
-                            {{semifinal.athleteId.school.name}}
-                          </div>
-                        </td>
-                        <td>
-                          <div class="text-capitalize">
-                            {{semifinal.result}}
-                          </div>
-                        </td>
-                        <td>
-                          <div class="text-capitalize">
-                            {{semifinal.time}}
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
+                </uib-accordion-heading>
+                <div class="time-trial-accordioncontent heat-trial-accordiancontent ">
+                  <div class="accordian-timetrial-table q-blue-table table-responsive">
+                    <table class="table-draws-schedule table-five">
+                      <thead>
+                        <tr>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">lane no</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">name</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">school</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">result</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">time</h4>
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="semifinal in semi.opponentsSingle track by $index">
+                          <td>
+                            <div class="text-capitalize">
+                              {{$index+1}}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              {{semifinal.athleteId.fullName}}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              {{semifinal.athleteId.school.name}}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              {{semifinal.result}}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              {{semifinal.time}}
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
+
+
               </div>
+            </uib-accordion>
+          </div>
+          <!--END  ACCORDIAN-->
 
 
-            </div>
-          </uib-accordion>
+
+          <!-- <div class="heats-viewmore text-right " ng-if="semi.round==='Qualifying'"> -->
+
+
         </div>
-        <!--END  ACCORDIAN-->
-
-
-
-        <!-- <div class="heats-viewmore text-right " ng-if="semi.round==='Qualifying'"> -->
-
-
-      </div>
-      <div class="heats-viewmore text-right" ng-click="showMoreData(true,'semi-final')" ng-if="showMore && roundsList[1].match.length>8">
-        <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
-      </div>
-      <div class="heats-viewmore text-right" ng-click="showMoreData(false,'semi-final')" ng-if="!showMore">
-        <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
+        <div class="heats-viewmore text-right" ng-click="showMoreData(true,'semi-final')" ng-if="showMore && roundsList[1].match.length>8">
+          <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+        </div>
+        <div class="heats-viewmore text-right" ng-click="showMoreData(false,'semi-final')" ng-if="!showMore">
+          <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
+        </div>
       </div>
       <!-- SEMI-FINAL END -->
 
@@ -234,101 +236,103 @@
           <span>{{roundsList[2].match[2].scheduleTime }}</span></p>
       </div>
       <!--END HEAD-->
-      <div class="heats-semiqualifying-holder">
+      <div ng-if="roundsList[2].match">
+        <div class="heats-semiqualifying-holder">
 
 
-        <!-- ACCORDIAN-->
-        <div class="time-trial-accordian heat-trial-accordian" ng-class="{'bluecolor-accordian':roundsList[2].name==='Heat'}">
-          <uib-accordion close-others="oneAtATime">
-            <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="semi in roundsList[2].match | limitTo:heatLImit track by $index ">
-              <uib-accordion-heading class="clearfix">
-                <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
-                <a href="">
-                  <h4 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Heat {{$index+1}}</h4>
-                </a>
+          <!-- ACCORDIAN-->
+          <div class="time-trial-accordian heat-trial-accordian" ng-class="{'bluecolor-accordian':roundsList[2].name==='Heat'}">
+            <uib-accordion close-others="oneAtATime">
+              <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="semi in roundsList[2].match | limitTo:heatLImit track by $index ">
+                <uib-accordion-heading class="clearfix">
+                  <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
+                  <a href="">
+                    <h4 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Heat {{$index+1}}</h4>
+                  </a>
 
-                <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
-              </uib-accordion-heading>
-              <div class="time-trial-accordioncontent heat-trial-accordiancontent ">
-                <div class="accordian-timetrial-table q-blue-table table-responsive">
-                  <table class="table-draws-schedule table-five">
-                    <thead>
-                      <tr>
-                        <th>
-                          <div class="">
-                            <h4 class="m-clear">lane no</h4>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="">
-                            <h4 class="m-clear">name</h4>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="">
-                            <h4 class="m-clear">school</h4>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="">
-                            <h4 class="m-clear">result</h4>
-                          </div>
-                        </th>
-                        <th>
-                          <div class="">
-                            <h4 class="m-clear">time</h4>
-                          </div>
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr ng-repeat="semifinal in semi.opponentsSingle track by $index">
-                        <td>
-                          <div class="text-capitalize">
-                            {{$index+1}}
-                          </div>
-                        </td>
-                        <td>
-                          <div class="text-capitalize">
-                            {{semifinal.athleteId.fullName}}
-                          </div>
-                        </td>
-                        <td>
-                          <div class="text-capitalize">
-                            {{semifinal.athleteId.school.name}}
-                          </div>
-                        </td>
-                        <td>
-                          <div class="text-capitalize">
-                            {{semifinal.result}}
-                          </div>
-                        </td>
-                        <td>
-                          <div class="text-capitalize">
-                            {{semifinal.time}}
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+                  <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
+                </uib-accordion-heading>
+                <div class="time-trial-accordioncontent heat-trial-accordiancontent ">
+                  <div class="accordian-timetrial-table q-blue-table table-responsive">
+                    <table class="table-draws-schedule table-five">
+                      <thead>
+                        <tr>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">lane no</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">name</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">school</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">result</h4>
+                            </div>
+                          </th>
+                          <th>
+                            <div class="">
+                              <h4 class="m-clear">time</h4>
+                            </div>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="semifinal in semi.opponentsSingle track by $index">
+                          <td>
+                            <div class="text-capitalize">
+                              {{$index+1}}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              {{semifinal.athleteId.fullName}}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              {{semifinal.athleteId.school.name}}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              {{semifinal.result}}
+                            </div>
+                          </td>
+                          <td>
+                            <div class="text-capitalize">
+                              {{semifinal.time}}
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
                 </div>
+
+
               </div>
+            </uib-accordion>
+          </div>
+          <!--END  ACCORDIAN-->
 
 
-            </div>
-          </uib-accordion>
+
+
         </div>
-        <!--END  ACCORDIAN-->
-
-
-
-
-      </div>
-      <div class="heats-viewmore text-right" ng-click="showMoreData(true,'heat')" ng-if="showHeat && roundsList[2].match.length>8">
-        <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
-      </div>
-      <div class="heats-viewmore text-right" ng-click="showMoreData(false,'heat')" ng-if="!showHeat">
-        <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
+        <div class="heats-viewmore text-right" ng-click="showMoreData(true,'heat')" ng-if="showHeat && roundsList[2].match.length>8">
+          <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+        </div>
+        <div class="heats-viewmore text-right" ng-click="showMoreData(false,'heat')" ng-if="!showHeat">
+          <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
+        </div>
       </div>
 
       <!-- HEAT END -->
