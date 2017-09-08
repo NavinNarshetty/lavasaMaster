@@ -172,8 +172,8 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                     month: 'Dec'
                 }, {
                     sport: 'Shooting',
-                    date1: '13',
-                    date2: '17',
+                    date1: '6',
+                    date2: '9',
                     month: 'Dec'
                 }, {
                     sport: 'Squash',
@@ -187,8 +187,8 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                     month: 'Dec'
                 }, {
                     sport: 'Table Tennis',
-                    date1: '6',
-                    date2: '11',
+                    date1: '13',
+                    date2: '17',
                     month: 'Dec'
                 }, {
                     sport: 'Taekwondo',
@@ -215,9 +215,7 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                     date: '11',
                     month: 'Dec'
                 }, {
-                    sport: '',
-                    date: '',
-                    month: ''
+                    sport: 'Wrestling'
                 }];
             } else if ($scope.sfaCity == 'Hyderabad') {
                 $scope.schedulelist = [{
@@ -386,8 +384,8 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                 month: 'Dec'
             }, {
                 sport: 'Shooting',
-                date1: '13',
-                date2: '17',
+                date1: '6',
+                date2: '9',
                 month: 'Dec'
             }, {
                 sport: 'Squash',

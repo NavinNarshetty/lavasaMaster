@@ -322,7 +322,7 @@
                 "validation": ["", "trim", ""],
                 "dropDownField": "",
                 "dropDownType": "single",
-                "dropDown": ["Boxing", "Fencing", "Judo", "Karate", " Sport Mma", "Taekwondo"]
+                "dropDown": ["Boxing", "Fencing", "Judo", "Karate", "Sport Mma", "Taekwondo", "Wrestling"]
             }]
         },
         {

@@ -367,8 +367,7 @@
                 "dropDownField": "",
                 "dropDownType": "single",
                 "dropDown": ["Basketball ", "Volleyball", "Throwball", "Handball", "Kho Kho", "Hockey", "Football", "Kabaddi", "Badminton",
-                    "Tennis", "Table Tennis", "Squash", "Judo", "Karate", "Sports MMA", "Boxing", "Taekwondo",
-                    "Fencing", "Archery", "Shooting", "Swimming", "Waterpolo", "Athletics", "Carrom", "Chess"
+                    "Tennis", "Table Tennis", "Squash", "Judo", "Karate", "Sports MMA", "Boxing", "Taekwondo", "Wrestling", "Fencing", "Archery", "Shooting", "Swimming", "Waterpolo", "Athletics", "Carrom", "Chess"
                 ],
                 "validation": ["", "trim", ""]
             }]
