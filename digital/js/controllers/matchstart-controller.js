@@ -386,7 +386,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
         if($scope.formData.winner.player =="" || !$scope.formData.winner.player){
           toastr.warning('Please select a winner');
         } else {
-          if ($scope.formData.players[0].isWalkover == true ) {
+          if ($scope.formData.players[0].walkover == true ) {
             $scope.updateWinnerResult();
           } else {
             $scope.formData.winner.reason = 'Bye';
