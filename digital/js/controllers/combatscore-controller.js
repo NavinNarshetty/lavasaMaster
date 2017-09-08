@@ -68,6 +68,17 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     // }
     // DESTROY AUTO SAVE END
     // MATCH COMPLETE
+    $scope.completePopup = function(){
+      var modalCompleteMatch;
+        $rootScope.modalInstance = $uibModal.open({
+          animation: true,
+          scope: $scope,
+          // backdrop: 'static',
+          // keyboard: false,
+          templateUrl: 'views/modal/confirmcomplete.html',
+          windowClass: 'completematch-modal'
+        })
+    };
     $scope.matchComplete = function(){
       if ($scope.match.resultsCombat) {
         $scope.match.resultsCombat.status = "IsCompleted";

@@ -79,6 +79,17 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
       })
     // DESTROY AUTO SAVE END
     // MATCH COMPLETE
+    $scope.completePopup = function(){
+      var modalCompleteMatch;
+        $rootScope.modalInstance = $uibModal.open({
+          animation: true,
+          scope: $scope,
+          // backdrop: 'static',
+          // keyboard: false,
+          templateUrl: 'views/modal/confirmcomplete.html',
+          windowClass: 'completematch-modal'
+        })
+    };
     $scope.matchComplete = function(){
       if($scope.match.resultsRacquet){
       $scope.match.resultsRacquet.status = "IsCompleted";
