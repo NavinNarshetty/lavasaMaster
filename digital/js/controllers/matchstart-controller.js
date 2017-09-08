@@ -187,7 +187,8 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                             "matchPhoto": [],
                             "scoreSheet": [],
                             "status": "",
-                            "winner": {}
+                            "winner": {},
+                            "isNoMatch": false;
                           }
                           _.each($scope.matchDetails.teams, function(n, key) {
                               $scope.formData.teams[key] = {
@@ -264,6 +265,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
           player.noShow = true;
           player.walkover = false;
       })
+      $scope.formData.isNoMatch = true;
     }
     // NO MATCH END
     // TEAM NO MATCH

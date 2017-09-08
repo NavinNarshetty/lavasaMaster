@@ -794,6 +794,46 @@ header {
 }
 // TEAM SELECTION MODAL END
 
+// CONFIRM COMPLETE MODAL
+.completematch-modal{
+  .modal-title{
+    color: #fb7700;
+    font-weight: 700;
+  }
+  .modal-footer{
+    padding: 0;
+    border: none;
+  }
+}
+.warning-logo{
+  margin: 0px 5px;
+  color: red;
+}
+.confirmation-message{
+  font-size: 18px;
+  font-weight: 700;
+}
+.confirmationmodal-button{
+  padding: 5px;
+}
+
+.btn-modalconfirm{
+  width: 49%;
+  margin: 0;
+  border: 1px solid #ccc;
+  display: inline-block;
+  background-color: transparent;
+  color: #27b465;
+  font-weight: 700;
+
+  &:active, &:hover, &:focus {
+    background-color: transparent;
+    color: #27b465;
+    border-color: #27b465;
+  }
+}
+// CONFIRM COMPLETE MODAL END
+
 .hello{
   width: 100%;
   height: 50px;
