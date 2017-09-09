@@ -29,10 +29,11 @@
         <select class="form-control" ng-model="form.excelType">
                         <option  value="qualifying">Qualifying</option>
                         <option  value="knockout">Knockout</option>
+                        <!--<option  value="league">League</option>-->
                     </select>
     </div>
 
-    <div class="col-md-12 drop-2" ng-if="form.resultType=='knockout'||form.resultType=='qualifying-knockout'&&form.excelType=='knockout'">
+    <div class="col-md-12 drop-2" ng-if="form.resultType=='knockout'||form.excelType=='knockout'">
         <label>Knockout Range</label>
         <select class="form-control" ng-model="form.range">
           <option  value=2>2</option>
@@ -59,14 +60,14 @@
         </div>
       </div>
     </form>-->
-    <div class="col-md-12 drop-2" ng-if="form.resultType!='qualifying-knockout'&&form.resultType!='qualifying-round'">
+    <div class="col-md-12 drop-2" ng-if="form.resultType!='qualifying-knockout'&&form.resultType!='qualifying-round'&&form.resultType!='league-cum-knockout'">
         <label>Sport Type*</label>
         <select class="form-control" ng-model="form.playerType">
           <option  value="team">Team</option>
           <option  value="individual">Individual</option>
         </select>
     </div>
-    <div class="col-md-12 drop-1" ng-if="form.resultType=='qualifying-knockout'||form.resultType=='knockout'||form.resultType=='league-cum-knockout'">
+    <div class="col-md-12 drop-1" ng-if="form.excelType=='knockout'||form.resultType=='knockout'">
         <label>Third Place*</label>
         <select class="form-control" ng-model="form.thirdPlace">
           <option  value="yes">YES</option>

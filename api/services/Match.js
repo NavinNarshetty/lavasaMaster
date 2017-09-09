@@ -886,6 +886,7 @@ var model = {
                                         callback(null, singleData);
                                     } else {
                                         if (_.isEmpty(singleData["SFAID 1"])) {
+                                            singleData["PARTICIPANT 1"] = null;
                                             callback(null, singleData);
                                         } else {
                                             // console.log("singleData1", singleData);
@@ -894,7 +895,7 @@ var model = {
                                             paramData.sport = singleData.SPORT;
                                             Match.getAthleteId(paramData, function (err, complete) {
                                                 if (err || _.isEmpty(complete)) {
-                                                    singleData["PARTICIPANT 1"] = null;
+                                                    singleData["PARTICIPANT 1"] = "";
                                                     err = "SFAID 1 may have wrong values";
                                                     callback(null, {
                                                         error: err,
@@ -917,7 +918,7 @@ var model = {
                                         callback(null, singleData);
                                     } else {
                                         if (_.isEmpty(singleData["SFAID 2"])) {
-                                            // console.log("inside sfa");
+                                            singleData["PARTICIPANT 2"] = "";
                                             callback(null, singleData);
                                         } else {
                                             var paramData = {};
@@ -1008,10 +1009,15 @@ var model = {
 
                 },
                 function (singleData, callback) {
-                    data.sport = singleData[0].success.sport;
-                    Match.addPreviousMatch(data, function (err, sportData) {
+                    // callback(null, singleData);
+                    if (singleData.error) {
                         callback(null, singleData);
-                    });
+                    } else {
+                        data.sport = singleData[0].success.sport;
+                        Match.addPreviousMatch(data, function (err, sportData) {
+                            callback(null, singleData);
+                        });
+                    }
                 }
             ],
             function (err, results) {
@@ -1944,7 +1950,7 @@ var model = {
                                     } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
                                         paramData.gender = "female";
                                     }
-                                    paramData.weight = undefined;
+                                    paramData.weight = singleData["WEIGHT CATEGORIES"];
                                     Match.getSportId(paramData, function (err, sportData) {
                                         if (err || _.isEmpty(sportData)) {
                                             singleData.SPORT = null;
@@ -2410,7 +2416,7 @@ var model = {
             obj["SCHOOL 2"] = "";
             finalData.push(obj);
             Config.generateExcel("KnockoutIndividual", finalData, res);
-        } else if (data.resultType == 'league-cum-knockout' && data.excelType == 'league') {
+        } else if (data.resultType == 'league-cum-knockout') {
             var obj = {};
             // obj["MATCH ID"] = "";
             obj.DATE = "";
@@ -2420,13 +2426,17 @@ var model = {
             obj["AGE GROUP"] = "";
             obj["EVENT"] = "";
             obj["WEIGHT CATEGORIES"] = "";
+            obj["STAGE"] = "";
             obj["ROUND"] = "";
+            obj["MATCH NO"] = "";
             obj["TEAM 1"] = "";
             obj["TEAM NAME 1"] = "";
             obj["SCHOOL 1"] = "";
+            obj["COACH NAME 1"] = "";
             obj["TEAM 2"] = "";
             obj["TEAM NAME 2"] = "";
             obj["SCHOOL 2"] = "";
+            obj["COACH NAME 2"] = "";
             // obj["RESULT 1"] = "";
             // obj["SCORE 1"] = "";
             // obj["DATA POINTS 1"] = "";
