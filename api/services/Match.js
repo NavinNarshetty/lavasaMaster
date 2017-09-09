@@ -39,9 +39,9 @@ var schema = new Schema({
     resultsRacquet: Schema.Types.Mixed,
     resultHeat: Schema.Types.Mixed,
     resultHockey: Schema.Types.Mixed,
-    resultBasketBall: Schema.Types.Mixed,
-    resultVollyBall: Schema.Types.Mixed,
-    resultHandBall: Schema.Types.Mixed,
+    resultBasketball: Schema.Types.Mixed,
+    resultVolleyball: Schema.Types.Mixed,
+    resultHandball: Schema.Types.Mixed,
     resultWaterPolo: Schema.Types.Mixed,
     resultKabaddi: Schema.Types.Mixed,
     resultFootball: Schema.Types.Mixed,
@@ -3118,10 +3118,10 @@ var model = {
                             }
                         };
                         callback(null, matchObj);
-                    } else if (data.resultVollyBall) {
+                    } else if (data.resultVolleyball) {
                         var matchObj = {
                             $set: {
-                                resultVollyBall: data.resultVollyBall
+                                resultVolleyball: data.resultVolleyball
                             }
                         };
                         callback(null, matchObj);
@@ -3310,14 +3310,14 @@ var model = {
                                             opponentsSingle: lostPlayer
                                         }
                                     };
-                                } else if (data.found.resultVollyBall && data.found.resultVollyBall.status == 'IsCompleted' && data.found.resultVollyBall.isNoMatch == false) {
-                                    if (data.found.opponentsTeam[0].equals(data.found.resultVollyBall.winner.player)) {
+                                } else if (data.found.resultVolleyball && data.found.resultVolleyball.status == 'IsCompleted' && data.found.resultVolleyball.isNoMatch == false) {
+                                    if (data.found.opponentsTeam[0].equals(data.found.resultVolleyball.winner.player)) {
                                         lostPlayer.push(data.found.opponentsTeam[1]);
-                                        winPlayer.push(data.found.resultVollyBall.winner.player);
+                                        winPlayer.push(data.found.resultVolleyball.winner.player);
                                         console.log("player", winPlayer);
                                     } else {
                                         lostPlayer.push(data.found.opponentsTeam[0]);
-                                        winPlayer.push(data.found.resultVollyBall.winner.player);
+                                        winPlayer.push(data.found.resultVolleyball.winner.player);
                                         console.log("player", winPlayer);
                                     }
                                     updateObj = {
@@ -3359,14 +3359,14 @@ var model = {
                                                 opponentsSingle: lostPlayer
                                             }
                                         };
-                                    } else if (data.found.resultVollyBall && data.found.resultVollyBall.status == 'IsCompleted' && data.found.resultVollyBall.isNoMatch == false) {
-                                        if (data.found.opponentsTeam[0].equals(data.found.resultVollyBall.winner.player)) {
+                                    } else if (data.found.resultVolleyball && data.found.resultVolleyball.status == 'IsCompleted' && data.found.resultVolleyball.isNoMatch == false) {
+                                        if (data.found.opponentsTeam[0].equals(data.found.resultVolleyball.winner.player)) {
                                             lostPlayer.push(data.found.opponentsTeam[1]);
-                                            winPlayer.push(data.found.resultVollyBall.winner.player);
+                                            winPlayer.push(data.found.resultVolleyball.winner.player);
                                             console.log("player", winPlayer);
                                         } else {
                                             lostPlayer.push(data.found.opponentsTeam[0]);
-                                            winPlayer.push(data.found.resultVollyBall.winner.player);
+                                            winPlayer.push(data.found.resultVolleyball.winner.player);
                                             console.log("player", winPlayer);
                                         }
                                         updateObj = {
@@ -3445,8 +3445,8 @@ var model = {
                                             opponentsTeam: winPlayer
                                         }
                                     };
-                                } else if (data.found.resultVollyBall && data.found.resultVollyBall.status == 'IsCompleted' && data.found.resultVollyBall.isNoMatch == false) {
-                                    winPlayer.push(data.found.resultVollyBall.winner.opponentsSingle);
+                                } else if (data.found.resultVolleyball && data.found.resultVolleyball.status == 'IsCompleted' && data.found.resultVolleyball.isNoMatch == false) {
+                                    winPlayer.push(data.found.resultVolleyball.winner.opponentsSingle);
                                     console.log("player", winPlayer);
                                     updateObj = {
                                         $set: {
@@ -3469,8 +3469,8 @@ var model = {
                                                 opponentsTeam: winPlayer
                                             }
                                         };
-                                    } else if (data.found.resultVollyBall && data.found.resultVollyBall.status == "IsCompleted" && data.found.resultVollyBall.isNoMatch == false) {
-                                        winPlayer.push(data.found.resultVollyBall.winner.player);
+                                    } else if (data.found.resultVolleyball && data.found.resultVolleyball.status == "IsCompleted" && data.found.resultVolleyball.isNoMatch == false) {
+                                        winPlayer.push(data.found.resultVolleyball.winner.player);
                                         console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
