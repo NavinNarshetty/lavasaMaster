@@ -3115,6 +3115,13 @@ var model = {
                             }
                         };
                         callback(null, matchObj);
+                    }else if (data.resultVollyBall) {
+                        var matchObj = {
+                            $set: {
+                                resultVollyBall: data.resultVollyBall
+                            }
+                        };
+                        callback(null, matchObj);
                     }
                 },
                 function (matchObj, callback) {
