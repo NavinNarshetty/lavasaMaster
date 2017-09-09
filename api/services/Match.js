@@ -854,6 +854,130 @@ var model = {
 
     },
 
+    getSportLeagueKnockoutRounds: function (data, callback) {
+        var finalData = {};
+        var matchData1 = [];
+        var matchData2 = [];
+        async.waterfall([
+            function (callback) {
+                var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                Match.find({
+                    sport: data.sport,
+                    excelType: "League"
+                }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            var matches = _.groupBy(found, 'round');
+                            callback(null, matches);
+                        }
+                    }
+                });
+            },
+            function (matches, callback) {
+                var i = 0;
+                var dummy = [];
+                var arr = _.keys(matches);
+                _.each(matches, function (n) {
+                    dummy.push(n);
+                });
+                while (i != arr.length) {
+                    var match = {};
+                    match.name = arr[i];
+                    match.match = dummy[i];
+                    // match.sportType = match.match[0].sport.sportslist.sportsListSubCategory.sportsListCategory.name
+                    matchData1.push(match);
+                    i++;
+                }
+                var sendObj = {};
+                sendObj.roundsListName = _.keys(matches);
+                sendObj.roundsList = matchData1;
+                if (data.round) {
+                    var index = _.findIndex(matchData1, function (n) {
+                        return n.name == data.round
+                    });
+
+                    if (index != -1) {
+                        sendObj.roundsList = _.slice(matchData1, index, index + 3);
+                        callback(null, sendObj);
+                    } else {
+                        callback(null, sendObj);
+                    }
+
+                } else {
+                    callback(null, sendObj);
+                }
+            },
+            function (sendObj, callback) {
+                var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                Match.find({
+                    sport: data.sport,
+                    excelType: "Knockout"
+                }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            finalData.qualifying = sendObj;
+                            var matches = _.groupBy(found, 'round');
+                            callback(null, matches);
+                        }
+                    }
+                });
+            },
+            function (matches, callback) {
+                var i = 0;
+                var dummy = [];
+                var arr = _.keys(matches);
+                _.each(matches, function (n) {
+                    dummy.push(n);
+                });
+                while (i != arr.length) {
+                    var match = {};
+                    match.name = arr[i];
+                    match.match = dummy[i];
+                    // match.sportType = match.match[0].sport.sportslist.sportsListSubCategory.sportsListCategory.name
+                    matchData2.push(match);
+                    i++;
+                }
+                var sendObj = {};
+                sendObj.roundsListName = _.keys(matches);
+                sendObj.roundsList = matchData2;
+                if (data.round) {
+                    var index = _.findIndex(matchData2, function (n) {
+                        return n.name == data.round
+                    });
+
+                    if (index != -1) {
+                        sendObj.roundsList = _.slice(matchData2, index, index + 3);
+                        finalData.knockout = sendObj;
+                        callback(null, finalData);
+                    } else {
+                        finalData.knockout = sendObj;
+                        callback(null, finalData);
+                    }
+
+                } else {
+                    finalData.knockout = sendObj;
+                    callback(null, finalData);
+                }
+            }
+        ], function (err, result) {
+            console.log("Final Callback");
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
+            }
+        });
+
+    },
+
     //-----------------------------SAVE Excel ---------------------------------------------
 
     saveKnockoutIndividual: function (importData, data, callback) {
@@ -3147,12 +3271,15 @@ var model = {
 
     },
 
-    generateExcelKnockoutTeam: function (match, callback) {
+    generateLeagueKnockout: function (match, callback) {
+        var i = 1;
         async.concatSeries(match, function (mainData, callback) {
                 var obj = {};
                 // console.log(JSON.stringify(mainData, null, "    "));
                 obj["MATCH ID"] = mainData.matchId;
-                obj["ROUND"] = mainData.round;
+                var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
+                obj.DATE = dateTime;
+                obj.TIME = mainData.scheduleTime;
                 obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
                 if (mainData.sport.gender == "male") {
                     obj.GENDER = "Male";
@@ -3168,38 +3295,39 @@ var model = {
                 } else {
                     obj["WEIGHT CATEGORIES"] = "";
                 }
-                var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
-                obj.DATE = dateTime;
-                obj.TIME = mainData.scheduleTime;
+                obj["STAGE"] = mainData.excelType;
+                obj["ROUND"] = mainData.round;
+                obj["MATCH NO"] = "MATCH " + i++;
                 console.log(JSON.stringify(mainData.opponentsTeam, null, "    "), "-------------");
                 if (mainData.opponentsTeam.length > 0) {
                     obj["TEAM 1"] = mainData.opponentsTeam[0].teamId;
-                    obj["TEAM NAME 1"] = mainData.opponentsTeam[0].teamId;
+                    obj["TEAM NAME 1"] = mainData.opponentsTeam[0].name;
                     obj["SCHOOL 1"] = mainData.opponentsTeam[0].schoolName;
                     // console.log(JSON.stringify(mainData.resultsCombat, null, "    "),"-------------");                                    
-                    if (mainData.resultsCombat) {
-                        if (mainData.opponentsTeam[0].athleteId._id.equals(mainData.resultsCombat.winnner[0].player)) {
+                    if (mainData.resultFootball) {
+                        obj["COACH NAME 1"] = mainData.resultFootball.coachName;
+                        if (mainData.opponentsTeam[0].athleteId._id.equals(mainData.resultFootball.winnner[0].player)) {
                             obj["RESULT 1"] = "Won";
                         } else {
                             obj["RESULT 1"] = "Lost";
                         }
                         var i;
-                        for (i = 0; i < mainData.resultsCombat.players[0].sets.length; i++) {
+                        for (i = 0; i < mainData.resultFootball.players[0].sets.length; i++) {
                             if (i == 0) {
-                                obj["SCORE 1"] = "Set" + i + "-" + mainData.resultsCombat.players[0].sets[i].point;
-                                obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets[i];
+                                obj["SCORE 1"] = "Set" + i + "-" + mainData.resultFootball.players[0].sets[i].point;
+                                obj["DATA POINTS 1"] = mainData.resultFootball.players[0].sets[i];
 
                             } else {
-                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsCombat.players[0].sets[i].point;
-                                obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + mainData.resultsCombat.players[0].sets[i];
+                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultFootball.players[0].sets[i].point;
+                                obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + mainData.resultFootball.players[0].sets[i];
                             }
 
                         }
                         // obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets;
                     }
                 } else {
-                    obj["TEAMID 1"] = "";
-                    obj["PARTICIPANT 1"] = "";
+                    obj["TEAM 1"] = "";
+                    obj["TEAM NAME 1"] = "";
                     obj["SCHOOL 1"] = "";
                     obj["RESULT 1"] = "";
                     obj["SCORE 1"] = "";
@@ -3207,29 +3335,31 @@ var model = {
                 }
 
                 if (mainData.opponentsTeam.length > 1) {
-                    obj["TEAMID 2"] = mainData.opponentsTeam[1].teamId;
+                    obj["TEAM 2"] = mainData.opponentsTeam[1].teamId;
+                    obj["TEAM NAME 2"] = mainData.opponentsTeam[0].name;
                     obj["SCHOOL 2"] = mainData.opponentsTeam[1].schoolName;
-                    if (mainData.resultsCombat) {
+                    if (mainData.resultFootball) {
+                        obj["COACH NAME 2"] = mainData.resultFootball.coachName;
                         if (mainData.opponentsTeam[1].athleteId._id === mainData.resultsCombat.winnner[0].player) {
                             obj["RESULT 2"] = "Won";
                         } else {
                             obj["RESULT 2"] = "Lost";
                         }
                         var i;
-                        for (i = 0; i < mainData.resultsCombat.players[1].sets.length; i++) {
+                        for (i = 0; i < mainData.resultFootball.players[1].sets.length; i++) {
                             if (i == 0) {
-                                obj["SCORE 2"] = "Set" + i + "-" + mainData.resultsCombat.players[1].sets[i].point;
-                                obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets[i];
+                                obj["SCORE 2"] = "Set" + i + "-" + mainData.resultFootball.players[1].sets[i].point;
+                                obj["DATA POINTS 2"] = mainData.resultFootball.players[1].sets[i];
                             } else {
-                                obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + i + "-" + mainData.resultsCombat.players[1].sets[i].point;
-                                obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + mainData.resultsCombat.players[1].sets[i];
+                                obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + i + "-" + mainData.resultFootball.players[1].sets[i].point;
+                                obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + mainData.resultFootball.players[1].sets[i];
                             }
                         }
                         // obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets[;
                     }
                 } else {
-                    obj["TEAMID 2"] = "";
-                    obj["PARTICIPANT 2"] = "";
+                    obj["TEAM 2"] = "";
+                    obj["TEAM NAME 2"] = "";
                     obj["SCHOOL 2"] = "";
                     obj["RESULT 2"] = "";
                     obj["SCORE 2"] = "";
@@ -4713,6 +4843,29 @@ var model = {
             callback(null, singleData);
         });
 
+
+    },
+
+    updateFootball: function (data, callback) {
+        var matchObj = {
+            $set: {
+                resultFootball: data.resultFootball
+            }
+        };
+        Match.update({
+            matchId: data.matchId
+        }, matchObj).exec(
+            function (err, match) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(match)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, match);
+                    }
+                }
+            });
 
     }
 };
