@@ -864,7 +864,8 @@ var model = {
                                     } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
                                         paramData.gender = "female";
                                     }
-                                    paramData.weight = singleData["WEIGHT CATEGORIES"];
+                                    var weight = singleData["WEIGHT CATEGORIES"];
+                                    paramData.weight = _.trimStart(weight, " ");
                                     Match.getSportId(paramData, function (err, sportData) {
                                         if (err || _.isEmpty(sportData)) {
                                             singleData.SPORT = null;
@@ -1526,7 +1527,8 @@ var model = {
                                 } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
                                     paramData.gender = "female";
                                 }
-                                paramData.weight = singleData["WEIGHT CATEGORIES"];
+                                var weight = singleData["WEIGHT CATEGORIES"];
+                                paramData.weight = _.trimStart(weight, " ");
                                 Match.getSportId(paramData, function (err, sportData) {
                                     if (err || _.isEmpty(sportData)) {
                                         singleData.SPORT = null;
@@ -1950,7 +1952,8 @@ var model = {
                                     } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
                                         paramData.gender = "female";
                                     }
-                                    paramData.weight = singleData["WEIGHT CATEGORIES"];
+                                    var weight = singleData["WEIGHT CATEGORIES"];
+                                    paramData.weight = _.trimStart(weight, " ");
                                     Match.getSportId(paramData, function (err, sportData) {
                                         if (err || _.isEmpty(sportData)) {
                                             singleData.SPORT = null;
@@ -3115,7 +3118,7 @@ var model = {
                             }
                         };
                         callback(null, matchObj);
-                    }else if (data.resultVollyBall) {
+                    } else if (data.resultVollyBall) {
                         var matchObj = {
                             $set: {
                                 resultVollyBall: data.resultVollyBall
