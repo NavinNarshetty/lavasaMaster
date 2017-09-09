@@ -388,14 +388,22 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     $scope.saveWinner = function(){
       console.log($scope.formData, 'savedata');
       if($scope.matchDetails.players.length == 1){
-        if($scope.formData.winner.player =="" || !$scope.formData.winner.player){
-          toastr.warning('Please select a winner');
-        } else {
-          if ($scope.formData.players[0].walkover == true ) {
-            $scope.updateWinnerResult();
+        if($scope.formData.players[0].noShow == true){
+          $scope.formData.isNoMatch = true;
+          $scope.formData.winner.player = "";
+          $scope.formData.winner.opponentsSingle = "";
+          $scope.updateWinnerResult();
+        } else{
+          $scope.formData.isNoMatch = false;
+          if($scope.formData.winner.player =="" || !$scope.formData.winner.player){
+            toastr.warning('Please select a winner');
           } else {
-            $scope.formData.winner.reason = 'Bye';
-            $scope.updateWinnerResult();
+            if ($scope.formData.players[0].walkover == true ) {
+              $scope.updateWinnerResult();
+            } else {
+              $scope.formData.winner.reason = 'Bye';
+              $scope.updateWinnerResult();
+            }
           }
         }
       } else{
@@ -403,6 +411,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
           $scope.formData.isNoMatch = true;
           $scope.formData.winner = {};
           $scope.formData.winner.player = "";
+          $scope.formData.winner.opponentsSingle = "";
           $scope.updateWinnerResult();
         } else {
           $scope.formData.isNoMatch = false;
