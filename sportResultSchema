@@ -58,7 +58,7 @@ var resultHockey = {
     scoreSheet: [{"588372837289379283789.jpg"}]
 };
 
-var resultBasketBall = {
+var resultBasketball = {
     team[{
         teamId: _id,
         teamResults:{
@@ -109,7 +109,7 @@ var resultBasketBall = {
     scoreSheet: [{"588372837289379283789.jpg"}]
 };
 
-var resultVollyBall = {
+var resultVolleyball = {
     team[{
         teamId: _id,
         teamResults:{
@@ -143,7 +143,7 @@ var resultVollyBall = {
     scoreSheet: [{"588372837289379283789.jpg"}]
 };
 
-var resultHandBall = {
+var resultHandball = {
     team[{
         teamId: _id,
         teamResults:{

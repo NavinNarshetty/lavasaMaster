@@ -36,7 +36,7 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
                   $scope.setLength[key] = {
                     setShow : true
                   }
-                })
+                });
                 console.log($scope.setLength, 'setlength');
                 console.log($scope.match, 'match');
             } else {

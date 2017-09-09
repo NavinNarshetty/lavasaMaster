@@ -48,6 +48,7 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                 $scope.matchDetails.matchId = $scope.matchData.matchId;
                 console.log($scope.matchDetails, '$scope.matchDetails');
                 if ($scope.matchDetails.teams.length == 0) {
+                  toasstr.error("EmptyData");
                     if ($stateParams.drawFormat === 'Knockout') {
                         $state.go('knockout', {
                             drawFormat: $stateParams.drawFormat,
@@ -78,6 +79,8 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                                         "team": n._id,
                                         "noShow": false,
                                         "walkover": false,
+                                        "coach": "",
+                                        "formation": "",
                                         "players": [],
                                         "teamResults": {
                                             halfPoints: 0,
@@ -113,6 +116,7 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                             } else {
                                 $scope.formData = $scope.matchDetails.resultFootball;
                                 if ($scope.matchDetails.resultFootball.status == 'IsCompleted') {
+                                  toastr.warning("This match has already been scored.", "Match Complete");
                                     if ($stateParams.drawFormat === 'Knockout') {
                                         $state.go('knockout', {
                                             drawFormat: $stateParams.drawFormat,
@@ -144,6 +148,8 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                                         "team": n._id,
                                         "noShow": false,
                                         "walkover": false,
+                                        "coach": "",
+                                        "formation": "",
                                         "players": [],
                                         "teamResults": {
                                             sets: [{
@@ -151,6 +157,7 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                                             }],
                                             spike: 0,
                                             fouls: 0,
+                                            block: 0,
                                         }
                                     }
                                     _.each($scope.matchDetails.teams[key].studentTeam, function(m, mkey) {
@@ -168,6 +175,7 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                             } else {
                                 $scope.formData = $scope.matchDetails.resultVolleyball;
                                 if ($scope.matchDetails.resultVolleyball.status == 'IsCompleted') {
+                                  toastr.warning("This match has already been scored.", "Match Complete");
                                     if ($stateParams.drawFormat === 'Knockout') {
                                         $state.go('knockout', {
                                             drawFormat: $stateParams.drawFormat,
@@ -187,6 +195,7 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                     // INITIALISE RESULTS END
                 }
             } else {
+              toastr.error('There was some internal error. Please try again.');
                 console.log("ERROR IN getOneMatch");
             }
         })
@@ -225,7 +234,7 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                     $scope.matchResult = {
                         matchId: $scope.matchData.matchId
                     }
-                    switch ($scope.matchDetails.sportName) {
+                    switch ($scope.matchDetails.sportsName) {
                         case "Volleyball":
                             $scope.matchResult.resultVolleyball = formData;
                             if (!$scope.matchResult.resultVolleyball.status) {
@@ -241,7 +250,7 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                     }
                     NavigationService.saveMatch($scope.matchResult, function(data) {
                         if (data.value == true) {
-                            switch ($scope.matchDetails.sportName) {
+                            switch ($scope.matchDetails.sportsName) {
                                 case "Volleyball":
                                   $state.go("scorevolleyball",{
                                     drawFormat: $stateParams.drawFormat,

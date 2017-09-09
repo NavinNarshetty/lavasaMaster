@@ -74,6 +74,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                       } else{
                         $scope.formData = $scope.matchDetails.resultsCombat;
                         if($scope.matchDetails.resultsCombat.status == 'IsCompleted'){
+                          toastr.warning("This match has already been scored.", "Match Complete");
                           if ($stateParams.drawFormat === 'Knockout') {
                               $state.go('knockout', {
                                 drawFormat: $stateParams.drawFormat,
@@ -165,6 +166,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                       } else{
                         $scope.formData = $scope.matchDetails.resultsRacquet;
                         if($scope.matchDetails.resultsRacquet.status == 'IsCompleted'){
+                          toastr.warning("This match has already been scored.", "Match Complete");
                           if ($stateParams.drawFormat === 'Knockout') {
                               $state.go('knockout', {
                                 drawFormat: $stateParams.drawFormat,
