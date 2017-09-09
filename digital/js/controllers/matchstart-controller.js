@@ -277,6 +277,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
           team.noShow = true;
           team.walkover = false;
       })
+      $scope.formData.isNoMatch = true;
     }
     // TEAM NO MATCH END
     // SAVE RESULT
@@ -458,18 +459,23 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     }
     $scope.saveTeamWinner = function(){
       if($scope.matchDetails.teams.length == 1){
-        if($scope.formData.winner.player =="" || !$scope.formData.winner.player){
-          toastr.warning('Please select a winner');
-        } else {
-          if ($scope.formData.teams[0].isWalkover == true ) {
-            $scope.updateWinnerResult();
+        if($scope.formData.teams[0].noShow == true){
+          $scope.formData.isNoMatch = true;
+          $scope.formData.winner.player = "";
+          $scope.updateTeamWinner();
+        } else{
+          $scope.formData.isNoMatch = false;
+          if($scope.formData.winner.player =="" || !$scope.formData.winner.player){
+            toastr.warning('Please select a winner');
           } else {
-            $scope.formData.winner.reason = 'Bye';
-            $scope.updateWinnerResult();
+            if ($scope.formData.teams[0].walkover == true ) {
+              $scope.updateTeamWinner();
+            } else {
+              $scope.formData.winner.reason = 'Bye';
+              $scope.updateTeamWinner();
+            }
           }
         }
-        $scope.formData.winner.reason = 'Bye';
-        $scope.updateTeamWinner();
       } else{
         if($scope.formData.teams[0].noShow == true && $scope.formData.teams[1].noShow == true){
           $scope.formData.isNoMatch = true;
@@ -489,7 +495,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                 n.walkover = false;
                 n.noShow = true;
               }
-            });
+            })
             $scope.updateTeamWinner();
           }
         }
