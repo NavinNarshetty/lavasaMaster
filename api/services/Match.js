@@ -771,6 +771,7 @@ var model = {
                 var sendObj = {};
                 sendObj.roundsListName = _.keys(matches);
                 sendObj.roundsList = matchData1;
+                console.log("sendObj",sendObj);
                 if (data.round) {
                     var index = _.findIndex(matchData1, function (n) {
                         return n.name == data.round
@@ -824,6 +825,7 @@ var model = {
                 var sendObj = {};
                 sendObj.roundsListName = _.keys(matches);
                 sendObj.roundsList = matchData2;
+                console.log("sendObj",sendObj);
                 if (data.round) {
                     var index = _.findIndex(matchData2, function (n) {
                         return n.name == data.round
@@ -865,6 +867,7 @@ var model = {
                     sport: data.sport,
                     excelType: "League"
                 }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                    // console.log("found",found);
                     if (err) {
                         callback(err, null);
                     } else {
@@ -872,6 +875,7 @@ var model = {
                             callback(null, []);
                         } else {
                             var matches = _.groupBy(found, 'round');
+                            // console.log("matches",matches);
                             callback(null, matches);
                         }
                     }
@@ -895,6 +899,7 @@ var model = {
                 var sendObj = {};
                 sendObj.roundsListName = _.keys(matches);
                 sendObj.roundsList = matchData1;
+                console.log("sendObj",sendObj);
                 if (data.round) {
                     var index = _.findIndex(matchData1, function (n) {
                         return n.name == data.round
@@ -915,8 +920,9 @@ var model = {
                 var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
                 Match.find({
                     sport: data.sport,
-                    excelType: "Knockout"
+                    excelType: "Knockout "
                 }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                    console.log("found",found);
                     if (err) {
                         callback(err, null);
                     } else {
@@ -925,6 +931,7 @@ var model = {
                         } else {
                             finalData.qualifying = sendObj;
                             var matches = _.groupBy(found, 'round');
+                            console.log("matches",matches);
                             callback(null, matches);
                         }
                     }
@@ -956,9 +963,11 @@ var model = {
                     if (index != -1) {
                         sendObj.roundsList = _.slice(matchData2, index, index + 3);
                         finalData.knockout = sendObj;
+                        console.log("finalData",finalData);
                         callback(null, finalData);
                     } else {
                         finalData.knockout = sendObj;
+                        console.log("finalData",finalData);                        
                         callback(null, finalData);
                     }
 

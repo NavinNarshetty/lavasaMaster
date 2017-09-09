@@ -75,7 +75,7 @@ var controller = {
                                 resData.push(obj);
                                 callback(null, resData);
                             }
-                        }else if (req.body.resultType == "league-cum-knockout") {
+                        } else if (req.body.resultType == "league-cum-knockout") {
                             var excelLength = importData.length;
                             var range = req.body.range;
                             var sum = 0;
@@ -327,6 +327,37 @@ var controller = {
                                 // });
                                 // if (headerFlag == header.length) {
                                 Match.saveKnockoutIndividual(importData, req.body, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+                                // } else {
+                                //     callback(null, [{
+                                //         error: "Headers may have wrong values. Follow Headers Below !",
+                                //         success: header
+                                //     }]);
+                                // }
+                            } else if (req.body.resultType == "league-cum-knockout") {
+                                // var header = [];
+                                // var headerFlag = 0;
+                                // header.push("DATE");
+                                // header.push("TIME");
+                                // header.push('EVENT ');
+                                // header.push("AGE GROUP");
+                                // header.push("GENDER");
+                                // // header.push("WEIGHT CATEGORIES");
+                                // header.push("SPORT");
+                                // header.push("SFA ID");
+                                // header.push("ROUND ");
+                                // _.each(header, function (n) {
+                                //     if (_.has(importData[0], n) == true) {
+                                //         headerFlag++;
+                                //     }
+                                // });
+                                // if (headerFlag == header.length) {
+                                Match.saveLeagueKnockout(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
                                     } else {
@@ -659,5 +690,16 @@ var controller = {
             })
         }
     },
+
+    getSportLeagueKnockoutRounds: function (req, res) {
+        if (req.body.sport) {
+            Match.getSportLeagueKnockoutRounds(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Sport not Found",
+                "value": false
+            })
+        }
+    }
 };
 module.exports = _.assign(module.exports, controller);
