@@ -354,6 +354,21 @@ var model = {
                         } else {
                             finalData.resultsRacquet = found.resultsRacquet;
                         }
+                        if (_.isEmpty(found.resultVolleyball)) {
+                            finalData.resultVolleyball = "";
+                        } else {
+                            finalData.resultVolleyball = found.resultVolleyball;
+                        }
+                        if (_.isEmpty(found.resultHockey)) {
+                            finalData.resultHockey = "";
+                        } else {
+                            finalData.resultHockey = found.resultHockey;
+                        }
+                        if (_.isEmpty(found.resultBasketball)) {
+                            finalData.resultBasketball = "";
+                        } else {
+                            finalData.resultBasketball = found.resultBasketball;
+                        }
                         callback(null, finalData);
                     }
 
@@ -3125,6 +3140,20 @@ var model = {
                             }
                         };
                         callback(null, matchObj);
+                    } else if (data.resultBasketball) {
+                        var matchObj = {
+                            $set: {
+                                resultBasketball: data.resultBasketball
+                            }
+                        };
+                        callback(null, matchObj);
+                    } else if (data.resultHockey) {
+                        var matchObj = {
+                            $set: {
+                                resultHockey: data.resultHockey
+                            }
+                        };
+                        callback(null, matchObj);
                     }
                 },
                 function (matchObj, callback) {
@@ -3330,6 +3359,46 @@ var model = {
                                             opponentsSingle: lostPlayer
                                         }
                                     };
+                                } else if (data.found.resultBasketball && data.found.resultBasketball.status == 'IsCompleted' && data.found.resultBasketball.isNoMatch == false) {
+                                    if (data.found.opponentsTeam[0].equals(data.found.resultBasketball.winner.player)) {
+                                        lostPlayer.push(data.found.opponentsTeam[1]);
+                                        winPlayer.push(data.found.resultBasketball.winner.player);
+                                        console.log("player", winPlayer);
+                                    } else {
+                                        lostPlayer.push(data.found.opponentsTeam[0]);
+                                        winPlayer.push(data.found.resultBasketball.winner.player);
+                                        console.log("player", winPlayer);
+                                    }
+                                    updateObj = {
+                                        $set: {
+                                            opponentsSingle: winPlayer
+                                        }
+                                    };
+                                    updateObj1 = {
+                                        $set: {
+                                            opponentsSingle: lostPlayer
+                                        }
+                                    };
+                                } else if (data.found.resultHockey && data.found.resultHockey.status == 'IsCompleted' && data.found.resultHockey.isNoMatch == false) {
+                                    if (data.found.opponentsTeam[0].equals(data.found.resultHockey.winner.player)) {
+                                        lostPlayer.push(data.found.opponentsTeam[1]);
+                                        winPlayer.push(data.found.resultHockey.winner.player);
+                                        console.log("player", winPlayer);
+                                    } else {
+                                        lostPlayer.push(data.found.opponentsTeam[0]);
+                                        winPlayer.push(data.found.resultHockey.winner.player);
+                                        console.log("player", winPlayer);
+                                    }
+                                    updateObj = {
+                                        $set: {
+                                            opponentsSingle: winPlayer
+                                        }
+                                    };
+                                    updateObj1 = {
+                                        $set: {
+                                            opponentsSingle: lostPlayer
+                                        }
+                                    };
                                 } else {
                                     callback(null, data.found);
                                 }
@@ -3379,15 +3448,53 @@ var model = {
                                                 opponentsSingle: lostPlayer
                                             }
                                         };
+                                    } else if (data.found.resultBasketball && data.found.resultBasketball.status == 'IsCompleted' && data.found.resultBasketball.isNoMatch == false) {
+                                        if (data.found.opponentsTeam[0].equals(data.found.resultBasketball.winner.player)) {
+                                            lostPlayer.push(data.found.opponentsTeam[1]);
+                                            winPlayer.push(data.found.resultBasketball.winner.player);
+                                            console.log("player", winPlayer);
+                                        } else {
+                                            lostPlayer.push(data.found.opponentsTeam[0]);
+                                            winPlayer.push(data.found.resultBasketball.winner.player);
+                                            console.log("player", winPlayer);
+                                        }
+                                        updateObj = {
+                                            $set: {
+                                                opponentsSingle: winPlayer
+                                            }
+                                        };
+                                        updateObj1 = {
+                                            $set: {
+                                                opponentsSingle: lostPlayer
+                                            }
+                                        };
+                                    } else if (data.found.resultHockey && data.found.resultHockey.status == 'IsCompleted' && data.found.resultHockey.isNoMatch == false) {
+                                        if (data.found.opponentsTeam[0].equals(data.found.resultHockey.winner.player)) {
+                                            lostPlayer.push(data.found.opponentsTeam[1]);
+                                            winPlayer.push(data.found.resultHockey.winner.player);
+                                            console.log("player", winPlayer);
+                                        } else {
+                                            lostPlayer.push(data.found.opponentsTeam[0]);
+                                            winPlayer.push(data.found.resultHockey.winner.player);
+                                            console.log("player", winPlayer);
+                                        }
+                                        updateObj = {
+                                            $set: {
+                                                opponentsSingle: winPlayer
+                                            }
+                                        };
+                                        updateObj1 = {
+                                            $set: {
+                                                opponentsSingle: lostPlayer
+                                            }
+                                        };
                                     } else {
                                         callback(null, data.found);
                                     }
-
                                 } else {
                                     updateObj = {};
                                 }
                             }
-
                         } else {
                             console.log("in found", found, "data", data);
                             if (data.isTeam == false && _.isEmpty(found[0].opponentsSingle)) {
@@ -3453,6 +3560,22 @@ var model = {
                                             opponentsSingle: winPlayer
                                         }
                                     };
+                                } else if (data.found.resultBasketball && data.found.resultBasketball.status == 'IsCompleted' && data.found.resultBasketball.isNoMatch == false) {
+                                    winPlayer.push(data.found.resultBasketball.winner.opponentsSingle);
+                                    console.log("player", winPlayer);
+                                    updateObj = {
+                                        $set: {
+                                            opponentsSingle: winPlayer
+                                        }
+                                    };
+                                } else if (data.found.resultHockey && data.found.resultHockey.status == 'IsCompleted' && data.found.resultHockey.isNoMatch == false) {
+                                    winPlayer.push(data.found.resultHockey.winner.opponentsSingle);
+                                    console.log("player", winPlayer);
+                                    updateObj = {
+                                        $set: {
+                                            opponentsSingle: winPlayer
+                                        }
+                                    };
                                 } else {
                                     callback(null, data.found);
                                 }
@@ -3471,6 +3594,22 @@ var model = {
                                         };
                                     } else if (data.found.resultVolleyball && data.found.resultVolleyball.status == "IsCompleted" && data.found.resultVolleyball.isNoMatch == false) {
                                         winPlayer.push(data.found.resultVolleyball.winner.player);
+                                        console.log("player", winPlayer);
+                                        updateObj = {
+                                            $set: {
+                                                opponentsTeam: winPlayer
+                                            }
+                                        };
+                                    } else if (data.found.resultBasketball && data.found.resultBasketball.status == "IsCompleted" && data.found.resultBasketball.isNoMatch == false) {
+                                        winPlayer.push(data.found.resultBasketball.winner.player);
+                                        console.log("player", winPlayer);
+                                        updateObj = {
+                                            $set: {
+                                                opponentsTeam: winPlayer
+                                            }
+                                        };
+                                    } else if (data.found.resultHockey && data.found.resultHockey.status == "IsCompleted" && data.found.resultHockey.isNoMatch == false) {
+                                        winPlayer.push(data.found.resultHockey.winner.player);
                                         console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
