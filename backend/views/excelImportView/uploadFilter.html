@@ -2,7 +2,7 @@
     <form name="detailForm" role="form" class="sec">
         <div class="">
             <div class="col-md-12 drop-2">
-                <div class="form-group">
+                <div class="form-group"> 
                     <label>Match-ID*</label>
                     <input type="text" name="matchId" ng-model="form.matchId" class="form-control" placeholder="Enter Match-ID" required>
                     <div class="error-msg" ng-if="detailForm.rulesname.$invalid && detailForm.rulesname.$touched">Please Enter Valid Name *</div>
@@ -33,7 +33,7 @@
                     </select>
     </div>
 
-    <div class="col-md-12 drop-2" ng-if="form.resultType=='knockout'||form.excelType=='knockout'">
+    <div class="col-md-12 drop-2" ng-if="form.resultType=='knockout'||form.excelType=='knockout' || form.resultType=='league-cum-knockout'">
         <label>Knockout Range</label>
         <select class="form-control" ng-model="form.range">
           <option  value=2>2</option>
@@ -67,7 +67,7 @@
           <option  value="individual">Individual</option>
         </select>
     </div>
-    <div class="col-md-12 drop-1" ng-if="form.excelType=='knockout'||form.resultType=='knockout'">
+    <div class="col-md-12 drop-1" ng-if="form.excelType=='knockout' || form.resultType=='knockout' || form.resultType=='league-cum-knockout'">
         <label>Third Place*</label>
         <select class="form-control" ng-model="form.thirdPlace">
           <option  value="yes">YES</option>

@@ -75,6 +75,29 @@ var controller = {
                                 resData.push(obj);
                                 callback(null, resData);
                             }
+                        }else if (req.body.resultType == "league-cum-knockout") {
+                            var excelLength = importData.length;
+                            var range = req.body.range;
+                            var sum = 0;
+                            while (range >= 1) {
+                                sum = parseInt(sum) + range;
+                                range = range / 2;
+                            }
+                            if (req.body.thirdPlace == "yes") {
+                                sum = sum + 1;
+                            }
+                            if (excelLength == sum) {
+                                req.body.rangeTotal = sum;
+                                callback(null, importData);
+                            } else {
+                                var resData = [];
+                                var obj = {};
+                                err = "excel row do not match with selected range";
+                                obj.error = err;
+                                obj.success = importData;
+                                resData.push(obj);
+                                callback(null, resData);
+                            }
                         } else {
                             callback(null, importData);
                         }
