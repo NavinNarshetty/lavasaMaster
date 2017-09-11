@@ -2357,14 +2357,16 @@ var model = {
                             if (mainData.opponentsSingle[0].athleteId._id.equals(mainData.resultsCombat.winner.player)) {
                                 obj["RESULT 1"] = "Won";
                             } else {
-                                if (mainData.resultsCombat.players[0].walkover == true && mainData.resultsCombat.isNoMatch == false) {
-                                    obj["RESULT 1"] = "walkover";
-                                } else {
-                                    if (mainData.resultsCombat.isNoMatch == false) {
+                                if (mainData.resultsCombat.isNoMatch == false) {
+                                    if (mainData.resultsCombat.players[0].walkover == false && mainData.resultsCombat.players[0].noShow == false) {
                                         obj["RESULT 1"] = "Lost";
+                                    } else if (mainData.resultsCombat.players[0].walkover == true) {
+                                        obj["RESULT 1"] = "walkover";
                                     } else {
-                                        obj["RESULT 1"] = "No Match";
+                                        obj["RESULT 1"] = "noShow";
                                     }
+                                } else {
+                                    obj["RESULT 1"] = "No Match";
                                 }
                             }
                             var i;
@@ -2373,12 +2375,12 @@ var model = {
                                 if (i == 0) {
                                     obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultsCombat.players[0].sets[i].point;
                                     obj["DATA POINTS 1"] = "Set" + sNo + "-" + mainData.resultsCombat.players[0].sets[i];
-
+                                    sNo++;
                                 } else {
                                     obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsCombat.players[0].sets[i].point;
                                     obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "-" + mainData.resultsCombat.players[0].sets[i];
+                                    sNo++;
                                 }
-                                sNo++;
                             }
                         } else {
                             obj["RESULT 1"] = "";
@@ -2391,14 +2393,16 @@ var model = {
                             if (mainData.opponentsSingle[0].athleteId._id.equals(mainData.resultsRacquet.winner.player)) {
                                 obj["RESULT 1"] = "Won";
                             } else {
-                                if (mainData.resultsRacquet.players[0].walkover == true && mainData.resultsRacquet.isNoMatch == false) {
-                                    obj["RESULT 1"] = "walkover";
-                                } else {
-                                    if (mainData.resultsRacquet.isNoMatch == false) {
+                                if (mainData.resultsRacquet.isNoMatch == false) {
+                                    if (mainData.resultsRacquet.players[0].walkover == false && mainData.resultsRacquet.players[0].noShow == false) {
                                         obj["RESULT 1"] = "Lost";
+                                    } else if (mainData.resultsRacquet.players[0].walkover == true) {
+                                        obj["RESULT 1"] = "walkover";
                                     } else {
-                                        obj["RESULT 1"] = "No Match";
+                                        obj["RESULT 1"] = "noShow";
                                     }
+                                } else {
+                                    obj["RESULT 1"] = "No Match";
                                 }
                             }
                             var i;
@@ -2407,12 +2411,13 @@ var model = {
                                 if (i == 0) {
                                     obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultsRacquet.players[0].sets[i].point;
                                     obj["DATA POINTS 1"] = "Set" + sNo + "-" + mainData.resultsRacquet.players[0].sets[i];
-
+                                    sNo++;
                                 } else {
                                     obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsRacquet.players[0].sets[i].point;
                                     obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "-" + mainData.resultsRacquet.players[0].sets[i];
+                                    sNo++;
                                 }
-                                sNo++;
+
                             }
                         } else {
                             obj["RESULT 1"] = "";
@@ -2448,24 +2453,29 @@ var model = {
                         if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsCombat.winner.player) {
                             obj["RESULT 2"] = "Won";
                         } else {
-                            if (mainData.resultsCombat.players[1].walkover == true && mainData.resultsCombat.isNoMatch == false) {
-                                obj["RESULT 2"] = "walkover";
-                            } else {
-                                if (mainData.resultsCombat.isNoMatch == false) {
+                            if (mainData.resultsCombat.isNoMatch == false) {
+                                if (mainData.resultsCombat.players[1].walkover == false && mainData.resultsCombat.players[1].noShow == false) {
                                     obj["RESULT 2"] = "Lost";
+                                } else if (mainData.resultsCombat.players[1].walkover == true) {
+                                    obj["RESULT 2"] = "walkover";
                                 } else {
-                                    obj["RESULT 2"] = "No Match";
+                                    obj["RESULT 2"] = "noShow";
                                 }
+                            } else {
+                                obj["RESULT 2"] = "No Match";
                             }
                         }
                         var i;
+                        var sNo = 1;
                         for (i = 0; i < mainData.resultsCombat.players[1].sets.length; i++) {
                             if (i == 0) {
-                                obj["SCORE 2"] = "Set" + i + "-" + mainData.resultsCombat.players[1].sets[i].point;
-                                obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets[i];
+                                obj["SCORE 2"] = "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i].point;
+                                obj["DATA POINTS 2"] = "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i];
+                                sNo++;
                             } else {
-                                obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + i + "-" + mainData.resultsCombat.players[1].sets[i].point;
-                                obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + mainData.resultsCombat.players[1].sets[i];
+                                obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i].point;
+                                obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i];
+                                sNo++;
                             }
                         }
                         // obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets[;
@@ -2473,14 +2483,16 @@ var model = {
                         if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsRacquet.winner.player) {
                             obj["RESULT 2"] = "Won";
                         } else {
-                            if (mainData.resultsRacquet.players[1].walkover == true && mainData.resultsRacquet.isNoMatch == false) {
-                                obj["RESULT 2"] = "walkover";
-                            } else {
-                                if (mainData.resultsRacquet.isNoMatch == false) {
+                            if (mainData.resultsRacquet.isNoMatch == false) {
+                                if (mainData.resultsRacquet.players[1].walkover == false && mainData.resultsRacquet.players[1].noShow == false) {
                                     obj["RESULT 2"] = "Lost";
+                                } else if (mainData.resultsRacquet.players[1].walkover == true) {
+                                    obj["RESULT 2"] = "walkover";
                                 } else {
-                                    obj["RESULT 2"] = "No Match";
+                                    obj["RESULT 2"] = "noShow";
                                 }
+                            } else {
+                                obj["RESULT 2"] = "No Match";
                             }
                         }
                         var i;
@@ -3574,6 +3586,7 @@ var model = {
                                 } else if (!_.isEmpty(found.opponentsTeam)) {
                                     data.isTeam = true;
                                 }
+                                console.log("data.isTeam", data.isNoMatch);
                                 data._id = found._id;
                                 data.found = found;
                                 callback(null, found);
@@ -3939,27 +3952,27 @@ var model = {
                                         }
                                     };
                                 } else if (data.found.resultVolleyball && data.found.resultVolleyball.status == 'IsCompleted' && data.found.resultVolleyball.isNoMatch == false) {
-                                    winPlayer.push(data.found.resultVolleyball.winner.opponentsSingle);
+                                    winPlayer.push(data.found.resultVolleyball.winner.player);
                                     console.log("player", winPlayer);
                                     updateObj = {
                                         $set: {
-                                            opponentsSingle: winPlayer
+                                            opponentsTeam: winPlayer
                                         }
                                     };
                                 } else if (data.found.resultBasketball && data.found.resultBasketball.status == 'IsCompleted' && data.found.resultBasketball.isNoMatch == false) {
-                                    winPlayer.push(data.found.resultBasketball.winner.opponentsSingle);
+                                    winPlayer.push(data.found.resultBasketball.winner.player);
                                     console.log("player", winPlayer);
                                     updateObj = {
                                         $set: {
-                                            opponentsSingle: winPlayer
+                                            opponentsTeam: winPlayer
                                         }
                                     };
                                 } else if (data.found.resultHockey && data.found.resultHockey.status == 'IsCompleted' && data.found.resultHockey.isNoMatch == false) {
-                                    winPlayer.push(data.found.resultHockey.winner.opponentsSingle);
+                                    winPlayer.push(data.found.resultHockey.winner.player);
                                     console.log("player", winPlayer);
                                     updateObj = {
                                         $set: {
-                                            opponentsSingle: winPlayer
+                                            opponentsTeam: winPlayer
                                         }
                                     };
                                 } else {
