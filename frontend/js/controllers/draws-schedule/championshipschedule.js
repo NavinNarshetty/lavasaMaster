@@ -66,7 +66,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date2: '17',
                     month: 'Dec'
                 }, {
-                    sport: 'Hockey',
+                    sport: 'Hockey'
                 }, {
                     sport: 'Judo',
                     date1: '16',
@@ -139,9 +139,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date: '11',
                     month: 'Dec'
                 }, {
-                    sport: '',
-                    date: '',
-                    month: ''
+                    sport: 'Wrestling'
                 }];
             } else if ($scope.sfaCity == 'Hyderabad') {
                 $scope.schedulelist = [{

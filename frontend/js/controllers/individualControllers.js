@@ -258,7 +258,7 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
         'varSet': false,
         'selectAgeExpression': ''
     };
-    if (selectService.sportName === 'Judo' || selectService.sportName === 'judo' || selectService.sportName === 'Boxing' || selectService.sportName === 'boxing' || selectService.sportName === 'Taekwondo' || selectService.sportName === 'taekwondo' || selectService.sportName === 'Sport MMA' || selectService.sportName === 'sport MMA') {
+    if (selectService.sportName === 'Judo' || selectService.sportName === 'judo' || selectService.sportName === 'Boxing' || selectService.sportName === 'boxing' || selectService.sportName === 'Taekwondo' || selectService.sportName === 'taekwondo' || selectService.sportName === 'Sport MMA' || selectService.sportName === 'sport MMA' || selectService.sportName === 'Wrestling' || selectService.sportName === 'wrestling') {
         $scope.withWeight = true;
     } else {
         $scope.withWeight = false;
@@ -267,7 +267,7 @@ myApp.controller('ConfirmIndividualCtrl', function ($scope, TemplateService, Nav
     function configureVariables() {
         if ($scope.selectService && $scope.selectService.sportName) {
             var st = $scope.selectService.sportName;
-            if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA') {
+            if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling') {
                 $scope.config.weightsReq = true;
                 $scope.config.ageVar = 'athelete.ageSelected';
                 $scope.config.weightVar = 'athelete.sport';

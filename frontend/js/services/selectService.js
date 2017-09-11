@@ -1,4 +1,4 @@
-myApp.service('selectService', function($http, TemplateService, $state, toastr, NavigationService, loginService, errorService) {
+myApp.service('selectService', function ($http, TemplateService, $state, toastr, NavigationService, loginService, errorService) {
     this.team = [];
     this.detail = null;
     this.sportsId = null; // Req in api For sending data at backend eg:5864..69
@@ -11,8 +11,8 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
     this.showMissingFields = false;
     this.disableNextOnRules = false;
     this.isDisabled = false;
-    this.initialFun = function() {
-        loginService.loginGet(function(data) {
+    this.initialFun = function () {
+        loginService.loginGet(function (data) {
             detail = data;
         });
         if (detail.userType === 'athlete') {
@@ -22,12 +22,12 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
         }
     };
 
-    this.setBasicSportDetails = function(formData, callback) {
+    this.setBasicSportDetails = function (formData, callback) {
         $http({
             url: adminUrl2 + 'SportsListSubCategory/getSportsDeails',
             method: 'POST',
             data: formData
-        }).then(function(data) {
+        }).then(function (data) {
             if (data.data.value) {
                 callback(data.data.data);
             } else {
@@ -37,9 +37,9 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
     };
 
     //make .checked to true if already selected
-    this.isAtheleteSelected = function(listOfAthlete, team) {
+    this.isAtheleteSelected = function (listOfAthlete, team) {
         var temp = _.intersectionBy(listOfAthlete, this.team, '_id');
-        _.each(temp, function(n) {
+        _.each(temp, function (n) {
             n.checked = true;
         });
         return listOfAthlete;
@@ -48,7 +48,7 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
 
 
     // push to Team
-    this.pushToTeam = function(obj, bool, listOfAthlete, events) {
+    this.pushToTeam = function (obj, bool, listOfAthlete, events) {
         console.log(obj, bool, listOfAthlete, events);
 
         function checkIfApplicable(sT, sN) {
@@ -120,7 +120,7 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
             }
         } else {
             //remove athelete
-            _.remove(this.team, function(n) {
+            _.remove(this.team, function (n) {
                 return n._id == obj._id;
             });
             var temp = _.find(listOfAthlete, ['_id', obj._id]);
@@ -128,15 +128,15 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
         }
     };
 
-    this.getAgeGroupByAthelete = function(athelete, confirmPageKey, events) {
+    this.getAgeGroupByAthelete = function (athelete, confirmPageKey, events) {
         var birthdate = moment(athelete.dob);
         var st = this.sportName;
 
         //Events are filtered as per age and weights
         function getAgeGroups(events) {
             var event = _.cloneDeep(events);
-            _.each(event, function(i, key) {
-                i.data = _.filter(i.data, function(j) {
+            _.each(event, function (i, key) {
+                i.data = _.filter(i.data, function (j) {
                     var startDate = moment(j.fromAge);
                     var endDate = moment(j.toAge);
                     if ((j.gender == athelete.gender) && birthdate.isBetween(startDate, endDate, null, '[]')) {
@@ -146,7 +146,7 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
                     }
                 });
             });
-            event = _.reject(event, function(n) {
+            event = _.reject(event, function (n) {
                 return n.data.length == 0;
             });
             return event;
@@ -164,41 +164,41 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
             var airRiflePistol = _.cloneDeep(events);
 
             //airRiflePeep
-            _.each(airRiflePeep, function(n, i) {
+            _.each(airRiflePeep, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Air Rifle Peep']);
-                _.each(n.data, function(key) {
+                _.each(n.data, function (key) {
                     key.ageId = n._id;
                 });
             });
 
             airRiflePeep = getAgeGroups(airRiflePeep);
-            _.each(airRiflePeep, function(j) {
+            _.each(airRiflePeep, function (j) {
                 airRiflePeepArr.push(j.data);
             });
             athelete.airRiflePeep = _.flattenDeep(airRiflePeepArr);
 
             // airRifleOpen
-            _.each(airRifleOpen, function(n, i) {
+            _.each(airRifleOpen, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Air Rifle Open']);
-                _.each(n.data, function(key) {
+                _.each(n.data, function (key) {
                     key.ageId = n._id;
                 });
             });
             airRifleOpen = getAgeGroups(airRifleOpen);
-            _.each(airRifleOpen, function(j) {
+            _.each(airRifleOpen, function (j) {
                 airRifleOpenArr.push(j.data);
             });
             athelete.airRifleOpen = _.flattenDeep(airRifleOpenArr);
 
             // airRiflePistol
-            _.each(airRiflePistol, function(n, i) {
+            _.each(airRiflePistol, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Air Pistol']);
-                _.each(n.data, function(key) {
+                _.each(n.data, function (key) {
                     key.ageId = n._id;
                 });
             });
             airRiflePistol = getAgeGroups(airRiflePistol);
-            _.each(airRiflePistol, function(j) {
+            _.each(airRiflePistol, function (j) {
                 airRiflePistolArr.push(j.data);
             });
             athelete.airRiflePistol = _.flattenDeep(airRiflePistolArr);
@@ -217,13 +217,13 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
             var kumite = _.cloneDeep(events);
 
             // kata
-            _.each(kata, function(n, i) {
+            _.each(kata, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Kata']);
             });
             athelete.eventKata = getAgeGroups(kata);
 
             // kumite
-            _.each(kumite, function(n, i) {
+            _.each(kumite, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Kumite']);
             });
             athelete.eventKumite = getAgeGroups(kumite);
@@ -251,7 +251,7 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
             var foil = _.cloneDeep(events);
 
             //epee
-            _.each(epee, function(n, i) {
+            _.each(epee, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Epee']);
             });
             athelete.eventEpee = getAgeGroups(epee);
@@ -263,7 +263,7 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
             });
 
             // sabre
-            _.each(sabre, function(n, i) {
+            _.each(sabre, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Sabre']);
             });
             athelete.eventSabre = getAgeGroups(sabre);
@@ -275,7 +275,7 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
             });
 
             // foil
-            _.each(foil, function(n, i) {
+            _.each(foil, function (n, i) {
                 n.data = _.filter(n.data, ['eventName', 'Foil']);
             });
             athelete.eventFoil = getAgeGroups(foil);
@@ -293,8 +293,8 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
 
         function filterArchery(events) {
             athelete.allEvents = [];
-            _.each(events, function(m, i) {
-                _.each(m.data, function(n) {
+            _.each(events, function (m, i) {
+                _.each(m.data, function (n) {
                     n._id = m._id;
                     athelete.allEvents.push(n);
                 });
@@ -345,8 +345,8 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
         // _.filter(sports,between athlete birthdate and filter by gender as well);
     };
 
-    this.goNext = function(basicSportDetails, gender, age, length) {
-        this.yourPromise = NavigationService.success().then(function() {
+    this.goNext = function (basicSportDetails, gender, age, length) {
+        this.yourPromise = NavigationService.success().then(function () {
             console.log(basicSportDetails, gender, age, length, "---------Gonext service----------");
 
             this.gender = gender;
@@ -389,7 +389,7 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
         });
     };
 
-    this.findOverAllFormValidation = function() {
+    this.findOverAllFormValidation = function () {
         this.isValidForm = (_.findIndex(this.team, ['isValidSelection', false]) == -1);
         if (this.isValidForm) {
             this.showMissingFields = false;
@@ -399,14 +399,14 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
         }
     };
 
-    this.confirmSelection = function(data) {
+    this.confirmSelection = function (data) {
         console.log(this.team);
         var formData = _.cloneDeep(this.team);
         switch (this.sportType) {
             case "K":
                 this.findOverAllFormValidation();
-                _.each(formData, function(m) {
-                    _.each(m.sport, function(n, index) {
+                _.each(formData, function (m) {
+                    _.each(m.sport, function (n, index) {
                         console.log(index, index == 0 && n.data[0]);
                         if (index == 0 && n && n.data[0]) {
                             m.sport[0] = n.data[0].sport;
@@ -420,12 +420,12 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
             case "FA":
                 this.findOverAllFormValidation();
                 if (this.sportName == 'Fencing') {
-                    _.each(formData, function(n) {
+                    _.each(formData, function (n) {
                         n.sport = _.compact(n.sport);
                     });
                 } else if (this.sportName == 'Archery') {
                     console.log(formData);
-                    _.each(formData, function(m, i) {
+                    _.each(formData, function (m, i) {
                         formData[i].sport = _.map(m.sport, 'sport');
                     });
 
@@ -437,10 +437,10 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
                 break;
             case "I":
                 var st = this.sportName
-                if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA') {
+                if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling') {
                     this.findOverAllFormValidation();
-                    _.each(formData, function(n, i) {
-                        n.sport = _.filter(n.sport, function(o, i) {
+                    _.each(formData, function (n, i) {
+                        n.sport = _.filter(n.sport, function (o, i) {
                             return i == 1
                         });
                     });
@@ -454,7 +454,7 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
         //check if form is valid and then send data
         if (this.isValidForm) {
             console.log("isValid");
-            _.each(formData, function(n, i) {
+            _.each(formData, function (n, i) {
                 n.sportsListSubCategory = $.jStorage.get("sportsId");
                 n.athleteId = n._id
                 formData[i] = _.pick(n, ['sport', 'sportsListSubCategory', 'athleteId']);
@@ -465,10 +465,10 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
         }
     };
 
-    this.saveData = function(formData, data) {
+    this.saveData = function (formData, data) {
         var accessToken = $.jStorage.get('userDetails').accessToken;
         var obj = {};
-        _.each(formData, function(n) {
+        _.each(formData, function (n) {
             if (data.nominatedContactDetails) {
                 n.nominatedContactDetails = data.nominatedContactDetails;
             }
@@ -498,9 +498,9 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
             'method': 'POST',
             'url': adminUrl2 + 'individualSport/saveInIndividual',
             'data': obj
-        }).then(function(data) {
+        }).then(function (data) {
             ref.isDisabled = false;
-            errorService.errorCode(data, function(allData) {
+            errorService.errorCode(data, function (allData) {
                 if (!allData.message) {
                     if (allData.value) {
                         toastr.success("Successfully Confirmed", 'Success Message');
@@ -513,7 +513,7 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
         });
     };
 
-    this.isValidSelection = function(athelete) {
+    this.isValidSelection = function (athelete) {
         switch (this.sportType) {
             case "K":
                 var arr = athelete.sport;
@@ -570,7 +570,7 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
                 break;
             case "I":
                 var st = this.sportName;
-                if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA') {
+                if (st == 'Judo' || st == 'Boxing' || st == 'Taekwondo' || st == 'Sport MMA' || st == 'Wrestling') {
                     athelete.isValidSelection = (athelete.sport && athelete.sport[1] && athelete.sport[1] != '') ? true : false;
                 } else {
                     var arr = _.compact(athelete.sport);
@@ -584,17 +584,17 @@ myApp.service('selectService', function($http, TemplateService, $state, toastr, 
         }
     };
 
-    this.editTeam = function(state) {
+    this.editTeam = function (state) {
         $state.go(state, {
             'id': this.sportsId
         });
     };
 
-    this.emptyTeam = function() {
+    this.emptyTeam = function () {
         this.team = [];
     };
 
-    this.reset = function() {
+    this.reset = function () {
         this.team = [];
         this.sportsId = null;
         this.gender = null;
