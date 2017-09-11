@@ -203,32 +203,42 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
 
 
 
-  $scope.viewDraw = function (formData) {
-      NavigationService.getQuickSportId(formData, function (data) {
-          errorService.errorCode(data, function (allData) {
-              if (!allData.message) {
-                  if (allData.value) {
-                      $scope.drawDetails = allData.data;
-                      if ($scope.drawDetails === 'No Data Found') {
-                          toastr.error('No Event Found', 'Error Message');
-                      }
-                      console.log($scope.drawDetails, " $scope.drawDetails");
-                      if ($scope.drawDetails.drawFormat === 'Knockout') {
-                          $state.go('knockout', {
-                            drawFormat: $scope.drawDetails.drawFormat,
-                            id: $scope.drawDetails.sport
-                          });
-                      } else if ($scope.drawDetails.drawFormat === 'Heats') {
-                          $state.go('heats', {
-                            drawFormat: $scope.drawDetails.drawFormat,
-                            id: $scope.drawDetails.sport
-                          });
-                      }
-                  }
-              } else {
-                  toastr.error(allData.message, 'Error Message');
-              }
-          });
-      });
-  };
+    $scope.viewDraw = function (formData) {
+        NavigationService.getQuickSportId(formData, function (data) {
+            errorService.errorCode(data, function (allData) {
+                if (!allData.message) {
+                    if (allData.value) {
+                        $scope.drawDetails = allData.data;
+                        if ($scope.drawDetails === 'No Data Found') {
+                            toastr.error('No Event Found', 'Error Message');
+                        }
+                        console.log($scope.drawDetails, " $scope.drawDetails");
+                        if ($scope.drawDetails.drawFormat === 'Knockout') {
+
+                            if ($scope.drawDetails.isTeam) {
+                                console.log("im in knockout team");
+                                $state.go('knockout-team', {
+                                    // drawFormatTeam: $scope.drawDetails.drawFormat,
+                                    id: $scope.drawDetails.sport
+                                });
+                                console.log("knockout-team");
+                            } else {
+                                $state.go('knockout', {
+                                    drawFormat: $scope.drawDetails.drawFormat,
+                                    id: $scope.drawDetails.sport
+                                });
+                            }
+                        } else if ($scope.drawDetails.drawFormat === 'Heats') {
+                            $state.go('heats', {
+                                drawFormat: $scope.drawDetails.drawFormat,
+                                id: $scope.drawDetails.sport
+                            });
+                        }
+                    }
+                } else {
+                    toastr.error(allData.message, 'Error Message');
+                }
+            });
+        });
+    };
 });

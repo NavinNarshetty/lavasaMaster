@@ -148,12 +148,12 @@ myApp.controller('BasketballScoreCtrl', function ($scope, TemplateService, Navig
   $scope.removeMatchScore = function (pic, type) {
     switch (type) {
       case 'matchPhoto':
-        _.remove($scope.match.resultBasketball.matchPhoto, function (n) {
+        _.remove($scope.match.resultHandball.matchPhoto, function (n) {
           return n.image === pic.image;
         })
         break;
       case 'scoreSheet':
-        _.remove($scope.match.resultBasketball.scoreSheet, function (n) {
+        _.remove($scope.match.resultHandball.scoreSheet, function (n) {
           return n.image === pic.image;
         })
         break;

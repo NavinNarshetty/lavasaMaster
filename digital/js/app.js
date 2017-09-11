@@ -69,7 +69,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'HockeyScoreCtrl'
         })
         .state('scorebasketball', {
-            url: "/scorebasketball",
+            url: "/scorebasketball/:drawFormat/:id/:sport",
             templateUrl: tempateURL,
             controller: 'BasketballScoreCtrl'
         })
@@ -77,6 +77,21 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/volleyball/:drawFormat/:id/:sport",
             templateUrl: tempateURL,
             controller: 'VolleyballScoreCtrl'
+        })
+        .state('scorehandball', {
+            url: "/scorehandball",
+            templateUrl: tempateURL,
+            controller: 'HandballScoreCtrl'
+        })
+        .state('scorewaterpolo', {
+            url: "/waterpolo",
+            templateUrl: tempateURL,
+            controller: 'WaterPoloScoreCtrl'
+        })
+        .state('knockout-team', {
+            url: "/knockout-team/:id",
+            templateUrl: tempateURL,
+            controller: 'KnockoutTeamCtrl'
         })
         .state('knockout', {
             url: "/:drawFormat/:id",

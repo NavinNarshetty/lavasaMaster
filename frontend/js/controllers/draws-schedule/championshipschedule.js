@@ -585,6 +585,10 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                                 id: $scope.drawDetails.sport,
                             });
 
+                        } else if ($scope.drawDetails.drawFormat === 'League cum Knockout') {
+                            $state.go('league-knockout', {
+                                id: $scope.drawDetails.sport,
+                            });
                         }
                     }
                 } else {

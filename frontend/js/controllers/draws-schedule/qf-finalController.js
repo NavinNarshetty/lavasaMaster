@@ -152,8 +152,12 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
                 key.showMore = true;
                 _.each(key.match, function (value) {
                   _.each(value.opponentsSingle, function (obj, index1) {
-                    obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
-                    if (value.resultQualifyingRound.player) {
+                    if (!_.isEmpty(obj.athleteId)) {
+                      obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                    }
+
+
+                    if (value.resultQualifyingRound !== undefined) {
                       obj.result = value.resultQualifyingRound.player.result;
                       obj.noOfJumps = value.resultQualifyingRound.player.attempt.length;
                       obj.score = value.resultQualifyingRound.player.attempt[index1];
