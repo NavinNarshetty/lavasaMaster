@@ -51,7 +51,8 @@ var schema = new Schema({
     scheduleTime: String,
     video: String,
     matchCenter: String,
-    excelType: String
+    excelType: String,
+    heatNo: String,
 });
 
 schema.plugin(deepPopulate, {
@@ -1300,6 +1301,7 @@ var model = {
                                         player.id = n.success["PARTICIPANT 1"];
                                         player.laneNo = n.success["LANE NUMBER"];
                                         result.players.push(player);
+                                        paramData.heatNo = n.success["HEAT NUMBER"]
                                         paramData.resultHeat = result;
                                         callback(null, paramData);
                                     }
