@@ -813,6 +813,13 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log)
                 data: request
             }).then(callback);
         },
+        getSportLeagueKnockoutRounds: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'match/getSportLeagueKnockoutRounds',
+                method: 'POST',
+                data: request
+            }).then(callback);
+        },
 
         getSportSpecificRounds: function (request, callback) {
 
@@ -826,6 +833,9 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log)
 
                 function sortOpponents(arrToSort, match1, match2) {
                     console.log("arrToSort", arrToSort);
+                    _.remove(arrToSort, function (n) {
+                        return n == null;
+                    });
                     console.log("match1", match1);
                     console.log("match2", match2);
                     var sortedArr = _.cloneDeep(arrToSort);

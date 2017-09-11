@@ -1,71 +1,71 @@
 var uploadurl = adminurl + "upload/";
 myApp.factory('NavigationService', function ($http) {
     var navigation = [{
-            name: "Home",
+        name: "Home",
+        classis: "active",
+        anchor: "home",
+        subnav: [{
+            name: "Subnav1",
             classis: "active",
-            anchor: "home",
-            subnav: [{
-                name: "Subnav1",
-                classis: "active",
-                anchor: "home"
-            }]
-        }, {
-            name: "Form",
-            classis: "active",
-            anchor: "form",
-            subnav: []
-        },
-        {
-            name: "Grid",
-            classis: "active",
-            anchor: "grid",
-            subnav: []
-        }
+            anchor: "home"
+        }]
+    }, {
+        name: "Form",
+        classis: "active",
+        anchor: "form",
+        subnav: []
+    },
+    {
+        name: "Grid",
+        classis: "active",
+        anchor: "grid",
+        subnav: []
+    }
     ];
 
     return {
         getNavigation: function () {
             return navigation;
         },
-        getOneMatch: function(formData, callback){
-          $http({
-              url: adminurl + "match/getOne",
-              method: "POST",
-              data: formData
-          }).success(function (data) {
-            console.log(data,"nav");
-              callback(data)
-          });
+        getOneMatch: function (formData, callback) {
+            $http({
+                url: adminurl + "match/getOne",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                console.log(data, "nav");
+                callback(data)
+            });
         },
-        saveMatch: function(formData, callback){
-          // console.log(formData, 'saveMatch');
-          $http({
-              url: adminurl + "match/updateResult",
-              method: "POST",
-              data: formData
-          }).success(function (data) {
-              callback(data)
-          });
+        saveMatch: function (formData, callback) {
+            // console.log(formData, 'saveMatch');
+            $http({
+                url: adminurl + "match/updateResult",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
         },
-        getAllSportsList: function(callback) {
+        getAllSportsList: function (callback) {
             $http({
                 url: adminurl + 'SportsList/getAll',
                 method: 'POST'
             }).then(callback);
         },
-        getAllAgeGroups: function(callback) {
+        getAllAgeGroups: function (callback) {
             $http({
                 url: adminurl + 'AgeGroup/getAll',
                 method: 'POST'
             }).then(callback);
         },
-        getAllWeights: function(callback) {
+        getAllWeights: function (callback) {
             $http({
                 url: adminurl + 'Weight/getAll',
                 method: 'POST'
             }).then(callback);
         },
-        getQuickSportId: function(request, callback) {
+        getQuickSportId: function (request, callback) {
             $http({
                 url: adminurl + 'match/getQuickSportId',
                 method: 'POST',
@@ -84,6 +84,9 @@ myApp.factory('NavigationService', function ($http) {
 
                 function sortOpponents(arrToSort, match1, match2) {
                     console.log("arrToSort", arrToSort);
+                    _.remove(arrToSort, function (n) {
+                        return n == null;
+                    });
                     console.log("match1", match1);
                     console.log("match2", match2);
                     var sortedArr = _.cloneDeep(arrToSort);

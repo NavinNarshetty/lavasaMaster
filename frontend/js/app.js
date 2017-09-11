@@ -307,7 +307,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'swissLeagueCtrl'
         })
         .state('league-knockout', {
-            url: "/league-knockout",
+            url: "/league-knockout/:id",
             templateUrl: tempateURL,
             controller: 'LeagueKnockoutCtrl'
         })
@@ -320,6 +320,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/knockout/:id",
             templateUrl: tempateURL,
             controller: 'KnockoutCtrl'
+        })
+        .state('knockout-team', {
+            url: "/knockout-team/:id",
+            templateUrl: tempateURL,
+            controller: 'KnockoutTeamCtrl'
         })
         .state('knockout-doubles', {
             url: "/knockout-doubles",

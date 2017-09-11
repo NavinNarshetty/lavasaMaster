@@ -108,139 +108,141 @@
               <span>|</span>
               <span>{{data.match[0].scheduleTime }}</span></p>
           </div>
-          <table class="table-draws-schedule table-five">
-            <thead>
-              <tr>
+          <div ng-if="data.match">
+            <table class="table-draws-schedule table-five">
+              <thead>
+                <tr>
 
-                <th>
-                  <div>
-                    <h4 class="m-clear">name</h4>
-                  </div>
-                </th>
-                <th>
-                  <div>
-                    <h4 class="m-clear">
-                      school
-                    </h4>
-                  </div>
-                </th>
-                <th ng-if="roundsList[0].match[0].sport.sportslist.name!='High jump' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!='Shooting' ">
-                  <div>
-                    <h4 class="m-clear">
-                      Best Attempt
-                    </h4>
-                  </div>
-                </th>
+                  <th>
+                    <div>
+                      <h4 class="m-clear">name</h4>
+                    </div>
+                  </th>
+                  <th>
+                    <div>
+                      <h4 class="m-clear">
+                        school
+                      </h4>
+                    </div>
+                  </th>
+                  <th ng-if="roundsList[0].match[0].sport.sportslist.name!='High jump' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!='Shooting' ">
+                    <div>
+                      <h4 class="m-clear">
+                        Best Attempt
+                      </h4>
+                    </div>
+                  </th>
 
-                <th ng-if="data.name === 'Final'&& roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!=='Shooting'">
-                  <div>
-                    <h4 class="m-clear">
-                      Position
-                    </h4>
-                  </div>
-                </th>
-                <th ng-if=" data.name !== 'Final' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!=='Shooting' && roundsList[0].match[0].sport.sportslist.name!=='High jump'">
-                  <div>
-                    <h4 class="m-clear">
-                      Result
-                    </h4>
-                  </div>
-                </th>
-                <th ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
-                  <div>
-                    <h4 class="m-clear">
-                      No.Of Jumps
-                    </h4>
-                  </div>
-                </th>
-                <th ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
-                  <div>
-                    <h4 class="m-clear">
-                      Score
-                    </h4>
-                  </div>
-                </th>
-                <th ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
-                  <div>
-                    <h4 class="m-clear">
-                      Result
-                    </h4>
-                  </div>
-                </th>
-                <th ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
-                  <div>
-                    <h4 class="m-clear">
-                      Position
-                    </h4>
-                  </div>
-                </th>
-                <th>
-                  <div>
-                    <h4 class="m-clear">Video</h4>
-                  </div>
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr ng-repeat="final in data.match|limitTo:data.limitValue track by $index">
-                <td>
-                  <div class="text-capitalize">{{final.opponentsSingle[0].athleteId.fullName}} </div>
-                </td>
-                <td>
-                  <div class="text-capitalize">
-                    {{final.opponentsSingle[0].athleteId.school.name}}
-                  </div>
-                </td>
-                <td ng-if="roundsList[0].match[0].sport.sportslist.name!='High jump' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!='Shooting' ">
-                  <div>
-                    {{final.opponentsSingle[0].bestattempt}}
-                  </div>
-                </td>
-                <td ng-if="data.name === 'Final' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!== 'Shooting'">
-                  <div>
-                    {{final.opponentsSingle[0].result}}
-                  </div>
-                </td>
-                <td ng-if=" data.name !== 'Final' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!=='Shooting' && roundsList[0].match[0].sport.sportslist.name!=='High jump'">
-                  <div>
-                    {{final.opponentsSingle[0].result}}
-                  </div>
-                </td>
-                <td ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
-                  <div>
-                    {{final.opponentsSingle[0].noOfJumps}}
-                  </div>
-                </td>
-                <td ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
-                  <div>
-                    {{final.opponentsSingle[0].score}}
-                  </div>
-                </td>
-                <td ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
-                  <div>
-                    {{final.opponentsSingle[0].result}}
-                  </div>
-                </td>
-                <td ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
-                  <div>
-                    {{final.opponentsSingle[0].result}}
-                  </div>
-                </td>
-                <td>
-                  <div>
-                    <a href="">
+                  <th ng-if="data.name === 'Final'&& roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!=='Shooting'">
+                    <div>
+                      <h4 class="m-clear">
+                        Position
+                      </h4>
+                    </div>
+                  </th>
+                  <th ng-if=" data.name !== 'Final' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!=='Shooting' && roundsList[0].match[0].sport.sportslist.name!=='High jump'">
+                    <div>
+                      <h4 class="m-clear">
+                        Result
+                      </h4>
+                    </div>
+                  </th>
+                  <th ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
+                    <div>
+                      <h4 class="m-clear">
+                        No.Of Jumps
+                      </h4>
+                    </div>
+                  </th>
+                  <th ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
+                    <div>
+                      <h4 class="m-clear">
+                        Score
+                      </h4>
+                    </div>
+                  </th>
+                  <th ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
+                    <div>
+                      <h4 class="m-clear">
+                        Result
+                      </h4>
+                    </div>
+                  </th>
+                  <th ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
+                    <div>
+                      <h4 class="m-clear">
+                        Position
+                      </h4>
+                    </div>
+                  </th>
+                  <th>
+                    <div>
+                      <h4 class="m-clear">Video</h4>
+                    </div>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="final in data.match|limitTo:data.limitValue track by $index" ng-if="data.match">
+                  <td>
+                    <div class="text-capitalize">{{final.opponentsSingle[0].athleteId.fullName}} </div>
+                  </td>
+                  <td>
+                    <div class="text-capitalize">
+                      {{final.opponentsSingle[0].athleteId.school.name}}
+                    </div>
+                  </td>
+                  <td ng-if="roundsList[0].match[0].sport.sportslist.name!='High jump' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!='Shooting' ">
+                    <div>
+                      {{final.opponentsSingle[0].bestattempt}}
+                    </div>
+                  </td>
+                  <td ng-if="data.name === 'Final' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!== 'Shooting'">
+                    <div>
+                      {{final.opponentsSingle[0].result}}
+                    </div>
+                  </td>
+                  <td ng-if=" data.name !== 'Final' && roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name!=='Shooting' && roundsList[0].match[0].sport.sportslist.name!=='High jump'">
+                    <div>
+                      {{final.opponentsSingle[0].result}}
+                    </div>
+                  </td>
+                  <td ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
+                    <div>
+                      {{final.opponentsSingle[0].noOfJumps}}
+                    </div>
+                  </td>
+                  <td ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
+                    <div>
+                      {{final.opponentsSingle[0].score}}
+                    </div>
+                  </td>
+                  <td ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name === 'Shooting'">
+                    <div>
+                      {{final.opponentsSingle[0].result}}
+                    </div>
+                  </td>
+                  <td ng-if="roundsList[0].match[0].sport.sportslist.name === 'High jump'">
+                    <div>
+                      {{final.opponentsSingle[0].result}}
+                    </div>
+                  </td>
+                  <td>
+                    <div>
+                      <a href="">
                         <img src="img/sf-play.png" alt="">
                       </a>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-          <div class="qf-final-viewmore" ng-click="showMoreData(true,$index)" ng-if="data.showMore && data.match.length>8">
-            <button class="btn sport-btn-blue-outline">View More</button>
-          </div>
-          <div class="qf-final-viewmore" ng-click="showMoreData(false,$index)" ng-if="!data.showMore">
-            <button class="btn sport-btn-blue-outline">View Less</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="qf-final-viewmore" ng-click="showMoreData(true,$index)" ng-if="data.showMore && data.match.length>8">
+              <button class="btn sport-btn-blue-outline">View More</button>
+            </div>
+            <div class="qf-final-viewmore" ng-click="showMoreData(false,$index)" ng-if="!data.showMore">
+              <button class="btn sport-btn-blue-outline">View Less</button>
+            </div>
           </div>
         </div>
 

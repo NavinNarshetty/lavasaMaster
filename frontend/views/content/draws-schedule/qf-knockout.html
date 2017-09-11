@@ -2,9 +2,9 @@
   <div class="container">
     <!--SPORT NAME-->
     <div class="qf-knockout-sportname text-center">
-      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>{{knockout[0].match[0].sport.sportslist.sportsListSubCategory.name}}</span> |
-        <span>{{knockout[0].match[0].sport.gender}}</span> |
-        <span>{{knockout[0].match[0].sport.ageGroup.name}}</span></h3>
+      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>{{knockout[0].sport.sportslist.sportsListSubCategory.name}}</span> |
+        <span>{{knockout[0].sport.gender}}</span> |
+        <span>{{knockout[0].sport.ageGroup.name}}</span></h3>
       <div class="draws-downloadpdf draws-a">
         <a href="#">Download the schedule in pdf format</a>
       </div>
@@ -56,8 +56,8 @@
               </th>
             </tr>
           </thead>
-          <tbody ng-repeat="knockout in knockout track by $index">
-            <tr ng-repeat="data in knockout.match track by $index">
+          <tbody>
+            <tr ng-repeat="data in knockout| limitTo:limitKnockout track by $index">
               <td>
                 <div class="text-capitalize">
                   {{data.round}}
@@ -91,17 +91,20 @@
             </tr>
           </tbody>
         </table>
-        <div class="qf-knockout-viewmore text-right ">
+        <div class="qf-knockout-viewmore text-right " ng-if="!showKnockout && knockout.length>8 " ng-click="showMoreData(true,'knockout');">
           <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+        </div>
+        <div class="qf-knockout-viewmore text-right " ng-click="showMoreData(false,'knockout');" ng-if="showKnockout">
+          <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
         </div>
       </div>
       <!--END KNOCKOUT TABLE-->
       <!--QUALIFYING HEAD-->
       <div class="qf-knockout-qualifyinghead">
         <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Qualifying</h3>
-        <p class="sport-color-primary"><span>17th August,</span>
-          <span>2017</span> |
-          <span>10.30am</span></p>
+        <p class="sport-color-primary"><span>{{qualifying[0].match[0].scheduleDate |englishNumeralDate}}</span>
+          <span> |</span>
+          <span>{{qualifying[0].match[0].scheduleTime}}</span></p>
       </div>
       <!--END QUALIFYING HEAD-->
 
@@ -142,8 +145,9 @@
               </th>
             </tr>
           </thead>
+
           <tbody>
-            <tr ng-repeat="qualify in qualifying[0].match track by $index">
+            <tr ng-repeat="qualify in qualifying[0].match | limitTo:limitValue track by $index">
               <td>
                 <div>
                   {{$index+1}}
@@ -179,8 +183,12 @@
             </tr>
           </tbody>
         </table>
-        <div class="qf-knockout-qualify-viewmore text-right ">
+        <div class="qf-knockout-qualify-viewmore text-right" ng-click="showMoreData(true,'qualifying')" ng-if="!showMore && qualifying[0].match.length>8">
           <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+        </div>
+
+        <div class="qf-knockout-qualify-viewmore text-right" ng-click="showMoreData(false,'qualifying')" ng-if="showMore">
+          <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
         </div>
       </div>
       <!--END QUALIFYING TABLE-->
