@@ -2357,19 +2357,28 @@ var model = {
                             if (mainData.opponentsSingle[0].athleteId._id.equals(mainData.resultsCombat.winner.player)) {
                                 obj["RESULT 1"] = "Won";
                             } else {
-                                obj["RESULT 1"] = "Lost";
+                                if (mainData.resultsCombat.players[0].walkover == true && mainData.resultsCombat.isNoMatch == false) {
+                                    obj["RESULT 1"] = "walkover";
+                                } else {
+                                    if (mainData.resultsCombat.isNoMatch == false) {
+                                        obj["RESULT 1"] = "Lost";
+                                    } else {
+                                        obj["RESULT 1"] = "No Match";
+                                    }
+                                }
                             }
                             var i;
+                            var sNo = 1;
                             for (i = 0; i < mainData.resultsCombat.players[0].sets.length; i++) {
                                 if (i == 0) {
-                                    obj["SCORE 1"] = "Set" + i + "-" + mainData.resultsCombat.players[0].sets[i].point;
-                                    obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets[i];
+                                    obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultsCombat.players[0].sets[i].point;
+                                    obj["DATA POINTS 1"] = "Set" + sNo + "-" + mainData.resultsCombat.players[0].sets[i];
 
                                 } else {
                                     obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsCombat.players[0].sets[i].point;
-                                    obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + mainData.resultsCombat.players[0].sets[i];
+                                    obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "-" + mainData.resultsCombat.players[0].sets[i];
                                 }
-
+                                sNo++;
                             }
                         } else {
                             obj["RESULT 1"] = "";
@@ -2382,19 +2391,28 @@ var model = {
                             if (mainData.opponentsSingle[0].athleteId._id.equals(mainData.resultsRacquet.winner.player)) {
                                 obj["RESULT 1"] = "Won";
                             } else {
-                                obj["RESULT 1"] = "Lost";
+                                if (mainData.resultsRacquet.players[0].walkover == true && mainData.resultsRacquet.isNoMatch == false) {
+                                    obj["RESULT 1"] = "walkover";
+                                } else {
+                                    if (mainData.resultsRacquet.isNoMatch == false) {
+                                        obj["RESULT 1"] = "Lost";
+                                    } else {
+                                        obj["RESULT 1"] = "No Match";
+                                    }
+                                }
                             }
                             var i;
+                            var sNo = 1;
                             for (i = 0; i < mainData.resultsRacquet.players[0].sets.length; i++) {
                                 if (i == 0) {
-                                    obj["SCORE 1"] = "Set" + i + "-" + mainData.resultsRacquet.players[0].sets[i].point;
-                                    obj["DATA POINTS 1"] = mainData.resultsRacquet.players[0].sets[i];
+                                    obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultsRacquet.players[0].sets[i].point;
+                                    obj["DATA POINTS 1"] = "Set" + sNo + "-" + mainData.resultsRacquet.players[0].sets[i];
 
                                 } else {
                                     obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsRacquet.players[0].sets[i].point;
-                                    obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + mainData.resultsRacquet.players[0].sets[i];
+                                    obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "-" + mainData.resultsRacquet.players[0].sets[i];
                                 }
-
+                                sNo++;
                             }
                         } else {
                             obj["RESULT 1"] = "";
@@ -2430,7 +2448,15 @@ var model = {
                         if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsCombat.winner.player) {
                             obj["RESULT 2"] = "Won";
                         } else {
-                            obj["RESULT 2"] = "Lost";
+                            if (mainData.resultsCombat.players[1].walkover == true && mainData.resultsCombat.isNoMatch == false) {
+                                obj["RESULT 2"] = "walkover";
+                            } else {
+                                if (mainData.resultsCombat.isNoMatch == false) {
+                                    obj["RESULT 2"] = "Lost";
+                                } else {
+                                    obj["RESULT 2"] = "No Match";
+                                }
+                            }
                         }
                         var i;
                         for (i = 0; i < mainData.resultsCombat.players[1].sets.length; i++) {
@@ -2444,11 +2470,18 @@ var model = {
                         }
                         // obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets[;
                     } else if (mainData.resultsRacquet) {
-
                         if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsRacquet.winner.player) {
                             obj["RESULT 2"] = "Won";
                         } else {
-                            obj["RESULT 2"] = "Lost";
+                            if (mainData.resultsRacquet.players[1].walkover == true && mainData.resultsRacquet.isNoMatch == false) {
+                                obj["RESULT 2"] = "walkover";
+                            } else {
+                                if (mainData.resultsRacquet.isNoMatch == false) {
+                                    obj["RESULT 2"] = "Lost";
+                                } else {
+                                    obj["RESULT 2"] = "No Match";
+                                }
+                            }
                         }
                         var i;
                         for (i = 0; i < mainData.resultsRacquet.players[1].sets.length; i++) {
