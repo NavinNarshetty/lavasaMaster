@@ -288,6 +288,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailMatchesCtrl'
         })
+        // ***************EDIT PAGES FOR DIGITAL SCORING *******************
         //detailplayer
         .state('detailplayer', {
             url: "/detailplayer/:id",
@@ -306,6 +307,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailSportTeamCtrl'
         })
+        .state('format-table', {
+            url: "/format-table/:type",
+            templateUrl: "views/template.html",
+            controller: 'FormatTableCtrl'
+        })
+        // **************************END EDIT DIGITAL *******************
         //medals
         .state('medals', {
             url: "/medals",

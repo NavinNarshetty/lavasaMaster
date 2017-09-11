@@ -4213,7 +4213,15 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
         $scope.viewMatch = function (data) {
             console.log(data);
-            $scope.showMatch = !$scope.showMatch;
+            // $scope.showMatch = !$scope.showMatch;
+            console.log($scope.form, "in view match")
+            NavigationService.setDetail(data, function (data) {
+                console.log('got it');
+            });
+            $state.go('format-table', {
+                type: data.sportslist.drawFormat.name
+            });
+
             $scope.viewTable(data);
         }
 

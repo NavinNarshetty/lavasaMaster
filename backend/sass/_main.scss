@@ -1354,5 +1354,40 @@
      }
  }
 
+ .cross-team {
+     position: absolute;
+     right: 3px;
+     top: -25px;
+     cursor: pointer;
+ }
+
+ .date-mb40 {
+     margin-bottom: 35px;
+ }
+
+ .checkbox-mb {
+     margin-top: 30px;
+ }
+
+ .detailsport-team {
+     .btn {
+         padding: 5px 8px;
+         font-size: 12px;
+     }
+ }
+
+ .format-table-head {
+     margin-bottom: 30px;
+ }
+
+ .detailsport-team {
+     input[type=number]::-webkit-inner-spin-button,
+     input[type=number]::-webkit-outer-spin-button {
+         -webkit-appearance: none;
+         -moz-appearance: none;
+         appearance: none;
+     }
+ }
+
  @import "fancybox-override";
  @import "other/mobile";

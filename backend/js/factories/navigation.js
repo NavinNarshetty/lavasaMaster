@@ -431,5 +431,18 @@ myApp.factory('NavigationService', function ($http) {
             });
         },
 
+        setDetail: function (data, callback) {
+            if (data) {
+                $.jStorage.set("detail", data);
+                callback();
+            }
+        },
+
+        removeDetail: function (data, callback) {
+            // console.log('value', data);
+            $.jStorage.flush(data);
+            // callback();
+        },
+
     };
 });
