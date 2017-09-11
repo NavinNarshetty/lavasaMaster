@@ -233,6 +233,11 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                 drawFormat: $scope.drawDetails.drawFormat,
                                 id: $scope.drawDetails.sport
                             });
+                        } else if ($scope.drawDetails.drawFormat === 'League cum Knockout') {
+                          $state.go('knockout', {
+                              drawFormat: $scope.drawDetails.drawFormat,
+                              id: $scope.drawDetails.sport
+                          });
                         }
                     }
                 } else {

@@ -1,4 +1,4 @@
-myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, toastr) {
+myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, toastr, $rootScope) {
     $scope.template = TemplateService.getHTML("content/match-team.html");
     TemplateService.title = "Sport Match"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -11,6 +11,7 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
     $scope.disableWinner = false;
     $scope.matchError = "";
     $scope.showError = false;
+    $scope.removeReset = true;
     // VARIABLE INITIALISE END
 
     // INITIALSE SWIPER
@@ -259,8 +260,8 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                                   });
                                 break;
                                 case "Football":
-                                    $state.go("scorefootball");
-                                    break;
+                                  $state.go("scorefootball");
+                                break;
                             }
                         } else {
                             toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
@@ -280,34 +281,39 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
             case "Football":
                 $scope.matchResult.resultFootball = $scope.formData;
                 $scope.matchResult.resultFootball.status = "IsCompleted";
-                break;
+            break;
             case "Volleyball":
                 $scope.matchResult.resultVolleyball = $scope.formData;
                 $scope.matchResult.resultVolleyball.status = "IsCompleted";
-                break;
+            break;
         }
         switch ($scope.matchDetails.sportsName) {
             case "Volleyball":
                 NavigationService.saveMatch($scope.matchResult, function(data) {
                     if (data.value == true) {
-                        if ($stateParams.drawFormat === 'Knockout') {
-                            $state.go('knockout', {
-                                drawFormat: $stateParams.drawFormat,
-                                id: $stateParams.sport
-                            });
-                        } else if ($stateParams.drawFormat === 'Heats') {
-                            $state.go('heats', {
-                                drawFormat: $stateParams.drawFormat,
-                                id: $stateParams.sport
-                            });
-                        }
+                      toastr.success('Results stored successfully', 'Saved success');
+                      $state.go('knockout', {
+                        drawFormat: $stateParams.drawFormat,
+                        id: $stateParams.sport
+                      });
                     } else {
-                        toastr.error('Match save failed. Please try again', 'Scoring Save Failed');
+                      toastr.error('Match save failed. Please try again', 'Scoring Save Failed');
                     }
                 });
-                break;
+            break;
             case "Football":
-                toatsr.success('Football Api Call');
+              console.log('FOOOTBALL');
+              NavigationService.saveMatch($scope.matchResult, function(data) {
+                if (data.value == true) {
+                  toastr.success('Results stored successfully', 'Saved success');
+                  $state.go('knockout', {
+                    drawFormat: $stateParams.drawFormat,
+                    id: $stateParams.sport
+                  });
+                } else {
+                  toastr.error('Match save failed. Please try again', 'Scoring Save Failed');
+                }
+              });
             break;
         }
     }
@@ -355,7 +361,6 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
         }
       }
     }
-
     // OPEN MATCH-NO MATCH MODAL
     $scope.showNoMatch = function() {
             if ($scope.formData) {
@@ -387,5 +392,28 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
 
         }
         // OPEN MATCH-NO MATCH MODAL
+    // OPEN MATCH-NO MATCH MODAL END
+    // RESET RESULT POPUP
+    $scope.resetResultPop = function(){
+        $rootScope.modalInstance = $uibModal.open({
+          animation: true,
+          scope: $scope,
+          templateUrl: 'views/modal/resetresult.html',
+          windowClass: 'completematch-modal resetresult-modal'
+        })
+    }
+    // RESET RESULT POPUP END
+    // RESET MATCH RESULT
+    $scope.resetMatchResult = function(){
+      $scope.formData = {};
+      $rootScope.modalInstance.close('a');
+      toastr.success('Match Result has been successfully reset', 'Result Reset');
+    }
+    // RESET MATCH RESULT
+    // REMOVE RESET
+    $scope.removeReset = function(){
+      $scope.removeReset = false;
+    }
+    // REMOVE RESET END
 
 })

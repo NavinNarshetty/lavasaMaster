@@ -6,6 +6,9 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
 
     // INITIALISE VARIABLES
     $scope.match = {};
+    $scope.stateParam = $stateParams;
+    $scope.matchId=$stateParams.id;
+    $scope.matchData = {};
     // INITIALISE VARIABLES END
 
     // CLEAVE FUNCTION OPTIONS
@@ -70,6 +73,50 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       console.log($scope.isPlayer, 'playa');
     }
     // SELECT PLAYING END
+    // SAVE PLAYING TEAM
+    $scope.savePlayingTeam = function(result){
+      console.log(result,'result');
+      var saveCounter = 0;
+      _.each(result.teams, function(n, nKey){
+        var countLength = 0;
+        var tkey = 0;
+        var tKey = nKey + 1;
+        if(n.coach == ""){
+          toastr.error("Please enter coach of Team " + tKey, "Enter Details");
+        } else if (n.formation == "") {
+          toastr.error("Please enter formation of Team " + tKey, "Enter Details");
+        } else{
+          _.each(n.players, function(m, mkey){
+            if(m.isPlaying == true){
+              countLength = countLength + 1;
+            }
+          });
+          if(countLength < $scope.match.minTeamPlayers){
+            toastr.error("Select minimum " +  $scope.match.minTeamPlayers + " players for Team " + tKey + " to start scoring.","Enter Details");
+          }
+          else {
+            saveCounter = saveCounter + 1;
+          }
+        }
+      });
+      if(saveCounter == 2){
+        $scope.matchResult = {
+          resultFootball : result,
+          matchId: $scope.matchData.matchId
+        }
+
+        console.log($scope.matchResult, "matchResult");
+        NavigationService.saveMatch($scope.matchResult, function(data){
+          if(data.value == true){
+            console.log('save success');
+            $rootScope.modalInstance.close('a');
+          } else{
+            alert('fail save');
+          }
+        });
+      }
+    }
+    // SAVE PLAYING TEAM END
     // TEAM SCORE INCREMENT
     $scope.incrementTeamPoint = function(team, point){
       $scope.team = team;
