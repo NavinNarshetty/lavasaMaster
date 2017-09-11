@@ -2373,11 +2373,11 @@ var model = {
                             for (i = 0; i < mainData.resultsCombat.players[0].sets.length; i++) {
                                 if (i == 0) {
                                     obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultsCombat.players[0].sets[i].point;
-                                    obj["DATA POINTS 1"] = "Set" + sNo + "-" + mainData.resultsCombat.players[0].sets[i];
+                                    obj["DATA POINTS 1"] = "Set" + sNo + "{ point:" + mainData.resultsCombat.players[0].sets[i].point + "ace:" + mainData.resultsCombat.players[0].sets[i].ace + "winner:" + mainData.resultsCombat.players[0].sets[i].winner + "unforcedError:" + mainData.resultsCombat.players[0].sets[i].unforcedError + "serviceError:" + mainData.resultsCombat.players[0].sets[i].serviceError + "doubleFaults:" + mainData.resultsCombat.players[0].sets[i].doubleFaults + "}";
                                     sNo++;
                                 } else {
                                     obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsCombat.players[0].sets[i].point;
-                                    obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "-" + mainData.resultsCombat.players[0].sets[i];
+                                    obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "{ point:" + mainData.resultsCombat.players[0].sets[i].point + "ace:" + mainData.resultsCombat.players[0].sets[i].ace + "winner:" + mainData.resultsCombat.players[0].sets[i].winner + "unforcedError:" + mainData.resultsCombat.players[0].sets[i].unforcedError + "serviceError:" + mainData.resultsCombat.players[0].sets[i].serviceError + "doubleFaults:" + mainData.resultsCombat.players[0].sets[i].doubleFaults + "}";
                                     sNo++;
                                 }
                             }
@@ -2409,21 +2409,20 @@ var model = {
                             for (i = 0; i < mainData.resultsRacquet.players[0].sets.length; i++) {
                                 if (i == 0) {
                                     obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultsRacquet.players[0].sets[i].point;
-                                    obj["DATA POINTS 1"] = "Set" + sNo + "-" + mainData.resultsRacquet.players[0].sets[i];
+                                    obj["DATA POINTS 1"] = "Set" + sNo + "{ point:" + mainData.resultsRacquet.players[0].sets[i].point + "ace:" + mainData.resultsRacquet.players[0].sets[i].ace + "winner:" + mainData.resultsRacquet.players[0].sets[i].winner + "unforcedError:" + mainData.resultsRacquet.players[0].sets[i].unforcedError + "serviceError:" + mainData.resultsRacquet.players[0].sets[i].serviceError + "doubleFaults:" + mainData.resultsRacquet.players[0].sets[i].doubleFaults + "}";
                                     sNo++;
                                 } else {
                                     obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsRacquet.players[0].sets[i].point;
-                                    obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "-" + mainData.resultsRacquet.players[0].sets[i];
+                                    obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "{ point:" + mainData.resultsRacquet.players[0].sets[i].point + "ace:" + mainData.resultsRacquet.players[0].sets[i].ace + "winner:" + mainData.resultsRacquet.players[0].sets[i].winner + "unforcedError:" + mainData.resultsRacquet.players[0].sets[i].unforcedError + "serviceError:" + mainData.resultsRacquet.players[0].sets[i].serviceError + "doubleFaults:" + mainData.resultsRacquet.players[0].sets[i].doubleFaults + "}";
                                     sNo++;
                                 }
-
                             }
                         } else {
                             obj["RESULT 1"] = "";
                             obj["SCORE 1"] = "";
                             obj["DATA POINTS 1"] = "";
                         }
-                        // obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets;
+                        // obj["DATA POINTS 1"] = mainData.resultsRacquet.players[0].sets;
                     } else {
                         obj["RESULT 1"] = "";
                         obj["SCORE 1"] = "";
@@ -2468,12 +2467,12 @@ var model = {
                         var sNo = 1;
                         for (i = 0; i < mainData.resultsCombat.players[1].sets.length; i++) {
                             if (i == 0) {
-                                obj["SCORE 2"] = "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i].point;
-                                obj["DATA POINTS 2"] = "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i];
+                                obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i].point;
+                                obj["DATA POINTS 1"] = "Set" + sNo + "{ point:" + mainData.resultsCombat.players[1].sets[i].point + "ace:" + mainData.resultsCombat.players[1].sets[i].ace + "winner:" + mainData.resultsCombat.players[1].sets[i].winner + "unforcedError:" + mainData.resultsCombat.players[1].sets[i].unforcedError + "serviceError:" + mainData.resultsCombat.players[1].sets[i].serviceError + "doubleFaults:" + mainData.resultsCombat.players[1].sets[i].doubleFaults + "}";
                                 sNo++;
                             } else {
-                                obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i].point;
-                                obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i];
+                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + sNo + "-" + mainData.resultsCombat.players[1].sets[i].point;
+                                obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "{ point:" + mainData.resultsCombat.players[1].sets[i].point + "ace:" + mainData.resultsCombat.players[1].sets[i].ace + "winner:" + mainData.resultsCombat.players[1].sets[i].winner + "unforcedError:" + mainData.resultsCombat.players[1].sets[i].unforcedError + "serviceError:" + mainData.resultsCombat.players[1].sets[i].serviceError + "doubleFaults:" + mainData.resultsCombat.players[1].sets[i].doubleFaults + "}";
                                 sNo++;
                             }
                         }
@@ -2497,11 +2496,13 @@ var model = {
                         var i;
                         for (i = 0; i < mainData.resultsRacquet.players[1].sets.length; i++) {
                             if (i == 0) {
-                                obj["SCORE 2"] = "Set" + i + "-" + mainData.resultsRacquet.players[1].sets[i].point;
-                                obj["DATA POINTS 2"] = mainData.resultsRacquet.players[1].sets[i];
+                                obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultsRacquet.players[1].sets[i].point;
+                                obj["DATA POINTS 1"] = "Set" + sNo + "{ point:" + mainData.resultsRacquet.players[1].sets[i].point + "ace:" + mainData.resultsRacquet.players[1].sets[i].ace + "winner:" + mainData.resultsRacquet.players[1].sets[i].winner + "unforcedError:" + mainData.resultsRacquet.players[1].sets[i].unforcedError + "serviceError:" + mainData.resultsRacquet.players[1].sets[i].serviceError + "doubleFaults:" + mainData.resultsRacquet.players[1].sets[i].doubleFaults + "}";
+                                sNo++;
                             } else {
-                                obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + i + "-" + mainData.resultsRacquet.players[1].sets[i].point;
-                                obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + mainData.resultsRacquet.players[1].sets[i];
+                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsRacquet.players[1].sets[i].point;
+                                obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "{ point:" + mainData.resultsRacquet.players[1].sets[i].point + "ace:" + mainData.resultsRacquet.players[1].sets[i].ace + "winner:" + mainData.resultsRacquet.players[1].sets[i].winner + "unforcedError:" + mainData.resultsRacquet.players[1].sets[i].unforcedError + "serviceError:" + mainData.resultsRacquet.players[1].sets[i].serviceError + "doubleFaults:" + mainData.resultsRacquet.players[1].sets[i].doubleFaults + "}";
+                                sNo++;
                             }
                         }
                         // obj["DATA POINTS 2"] = mainData.resultsRacquet.players[1].sets[;
