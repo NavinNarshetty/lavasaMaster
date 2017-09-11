@@ -173,7 +173,7 @@ var controller = {
                             } else if (req.body.resultType == "heat" && req.body.playerType == "individual") {
                                 async.waterfall([
                                         function (callback) {
-                                            var roundTypes = _.groupBy(importData, 'ROUND ');
+                                            var roundTypes = _.groupBy(importData, 'ROUND');
                                             _.each(roundTypes, function (roundType, key) {
                                                 roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
                                                 console.log("---------------------");
@@ -202,7 +202,7 @@ var controller = {
                             } else if (req.body.resultType == "heat" && req.body.playerType == "team") {
                                 async.waterfall([
                                         function (callback) {
-                                            var roundTypes = _.groupBy(importData, 'ROUND ');
+                                            var roundTypes = _.groupBy(importData, 'ROUND');
                                             console.log(roundTypes, "Before---------------------");
                                             _.each(roundTypes, function (roundType, key) {
                                                 roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');

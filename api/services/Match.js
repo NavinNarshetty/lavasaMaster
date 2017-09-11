@@ -1192,7 +1192,6 @@ var model = {
     saveHeatIndividual: function (importData, data, callback) {
         var countError = 0;
         var arrMathes = [];
-
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (mainData, callback) {
@@ -1206,7 +1205,6 @@ var model = {
                                 var date = Math.round((singleData.DATE - 25569) * 86400 * 1000);
                                 date = new Date(date);
                                 singleData.DATE = date.toISOString();
-
                                 async.waterfall([
                                         function (callback) {
                                             var paramData = {};
@@ -1294,7 +1292,7 @@ var model = {
                                         callback(null, n);
                                     } else {
                                         paramData.matchId = data.matchId;
-                                        paramData.round = n.success["ROUND "];
+                                        paramData.round = n.success["ROUND"];
                                         if (!_.isEmpty(n.success["PARTICIPANT 1"])) {
                                             paramData.opponentsSingle.push(n.success["PARTICIPANT 1"]);
                                         }
@@ -1382,7 +1380,7 @@ var model = {
                                 async.waterfall([
                                         function (callback) {
                                             var paramData = {};
-                                            paramData.name = singleData["EVENT "];
+                                            paramData.name = singleData["EVENT"];
                                             paramData.age = singleData["AGE GROUP"];
                                             if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
                                                 paramData.gender = "male";
@@ -1462,7 +1460,7 @@ var model = {
                                         callback(null, n);
                                     } else {
                                         paramData.matchId = data.matchId;
-                                        paramData.round = n.success["ROUND "];
+                                        paramData.round = n.success["ROUND"];
                                         if (!_.isEmpty(n.success["TEAM 1"])) {
                                             paramData.opponentsTeam.push(n.success["TEAM 1"]);
                                         }
@@ -2031,7 +2029,7 @@ var model = {
                                         paramData.opponentsSingle = [];
                                         paramData.matchId = data.matchId;
                                         // paramData.round = "Qualifying Round";
-                                        paramData.round = singleData["ROUND "];
+                                        paramData.round = singleData["ROUND"];
                                         if (_.isEmpty(singleData["PARTICIPANT 1"])) {
                                             paramData.opponentsSingle = "";
                                         } else {
@@ -2586,7 +2584,7 @@ var model = {
             obj["EVENT"] = "";
             obj.GENDER = ""
             obj["AGE GROUP"] = "";
-            obj["ROUND "] = "";
+            obj["ROUND"] = "";
             obj["HEAT NUMBER"] = "";
             obj["LANE NUMBER"] = "";
             obj["SFA ID"] = " ";
@@ -2608,7 +2606,7 @@ var model = {
             obj["EVENT"] = "";
             obj.GENDER = ""
             obj["AGE GROUP"] = "";
-            obj["ROUND "] = "";
+            obj["ROUND"] = "";
             obj["HEAT NUMBER"] = "";
             obj["LANE NUMBER"] = "";
             obj["TEAMID 1"] = "";
