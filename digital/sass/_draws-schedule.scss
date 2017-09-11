@@ -349,9 +349,10 @@ $sport-table-grey:#efeeee !default;
   }
 }
 
-.ver-mid{
+.ver-mid {
   vertical-align: middle;
 }
+
 // ********************END ORANGE TABLE ***************
 // END COMMON CLASS
 // *******************QUALIFYING+ FINAL ROUND************************
@@ -812,7 +813,7 @@ $sport-table-grey:#efeeee !default;
   }
 }
 
-.combatreasonresult{
+.combatreasonresult {
   font-weight: 700;
   font-size: 12px;
 }
@@ -832,25 +833,25 @@ $sport-table-grey:#efeeee !default;
   }
 }
 
-.knockout-live-foot{
-  background-color:#ffb026;
-
+.knockout-live-foot {
+  background-color: #ffb026;
 }
-.knockout-live-text{
+
+.knockout-live-text {
   color: #27b465;
-  font-weight:700;
+  font-weight: 700;
   text-transform: uppercase;
 }
-.knockout-dot-live{
-  color: #27b465;
-  // font-weight:700;
+
+.knockout-dot-live {
+  color: #27b465; // font-weight:700;
   font-size: 10px;
 }
-.custom-knockout-color{
+
+.custom-knockout-color {
   text-transform: capitalize;
   font-weight: 600;
 }
-
 
 .knockout-winner-card-content {
   background-color: #373737;
@@ -1198,5 +1199,11 @@ $sport-table-grey:#efeeee !default;
   } // RACKET-SCORE PAGE END
 }
 
+// BASKETBALL
+.score-quaterpoints {
+  margin: 0 10px;
+}
+
+// BASKETBALL END
 // MATCH CENTER END
 // MATCH CENTER MODAL END
