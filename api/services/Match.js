@@ -2419,10 +2419,10 @@ var model = {
                 if (mainData.opponentsSingle.length > 1) {
                     obj["SFAID 2"] = mainData.opponentsSingle[1].athleteId.sfaId;
 
-                    if (mainData.opponentsSingle[0].athleteId.middleName) {
-                        obj["PARTICIPANT 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.middleName + " " + mainData.opponentsSingle[0].athleteId.surname;
+                    if (mainData.opponentsSingle[1].athleteId.middleName) {
+                        obj["PARTICIPANT 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.middleName + " " + mainData.opponentsSingle[1].athleteId.surname;
                     } else {
-                        obj["PARTICIPANT 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
+                        obj["PARTICIPANT 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.surname;
                     }
                     obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
                     if (mainData.resultsCombat) {
