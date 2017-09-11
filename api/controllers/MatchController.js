@@ -176,11 +176,12 @@ var controller = {
                                             var roundTypes = _.groupBy(importData, 'ROUND ');
                                             _.each(roundTypes, function (roundType, key) {
                                                 roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
-                                                console.log(heatType, "---------------------");
+                                                console.log("---------------------");
                                             });
                                             callback(null, roundTypes);
                                         },
                                         function (roundTypes, callback) {
+                                            // console.log("roundTypes", roundTypes);
                                             Match.saveHeatIndividual(roundTypes, req.body, function (err, complete) {
                                                 if (err || _.isEmpty(complete)) {
                                                     callback(err, null);

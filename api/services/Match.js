@@ -1197,6 +1197,7 @@ var model = {
                 function (callback) {
                     async.concatSeries(importData, function (mainData, callback) {
                         async.concatSeries(mainData, function (arrData, callback) {
+                            // var finalData = {};
                             var paramData = {};
                             paramData.opponentsSingle = [];
                             var result = {};
@@ -1205,10 +1206,11 @@ var model = {
                                 var date = Math.round((singleData.DATE - 25569) * 86400 * 1000);
                                 date = new Date(date);
                                 singleData.DATE = date.toISOString();
+
                                 async.waterfall([
                                         function (callback) {
                                             var paramData = {};
-                                            paramData.name = singleData["EVENT "];
+                                            paramData.name = singleData["EVENT"];
                                             paramData.age = singleData["AGE GROUP"];
                                             if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
                                                 paramData.gender = "male";
@@ -1216,6 +1218,7 @@ var model = {
                                                 paramData.gender = "female";
                                             }
                                             paramData.weight = undefined;
+                                            console.log("paramData", paramData);
                                             Match.getSportId(paramData, function (err, sportData) {
                                                 if (err || _.isEmpty(sportData)) {
                                                     singleData.SPORT = null;
@@ -1231,14 +1234,15 @@ var model = {
                                             });
                                         },
                                         function (singleData, callback) {
+                                            // console.log("singleData", singleData);
                                             if (singleData.error) {
                                                 countError++;
-                                                finalData = singleData;
+                                                // finalData = singleData;
                                                 callback(null, singleData);
                                             } else {
                                                 if (_.isEmpty(singleData["SFA ID"])) {
-                                                    finalData.error = "SFA ID is empty";
-                                                    finalData.success = singleData;
+                                                    // finalData.error = "SFA ID is empty";
+                                                    // finalData.success = singleData;
                                                     callback(null, singleData);
                                                 } else {
                                                     var param = {};
@@ -1264,7 +1268,7 @@ var model = {
                                         function (singleData, callback) {
                                             if (singleData.error) {
                                                 countError++;
-                                                finalData = singleData;
+                                                // finalData = singleData;
                                                 callback(null, singleData);
                                             } else {
                                                 callback(null, {
@@ -1403,12 +1407,10 @@ var model = {
                                         function (singleData, callback) {
                                             if (singleData.error) {
                                                 countError++;
-                                                finalData = singleData;
                                                 callback(null, singleData);
                                             } else {
                                                 if (_.isEmpty(singleData["TEAM ID"])) {
-                                                    finalData.error = "TEAM ID is empty";
-                                                    finalData.success = singleData;
+
                                                     callback(null, singleData);
                                                 } else {
                                                     var param = {};
@@ -1435,7 +1437,6 @@ var model = {
                                         function (singleData, callback) {
                                             if (singleData.error) {
                                                 countError++;
-                                                finalData = singleData;
                                                 callback(null, singleData);
                                             } else {
                                                 callback(null, {
@@ -1541,7 +1542,7 @@ var model = {
                                 function (singleData, callback) {
                                     console.log("singleData", singleData);
                                     var paramData = {};
-                                    paramData.name = singleData['EVENT '];
+                                    paramData.name = singleData['EVENT'];
                                     paramData.age = singleData["AGE GROUP"];
                                     if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
                                         paramData.gender = "male";
@@ -1969,7 +1970,7 @@ var model = {
                                 function (singleData, callback) {
                                     console.log("singleData", singleData);
                                     var paramData = {};
-                                    paramData.name = singleData['EVENT '];
+                                    paramData.name = singleData['EVENT'];
                                     paramData.age = singleData["AGE GROUP"];
                                     if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
                                         paramData.gender = "male";
@@ -2582,7 +2583,7 @@ var model = {
             obj.DATE = "";
             obj.TIME = "";
             obj.SPORT = "";
-            obj["EVENT "] = "";
+            obj["EVENT"] = "";
             obj.GENDER = ""
             obj["AGE GROUP"] = "";
             obj["ROUND "] = "";
@@ -2604,7 +2605,7 @@ var model = {
             obj.DATE = "";
             obj.TIME = "";
             obj.SPORT = "";
-            obj["EVENT "] = "";
+            obj["EVENT"] = "";
             obj.GENDER = ""
             obj["AGE GROUP"] = "";
             obj["ROUND "] = "";
@@ -2624,7 +2625,7 @@ var model = {
             obj.DATE = "";
             obj.TIME = "";
             obj.SPORT = "";
-            obj["EVENT "] = "";
+            obj["EVENT"] = "";
             obj["GENDER"] = ""
             obj["AGE GROUP"] = "";
             // obj["WEIGHT CATEGORIES"] = "";
@@ -2643,7 +2644,7 @@ var model = {
             obj.DATE = "";
             obj.TIME = "";
             obj.SPORT = "";
-            obj["EVENT "] = "";
+            obj["EVENT"] = "";
             obj["GENDER"] = ""
             obj["AGE GROUP"] = "";
             // obj["WEIGHT CATEGORIES"] = "";
@@ -2657,7 +2658,7 @@ var model = {
             // obj["RESULT"] = "";
             finalData.push(obj);
             Config.generateExcel("KnockoutIndividual", finalData, res);
-        } else if (data.resultType == "qualifying-round" && data.excelType == 'knockout') {
+        } else if (data.resultType == "qualifying-knockout" && data.excelType == 'knockout') {
             var obj = {};
             obj["ROUND NAME"] = "";
             obj["SPORT"] = "";
