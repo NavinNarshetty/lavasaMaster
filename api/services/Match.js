@@ -75,37 +75,36 @@ schema.plugin(deepPopulate, {
         "opponentsTeam.studentTeam.studentId": {
             select: '_id sfaId firstName middleName surname school photograph dob city'
         },
-        "resultsRacquet.team": {
-            select: ''
-        },
-        "resultHeat.team": {
-            select: ''
-        },
-        "resultHockey.team": {
-            select: ''
-        },
-        "resultBasketball.team": {
-            select: ''
-        },
-        "resultVolleyball.team": {
-            select: ''
-        },
-        "resultHandball.team": {
-            select: ''
-        },
-        "resultWaterPolo.team": {
-            select: ''
-        },
-        "resultKabaddi.team": {
-            select: ''
-        },
-        "resultFootball.team": {
-            select: ''
-        },
-        "resultKnockout": {
-            select: ''
-        },
-
+        // "resultsRacquet.team": {
+        //     select: ''
+        // },
+        // "resultHeat.team": {
+        //     select: ''
+        // },
+        // "resultHockey.team": {
+        //     select: ''
+        // },
+        // "resultBasketball.team": {
+        //     select: ''
+        // },
+        // "resultVolleyball.team": {
+        //     select: ''
+        // },
+        // "resultHandball.team": {
+        //     select: ''
+        // },
+        // "resultWaterPolo.team": {
+        //     select: ''
+        // },
+        // "resultKabaddi.team": {
+        //     select: ''
+        // },
+        // "resultFootball.team": {
+        //     select: ''
+        // },
+        // "resultKnockout": {
+        //     select: ''
+        // },
     }
 });
 schema.plugin(uniqueValidator);
