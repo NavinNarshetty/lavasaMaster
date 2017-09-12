@@ -59,7 +59,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'RacquetDoublesScoreCtrl'
         })
         .state('scorefootball', {
-            url: "/scorefootball",
+            url: "/football/:drawFormat/:id/:sport",
             templateUrl: tempateURL,
             controller: 'FootballScoreCtrl'
         })

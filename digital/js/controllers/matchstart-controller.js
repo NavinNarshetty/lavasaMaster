@@ -306,9 +306,6 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
               $scope.matchResult.resultsRacquet.status = "IsLive";
             }
           break;
-          case "Team Sports":
-
-            break;
         }
         NavigationService.saveMatch($scope.matchResult, function(data){
           if(data.value == true){
@@ -551,8 +548,31 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     // RESET MATCH RESULT
     $scope.resetMatchResult = function(){
       $scope.formData = {};
-      $rootScope.modalInstance.close('a');
-      toastr.success('Match Result has been successfully reset', 'Result Reset');
+      $scope.matchResult = {
+        matchId: $scope.matchData.matchId
+      }
+      switch ($scope.matchDetails.sportType) {
+        case "Combat Sports":
+          $scope.matchResult.resultsCombat = $scope.formData;
+          if(!$scope.matchResult.resultsCombat.status){
+            $scope.matchResult.resultsCombat.status = "IsLive";
+          }
+        break;
+        case "Racquet Sports":
+          $scope.matchResult.resultsRacquet = $scope.formData;
+          if(!$scope.matchResult.resultsRacquet.status){
+            $scope.matchResult.resultsRacquet.status = "IsLive";
+          }
+        break;
+      }
+      NavigationService.saveMatch($scope.matchResult, function(data){
+        if(data.value == true){
+          $rootScope.modalInstance.close('a');
+          toastr.success('Match result has been successfully reset', 'Result Reset');
+        } else{
+          toastr.error('Match result reset failed. Please try again', 'Result Reset Failed');
+        }
+      });
     }
     // RESET MATCH RESULT
     // REMOVE RESET

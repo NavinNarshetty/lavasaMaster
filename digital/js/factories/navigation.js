@@ -47,6 +47,16 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data)
             });
         },
+        saveFootball: function (formData, callback) {
+            // console.log(formData, 'saveMatch');
+            $http({
+                url: adminurl + "match/updateFootball",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
         getAllSportsList: function (callback) {
             $http({
                 url: adminurl + 'SportsList/getAll',

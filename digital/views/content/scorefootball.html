@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <div class="row" hidden>
                 <button type="button" name="button" class="btn" ng-click="selectTeam(match.resultFootball)"> Team init</button>
             </div>
             <!-- TEAM HEADERS -->
@@ -39,7 +39,7 @@
                             <div class="team-playing" ng-repeat="player in match.resultFootball.teams[0].players track by $index">
                                 <!-- <p ng-if="$index==0">Players</p> -->
                                 <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="addPlayerPoints(player,$index)">
-                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].players[$index].firstName}} {{match.teams[0].players[$index].surname}}</span></p>
+                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                                 <!-- <p ng-if="$index==0">Substitues</p> -->
                                 <div class="teamplayer" ng-if="player.isPlaying==false" >
                                   <!-- ng-click="addPlayerPoints(player,$index)" -->
-                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].players[$index].firstName}} {{match.teams[0].players[$index].surname}}</span></p>
+                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                             </div>
                             <div class="team-playing" ng-repeat="player in match.resultFootball.teams[1].players track by $index">
                                 <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="addPlayerPoints(player,$index)">
-                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].players[$index].firstName}} {{match.teams[1].players[$index].surname}}</span></p>
+                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].studentTeam[$index].studentId.firstName}} {{match.teams[1].studentTeam[$index].studentId.surname}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
                             <div class="team-substitute" ng-repeat="player in match.resultFootball.teams[1].players track by $index">
                                 <div class="teamplayer" ng-if="player.isPlaying==false" >
                                   <!-- ng-click="addPlayerPoints(player,$index)" -->
-                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].players[$index].firstName}} {{match.teams[1].players[$index].surname}}</span></p>
+                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].studentTeam[$index].studentId.firstName}} {{match.teams[1].studentTeam[$index].studentId.surname}}</span></p>
                                 </div>
                             </div>
                         </div>

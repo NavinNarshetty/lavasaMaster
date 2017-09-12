@@ -86,11 +86,11 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                                         "teamResults": {
                                             halfPoints: 0,
                                             finalPoints: 0,
-                                            penalityPoints: 0,
+                                            penaltyPoints: 0,
                                             shotsOnGoal: 0,
                                             totalShots: 0,
                                             corners: 0,
-                                            penality: 0,
+                                            penalty: 0,
                                             saves: 0,
                                             fouls: 0,
                                             offSide: 0,
@@ -118,17 +118,10 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                                 $scope.formData = $scope.matchDetails.resultFootball;
                                 if ($scope.matchDetails.resultFootball.status == 'IsCompleted') {
                                   toastr.warning("This match has already been scored.", "Match Complete");
-                                    if ($stateParams.drawFormat === 'Knockout') {
-                                        $state.go('knockout', {
-                                            drawFormat: $stateParams.drawFormat,
-                                            id: $stateParams.sport
-                                        });
-                                    } else if ($stateParams.drawFormat === 'Heats') {
-                                        $state.go('heats', {
-                                            drawFormat: $stateParams.drawFormat,
-                                            id: $stateParams.sport
-                                        });
-                                    }
+                                  $state.go('knockout', {
+                                    drawFormat: $stateParams.drawFormat,
+                                    id: $stateParams.sport
+                                  });
                                 }
                             }
                             console.log($scope.formData, 'football result');
@@ -249,7 +242,20 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                             }
                             break;
                     }
-                    NavigationService.saveMatch($scope.matchResult, function(data) {
+                    if ($scope.matchDetails.sportsName === 'Football') {
+                      NavigationService.saveFootball($scope.matchResult, function(data){
+                        if (data.value == true) {
+                          $state.go("scorefootball",{
+                            drawFormat: $stateParams.drawFormat,
+                            sport: $stateParams.sport,
+                            id: $scope.matchData.matchId
+                          });
+                        } else {
+                            toastr.error('Data save failed. Please try again.', 'Save Error');
+                        }
+                      });
+                    } else {
+                      NavigationService.saveMatch($scope.matchResult, function(data) {
                         if (data.value == true) {
                             switch ($scope.matchDetails.sportsName) {
                                 case "Volleyball":
@@ -264,9 +270,10 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                                 break;
                             }
                         } else {
-                            toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
+                            toastr.error('Data save failed. Please try again.', 'Save Error');
                         }
-                    });
+                      });
+                  }
                 }
             } else {
                 toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
@@ -303,7 +310,7 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
             break;
             case "Football":
               console.log('FOOOTBALL');
-              NavigationService.saveMatch($scope.matchResult, function(data) {
+              NavigationService.saveFootball($scope.matchResult, function(data) {
                 if (data.value == true) {
                   toastr.success('Results stored successfully', 'Saved success');
                   $state.go('knockout', {
@@ -406,6 +413,44 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
     // RESET MATCH RESULT
     $scope.resetMatchResult = function(){
       $scope.formData = {};
+      ////
+      $scope.matchResult = {
+        matchId: $scope.matchData.matchId
+      }
+      switch ($scope.matchDetails.sportsName) {
+        case "Football":
+          $scope.matchResult.resultFootball = $scope.formData;
+          if(!$scope.matchResult.resultFootball.status){
+            $scope.matchResult.resultFootball.status = "IsLive";
+          }
+        break;
+        case "Volleyball":
+          $scope.matchResult.resultVolleyball = $scope.formData;
+          if(!$scope.matchResult.resultVolleyball.status){
+            $scope.matchResult.resultVolleyball.status = "IsLive";
+          }
+        break;
+      }
+      if ($scope.matchDetails.sportsName === 'Football') {
+        NavigationService.saveFootball($scope.matchResult, function(data) {
+          if (data.value == true) {
+            toastr.success('Match result has been successfully reset', 'Result Reset');
+            $rootScope.modalInstance.close('a');
+          } else {
+            toastr.error('Match result reset failed. Please try again', 'Result Reset Failed');
+          }
+        });
+      } else {
+        NavigationService.saveMatch($scope.matchResult, function(data){
+          if(data.value == true){
+            toastr.success('Match result has been successfully reset', 'Result Reset');
+            $rootScope.modalInstance.close('a');
+          } else{
+            toastr.error('Match result reset failed. Please try again', 'Result Reset Failed');
+          }
+        });
+      }
+      ////
       $rootScope.modalInstance.close('a');
       toastr.success('Match Result has been successfully reset', 'Result Reset');
     }

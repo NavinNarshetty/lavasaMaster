@@ -1,4 +1,4 @@
-myApp.controller('FootballScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, $interval, toastr) {
+myApp.controller('FootballScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, $interval, toastr, $rootScope) {
     $scope.template = TemplateService.getHTML("content/scorefootball.html");
     TemplateService.title = "Score Football"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -30,7 +30,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     $scope.selectTeam = function(result){
       $scope.result = result;
       var teamSelection;
-      teamSelection = $uibModal.open({
+      $rootScope.modalInstance = $uibModal.open({
         animation: true,
         scope: $scope,
         backdrop: 'static',
@@ -53,7 +53,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
             playingCount = playingCount + 1;
           }
         });
-        if(playingCount <  $scope.match.minPlayers){
+        if(playingCount <  $scope.match.minTeamPlayers){
           if($scope.isPlayer.isPlaying == true){
             $scope.isPlayer.isPlaying = false;
           } else{
@@ -106,7 +106,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
         }
 
         console.log($scope.matchResult, "matchResult");
-        NavigationService.saveMatch($scope.matchResult, function(data){
+        NavigationService.saveFootball($scope.matchResult, function(data){
           if(data.value == true){
             console.log('save success');
             $rootScope.modalInstance.close('a');
@@ -331,14 +331,124 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     }
     // PENALTY SHOOTOUTS MODAL END
     // FUNCTIONS END
+
+    // API CALLS
+    // GET MATCH
+    $scope.getOneMatch = function() {
+        $scope.matchData.matchId = $stateParams.id;
+        NavigationService.getOneMatch($scope.matchData, function(data) {
+            if (data.value == true) {
+              if(data.data.error){
+                $scope.matchError = data.data.error;
+                console.log($scope.matchError,'error');
+                toastr.error('Invalid MatchID. Please check the MatchID entered.', 'Error');
+              }
+                $scope.match = data.data;
+                $scope.match.matchId = $scope.matchData.matchId;
+                _.each($scope.match.resultFootball.teams[0].teamResults.sets, function(n,key){
+                  $scope.setLength[key] = {
+                    setShow : true
+                  }
+                });
+                if($scope.match.resultFootball.teams[0] == "" || $scope.match.resultFootball.teams[0].formation == "" ||$scope.match.resultFootball.teams[1].coach == "" || $scope.match.resultFootball.teams[1] == ''){
+                  $scope.selectTeam($scope.match.resultFootball);
+                }
+            } else {
+                console.log("ERROR IN getOneMatch");
+            }
+        })
+    };
+    $scope.getOneMatch();
+    // GET MATCH END
+    // SAVE RESULT
+    $scope.saveResult = function(formData){
+      $scope.matchResult = {
+        resultFootball : formData.resultFootball,
+        matchId: $scope.matchData.matchId
+      }
+      NavigationService.saveFootball($scope.matchResult, function(data){
+        if(data.value == true){
+          console.log('save success');
+        } else{
+          alert('fail save');
+        }
+      });
+    }
+    // SAVE RESULT END
+    // AUTO SAVE
+    $scope.autoSave = function(){
+      $scope.$on('$viewContentLoaded', function(event) {
+        promise = $interval(function () {
+          $scope.saveResult($scope.match);
+        }, 10000);
+      })
+    }
+    $scope.autoSave();
+    // AUTO SAVE FUNCTION END
+    // DESTROY AUTO SAVE
+    // $scope.destroyAutoSave = function(){
+      $scope.$on('$destroy', function(){
+        console.log('destroy');
+        $interval.cancel(promise);
+      })
+    // }
+    // DESTROY AUTO SAVE END
+    // AUTO SAVE END
+    // MATCH COMPLETE
+    $scope.completePopup = function(){
+      var modalCompleteMatch;
+        $rootScope.modalInstance = $uibModal.open({
+          animation: true,
+          scope: $scope,
+          // backdrop: 'static',
+          // keyboard: false,
+          templateUrl: 'views/modal/confirmcomplete.html',
+          windowClass: 'completematch-modal'
+        })
+    };
+    $scope.matchComplete = function(){
+      if ($scope.match.resultFootball) {
+        $scope.match.resultFootball.status = "IsCompleted";
+          $scope.matchResult = {
+            resultFootball : $scope.match.resultFootball,
+            matchId: $scope.matchData.matchId
+          }
+          NavigationService.saveFootball($scope.matchResult, function(data){
+            if(data.value == true){
+              if ($stateParams.drawFormat === 'Knockout') {
+                  $state.go('knockout', {
+                    drawFormat: $stateParams.drawFormat,
+                    id: $stateParams.sport
+                  });
+              } else if ($stateParams.drawFormat === 'Heats') {
+                  $state.go('heats', {
+                    drawFormat: $stateParams.drawFormat,
+                    id: $stateParams.sport
+                  });
+              }
+              console.log('save success');
+            } else{
+              // alert('fail save');
+              toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
+            }
+          });
+          console.log($scope.matchResult, 'result#');
+      } else {
+        toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
+      }
+    }
+    // MATCH COMPLETE END
+    // API CALLS END
+
+
     // JSON
-    $scope.match = {
+    $scope.smatch = {
       matchId: '123456',
       sportsName: 'Football',
       age: 'u-11',
       gender: 'female',
       round: 'final',
-      minPlayers: 4,
+      minTeamPlayers: 4,
       resultFootball:{
         teams:[{
           teamId: '987654',
