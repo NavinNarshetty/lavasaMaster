@@ -1001,6 +1001,7 @@ var model = {
     //-----------------------------SAVE Excel ---------------------------------------------
 
     saveKnockoutIndividual: function (importData, data, callback) {
+        // console.log("import", importData);
         var countError = 0;
         async.waterfall([
                 function (callback) {
@@ -1013,7 +1014,7 @@ var model = {
                                     callback(null, singleData);
                                 },
                                 function (singleData, callback) {
-                                    console.log("singleData", singleData);
+                                    // console.log("singleData", singleData);
                                     var paramData = {};
                                     paramData.name = singleData.EVENT;
                                     console.log("para,", paramData.name);
@@ -1040,7 +1041,7 @@ var model = {
                                     });
                                 },
                                 function (singleData, callback) {
-                                    // console.log("logssss", singleData);
+                                    console.log("logssss", singleData);
                                     if (singleData.error) {
                                         countError++;
                                         callback(null, singleData);
@@ -1072,7 +1073,7 @@ var model = {
 
                                 },
                                 function (singleData, callback) {
-                                    // console.log("logssss", singleData);
+                                    console.log("logssss***", singleData);
                                     if (singleData.error) {
                                         countError++;
                                         callback(null, singleData);
@@ -1099,7 +1100,7 @@ var model = {
 
                                 },
                                 function (singleData, callback) {
-                                    // console.log("logssss", singleData);
+                                    console.log("logssss", singleData);
                                     if (singleData.error) {
                                         countError++;
                                         callback(null, singleData);
@@ -1169,7 +1170,7 @@ var model = {
 
                 },
                 function (singleData, callback) {
-                    // callback(null, singleData);
+                    console.log("singleData", singleData);
                     if (singleData.error) {
                         callback(null, singleData);
                     } else {

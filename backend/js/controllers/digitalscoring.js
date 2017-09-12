@@ -26,6 +26,7 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
   $scope.form.page = 1;
   $scope.form.type = '';
   $scope.form.keyword = '';
+  $scope.result = [];
 
 
   // SEARCH IN TABLE
@@ -67,9 +68,34 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
       });
       _.each($scope.items, function (data) {
         if (data.resultsCombat) {
-          console.log("in combat")
+          var resultKnockout = {};
+          console.log("in combat");
+          resultKnockout.set = 0;
+          var i = 0;
+          _.each(data.resultsCombat.players, function (n) {
+            if (i == 0) {
+              resultKnockout.set = n.sets[0].point;
+              i++;
+            } else {
+              resultKnockout.set = resultKnockout.set + "-" + n.sets[0].point;
+            }
+          });
+          resultKnockout.matchId = data.matchId;
+          resultKnockout.round = data.round;
+          if (data.opponentsSingle[0]) {
+            resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
+          } else {
+            resultKnockout.player1 = "-";
+          }
+          if (data.opponentsSingle[1]) {
+            resultKnockout.player2 = data.opponentsSingle[1].athleteId.fullname;
+          } else {
+            resultKnockout.player2 = "-";
+          }
+          console.log("data", data);
+          $scope.result.push(resultKnockout);
         }
-      })
+      });
     });
   }
   $scope.viewTable();

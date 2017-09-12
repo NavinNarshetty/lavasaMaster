@@ -108,7 +108,6 @@ var controller = {
                             callback(null, importData);
                         } else {
                             if (req.body.resultType == "knockout" && req.body.playerType == "individual") {
-
                                 Match.saveKnockoutIndividual(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
@@ -552,6 +551,18 @@ var controller = {
                 "value": false
             })
         }
-    }
+    },
+
+    updateFootball: function (req, res) {
+        if (req.body) {
+            Match.updateFootball(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
 };
 module.exports = _.assign(module.exports, controller);
