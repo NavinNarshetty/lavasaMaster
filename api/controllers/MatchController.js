@@ -279,6 +279,7 @@ var controller = {
 
     updateExcelMatch: function (req, res) {
         if (req.body) {
+            console.log("req", req.body);
             async.waterfall([
                     function (callback) {
                         Config.importGS(req.body.file, function (err, importData) {
@@ -290,61 +291,60 @@ var controller = {
                         });
                     },
                     function (importData, callback) {
-                        if (importData[0].error) {
-                            callback(null, importData);
+                        if (req.body.resultType == 'heat' && req.body.playerType == 'individual') {
+                            console.log("req", req.body);
+                            var roundTypes = _.groupBy(importData, "ROUND");
+                            _.each(roundTypes, function (roundType, key) {
+                                roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
+                            });
+                            console.log("roundTypes", roundTypes);
+                            Match.UpdateHeatIndividual(roundTypes, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else if (req.body.resultType == "heat" && req.body.playerType == "team") {
+                            var roundTypes = _.groupBy(importData, 'ROUND');
+                            _.each(roundTypes, function (roundType, key) {
+                                roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
+                            });
+                            Match.UpdateHeatTeam(roundTypes, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else if (req.body.resultType == "qualifying-round" && req.body.playerType == "individual") {
+                            Match.updateQualifyingRoundIndividual(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "qualifying") {
+                            Match.updateQualifying(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "knockout") {
+                            Match.updateQualifyingKnockout(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
                         } else {
-                            if (req.body.resultType == "heat" && req.body.playerType == "individual") {
-                                var roundTypes = _.groupBy(importData, 'ROUND');
-                                _.each(roundTypes, function (roundType, key) {
-                                    roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
-                                });
-                                Match.UpdateHeatIndividual(roundTypes, function (err, complete) {
-                                    if (err || _.isEmpty(complete)) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, complete);
-                                    }
-                                });
-                            } else if (req.body.resultType == "heat" && req.body.playerType == "team") {
-                                var roundTypes = _.groupBy(importData, 'ROUND');
-                                _.each(roundTypes, function (roundType, key) {
-                                    roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
-                                });
-                                Match.UpdateHeatTeam(roundTypes, function (err, complete) {
-                                    if (err || _.isEmpty(complete)) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, complete);
-                                    }
-                                });
-                            } else if (req.body.resultType == "qualifying-round" && req.body.playerType == "individual") {
-                                Match.updateQualifyingRoundIndividual(importData, req.body, function (err, complete) {
-                                    if (err || _.isEmpty(complete)) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, complete);
-                                    }
-                                });
-                            } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "qualifying") {
-                                Match.updateQualifying(importData, req.body, function (err, complete) {
-                                    if (err || _.isEmpty(complete)) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, complete);
-                                    }
-                                });
-                            } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "knockout") {
-                                Match.updateQualifyingKnockout(importData, req.body, function (err, complete) {
-                                    if (err || _.isEmpty(complete)) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, complete);
-                                    }
-                                });
-                            } else {
-                                callback(null, importData);
-                            }
+                            callback(null, importData);
                         }
+                        // }
                     }
                 ],
                 function (err, results) {

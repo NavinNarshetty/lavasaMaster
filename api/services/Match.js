@@ -4148,12 +4148,9 @@ var model = {
                                                 function (singleData, callback) {
                                                     if (singleData.error) {
                                                         countError++;
-                                                        finalData = singleData;
                                                         callback(null, singleData);
                                                     } else {
                                                         if (_.isEmpty(singleData["SFA ID"])) {
-                                                            finalData.error = "SFA ID is empty";
-                                                            finalData.success = singleData;
                                                             callback(null, singleData);
                                                         } else {
                                                             var param = {};
@@ -4179,7 +4176,7 @@ var model = {
                                                 function (singleData, callback) {
                                                     if (singleData.error) {
                                                         countError++;
-                                                        finalData = singleData;
+                                                        // finalData = singleData;
                                                         callback(null, singleData);
                                                     } else {
                                                         callback(null, {
@@ -4218,7 +4215,9 @@ var model = {
                                                 paramData.sport = n.success.SPORT;
                                                 paramData.scheduleDate = moment(n.success.DATE).format();
                                                 paramData.scheduleTime = n.success.TIME;
-                                                paramData.resultHeat = result;
+                                                if (_.isEmpty(result)) {
+                                                    paramData.resultHeat = result;
+                                                }
                                                 callback(null, paramData);
                                             }
                                         }, function (err, n) {
