@@ -94,6 +94,67 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
           }
           console.log("data", data);
           $scope.result.push(resultKnockout);
+        } else if (data.resultsRacquet) {
+          var resultKnockout = {};
+          console.log("in Racquet");
+          resultKnockout.set = 0;
+          var i = 0;
+          var count = 0;
+          var playerLength = data.resultsRacquet.players.length;
+          if (playerLength == 2) {
+            var player1Set = data.resultsRacquet.players[0].sets.length;
+            while (i < player1Set) {
+              if (i == 0) {
+                resultKnockout.set = data.resultsRacquet.players[0].sets[i].point + "-" + data.resultsRacquet.players[1].sets[i].point;
+                i++;
+              } else {
+                resultKnockout.set = resultKnockout.set + "," + data.resultsRacquet.players[0].sets[i].point + "-" + data.resultsRacquet.players[1].sets[i].point;
+                i++;
+              }
+            }
+          } else {
+            var player1Set = data.resultsRacquet.players[0].sets.length;
+            while (count < player1Set) {
+              if (count == 0) {
+                resultKnockout.set = data.resultsRacquet.players[0].sets[count].point;
+                count++;
+              } else {
+                resultKnockout.set = resultKnockout.set + "," + data.resultsRacquet.players[0].sets[cpunt].point;
+                count++;
+              }
+            }
+          }
+          resultKnockout.matchId = data.matchId;
+          resultKnockout.round = data.round;
+          if (data.opponentsSingle[0]) {
+            resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
+          } else {
+            resultKnockout.player1 = "-";
+          }
+          if (data.opponentsSingle[1]) {
+            resultKnockout.player2 = data.opponentsSingle[1].athleteId.fullname;
+          } else {
+            resultKnockout.player2 = "-";
+          }
+          console.log("data", data);
+          $scope.result.push(resultKnockout);
+        } else {
+          var resultKnockout = {};
+          resultKnockout.matchId = data.matchId;
+          resultKnockout.round = data.round;
+          if (data.opponentsSingle[0]) {
+            resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
+          } else {
+            resultKnockout.player1 = "-";
+          }
+          if (data.opponentsSingle[1]) {
+            resultKnockout.player2 = data.opponentsSingle[1].athleteId.fullname;
+          } else {
+            resultKnockout.player2 = "-";
+          }
+          resultKnockout.set = "-";
+          console.log("data", data);
+          $scope.result.push(resultKnockout);
         }
       });
     });

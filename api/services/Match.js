@@ -75,12 +75,37 @@ schema.plugin(deepPopulate, {
         "opponentsTeam.studentTeam.studentId": {
             select: '_id sfaId firstName middleName surname school photograph dob city'
         },
-        "prevMatch": {
-            select: '_id incrementalId'
+        "resultsRacquet.team": {
+            select: ''
         },
-        "nextMatch": {
-            select: '_id incrementalId'
+        "resultHeat.team": {
+            select: ''
         },
+        "resultHockey.team": {
+            select: ''
+        },
+        "resultBasketball.team": {
+            select: ''
+        },
+        "resultVolleyball.team": {
+            select: ''
+        },
+        "resultHandball.team": {
+            select: ''
+        },
+        "resultWaterPolo.team": {
+            select: ''
+        },
+        "resultKabaddi.team": {
+            select: ''
+        },
+        "resultFootball.team": {
+            select: ''
+        },
+        "resultKnockout": {
+            select: ''
+        },
+
     }
 });
 schema.plugin(uniqueValidator);
