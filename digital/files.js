@@ -65,4 +65,5 @@ module.exports = [
   'digital/js/controllers/knockout.js',
   'digital/js/controllers/scorehockey-controller.js',
   'digital/js/controllers/scorebasketball-controller.js',
+  'digital/js/controllers/scorekabaddi-controller.js',
 ];

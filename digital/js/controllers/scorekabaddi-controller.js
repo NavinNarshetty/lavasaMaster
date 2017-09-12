@@ -1,5 +1,5 @@
-myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, $interval, toastr) {
-  $scope.template = TemplateService.getHTML("content/scorehandball.html");
+myApp.controller('KabaddiScoreCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, $interval, toastr) {
+  $scope.template = TemplateService.getHTML("content/scorekabaddi.html");
   TemplateService.title = "Score Hockey"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
 
@@ -19,7 +19,6 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
     })
   }
   // SELECT TEAM END
-
   // PLAYER POINTS MODAL
   $scope.addPlayerPoints = function (player, index) {
     $scope.selectedPlayer = player;
@@ -31,7 +30,7 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
       // backdrop: 'static',
       keyboard: false,
       size: 'lg',
-      templateUrl: 'views/modal/scoreplayer-handball.html',
+      templateUrl: 'views/modal/scoreplayer-kabaddi.html',
       windowClass: 'scoreplayer-football-modal'
     })
   }
@@ -45,19 +44,14 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
           $scope.team.teamResults.finalGoalPoints = $scope.team.teamResults.finalGoalPoints - 1;
         }
         break;
-      case 'shotsOnGoal':
-        if ($scope.team.teamResults.shotsOnGoal > 0) {
-          $scope.team.teamResults.shotsOnGoal = $scope.team.teamResults.shotsOnGoal - 1;
+      case 'superTackle':
+        if ($scope.team.teamResults.superTackle > 0) {
+          $scope.team.teamResults.superTackle = $scope.team.teamResults.superTackle - 1;
         }
         break;
-      case 'penalty':
-        if ($scope.team.teamResults.penalty > 0) {
-          $scope.team.teamResults.penalty = $scope.team.teamResults.penalty - 1;
-        }
-        break;
-      case 'saves':
-        if ($scope.team.teamResults.saves > 0) {
-          $scope.team.teamResults.saves = $scope.team.teamResults.saves - 1;
+      case 'allOut':
+        if ($scope.team.teamResults.allOut > 0) {
+          $scope.team.teamResults.allOut = $scope.team.teamResults.allOut - 1;
         }
         break;
     }
@@ -73,14 +67,11 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
       case 'finalGoalPoints':
         $scope.team.teamResults.finalGoalPoints = $scope.team.teamResults.finalGoalPoints + 1;
         break;
-      case 'shotsOnGoal':
-        $scope.team.teamResults.shotsOnGoal = $scope.team.teamResults.shotsOnGoal + 1;
+      case 'superTackle':
+        $scope.team.teamResults.superTackle = $scope.team.teamResults.superTackle + 1;
         break;
-      case 'penalty':
-        $scope.team.teamResults.penalty = $scope.team.teamResults.penalty + 1;
-        break;
-      case 'saves':
-        $scope.team.teamResults.saves = $scope.team.teamResults.saves + 1;
+      case 'allOut':
+        $scope.team.teamResults.allOut = $scope.team.teamResults.allOut + 1;
         break;
     }
     console.log(point, 'inTP');
@@ -91,26 +82,34 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
   $scope.decrementPlayerPoint = function (player, point) {
     $scope.player = player;
     switch (point) {
-      case 'goal':
-        if ($scope.player.playerPoints.goal.length > 0) {
-          var length = $scope.player.playerPoints.goal.length - 1;
-          _.remove($scope.player.playerPoints.goal, function (m, index) {
+      case 'raids':
+        if ($scope.player.playerPoints.raids.length > 0) {
+          var length = $scope.player.playerPoints.raids.length - 1;
+          _.remove($scope.player.playerPoints.raids, function (m, index) {
             return length == index;
           })
         }
         break;
-      case 'yellowCard':
-        if ($scope.player.playerPoints.yellowCard.length > 0) {
-          var length = $scope.player.playerPoints.yellowCard.length - 1;
-          _.remove($scope.player.playerPoints.yellowCard, function (m, index) {
+      case 'bonusPoint':
+        if ($scope.player.playerPoints.bonusPoint.length > 0) {
+          var length = $scope.player.playerPoints.bonusPoint.length - 1;
+          _.remove($scope.player.playerPoints.bonusPoint, function (m, index) {
             return length == index;
           })
         }
         break;
-      case 'greenCard':
-        if ($scope.player.playerPoints.greenCard.length > 0) {
-          var length = $scope.player.playerPoints.greenCard.length - 1;
-          _.remove($scope.player.playerPoints.greenCard, function (m, index) {
+      case 'superRaid':
+        if ($scope.player.playerPoints.superRaid.length > 0) {
+          var length = $scope.player.playerPoints.superRaid.length - 1;
+          _.remove($scope.player.playerPoints.superRaid, function (m, index) {
+            return length == index;
+          })
+        }
+        break;
+      case 'tackle':
+        if ($scope.player.playerPoints.tackle.length > 0) {
+          var length = $scope.player.playerPoints.tackle.length - 1;
+          _.remove($scope.player.playerPoints.tackle, function (m, index) {
             return length == index;
           })
         }
@@ -139,18 +138,23 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
   $scope.incrementPlayerPoint = function (player, point) {
     $scope.player = player;
     switch (point) {
-      case 'goal':
-        $scope.player.playerPoints.goal.push({
+      case 'raids':
+        $scope.player.playerPoints.raids.push({
           time: 0
         });
         break;
-      case 'yellowCard':
-        $scope.player.playerPoints.yellowCard.push({
+      case 'bonusPoint':
+        $scope.player.playerPoints.bonusPoint.push({
           time: 0
         });
         break;
-      case 'greenCard':
-        $scope.player.playerPoints.greenCard.push({
+      case 'superRaid':
+        $scope.player.playerPoints.superRaid.push({
+          time: 0
+        });
+        break;
+      case 'tackle':
+        $scope.player.playerPoints.tackle.push({
           time: 0
         });
         break;
@@ -169,57 +173,39 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
     console.log('inPP');
   };
   // PLAYER SCORE INCREMENT END
-
   // REMOVE MATCH SCORESHEET
   $scope.removeMatchScore = function (pic, type) {
     switch (type) {
       case 'matchPhoto':
-        _.remove($scope.match.resultHandball.matchPhoto, function (n) {
+        _.remove($scope.match.resultKabaddi.matchPhoto, function (n) {
           return n.image === pic.image;
         })
         break;
       case 'scoreSheet':
-        _.remove($scope.match.resultHandball.scoreSheet, function (n) {
+        _.remove($scope.match.resultKabaddi.scoreSheet, function (n) {
           return n.image === pic.image;
         })
         break;
     }
   }
   // REMOVE MATCH SCORESHEET END
-
-  // PENALTY SHOOTOUTS MODAL
-  $scope.startPenalty = function () {
-    var teamPenaltyModal;
-    teamPenaltyModal = $uibModal.open({
-      animation: true,
-      scope: $scope,
-      backdrop: 'static',
-      keyboard: false,
-      size: 'lg',
-      templateUrl: 'views/modal/penaltyshootouts.html',
-      windowClass: 'penaltyshootouts-modal'
-    })
-  }
-  // PENALTY SHOOTOUTS MODAL END
   // JSON
   $scope.match = {
     matchId: '123456',
-    sportsName: 'Handball',
+    sportsName: 'KAbaddi',
     age: 'u-11',
     gender: 'female',
     round: 'final',
     minPlayers: 4,
-    resultHandball: {
+    resultKabaddi: {
       teams: [{
         teamId: '987654',
         teamResults: {
-          goalPoints: [{
-            goal: 20,
-          }],
+          halfPoints: 10,
+          finalPoints: 22,
           finalGoalPoints: 22,
-          shotsOnGoal: 2,
-          penalty: 10,
-          saves: 1,
+          superTackle: 1,
+          allOut: 1
         },
         players: [{
           name: 'hello',
@@ -229,14 +215,20 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
           walkover: true,
           color: "Blue/Red",
           playerPoints: {
-            goal: [{
-              points: 1,
+            raids: [{
+              count: 1,
               time: 11
             }],
-            yellowCard: [{
+            bonusPoint: [{
+              count: 1,
               time: 11
             }],
-            greenCard: [{
+            superRaid: [{
+              count: 1,
+              time: 11
+            }],
+            tackle: [{
+              count: 1,
               time: 11
             }],
             in: [{
@@ -254,14 +246,20 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
           walkover: true,
           color: "Blue/Red",
           playerPoints: {
-            goal: [{
-              points: 1,
+            raids: [{
+              count: 1,
               time: 11
             }],
-            yellowCard: [{
+            bonusPoint: [{
+              count: 1,
               time: 11
             }],
-            greenCard: [{
+            superRaid: [{
+              count: 1,
+              time: 11
+            }],
+            tackle: [{
+              count: 1,
               time: 11
             }],
             in: [{
@@ -279,14 +277,20 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
           walkover: true,
           color: "Blue/Red",
           playerPoints: {
-            goal: [{
-              points: 1,
+            raids: [{
+              count: 1,
               time: 11
             }],
-            yellowCard: [{
+            bonusPoint: [{
+              count: 1,
               time: 11
             }],
-            greenCard: [{
+            superRaid: [{
+              count: 1,
+              time: 11
+            }],
+            tackle: [{
+              count: 1,
               time: 11
             }],
             in: [{
@@ -300,13 +304,11 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
       }, {
         teamId: '124358',
         teamResults: {
-          goalPoints: [{
-            goal: 20,
-          }],
+          halfPoints: 10,
+          finalPoints: 22,
           finalGoalPoints: 22,
-          shotsOnGoal: 2,
-          penalty: 10,
-          saves: 1,
+          superTackle: 1,
+          allOut: 1
         },
         players: [{
           name: 'hello',
@@ -316,39 +318,20 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
           walkover: true,
           color: "Blue/Red",
           playerPoints: {
-            goal: [{
-              points: 1,
+            raids: [{
+              count: 1,
               time: 11
             }],
-            yellowCard: [{
+            bonusPoint: [{
+              count: 1,
               time: 11
             }],
-            greenCard: [{
+            superRaid: [{
+              count: 1,
               time: 11
             }],
-            in: [{
-              time: 11
-            }],
-            out: [{
-              time: 11
-            }]
-          }
-        }, {
-          name: 'hello',
-          isPlaying: true,
-          jerseyNo: 1,
-          noShow: true,
-          walkover: true,
-          color: "Blue/Red",
-          playerPoints: {
-            goal: [{
-              points: 1,
-              time: 11
-            }],
-            yellowCard: [{
-              time: 11
-            }],
-            greenCard: [{
+            tackle: [{
+              count: 1,
               time: 11
             }],
             in: [{
@@ -366,14 +349,51 @@ myApp.controller('HandballScoreCtrl', function ($scope, TemplateService, Navigat
           walkover: true,
           color: "Blue/Red",
           playerPoints: {
-            goal: [{
-              points: 1,
+            raids: [{
+              count: 1,
               time: 11
             }],
-            yellowCard: [{
+            bonusPoint: [{
+              count: 1,
               time: 11
             }],
-            greenCard: [{
+            superRaid: [{
+              count: 1,
+              time: 11
+            }],
+            tackle: [{
+              count: 1,
+              time: 11
+            }],
+            in: [{
+              time: 11
+            }],
+            out: [{
+              time: 11
+            }]
+          }
+        }, {
+          name: 'hello',
+          isPlaying: true,
+          jerseyNo: 1,
+          noShow: true,
+          walkover: true,
+          color: "Blue/Red",
+          playerPoints: {
+            raids: [{
+              count: 1,
+              time: 11
+            }],
+            bonusPoint: [{
+              count: 1,
+              time: 11
+            }],
+            superRaid: [{
+              count: 1,
+              time: 11
+            }],
+            tackle: [{
+              count: 1,
               time: 11
             }],
             in: [{
