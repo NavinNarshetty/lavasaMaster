@@ -1846,6 +1846,7 @@ var model = {
         var final = {};
         match.prev = [];
         final.finalPrevious = [];
+        var thirdPlaceCount = 0;
         async.waterfall([
                 function (callback) {
                     Match.find({
@@ -1865,16 +1866,26 @@ var model = {
                     });
                 },
                 function (found, callback) {
+                    if (data.thirdPlace == 'yes') {
+                        thirdPlaceCount = 0;
+                    } else {
+                        thirdPlaceCount = 1;
+                    }
+
                     final.matchData = found;
                     async.eachSeries(found, function (singleData, callback) {
-                        if (count < 2) {
-                            match.prev.push(singleData._id);
-                            count++;
-                        }
-                        if (count == 2) {
-                            final.finalPrevious.push(match.prev);
-                            match.prev = [];
-                            count = 0;
+                        if (thirdPlaceCount == 0) {
+                            if (count < 2) {
+                                match.prev.push(singleData._id);
+                                count++;
+                            }
+                            if (count == 2) {
+                                final.finalPrevious.push(match.prev);
+                                match.prev = [];
+                                count = 0;
+                            }
+                        } else {
+                            thirdPlaceCount = 0;
                         }
                         callback(null, count);
                     }, function (err) {
@@ -3615,7 +3626,8 @@ var model = {
                     } else {
                         var winPlayer = [];
                         var lostPlayer = [];
-                        if (data.found.round == "Semi Final") {
+                        var foundLength = found.length;
+                        if (data.found.round == "Semi Final" && foundLength == 2) {
                             if (data.isTeam == false && _.isEmpty(found[0].opponentsSingle) && _.isEmpty(found[1].opponentsSingle)) {
                                 // console.log("inside found", data.found.resultsCombat.status);
                                 if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
