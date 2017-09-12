@@ -370,6 +370,11 @@ var model = {
                         } else {
                             finalData.resultBasketball = found.resultBasketball;
                         }
+                        if (_.isEmpty(found.resultFootball)) {
+                            finalData.resultFootball = "";
+                        } else {
+                            finalData.resultFootball = found.resultFootball;
+                        }
                         callback(null, finalData);
                     }
 
