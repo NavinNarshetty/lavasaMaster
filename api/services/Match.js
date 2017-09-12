@@ -2887,7 +2887,7 @@ var model = {
                     prevRound = matchData.round;
                 }
                 var i = 0;
-                if (matchData.opponentsSingle) {
+                if (!_.isEmpty(matchData.opponentsSingle)) {
                     async.concatSeries(matchData.opponentsSingle, function (mainData, callback) {
                             var obj = {};
                             obj["MATCH ID"] = matchData.matchId;
@@ -2905,10 +2905,7 @@ var model = {
                             obj["AGE GROUP"] = matchData.sport.ageGroup.name;
                             obj.EVENT = matchData.sport.sportslist.name;
                             obj["ROUND"] = matchData.round;
-                            obj["HEAT NUMBER"] = count;
-                            // obj["LANE NUMBER"] = matchData.resultHeat.players[i].laneNo;
-                            console.log();
-
+                            obj["HEAT NUMBER"] = matchData.heatNo;
                             obj["LANE NUMBER"] = matchData.resultHeat.players[i].laneNo;
                             obj["SFA ID"] = mainData.athleteId.sfaId;
                             if (mainData.athleteId.middleName) {
@@ -2950,8 +2947,8 @@ var model = {
                     }
                     obj["AGE GROUP"] = matchData.sport.ageGroup.name;
                     obj.EVENT = matchData.sport.sportslist.name;
-                    obj["ROUND "] = matchData.round;
-                    obj["HEAT NUMBER"] = count;
+                    obj["ROUND"] = matchData.round;
+                    obj["HEAT NUMBER"] = matchData.heatNo;
                     obj["LANE NUMBER"] = "";
                     obj["SFA ID"] = " ";
                     obj["NAME"] = " ";
