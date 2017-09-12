@@ -4,66 +4,86 @@
 <div class="modal-body">
   <div class="scoreteam-playerpoints">
     <div class="row">
-      <!-- GOAL HOLDER-->
+      <!-- raids HOLDER-->
       <div class="col-md-3 col-sm-3">
         <div class="teamscore-pointholder text-center">
-          <label for=""> Goal </label>
+          <label for=""> Raids </label>
           <div class="relate teamscore-point mtb-10">
-            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'goal');"
+            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'raids');"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus"></i></button>
-            <input type="number" ng-model="selectedPlayer.playerPoints.goal.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
+            <input type="number" ng-model="selectedPlayer.playerPoints.raids.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
               readonly>
-            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'goal');"
+            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'raids');"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
           </div>
           <div class="input-group">
-            <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.goal[selectedPlayer.playerPoints.goal.length-1].time"
+            <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.raids[selectedPlayer.playerPoints.raids.length-1].time"
               placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false">
             <span class="input-group-addon">Min</span>
           </div>
         </div>
       </div>
-      <!-- GOAL HOLDER-->
-      <!-- YELLOW CARD HOLDER -->
+      <!-- raids HOLDER-->
+      <!-- bonusPoint HOLDER -->
       <div class="col-md-3 col-sm-3">
         <div class="teamscore-pointholder text-center">
-          <label for=""> Yellow-card </label>
+          <label for=""> Bonus-Point </label>
           <div class="relate teamscore-point mtb-10">
-            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'yellowCard');"
+            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'bonusPoint');"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus"></i></button>
-            <input type="number" ng-model="selectedPlayer.playerPoints.yellowCard.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
+            <input type="number" ng-model="selectedPlayer.playerPoints.bonusPoint.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
               readonly>
-            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'yellowCard');"
+            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'bonusPoint');"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
           </div>
           <div class="input-group">
-            <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.yellowCard[selectedPlayer.playerPoints.yellowCard.length-1].time"
+            <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.bonusPoint[selectedPlayer.playerPoints.bonusPoint.length-1].time"
               placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false">
             <span class="input-group-addon">Min</span>
           </div>
         </div>
       </div>
-      <!-- YELLOW CARD HOLDER -->
-      <!-- GREEN CARD -->
+      <!-- bonusPoint HOLDER -->
+      <!-- superRaid -->
       <div class="col-md-3 col-sm-3">
         <div class="teamscore-pointholder text-center">
-          <label for=""> Green Card </label>
+          <label for=""> Super-Raid </label>
           <div class="relate teamscore-point mtb-10">
-            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'greenCard');"
+            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'superRaid');"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus" ></i></button>
-            <input type="number" ng-model="selectedPlayer.playerPoints.greenCard.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
+            <input type="number" ng-model="selectedPlayer.playerPoints.superRaid.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
               readonly>
-            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'greenCard');"
+            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'superRaid');"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
           </div>
           <div class="input-group">
-            <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.greenCard[selectedPlayer.playerPoints.greenCard.length-1].time"
-              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.greenCard.length <= 0">
+            <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.superRaid[selectedPlayer.playerPoints.superRaid.length-1].time"
+              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.superRaid.length <= 0">
             <span class="input-group-addon">Min</span>
           </div>
         </div>
       </div>
-      <!-- GREEN CARD-->
+      <!-- superRaid-->
+      <!-- tackle -->
+      <div class="col-md-3 col-sm-3">
+        <div class="teamscore-pointholder text-center">
+          <label for=""> Tackle </label>
+          <div class="relate teamscore-point mtb-10">
+            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'tackle');"
+              ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus" ></i></button>
+            <input type="number" ng-model="selectedPlayer.playerPoints.tackle.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
+              readonly>
+            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'tackle');"
+              ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
+          </div>
+          <div class="input-group">
+            <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.tackle[selectedPlayer.playerPoints.tackle.length-1].time"
+              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.tackle.length <= 0">
+            <span class="input-group-addon">Min</span>
+          </div>
+        </div>
+      </div>
+      <!-- tackle-->
       <!-- IN HOLDER -->
       <div class="col-md-3 col-sm-3">
         <div class="teamscore-pointholder text-center">

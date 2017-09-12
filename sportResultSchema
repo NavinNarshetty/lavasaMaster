@@ -242,9 +242,8 @@ var resultKabaddi = {
     team[{
         teamId: _id,
         teamResults:{
-        goalPoints:[{
-              goal:20,
-        }],
+        halfPoints:10,
+        finalPoints:22,
         finalGoalPoints:22,
         superTackle:1,
         allOut:1

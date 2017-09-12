@@ -143,6 +143,9 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                     month: 'Dec'
                 }, {
                     sport: 'Hockey',
+                    date1: '2',
+                    date2: '5',
+                    month: 'Dec'
                 }, {
                     sport: 'Judo',
                     date1: '16',
@@ -215,7 +218,10 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                     date: '11',
                     month: 'Dec'
                 }, {
-                    sport: 'Wrestling'
+                    sport: 'Wrestling',
+                    date1: '14',
+                    date2: '15',
+                    month: 'Dec'
                 }];
             } else if ($scope.sfaCity == 'Hyderabad') {
                 $scope.schedulelist = [{
@@ -370,6 +376,9 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                 month: 'Dec'
             }, {
                 sport: 'Hockey',
+                date1: '2',
+                date2: '5',
+                month: 'Dec'
             }, {
                 sport: 'Judo',
                 date1: '16',
@@ -1601,9 +1610,9 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
 
     //racquet sports array
     $scope.addRacquetSports = function (formdata) {
-        $scope.combatSports = [];
-        $scope.targetSports = [];
-        $scope.individualSports = [];
+        // $scope.combatSports = [];
+        // $scope.targetSports = [];
+        // $scope.individualSports = [];
         var index = _.findIndex($scope.racquetSports, function (n) {
             return n.name == formdata;
         });
