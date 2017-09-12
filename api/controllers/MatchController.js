@@ -108,23 +108,7 @@ var controller = {
                             callback(null, importData);
                         } else {
                             if (req.body.resultType == "knockout" && req.body.playerType == "individual") {
-                                // var header = [];
-                                // var headerFlag = 0;
-                                // header.push("DATE");
-                                // header.push("TIME");
-                                // header.push("EVENT");
-                                // header.push("AGE GROUP");
-                                // header.push("GENDER");
-                                // header.push("WEIGHT CATEGORIES");
-                                // header.push("SPORT");
-                                // header.push("SFAID 1");
-                                // header.push("ROUND NAME");
-                                // _.each(header, function (n) {
-                                //     if (_.has(importData[0], n) == true) {
-                                //         headerFlag++;
-                                //     }
-                                // });
-                                // if (headerFlag == header.length) {
+
                                 Match.saveKnockoutIndividual(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
@@ -132,31 +116,8 @@ var controller = {
                                         callback(null, complete);
                                     }
                                 });
-                                // } else {
-                                //     console.log("indise false knockout");
-                                //     callback(null, [{
-                                //         error: "Headers may have wrong values. Follow Headers Below !",
-                                //         success: header
-                                //     }]);
-                                // }
+
                             } else if (req.body.resultType == "knockout" && req.body.playerType == "team") {
-                                // var header = [];
-                                // var headerFlag = 0;
-                                // header.push("DATE");
-                                // header.push("TIME");
-                                // header.push("EVENT");
-                                // header.push("AGE GROUP");
-                                // header.push("GENDER");
-                                // header.push("WEIGHT CATEGORIES");
-                                // header.push("SPORT");
-                                // header.push("TEAMID 1");
-                                // header.push("ROUND NAME");
-                                // _.each(header, function (n) {
-                                //     if (_.has(importData[0], n) == true) {
-                                //         headerFlag++;
-                                //     }
-                                // });
-                                // if (headerFlag == header.length) {
                                 Match.saveKnockoutTeam(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
@@ -164,12 +125,7 @@ var controller = {
                                         callback(null, complete);
                                     }
                                 });
-                                // } else {
-                                //     callback(null, [{
-                                //         error: "Headers may have wrong values. Follow Headers Below !",
-                                //         success: header
-                                //     }]);
-                                // }
+
                             } else if (req.body.resultType == "heat" && req.body.playerType == "individual") {
                                 async.waterfall([
                                         function (callback) {
@@ -248,23 +204,6 @@ var controller = {
                                     }
                                 });
                             } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "knockout") {
-                                // var header = [];
-                                // var headerFlag = 0;
-                                // header.push("DATE");
-                                // header.push("TIME");
-                                // header.push('EVENT ');
-                                // header.push("AGE GROUP");
-                                // header.push("GENDER");
-                                // // header.push("WEIGHT CATEGORIES");
-                                // header.push("SPORT");
-                                // header.push("SFA ID");
-                                // header.push("ROUND ");
-                                // _.each(header, function (n) {
-                                //     if (_.has(importData[0], n) == true) {
-                                //         headerFlag++;
-                                //     }
-                                // });
-                                // if (headerFlag == header.length) {
                                 Match.saveKnockoutIndividual(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
@@ -272,30 +211,9 @@ var controller = {
                                         callback(null, complete);
                                     }
                                 });
-                                // } else {
-                                //     callback(null, [{
-                                //         error: "Headers may have wrong values. Follow Headers Below !",
-                                //         success: header
-                                //     }]);
-                                // }
+
                             } else if (req.body.resultType == "league-cum-knockout") {
-                                // var header = [];
-                                // var headerFlag = 0;
-                                // header.push("DATE");
-                                // header.push("TIME");
-                                // header.push('EVENT ');
-                                // header.push("AGE GROUP");
-                                // header.push("GENDER");
-                                // // header.push("WEIGHT CATEGORIES");
-                                // header.push("SPORT");
-                                // header.push("SFA ID");
-                                // header.push("ROUND ");
-                                // _.each(header, function (n) {
-                                //     if (_.has(importData[0], n) == true) {
-                                //         headerFlag++;
-                                //     }
-                                // });
-                                // if (headerFlag == header.length) {
+
                                 Match.saveLeagueKnockout(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
@@ -303,12 +221,7 @@ var controller = {
                                         callback(null, complete);
                                     }
                                 });
-                                // } else {
-                                //     callback(null, [{
-                                //         error: "Headers may have wrong values. Follow Headers Below !",
-                                //         success: header
-                                //     }]);
-                                // }
+
                             } else {
                                 callback(null, importData);
                             }
@@ -382,7 +295,7 @@ var controller = {
                             callback(null, importData);
                         } else {
                             if (req.body.resultType == "heat" && req.body.playerType == "individual") {
-                                var roundTypes = _.groupBy(importData, 'ROUND ');
+                                var roundTypes = _.groupBy(importData, 'ROUND');
                                 _.each(roundTypes, function (roundType, key) {
                                     roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
                                 });
@@ -394,7 +307,7 @@ var controller = {
                                     }
                                 });
                             } else if (req.body.resultType == "heat" && req.body.playerType == "team") {
-                                var roundTypes = _.groupBy(importData, 'ROUND ');
+                                var roundTypes = _.groupBy(importData, 'ROUND');
                                 _.each(roundTypes, function (roundType, key) {
                                     roundTypes[key] = _.groupBy(roundType, 'HEAT NUMBER');
                                 });

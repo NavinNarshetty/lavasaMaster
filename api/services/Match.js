@@ -2903,7 +2903,7 @@ var model = {
                             }
                             obj["AGE GROUP"] = matchData.sport.ageGroup.name;
                             obj.EVENT = matchData.sport.sportslist.name;
-                            obj["ROUND "] = matchData.round;
+                            obj["ROUND"] = matchData.round;
                             obj["HEAT NUMBER"] = count;
                             // obj["LANE NUMBER"] = matchData.resultHeat.players[i].laneNo;
                             console.log();
@@ -2999,7 +2999,7 @@ var model = {
                             }
                             obj["AGE GROUP"] = matchData.sport.ageGroup.name;
                             obj.EVENT = matchData.sport.sportslist.name;
-                            obj["ROUND "] = matchData.round;
+                            obj["ROUND"] = matchData.round;
                             obj["HEAT NUMBER"] = count;
                             obj["LANE NUMBER"] = laneNo;
                             laneNo++;
@@ -4208,7 +4208,7 @@ var model = {
                                             } else {
                                                 var player = {};
                                                 paramData.matchId = n.success["MATCH ID"];
-                                                paramData.round = n.success["ROUND "];
+                                                paramData.round = n.success["ROUND"];
                                                 if (!_.isEmpty(n.success["PARTICIPANT 1"])) {
                                                     paramData.opponentsSingle.push(n.success["PARTICIPANT 1"]);
                                                     player.id = n.success["PARTICIPANT 1"];
@@ -4568,7 +4568,7 @@ var model = {
                                             } else {
                                                 var player = {};
                                                 paramData.matchId = n.success["MATCH ID"];
-                                                paramData.round = n.success["ROUND "];
+                                                paramData.round = n.success["ROUND"];
                                                 if (!_.isEmpty(n.success["TEAM 1"])) {
                                                     paramData.opponentsTeam.push(n.success["TEAM 1"]);
                                                     player.id = n.success["TEAM 1"];
