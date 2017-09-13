@@ -3041,50 +3041,56 @@ var model = {
                 }
                 var laneNo = 1;
                 var i = 0;
-                if (matchData.opponentsTeam) {
-                    async.concatSeries(matchData.opponentsTeam, function (mainData, callback) {
+                if (!_.isEmpty(matchData.resultHeat)) {
+                    async.concatSeries(matchData.resultHeat.players, function (mainData, callback) {
                             var obj = {};
                             obj["MATCH ID"] = matchData.matchId;
                             var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
                             obj.DATE = dateTime;
                             obj.TIME = matchData.scheduleTime;
-                            console.log("sport", matchData.sport.sportslist.sportsListSubCategory.name);
                             obj.SPORT = matchData.sport.sportslist.sportsListSubCategory.name;
                             if (matchData.sport.gender == "male") {
                                 obj.GENDER = "Male";
-                            } else if (matchData.sport.gender == "Female") {
+                            } else if (matchData.sport.gender == "female") {
                                 obj.GENDER = "Female";
                             } else {
-                                obj.GENDER = "Male & Female"
+                                obj.GENDER = "Male & Female";
                             }
                             obj["AGE GROUP"] = matchData.sport.ageGroup.name;
                             obj.EVENT = matchData.sport.sportslist.name;
                             obj["ROUND"] = matchData.round;
-                            obj["HEAT NUMBER"] = count;
-                            obj["LANE NUMBER"] = laneNo;
-                            laneNo++;
-                            if (mainData) {
-                                obj["TEAM ID"] = mainData.teamId;
-                                obj["NAME"] = mainData.name;
-                                obj["SCHOOL"] = mainData.schoolName;
-                                if (matchData.resultHeat.teams[i].time) {
-                                    obj["TIMING"] = matchData.resultHeat.teams[i].time;
-                                } else {
-                                    obj["TIMING"] = "-";
-                                }
-                                if (matchData.resultHeat.teams[i].result) {
-                                    obj["RESULT"] = matchData.resultHeat.teams[i].result;
-                                } else {
-                                    obj["RESULT"] = "-";
-                                }
+                            obj["HEAT NUMBER"] = matchData.heatNo;
+                            obj["LANE NUMBER"] = mainData.laneNo;
+                            // obj["SFA ID"] = mainData.athleteId.sfaId;
+                            if (mainData.id) {
+                                obj["TEAM ID"] = matchData.opponentsTeam[i].teamId;
+                                obj["NAME"] = matchData.opponentsTeam[i].name;
+                                obj["SCHOOL"] = matchData.opponentsTeam[i].schoolName;
+                                i++;
                             } else {
                                 obj["TEAM ID"] = "";
                                 obj["NAME"] = "";
                                 obj["SCHOOL"] = "";
-                                obj["TIMING"] = " ";
-                                obj["RESULT"] = "";
-                                // obj["SCORE 1"] = "";
-                                // obj["DATA POINTS 1"] = "";
+                            }
+
+
+                            if (mainData.time) {
+                                obj["TIMING"] = mainData.time;
+                            } else {
+                                if (!_.isEmpty(obj["TEAM ID"])) {
+                                    obj["TIMING"] = "-";
+                                } else {
+                                    obj["TIMING"] = "";
+                                }
+                            }
+                            if (mainData.result) {
+                                obj["RESULT"] = mainData.result;
+                            } else {
+                                if (!_.isEmpty(obj["TEAM ID"])) {
+                                    obj["RESULT"] = "-";
+                                } else {
+                                    obj["RESULT"] = "";
+                                }
                             }
                             callback(null, obj);
                         },
@@ -3210,6 +3216,11 @@ var model = {
                         } else {
                             obj["ATTEMPT 3"] = "";
                         }
+                        if (mainData.resultQualifyingRound.player.bestAttempt) {
+                            obj["BEST ATTEMPT"] = mainData.resultQualifyingRound.player.bestAttempt;
+                        } else {
+                            obj["BEST ATTEMPT"] = "";
+                        }
                         if (mainData.resultQualifyingRound.player.result) {
                             obj["RESULT"] = mainData.resultQualifyingRound.player.result;
                         } else {
@@ -3219,6 +3230,7 @@ var model = {
                         obj["ATTEMPT 1"] = "";
                         obj["ATTEMPT 2"] = "";
                         obj["ATTEMPT 3"] = "";
+                        obj["BEST ATTEMPT"] = "";
                         obj["RESULT"] = "";
                     }
                 } else {
@@ -3228,8 +3240,8 @@ var model = {
                     obj["ATTEMPT 1"] = "";
                     obj["ATTEMPT 2"] = "";
                     obj["ATTEMPT 3"] = "";
+                    obj["BEST ATTEMPT"] = "";
                     obj["RESULT"] = "";
-
                 }
                 callback(null, obj);
 
@@ -4431,7 +4443,9 @@ var model = {
                                         if (singleData["ATTEMPT 3"]) {
                                             player.attempt.push(singleData["ATTEMPT 3"]);
                                         }
-
+                                        if (singleData["BEST ATTEMPT"]) {
+                                            player.bestAttempt.push(singleData["BEST ATTEMPT"]);
+                                        }
                                         if (singleData["RESULT"]) {
                                             if (singleData["RESULT"] == "noShow" || singleData["RESULT"] == "NOSHOW" || singleData["RESULT"] == "NoShow") {
                                                 player.noShow = "true";
