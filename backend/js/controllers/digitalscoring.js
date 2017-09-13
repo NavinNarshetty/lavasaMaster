@@ -56,16 +56,6 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
       $scope.items = data.data.results;
       $scope.totalItems = data.data.total;
       $scope.maxRow = data.data.options.count;
-      _.each($scope.items, function (key) {
-        console.log($scope.formData.players, 'plr');
-        _.each(key.opponentsSingle, function (value) {
-          if (value.athleteId.middleName === undefined) {
-            value.athleteId.fullname = value.athleteId.firstName + ' ' + value.athleteId.surname
-          } else {
-            value.athleteId.fullname = value.athleteId.firstName + ' ' + value.athleteId.middleName + ' ' + value.athleteId.surname
-          }
-        })
-      });
       _.each($scope.items, function (data) {
         if (data.resultsCombat) {
           var resultKnockout = {};
@@ -80,15 +70,25 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
               resultKnockout.set = resultKnockout.set + "-" + n.sets[0].point;
             }
           });
+
           resultKnockout.matchId = data.matchId;
           resultKnockout.round = data.round;
           if (data.opponentsSingle[0]) {
-            resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
+            if (data.opponentsSingle[0].athleteId.middleName === undefined) {
+              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.surname
+            } else {
+              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.middleName + ' ' + data.opponentsSingle[0].athleteId.surname
+            }
           } else {
             resultKnockout.player1 = "-";
           }
           if (data.opponentsSingle[1]) {
-            resultKnockout.player2 = data.opponentsSingle[1].athleteId.fullname;
+            if (data.opponentsSingle[1].athleteId.middleName === undefined) {
+              resultKnockout.player2 = data.opponentsSingle[1].athleteId.firstName + ' ' + data.opponentsSingle[1].athleteId.surname
+            } else {
+              resultKnockout.player2 = data.opponentsSingle[1].athleteId.firstName + ' ' + data.opponentsSingle[1].athleteId.middleName + ' ' + data.opponentsSingle[1].athleteId.surname
+            }
+            // resultKnockout.player2 = data.opponentsSingle[1].athleteId.fullname;
           } else {
             resultKnockout.player2 = "-";
           }
@@ -124,31 +124,127 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
               }
             }
           }
+
           resultKnockout.matchId = data.matchId;
           resultKnockout.round = data.round;
           if (data.opponentsSingle[0]) {
-            resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
+            if (data.opponentsSingle[0].athleteId.middleName === undefined) {
+              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.surname
+            } else {
+              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.middleName + ' ' + data.opponentsSingle[0].athleteId.surname
+            }
+            // resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
           } else {
             resultKnockout.player1 = "-";
           }
           if (data.opponentsSingle[1]) {
-            resultKnockout.player2 = data.opponentsSingle[1].athleteId.fullname;
+            if (data.opponentsSingle[1].athleteId.middleName === undefined) {
+              resultKnockout.player2 = data.opponentsSingle[1].athleteId.firstName + ' ' + data.opponentsSingle[1].athleteId.surname
+            } else {
+              resultKnockout.player2 = data.opponentsSingle[1].athleteId.firstName + ' ' + data.opponentsSingle[1].athleteId.middleName + ' ' + data.opponentsSingle[1].athleteId.surname
+            }
+            // resultKnockout.player2 = data.opponentsSingle[1].athleteId.fullname;
           } else {
             resultKnockout.player2 = "-";
           }
-          console.log("data", data);
+          // console.log("data", data);
+          $scope.result.push(resultKnockout);
+        } else if (data.resultQualifyingRound && data.excelType == "qualifying") {
+          console.log("in resultQualifyingRound", data);
+          var resultKnockout = {};
+          resultKnockout.matchId = data.matchId;
+          resultKnockout.round = data.round;
+          if (data.opponentsSingle[0]) {
+            if (data.opponentsSingle[0].athleteId.middleName === undefined) {
+              resultKnockout.player2 = "-";
+              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.surname;
+            } else {
+              resultKnockout.player2 = "-";
+              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.middleName + ' ' + data.opponentsSingle[0].athleteId.surname;
+            }
+            // resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
+          } else {
+            resultKnockout.player2 = "-";
+            resultKnockout.player1 = "-";
+          }
+
+          resultKnockout.set = data.resultQualifyingRound.player.finalScore;
+
+          // resultKnockout.result = data.resultQualifyingRound.player.result;
+          // console.log("data", data);
+          $scope.result.push(resultKnockout);
+        } else if (data.resultKnockout && data.excelType == "knockout") {
+          console.log("in resultQualifyingRound", data);
+          var resultKnockout = {};
+          resultKnockout.matchId = data.matchId;
+          resultKnockout.round = data.round;
+          if (data.opponentsSingle[0]) {
+            if (data.opponentsSingle[0].athleteId.middleName === undefined) {
+              resultKnockout.player2 = data.opponentsSingle[1].athleteId.firstName + ' ' + data.opponentsSingle[1].athleteId.surname;
+              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.surname;
+            } else {
+              resultKnockout.player2 = data.opponentsSingle[1].athleteId.firstName + ' ' + data.opponentsSingle[1].athleteId.middleName + ' ' + data.opponentsSingle[1].athleteId.surname;
+              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.middleName + ' ' + data.opponentsSingle[0].athleteId.surname;
+            }
+            // resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
+          } else {
+            resultKnockout.player2 = "-";
+            resultKnockout.player1 = "-";
+          }
+
+          resultKnockout.set = data.resultKnockout.finalScore;
+
+          // resultKnockout.result = data.resultQualifyingRound.player.result;
+          // console.log("data", data);
+          $scope.result.push(resultKnockout);
+        } else if (data.resultQualifyingRound) {
+          console.log("in resultQualifyingRound", data);
+          var resultKnockout = {};
+          resultKnockout.matchId = data.matchId;
+          resultKnockout.round = data.round;
+          if (data.opponentsSingle[0]) {
+            if (data.opponentsSingle[0].athleteId.middleName === undefined) {
+              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.surname
+            } else {
+              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.middleName + ' ' + data.opponentsSingle[0].athleteId.surname
+            }
+            // resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
+          } else {
+            resultKnockout.player1 = "-";
+          }
+          var i = 0;
+          _.each(data.resultQualifyingRound.player.attempt, function (n) {
+            if (i == 0) {
+              resultKnockout.set = n;
+              i++;
+            } else {
+              resultKnockout.set = resultKnockout.set + "," + n;
+            }
+          })
+          resultKnockout.result = data.resultQualifyingRound.player.result;
+          // console.log("data", data);
           $scope.result.push(resultKnockout);
         } else {
           var resultKnockout = {};
           resultKnockout.matchId = data.matchId;
           resultKnockout.round = data.round;
           if (data.opponentsSingle[0]) {
-            resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
+            if (data.opponentsSingle[0].athleteId.middleName === undefined) {
+              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.surname
+            } else {
+              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.middleName + ' ' + data.opponentsSingle[0].athleteId.surname
+            }
+            // resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
           } else {
             resultKnockout.player1 = "-";
           }
           if (data.opponentsSingle[1]) {
-            resultKnockout.player2 = data.opponentsSingle[1].athleteId.fullname;
+            if (data.opponentsSingle[1].athleteId.middleName === undefined) {
+              resultKnockout.player2 = data.opponentsSingle[1].athleteId.firstName + ' ' + data.opponentsSingle[1].athleteId.surname
+            } else {
+              resultKnockout.player2 = data.opponentsSingle[1].athleteId.firstName + ' ' + data.opponentsSingle[1].athleteId.middleName + ' ' + data.opponentsSingle[1].athleteId.surname
+            }
+            // resultKnockout.player2 = data.opponentsSingle[1].athleteId.fullname;
           } else {
             resultKnockout.player2 = "-";
           }

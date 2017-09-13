@@ -101,7 +101,6 @@ var controller = {
                         } else {
                             callback(null, importData);
                         }
-
                     },
                     function (importData, callback) {
                         if (importData[0].error) {
@@ -317,7 +316,7 @@ var controller = {
                                     callback(null, complete);
                                 }
                             });
-                        } else if (req.body.resultType == "qualifying-round" && req.body.playerType == "individual") {
+                        } else if (req.body.resultType == "qualifying-round") {
                             Match.updateQualifyingRoundIndividual(importData, req.body, function (err, complete) {
                                 if (err || _.isEmpty(complete)) {
                                     callback(err, null);

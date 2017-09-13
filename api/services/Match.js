@@ -1271,7 +1271,7 @@ var model = {
                                                     param.sport = singleData.SPORT;
                                                     Match.getAthleteId(param, function (err, complete) {
                                                         if (err || _.isEmpty(complete)) {
-                                                            singleData["PARTICIPANT 1"] = null;
+                                                            singleData["NAME"] = null;
                                                             err = "SFA ID may have wrong values";
                                                             // console.log("err found");
                                                             callback(null, {
@@ -1279,7 +1279,7 @@ var model = {
                                                                 success: singleData
                                                             });
                                                         } else {
-                                                            singleData["PARTICIPANT 1"] = complete._id;
+                                                            singleData["NAME"] = complete._id;
                                                             callback(null, singleData);
                                                         }
                                                     });
@@ -1315,14 +1315,14 @@ var model = {
                                     } else {
                                         paramData.matchId = data.matchId;
                                         paramData.round = n.success["ROUND"];
-                                        if (!_.isEmpty(n.success["PARTICIPANT 1"])) {
-                                            paramData.opponentsSingle.push(n.success["PARTICIPANT 1"]);
+                                        if (!_.isEmpty(n.success["NAME"])) {
+                                            paramData.opponentsSingle.push(n.success["NAME"]);
                                         }
                                         paramData.sport = n.success.SPORT;
                                         paramData.scheduleDate = n.success.DATE;
                                         paramData.scheduleTime = n.success.TIME;
                                         var player = {};
-                                        player.id = n.success["PARTICIPANT 1"];
+                                        player.id = n.success["NAME"];
                                         player.laneNo = n.success["LANE NUMBER"];
                                         result.players.push(player);
                                         paramData.heatNo = n.success["HEAT NUMBER"]
@@ -1439,7 +1439,7 @@ var model = {
                                                     console.log(param);
                                                     Match.getTeamId(param, function (err, complete) {
                                                         if (err || _.isEmpty(complete)) {
-                                                            singleData["TEAM 1"] = null;
+                                                            singleData["NAME"] = null;
                                                             err = "TEAM ID may have wrong values";
                                                             console.log("err found");
                                                             callback(null, {
@@ -1447,7 +1447,7 @@ var model = {
                                                                 success: singleData
                                                             });
                                                         } else {
-                                                            singleData["TEAM 1"] = complete._id;
+                                                            singleData["NAME"] = complete._id;
                                                             callback(null, singleData);
                                                         }
                                                     });
@@ -1483,15 +1483,15 @@ var model = {
                                     } else {
                                         paramData.matchId = data.matchId;
                                         paramData.round = n.success["ROUND"];
-                                        if (!_.isEmpty(n.success["TEAM 1"])) {
-                                            paramData.opponentsTeam.push(n.success["TEAM 1"]);
+                                        if (!_.isEmpty(n.success["NAME"])) {
+                                            paramData.opponentsTeam.push(n.success["NAME"]);
                                         }
                                         paramData.sport = n.success.SPORT;
                                         paramData.scheduleDate = n.success.DATE;
                                         paramData.scheduleTime = n.success.TIME;
                                         paramData.heatNo = n.success["HEAT NUMBER"];
                                         var team = {};
-                                        team.id = n.success["TEAM 1"];
+                                        team.id = n.success["NAME"];
                                         team.laneNo = n.success["LANE NUMBER"];
                                         result.teams.push(team);
                                         paramData.resultHeat = result;
@@ -2652,8 +2652,8 @@ var model = {
             obj["HEAT NUMBER"] = "";
             obj["LANE NUMBER"] = "";
             obj["TEAM ID"] = "";
-            obj["TEAM 1"] = "";
-            obj["SCHOOL 1"] = "";
+            obj["NAME"] = "";
+            obj["SCHOOL"] = "";
             // obj["TIMING"] = " ";
             // obj["RESULT 1"] = "";
             // obj["SCORE 1"] = "";
@@ -3133,7 +3133,7 @@ var model = {
         async.concatSeries(match, function (mainData, callback) {
                 var obj = {};
                 obj["MATCH ID"] = mainData.matchId;
-                obj["ROUND NAME"] = mainData.round;
+                obj["ROUND"] = mainData.round;
                 obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
                 if (mainData.sport.gender == "male") {
                     obj.GENDER = "Male";
@@ -3163,10 +3163,18 @@ var model = {
                     if (mainData.resultQualifyingRound) {
                         if (mainData.resultQualifyingRound.player.attempt[0]) {
                             obj["ATTEMPT 1"] = mainData.resultQualifyingRound.player.attempt[0];
-                        } else if (mainData.resultQualifyingRound.player.attempt[1]) {
+                        } else {
+                            obj["ATTEMPT 1"] = "";
+                        }
+                        if (mainData.resultQualifyingRound.player.attempt[1]) {
                             obj["ATTEMPT 2"] = mainData.resultQualifyingRound.player.attempt[1];
-                        } else if (mainData.resultQualifyingRound.player.attempt[2]) {
+                        } else {
+                            obj["ATTEMPT 2"] = "";
+                        }
+                        if (mainData.resultQualifyingRound.player.attempt[2]) {
                             obj["ATTEMPT 3"] = mainData.resultQualifyingRound.player.attempt[2];
+                        } else {
+                            obj["ATTEMPT 3"] = "";
                         }
                         if (mainData.resultQualifyingRound.player.result) {
                             obj["RESULT"] = mainData.resultQualifyingRound.player.result;
@@ -3248,7 +3256,7 @@ var model = {
                                 if (mainData.resultQualifyingRound) {
                                     obj["SCORE - ROUND 1"] = mainData.resultQualifyingRound.player.attempt[0];
                                     obj["SCORE - ROUND 2"] = mainData.resultQualifyingRound.player.attempt[1];
-                                    obj["FINAL SCORE"] = mainData.resultQualifyingRound.player.attempt[2];
+                                    obj["FINAL SCORE"] = mainData.resultQualifyingRound.player.finalScore;
                                     obj["RANK"] = mainData.resultQualifyingRound.player.rank;
                                     obj["RESULT"] = mainData.resultQualifyingRound.player.result;
                                     if (mainData.resultQualifyingRound.player.video) {
@@ -4534,12 +4542,9 @@ var model = {
                                                 function (singleData, callback) {
                                                     if (singleData.error) {
                                                         countError++;
-                                                        finalData = singleData;
                                                         callback(null, singleData);
                                                     } else {
                                                         if (_.isEmpty(singleData["TEAM ID"])) {
-                                                            finalData.error = "TEAM ID is empty";
-                                                            finalData.success = singleData;
                                                             callback(null, singleData);
                                                         } else {
                                                             var param = {};
@@ -4566,7 +4571,6 @@ var model = {
                                                 function (singleData, callback) {
                                                     if (singleData.error) {
                                                         countError++;
-                                                        finalData = singleData;
                                                         callback(null, singleData);
                                                     } else {
                                                         callback(null, {
@@ -5016,6 +5020,8 @@ var model = {
 
     },
 
+
+    //-------update from digitalscore 
     updateFootball: function (data, callback) {
         var matchObj = {
             $set: {

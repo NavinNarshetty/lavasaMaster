@@ -184,7 +184,7 @@
                   <tbody>
                     <!--<tr ng-repeat="item in items">-->
                     <!-- <tr ng-repeat="item in items"> -->
-                    <tr ng-repeat="item in items|filter:item.matchId">
+                    <tr ng-repeat="item in result|filter:item.matchId">
                       <!--<tr>-->
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
                       <!--<td>{{($index + 1)}}</td>-->
@@ -195,10 +195,10 @@
                                         <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
                       </td>
                       <td>
-
+                        {{item.player1}}
                       </td>
-                      <td></td>
-                      <td></td>
+                      <td>{{item.set}}</td>
+                      <td>{{item.result}}</td>
                       <td>
                         <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item.sport.sportslist.sportslistSubCategory.sportsListCategory,item.matchId,item.sport.sportslist.sportsListSubCategory.isTeam)">
                                             <i class="fa fa-pencil"></i> Edit
@@ -248,7 +248,7 @@
                   <tbody>
                     <!--<tr ng-repeat="item in items">-->
                     <!-- <tr ng-repeat="item in items"> -->
-                    <tr ng-repeat="item in items|filter:item.matchId">
+                    <tr ng-repeat="item in result|filter:item.matchId">
                       <!--<tr>-->
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
                       <!--<td>{{($index + 1)}}</td>-->
@@ -259,10 +259,10 @@
                                             <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
                       </td>
                       <td>
-
+                        {{item.player1}}
                       </td>
-                      <td></td>
-                      <td></td>
+                      <td>{{item.player2}}</td>
+                      <td>{{item.set}}</td>
                       <td>
                         <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item.sport.sportslist.sportslistSubCategory.sportsListCategory,item.matchId,item.sport.sportslist.sportsListSubCategory.isTeam)">
                                                 <i class="fa fa-pencil"></i> Edit
