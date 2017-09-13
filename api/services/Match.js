@@ -2946,12 +2946,12 @@ var model = {
                             if (matchData.resultHeat.players[i].time) {
                                 obj["TIMING"] = matchData.resultHeat.players[i].time;
                             } else {
-                                obj["TIMING"] = " ";
+                                obj["TIMING"] = "-";
                             }
                             if (matchData.resultHeat.players[i].result) {
                                 obj["RESULT"] = matchData.resultHeat.players[i].result;
                             } else {
-                                obj["RESULT"] = " ";
+                                obj["RESULT"] = "-";
                             }
                             i++;
                             callback(null, obj);
@@ -3036,12 +3036,12 @@ var model = {
                                 if (matchData.resultHeat.teams[i].time) {
                                     obj["TIMING"] = matchData.resultHeat.teams[i].time;
                                 } else {
-                                    obj["TIMING"] = " ";
+                                    obj["TIMING"] = "-";
                                 }
                                 if (matchData.resultHeat.teams[i].result) {
                                     obj["RESULT"] = matchData.resultHeat.teams[i].result;
                                 } else {
-                                    obj["RESULT"] = " ";
+                                    obj["RESULT"] = "-";
                                 }
                             } else {
                                 obj["TEAM ID"] = "";
@@ -4198,7 +4198,7 @@ var model = {
                                                                 if (err || _.isEmpty(complete)) {
                                                                     singleData["NAME"] = null;
                                                                     err = "SFA ID may have wrong values";
-                                                                    console.log("err found");
+                                                                    // console.log("err found");
                                                                     callback(null, {
                                                                         error: err,
                                                                         success: singleData
@@ -4214,7 +4214,6 @@ var model = {
                                                 function (singleData, callback) {
                                                     if (singleData.error) {
                                                         countError++;
-                                                        // finalData = singleData;
                                                         callback(null, singleData);
                                                     } else {
                                                         callback(null, {
@@ -4233,7 +4232,7 @@ var model = {
                                             });
 
                                     }, function (err, singleData) {
-                                        console.log("for save", singleData);
+                                        // console.log("for save", singleData);
                                         async.concatSeries(singleData, function (n, callback) {
                                             if (n.error) {
                                                 countError++;
@@ -4245,15 +4244,20 @@ var model = {
                                                 if (!_.isEmpty(n.success["NAME"])) {
                                                     paramData.opponentsSingle.push(n.success["NAME"]);
                                                     player.id = n.success["NAME"];
-                                                    player.time = n.success["TIMING"];
-                                                    player.result = n.success["RESULT"];
+                                                    if (n.success["TIMING"]) {
+                                                        player.time = n.success["TIMING"];
+                                                    }
+                                                    if (n.success["RESULT"]) {
+                                                        player.result = n.success["RESULT"];
+                                                    }
+                                                    // player.result = n.success["RESULT"];
                                                     player.laneNo = n.success["LANE NUMBER"];
                                                     result.players.push(player);
                                                 }
                                                 paramData.sport = n.success.SPORT;
                                                 paramData.scheduleDate = moment(n.success.DATE).format();
                                                 paramData.scheduleTime = n.success.TIME;
-                                                if (_.isEmpty(result)) {
+                                                if (!_.isEmpty(result)) {
                                                     paramData.resultHeat = result;
                                                 }
                                                 callback(null, paramData);
@@ -4263,6 +4267,7 @@ var model = {
                                                 countError++;
                                                 callback(null, n);
                                             } else {
+                                                console.log("param", paramData);
                                                 Match.update({
                                                     matchId: paramData.matchId
                                                 }, paramData).exec(
@@ -4601,8 +4606,12 @@ var model = {
                                                 if (!_.isEmpty(n.success["NAME"])) {
                                                     paramData.opponentsTeam.push(n.success["NAME"]);
                                                     player.id = n.success["NAME"];
-                                                    player.time = n.success["TIMING"];
-                                                    player.result = n.success["RESULT"];
+                                                    if (n.success["TIMING"]) {
+                                                        player.time = n.success["TIMING"];
+                                                    }
+                                                    if (n.success["RESULT"]) {
+                                                        player.result = n.success["RESULT"];
+                                                    }
                                                     player.laneNo = n.success["LANE NUMBER"];
                                                     result.players.push(player);
                                                 }
@@ -4610,7 +4619,9 @@ var model = {
                                                 paramData.sport = n.success.SPORT;
                                                 paramData.scheduleDate = moment(n.success.DATE).format();
                                                 paramData.scheduleTime = n.success.TIME;
-                                                paramData.resultHeat = result;
+                                                if (!_.isEmpty(result)) {
+                                                    paramData.resultHeat = result;
+                                                }
                                                 callback(null, paramData);
                                             }
                                         }, function (err, n) {
