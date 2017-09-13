@@ -62,13 +62,14 @@
                 </div>
               </td>
               <td>
-                <div class="text-capitalize">
-                  {{data.opponentsTeam[0].schoolName}}
+                <div class="text-capitalize" title="{{data.opponentsTeam[0].schoolName}}">
+                  <span>{{data.opponentsTeam[0].teamId}} - {{data.opponentsTeam[0].schoolName | truncate:'30'}}</span>
+
                 </div>
               </td>
               <td>
                 <div class="text-capitalize">
-                  {{data.opponentsTeam[1].schoolName}}
+                  <span title="{{data.opponentsTeam[1].schoolName}}">{{data.opponentsTeam[1].teamId}} - {{data.opponentsTeam[1].schoolName | truncate:'30'}}</span>
                 </div>
               </td>
               <td>
@@ -278,12 +279,12 @@
                         </td>
                         <td>
                           <div class="text-capitalize">
-                            {{content.opponentsTeam[0].schoolName}}
+                            <span>{{content.opponentsTeam[0].teamId}} - {{content.opponentsTeam[0].schoolName | truncate:'30'}}</span>
                           </div>
                         </td>
                         <td>
                           <div class="text-capitalize">
-                            {{content.opponentsTeam[1].schoolName}}
+                            <span>{{content.opponentsTeam[1].teamId}} - {{content.opponentsTeam[1].schoolName | truncate:'30'}}</span>
                           </div>
                         </td>
                         <td>

@@ -820,7 +820,13 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log)
                 data: request
             }).then(callback);
         },
-
+        getSportSpecificQualifyingRound: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'match/getSportSpecificRounds',
+                method: 'POST',
+                data: request
+            }).then(callback);
+        },
         getSportSpecificRounds: function (request, callback) {
 
             $http({
@@ -829,7 +835,7 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log)
                 data: request
             }).then(function (data) {
                 var knockout = data.data.data;
-                console.log(knockout);
+                console.log('firstone', data.data.data);
 
                 function sortOpponents(arrToSort, match1, match2) {
                     console.log("arrToSort", arrToSort);
@@ -872,23 +878,32 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log)
                         console.log("------------------------------------------");
 
                         return sortedArr;
+                    } else if (arrToSort.length > 2) {
+                        sortedArr = arrToSort;
+                        console.log("sortedArr", sortedArr);
+                        console.log("arrayLength > 2");
+                        console.log("------------------------------------------");
+
+                        return sortedArr;
                     }
                 }
-                _.each(knockout.roundsList, function (round, key) {
-                    if (key > 0 && key < 3) {
-                        _.each(round.match, function (match, index) {
-                            var match1, match2;
+                if (knockout.roundsList) {
+                    _.each(knockout.roundsList, function (round, key) {
+                        if (key > 0 && key < 3) {
+                            _.each(round.match, function (match, index) {
+                                var match1, match2;
 
-                            if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2].opponentsSingle) {
-                                match1 = knockout.roundsList[key - 1].match[index * 2].opponentsSingle;
-                            }
-                            if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2].opponentsSingle) {
-                                match2 = knockout.roundsList[key - 1].match[index * 2 + 1].opponentsSingle;
-                            }
-                            match.opponentsSingle = sortOpponents(match.opponentsSingle, match1, match2);
-                        });
-                    }
-                });
+                                if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2].opponentsSingle) {
+                                    match1 = knockout.roundsList[key - 1].match[index * 2].opponentsSingle;
+                                }
+                                if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2].opponentsSingle) {
+                                    match2 = knockout.roundsList[key - 1].match[index * 2 + 1].opponentsSingle;
+                                }
+                                match.opponentsSingle = sortOpponents(match.opponentsSingle, match1, match2);
+                            });
+                        }
+                    });
+                }
                 console.log(data.data.data);
                 callback(data);
             });

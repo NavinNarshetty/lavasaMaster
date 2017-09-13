@@ -217,7 +217,10 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
 
               });
               $scope.knockout = _.flattenDeep($scope.knockoutArr);
-              $scope.matches = allData.data.qualifying.roundsList;
+              if (allData.data.qualifying) {
+                $scope.matches = allData.data.qualifying.roundsList;
+              }
+
               console.log($scope.knockout, "$scope.knockout");
               console.log($scope.matches, "$scope.matches ");
             }

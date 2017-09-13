@@ -108,7 +108,7 @@
                </div>
             </div>
            
-            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true , 'knockout-live-foot': card.status === 'IsLive'}">
+            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true , 'knockout-live-foot': card.status === 'IsLive'}">
 
               <p class="m-clear " ng-if="!card.status || card.status===''">
                
@@ -173,7 +173,7 @@
 
               </div>
             </div>
-            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true,'knockout-live-foot': card.status === 'IsLive'}">
+            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true ,'knockout-live-foot': card.status === 'IsLive'}">
               <p class="m-clear " ng-if="!card.status || card.status===''">
                 <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
               </p>

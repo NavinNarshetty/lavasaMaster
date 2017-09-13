@@ -579,7 +579,8 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                             } else {
                                 console.log("im in else");
                                 $state.go('heats', {
-                                    id: $scope.drawDetails.sport
+                                    id: $scope.drawDetails.sport,
+                                    sportName: $scope.nameOfSport
                                 });
                             }
 

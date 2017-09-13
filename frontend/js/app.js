@@ -282,7 +282,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'ChampionshipScheduleCtrl'
         })
         .state('heats', {
-            url: "/heats/:id",
+            url: "/heats/:id/:sportName",
             templateUrl: tempateURL,
             controller: 'HeatsCtrl'
         })

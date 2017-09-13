@@ -136,7 +136,7 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
         $scope.constraints.round = roundName;
       }
       $scope.constraints.sport = $stateParams.id;
-      NavigationService.getSportSpecificRounds($scope.constraints, function (data) {
+      NavigationService.getSportSpecificQualifyingRound($scope.constraints, function (data) {
         errorService.errorCode(data, function (allData) {
           if (!allData.message) {
             if (allData.value) {
@@ -151,21 +151,28 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
                 key.limitValue = 8;
                 key.showMore = true;
                 _.each(key.match, function (value) {
-                  _.each(value.opponentsSingle, function (obj, index1) {
-                    if (!_.isEmpty(obj.athleteId)) {
-                      obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
-                    }
+                  if (value.opponentsSingle.length > 0) {
+                    _.each(value.opponentsSingle, function (obj, index1) {
+
+                      if (!_.isEmpty(obj.athleteId)) {
+                        obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                      }
 
 
-                    if (value.resultQualifyingRound !== undefined) {
-                      obj.result = value.resultQualifyingRound.player.result;
-                      obj.noOfJumps = value.resultQualifyingRound.player.attempt.length;
-                      obj.score = value.resultQualifyingRound.player.attempt[index1];
-                      obj.bestattempt = Math.max.apply(Math, value.resultQualifyingRound.player.attempt);
-                      value.bestAttempt = obj.bestattempt;
-                    }
+                      if (value.resultQualifyingRound !== undefined) {
+                        obj.result = value.resultQualifyingRound.player.result;
+                        obj.noOfJumps = value.resultQualifyingRound.player.attempt.length;
+                        obj.score = value.resultQualifyingRound.player.attempt[index1];
+                        if (value.resultQualifyingRound.player.attempt.length > 0) {
+                          obj.bestattempt = Math.max.apply(Math, value.resultQualifyingRound.player.attempt);
+                          value.bestAttempt = obj.bestattempt;
+                        }
 
-                  });
+                      }
+
+                    });
+                  }
+
 
                 });
               });
