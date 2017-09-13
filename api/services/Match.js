@@ -418,6 +418,24 @@ var model = {
             });
     },
 
+    getOneBackend: function (data, callback) {
+        var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+        Match.findOne({
+            matchId: data.matchId
+        }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else {
+                if (_.isEmpty(found)) {
+                    callback(null, []);
+                } else {
+                    console.log("found0", found);
+                    callback(null, found);
+                }
+            }
+        });
+    },
+
     saveMatch: function (data, callback) {
         async.waterfall([
                 function (callback) {
@@ -2915,8 +2933,8 @@ var model = {
                     prevRound = matchData.round;
                 }
                 var i = 0;
-                if (!_.isEmpty(matchData.opponentsSingle)) {
-                    async.concatSeries(matchData.opponentsSingle, function (mainData, callback) {
+                if (!_.isEmpty(matchData.resultHeat)) {
+                    async.concatSeries(matchData.resultHeat.players, function (mainData, callback) {
                             var obj = {};
                             obj["MATCH ID"] = matchData.matchId;
                             var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');
@@ -2928,32 +2946,48 @@ var model = {
                             } else if (matchData.sport.gender == "female") {
                                 obj.GENDER = "Female";
                             } else {
-                                obj.GENDER = "Male & Female"
+                                obj.GENDER = "Male & Female";
                             }
                             obj["AGE GROUP"] = matchData.sport.ageGroup.name;
                             obj.EVENT = matchData.sport.sportslist.name;
                             obj["ROUND"] = matchData.round;
                             obj["HEAT NUMBER"] = matchData.heatNo;
-                            obj["LANE NUMBER"] = matchData.resultHeat.players[i].laneNo;
-                            obj["SFA ID"] = mainData.athleteId.sfaId;
-                            if (mainData.athleteId.middleName) {
-                                obj["NAME"] = mainData.athleteId.firstName + " " + mainData.athleteId.middleName + " " + mainData.athleteId.surname;
+                            obj["LANE NUMBER"] = mainData.laneNo;
+                            // obj["SFA ID"] = mainData.athleteId.sfaId;
+                            if (mainData.id) {
+                                obj["SFA ID"] = matchData.opponentsSingle[i].athleteId.sfaId;
+                                if (matchData.opponentsSingle[i].athleteId.middleName) {
+                                    obj["NAME"] = matchData.opponentsSingle[i].athleteId.firstName + " " + matchData.opponentsSingle[i].athleteId.middleName + " " + matchData.opponentsSingle[i].athleteId.surname;
+                                } else {
+                                    obj["NAME"] = matchData.opponentsSingle[i].athleteId.firstName + " " + matchData.opponentsSingle[i].athleteId.surname;
+                                }
+                                obj["SCHOOL"] = matchData.opponentsSingle[i].athleteId.school.name;
+                                i++;
                             } else {
-                                obj["NAME"] = mainData.athleteId.firstName + " " + mainData.athleteId.surname;
+                                obj["SFA ID"] = "";
+                                obj["NAME"] = "";
+                                obj["SCHOOL"] = "";
                             }
-                            obj["SCHOOL"] = mainData.athleteId.school.name;
 
-                            if (matchData.resultHeat.players[i].time) {
-                                obj["TIMING"] = matchData.resultHeat.players[i].time;
+
+                            if (mainData.time) {
+                                obj["TIMING"] = mainData.time;
                             } else {
-                                obj["TIMING"] = "-";
+                                if (!_.isEmpty(obj["SFA ID"])) {
+                                    obj["TIMING"] = "-";
+                                } else {
+                                    obj["TIMING"] = "";
+                                }
                             }
-                            if (matchData.resultHeat.players[i].result) {
-                                obj["RESULT"] = matchData.resultHeat.players[i].result;
+                            if (mainData.result) {
+                                obj["RESULT"] = mainData.result;
                             } else {
-                                obj["RESULT"] = "-";
+                                if (!_.isEmpty(obj["SFA ID"])) {
+                                    obj["RESULT"] = "-";
+                                } else {
+                                    obj["RESULT"] = "";
+                                }
                             }
-                            i++;
                             callback(null, obj);
                         },
                         function (err, singleData) {

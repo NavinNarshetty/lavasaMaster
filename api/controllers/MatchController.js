@@ -16,6 +16,17 @@ var controller = {
         }
     },
 
+    getOneBackend: function (req, res) {
+        if (req.body && req.body.matchId) {
+            Match.getOneBackend(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Match Id not Found",
+                "value": false
+            })
+        }
+    },
+
     saveMatch: function (req, res) {
         if (req.body) {
             Match.saveMatch(req.body, res.callback);
