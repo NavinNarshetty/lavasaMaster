@@ -92,6 +92,12 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
           } else {
             resultKnockout.player2 = "-";
           }
+          if (_.isEmpty(data.opponentsSingle)) {
+            resultKnockout.isTeam = true;
+          } else {
+            resultKnockout.isTeam = false;
+          }
+          resultKnockout.sportType = "Combat";
           console.log("data", data);
           $scope.result.push(resultKnockout);
         } else if (data.resultsRacquet) {
@@ -147,6 +153,12 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
           } else {
             resultKnockout.player2 = "-";
           }
+          if (_.isEmpty(data.opponentsSingle)) {
+            resultKnockout.isTeam = true;
+          } else {
+            resultKnockout.isTeam = false;
+          }
+          resultKnockout.sportType = "Racquet";
           // console.log("data", data);
           $scope.result.push(resultKnockout);
         } else if (data.resultQualifyingRound && data.excelType == "qualifying") {
@@ -176,6 +188,7 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
         } else if (data.resultKnockout && data.excelType == "knockout") {
           console.log("in resultQualifyingRound", data);
           var resultKnockout = {};
+
           resultKnockout.matchId = data.matchId;
           resultKnockout.round = data.round;
           if (data.opponentsSingle[0]) {
@@ -304,20 +317,20 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
     });
   }
 
-  $scope.specificFormat = function (draw, matchid, team) {
+  $scope.specificFormat = function (data) {
     console.log("click")
-    console.log(team)
-    if (team == false) {
+    console.log("data", data);
+    if (data.isTeam == false) {
       console.log("team fasle")
-      if (draw == "Combat Sports" || "Racquet Sports") {
+      if (data.sportType == "Combat" || data.sportType == "Racquet") {
         $state.go('detailplayer', {
-          id: matchid
+          id: data.matchId
         });
       } else {
         toastr.error("Something went wrong")
       }
-    } else if (team == true) {
-      if (draw == "Combat Sports" || "Racquet Sports") {
+    } else if (data.isTeam == true) {
+      if (data.sportType == "Combat" || data.sportType == "Racquet") {
         $state.go('detailteam', {
           id: matchid
         });
