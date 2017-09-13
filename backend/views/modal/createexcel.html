@@ -11,7 +11,7 @@
             <select name="selectDraws" class="form-control" ng-model="form.resultType" required>
                   <option  value="knockout">Knockout</option>
                   <option  value="heat">Heat</option>
-                  <option  value="league">League</option>
+                  <option  value="direct-final">Direct Final</option>
                   <option  value="league-cum-knockout">League cum Knockout</option>
                   <option  value="qualifying-knockout">Qualifying Knockout</option>
                   <option  value="qualifying-round">Qualifying Round</option>
@@ -24,7 +24,7 @@
       <div class="row">
         <div class="col-md-12">
           <!-- SPORT TYPE -->
-          <div class="form-group" ng-if="form.resultType!='qualifying-knockout'&&form.resultType!='qualifying-round'">
+          <div class="form-group" ng-if="form.resultType!='qualifying-knockout'&&form.resultType!='qualifying-round'&&form.resultType!='direct-final'">
             <label>Sport Type</label>
             <select name="selectplayer" class="form-control" ng-model="form.playerType">
             <option  value="team">Team</option>

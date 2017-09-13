@@ -231,6 +231,15 @@ var controller = {
                                     }
                                 });
 
+                            } else if (req.body.resultType == "direct-final") {
+                                Match.saveQualifyingRoundIndividual(importData, req.body, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+
                             } else {
                                 callback(null, importData);
                             }
@@ -404,7 +413,7 @@ var controller = {
                             Match.generateExcelKnockout(req.body, res);
                         } else if (req.body.resultType == "heat") {
                             Match.generateExcelHeat(req.body, res);
-                        } else if (req.body.resultType == "qualifying-round") {
+                        } else if (req.body.resultType == "qualifying-round" || req.body.resultType == "direct-final") {
                             Match.generateExcelQualifyingRound(req.body, res);
                         } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "qualifying") {
                             Match.generateExcelQualifying(req.body, res);
