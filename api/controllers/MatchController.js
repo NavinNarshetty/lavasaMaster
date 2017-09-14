@@ -87,7 +87,19 @@ var controller = {
                                 callback(null, resData);
                             }
                         } else if (req.body.resultType == "league-cum-knockout") {
-                            var excelLength = importData.length;
+
+                            var knockout = _.groupBy(importData, 'STAGE');
+                            var i = 0;
+                            var excelLength = 0;
+                            _.each(knockout, function (n) {
+                                if (i == 0) {
+                                    i++;
+                                } else {
+                                    excelLength = n.length;
+                                }
+
+                            });
+                            // var excelLength = importData.length;
                             var range = req.body.range;
                             var sum = 0;
                             while (range >= 1) {
@@ -222,7 +234,6 @@ var controller = {
                                 });
 
                             } else if (req.body.resultType == "league-cum-knockout") {
-
                                 Match.saveLeagueKnockout(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);

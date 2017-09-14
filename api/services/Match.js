@@ -2020,6 +2020,134 @@ var model = {
             });
     },
 
+    addPreviousLeagueKnockoutMatch: function (data, callback) {
+        var count = 0;
+        var match = {};
+        var final = {};
+        match.prev = [];
+        final.finalPrevious = [];
+        var thirdPlaceCount = 0;
+        async.waterfall([
+                function (callback) {
+                    Match.find({
+                        sport: data.sport,
+                        excelType: {
+                            $regex: "knockout",
+                            $options: "i"
+                        }
+                    }).lean().sort({
+                        createdAt: -1
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (data.thirdPlace == 'yes') {
+                        thirdPlaceCount = 0;
+                    } else {
+                        thirdPlaceCount = 1;
+                    }
+
+                    final.matchData = found;
+                    async.eachSeries(found, function (singleData, callback) {
+                        if (thirdPlaceCount == 0) {
+                            if (count < 2) {
+                                match.prev.push(singleData._id);
+                                count++;
+                            }
+                            if (count == 2) {
+                                final.finalPrevious.push(match.prev);
+                                match.prev = [];
+                                count = 0;
+                            }
+                        } else {
+                            thirdPlaceCount = 0;
+                        }
+                        callback(null, count);
+                    }, function (err) {
+                        callback(null, final);
+                    });
+                },
+                function (final, callback) {
+                    var range = parseInt(data.range) + 1;
+                    var rangeTotal = data.rangeTotal;
+                    var i = 0;
+                    var row = 0;
+                    var ThirdPlace = [];
+                    async.eachSeries(final.finalPrevious, function (singleData, callback) {
+                            var id = final.matchData[row]._id;
+                            var updateObj = {
+                                $set: {
+                                    prevMatch: final.finalPrevious[i]
+                                }
+                            };
+                            console.log("row", row, "rangeTotal", rangeTotal);
+                            if (final.matchData[row].round != "Third Place") {
+                                Match.update({
+                                    _id: id
+                                }, updateObj).exec(
+                                    function (err, match) {
+                                        console.log("updated");
+                                    });
+                            }
+                            i++;
+                            row++;
+                            callback(null, final);
+                        },
+                        function (err) {
+                            callback(null, final);
+                        });
+                },
+                function (final, callback) {
+                    if (data.thirdPlace == "yes") {
+                        Match.findOne({
+                            sport: data.sport,
+                            round: "Final"
+                        }).lean().exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(found)) {
+                                    callback(null, []);
+                                } else {
+
+                                    var updateObj = {
+                                        $set: {
+                                            prevMatch: found.prevMatch
+                                        }
+                                    };
+                                    Match.update({
+                                        sport: data.sport,
+                                        round: "Third Place"
+                                    }, updateObj).exec(
+                                        function (err, match) {
+                                            callback(null, final);
+                                        });
+                                }
+                            }
+                        });
+                    } else {
+                        callback(null, final);
+                    }
+                },
+            ],
+            function (err, results) {
+                if (err || _.isEmpty(results)) {
+                    callback(err, null);
+                } else {
+                    callback(null, results);
+                }
+            });
+    },
+
     saveQualifyingIndividual: function (importData, data, callback) {
         var countError = 0;
         async.waterfall([
@@ -2324,6 +2452,17 @@ var model = {
                         callback(null, singleData);
                     });
 
+            },
+            function (singleData, callback) {
+                console.log("singleData", singleData);
+                if (singleData.error) {
+                    callback(null, singleData);
+                } else {
+                    data.sport = singleData[0].success.sport;
+                    Match.addPreviousLeagueKnockoutMatch(data, function (err, sportData) {
+                        callback(null, singleData);
+                    });
+                }
             }
         ], function (err, results) {
             if (err || _.isEmpty(results)) {
