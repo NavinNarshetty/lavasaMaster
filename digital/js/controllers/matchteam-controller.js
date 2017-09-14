@@ -51,7 +51,7 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                 if ($scope.matchDetails.teams.length == 0) {
                   toasstr.error("EmptyData");
                     if ($stateParams.drawFormat === 'Knockout') {
-                        $state.go('knockout', {
+                        $state.go('knockout-team', {
                             drawFormat: $stateParams.drawFormat,
                             id: $stateParams.sport
                         });
@@ -303,7 +303,7 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                 NavigationService.saveMatch($scope.matchResult, function(data) {
                     if (data.value == true) {
                       toastr.success('Results stored successfully', 'Saved success');
-                      $state.go('knockout', {
+                      $state.go('knockout-team', {
                         drawFormat: $stateParams.drawFormat,
                         id: $stateParams.sport
                       });
