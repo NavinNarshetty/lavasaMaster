@@ -1237,11 +1237,10 @@ var model = {
                 function (found, callback) {
                     if (found.atheleteSchoolName) {
                         data.school = found.atheleteSchoolName;
-                        data.sfaid = found.sfaId;
+                        data.sfaid = '-';
                         data.email = found.email;
                         data.mobile = found.mobile;
                         callback(null, data);
-
                     } else {
                         School.findOne({
                             _id: found.school
@@ -1252,7 +1251,7 @@ var model = {
                                 callback("Incorrect Login Details", null);
                             } else {
                                 data.school = schoolData.name;
-                                data.sfaid = found.sfaId;
+                                data.sfaid = found.sfaID;
                                 data.email = found.email;
                                 data.mobile = found.mobile;
                                 callback(null, data);
