@@ -312,6 +312,16 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'FormatTableCtrl'
         })
+        .state('detail-heats', {
+            url: "/detail-heats/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailHeatCtrl'
+        })
+        .state('detail-qualifying', {
+            url: "/detail-qualifying/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailQualifyingCtrl'
+        })
         // **************************END EDIT DIGITAL *******************
         //medals
         .state('medals', {

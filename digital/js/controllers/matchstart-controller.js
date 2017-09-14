@@ -1,4 +1,4 @@
-myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, toastr) {
+myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, toastr, $rootScope) {
     $scope.template = TemplateService.getHTML("content/match-start.html");
     TemplateService.title = "Sport Match"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -11,6 +11,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     $scope.disableWinner = false;
     $scope.matchError = "";
     $scope.showError = false;
+    $scope.removeReset = true;
     // VARIABLE INITIALISE END
 
     // INITIALSE SWIPER
@@ -305,9 +306,6 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
               $scope.matchResult.resultsRacquet.status = "IsLive";
             }
           break;
-          case "Team Sports":
-
-            break;
         }
         NavigationService.saveMatch($scope.matchResult, function(data){
           if(data.value == true){
@@ -537,5 +535,61 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
 
     }
     // OPEN MATCH-NO MATCH MODAL
+    // RESET RESULT POPUP
+    $scope.resetResultPop = function(){
+        $rootScope.modalInstance = $uibModal.open({
+          animation: true,
+          scope: $scope,
+          templateUrl: 'views/modal/resetresult.html',
+          windowClass: 'completematch-modal resetresult-modal'
+        })
+    }
+    // RESET RESULT POPUP END
+    // RESET MATCH RESULT
+    $scope.resetMatchResult = function(){
+      $scope.formData = {};
+      $scope.matchResult = {
+        matchId: $scope.matchData.matchId
+      }
+      switch ($scope.matchDetails.sportType) {
+        case "Combat Sports":
+          $scope.matchResult.resultsCombat = $scope.formData;
+          if(!$scope.matchResult.resultsCombat.status){
+            $scope.matchResult.resultsCombat.status = "IsLive";
+          }
+        break;
+        case "Racquet Sports":
+          $scope.matchResult.resultsRacquet = $scope.formData;
+          if(!$scope.matchResult.resultsRacquet.status){
+            $scope.matchResult.resultsRacquet.status = "IsLive";
+          }
+        break;
+      }
+      NavigationService.saveMatch($scope.matchResult, function(data){
+        if(data.value == true){
+          $rootScope.modalInstance.close('a');
+          toastr.success('Match result has been successfully reset', 'Result Reset');
+          if ($stateParams.drawFormat === 'Knockout') {
+              $state.go('knockout', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+          } else if ($stateParams.drawFormat === 'Heats') {
+              $state.go('heats', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+          }
+        } else{
+          toastr.error('Match result reset failed. Please try again', 'Result Reset Failed');
+        }
+      });
+    }
+    // RESET MATCH RESULT
+    // REMOVE RESET
+    $scope.removeReset = function(){
+      $scope.removeReset = false;
+    }
+    // REMOVE RESET END
 
 })

@@ -174,9 +174,24 @@ myApp.controller('BasketballScoreCtrl', function ($scope, TemplateService, Navig
   // REMOVE MATCH SCORESHEET
   //type scoreSheet/matchPhoto
   $scope.removeMatchScore = function (pic, type) {
+<<<<<<< HEAD
     _.remove($scope.match.resultBasketball[type], function (n) {
       return n.image === pic.image;
     });
+=======
+    switch (type) {
+      case 'matchPhoto':
+        _.remove($scope.match.resultHandball.matchPhoto, function (n) {
+          return n.image === pic.image;
+        })
+        break;
+      case 'scoreSheet':
+        _.remove($scope.match.resultHandball.scoreSheet, function (n) {
+          return n.image === pic.image;
+        })
+        break;
+    }
+>>>>>>> 24482c2c2feaa31ec72cdf31c021c3d217fe9388
   }
   // REMOVE MATCH SCORESHEET END
 

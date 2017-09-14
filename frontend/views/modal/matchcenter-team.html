@@ -1,0 +1,162 @@
+<div class="matchcenter-modal">
+  <div class="modal-header">
+    <div class="matchstart-header clearfix">
+      <div class="pull-right">
+        <p class="m-clear">match id: <span>{{match.matchId}}123456789</span> </p>
+      </div>
+      <p class="m-clear"><span>{{match.sportsName}}Tennis</span> - <span>{{match.age}}U-19</span> <span>{{match.gender}}M</span> <span>{{match.round}}1</span></p>
+
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="modal-container">
+      <div class="row">
+        <div class="matchwinner text-center">
+          <p>Match Winner: <span class="matchwinner-title"> <span>Jamnabai Narsee School</span>
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <!-- PLAYER CARDS -->
+        <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="card in data | limitTo:2 track by $index">
+          <div class="combatscore-player">
+            <div class="matchplayer-card {{player.player}}">
+              <div class="matchplayer-playerid">
+                <p>Team ID: <span>{{player.sfaId}}123456789123</span></p>
+              </div>
+              <div class="matchplayer-image">
+                <img ng-src="img/dishapatani1.jpg" alt="{player.firstName}} {{player.surname}}" class="img-responsive">
+              </div>
+              <div class="matchplayer-details">
+                <!-- <p class="matchplayer-name"><span> {{player.firstName}}dishapatani1 </span> <span> {{player.surname}}dishapatani1 </span></p> -->
+                <p class="matchplayer-school matchplayer-name">{{player.school.name | truncate:'22'}} Jamnabai Narsee School</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- PLAYER CARDS END -->
+      </div>
+
+      <div class="team-player-accordian-holder">
+        <!-- TEAM DATA POINTS ACCORDIAN -->
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="team in data | limitTo:2 track by $index">
+
+            <uib-accordion close-others="oneAtATime">
+              <div uib-accordion-group class="panel-default" is-open="s.open">
+                <uib-accordion-heading class="clearfix">
+                  <!-- <a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a> -->
+                  <!-- <span class="pull-right edit-team-button">Winner: <span>Jamnabai Narsee School</span> </span> -->
+                  <a href="">
+                    <p class="d-fjalla-one text-uppercase sport-color-primary m-clear">
+                      <span>Team  </span> <span class="teamplayer-fullname"></span>
+                    </p>
+                  </a>
+                </uib-accordion-heading>
+                <div class="">
+                  <div class="">
+
+                    <div class="row">
+                      <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="s in data | limitTo:4 track by $index">
+                        <label for="">sets {{$index + 1}}</label>
+                        <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <label for="">fouls</label>
+                        <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                      </div>
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <label for="">spike</label>
+                        <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                      </div>
+                      <div class="col-md-4 col-sm-6 col-xs-12">
+                        <label for="">block</label>
+                        <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+            </uib-accordion>
+
+            </div>
+          </div>
+        </div>
+        <!-- TEAM DATA POINTS ACCORDIAN END -->
+        <!-- PLAYER ACCORDIAN -->
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="tea in team  track by $index">
+            <uib-accordion close-others="oneAtATime">
+              <div uib-accordion-group class="panel-default" is-open="s.open">
+                <uib-accordion-heading class="clearfix">
+                  <!-- <a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a> -->
+                  <!-- <span class="pull-right edit-team-button">Winner: <span>Jamnabai Narsee School</span> </span> -->
+                  <a href="">
+                    <p class="d-fjalla-one text-uppercase sport-color-primary m-clear">
+                      <span>Players </span> <span class="teamplayer-fullname"></span>
+                    </p>
+                  </a>
+                </uib-accordion-heading>
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                  <uib-accordion close-others="oneAtATime">
+                    <div uib-accordion-group class="panel-default" is-open="p.open" ng-repeat="p in tea.players track by $index">
+                      <uib-accordion-heading class="clearfix">
+                        <!-- <a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a> -->
+                        <span class="pull-right edit-team-button"> </span>
+                        <a href="">
+                          <p class="d-fjalla-one text-uppercase sport-color-primary m-clear">
+                            <span>{{p.firstName}}  </span> <span class="teamplayer-fullname"></span>
+                          </p>
+                        </a>
+                      </uib-accordion-heading>
+                      <div class="">
+                        <div class="row">
+                          <div class="">
+                            <!-- <h4>Set {{$index+1}}</h4> -->
+                            <div class="col-md-6 col-sm-4 col-xs-6">
+                              <label for="">Ace</label>
+                              <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                            </div>
+                            <div class="col-md-6 col-sm-4 col-xs-6">
+                              <label for="">Winner</label>
+                              <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                            </div>
+                            <div class="col-md-6 col-sm-4 col-xs-6">
+                              <label>Unforced Error</label>
+                              <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                            </div>
+                            <div class="col-md-6 col-sm-4 col-xs-6">
+                              <label>Unforced Error</label>
+                              <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                            </div>
+                            <div class="col-md-6 col-sm-4 col-xs-6">
+                              <label>Unforced Error</label>
+                              <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                            </div>
+                          </div>
+
+                        </div>
+                      </div>
+
+
+                  </uib-accordion>
+                  </div>
+                </div>
+            </uib-accordion>
+            </div>
+
+
+            <!-- PLAYER ACCORDIAN END -->
+          </div>
+
+
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-warning" type="button" ng-click="$dismiss()">Cancel</button>
+          <!-- <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button> -->
+        </div>
+      </div>

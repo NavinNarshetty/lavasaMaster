@@ -1,4 +1,4 @@
-myApp.controller('KnockoutCtrl', function($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope, $uibModal) {
+myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope, $uibModal) {
     $scope.template = TemplateService.getHTML("content/knockout.html");
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -7,18 +7,18 @@ myApp.controller('KnockoutCtrl', function($scope, TemplateService, $state, Navig
     $scope.data = [1, 2, 3, 4, 5, 6, 7, 8];
     // MODAL
     var modal;
-    $scope.matchCenter = function() {
-            modal = $uibModal.open({
-                animation: true,
-                scope: $scope,
-                // backdrop: 'static',
-                keyboard: false,
-                templateUrl: 'views/modal/matchcenter.html',
-                size: 'lg',
-                windowClass: 'matchcenter-modal'
-            })
-        }
-        // MODAL END
+    $scope.matchCenter = function () {
+        modal = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            // backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'views/modal/matchcenter.html',
+            size: 'lg',
+            windowClass: 'matchcenter-modal'
+        })
+    }
+    // MODAL END
     $scope.oneAtATime = true;
     $scope.status = {
         isCustomHeaderOpen: false,
@@ -27,9 +27,9 @@ myApp.controller('KnockoutCtrl', function($scope, TemplateService, $state, Navig
     };
     // MODAL END
     // SWIPER
-    $scope.$on('$viewContentLoaded', function(event) {
+    $scope.$on('$viewContentLoaded', function (event) {
 
-        $timeout(function() {
+        $timeout(function () {
             mySwiper = new Swiper('.swiper-container', {
                 paginationClickable: true,
                 nextButton: '.swiper-button-next',
@@ -58,64 +58,64 @@ myApp.controller('KnockoutCtrl', function($scope, TemplateService, $state, Navig
     // END SWIPER
 
     // START SCORING FUNCTION
-    $scope.startScoring = function(card) {
-            console.log(card, 'startScoring');
-            if (_.isEmpty(card.opponentsSingle[0]) && _.isEmpty(card.opponentsSingle[1])) {
-                toastr.error('No players found for match.', 'No match');
+    $scope.startScoring = function (card) {
+        console.log(card, 'startScoring');
+        if (_.isEmpty(card.opponentsSingle[0]) && _.isEmpty(card.opponentsSingle[1])) {
+            toastr.error('No players found for match.', 'No match');
+        } else {
+            if (card.status == 'IsCompleted') {
+                toastr.warning("This match has already been scored.", 'Scoring Completed');
             } else {
-                if (card.status == 'IsCompleted') {
-                    toastr.warning("This match has already been scored.", 'Scoring Completed');
-                } else {
-                    $state.go("matchstart", {
-                        drawFormat: $stateParams.drawFormat,
-                        sport: $stateParams.id,
-                        id: card.matchId
-                    });
-                }
+                $state.go("matchstart", {
+                    drawFormat: $stateParams.drawFormat,
+                    sport: $stateParams.id,
+                    id: card.matchId
+                });
             }
         }
-        // START SCORING FUNCTION END
+    }
+    // START SCORING FUNCTION END
 
     // KNOCKOUT JSON
     $scope.knockoutMatch = [{
-            players: [{
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional',
-                winner: true
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional'
-            }],
-            date: '27th July, 2017',
-            time: '10.30am'
+        players: [{
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional',
+            winner: true
         }, {
-            players: [{
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional'
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional',
-                winner: true
-            }],
-            matchcenter: true
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional'
+        }],
+        date: '27th July, 2017',
+        time: '10.30am'
+    }, {
+        players: [{
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional'
         }, {
-            players: [{
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional'
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional'
-            }],
-            date: '27th July, 2017',
-            time: '10.30am'
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional',
+            winner: true
+        }],
+        matchcenter: true
+    }, {
+        players: [{
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional'
         }, {
-            players: [{
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional'
-            }],
-            matchcenter: true
-        }]
-        // END KNOCK OUT JSON
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional'
+        }],
+        date: '27th July, 2017',
+        time: '10.30am'
+    }, {
+        players: [{
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional'
+        }],
+        matchcenter: true
+    }]
+    // END KNOCK OUT JSON
 
     $scope.round2 = [{
         players: [{
@@ -171,14 +171,14 @@ myApp.controller('KnockoutCtrl', function($scope, TemplateService, $state, Navig
         roundname: 'Round 3'
     }];
     $scope.constraints = {};
-    $scope.getSportSpecificRounds = function(roundName) {
+    $scope.getSportSpecificRounds = function (roundName) {
         if ($stateParams.id) {
             if (roundName) {
                 $scope.constraints.round = roundName;
             }
             $scope.constraints.sport = $stateParams.id;
-            NavigationService.getSportSpecificRounds($scope.constraints, function(data) {
-                errorService.errorCode(data, function(allData) {
+            NavigationService.getSportSpecificRounds($scope.constraints, function (data) {
+                errorService.errorCode(data, function (allData) {
                     if (!allData.message) {
                         if (allData.value) {
                             $scope.roundsListName = allData.data.roundsListName;
@@ -187,9 +187,9 @@ myApp.controller('KnockoutCtrl', function($scope, TemplateService, $state, Navig
                                 toastr.error("No Data Found", 'Error Message');
                                 $state.go('championshipschedule');
                             }
-                            _.each($scope.roundsList, function(key) {
-                                _.each(key.match, function(value) {
-                                    _.each(value.opponentsSingle, function(obj, index) {
+                            _.each($scope.roundsList, function (key) {
+                                _.each(key.match, function (value) {
+                                    _.each(value.opponentsSingle, function (obj, index) {
                                         if (obj && obj.athleteId) {
                                             obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
 
@@ -197,8 +197,10 @@ myApp.controller('KnockoutCtrl', function($scope, TemplateService, $state, Navig
                                             if (value.resultsCombat) {
                                                 console.log("resultsCombat", value.resultsCombat);
                                                 console.log(" im in resultsCombat");
-                                                obj.noShow = Boolean(value.resultsCombat.players[index].noShow);
-                                                obj.walkover = Boolean(value.resultsCombat.players[index].walkover);
+                                                if (value.resultsCombat.players[index]) {
+                                                  obj.noShow = Boolean(value.resultsCombat.players[index].noShow);
+                                                  obj.walkover = Boolean(value.resultsCombat.players[index].walkover);
+                                              }
                                                 value.status = value.resultsCombat.status;
                                                 value.isNoMatch = value.resultsCombat.isNoMatch;
                                                 value.video = value.resultsCombat.video;
@@ -260,14 +262,14 @@ myApp.controller('KnockoutCtrl', function($scope, TemplateService, $state, Navig
 
 });
 
-myApp.controller('KnockoutDoublesCtrl', function($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope, $uibModal) {
+myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope, $uibModal) {
     $scope.template = TemplateService.getHTML("content/ draws-schedule/knockout-doubles.html");
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
     // SWIPER
-    $scope.$on('$viewContentLoaded', function(event) {
+    $scope.$on('$viewContentLoaded', function (event) {
 
-        $timeout(function() {
+        $timeout(function () {
             mySwiper = new Swiper('.swiper-container', {
                 paginationClickable: true,
                 nextButton: '.swiper-button-next',
@@ -297,71 +299,71 @@ myApp.controller('KnockoutDoublesCtrl', function($scope, TemplateService, $state
 
     // DOUBLES JSON
     $scope.knockoutMatch = [{
-            players: [{
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional',
-                winner: true
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional',
-                winner: true
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional'
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional'
-            }],
-            date: '27th July, 2017',
-            time: '10.30am'
+        players: [{
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional',
+            winner: true
         }, {
-            players: [{
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional',
-                winner: true
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional',
-                winner: true
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional'
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional'
-            }],
-            matchcenter: true
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional',
+            winner: true
         }, {
-            players: [{
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional',
-                winner: true
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional',
-                winner: true
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional'
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional'
-            }],
-            matchcenter: true
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional'
         }, {
-            players: [{
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional',
-                winner: true
-            }, {
-                player: 'Harshit shah',
-                schoolname: 'Dhirubhai Ambani Intertional',
-                winner: true
-            }],
-            date: '27th July, 2017',
-            time: '10.30am'
-        }, ]
-        // END DOUBLES JSON
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional'
+        }],
+        date: '27th July, 2017',
+        time: '10.30am'
+    }, {
+        players: [{
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional',
+            winner: true
+        }, {
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional',
+            winner: true
+        }, {
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional'
+        }, {
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional'
+        }],
+        matchcenter: true
+    }, {
+        players: [{
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional',
+            winner: true
+        }, {
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional',
+            winner: true
+        }, {
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional'
+        }, {
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional'
+        }],
+        matchcenter: true
+    }, {
+        players: [{
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional',
+            winner: true
+        }, {
+            player: 'Harshit shah',
+            schoolname: 'Dhirubhai Ambani Intertional',
+            winner: true
+        }],
+        date: '27th July, 2017',
+        time: '10.30am'
+    },]
+    // END DOUBLES JSON
 
     $scope.winnersCard = [{
         player: 'Harshit shah',

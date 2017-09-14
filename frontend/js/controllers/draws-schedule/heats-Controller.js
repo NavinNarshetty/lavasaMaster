@@ -115,6 +115,10 @@ myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, Navigat
 
 
   $scope.constraints = {};
+  $scope.showFinalHeadng = true;
+  $scope.showSemiFinal = true;
+  $scope.eventName = $stateParams.sportName;
+  console.log("eventName", $scope.eventName);
   $scope.getSportSpecificRounds = function (roundName) {
     if ($stateParams.id) {
       if (roundName) {
@@ -133,22 +137,72 @@ myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, Navigat
               }
               $scope.roundsList = $scope.roundsList.reverse();
               _.each($scope.roundsList, function (key) {
-                console.log("key", key);
                 _.each(key.match, function (value) {
+                  if (value.sport.sportslist.sportsListSubCategory.isTeam) {
+                    value.opponentsSingle = [];
+                  } else {
+                    value.opponentsTeam = [];
+                  }
+                  if (value.opponentsSingle.length > 0) {
+                    _.each(value.opponentsSingle, function (obj, index1) {
+                      if (key.name.toLowerCase() === 'final') {
+                        if (obj) {
+                          if (_.isEmpty(obj.athleteId)) {
+                            $scope.showFinalHeadng = false;
+                          }
+                        }
 
-                  _.each(value.opponentsSingle, function (obj, index1) {
-                    if (!_.isEmpty(obj.athleteId)) {
-                      obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
-                    }
-                    if (value.resultHeat.players[index1] !== undefined) {
-                      obj.result = value.resultHeat.players[index1].result;
-                      obj.laneNo = value.resultHeat.players[index1].laneNo;
-                      obj.time = value.resultHeat.players[index1].time;
-                    }
-                  });
+                      }
+                      if (key.name.toLowerCase() === 'semi final') {
+                        if (obj) {
+                          if (_.isEmpty(obj.athleteId)) {
+                            $scope.showSemiFinal = false;
+                          }
+                        }
 
+                      }
 
+                      if (!_.isEmpty(obj.athleteId)) {
+                        obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                      }
+                      if (value.resultHeat.players !== undefined && value.resultHeat.players[index1] && value.resultHeat.players[index1] !== undefined && value.resultHeat.players[index1] !== null) {
+                        obj.result = value.resultHeat.players[index1].result;
+                        obj.laneNo = value.resultHeat.players[index1].laneNo;
+                        obj.time = value.resultHeat.players[index1].time;
+                      }
+                    });
+                  }
+                  if (value.opponentsTeam.length > 0) {
+                    _.each(value.opponentsTeam, function (obj, index1) {
+                      if (key.name.toLowerCase() === 'final') {
+                        if (obj) {
+                          if (_.isEmpty(obj.teamId)) {
+                            $scope.showFinalHeadng = false;
 
+                          }
+                        }
+
+                      }
+                      if (key.name.toLowerCase() === 'semi final') {
+                        if (obj) {
+                          if (_.isEmpty(obj.teamId)) {
+                            $scope.showSemiFinal = false;
+                          }
+                        }
+
+                      }
+
+                      if (!_.isEmpty(obj.teamId)) {
+                        obj.schoolNameWithTeamId = obj.teamId + ' - ' + obj.schoolName;
+                      }
+
+                      if (value.resultHeat.teams !== undefined && value.resultHeat.teams[index1] && value.resultHeat.teams[index1] !== undefined && value.resultHeat.teams[index1] !== null) {
+                        obj.result = value.resultHeat.teams[index1].result;
+                        obj.laneNo = value.resultHeat.teams[index1].laneNo;
+                        obj.time = value.resultHeat.teams[index1].time;
+                      }
+                    });
+                  }
                 });
               });
               console.log($scope.roundsListName, " $scope.roundsListName ");

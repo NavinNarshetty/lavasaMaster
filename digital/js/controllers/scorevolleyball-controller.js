@@ -406,21 +406,13 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
           }
           NavigationService.saveMatch($scope.matchResult, function(data){
             if(data.value == true){
-              if ($stateParams.drawFormat === 'Knockout') {
-                  $state.go('knockout', {
-                    drawFormat: $stateParams.drawFormat,
-                    id: $stateParams.sport
-                  });
-              } else if ($stateParams.drawFormat === 'Heats') {
-                  $state.go('heats', {
-                    drawFormat: $stateParams.drawFormat,
-                    id: $stateParams.sport
-                  });
-              }
+              $state.go('knockout-team', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
               console.log('save success');
             } else{
-              // alert('fail save');
-              toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
+              toastr.error('Data save failed. Please try again.', 'Save Error');
             }
           });
           console.log($scope.matchResult, 'result#');

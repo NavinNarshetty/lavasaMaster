@@ -1,4 +1,12 @@
 <div class="matchstart-page">
+  <div class="removeresult-header" ng-show="removeReset" ng-if="formData.status === 'IsLive'">
+    <div class="container">
+      <div class="removeresult-holder">
+        <span class="fa fa-times close-resultreset" ng-click="removeReset()"></span>
+        <button type="button" class="btn btn-removeresult" ng-click="resetResultPop()">RESET RESULT</button>
+      </div>
+    </div>
+  </div>
   <div class="matchstart-header clearfix">
     <div class="container">
       <div class="pull-right">

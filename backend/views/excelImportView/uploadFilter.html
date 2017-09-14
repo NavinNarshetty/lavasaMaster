@@ -2,7 +2,7 @@
     <form name="detailForm" role="form" class="sec">
         <div class="">
             <div class="col-md-12 drop-2">
-                <div class="form-group"> 
+                <div class="form-group">
                     <label>Match-ID*</label>
                     <input type="text" name="matchId" ng-model="form.matchId" class="form-control" placeholder="Enter Match-ID" required>
                     <div class="error-msg" ng-if="detailForm.rulesname.$invalid && detailForm.rulesname.$touched">Please Enter Valid Name *</div>
@@ -16,7 +16,7 @@
         <select class="form-control" ng-model="form.resultType">
           <option  value="knockout">Knockout</option>
           <option  value="heat">Heat</option>
-          <option  value="league">League</option>
+          <option  value="direct-final">Direct Final</option>
           <option  value="league-cum-knockout">League cum Knockout</option>
           <option  value="qualifying-knockout">Qualifying Knockout</option>
           <option  value="qualifying-round">Qualifying Round</option>
@@ -60,7 +60,7 @@
         </div>
       </div>
     </form>-->
-    <div class="col-md-12 drop-2" ng-if="form.resultType!='qualifying-knockout'&&form.resultType!='qualifying-round'&&form.resultType!='league-cum-knockout'">
+    <div class="col-md-12 drop-2" ng-if="form.resultType!='qualifying-knockout'&&form.resultType!='qualifying-round'&&form.resultType!='league-cum-knockout'&&form.resultType!='direct-final'">
         <label>Sport Type*</label>
         <select class="form-control" ng-model="form.playerType">
           <option  value="team">Team</option>

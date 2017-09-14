@@ -59,6 +59,7 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
   // END TABLE JSON
 
   $scope.constraints = {};
+  $scope.knockoutArr = [];
   $scope.getSportSpecificRounds = function (roundName) {
     if ($stateParams.id) {
       if (roundName) {
@@ -80,6 +81,10 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
                 });
 
               });
+              _.each($scope.knockout, function (data) {
+                $scope.knockoutArr.push(data.match);
+              });
+              $scope.knockout = _.flattenDeep($scope.knockoutArr);
               _.each($scope.qualifying, function (data, index) {
                 _.each(data.match, function (key) {
                   _.each(key.opponentsSingle, function (obj) {
@@ -87,7 +92,6 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
                   });
                 });
               });
-              console.log("$scope.qualifying,", $scope.qualifying);
             }
           } else {
             toastr.error(allData.message, 'Error Message');
@@ -97,4 +101,33 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
     }
   };
   $scope.getSportSpecificRounds();
+
+  //show more data
+  $scope.limitKnockout = 8;
+  $scope.limitValue = 8;
+  $scope.showMoreData = function (bool, type) {
+    if (type === 'knockout') {
+      console.log("im inn");
+      if (bool) {
+        $scope.showKnockout = true;
+        $scope.limitKnockout = 5000;
+      } else {
+        $scope.limitKnockout = 8;
+        $scope.showKnockout = false;
+      }
+    } else {
+      if (type === 'qualifying') {
+        if (bool === true) {
+          console.log("im inn");
+          $scope.showMore = true;
+          $scope.limitValue = 5000;
+        } else {
+          $scope.showMore = false;
+          $scope.limitValue = 8;
+        }
+      }
+    }
+  };
+
+
 });

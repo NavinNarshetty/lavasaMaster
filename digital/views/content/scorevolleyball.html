@@ -22,9 +22,9 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <button type="button" name="button" class="btn" ng-click="selectTeam(match.resultVolleyball)"> Team init</button>
-            </div>
+            </div> -->
             <!-- TEAM HEADERS -->
             <!-- TEAM SCORING -->
             <div class="teamscoring-section">
@@ -75,7 +75,7 @@
                         <div class="team-teampoints">
                             <!-- SETS DATA POINT -->
                             <div class="relate teamscore-point mtb-10" ng-repeat="set in team.teamResults.sets track by $index" ng-if= "setDisplay.value == $index">
-                                <label class="teamdatapoint-name">Set {{$index}}</label>
+                                <label class="teamdatapoint-name">Set {{$index + 1}}</label>
                                 <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementScore(set,'points');"><i class="fa fa-minus"></i></button>
                                 <input type="number" ng-model="set.points" min="0" max="99" class="score-number teamscore-number display-inline form-control">
                                 <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementScore(set,'points');"><i class="fa fa-plus"></i></button>
@@ -172,7 +172,7 @@
                 <!-- RESULT SELECTS -->
                 <div class="combatscore-selects">
                     <div class="row">
-                        <div class="col-md-offset-2 col-md-4 col-sm-6">
+                        <div class="col-md-offset-4 col-md-4 col-sm-6">
                             <div class="match-selectwinner text-left">
                                 <label for="matchWinnerPlayer" class="text-uppercase">Select Winner</label>
                                 <!-- UI SELECT -->
@@ -184,12 +184,6 @@
                                 </ui-select>
                                 <!-- UI SELECT END -->
                             </div>
-                        </div>
-                        <div class="col-md-4 col-sm-6">
-                          <div class="text-left">
-                            <label for="">For Penalties</label>
-                            <button class="btn btn-scoring btn-green-outline" ng-click="startPenalty()">Penalty Shootouts</button>
-                          </div>
                         </div>
                     </div>
                 </div>

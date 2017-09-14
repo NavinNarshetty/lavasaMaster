@@ -144,3 +144,15 @@ myApp.filter('formatDate', function () {
         return returnVal;
     };
 });
+
+myApp.filter('truncate', function () {
+    return function (value, limit) {
+        if (value) {
+            if (value.length < limit) {
+                return value;
+            } else {
+                return value.slice(0, limit) + "...";
+            }
+        }
+    }
+})

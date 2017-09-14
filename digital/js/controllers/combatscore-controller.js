@@ -1,4 +1,4 @@
-myApp.controller('CombatScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, $interval, toastr) {
+myApp.controller('CombatScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal, $stateParams, $state, $interval, toastr, $rootScope) {
     $scope.template = TemplateService.getHTML("content/score-combat.html");
     TemplateService.title = "Score Combat"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -73,8 +73,6 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
         $rootScope.modalInstance = $uibModal.open({
           animation: true,
           scope: $scope,
-          // backdrop: 'static',
-          // keyboard: false,
           templateUrl: 'views/modal/confirmcomplete.html',
           windowClass: 'completematch-modal'
         })

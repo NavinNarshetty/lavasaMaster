@@ -1,0 +1,86 @@
+ if (_.isEmpty(arrToSort)) {
+            console.log("------------------------------------------");
+            return arrToSort;
+        } else if (arrToSort.length == 1) {
+            var index = _.findIndex(match1, ["_id", arrToSort[0]._id]);
+            console.log(index);
+            if (index == -1) {
+                arrToSort[0] = {};
+                arrToSort[1] = sortedArr[0];
+            } else {
+                arrToSort[0] = sortedArr[0];
+                arrToSort[1] = {};
+            }
+            console.log("sortedArr", sortedArr);
+            console.log("arrayLength 1");
+            console.log("------------------------------------------");
+            
+            return sortedArr;
+        } else if (arrToSort.length == 2) {
+            if (_.findIndex(match1, ["_id", arrToSort[0]._id]) == -1) {
+                arrToSort[0] = sortedArr[1];
+                arrToSort[1] = sortedArr[0];
+            } else {
+                arrToSort[0] = sortedArr[0];
+                arrToSort[1] = sortedArr[1];
+            }
+            console.log("sortedArr", sortedArr);
+            console.log("arrayLength 2"); 
+            console.log("------------------------------------------");
+            return sortedArr;
+        }
+
+
+
+
+
+        // if (_.isEmpty(arrToSort)) {
+        //     return arrToSort;
+        // } else {
+        //     _.each(arrToSort, function (val, key) {
+        //         if (_.findIndex(match1, ["_id", val._id]) == -1) {
+        //             if (arrToSort.length == 1) {
+        //                 sortedArr[0] = {};
+        //                 sortedArr[1] = val;
+        //             } else {
+        //                 if (key == 0) {
+        //                     sortedArr[0] = arrToSort[1];
+        //                     sortedArr[1] = val;
+        //                 } else {
+        //                     sortedArr[0] = arrToSort[0];
+        //                     sortedArr[1] = val;
+        //                 }
+        //             }
+        //         } else {
+        //             if (arrToSort.length == 1) {
+        //                 sortedArr[0] = val;
+        //                 sortedArr[1] = {};                      
+        //             } else {
+        //                 sortedArr[0] = val;
+        //                 if (key == 0) {
+        //                     sortedArr[0] = val;
+        //                     sortedArr[1] = arrToSort[1];
+        //                 } else {
+        //                     sortedArr[0] = val;
+        //                     sortedArr[1] = arrToSort[1];
+        //                 }
+        //                 // console.log("sortedArr",sortedArr);
+        //                 //  return arrToSort;                     
+        //             }
+
+        //         }
+        //     });
+        //     console.log("sortedArr",sortedArr);
+        //     console.log("---------------------------------------------------");
+        //     return sortedArr;
+        // }
+
+
+
+
+
+           //set update variable,matchObj
+            //UPDATE MATCH-- with above 'set variable',matchObj
+             //find match which was updated in previous function and check whether its team match or individual
+              //find all matches whoose previous match was the match which is getting updated
+               //data.found=match getting updated;found=next round match

@@ -275,6 +275,7 @@ header {
     position: relative;
     background: transparent;
     color: #a0a0a0;
+    cursor: pointer;
     line-height: 1;
 }
 
@@ -315,6 +316,40 @@ header {
 }
 
 // BUTTONS END
+// REMOVE RESULT HEADER
+.removeresult-header {
+  padding: 5px 0;
+  position: relative;
+  background: #eee;
+}
+.removeresult-holder {
+  padding: 0 20px;
+  text-align: right;
+}
+.close-resultreset {
+  padding: 0px 10px;
+  position: absolute;
+  top: 50%;
+  right: 20px;
+  cursor: pointer;
+  font-size: 16px;
+  line-height: 1;
+  @include transform(translateY(-50%));
+}
+.btn-removeresult {
+  padding: 5px 10px;
+  border: 1px solid #000;
+  background-color: transparent;
+  color: #000;
+  font-size: 12px;
+  line-height: 1;
+  &:active, &:focus, &:hover{
+    background-color: transparent;
+    color: #000;
+    outline: none;
+  }
+}
+// REMOVE RESULT HEADER END
 // MATCH START PAGE
 .matchstart-page,
 .racketscore-page,

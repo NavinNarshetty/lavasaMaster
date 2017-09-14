@@ -195,8 +195,67 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
       lost: "1",
       draw: "1",
       points: "6"
-    }, ]
+    },]
   }];
+
+  $scope.constraints = {};
+  $scope.knockoutArr = [];
+  $scope.getSportSpecificRounds = function (roundName) {
+    if ($stateParams.id) {
+      if (roundName) {
+        $scope.constraints.round = roundName;
+      }
+      $scope.constraints.sport = $stateParams.id;
+      NavigationService.getSportLeagueKnockoutRounds($scope.constraints, function (data) {
+        errorService.errorCode(data, function (allData) {
+          if (!allData.message) {
+            if (allData.value) {
+              console.log("alldata", allData.data);
+              $scope.knockout = allData.data.knockout.roundsList;
+              _.each($scope.knockout, function (n) {
+                $scope.knockoutArr.push(n.match);
+
+              });
+              $scope.knockout = _.flattenDeep($scope.knockoutArr);
+              if (allData.data.qualifying) {
+                $scope.matches = allData.data.qualifying.roundsList;
+              }
+
+              console.log($scope.knockout, "$scope.knockout");
+              console.log($scope.matches, "$scope.matches ");
+            }
+          } else {
+            toastr.error(allData.message, 'Error Message');
+          }
+        });
+      });
+    }
+  };
+  $scope.getSportSpecificRounds();
+  $scope.knockoutLimit = 8;
+  $scope.limitValue = 8;
+  $scope.showMoreData = function (bool, type) {
+    if (type === 'knockout') {
+      if (bool) {
+        $scope.showKnockout = true;
+        $scope.knockoutLimit = 5000;
+
+      } else {
+        $scope.showKnockout = false;
+        $scope.knockoutLimit = 8;
+      }
+
+    } else {
+      if (bool) {
+        $scope.showMatch = true;
+        $scope.limitValue = 5000;
+      } else {
+        $scope.showMatch = false;
+        $scope.limitValue = 8;
+      }
+    }
+
+  };
 
 
 });

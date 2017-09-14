@@ -59,7 +59,7 @@
                   <tbody>
                     <!--<tr ng-repeat="item in items">-->
                     <!-- <tr ng-repeat="item in items"> -->
-                    <tr ng-repeat="item in items|filter:item.matchId">
+                    <tr ng-repeat="item in result|filter:item.matchId">
                       <!--<tr>-->
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
                       <!--<td>{{($index + 1)}}</td>-->
@@ -70,19 +70,17 @@
                                 <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
                       </td>
                       <td>
-                        {{item.opponentsSingle[0].athleteId.fullname}}
+                        {{item.player1}}
                       </td>
                       <td>
-                        {{item.opponentsSingle[1].athleteId.fullname}}
+                        {{item.player2}}
                       </td>
                       <td>
-                        <span ng-repeat="score in item.resultsCombat.players track by $index">
-                          <span>{{score.sets.point}}</span>
-                        </span>
+                        {{item.set}}
                         <!-- <span>{{item.resultsCombat.players[0].sets[0].point}}</span> <span>-</span> <span></span> -->
                       </td>
                       <td>
-                        <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item.sport.sportslist.sportslistSubCategory.sportsListCategory,item.matchId,item.sport.sportslist.sportsListSubCategory.isTeam)">
+                        <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item)">
                                     <i class="fa fa-pencil"></i> Edit
                                   </a>
                         <a class="btn btn-danger" ng-click="confDel(item._id)">
@@ -138,7 +136,7 @@
                         {{item.heatNo}}
                       </td>
                       <td>
-                        <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item.sport.sportslist.sportslistSubCategory.sportsListCategory,item.matchId,item.sport.sportslist.sportsListSubCategory.isTeam)">
+                        <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item)">
                                         <i class="fa fa-pencil"></i> Edit
                                       </a>
                         <a class="btn btn-danger" ng-click="confDel(item._id)">
@@ -186,7 +184,7 @@
                   <tbody>
                     <!--<tr ng-repeat="item in items">-->
                     <!-- <tr ng-repeat="item in items"> -->
-                    <tr ng-repeat="item in items|filter:item.matchId">
+                    <tr ng-repeat="item in result|filter:item.matchId">
                       <!--<tr>-->
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
                       <!--<td>{{($index + 1)}}</td>-->
@@ -197,12 +195,12 @@
                                         <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
                       </td>
                       <td>
-
+                        {{item.player1}}
                       </td>
-                      <td></td>
-                      <td></td>
+                      <td>{{item.set}}</td>
+                      <td>{{item.result}}</td>
                       <td>
-                        <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item.sport.sportslist.sportslistSubCategory.sportsListCategory,item.matchId,item.sport.sportslist.sportsListSubCategory.isTeam)">
+                        <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item)">
                                             <i class="fa fa-pencil"></i> Edit
                                           </a>
                         <a class="btn btn-danger" ng-click="confDel(item._id)">
@@ -250,7 +248,7 @@
                   <tbody>
                     <!--<tr ng-repeat="item in items">-->
                     <!-- <tr ng-repeat="item in items"> -->
-                    <tr ng-repeat="item in items|filter:item.matchId">
+                    <tr ng-repeat="item in result|filter:item.matchId">
                       <!--<tr>-->
                       <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
                       <!--<td>{{($index + 1)}}</td>-->
@@ -261,10 +259,10 @@
                                             <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
                       </td>
                       <td>
-
+                        {{item.player1}}
                       </td>
-                      <td></td>
-                      <td></td>
+                      <td>{{item.player2}}</td>
+                      <td>{{item.set}}</td>
                       <td>
                         <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item.sport.sportslist.sportslistSubCategory.sportsListCategory,item.matchId,item.sport.sportslist.sportsListSubCategory.isTeam)">
                                                 <i class="fa fa-pencil"></i> Edit

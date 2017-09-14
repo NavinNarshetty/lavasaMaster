@@ -242,8 +242,25 @@ var resultKabaddi = {
     team[{
         teamId: _id,
         teamResults:{
-            goalPoints:[{
-                goal:20,
+        halfPoints:10,
+        finalPoints:22,
+        finalGoalPoints:22,
+        superTackle:1,
+        allOut:1
+        }
+        players: [{
+        player: id,
+        noShow: true,
+        walkover: true,
+        color: "Blue/Red",
+        playerPoints: {
+            raids:[{
+                count:1,
+                time:11am
+            }],
+            bonusPoint:[{
+                count:1,
+                time:11am
             }],
             finalGoalPoints:22,
             superTackle:1,
