@@ -672,12 +672,14 @@ var model = {
                 console.log("Finding DrawFormat");
                 SportsList.findOne({
                     "_id": matchObj.sportslist
-                }).deepPopulate("drawFormat sportsListSubCategory").exec(function (err, sportslist) {
+                }).deepPopulate("drawFormat sportsListSubCategory sportsListSubCategory.sportsListCategory").exec(function (err, sportslist) {
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(sportslist)) {
+                        console.log("******", sportslist);
                         sendObj.drawFormat = sportslist.drawFormat.name;
                         sendObj.isTeam = sportslist.sportsListSubCategory.isTeam;
+                        sendObj.sportType = sportslist.sportsListSubCategory.sportsListCategory.name;
                         callback(null, sportslist);
                     } else {
                         console.log(matchObj.sportslist, "SportList Not Found");
