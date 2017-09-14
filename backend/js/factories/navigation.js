@@ -423,10 +423,21 @@ myApp.factory('NavigationService', function ($http) {
         saveMatch: function (formData, callback) {
             // console.log(formData, 'saveMatch');
             $http({
-                url: adminurl + "match/updateResult",
+                url: adminurl + "match/updateBackend",
                 method: "POST",
                 data: formData
             }).success(function (data) {
+                callback(data)
+            });
+        },
+
+        getOneBackend: function (formData, callback) {
+            $http({
+                url: adminurl + "match/getOneBackend",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                console.log(data, "nav");
                 callback(data)
             });
         },

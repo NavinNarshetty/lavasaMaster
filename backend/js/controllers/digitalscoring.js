@@ -213,6 +213,7 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
         } else if (data.resultQualifyingRound) {
           console.log("in resultQualifyingRound", data);
           var resultKnockout = {};
+          resultKnockout.sportType = "QualifyingRound";
           resultKnockout.matchId = data.matchId;
           resultKnockout.round = data.round;
           if (data.opponentsSingle[0]) {
@@ -337,7 +338,17 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
       } else {
         toastr.error("team error")
       }
+    } else if (data.resultHeat) {
+      $state.go('detail-heats', {
+        id: data.matchId
+      });
+    } else if (data.sportType == "QualifyingRound") {
+      console.log("inside")
+      $state.go('detail-qualifying', {
+        id: data.matchId
+      });
     }
+
   }
 })
 // FORMAT TABLE END

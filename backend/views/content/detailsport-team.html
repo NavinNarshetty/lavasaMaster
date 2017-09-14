@@ -117,6 +117,25 @@
                   </div>
                   <!-- DATE && TIME HOLDER -->
 
+                  <!-- STAGE + POOL + ROUND -->
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Stage</label>
+                        <input type="text" name="round" ng-model="formData.sportType" class="form-control" placeholder="Enter Round" readonly>
+                        <div class="error-msg" ng-if="detailForm.round.$invalid && detailForm.round.$touched">Please Enter Valid Round *</div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label>Pool</label>
+                        <input type="text" name="round" ng-model="formData.sportType" class="form-control" placeholder="Enter Round" readonly>
+                        <div class="error-msg" ng-if="detailForm.round.$invalid && detailForm.round.$touched">Please Enter Valid Round *</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- STAGE + POOL + ROUND END -->
+
                   <!-- ROUND NAME && SPORT NAME -->
                   <div class="row">
                     <div class="col-md-6">
@@ -174,6 +193,10 @@
                       <!-- CHECKBOX END -->
                     </div>
                   </div>
+
+
+
+
                   <!-- SCORE CARD -->
                   <div class="form-group" fields>
                     <label>Score Card <span ng-show="type.required">*</span></label>

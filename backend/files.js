@@ -62,4 +62,5 @@ module.exports = [
     // Contorllers
     'backend/js/controllers/controller.js',
     'backend/js/controllers/digitalscoring.js',
+    'backend/js/controllers/heats.js',
 ];
