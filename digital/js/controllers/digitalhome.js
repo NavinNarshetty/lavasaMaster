@@ -218,7 +218,7 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                             if ($scope.drawDetails.isTeam) {
                                 console.log("im in knockout team");
                                 $state.go('knockout-team', {
-                                    // drawFormatTeam: $scope.drawDetails.drawFormat,
+                                    drawFormat: $scope.drawDetails.drawFormat,
                                     id: $scope.drawDetails.sport
                                 });
                                 console.log("knockout-team");
@@ -234,7 +234,7 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                 id: $scope.drawDetails.sport
                             });
                         } else if ($scope.drawDetails.drawFormat === 'League cum Knockout') {
-                          $state.go('knockout', {
+                          $state.go('knockout-team', {
                               drawFormat: $scope.drawDetails.drawFormat,
                               id: $scope.drawDetails.sport
                           });

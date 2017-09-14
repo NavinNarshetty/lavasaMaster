@@ -197,8 +197,10 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                                             if (value.resultsCombat) {
                                                 console.log("resultsCombat", value.resultsCombat);
                                                 console.log(" im in resultsCombat");
-                                                obj.noShow = Boolean(value.resultsCombat.players[index].noShow);
-                                                obj.walkover = Boolean(value.resultsCombat.players[index].walkover);
+                                                if (value.resultsCombat.players[index]) {
+                                                  obj.noShow = Boolean(value.resultsCombat.players[index].noShow);
+                                                  obj.walkover = Boolean(value.resultsCombat.players[index].walkover);
+                                              }
                                                 value.status = value.resultsCombat.status;
                                                 value.isNoMatch = value.resultsCombat.isNoMatch;
                                                 value.video = value.resultsCombat.video;

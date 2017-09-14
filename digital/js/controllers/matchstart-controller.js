@@ -569,6 +569,17 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
         if(data.value == true){
           $rootScope.modalInstance.close('a');
           toastr.success('Match result has been successfully reset', 'Result Reset');
+          if ($stateParams.drawFormat === 'Knockout') {
+              $state.go('knockout', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+          } else if ($stateParams.drawFormat === 'Heats') {
+              $state.go('heats', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+          }
         } else{
           toastr.error('Match result reset failed. Please try again', 'Result Reset Failed');
         }

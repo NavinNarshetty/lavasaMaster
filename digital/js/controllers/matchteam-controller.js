@@ -86,7 +86,6 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                                         "teamResults": {
                                             halfPoints: 0,
                                             finalPoints: 0,
-                                            penaltyPoints: 0,
                                             shotsOnGoal: 0,
                                             totalShots: 0,
                                             corners: 0,
@@ -107,7 +106,7 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                                                 "assist": [],
                                                 "redCard": [],
                                                 "yellowCard": [],
-                                                "penalityPoint": 0,
+                                                "penaltyPoint": 0,
                                                 "in": [],
                                                 "out": []
                                             }
@@ -171,7 +170,12 @@ myApp.controller('MatchTeamCtrl', function($scope, TemplateService, NavigationSe
                                 if ($scope.matchDetails.resultVolleyball.status == 'IsCompleted') {
                                   toastr.warning("This match has already been scored.", "Match Complete");
                                     if ($stateParams.drawFormat === 'Knockout') {
-                                        $state.go('knockout', {
+                                        $state.go('knockout-team', {
+                                            drawFormat: $stateParams.drawFormat,
+                                            id: $stateParams.sport
+                                        });
+                                    } else if ($stateParams.drawFormat === 'League cum Knockout') {
+                                        $state.go('knockout-team', {
                                             drawFormat: $stateParams.drawFormat,
                                             id: $stateParams.sport
                                         });

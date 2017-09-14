@@ -33,6 +33,25 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
   });
   // END SWIPER
 
+  // START SCORING FUNCTION
+  $scope.startScoring = function (card) {
+      console.log(card, 'startScoring');
+      if (_.isEmpty(card.opponentsTeam[0]) && _.isEmpty(card.opponentsTeam[1])) {
+          toastr.error('No players found for match.', 'No match');
+      } else {
+          if (card.status == 'IsCompleted') {
+              toastr.warning("This match has already been scored.", 'Scoring Completed');
+          } else {
+              $state.go("matchteam", {
+                  drawFormat: $stateParams.drawFormat,
+                  sport: $stateParams.id,
+                  id: card.matchId
+              });
+          }
+      }
+  }
+  // START SCORING FUNCTION END
+
   // DOUBLES JSON
   console.log("imin knockout team ctrl");
   $scope.constraints = {};

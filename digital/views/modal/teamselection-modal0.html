@@ -1,0 +1,92 @@
+<div class="selection-modalcontent">
+    <form>
+        <div class="modal-header">
+            <h4 class="modal-title">Team Player Selection</h4>
+        </div>
+        <div class="modal-body">
+            <div class="penaltyshootouts-content">
+                <div class="row">
+                    <div class="col-md-6 col-sm-6" ng-repeat="team in result.teams track by $index" ng-init="teamIndex = $index">
+                        <div class="teamcard mainteamcard">
+                            <div class="teamcard-header text-uppercase">
+                                <p>{{match.teams[$index].schoolName}}</p>
+                                <p>Team ID: <span> {{match.teams[$index].teamId}} </span></p>
+                            </div>
+                            <div class="select-teamcoach">
+                                <label for="{{team.teamId}}.coach">Enter Coach</label>
+                                <input type="text" id="{{team.teamId}}.coach" placeholder="Enter Coach Name" ng-model="team.coach" class="form-control" required/>
+                            </div>
+                            <div class="select-teamcoach">
+                                <label for="{{team.teamId}}.formation">Enter Formation</label>
+                                <input type="text" id="{{team.teamId}}.formation" placeholder="Enter Formation" ng-model="team.formation" class="form-control" cleave="options.formation" required/>
+                            </div>
+                            <div class="select-teamcoach" hidden>
+                                <label for="{{team.teamId}}.captain">Select Captain</label>
+                                <ui-select id="{{team.teamId}}.captain" ng-model="team.captain" theme="bootstrap">
+                                    <ui-select-match placeholder="Select Captain"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+                                    <ui-select-choices repeat="player._id as player in match.teams[$index].players | filter: $select.search">
+                                        <p class="opponentsingle-selector">{{player.firstName}} {{player.surname}}</p>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                            <div class="select-teamcoach" hidden>
+                                <label for="{{team.teamId}}.goalKeeper">Select Goalkeeper</label>
+                                <ui-select id="{{team.teamId}}.goalKeeper" ng-model="team.goalKeeper" theme="bootstrap">
+                                    <ui-select-match placeholder="Select Goalkeeper"> {{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+                                    <ui-select-choices repeat="player._id as player in match.teams[$index].players | filter: $select.search">
+                                        <p class="opponentsingle-selector">{{player.firstName}} {{player.surname}}</p>
+                                    </ui-select-choices>
+                                </ui-select>
+                            </div>
+                        </div>
+                        <div class="teamselection-playertable table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th colspan="8">
+                                            <div class="teamselection-head teamhead-player">Player</div>
+                                        </th>
+                                        <th>
+                                            <div class="teamselection-head">Jersey</div>
+                                        </th>
+                                        <th>
+                                            <div class="teamselection-head">Playing</div>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="player in team.players track by $index">
+                                        <td colspan="8">
+                                            <div class="teamselect-name">
+                                                <p class="clearfix m-clear">{{match.teams[teamIndex].studentTeam[$index].studentId.firstName}} {{match.teams[teamIndex].studentTeam[$index].studentId.surname}}</p>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="relate teamselect-jersey">
+                                                <input type="number" ng-model="player.jerseyNo" min="0" max="99" class="score-number teamscore-number display-inline form-control">
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="select-isplaying">
+                                                <div class="custom-checkbox " ng-class="{'custom-checkbox-checked': player.isPlaying == true}" ng-model="player.isPlaying" ng-click="selectPlaying(team, player);">
+                                                    <span class="fa fa-check get-center"></span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- <pre>{{result|json}}</pre/> -->
+        </div>
+        <div class="modal-footer">
+            <div class="scoreplayer-save">
+                <button class="btn btn-green-outline text-center" type="button" ng-click="savePlayingTeam(result);">Done</button>
+                <button class="btn btn-green-outline text-center" type="button"  ui-sref="matchteam({'drawFormat':stateParam.drawFormat, 'id':matchId, 'sport': stateParam.sport})">Cancel</button>
+            </div>
+        </div>
+    </form>
+</div>

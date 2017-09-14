@@ -4,7 +4,7 @@
 <div class="modal-body">
     <div class="penaltyshootouts-content">
         <div class="row">
-            <div class="col-md-6 col-sm-6" ng-repeat="team in match.resultFootball.teams track by $index" ng-init="teamIndex = $index">
+            <div class="col-md-6 col-sm-6" ng-repeat="team in matchPenalty.teams track by $index" ng-init="teamIndex = $index">
                 <div class="teamcard mainteamcard">
                     <div class="teamcard-header text-uppercase">
                         <p>{{match.teams[$index].schoolName}}</p>
@@ -20,7 +20,7 @@
                         <!-- <p ng-if="$index==0">Players</p> -->
                         <div class="teamplayer" ng-if="player.isPlaying==true">
                             <div class="penaltyshoot-player">
-                                <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[teamIndex].players[$index].firstName}}</span></p>
+                                <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[teamIndex].studentTeam[$index].studentId.firstName}} {{match.teams[teamIndex].studentTeam[$index].studentId.surname}}</span></p>
                             </div>
                             <!-- PENALTY POINTS -->
                             <div class="relate penalty-point">
@@ -32,16 +32,22 @@
                         </div>
                     </div>
                 </div>
+                <div class="team-penaltypoints">
+                  <div class="select-teamcoach">
+                      <label for="{{team.teamId}}.coach">Final Penalty Points</label>
+                      <input type="text" id="{{team.teamId}}.coach" placeholder="Enter" ng-model="team.teamResults.penaltyPoints" class="form-control" required/>
+                  </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="">
-      <pre>{{match.resultFootball.teams|json}}</pre>
     </div>
 </div>
 <div class="modal-footer">
     <div class="scoreplayer-save">
-        <button class="btn btn-green-outline text-center" type="button" ng-click="$ctrl.ok()">Done</button>
+        <button class="btn btn-green-outline text-center" type="button" ng-click="savePenaltyScore(matchPenalty)">Done</button>
         <button class="btn btn-green-outline text-center" type="button" ng-click="$dismiss()">Cancel</button>
     </div>
+</div>
+<div class="">
+<pre>{{matchPenalty.teams|json}}</pre>
 </div>
