@@ -420,7 +420,7 @@ var model = {
     },
 
     getOneBackend: function (data, callback) {
-        var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+        var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.sportslist.drawFormat sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
         Match.findOne({
             matchId: data.matchId
         }).lean().deepPopulate(deepSearch).exec(function (err, found) {
@@ -5240,9 +5240,10 @@ var model = {
                                             paramData.opponentsSingle = "";
                                         } else {
                                             paramData.opponentsSingle.push(singleData["NAME"]);
-                                            player.id = singleData["NAME"];
+                                            // player.id = singleData["NAME"];
                                         }
-                                        player.attempt = [];
+                                        // player.attempt = [];
+                                        player.laneNo = singleData["LANE NUMBER"];
                                         if (singleData["DETAIL NO."]) {
                                             player.detail = singleData["DETAIL NO."];
                                         }
@@ -5340,6 +5341,85 @@ var model = {
                 }
             });
 
+    },
+
+    updateBackend: function (data, callback) {
+        if (data.resultsCombat) {
+            var matchObj = {
+                $set: {
+                    resultsCombat: data.resultsCombat
+                }
+            };
+
+
+        } else if (data.resultsRacquet) {
+            var matchObj = {
+                $set: {
+                    resultsRacquet: data.resultsRacquet
+                }
+            };
+
+        } else if (data.resultVolleyball) {
+            var matchObj = {
+                $set: {
+                    resultVolleyball: data.resultVolleyball
+                }
+            };
+
+        } else if (data.resultBasketball) {
+            var matchObj = {
+                $set: {
+                    resultBasketball: data.resultBasketball
+                }
+            };
+
+        } else if (data.resultHockey) {
+            var matchObj = {
+                $set: {
+                    resultHockey: data.resultHockey
+                }
+            };
+
+        } else if (data.resultHeat) {
+            var matchObj = {
+                $set: {
+                    resultHeat: data.resultHeat
+                }
+            };
+        } else if (data.resultQualifyingRound) {
+            var matchObj = {
+                $set: {
+                    resultQualifyingRound: data.resultQualifyingRound
+                }
+            };
+        } else if (data.resultShooting) {
+            var matchObj = {
+                $set: {
+                    resultShooting: data.resultShooting
+                }
+            };
+        } else if (data.resultKnockout) {
+            var matchObj = {
+                $set: {
+                    resultKnockout: data.resultKnockout
+                }
+            };
+        }
+
+        Match.update({
+            matchId: data.matchId
+        }, matchObj).exec(
+            function (err, match) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(match)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, match);
+                    }
+                }
+            });
     }
 };
 module.exports = _.assign(module.exports, exports, model);

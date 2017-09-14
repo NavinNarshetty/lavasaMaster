@@ -360,6 +360,14 @@ var controller = {
                                     callback(null, complete);
                                 }
                             });
+                        } else if (req.body.resultType == 'direct-final') {
+                            Match.updateDirectFinal(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
                         } else {
                             callback(null, importData);
                         }
@@ -575,6 +583,17 @@ var controller = {
     updateFootball: function (req, res) {
         if (req.body) {
             Match.updateFootball(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
+    updateBackend: function (req, res) {
+        if (req.body) {
+            Match.updateBackend(req.body, res.callback);
         } else {
             res.json({
                 "data": "Body not Found",
