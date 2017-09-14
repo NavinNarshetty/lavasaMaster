@@ -1,26 +1,26 @@
 var uploadurl = adminurl + "upload/";
-myApp.factory('NavigationService', function ($http) {
+myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
     var navigation = [{
-        name: "Home",
-        classis: "active",
-        anchor: "home",
-        subnav: [{
-            name: "Subnav1",
+            name: "Home",
             classis: "active",
-            anchor: "home"
-        }]
-    }, {
-        name: "Form",
-        classis: "active",
-        anchor: "form",
-        subnav: []
-    },
-    {
-        name: "Grid",
-        classis: "active",
-        anchor: "grid",
-        subnav: []
-    }
+            anchor: "home",
+            subnav: [{
+                name: "Subnav1",
+                classis: "active",
+                anchor: "home"
+            }]
+        }, {
+            name: "Form",
+            classis: "active",
+            anchor: "form",
+            subnav: []
+        },
+        {
+            name: "Grid",
+            classis: "active",
+            anchor: "grid",
+            subnav: []
+        }
     ];
 
     return {
@@ -46,6 +46,23 @@ myApp.factory('NavigationService', function ($http) {
             }).success(function (data) {
                 callback(data)
             });
+        },
+        saveMatchPp: function (match, callback) {
+            // console.log(formData, 'saveMatch');
+            console.log(match);
+            var resulrVar = ResultSportInitialization.getResultVariable(match.sportsName);
+
+            var obj = {};
+            obj[resulrVar] = match[resulrVar];
+            obj.matchId = match.matchId;
+            console.log(obj);
+            // $http({
+            //     url: adminurl + "match/updateResult",
+            //     method: "POST",
+            //     data: formData
+            // }).success(function (data) {
+            //     callback(data)
+            // });
         },
         saveFootball: function (formData, callback) {
             // console.log(formData, 'saveMatch');
