@@ -2,50 +2,51 @@ var resultHockey = {
     team[{
         teamId: _id,
         teamResults:{
-        goalPoints:[{
-              goal:20,
-        }],
-        finalGoalPoints:22,
-        shotsOnGoal: 2,
-        totalShots:2,
-        penalityPoints:10,
-        penalityCorners:2,
-        penalityStroke:1,
-        saves:1,
-        fouls:1,
+            goalPoints:[{
+                goal:20,
+            }],
+            finalGoalPoints:22,
+            shotsOnGoal: 2,
+            totalShots:2,
+            penalityPoints:10,
+            penalityCorners:2,
+            penalityStroke:1,
+            saves:1,
+            fouls:1,
         }
         players: [{
-        player: id,
-        noShow: true,
-        walkover: true,
-        color: "Blue/Red",
-        playerPoints: {
-            goal:[{
-                points:1,
-                time:11am
-            }],
-            assist:[{
-                count:1,
-                time:11am
-            }],
-            redCard:[{
-                time:11am
-            }],
-            yellowCard:[{
-                time:11am
-            }],
-            greenCard:[{
-                time:11am
-            }],
-            penalityPoint:1,
-            in:[{
-                time:11am
-            }],
-            out:[{
-                time:11am
-            }]
-        }
-       }]}]
+            player: id,
+            noShow: true,
+            walkover: true,
+            color: "Blue/Red",
+            playerPoints: {
+                goal:[{
+                    points:1,
+                    time:11am
+                }],
+                assist:[{
+                    count:1,
+                    time:11am
+                }],
+                redCard:[{
+                    time:11am
+                }],
+                yellowCard:[{
+                    time:11am
+                }],
+                greenCard:[{
+                    time:11am
+                }],
+                penalityPoint:1,
+                in:[{
+                    time:11am
+                }],
+                out:[{
+                    time:11am
+                }]
+            }
+       }]
+    }]
 
     isNoMatch: true,
     isDraw: true,
@@ -62,42 +63,41 @@ var resultBasketball = {
     team[{
         teamId: _id,
         teamResults:{
-        quarterPoints:[{
-              basket:20,
-        }],
-        finalGoalPoints:22,
+            quarterPoints:[{
+                basket:20,
+            }],
+            finalGoalPoints:22, 
         }
         players: [{
-        player: id,
-        noShow: true,
-        walkover: true,
-        color: "Blue/Red",
-        playerPoints: {
-            freeThrow:[{
-                count:1,
-                time:11am
-            }],
-            2Points:[{
-                 count:1,
-                time:11am
-
+            player: id,
+            noShow: true,
+            walkover: true,
+            color: "Blue/Red",
+            playerPoints: {
+                freeThrow:[{
+                    count:1,
+                    time:11am
                 }],
-            3Points:[{
-                count:1,
-                time:11am
-            }],
-            personalFoul:[{
-                count:1,
-                time:11am
-            }],
-            technicalFoul:[{
-                count:1,
-                time:11am
-            }],
-        }
-       }]
-        }]
+                Points2:[{
+                    count:1,
+                    time:11am
 
+                    }],
+                Points3:[{
+                    count:1,
+                    time:11am
+                }],
+                personalFoul:[{
+                    count:1,
+                    time:11am
+                }],
+                technicalFoul:[{
+                    count:1,
+                    time:11am
+                }],
+            }
+        }]
+    }],
     isNoMatch: true,
     isDraw: true,
     winnner: [{
@@ -113,25 +113,25 @@ var resultVolleyball = {
     team[{
         teamId: _id,
         teamResults:{
-        set:[{
-              points:20,
-        }],
-        fouls:1,
-        spike:1,
-        block:1,
+            set:[{
+                points:20,
+            }],
+            fouls:1,
+            spike:1,
+            block:1
         }
         players: [{
-        player: id,
-        playerPoints: {
-            in:[{
-                time:11am
-            }],
-            out:[{
-                time:11am
-            }]
-        }
-       }]
-        }],
+            player: id,
+            playerPoints: {
+                in:[{
+                    time:11am
+                }],
+                out:[{
+                    time:11am
+                }]
+            }
+        }]
+    }],
     isNoMatch: true,
     isDraw: true,
     winnner: [{
@@ -147,39 +147,39 @@ var resultHandball = {
     team[{
         teamId: _id,
         teamResults:{
-        goalPoints:[{
-              goal:20,
-        }],
-        finalGoalPoints:22,
-        shotsOnGoal: 2,
-        penality:10,
-        saves:1,
+            goalPoints:[{
+                goal:20,
+            }],
+            finalGoalPoints:22,
+            shotsOnGoal: 2,
+            penality:10,
+            saves:1
         }
         players: [{
-        player: id,
-        noShow: true,
-        walkover: true,
-        color: "Blue/Red",
-        playerPoints: {
-            goal:[{
-                points:1,
-                time:11am
-            }],
-            yellowCard:[{
-                time:11am
-            }],
-            greenCard:[{
-                time:11am
-            }],
-            in:[{
-                time:11am
-            }],
-            out:[{
-                time:11am
-            }]
-        }
-       }]}]
-
+            player: id,
+            noShow: true,
+            walkover: true,
+            color: "Blue/Red",
+            playerPoints: {
+                goal:[{
+                    points:1,
+                    time:11am
+                }],
+                yellowCard:[{
+                    time:11am
+                }],
+                greenCard:[{
+                    time:11am
+                }],
+                in:[{
+                    time:11am
+                }],
+                out:[{
+                    time:11am
+                }]
+            }
+        }]
+    }],
     isNoMatch: true,
     isDraw: true,
     winnner: [{
@@ -195,38 +195,38 @@ var resultWaterPolo = {
     team[{
         teamId: _id,
         teamResults:{
-        quarterPoints:[{
-              points:20,
-        }],
-        finalGoalPoints:22,
-        shotsOnGoal: 2,
-        totalShots:2,
-        penalityPoints:10,
-        penality:0,
-        saves:1,
-        }
+            quarterPoints:[{
+                points:20,
+            }],
+            finalGoalPoints:22,
+            shotsOnGoal: 2,
+            totalShots:2,
+            penalityPoints:10,
+            penality:0,
+            saves:1
+        },
         players: [{
-        player: id,
-        noShow: true,
-        walkover: true,
-        color: "Blue/Red",
-        playerPoints: {
-            goal:[{
-                points:1,
-                time:11am
-            }],
-            penalityPoint:[{
-                count:1
-            }],
-            in:[{
-                time:11am
-            }],
-            out:[{
-                time:11am
-            }]
-        }
-       }]}]
-
+            player: id,
+            noShow: true,
+            walkover: true,
+            color: "Blue/Red",
+            playerPoints: {
+                goal:[{
+                    points:1,
+                    time:11am
+                }],
+                penalityPoint:[{
+                    count:1
+                }],
+                in:[{
+                    time:11am
+                }],
+                out:[{
+                    time:11am
+                }]
+            }
+        }]
+    }],
     isNoMatch: true,
     isDraw: true,
     winnner: [{
@@ -242,45 +242,44 @@ var resultKabaddi = {
     team[{
         teamId: _id,
         teamResults:{
-        goalPoints:[{
-              goal:20,
-        }],
-        finalGoalPoints:22,
-        superTackle:1,
-        allOut:1
-        }
+            goalPoints:[{
+                goal:20,
+            }],
+            finalGoalPoints:22,
+            superTackle:1,
+            allOut:1
+        },
         players: [{
-        player: id,
-        noShow: true,
-        walkover: true,
-        color: "Blue/Red",
-        playerPoints: {
-            raids:[{
-                count:1,
-                time:11am
-            }],
-            bonusPoint:[{
-                count:1,
-                time:11am
-            }],
-            superRaid:[{
-                count:1,
-                time:11am
-            }],
-            tackle:[{
-                count:1,
-                time:11am
-            }],
-            in:[{
-                time:11am
-            }],
-            out:[{
-                time:11am
-            }]
-        }
-       }]
+            player: id,
+            noShow: true,
+            walkover: true,
+            color: "Blue/Red",
+            playerPoints: {
+                raids:[{
+                    count:1,
+                    time:11am
+                }],
+                bonusPoint:[{
+                    count:1,
+                    time:11am
+                }],
+                superRaid:[{
+                    count:1,
+                    time:11am
+                }],
+                tackle:[{
+                    count:1,
+                    time:11am
+                }],
+                in:[{
+                    time:11am
+                }],
+                out:[{
+                    time:11am
+                }]
+            }
         }],
-
+    }],
     isNoMatch: true,
     isDraw: true,
     winnner: [{
@@ -296,98 +295,51 @@ var resultFootball = {
    team[{
         teamId: _id,
         teamResults:{
-        halfPoints:10,
-        finalPoints:22,
-        penalityPoints:1,
-        shotsOnGoal: 2,
-        totalShots:2,
-        corners:2,
-        penality:1,
-        saves:1,
-        fouls:1,
-        offSide:1
-        cleanSheet:1,
-        noShow: true,
-        walkover: true,
+            halfPoints:10,
+            finalPoints:22,
+            penalityPoints:1,
+            shotsOnGoal: 2,
+            totalShots:2,
+            corners:2,
+            penality:1,
+            saves:1,
+            fouls:1,
+            offSide:1
+            cleanSheet:1,
+            noShow: true,
+            walkover: true,
         }
         players: [{
-        player: id,
-        isPlaying:true,
-        color: "Blue/Red",
-        jerseyNo:12,
-        playerPoints: {
-            goal:[{
-                points:1,
-                time:11am
-            }],
-            assist:[{
-                count:1,
-                time:11am
-            }],
-            redCard:[{
-                time:11am
-            }],
-            yellowCard:[{
-                time:11am
-            }],
-            penalityPoint:[{
-                count:1
-            }],
-            in:[{
-                time:11am
-            }],
-            out:[{
-                time:11am
-            }]
-        }
-       }]
-        },{
-        teamId: _id,
-        teamResults:{
-        halfPoints:10,
-        finalPoints:22,
-        penalityPoints:1,
-        shotsOnGoal: 2,
-        totalShots:2,
-        corners:2,
-        penality:1,
-        saves:1,
-        fouls:1,
-        offSide:1
-        cleanSheet:1,
-        superTackle:1,
-        }
-        players: [{
-        player: id,
-        noShow: true,
-        walkover: true,
-        color: "Blue/Red",
-        playerPoints: {
-            goal:[{
-                points:1,
-                time:11am
-            }],
-            assist:[{
-                count:1,
-                time:11am
-            }],
-            redCard:[{
-                time:11am
-            }],
-            yellowCard:[{
-                time:11am
-            }],
-            penalityPoint:[{
-                count:1
-            }],
-            in:[{
-                time:11am
-            }],
-            out:[{
-                time:11am
-            }]
-        }
-       }]
+            player: id,
+            isPlaying:true,
+            color: "Blue/Red",
+            jerseyNo:12,
+            playerPoints: {
+                goal:[{
+                    points:1,
+                    time:11am
+                }],
+                assist:[{
+                    count:1,
+                    time:11am
+                }],
+                redCard:[{
+                    time:11am
+                }],
+                yellowCard:[{
+                    time:11am
+                }],
+                penalityPoint:[{
+                    count:1
+                }],
+                in:[{
+                    time:11am
+                }],
+                out:[{
+                    time:11am
+                }]
+            }
+        }]
         }]
     isNoMatch: true,
     isDraw: true,

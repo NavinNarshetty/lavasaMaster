@@ -86,7 +86,6 @@ myApp.directive('img', function ($compile, $parse) {
                 callback: "&ngCallback"
             },
             link: function ($scope, element, attrs) {
-                console.log($scope.model, 'yo modell');
                 $scope.showImage = function () {};
                 $scope.check = true;
                 if (!$scope.type) {
@@ -108,7 +107,6 @@ myApp.directive('img', function ($compile, $parse) {
                 // }
 
                 $scope.$watch("image", function (newVal, oldVal) {
-                    console.log(newVal, oldVal);
                     isArr = _.isArray(newVal);
                     if (!isArr && newVal && newVal.file) {
                         $scope.uploadNow(newVal);
@@ -161,7 +159,7 @@ myApp.directive('img', function ($compile, $parse) {
                         },
                         transformRequest: angular.identity
                     }).then(function (data) {
-                      // console.log(data);
+                        // console.log(data);
                         data = data.data;
                         console.log(data);
                         $scope.uploadStatus = "uploaded";
@@ -187,9 +185,9 @@ myApp.directive('img', function ($compile, $parse) {
 
                         }
                         $timeout(function () {
-                          $scope.callback({
-                              'data': data.data[0]
-                          });
+                            $scope.callback({
+                                'data': data.data[0]
+                            });
                             // $scope.callback();
                         }, 100);
 
@@ -222,6 +220,26 @@ myApp.directive('img', function ($compile, $parse) {
             }
         };
     })
+
+    .directive("limitToMax", function () {
+        return {
+            link: function (scope, element, attributes) {
+                var oldVal = null;
+                element.on("keydown keyup", function (e) {
+                    if (Number(element.val()) > Number(attributes.max) &&
+                        e.keyCode != 46 // delete
+                        &&
+                        e.keyCode != 8 // backspace
+                    ) {
+                        e.preventDefault();
+                        element.val(oldVal);
+                    } else {
+                        oldVal = Number(element.val());
+                    }
+                });
+            }
+        };
+    });
 
 
 ;

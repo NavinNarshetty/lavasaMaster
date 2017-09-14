@@ -94,3 +94,12 @@ myApp.filter('englishNumeralDate', function () {
         }
     };
 });
+
+myApp.filter('filterPlayers', function () {
+    return function (players) {
+        console.log(players);
+       players=_.filter(players, ['noShow', false]);
+       console.log(players);
+       return players;
+    };
+});

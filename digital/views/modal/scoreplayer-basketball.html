@@ -9,16 +9,16 @@
         <div class="teamscore-pointholder text-center">
           <label for=""> Free-Throw </label>
           <div class="relate teamscore-point mtb-10">
-            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'freeThrow');"
+            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scorePlayerPoints(selectedPlayer,'freeThrow','-');"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus"></i></button>
             <input type="number" ng-model="selectedPlayer.playerPoints.freeThrow.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
               readonly>
-            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'freeThrow');"
+            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scorePlayerPoints(selectedPlayer,'freeThrow','+');"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
           </div>
           <div class="input-group">
             <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.freeThrow[selectedPlayer.playerPoints.freeThrow.length-1].time"
-              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false">
+              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false" ng-readonly="selectedPlayer.playerPoints.freeThrow.length==0">
             <span class="input-group-addon">Min</span>
           </div>
         </div>
@@ -29,16 +29,16 @@
         <div class="teamscore-pointholder text-center">
           <label for=""> Points2 </label>
           <div class="relate teamscore-point mtb-10">
-            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'Points2');"
+            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scorePlayerPoints(selectedPlayer,'Points2','-')"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus"></i></button>
             <input type="number" ng-model="selectedPlayer.playerPoints.Points2.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
               readonly>
-            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'Points2');"
+            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scorePlayerPoints(selectedPlayer,'Points2','+')"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
           </div>
           <div class="input-group">
             <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.Points2[selectedPlayer.playerPoints.Points2.length-1].time"
-              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false">
+              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false" ng-readonly="selectedPlayer.playerPoints.Points2.length==0">
             <span class="input-group-addon">Min</span>
           </div>
         </div>
@@ -49,16 +49,16 @@
         <div class="teamscore-pointholder text-center">
           <label for=""> Points3 </label>
           <div class="relate teamscore-point mtb-10">
-            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'Points3');"
+            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scorePlayerPoints(selectedPlayer,'Points3','-')"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus"></i></button>
             <input type="number" ng-model="selectedPlayer.playerPoints.Points3.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
               readonly>
-            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'Points3');"
+            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scorePlayerPoints(selectedPlayer,'Points3','+');"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
           </div>
           <div class="input-group">
             <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.Points3[selectedPlayer.playerPoints.Points3.length-1].time"
-              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.Points3.length <= 0">
+              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.Points3.length <= 0" ng-readonly="selectedPlayer.playerPoints.Points3.length==0">
             <span class="input-group-addon">Min</span>
           </div>
         </div>
@@ -69,16 +69,16 @@
         <div class="teamscore-pointholder text-center">
           <label for=""> Personal Foul </label>
           <div class="relate teamscore-point mtb-10">
-            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'personalFoul');"
+            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scorePlayerPoints(selectedPlayer,'personalFoul','-')"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus" ></i></button>
             <input type="number" ng-model="selectedPlayer.playerPoints.personalFoul.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
               readonly>
-            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'personalFoul');"
+            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scorePlayerPoints(selectedPlayer,'personalFoul','+')"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
           </div>
           <div class="input-group">
             <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.personalFoul[selectedPlayer.playerPoints.personalFoul.length-1].time"
-              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.personalFoul.length <= 0">
+              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.personalFoul.length <= 0" ng-readonly="selectedPlayer.playerPoints.personalFoul.length==0">
             <span class="input-group-addon">Min</span>
           </div>
         </div>
@@ -89,16 +89,16 @@
         <div class="teamscore-pointholder text-center">
           <label for=""> Technical Foul</label>
           <div class="relate teamscore-point mtb-10">
-            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'technicalFoul');"
+            <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scorePlayerPoints(selectedPlayer,'technicalFoul','-')"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus" ></i></button>
             <input type="number" ng-model="selectedPlayer.playerPoints.technicalFoul.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
               readonly>
-            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'technicalFoul');"
+            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scorePlayerPoints(selectedPlayer,'technicalFoul','+')"
               ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
           </div>
           <div class="input-group">
             <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.technicalFoul[selectedPlayer.playerPoints.technicalFoul.length-1].time"
-              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.technicalFoul.length <= 0">
+              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.technicalFoul.length <= 0" ng-readonly="selectedPlayer.playerPoints.technicalFoul.length==0">
             <span class="input-group-addon">Min</span>
           </div>
         </div>
