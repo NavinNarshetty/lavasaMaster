@@ -327,7 +327,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'KnockoutTeamCtrl'
         })
         .state('knockout-doubles', {
-            url: "/knockout-doubles",
+            url: "/knockout-doubles/:id",
             templateUrl: tempateURL,
             controller: 'KnockoutDoublesCtrl'
         });

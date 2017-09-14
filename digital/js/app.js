@@ -93,6 +93,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'KabaddiScoreCtrl'
         })
+        .state('knockout-doubles', {
+            url: "/knockout-doubles/:id",
+            templateUrl: tempateURL,
+            controller: 'KnockoutDoublesCtrl'
+        })
         .state('knockout-team', {
             url: "/team/:drawFormat/:id",
             templateUrl: tempateURL,
@@ -103,11 +108,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'KnockoutCtrl'
         })
-        .state('knockout-doubles', {
-            url: "/knockout-doubles",
-            templateUrl: tempateURL,
-            controller: 'KnockoutDoublesCtrl'
-        })
+
         .state('form', {
             url: "/form",
             templateUrl: tempateURL,

@@ -213,31 +213,64 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                             toastr.error('No Event Found', 'Error Message');
                         }
                         console.log($scope.drawDetails, " $scope.drawDetails");
-                        if ($scope.drawDetails.drawFormat === 'Knockout') {
+                        // if ($scope.drawDetails.drawFormat === 'Knockout') {
 
-                            if ($scope.drawDetails.isTeam) {
-                                console.log("im in knockout team");
-                                $state.go('knockout-team', {
-                                    drawFormat: $scope.drawDetails.drawFormat,
-                                    id: $scope.drawDetails.sport
-                                });
-                                console.log("knockout-team");
-                            } else {
-                                $state.go('knockout', {
-                                    drawFormat: $scope.drawDetails.drawFormat,
-                                    id: $scope.drawDetails.sport
-                                });
+                        //     if ($scope.drawDetails.isTeam) {
+                        //         console.log("im in knockout team");
+                        //         $state.go('knockout-team', {
+                        //             drawFormat: $scope.drawDetails.drawFormat,
+                        //             id: $scope.drawDetails.sport
+                        //         });
+                        //         console.log("knockout-team");
+                        //     } else {
+                        //         $state.go('knockout', {
+                        //             drawFormat: $scope.drawDetails.drawFormat,
+                        //             id: $scope.drawDetails.sport
+                        //         });
+                        //     }
+                        // } else 
+                        if ($scope.drawDetails.sportType) {
+                            switch ($scope.drawDetails.sportType) {
+                                case 'Racquet Sports':
+                                    if ($scope.drawDetails.isTeam) {
+                                        $state.go('knockout-doubles', {
+                                            id: $scope.drawDetails.sport
+                                        });
+                                    } else {
+                                        $state.go('knockout', {
+                                            drawFormat: $scope.drawDetails.drawFormat,
+                                            id: $scope.drawDetails.sport
+                                        });
+                                    }
+
+                                    break;
+                                case 'Combat Sports':
+                                    $state.go('knockout', {
+                                        drawFormat: $scope.drawDetails.drawFormat,
+                                        id: $scope.drawDetails.sport
+                                    });
+
+                                    break;
+                                case 'Team Sports':
+                                    $state.go('knockout-team', {
+                                        // drawFormatTeam: $scope.drawDetails.drawFormat,
+                                        id: $scope.drawDetails.sport
+                                    });
+                                    break;
+                                default:
+                                    break;
                             }
-                        } else if ($scope.drawDetails.drawFormat === 'Heats') {
+                        }
+                        if ($scope.drawDetails.drawFormat === 'Heats') {
                             $state.go('heats', {
                                 drawFormat: $scope.drawDetails.drawFormat,
                                 id: $scope.drawDetails.sport
                             });
                         } else if ($scope.drawDetails.drawFormat === 'League cum Knockout') {
-                          $state.go('knockout-team', {
-                              drawFormat: $scope.drawDetails.drawFormat,
-                              id: $scope.drawDetails.sport
-                          });
+                            $state.go('knockout-team', {
+                                drawFormat: $scope.drawDetails.drawFormat,
+                                id: $scope.drawDetails.sport
+                            });
                         }
                     }
                 } else {

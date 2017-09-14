@@ -556,19 +556,38 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                         if ($scope.drawDetails === 'No Data Found') {
                             toastr.error('No Event Found', 'Error Message');
                         }
-                        console.log($scope.drawDetails, " $scope.drawDetails");
-                        if ($scope.drawDetails.drawFormat === 'Knockout') {
-                            if ($scope.drawDetails.isTeam) {
-                                $state.go('knockout-team', {
-                                    id: $scope.drawDetails.sport
-                                });
-                            } else {
-                                $state.go('knockout', {
-                                    id: $scope.drawDetails.sport
-                                });
-                            }
+                        //FOR CHECKING SPORT TYPE
+                        if ($scope.drawDetails.sportType) {
+                            switch ($scope.drawDetails.sportType) {
+                                case 'Racquet Sports':
+                                    if ($scope.drawDetails.isTeam) {
+                                        $state.go('knockout-doubles', {
+                                            id: $scope.drawDetails.sport
+                                        });
+                                    } else {
+                                        $state.go('knockout', {
+                                            id: $scope.drawDetails.sport
+                                        });
+                                    }
 
-                        } else if ($scope.drawDetails.drawFormat === 'Heats') {
+                                    break;
+                                case 'Combat Sports':
+                                    $state.go('knockout', {
+                                        id: $scope.drawDetails.sport
+                                    });
+
+                                    break;
+                                case 'Team Sports':
+                                    $state.go('knockout-team', {
+                                        id: $scope.drawDetails.sport
+                                    });
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+
+                        if ($scope.drawDetails.drawFormat === 'Heats') {
                             console.log("$scope.nameOfSport", $scope.nameOfSport);
                             if ($scope.nameOfSport === '50m Freestyle' || $scope.nameOfSport === '50m Backstroke' || $scope.nameOfSport === '50m Breaststroke' || $scope.nameOfSport === '50m Butterfly' || $scope.nameOfSport === '100m Freestyle' || $scope.nameOfSport === '100m Backstroke' || $scope.nameOfSport === '100m Breaststroke' || $scope.nameOfSport === '100m Butterfly' || $scope.nameOfSport === '200m Individual Medley' || $scope.nameOfSport === 'Swimming 4x50m Freestyle Relay' || $scope.nameOfSport === 'Swimming 4x50m Medley Relay') {
                                 $state.go('time-trial', {

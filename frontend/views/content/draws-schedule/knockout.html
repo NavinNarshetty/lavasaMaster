@@ -26,7 +26,7 @@
         <div class="knockout-swiper-holder">
           <div class="swiper-container">
             <div class="swiper-wrapper">
-              <div class="swiper-slide" ng-repeat="roundName in roundsListName">
+              <div class="swiper-slide" ng-repeat="roundName in roundsListName track by $index">
                 <div class="knockout-viewmore" ng-click="getSportSpecificRounds(roundName)">
                   <button class="btn sport-btn-blue-outline">{{roundName}}</button>
                 </div>

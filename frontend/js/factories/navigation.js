@@ -889,6 +889,7 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log)
                 }
                 if (knockout.roundsList) {
                     _.each(knockout.roundsList, function (round, key) {
+                        console.log(knockout.roundsList, "roundlist");
                         if (key > 0 && key < 3) {
                             _.each(round.match, function (match, index) {
                                 var match1, match2;

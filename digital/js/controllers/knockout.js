@@ -198,9 +198,9 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                                                 console.log("resultsCombat", value.resultsCombat);
                                                 console.log(" im in resultsCombat");
                                                 if (value.resultsCombat.players[index]) {
-                                                  obj.noShow = Boolean(value.resultsCombat.players[index].noShow);
-                                                  obj.walkover = Boolean(value.resultsCombat.players[index].walkover);
-                                              }
+                                                    obj.noShow = Boolean(value.resultsCombat.players[index].noShow);
+                                                    obj.walkover = Boolean(value.resultsCombat.players[index].walkover);
+                                                }
                                                 value.status = value.resultsCombat.status;
                                                 value.isNoMatch = value.resultsCombat.isNoMatch;
                                                 value.video = value.resultsCombat.video;
@@ -263,7 +263,7 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
 });
 
 myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope, $uibModal) {
-    $scope.template = TemplateService.getHTML("content/ draws-schedule/knockout-doubles.html");
+    $scope.template = TemplateService.getHTML("content/knockout-doubles.html");
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
     // SWIPER
@@ -432,5 +432,71 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
         roundname: 'Round 2'
     }, {
         roundname: 'Round 3'
-    }]
+    }];
+    $scope.constraints = {};
+    $scope.getSportSpecificRounds = function (roundName) {
+        if ($stateParams.id) {
+            if (roundName) {
+                $scope.constraints.round = roundName;
+            }
+            $scope.constraints.sport = $stateParams.id;
+            NavigationService.getSportSpecificRounds($scope.constraints, function (data) {
+                errorService.errorCode(data, function (allData) {
+                    if (!allData.message) {
+                        if (allData.value) {
+                            $scope.roundsListName = allData.data.roundsListName;
+                            $scope.roundsList = allData.data.roundsList;
+                            if ($scope.roundsListName.length === 0 || $scope.roundsList.length === 0) {
+                                toastr.error("No Data Found", 'Error Message');
+                                $state.go('championshipschedule');
+                            }
+                            _.each($scope.roundsList, function (key) {
+                                _.each(key.match, function (value) {
+                                    _.each(value.opponentsTeam, function (obj) {
+                                        console.log(obj, "obj");
+                                        if (obj) {
+                                            _.each(obj.studentTeam, function (value) {
+                                                value.fullName = value.studentId.firstName + ' ' + value.studentId.surname;
+                                            });
+                                            // obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                                            // console.log(obj, "objjjjjj");
+
+
+
+
+                                        }
+
+                                    });
+
+                                });
+                            });
+                            console.log($scope.roundsListName, " $scope.roundsListName ");
+                            console.log($scope.roundsList, " $scope.roundsList ");
+                        }
+                    } else {
+                        toastr.error(allData.message, 'Error Message');
+                    }
+                });
+            });
+        }
+    };
+    $scope.getSportSpecificRounds();
+    // START SCORING FUNCTION
+    $scope.startScoring = function (card) {
+        console.log(card, 'startScoring');
+        if (_.isEmpty(card.opponentsTeam[0]) && _.isEmpty(card.opponentsTeam[1])) {
+            toastr.error('No players found for match.', 'No match');
+        } else {
+            if (card.status == 'IsCompleted') {
+                toastr.warning("This match has already been scored.", 'Scoring Completed');
+            } else {
+                $state.go("matchstart", {
+                    drawFormat: $stateParams.drawFormat,
+                    sport: $stateParams.id,
+                    id: card.matchId
+                });
+            }
+        }
+    };
+    // START SCORING FUNCTION END
 });
