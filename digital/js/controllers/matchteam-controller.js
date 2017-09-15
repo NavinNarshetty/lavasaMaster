@@ -78,6 +78,8 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                 _.each($scope.matchDetails.teams, function (n, key) {
                                     $scope.formData.teams[key] = {
                                         "team": n._id,
+                                        "teamId": n.teamId,
+                                        "schoolName": n.schoolName,
                                         "noShow": false,
                                         "walkover": false,
                                         "coach": "",
@@ -139,6 +141,8 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                 _.each($scope.matchDetails.teams, function (n, key) {
                                     $scope.formData.teams[key] = {
                                         "team": n._id,
+                                        "teamId": n.teamId,
+                                        "schoolName": n.schoolName,
                                         "noShow": false,
                                         "walkover": false,
                                         "coach": "",

@@ -305,6 +305,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     // PLAYER POINTS MODAL
     $scope.addPlayerPoints = function(player, index, teamIndex){
       $scope.selectedPlayer = player;
+      $scope.selectedInPlayer = {};
       $scope.teamIndex = teamIndex;
       $scope.selectedTeam = $scope.match.teams[$scope.teamIndex];
       _.each($scope.selectedTeam.studentTeam, function(n, index){
@@ -318,13 +319,16 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       $rootScope.modalInstance = $uibModal.open({
         animation: true,
         scope: $scope,
-        keyboard: false,
+        keyboard: true,
         size: 'lg',
         templateUrl: 'views/modal/scoreplayer-football.html',
         windowClass: 'scoreplayer-football-modal'
       })
     }
     // PLAYER POINTS MODAL END
+    $scope.inPs = function(selectedInPlayer){
+      console.log(selectedInPlayer, 'in');
+    }
     // CANCEL PLAYER POINTS SAVE
     $scope.cancelPlayerPoints = function(){
       if($scope.selectedPlayer.isPlaying == false){
@@ -336,14 +340,29 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           })
         }
       }
+      _.each($scope.match.resultFootball.teams[$scope.teamIndex].players, function(n){
+        if(n.player == $scope.selectedInPlayer.player){
+          n.isPlaying = false;
+        }
+      });
       $rootScope.modalInstance.close('a');
     }
     // CANCEL PLAYER POINTS SAVE END
     // SAVE PLAYER POINTS
     $scope.savePlayerPoints = function(){
       if($scope.selectedPlayer.isPlaying == false){
-        console.log('hello');
+        var inLength = $scope.selectedPlayer.playerPoints.out.length - 1;
+        _.each($scope.match.resultFootball.teams[$scope.teamIndex].players, function(n){
+          if(n.player == $scope.selectedInPlayer.player){
+            n.isPlaying = true;
+            n.playerPoints.in.push({
+              time: $scope.selectedPlayer.playerPoints.out[inLength].time
+            });
+            console.log(n, 'yomama');
+          }
+        });
       }
+      $rootScope.modalInstance.close('a');
     }
     // SAVE PLAYER POINTS END
     // PENALTY SHOOTOUTS MODAL

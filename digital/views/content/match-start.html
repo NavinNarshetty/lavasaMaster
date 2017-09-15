@@ -68,18 +68,10 @@
             <span class="remove-pic" ng-click="removeMatchScore(pic)"><i class="fa fa-times"></i></span>
             <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
           </div>
-          <!-- <div class="swiper-container">
-            <div class="swiper-wrapper">
-              <div class="swiper-slide" ng-repeat="pic in matchDetails.resultsCombat.matchPhoto track by $index">
-
-              </div>
-            </div>
-          </div>
-          <div class="swiper-button-prev scorecard-prev"><span class="fa fa-chevron-left"></span></div>
-          <div class="swiper-button-next scorecard-next"><span class="fa fa-chevron-right"></span></div> -->
         </div>
         <div class="matchstart-score">
-          <button type="button" class="btn btn-green-outline btn-scoring" ng-click="saveResult(formData)" >start scoring</button>
+          <button type="button" class="btn btn-green-outline btn-scoring" ng-click="saveResult(formData)" ng-if="matchDetails.isTeam==false">start scoring</button>
+          <button type="button" class="btn btn-green-outline btn-scoring" ng-click="saveTeamResult(formData)" ng-if="matchDetails.isTeam==true">start scoring</button>
         </div>
       </div>
     </div>

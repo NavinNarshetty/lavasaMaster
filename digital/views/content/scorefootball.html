@@ -22,7 +22,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row" hidden>
+            <div class="row">
                 <button type="button" name="button" class="btn" ng-click="selectTeam(match.resultFootball)"> Team init</button>
             </div>
             <!-- TEAM HEADERS -->
@@ -55,6 +55,7 @@
                                 </div>
                             </div>
                         </div>
+                        <pre>{{match.resultFootball.teams[0]|json}}</pre>
                     </div>
                     <!-- TEAM 1 PLAYER DETAILS END -->
                     <!-- TEAM SCORES -->
@@ -151,6 +152,7 @@
                                 </div>
                             </div>
                         </div>
+                        <pre>{{match.resultFootball.teams[1]|json}}</pre>
                     </div>
                     <!-- TEAM 2 PLAYER DETAILS END -->
                 </div>

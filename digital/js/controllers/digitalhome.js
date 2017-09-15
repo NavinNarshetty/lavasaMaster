@@ -228,12 +228,13 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                         //             id: $scope.drawDetails.sport
                         //         });
                         //     }
-                        // } else 
+                        // } else
                         if ($scope.drawDetails.sportType) {
                             switch ($scope.drawDetails.sportType) {
                                 case 'Racquet Sports':
                                     if ($scope.drawDetails.isTeam) {
                                         $state.go('knockout-doubles', {
+                                            drawFormat: $scope.drawDetails.drawFormat,
                                             id: $scope.drawDetails.sport
                                         });
                                     } else {

@@ -151,7 +151,9 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                           }
                           _.each($scope.matchDetails.teams, function(n, key) {
                               $scope.formData.teams[key] = {
-                                  "player": n._id,
+                                  "team": n._id,
+                                  "teamId": n.teamId,
+                                  "schoolName": n.schoolName,
                                   "noShow": false,
                                   "walkover": false,
                                   "sets": [{
@@ -353,6 +355,61 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
       }
     }
     // SAVE RESULT END
+    // SAVE TEAM RESULT
+    $scope.saveTeamResult = function(formData){
+      console.log(formData, 'svae data');
+      if(formData){
+        if($scope.matchDetails.teams.length == 1){
+          toastr.error('Minimum 2 Teams required to start scoring');
+        } else {
+        $scope.matchResult = {
+          matchId: $scope.matchData.matchId
+        }
+        switch ($scope.matchDetails.sportType) {
+          case "Combat Sports":
+            $scope.matchResult.resultsCombat = formData;
+            if(!$scope.matchResult.resultsCombat.status){
+              $scope.matchResult.resultsCombat.status = "IsLive";
+            }
+          break;
+          case "Racquet Sports":
+            $scope.matchResult.resultsRacquet = formData;
+            if(!$scope.matchResult.resultsRacquet.status){
+              $scope.matchResult.resultsRacquet.status = "IsLive";
+            }
+          break;
+        }
+        NavigationService.saveMatch($scope.matchResult, function(data){
+          if(data.value == true){
+            switch ($scope.matchDetails.sportType) {
+              case "Combat Sports":
+                $state.go("scorecombatteam",{
+                  drawFormat: $stateParams.drawFormat,
+                  sport: $stateParams.sport,
+                  id: $scope.matchData.matchId
+                });
+
+              break;
+              case "Racquet Sports":
+                $state.go("scoreracquetdoubles",{
+                  drawFormat: $stateParams.drawFormat,
+                  sport: $stateParams.sport,
+                  id: $scope.matchData.matchId
+                });
+
+              break;
+            }
+          } else{
+            toastr.error('Data save failed. Please try again.', 'Save Error');
+          }
+        });
+      }
+    } else{
+        toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
+      }
+    }
+    // SAVE TEAM RESULT END
+    // UPDATE WINNER RESULT
     $scope.updateWinnerResult = function(){
       $scope.matchResult = {
         matchId: $scope.matchData.matchId

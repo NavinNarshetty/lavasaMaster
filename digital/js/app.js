@@ -94,7 +94,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'KabaddiScoreCtrl'
         })
         .state('knockout-doubles', {
-            url: "/knockout-doubles/:id",
+            url: "/doubles/:drawFormat/:id",
             templateUrl: tempateURL,
             controller: 'KnockoutDoublesCtrl'
         })
