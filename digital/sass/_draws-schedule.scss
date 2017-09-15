@@ -919,13 +919,19 @@ $sport-table-grey:#efeeee !default;
     &:nth-child(even) {
       border-bottom: none;
     }
-    &:nth-child(2) {
-      border-bottom: 3px solid $sport-primary;
-    }
+    // &:nth-child(2) {
+    //   border-bottom: 3px solid $sport-primary;
+    // }
   }
   .knockout-cardimage {
     width: 40px;
     height: 40px;
+  }
+  .knockoutdouble-teamplayer {
+    // border: 5px solid;
+    &:first-child{
+      border-bottom: 3px solid $sport-primary;
+    }
   }
 }
 

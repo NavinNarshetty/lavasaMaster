@@ -1,4 +1,4 @@
-myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal,$stateParams, $state, $interval, toastr) {
+myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, NavigationService, $timeout, $uibModal,$stateParams, $state, $interval, toastr, $rootScope) {
     $scope.template = TemplateService.getHTML("content/score-racquetdoubles.html");
     TemplateService.title = "Score Racquet Doubles"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -80,7 +80,13 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
     // DESTROY AUTO SAVE END
     // MATCH COMPLETE
     $scope.completePopup = function(){
-      var modalCompleteMatch;
+      if($scope.match.resultsRacquet.matchPhoto.length == 0){
+        toastr.error('Please upload match photo.', 'Data Incomplete');
+      } else if ($scope.match.resultsRacquet.scoreSheet.length == 0) {
+        toastr.error('Please upload scoresheet.', 'Data Incomplete');
+      } else if(!$scope.match.resultsRacquet.winner.player){
+        toastr.error('Please select a winner.', 'Data Incomplete');
+      } else {
         $rootScope.modalInstance = $uibModal.open({
           animation: true,
           scope: $scope,
@@ -89,6 +95,7 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
           templateUrl: 'views/modal/confirmcomplete.html',
           windowClass: 'completematch-modal'
         })
+      }
     };
     $scope.matchComplete = function(){
       if($scope.match.resultsRacquet){
@@ -100,7 +107,7 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
       NavigationService.saveMatch($scope.matchResult, function(data){
         if(data.value == true){
           if ($stateParams.drawFormat === 'Knockout') {
-              $state.go('knockout-team', {
+              $state.go('knockout-doubles', {
                 drawFormat: $stateParams.drawFormat,
                 id: $stateParams.sport
               });

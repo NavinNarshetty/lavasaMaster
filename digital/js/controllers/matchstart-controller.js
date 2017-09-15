@@ -366,6 +366,10 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
         if($scope.matchDetails.teams.length == 1){
           toastr.error('Minimum 2 Teams required to start scoring');
         } else {
+          if (formData.matchPhoto.length == 0) {
+            toastr.error('Please upload match photo.', 'Data Incomplete');
+          } else {
+
         $scope.matchResult = {
           matchId: $scope.matchData.matchId
         }
@@ -408,6 +412,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
           }
         });
       }
+    }
     } else{
         toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
       }
@@ -512,7 +517,17 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
       }
       NavigationService.saveMatch($scope.matchResult, function(data){
         if(data.value == true){
-          $state.go("home");
+          if ($stateParams.drawFormat === 'Knockout') {
+              $state.go('knockout-doubles', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+          } else if ($stateParams.drawFormat === 'Heats') {
+              $state.go('heats', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+          }
         } else{
           alert('fail save');
         }

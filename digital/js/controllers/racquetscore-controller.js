@@ -100,6 +100,13 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
     // DESTROY AUTO SAVE END
     // MATCH COMPLETE
     $scope.completePopup = function(){
+      if($scope.match.resultsRacquet.matchPhoto.length == 0){
+        toastr.error('Please upload match photo.', 'Data Incomplete');
+      } else if ($scope.match.resultsRacquet.scoreSheet.length == 0) {
+        toastr.error('Please upload scoresheet.', 'Data Incomplete');
+      } else if(!$scope.match.resultsRacquet.winner.player){
+        toastr.error('Please select a winner.', 'Data Incomplete');
+      } else {
       var modalCompleteMatch;
         $rootScope.modalInstance = $uibModal.open({
           animation: true,
@@ -109,6 +116,7 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
           templateUrl: 'views/modal/confirmcomplete.html',
           windowClass: 'completematch-modal'
         })
+      }
     };
     $scope.matchComplete = function(){
       if($scope.match.resultsRacquet){
