@@ -388,6 +388,22 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       $rootScope.modalInstance.close('a');
     }
     // SAVE PENALTY POINTS END
+    // REMOVE MATCH SCORESHEET
+    $scope.removeMatchScore = function(pic, type) {
+      switch (type) {
+        case 'matchPhoto':
+          _.remove($scope.match.resultFootball.matchPhoto, function(n) {
+              return n.image === pic.image;
+          })
+        break;
+        case 'scoreSheet':
+          _.remove($scope.match.resultFootball.scoreSheet, function(n) {
+            return n.image === pic.image;
+          })
+        break;
+      }
+    }
+    // REMOVE MATCH SCORESHEET END
     // FUNCTIONS END
 
     // API CALLS

@@ -258,60 +258,64 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
             if ($scope.matchDetails.teams.length == 1) {
                 toastr.error('Minimum 2 Players required to start scoring');
             } else {
-                $scope.matchResult = {
-                    matchId: $scope.matchData.matchId
-                }
-                switch ($scope.matchDetails.sportsName) {
-                    case "Volleyball":
-                        $scope.matchResult.resultVolleyball = formData;
-                        if (!$scope.matchResult.resultVolleyball.status) {
-                            $scope.matchResult.resultVolleyball.status = "IsLive";
-                        }
-                        break;
-                    case "Football":
-                        $scope.matchResult.resultFootball = formData;
-                        if (!$scope.matchResult.resultFootball.status) {
-                            $scope.matchResult.resultFootball.status = "IsLive";
-                        }
-                        break;
-                    case "Basketball":
-                        $scope.matchResult.resultBasketball = formData;
-                        if (!$scope.matchResult.resultBasketball.status) {
-                            $scope.matchResult.resultBasketball.status = "IsLive";
-                        }
-                        break;
-                }
-                if ($scope.matchDetails.sportsName === 'Football') {
-                    NavigationService.saveFootball($scope.matchResult, function (data) {
-                        if (data.value == true) {
-                            $state.go("scorefootball", {
-                                drawFormat: $stateParams.drawFormat,
-                                sport: $stateParams.sport,
-                                id: $scope.matchData.matchId
-                            });
-                        } else {
-                            toastr.error('Data save failed. Please try again.', 'Save Error');
-                        }
-                    });
+                if (formData.matchPhoto.length == 0) {
+                  toastr.error('Please upload match photo.', 'Data Incomplete');
                 } else {
-                    NavigationService.saveMatch($scope.matchResult, function (data) {
-                        if (data.value == true) {
-                            switch ($scope.matchDetails.sportsName) {
-                                case "Volleyball":
-                                    $state.go("scorevolleyball", {
-                                        drawFormat: $stateParams.drawFormat,
-                                        sport: $stateParams.sport,
-                                        id: $scope.matchData.matchId
-                                    });
-                                    break;
-                                case "Football":
-                                    $state.go("scorefootball");
-                                    break;
-                            }
-                        } else {
-                            toastr.error('Data save failed. Please try again.', 'Save Error');
-                        }
-                    });
+                  $scope.matchResult = {
+                      matchId: $scope.matchData.matchId
+                  }
+                  switch ($scope.matchDetails.sportsName) {
+                      case "Volleyball":
+                          $scope.matchResult.resultVolleyball = formData;
+                          if (!$scope.matchResult.resultVolleyball.status) {
+                              $scope.matchResult.resultVolleyball.status = "IsLive";
+                          }
+                          break;
+                      case "Football":
+                          $scope.matchResult.resultFootball = formData;
+                          if (!$scope.matchResult.resultFootball.status) {
+                              $scope.matchResult.resultFootball.status = "IsLive";
+                          }
+                          break;
+                      case "Basketball":
+                          $scope.matchResult.resultBasketball = formData;
+                          if (!$scope.matchResult.resultBasketball.status) {
+                              $scope.matchResult.resultBasketball.status = "IsLive";
+                          }
+                          break;
+                  }
+                  if ($scope.matchDetails.sportsName === 'Football') {
+                      NavigationService.saveFootball($scope.matchResult, function (data) {
+                          if (data.value == true) {
+                              $state.go("scorefootball", {
+                                  drawFormat: $stateParams.drawFormat,
+                                  sport: $stateParams.sport,
+                                  id: $scope.matchData.matchId
+                              });
+                          } else {
+                              toastr.error('Data save failed. Please try again.', 'Save Error');
+                          }
+                      });
+                  } else {
+                      NavigationService.saveMatch($scope.matchResult, function (data) {
+                          if (data.value == true) {
+                              switch ($scope.matchDetails.sportsName) {
+                                  case "Volleyball":
+                                      $state.go("scorevolleyball", {
+                                          drawFormat: $stateParams.drawFormat,
+                                          sport: $stateParams.sport,
+                                          id: $scope.matchData.matchId
+                                      });
+                                      break;
+                                  case "Football":
+                                      $state.go("scorefootball");
+                                      break;
+                              }
+                          } else {
+                              toastr.error('Data save failed. Please try again.', 'Save Error');
+                          }
+                      });
+                  }
                 }
             }
         } else {

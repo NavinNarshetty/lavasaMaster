@@ -69,6 +69,14 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     // DESTROY AUTO SAVE END
     // MATCH COMPLETE
     $scope.completePopup = function(){
+      if($scope.match.resultVolleyball.matchPhoto.length == 0){
+        toastr.error('Please upload match photo.', 'Data Incomplete');
+      } else if ($scope.match.resultVolleyball.scoreSheet.length == 0) {
+        toastr.error('Please upload scoresheet.', 'Data Incomplete');
+      } else if(!$scope.match.resultVolleyball.winner.player){
+        toastr.error('Please select a winner.', 'Data Incomplete');
+      } else {
+
       var modalCompleteMatch;
         $rootScope.modalInstance = $uibModal.open({
           animation: true,
@@ -76,6 +84,7 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
           templateUrl: 'views/modal/confirmcomplete.html',
           windowClass: 'completematch-modal'
         })
+      }
     };
     $scope.matchComplete = function(){
       if ($scope.match.resultsCombat) {

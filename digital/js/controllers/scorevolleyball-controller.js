@@ -369,6 +369,22 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
       })
     }
     // PENALTY SHOOTOUTS MODAL END
+    // REMOVE MATCH SCORESHEET
+    $scope.removeMatchScore = function(pic, type) {
+      switch (type) {
+        case 'matchPhoto':
+          _.remove($scope.match.resultVolleyball.matchPhoto, function(n) {
+              return n.image === pic.image;
+          })
+        break;
+        case 'scoreSheet':
+          _.remove($scope.match.resultVolleyball.scoreSheet, function(n) {
+            return n.image === pic.image;
+          })
+        break;
+      }
+    }
+    // REMOVE MATCH SCORESHEET END
     // FUNCTIONS END
     // API CALLS
     // GET MATCH
@@ -434,7 +450,14 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
     // AUTO SAVE END
     // MATCH COMPLETE
     $scope.completePopup = function(){
-      var modalCompleteMatch;
+      console.log($scope.match, 'complete');
+      if($scope.match.resultVolleyball.matchPhoto.length == 0){
+        toastr.error('Please upload match photo.', 'Data Incomplete');
+      } else if ($scope.match.resultVolleyball.scoreSheet.length == 0) {
+        toastr.error('Please upload scoresheet.', 'Data Incomplete');
+      } else if(!$scope.match.resultVolleyball.winner.player){
+        toastr.error('Please select a winner.', 'Data Incomplete');
+      } else {
         $rootScope.modalInstance = $uibModal.open({
           animation: true,
           scope: $scope,
@@ -443,6 +466,7 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
           templateUrl: 'views/modal/confirmcomplete.html',
           windowClass: 'completematch-modal'
         })
+      }
     };
     $scope.matchComplete = function(){
       if ($scope.match.resultVolleyball) {

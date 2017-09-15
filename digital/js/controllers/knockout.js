@@ -185,7 +185,7 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                             $scope.roundsList = allData.data.roundsList;
                             if ($scope.roundsListName.length === 0 || $scope.roundsList.length === 0) {
                                 toastr.error("No Data Found", 'Error Message');
-                                $state.go('championshipschedule');
+                                $state.go('digital-home');
                             }
                             _.each($scope.roundsList, function (key) {
                                 _.each(key.match, function (value) {
@@ -448,7 +448,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
                             $scope.roundsList = allData.data.roundsList;
                             if ($scope.roundsListName.length === 0 || $scope.roundsList.length === 0) {
                                 toastr.error("No Data Found", 'Error Message');
-                                $state.go('championshipschedule');
+                                $state.go('digital-home');
                             }
                             _.each($scope.roundsList, function (key) {
                                 _.each(key.match, function (value) {

@@ -100,7 +100,7 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
       NavigationService.saveMatch($scope.matchResult, function(data){
         if(data.value == true){
           if ($stateParams.drawFormat === 'Knockout') {
-              $state.go('knockout', {
+              $state.go('knockout-team', {
                 drawFormat: $stateParams.drawFormat,
                 id: $stateParams.sport
               });

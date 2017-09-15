@@ -69,7 +69,7 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
               $scope.roundsList = allData.data.roundsList;
               if ($scope.roundsListName.length === 0 || $scope.roundsList.length === 0) {
                 toastr.error("No Data Found", 'Error Message');
-                $state.go('championshipschedule');
+                $state.go('digital-home');
               }
               _.each($scope.roundsList, function (key) {
                 _.each(key.match, function (value) {
