@@ -253,13 +253,11 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
 
                                     break;
                                 case 'Team Sports':
-                                    $state.go('knockout-team', {
-                                        // drawFormatTeam: $scope.drawDetails.drawFormat,
-                                        id: $scope.drawDetails.sport
-                                    });
-                                    break;
-                                default:
-                                    break;
+                                  $state.go('knockout-team', {
+                                    drawFormat: $scope.drawDetails.drawFormat,
+                                    id: $scope.drawDetails.sport
+                                  });
+                                break;
                             }
                         }
                         if ($scope.drawDetails.drawFormat === 'Heats') {

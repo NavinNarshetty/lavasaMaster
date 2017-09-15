@@ -319,16 +319,13 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       $rootScope.modalInstance = $uibModal.open({
         animation: true,
         scope: $scope,
-        keyboard: true,
+        keyboard: false,
         size: 'lg',
         templateUrl: 'views/modal/scoreplayer-football.html',
         windowClass: 'scoreplayer-football-modal'
       })
     }
     // PLAYER POINTS MODAL END
-    $scope.inPs = function(selectedInPlayer){
-      console.log(selectedInPlayer, 'in');
-    }
     // CANCEL PLAYER POINTS SAVE
     $scope.cancelPlayerPoints = function(){
       if($scope.selectedPlayer.isPlaying == false){
@@ -370,7 +367,9 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       // var matchPenalty;
       $scope.matchPenalty = matchPenalty;
       _.each($scope.matchPenalty.teams, function(n){
-        n.teamResults.penaltyPoints = 0;
+        if (!n.teamResults.penaltyPoints) {
+          n.teamResults.penaltyPoints = "";
+        }
       });
       $rootScope.modalInstance = $uibModal.open({
         animation: true,

@@ -294,10 +294,20 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
     // REMOVE SET END
     // TEAM SETS END
     // PLAYER POINTS MODAL
-    $scope.addPlayerPoints = function(player, index){
+    $scope.addPlayerPoints = function(player, index, teamIndex){
       $scope.selectedPlayer = player;
-      var playerScoreModal;
-      playerScoreModal = $uibModal.open({
+      $scope.selectedInPlayer = {};
+      $scope.teamIndex = teamIndex;
+      $scope.selectedTeam = $scope.match.teams[$scope.teamIndex];
+      _.each($scope.selectedTeam.studentTeam, function(n, index){
+        n.isPlaying = "";
+        _.each($scope.match.resultVolleyball.teams[$scope.teamIndex].players, function(m, mkey){
+          if(n.studentId._id == m.player){
+            n.isPlaying = m.isPlaying;
+          }
+        });
+      });
+      $rootScope.modalInstance  = $uibModal.open({
         animation: true,
         scope: $scope,
         // backdrop: 'static',
@@ -308,6 +318,43 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
       })
     }
     // PLAYER POINTS MODAL END
+    // CANCEL PLAYER POINTS SAVE
+    $scope.cancelPlayerPoints = function(){
+      if($scope.selectedPlayer.isPlaying == false){
+        $scope.selectedPlayer.isPlaying = true;
+        if ($scope.selectedPlayer.playerPoints.out.length>0) {
+          var length = $scope.player.playerPoints.out.length -1;
+          _.remove($scope.player.playerPoints.out, function(m,index){
+            return length == index;
+          })
+        }
+      }
+      _.each($scope.match.resultVolleyball.teams[$scope.teamIndex].players, function(n){
+        if(n.player == $scope.selectedInPlayer.player){
+          n.isPlaying = false;
+        }
+      });
+      $rootScope.modalInstance.close('a');
+    }
+    // CANCEL PLAYER POINTS SAVE END
+    // SAVE PLAYER POINTS
+    $scope.savePlayerPoints = function(){
+      if($scope.selectedPlayer.isPlaying == false){
+        var inLength = $scope.selectedPlayer.playerPoints.out.length - 1;
+        _.each($scope.match.resultVolleyball.teams[$scope.teamIndex].players, function(n){
+          if(n.player == $scope.selectedInPlayer.player){
+            n.isPlaying = true;
+            n.playerPoints.in.push({
+              time: $scope.selectedPlayer.playerPoints.out[inLength].time
+            });
+            console.log(n, 'yomama');
+          }
+        });
+      }
+      $rootScope.modalInstance.close('a');
+      $scope.selectedInPlayer = {};
+    }
+    // SAVE PLAYER POINTS END
     // PENALTY SHOOTOUTS MODAL
     $scope.startPenalty = function(){
       var teamPenaltyModal;

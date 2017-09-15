@@ -171,7 +171,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                         if($scope.matchDetails.resultsRacquet.status == 'IsCompleted'){
                           toastr.warning("This match has already been scored.", "Match Complete");
                           if ($stateParams.drawFormat === 'Knockout') {
-                              $state.go('knockout', {
+                              $state.go('knockout-team', {
                                 drawFormat: $stateParams.drawFormat,
                                 id: $stateParams.sport
                               });

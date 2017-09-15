@@ -3,7 +3,39 @@
 </div>
 <div class="modal-body">
     <div class="scoreteam-playerpoints">
-        <div class="row">
+      <div class="row">
+        <!-- OUT -->
+        <div class="col-md-3 col-sm-3">
+            <div class="teamscore-pointholder">
+                <label for=""> Out </label>
+                <div class="relate teamscore-point mtb-10">
+                    <input type="number" ng-model="selectedPlayer.playerPoints.out.length" min="0" max="99" class="score-number teamscore-number display-inline form-control" readonly>
+                    <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'out');" ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
+                </div>
+                <div class="input-group">
+                    <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.out[selectedPlayer.playerPoints.out.length-1].time" placeholder="Time" ng-disabled="selectedPlayer.out.length <= 0">
+                    <span class="input-group-addon">Min</span>
+                </div>
+            </div>
+        </div>
+        <!-- OUT -->
+        <!-- IN -->
+        <div class="col-md-3 col-sm-3">
+            <div class="teamscore-pointholder">
+              <div class="match-selectwinner">
+                <label for="">Select substitute</label>
+                <ui-select id="matchWinnerPlayer" ng-model="selectedInPlayer.player" theme="bootstrap" ng-disabled="selectedPlayer.isPlaying">
+                    <ui-select-match placeholder="Select Winner">{{$select.selected.studentId.firstName}} {{$select.selected.studentId.surname}}</ui-select-match>
+                    <ui-select-choices repeat="player.studentId._id as player in selectedTeam.studentTeam | filter: $select.search">
+                        <p class="opponentsingle-selector" ng-if="player.isPlaying == false "> {{player.studentId.firstName}} {{player.studentId.surname}} </p>
+                    </ui-select-choices>
+                </ui-select>
+              </div>
+            </div>
+        </div>
+        <!-- IN -->
+      </div>
+        <div class="row" hidden>
           <!-- IN -->
           <div class="col-md-3 col-sm-3">
               <div class="teamscore-pointholder">
@@ -38,13 +70,14 @@
           <!-- OUT -->
         </div>
     </div>
-    <div class="row">
+    <!--<div class="row">
         <pre>{{selectedPlayer|json}}</pre>
-    </div>
+        <pre>{{selectedInPlayer|json}}</pre>
+    </div>-->
 </div>
 <div class="modal-footer">
     <div class="scoreplayer-save">
-        <button class="btn btn-green-outline text-center" type="button" ng-click="$ctrl.ok()">Done</button>
-        <button class="btn btn-green-outline text-center" type="button" ng-click="$dismiss()">Cancel</button>
+        <button class="btn btn-green-outline text-center" type="button" ng-click="savePlayerPoints()">Done</button>
+        <button class="btn btn-green-outline text-center" type="button" ng-click="cancelPlayerPoints()">Cancel</button>
     </div>
 </div>
