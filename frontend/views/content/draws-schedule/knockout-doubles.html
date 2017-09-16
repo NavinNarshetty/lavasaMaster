@@ -60,14 +60,14 @@
             </h3>  
           <div class="knockout-doubles-cardholder" ng-repeat="card in roundsList[0].match track by $index">
               <div class="knockoutdouble-teamplayer"  ng-repeat="players  in card.opponentsTeam track by $index" >
-            <div class="knockout-card" ng-repeat="player in players.studentTeam track by $index" ng-class="{'knockout-winnercard':players.isWinner===true}">
+            <div class="knockout-card knockout-custom-padding" ng-repeat="player in players.studentTeam track by $index" ng-class="{'knockout-winnercard':players.isWinner===true}">
             
               <div class="knockout-cardimage display-inline ver-mid">
                 <img src="/img/dishapatani1.jpg" alt="" class="img-responsive">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid">
                 <p class="m-clear knockout-winner-name" title="{{player.fullName }}">{{player.fullName | truncate:20}}</p>
-                <p class="m-clear .winner-knockout-school" title="{{players.schoolName}}">{{players.schoolName | truncate:20}}</p>
+                <p class="m-clear winner-knockout-school" title="{{players.schoolName}}">{{players.schoolName | truncate:20}}</p>
               </div>
             </div>
             </div>
@@ -118,13 +118,13 @@
           <div class="get-center knockout-round-width">
             <div class=" knockout-doubles-cardholder">
               <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index">
-                <div class="knockout-card " ng-repeat="player in players.studentTeam track by $index " ng-class="{'knockout-winnercard':card.isWinner===true}">
+                <div class="knockout-card knockout-custom-padding" ng-repeat="player in players.studentTeam track by $index " ng-class="{'knockout-winnercard':card.isWinner===true}">
                   <div class="knockout-cardimage display-inline ver-mid ">
                     <img src="/img/dishapatani1.jpg" alt=" " class="img-responsive ">
                   </div>
                   <div class="display-inline knockout-cardplayername ver-mid ">
                     <p class="m-clear knockout-winner-name" title="{{player.fullName}}">{{player.fullName}}</p>
-                    <p class="m-clear" title="{{players.schoolName}}">{{players.schoolName | truncate:'25'}}</p>
+                    <p class="m-clear winner-knockout-school" title="{{players.schoolName}}">{{players.schoolName | truncate:'25'}}</p>
                   </div>
                 </div>
               </div>
@@ -176,13 +176,13 @@
           <div class="get-center knockout-round-width">
             <div class=" knockout-doubles-cardholder">
               <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index" ng-class="{'knockout-winnercard':card.isWinner==true}">
-                <div class="knockout-card " ng-repeat="player in players.studentTeam track by $index">
+                <div class="knockout-card knockout-custom-padding " ng-repeat="player in players.studentTeam track by $index">
                   <div class="knockout-cardimage display-inline ver-mid ">
                     <img src="/img/dishapatani1.jpg" alt=" " class="img-responsive ">
                   </div>
                   <div class="display-inline knockout-cardplayername ver-mid ">
                     <p class="m-clear knockout-winner-name " title="{{player.fullName}}">{{player.fullName}}</p>
-                    <p class="m-clear " title="{{players.schoolName}}">{{players.schoolName | truncate:'25'}}</p>
+                    <p class="m-clear winner-knockout-school" title="{{players.schoolName}}">{{players.schoolName | truncate:'25'}}</p>
                   </div>
                 </div>
               </div>

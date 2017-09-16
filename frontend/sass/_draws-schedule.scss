@@ -762,6 +762,12 @@ $sport-table-grey:#efeeee !default;
   border-left: 10px solid transparent;
 }
 
+// ONLY FOR KNOCKOUT DOUBLES
+.knockout-custom-padding {
+  padding: 10px 5px;
+}
+
+// ONLY FOR KNOCKOUT DOUBLES END
 .knockout-winner-name {
   color: $sport-primary;
   font-weight: 600;
@@ -808,7 +814,8 @@ $sport-table-grey:#efeeee !default;
     text-decoration: none;
   }
 }
-.combatreasonresult{
+
+.combatreasonresult {
   font-weight: 700;
   font-size: 12px;
 }
@@ -828,25 +835,25 @@ $sport-table-grey:#efeeee !default;
   }
 }
 
-.knockout-live-foot{
-  background-color:#ffb026;
-
+.knockout-live-foot {
+  background-color: #ffb026;
 }
-.knockout-live-text{
+
+.knockout-live-text {
   color: #27b465;
-  font-weight:700;
+  font-weight: 700;
   text-transform: uppercase;
 }
-.knockout-dot-live{
-  color: #27b465;
-  // font-weight:700;
+
+.knockout-dot-live {
+  color: #27b465; // font-weight:700;
   font-size: 10px;
 }
-.custom-knockout-color{
+
+.custom-knockout-color {
   text-transform: capitalize;
   font-weight: 600;
 }
-
 
 .knockout-winner-card-content {
   background-color: #373737;
@@ -906,15 +913,14 @@ $sport-table-grey:#efeeee !default;
 }
 
 .knockout-doubles-cardholder {
-  min-height: 280px;
-  box-shadow: 0 0 10px $sport-grey-year; // border: 1px solid $sport-grey-year;
+  min-height: 280px; // box-shadow: 0 0 10px $sport-grey-year;
+  border: 1px solid $sport-grey-year;
   margin-bottom: 15px;
   position: relative;
   .knockout-card {
     &:nth-child(even) {
       border-bottom: none;
-    }
-    // &:nth-child(2) {
+    } // &:nth-child(2) {
     //   border-bottom: 3px solid $sport-primary;
     // }
   }
@@ -922,8 +928,8 @@ $sport-table-grey:#efeeee !default;
     width: 40px;
     height: 40px;
   }
-  .knockoutdouble-teamplayer{
-    &:first-child{
+  .knockoutdouble-teamplayer {
+    &:first-child {
       border-bottom: 3px solid $sport-primary;
     }
   }
