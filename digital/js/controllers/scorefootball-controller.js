@@ -543,7 +543,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           }
           NavigationService.saveFootball($scope.matchResult, function(data){
             if(data.value == true){
-              $state.go('knockout-team', {
+              $state.go('league-knockout', {
                 drawFormat: $stateParams.drawFormat,
                 id: $stateParams.sport
               });

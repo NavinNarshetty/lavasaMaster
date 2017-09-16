@@ -68,4 +68,5 @@ module.exports = [
   'digital/js/controllers/knockout-team.js',
   'digital/js/controllers/scorebasketball-controller.js',
   "digital/js/services/resultsportinitialization.js",
+  'digital/js/controllers/league-knockoutController.js',
 ];
