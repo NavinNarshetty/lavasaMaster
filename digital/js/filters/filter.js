@@ -101,5 +101,5 @@ myApp.filter('filterPlayers', function () {
        players=_.filter(players, ['noShow', false]);
        console.log(players);
        return players;
-    };
+    }; 
 });

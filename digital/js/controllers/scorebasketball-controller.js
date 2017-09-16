@@ -202,7 +202,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   // REMOVE MATCH SCORESHEET END
 
   // SAVE RESULT
-  //1-save AND getONE
+  //1-save AND getONE 
   //2-just save i.e. for autoSave
   //3-complete and save
   $scope.saveMatch = function (match, flag) {

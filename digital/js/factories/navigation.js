@@ -47,11 +47,11 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 callback(data)
             });
         },
-        saveMatchPp: function (match,resultVar,callback) {
+        saveMatchPp: function (match, resultVar, callback) {
             // console.log(formData, 'saveMatch');
             // console.log(match);
             // console.log(resultVar);
-            var obj={};
+            var obj = {};
             obj[resultVar] = match[resultVar];
             obj.matchId = match.matchId;
             // console.log(obj);
@@ -105,69 +105,80 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 method: 'POST',
                 data: request
             }).then(function (data) {
-                var knockout = data.data.data;
-                console.log(knockout);
+                if (!_.isEmpty(data.data.data.roundsList)) {
+                    var knockout = data.data.data;
+                    var sportType = knockout.roundsList[0].match[0].sport.sportslist.sportsListSubCategory.sportsListCategory.name;
+                    var sportName = knockout.roundsList[0].match[0].sport.sportslist.name;
+                    console.log(sportType,sportName);
+                    var resultVar = ResultSportInitialization.getResultVariable(sportName,sportType);
+                    console.log(resultVar);
+                    function sortOpponents(arrToSort, match1, match2, key) {
+                        console.log("arrToSort", arrToSort);
+                        console.log("match1", match1);
+                        console.log("match2", match2);
+                        console.log("key", key);
 
-                function sortOpponents(arrToSort, match1, match2) {
-                    console.log("arrToSort", arrToSort);
-                    _.remove(arrToSort, function (n) {
-                        return n == null;
-                    });
-                    // console.log("match1", match1);
-                    // console.log("match2", match2);
-                    var sortedArr = _.cloneDeep(arrToSort);
-
-                    if (_.isEmpty(arrToSort)) {
-                        // console.log("------------------------------------------");
-
-                        return [{}, {}];
-                    } else if (arrToSort.length == 1) {
-                        var index = _.findIndex(match1, ["_id", arrToSort[0]._id]);
-                        console.log(index);
-                        if (index == -1) {
-                            sortedArr[0] = {};
-                            sortedArr[1] = arrToSort[0];
-                        } else {
-                            sortedArr[0] = arrToSort[0];
-                            sortedArr[1] = {};
-                        }
-                        // console.log("sortedArr", sortedArr);
-                        // console.log("arrayLength 1");
-                        // console.log("------------------------------------------");
-
-                        return sortedArr;
-                    } else if (arrToSort.length == 2) {
-                        if (_.findIndex(match1, ["_id", arrToSort[0]._id]) == -1) {
-                            sortedArr[0] = arrToSort[1];
-                            sortedArr[1] = arrToSort[0];
-                        } else {
-                            sortedArr[0] = arrToSort[0];
-                            sortedArr[1] = arrToSort[1];
-                        }
-                        // console.log("sortedArr", sortedArr);
-                        // console.log("arrayLength 2");
-                        // console.log("------------------------------------------");
-
-                        return sortedArr;
-                    }
-                }
-                _.each(knockout.roundsList, function (round, key) {
-                    if (key > 0 && key < 3) {
-                        _.each(round.match, function (match, index) {
-                            var match1, match2;
-
-                            if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2].opponentsSingle) {
-                                match1 = knockout.roundsList[key - 1].match[index * 2].opponentsSingle;
-                            }
-                            if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2].opponentsSingle) {
-                                match2 = knockout.roundsList[key - 1].match[index * 2 + 1].opponentsSingle;
-                            }
-                            match.opponentsSingle = sortOpponents(match.opponentsSingle, match1, match2);
+                        _.remove(arrToSort, function (n) {
+                            return n == null;
                         });
+                        // console.log("match1", match1);
+                        // console.log("match2", match2);
+                        var sortedArr = _.cloneDeep(arrToSort);
+
+                        if (_.isEmpty(arrToSort)) {
+                            // console.log("------------------------------------------");
+
+                            return [{}, {}];
+                        } else if (arrToSort.length == 1) {
+                            var index = _.findIndex(match1, ["_id", arrToSort[0]._id]);
+                            console.log(index);
+                            if (index == -1) {
+                                sortedArr[0] = {};
+                                sortedArr[1] = arrToSort[0];
+                            } else {
+                                sortedArr[0] = arrToSort[0];
+                                sortedArr[1] = {};
+                            }
+                            // console.log("sortedArr", sortedArr);
+                            // console.log("arrayLength 1");
+                            // console.log("------------------------------------------");
+
+                            return sortedArr;
+                        } else if (arrToSort.length == 2) {
+                            if (_.findIndex(match1, ["_id", arrToSort[0]._id]) == -1) {
+                                sortedArr[0] = arrToSort[1];
+                                sortedArr[1] = arrToSort[0];
+                            } else {
+                                sortedArr[0] = arrToSort[0];
+                                sortedArr[1] = arrToSort[1];
+                            }
+                            // console.log("sortedArr", sortedArr);
+                            // console.log("arrayLength 2");
+                            // console.log("------------------------------------------");
+
+                            return sortedArr;
+                        }
                     }
-                });
-                console.log(data.data.data);
-                callback(data);
+                    _.each(knockout.roundsList, function (round, key) {
+                        if (key > 0 && key < 3) {
+                            _.each(round.match, function (match, index) {
+                                var match1, match2;
+
+                                if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
+                                    match1 = knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar];
+                                }
+                                if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
+                                    match2 = knockout.roundsList[key - 1].match[index * 2 + 1][resultVar.opponentsVar];
+                                }
+                                console.log(match,match[resultVar.opponentsVar],resultVar.opponentsVar,"resultVar.opponentsVar");
+                                match[resultVar.opponentsVar] = sortOpponents(match[resultVar.opponentsVar], match1, match2, key);
+                            });
+                        }
+                    });
+                    console.log(data.data.data);
+                    callback(data);
+                }
+
             });
         },
         getAllSpotsList: function (callback) {
@@ -182,6 +193,13 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 method: 'POST',
                 data: request
             }).then(callback);
-        }
+        },
+        getSportLeagueKnockoutRounds: function (request, callback) {
+           $http({
+               url: adminurl + 'match/getSportLeagueKnockoutRounds',
+               method: 'POST',
+               data: request
+           }).then(callback);
+       }
     };
 });

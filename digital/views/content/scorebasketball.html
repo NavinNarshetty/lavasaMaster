@@ -108,7 +108,7 @@
               <img ng-src="{{match.teams[$index].photograph|serverimage}}" alt="{{match.teams[$index].schoolName}}" class="img-responsive">
             </div>
             <div class="relate setpoint-element" ng-repeat="quarter in team.teamResults.quarterPoints track by $index">
-              <div class="score-quaterpoints">{{quarter}}
+              <div class="score-quaterpoints">
                 <label for="player1score" class="text-uppercase">Quarter {{$index+1}} </label>
                 <input type="number" placeholder="0" ng-model="quarter.basket" id="player1score" min="0" max="99" class="score-number display-inline form-control" limit-to-max>
               </div>
@@ -182,7 +182,7 @@
             <button class="btn btn-green-outline btn-scoring" ui-sref="matchstart({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
           </div>
           <div class="col-md-4 col-sm-4">
-            <button class="btn btn-green-outline btn-scoring" promise-btn="yourPromise" ng-click="saveResult(match)">Save</button>
+            <button class="btn btn-green-outline btn-scoring" promise-btn="yourPromise" ng-click="saveMatch(match,'2')">Save</button>
           </div>
           <div class="col-md-4 col-sm-4">
             <button class="btn btn-green-outline btn-scoring" ng-click="saveMatch(match,'3');">complete</button>

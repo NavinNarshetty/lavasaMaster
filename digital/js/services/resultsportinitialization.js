@@ -77,7 +77,7 @@ myApp.factory('ResultSportInitialization', function () {
             console.log("getTeamTemplate", team);
             var format = {
                 teamId: team.teamId,
-                team:team._id,
+                team: team._id,
                 noShow: false,
                 walkover: false,
                 coach: "",
@@ -188,37 +188,37 @@ myApp.factory('ResultSportInitialization', function () {
                     returnResult.resultBasketball = format;
                     returnResult.resultBasketball = obj.initializeTeamAndPlayers(sportName, returnResult.resultBasketball, match);
                     return returnResult;
-                    
+
                 case "Football":
                     returnResult.resultFootball = format;
                     obj.initializeTeamAndPlayers(sportName, returnResult.resultFootball, match);
                     return returnResult;
-                    
+
                 case "Hockey":
                     returnResult.resultHockey = format;
                     obj.initializeTeamAndPlayers(sportName, returnResult.resultHockey, match);
                     return returnResult;
-                     
+
                 case "Kabaddi":
                     returnResult.resultKabaddi = format;
                     obj.initializeTeamAndPlayers(sportName, returnResult.resultKabaddi, match);
                     return returnResult;
-                    
+
                 case "Volleyball":
                     returnResult.resultVolleyball = format;
                     obj.initializeTeamAndPlayers(sportName, returnResult.resultVolleyball, match);
                     return returnResult;
-                    
+
                 case "Handball":
                     returnResult.resultHandball = format;
                     obj.initializeTeamAndPlayers(sportName, returnResult.resultHandball, match);
                     return returnResult;
-                    
+
                 case "Water Polo":
                     returnResult.resultWaterPolo = format;
                     obj.initializeTeamAndPlayers(sportName, returnResult.resultWaterPolo, match);
                     return returnResult;
-                    
+
             }
 
         },
@@ -231,31 +231,78 @@ myApp.factory('ResultSportInitialization', function () {
         //for getting TEPLATE for result"Spotname" eg:resultFootball,resultBasketball etc end
 
         //for getting result variable that sport contains
-        getResultVariable: function (sportName) {
+        getResultVariable: function (sportName, sportType) {
+            if (sportType == "Racquet Sports") {
+                return {
+                    resultVar: "resultsRacquet",
+                    opponentsVar: "opponentsSingle"
+                };
+            } else if (sportType == "Combat Sports") {
+                return {
+                    resultVar: "resultsCombat",
+                    opponentsVar: "opponentsSingle"
+                };
+            } else {
+                switch (sportName) {
+                    case "Basketball":
+                        return {
+                            resultVar: "resultBasketball",
+                            html: "scorebasketball.html",
+                            scoringModal: "scoreplayer-basketball.html",
+                            opponentsVar: "opponentsTeam"
+                        };
 
-            switch (sportName) {
-                case "Basketball":
-                    return {resultVar:"resultBasketball",html:"scorebasketball.html",scoringModal:"scoreplayer-basketball.html"};
-                    
-                case "Football":
-                    return {resultVar:"resultFootball",html:"scorefootball.html",scoringModal:"scoreplayer-football.html"};
-                    
-                case "Hockey":
-                    return {resultVar:"resultHockey",html:"scorehockey.html",scoringModal:"scoreplayer-hockey.html"};
-                    
-                case "Kabaddi":
-                    return {resultVar:"resultKabaddi",html:"scorekabaddi.html",scoringModal:"scoreplayer-kabaddi.html"};
-                    
-                case "Volleyball":
-                    return {resultVar:"resultVolleyball",html:"scorevolleyball.html",scoringModal:"scoreplayer-volleyball.html"}; 
-                    
-                case "Handball":
-                    return {resultVar:"resultHandball",html:"scorehandball.html",scoringModal:"scorehandball.html"};
-                    
-                case "Water Polo":
-                    return {resultVar:"resultWaterPolo",html:"scorewaterpolo.html",scoringModal:"scorewaterpolo.html"};
-                    
+                    case "Football":
+                        return {
+                            resultVar: "resultFootball",
+                            html: "scorefootball.html",
+                            scoringModal: "scoreplayer-football.html",
+                            opponentsVar: "opponentsTeam"
+                        };
+
+                    case "Hockey":
+                        return {
+                            resultVar: "resultHockey",
+                            html: "scorehockey.html",
+                            scoringModal: "scoreplayer-hockey.html",
+                            opponentsVar: "opponentsTeam"
+                        };
+
+                    case "Kabaddi":
+                        return {
+                            resultVar: "resultKabaddi",
+                            html: "scorekabaddi.html",
+                            scoringModal: "scoreplayer-kabaddi.html",
+                            opponentsVar: "opponentsTeam"
+                        };
+
+                    case "Volleyball":
+                        return {
+                            resultVar: "resultVolleyball",
+                            html: "scorevolleyball.html",
+                            scoringModal: "scoreplayer-volleyball.html",
+                            opponentsVar: "opponentsTeam"
+                        };
+
+                    case "Handball":
+                        return {
+                            resultVar: "resultHandball",
+                            html: "scorehandball.html",
+                            scoringModal: "scorehandball.html",
+                            opponentsVar: "opponentsTeam"
+                        };
+
+                    case "Water Polo":
+                        return {
+                            resultVar: "resultWaterPolo",
+                            html: "scorewaterpolo.html",
+                            scoringModal: "scorewaterpolo.html",
+                            opponentsVar: "opponentsTeam"
+                        };
+                }
             }
+
+
         }
         //for getting result variable that sport contains ends        
 

@@ -121,7 +121,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                 $scope.formData = $scope.matchDetails.resultFootball;
                                 if ($scope.matchDetails.resultFootball.status == 'IsCompleted') {
                                     toastr.warning("This match has already been scored.", "Match Complete");
-                                    $state.go('knockout', {
+                                    $state.go('league-knockout', {
                                         drawFormat: $stateParams.drawFormat,
                                         id: $stateParams.sport
                                     });
@@ -200,11 +200,12 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                         case 'Kabaddi':
                         case 'Handball':
                         case 'Water Polo':
+                        console.log("For Data Initialization");
                             if ($scope.matchDetails[$scope.resultVar.resultVar] == null || $scope.matchDetails[$scope.resultVar.resultVar] == "" || $scope.matchDetails[$scope.resultVar.resultVar] == undefined) {
                                 ResultSportInitialization.getMyResult($scope.matchDetails.sportsName, $scope.matchDetails, function (result) {
                                     console.log("finalResult", result);
                                     var resultVar = ResultSportInitialization.getResultVariable($scope.matchDetails.sportsName);
-                                    $scope.formData = result[resultVar];
+                                    $scope.formData = result[resultVar.resultVar];
                                     console.log(resultVar, $scope.formData);
                                 });
                             } else {
@@ -385,7 +386,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                 NavigationService.saveFootball($scope.matchResult, function (data) {
                     if (data.value == true) {
                         toastr.success('Results stored successfully', 'Saved success');
-                        $state.go('knockout', {
+                        $state.go('league-knockout', {
                             drawFormat: $stateParams.drawFormat,
                             id: $stateParams.sport
                         });
