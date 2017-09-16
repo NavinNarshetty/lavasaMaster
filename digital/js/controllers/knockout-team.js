@@ -1,4 +1,4 @@
-myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope, $uibModal) {
+myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope, $uibModal, ResultSportInitialization) {
   $scope.template = TemplateService.getHTML("content/knockout-team.html");
   TemplateService.title = "Time Trial"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -68,13 +68,14 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
             if (allData.value) {
               $scope.roundsListName = allData.data.roundsListName;
               $scope.roundsList = allData.data.roundsList;
+              console.log($scope.roundsListName,"roundsListName");
+              console.log($scope.roundsList,"roundsList");              
               if ($scope.roundsListName.length === 0 || $scope.roundsList.length === 0) {
                 toastr.error("No Data Found", 'Error Message');
                 $state.go('digital-home');
               }
               sportName = $scope.roundsList[0].match[0].sport.sportslist.name;
               $scope.resultVar = ResultSportInitialization.getResultVariable(sportName);
-              console.log($scope.resultVar);
               //ResultSportInitialization--for getting Result Variable End
               var resultVar = $scope.resultVar.resultVar;
               _.each($scope.roundsList, function (key) {
@@ -115,8 +116,6 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
 
                 });
               });
-              console.log($scope.roundsListName, " $scope.roundsListName ");
-              console.log($scope.roundsList, " $scope.roundsList ");
             }
           } else {
             toastr.error(allData.message, 'Error Message');
