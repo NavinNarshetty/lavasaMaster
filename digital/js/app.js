@@ -104,7 +104,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'KnockoutTeamCtrl'
         })
         .state('knockout', {
-            url: "knockout/:drawFormat/:id",
+            url: "/knockout/:drawFormat/:id",
             templateUrl: tempateURL,
             controller: 'KnockoutCtrl'
         })
