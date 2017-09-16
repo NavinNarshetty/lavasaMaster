@@ -4107,12 +4107,12 @@ var model = {
                                     }
                                     updateObj = {
                                         $set: {
-                                            opponentsSingle: winPlayer
+                                            opponentsTeam: winPlayer
                                         }
                                     };
                                     updateObj1 = {
                                         $set: {
-                                            opponentsSingle: lostPlayer
+                                            opponentsTeam: lostPlayer
                                         }
                                     };
                                 } else if (data.found.resultVolleyball && data.found.resultVolleyball.status == 'IsCompleted' && data.found.resultVolleyball.isNoMatch == false) {
@@ -4127,12 +4127,12 @@ var model = {
                                     }
                                     updateObj = {
                                         $set: {
-                                            opponentsSingle: winPlayer
+                                            opponentsTeam: winPlayer
                                         }
                                     };
                                     updateObj1 = {
                                         $set: {
-                                            opponentsSingle: lostPlayer
+                                            opponentsTeam: lostPlayer
                                         }
                                     };
                                 } else if (data.found.resultBasketball && data.found.resultBasketball.status == 'IsCompleted' && data.found.resultBasketball.isNoMatch == false) {
@@ -4147,12 +4147,12 @@ var model = {
                                     }
                                     updateObj = {
                                         $set: {
-                                            opponentsSingle: winPlayer
+                                            opponentsTeam: winPlayer
                                         }
                                     };
                                     updateObj1 = {
                                         $set: {
-                                            opponentsSingle: lostPlayer
+                                            opponentsTeam: lostPlayer
                                         }
                                     };
                                 } else if (data.found.resultHockey && data.found.resultHockey.status == 'IsCompleted' && data.found.resultHockey.isNoMatch == false) {
@@ -4167,12 +4167,12 @@ var model = {
                                     }
                                     updateObj = {
                                         $set: {
-                                            opponentsSingle: winPlayer
+                                            opponentsTeam: winPlayer
                                         }
                                     };
                                     updateObj1 = {
                                         $set: {
-                                            opponentsSingle: lostPlayer
+                                            opponentsTeam: lostPlayer
                                         }
                                     };
                                 } else {
@@ -4196,12 +4196,12 @@ var model = {
                                         }
                                         updateObj = {
                                             $set: {
-                                                opponentsSingle: winPlayer
+                                                opponentsTeam: winPlayer
                                             }
                                         };
                                         updateObj1 = {
                                             $set: {
-                                                opponentsSingle: lostPlayer
+                                                opponentsTeam: lostPlayer
                                             }
                                         };
                                     } else if (data.found.resultVolleyball && data.found.resultVolleyball.status == 'IsCompleted' && data.found.resultVolleyball.isNoMatch == false) {
@@ -4216,12 +4216,12 @@ var model = {
                                         }
                                         updateObj = {
                                             $set: {
-                                                opponentsSingle: winPlayer
+                                                opponentsTeam: winPlayer
                                             }
                                         };
                                         updateObj1 = {
                                             $set: {
-                                                opponentsSingle: lostPlayer
+                                                opponentsTeam: lostPlayer
                                             }
                                         };
                                     } else if (data.found.resultBasketball && data.found.resultBasketball.status == 'IsCompleted' && data.found.resultBasketball.isNoMatch == false) {
@@ -4236,12 +4236,12 @@ var model = {
                                         }
                                         updateObj = {
                                             $set: {
-                                                opponentsSingle: winPlayer
+                                                opponentsTeam: winPlayer
                                             }
                                         };
                                         updateObj1 = {
                                             $set: {
-                                                opponentsSingle: lostPlayer
+                                                opponentsTeam: lostPlayer
                                             }
                                         };
                                     } else if (data.found.resultHockey && data.found.resultHockey.status == 'IsCompleted' && data.found.resultHockey.isNoMatch == false) {
@@ -4256,12 +4256,12 @@ var model = {
                                         }
                                         updateObj = {
                                             $set: {
-                                                opponentsSingle: winPlayer
+                                                opponentsTeam: winPlayer
                                             }
                                         };
                                         updateObj1 = {
                                             $set: {
-                                                opponentsSingle: lostPlayer
+                                                opponentsTeam: lostPlayer
                                             }
                                         };
                                     } else {
