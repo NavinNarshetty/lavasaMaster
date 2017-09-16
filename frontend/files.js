@@ -54,6 +54,7 @@ module.exports = [
   'frontend/js/services/loginService.js',
   'frontend/js/services/GoogleAdWordsService.js',
   'frontend/js/services/configService.js',
+  'frontend/js/services/resultsportinitializayion.js',
 
   //Factories
   'frontend/js/factories/navigation.js',

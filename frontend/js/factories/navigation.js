@@ -5,7 +5,7 @@ var imgPath2 = adminUrl2 + "upload/readFile";
 var uploadUrl2 = adminUrl2 + "upload/";
 
 // var currentYears = ["2015", "2016"];
-myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log) {
+myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log, ResultSportInitialization) {
     var standardDelay = 1000;
     var navigation = [{
         name: "Home",
@@ -834,79 +834,80 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log)
                 method: 'POST',
                 data: request
             }).then(function (data) {
-                var knockout = data.data.data;
-                console.log('firstone', data.data.data);
+                if (!_.isEmpty(data.data.data.roundsList)) {
+                    var knockout = data.data.data;
+                    var sportType = knockout.roundsList[0].match[0].sport.sportslist.sportsListSubCategory.sportsListCategory.name;
+                    var sportName = knockout.roundsList[0].match[0].sport.sportslist.name;
+                    console.log(sportType, sportName);
+                    var resultVar = ResultSportInitialization.getResultVariable(sportName, sportType);
+                    console.log(resultVar);
+                    function sortOpponents(arrToSort, match1, match2, key) {
+                        console.log("arrToSort", arrToSort);
+                        console.log("match1", match1);
+                        console.log("match2", match2);
+                        console.log("key", key);
 
-                function sortOpponents(arrToSort, match1, match2) {
-                    console.log("arrToSort", arrToSort);
-                    _.remove(arrToSort, function (n) {
-                        return n == null;
-                    });
-                    console.log("match1", match1);
-                    console.log("match2", match2);
-                    var sortedArr = _.cloneDeep(arrToSort);
+                        _.remove(arrToSort, function (n) {
+                            return n == null;
+                        });
+                        // console.log("match1", match1);
+                        // console.log("match2", match2);
+                        var sortedArr = _.cloneDeep(arrToSort);
 
-                    if (_.isEmpty(arrToSort)) {
-                        console.log("------------------------------------------");
+                        if (_.isEmpty(arrToSort)) {
+                            // console.log("------------------------------------------");
 
-                        return [{}, {}];
-                    } else if (arrToSort.length == 1) {
-                        var index = _.findIndex(match1, ["_id", arrToSort[0]._id]);
-                        console.log(index);
-                        if (index == -1) {
-                            sortedArr[0] = {};
-                            sortedArr[1] = arrToSort[0];
-                        } else {
-                            sortedArr[0] = arrToSort[0];
-                            sortedArr[1] = {};
+                            return [{}, {}];
+                        } else if (arrToSort.length == 1) {
+                            var index = _.findIndex(match1, ["_id", arrToSort[0]._id]);
+                            console.log(index);
+                            if (index == -1) {
+                                sortedArr[0] = {};
+                                sortedArr[1] = arrToSort[0];
+                            } else {
+                                sortedArr[0] = arrToSort[0];
+                                sortedArr[1] = {};
+                            }
+                            // console.log("sortedArr", sortedArr);
+                            // console.log("arrayLength 1");
+                            // console.log("------------------------------------------");
+
+                            return sortedArr;
+                        } else if (arrToSort.length == 2) {
+                            if (_.findIndex(match1, ["_id", arrToSort[0]._id]) == -1) {
+                                sortedArr[0] = arrToSort[1];
+                                sortedArr[1] = arrToSort[0];
+                            } else {
+                                sortedArr[0] = arrToSort[0];
+                                sortedArr[1] = arrToSort[1];
+                            }
+                            // console.log("sortedArr", sortedArr);
+                            // console.log("arrayLength 2");
+                            // console.log("------------------------------------------");
+
+                            return sortedArr;
                         }
-                        console.log("sortedArr", sortedArr);
-                        console.log("arrayLength 1");
-                        console.log("------------------------------------------");
-
-                        return sortedArr;
-                    } else if (arrToSort.length == 2) {
-                        if (_.findIndex(match1, ["_id", arrToSort[0]._id]) == -1) {
-                            sortedArr[0] = arrToSort[1];
-                            sortedArr[1] = arrToSort[0];
-                        } else {
-                            sortedArr[0] = arrToSort[0];
-                            sortedArr[1] = arrToSort[1];
-                        }
-                        console.log("sortedArr", sortedArr);
-                        console.log("arrayLength 2");
-                        console.log("------------------------------------------");
-
-                        return sortedArr;
-                    } else if (arrToSort.length > 2) {
-                        sortedArr = arrToSort;
-                        console.log("sortedArr", sortedArr);
-                        console.log("arrayLength > 2");
-                        console.log("------------------------------------------");
-
-                        return sortedArr;
                     }
-                }
-                if (knockout.roundsList) {
                     _.each(knockout.roundsList, function (round, key) {
-                        console.log(knockout.roundsList, "roundlist");
                         if (key > 0 && key < 3) {
                             _.each(round.match, function (match, index) {
                                 var match1, match2;
 
-                                if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2].opponentsSingle) {
-                                    match1 = knockout.roundsList[key - 1].match[index * 2].opponentsSingle;
+                                if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
+                                    match1 = knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar];
                                 }
-                                if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2].opponentsSingle) {
-                                    match2 = knockout.roundsList[key - 1].match[index * 2 + 1].opponentsSingle;
+                                if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
+                                    match2 = knockout.roundsList[key - 1].match[index * 2 + 1][resultVar.opponentsVar];
                                 }
-                                match.opponentsSingle = sortOpponents(match.opponentsSingle, match1, match2);
+                                console.log(match, match[resultVar.opponentsVar], resultVar.opponentsVar, "resultVar.opponentsVar");
+                                match[resultVar.opponentsVar] = sortOpponents(match[resultVar.opponentsVar], match1, match2, key);
                             });
                         }
                     });
+                    console.log(data.data.data);
+                    callback(data);
                 }
-                console.log(data.data.data);
-                callback(data);
+
             });
         },
         editDetails: function (id, callback) {

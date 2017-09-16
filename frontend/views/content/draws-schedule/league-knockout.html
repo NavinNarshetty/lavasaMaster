@@ -291,10 +291,10 @@
                           </div>
                         </td>
                         <td>
-                          <div class="text-capitalize" ng-if="content.score">
-                            {{content.score}}
+                          <div class="text-capitalize" ng-if="content.opponentsTeam[0].finalPoint && content.opponentsTeam[1].finalPoint">
+                            <span>{{content.opponentsTeam[0].finalPoint}} </span> - <span>{{content.opponentsTeam[1].finalPoint}}</span>
                           </div>
-                          <div class="text-capitalize" ng-if="!content.score">
+                          <div class="text-capitalize" ng-if="!content.opponentsTeam[0].finalPoint && !content.opponentsTeam[1].finalPoint">
                             -
                           </div>
                         </td>

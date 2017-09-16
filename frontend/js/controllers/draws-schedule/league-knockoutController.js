@@ -219,6 +219,44 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
               $scope.knockout = _.flattenDeep($scope.knockoutArr);
               if (allData.data.qualifying) {
                 $scope.matches = allData.data.qualifying.roundsList;
+                _.each($scope.matches, function (data) {
+                  _.each(data.match, function (key) {
+                    if (key.opponentsTeam) {
+                      _.each(key.opponentsTeam, function (team, index) {
+                        if (key.resultFootball !== undefined) {
+                          if (team._id === key.resultFootball.winner.player) {
+                            team.isWinner = true;
+                          }
+                        }
+                        if (key.resultFootball !== undefined && key.resultFootball.teams) {
+                          _.each(key.resultFootball.teams, function (n) {
+                            n.walkover = Boolean(n.walkover);
+                            n.noShow = Boolean(n.noShow);
+                            team.finalPoint = key.resultFootball.teams[index].teamResults.finalPoints;
+
+                          });
+                          $scope.tempWakover = _.find(key.resultFootball.teams, ['walkover', true]);
+                          $scope.tempNoshow = _.find(key.resultFootball.teams, ['noShow', true]);
+                          if ($scope.tempWakover) {
+                            key.walkover = $scope.tempWakover.walkover;
+                          }
+                          if ($scope.tempNoshow) {
+                            key.noShow = $scope.tempNoshow.noShow;
+                          }
+
+                        }
+
+                      });
+                    }
+                    if (key.resultFootball) {
+                      key.isNoMatch = key.resultFootball.isNoMatch;
+                      key.isDraw = key.resultFootball.isDraw;
+                      key.status = key.resultFootball.status;
+                    } else {
+                      console.log("im in else");
+                    }
+                  });
+                });
               }
 
               console.log($scope.knockout, "$scope.knockout");
