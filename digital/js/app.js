@@ -104,9 +104,14 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'KnockoutTeamCtrl'
         })
         .state('knockout', {
-            url: "/:drawFormat/:id",
+            url: "knockout/:drawFormat/:id",
             templateUrl: tempateURL,
             controller: 'KnockoutCtrl'
+        })
+        .state('league-knockout', {
+            url: "/league-knockout/:drawFormat/:id",
+            templateUrl: tempateURL,
+            controller: 'LeagueKnockoutCtrl'
         })
 
         .state('form', {
