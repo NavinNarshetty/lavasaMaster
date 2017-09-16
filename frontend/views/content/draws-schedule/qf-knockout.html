@@ -26,7 +26,7 @@
       <!--END KNOCKOUT HEAD-->
       <!--KNOCKOUT TABLE-->
       <div class="qf-knockout-table q-orange-table table-responsive ">
-        <table class="table-draws-schedule table-five">
+        <table class="table-draws-schedule table-five" ng-if="knockout.length>0">
           <thead>
             <tr>
               <th>
@@ -102,7 +102,7 @@
       <!--QUALIFYING HEAD-->
       <div class="qf-knockout-qualifyinghead">
         <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Qualifying</h3>
-        <p class="sport-color-primary"><span>{{qualifying[0].match[0].scheduleDate |englishNumeralDate}}</span>
+        <p class="sport-color-primary" ng-if="qualifying[0].match[0].scheduleDate"><span>{{qualifying[0].match[0].scheduleDate |englishNumeralDate}}</span>
           <span> |</span>
           <span>{{qualifying[0].match[0].scheduleTime}}</span></p>
       </div>
@@ -110,7 +110,7 @@
 
       <!--QUALIFYING TABLE-->
       <div class="qf-knouckout-qftable q-blue-table table-responsive">
-        <table class="table-draws-schedule table-six">
+        <table class="table-draws-schedule table-six" ng-if="qualifying[0].match.length>0">
           <thead>
             <tr>
               <th>

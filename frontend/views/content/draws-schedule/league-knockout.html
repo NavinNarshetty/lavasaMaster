@@ -73,8 +73,11 @@
                 </div>
               </td>
               <td>
-                <div class="text-capitalize">
+                <div class="text-capitalize" ng-if="data.score">
                   {{data.score}}
+                </div>
+                <div class="text-capitalize" ng-if="!data.score">
+                  -
                 </div>
               </td>
               <td>
@@ -288,8 +291,11 @@
                           </div>
                         </td>
                         <td>
-                          <div class="text-capitalize">
+                          <div class="text-capitalize" ng-if="content.score">
                             {{content.score}}
+                          </div>
+                          <div class="text-capitalize" ng-if="!content.score">
+                            -
                           </div>
                         </td>
                         <td>

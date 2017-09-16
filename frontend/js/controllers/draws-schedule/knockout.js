@@ -425,9 +425,6 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
     }, {
         roundname: 'Round 3'
     }];
-
-
-
     $scope.constraints = {};
     $scope.getSportSpecificRounds = function (roundName) {
         if ($stateParams.id) {
@@ -453,13 +450,43 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
                                             _.each(obj.studentTeam, function (value) {
                                                 value.fullName = value.studentId.firstName + ' ' + value.studentId.surname;
                                             });
-                                            // obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
-                                            // console.log(obj, "objjjjjj");
+                                        }
 
-
-
+                                        if (value && value.resultsRacquet) {
+                                            value.isNoMatch = value.resultsRacquet.isNoMatch;
+                                            value.status = value.resultsRacquet.status;
+                                            // value.teams
 
                                         }
+                                        if (value.resultsRacquet && value.resultsRacquet.winner) {
+                                            if (obj._id === value.resultsRacquet.winner.player) {
+                                                obj.isWinner = true;
+                                                value.isWinner = obj.isWinner;
+
+                                            } else {
+                                                obj.isWinner = false;
+                                            }
+                                        }
+
+                                        if (value.resultsRacquet !== undefined && value.resultsRacquet.teams) {
+                                            _.each(value.resultsRacquet.teams, function (n) {
+                                                n.walkover = Boolean(n.walkover);
+                                                n.noShow = Boolean(n.noShow);
+                                            });
+                                            $scope.tempWakover = _.find(value.resultsRacquet.teams, ['walkover', true]);
+                                            $scope.tempNoshow = _.find(value.resultsRacquet.teams, ['noShow', true]);
+                                            if ($scope.tempWakover) {
+                                                value.walkover = $scope.tempWakover.walkover;
+                                            }
+                                            if ($scope.tempNoshow) {
+                                                value.noShow = $scope.tempNoshow.noShow;
+
+                                            }
+                                        }
+
+
+
+
 
                                     });
 
@@ -690,12 +717,15 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
 
                                         }
                                         _.each(value.opponentsTeam, function (team) {
-                                            if (team._id === value.resultVolleyball.winner.player) {
-                                                team.isWinner = true;
+                                            if (team._id && value.resultVolleyball && value.resultVolleyball.winner) {
+                                                if (team._id === value.resultVolleyball.winner.player) {
+                                                    team.isWinner = true;
 
-                                            } else {
-                                                team.isWinner = false;
+                                                } else {
+                                                    team.isWinner = false;
+                                                }
                                             }
+
                                         });
                                     }
 
