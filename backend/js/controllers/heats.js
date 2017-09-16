@@ -7,6 +7,7 @@ myApp.controller('DetailHeatCtrl', function ($scope, TemplateService, Navigation
   $scope.navigation = NavigationService.getnav();
   $scope.matchData = {};
   $scope.formData = {};
+  $scope.high = [];
 
   // STATUS LIST END
   $scope.getOneBackend = function () {
@@ -234,17 +235,11 @@ myApp.controller('DetailQualifyingCtrl', function ($scope, TemplateService, Navi
   // SAVE
   $scope.saveDataMatch = function () {
     console.log($scope.formData, "save");
-    $scope.result = {};
-    // result.result = $scope.formData.resultHeat;
-    // $scope.obj = $.jStorage.get("detail")
-    _.each($scope.formData.resultHeat.players, function (key) {
-      key.show = false;
-    })
     NavigationService.saveMatch($scope.formData, function (data) {
       if (data.value == true) {
         console.log("in")
         console.log($scope.formData, "suksha");
-        $scope.getOneBackend()
+        $scope.show = false;
 
 
         // $scope.draw = $scope.data.sport.sportslist.drawFormat.name

@@ -1860,6 +1860,7 @@ myApp.controller('TeamSportCtrl', function ($scope, TemplateService, NavigationS
         $scope.url = "TeamSport/rejectionTeam";
         $scope.constraints = {};
         $scope.constraints.teamId = data;
+        console.log(data, "teamid")
         NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
             if (data.value) {
                 toastr.success('Successfully Deleted', 'Team Sport Message');

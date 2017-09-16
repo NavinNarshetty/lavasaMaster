@@ -178,12 +178,12 @@
                         </td>
                         <td>
                           <div class="display-content-holder" ng-if="!show">
-                            <p>{{player.set}}</p>
+                            <p>{{player.attempt.length}}</p>
                           </div>
-                          <div class="edit-content-holder" ng-if="show">
-                            <input type="text" name="incrementalId" ng-model="player.set" class="form-control" placeholder="Sport">
+                          <!-- <div class="edit-content-holder" ng-if="show" ng-repeat="set in player.attempt track by $index">
+                            <input type="text" name="incrementalId" ng-model="player.attempt" class="form-control" placeholder="Sport">
                             <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
-                          </div>
+                          </div> -->
                         </td>
                         <td>
                           <div class="display-content-holder" ng-if="!show">
@@ -211,6 +211,16 @@
                   </table>
                 </div>
                 <!-- TABLE OF HEAT PLAYERS END -->
+                <div class="row">
+                  <div class="col-md-4" ng-repeat="attp in formData.resultQualifyingRound.player.attempt track by $index">
+                    <div class="attempt-holder-highjump form-group">
+                      <label for="">Attempt{{$index + 1}}</label>
+                      <input type="text" name="incrementalId" ng-model="formData.resultQualifyingRound.player.attempt[$index]" class="form-control"
+                        placeholder="Sport">
+                    </div>
+                  </div>
+                </div>
+
               </div>
               <div class=" text-center mt20 odd-even-button ">
                 <button class="btn btn-default " type="submit " ng-click="saveDataMatch(formData) ">Save</button>
