@@ -354,6 +354,9 @@ var model = {
                         finalData.sportsName = found.sport.sportslist.name;
                         finalData.age = found.sport.ageGroup.name;
                         finalData.gender = found.sport.gender;
+                        if (found.excelType) {
+                            finalData.stage = found.excelType;
+                        }
                         finalData.minTeamPlayers = found.sport.minTeamPlayers;
                         finalData.maxTeamPlayers = found.sport.maxTeamPlayers;
                         finalData.sportType = found.sport.sportslist.sportsListSubCategory.sportsListCategory.name;
@@ -1045,6 +1048,166 @@ var model = {
 
     },
 
+    getStandings: function (data, callback) {
+        var deepSearch = "opponentsTeam";
+        var standings = [];
+        var teams = [];
+        var tablePoint = [];
+        var final = {};
+        async.waterfall([
+                function (callback) {
+                    Match.find({
+                        sport: data.sport,
+                        excelType: {
+                            $regex: "league",
+                            $options: "i"
+                        }
+                    }).lean().deepPopulate(deepSearch).sort({
+                        createdAt: 1
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                var matchesPerPool = _.groupBy(found, 'round');
+                                callback(null, matchesPerPool);
+                            }
+                        }
+                    });
+                },
+                function (matchesPerPool, callback) {
+                    var arr = _.keys(matchesPerPool);
+                    var i = 0;
+                    while (i != arr.length) {
+                        var match = {};
+                        var name = arr[i];
+                        match.name = arr[i];
+                        var n = matchesPerPool[name].length;
+                        _.each(matchesPerPool[name], function (match) {
+                            var team = {};
+                            if (match.opponentsTeam[0]) {
+                                team.id = match.opponentsTeam[0];
+                                teams.push(team);
+                            }
+                            if (match.opponentsTeam[1]) {
+                                team.id = match.opponentsTeam[1];
+                                teams.push(team);
+                            }
+                        });
+                        var t = _.uniq(teams, 'id');
+                        match.teams = t;
+                        teams = [];
+                        // match.match = matchesPerPool[name];
+                        standings.push(match);
+                        i++;
+                    }
+                    callback(null, standings);
+                },
+                function (standings, callback) {
+                    // final.standings = standings;
+                    async.eachSeries(standings, function (n, callback) {
+                        // console.log("*****", n);
+                        Match.getPointsPerPool(n, data, function (err, complete) {
+                            if (err || _.isEmpty(complete)) {
+                                callback(err, null);
+                            } else {
+                                var dummy = {};
+                                dummy.name = n.name;
+                                dummy.points = complete;
+                                tablePoint.push(dummy);
+                                callback(null, tablePoint);
+                            }
+                        });
+                    }, function (err) {
+                        final.tablePoint = tablePoint;
+                        callback(null, final);
+                    });
+                }
+            ],
+            function (err, results) {
+                if (err || _.isEmpty(results)) {
+                    callback(null, results);
+                } else {
+                    callback(null, results);
+                }
+            });
+    },
+
+    getPointsPerPool: function (standings, data, callback) {
+        async.concatSeries(standings.teams, function (team, callback) {
+            async.waterfall([
+                    function (callback) {
+                        var teamData = {};
+                        teamData.teamId = team.id.teamId;
+                        teamData.schoolName = team.id.schoolName;
+                        teamData._id = team.id._id;
+                        var teamid = team.id._id.toString();
+                        Match.find({
+                            sport: data.sport,
+                            excelType: {
+                                $regex: "league",
+                                $options: "i"
+                            },
+                            "resultFootball.teams.team": teamid,
+                            round: standings.name
+                        }).lean().deepPopulate("opponentsTeam").sort({
+                            createdAt: 1
+                        }).exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(found)) {
+                                    teamData.matches = found;
+                                    callback(null, teamData);
+                                } else {
+                                    teamData.matches = found;
+                                    callback(null, teamData);
+                                }
+                            }
+                        });
+                    },
+                    function (teamData, callback) {
+                        var scores = {};
+                        scores._id = teamData._id;
+                        scores.teamid = teamData.teamId;
+                        scores.schoolName = teamData.schoolName;
+                        scores.win = 0;
+                        scores.draw = 0;
+                        scores.points = 0;
+                        scores.loss = 0;
+                        scores.matchCount = 0;
+
+                        _.each(teamData.matches, function (match) {
+                            scores.matchCount = teamData.matches.length;
+                            if (teamData._id == match.resultFootball.winner.player) {
+                                scores.win = ++scores.win;
+                                scores.points = scores.points + 3;
+                            } else if (_.isEmpty(match.resultFootball.winner.player) && match.resultFootball.isDraw == true) {
+                                scores.draw = ++scores.draw;
+                                scores.points = scores.points + 2;
+                            } else {
+                                scores.loss = ++scores.loss;
+                            }
+                        });
+                        // scores.teamData = teamData;
+                        callback(null, scores);
+                    },
+                ],
+                function (err, results) {
+                    if (err || _.isEmpty(results)) {
+                        callback(null, results);
+                    } else {
+                        callback(null, results);
+                    }
+                });
+        }, function (err, result) {
+            callback(null, result);
+        });
+
+    },
+
     //-----------------------------SAVE Excel ---------------------------------------------
 
     saveKnockoutIndividual: function (importData, data, callback) {
@@ -1221,6 +1384,7 @@ var model = {
                     if (singleData.error) {
                         callback(null, singleData);
                     } else {
+                        data.isLeagueKnockout = false;
                         data.sport = singleData[0].success.sport;
                         Match.addPreviousMatch(data, function (err, sportData) {
                             callback(null, singleData);
@@ -1905,21 +2069,43 @@ var model = {
         var thirdPlaceCount = 0;
         async.waterfall([
                 function (callback) {
-                    Match.find({
-                        sport: data.sport
-                    }).lean().sort({
-                        createdAt: -1
-                    }).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(found)) {
-                                callback(null, []);
+                    if (data.isLeagueKnockout == false) {
+                        Match.find({
+                            sport: data.sport
+                        }).lean().sort({
+                            createdAt: -1
+                        }).exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
                             } else {
-                                callback(null, found);
+                                if (_.isEmpty(found)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, found);
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        Match.find({
+                            sport: data.sport,
+                            excelType: {
+                                $regex: "knockout",
+                                $options: "i"
+                            }
+                        }).lean().sort({
+                            createdAt: -1
+                        }).exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(found)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, found);
+                                }
+                            }
+                        });
+                    }
                 },
                 function (found, callback) {
                     if (data.thirdPlace == 'yes') {
@@ -1982,7 +2168,10 @@ var model = {
                     if (data.thirdPlace == "yes") {
                         Match.findOne({
                             sport: data.sport,
-                            round: "Final"
+                            round: {
+                                $regex: "final",
+                                $options: "i"
+                            }
                         }).lean().exec(function (err, found) {
                             if (err) {
                                 callback(err, null);
@@ -1998,135 +2187,10 @@ var model = {
                                     };
                                     Match.update({
                                         sport: data.sport,
-                                        round: "Third Place"
-                                    }, updateObj).exec(
-                                        function (err, match) {
-                                            callback(null, final);
-                                        });
-                                }
-                            }
-                        });
-                    } else {
-                        callback(null, final);
-                    }
-                },
-            ],
-            function (err, results) {
-                if (err || _.isEmpty(results)) {
-                    callback(err, null);
-                } else {
-                    callback(null, results);
-                }
-            });
-    },
-
-    addPreviousLeagueKnockoutMatch: function (data, callback) {
-        var count = 0;
-        var match = {};
-        var final = {};
-        match.prev = [];
-        final.finalPrevious = [];
-        var thirdPlaceCount = 0;
-        async.waterfall([
-                function (callback) {
-                    Match.find({
-                        sport: data.sport,
-                        excelType: {
-                            $regex: "knockout",
-                            $options: "i"
-                        }
-                    }).lean().sort({
-                        createdAt: -1
-                    }).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(found)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, found);
-                            }
-                        }
-                    });
-                },
-                function (found, callback) {
-                    if (data.thirdPlace == 'yes') {
-                        thirdPlaceCount = 0;
-                    } else {
-                        thirdPlaceCount = 1;
-                    }
-
-                    final.matchData = found;
-                    async.eachSeries(found, function (singleData, callback) {
-                        if (thirdPlaceCount == 0) {
-                            if (count < 2) {
-                                match.prev.push(singleData._id);
-                                count++;
-                            }
-                            if (count == 2) {
-                                final.finalPrevious.push(match.prev);
-                                match.prev = [];
-                                count = 0;
-                            }
-                        } else {
-                            thirdPlaceCount = 0;
-                        }
-                        callback(null, count);
-                    }, function (err) {
-                        callback(null, final);
-                    });
-                },
-                function (final, callback) {
-                    var range = parseInt(data.range) + 1;
-                    var rangeTotal = data.rangeTotal;
-                    var i = 0;
-                    var row = 0;
-                    var ThirdPlace = [];
-                    async.eachSeries(final.finalPrevious, function (singleData, callback) {
-                            var id = final.matchData[row]._id;
-                            var updateObj = {
-                                $set: {
-                                    prevMatch: final.finalPrevious[i]
-                                }
-                            };
-                            console.log("row", row, "rangeTotal", rangeTotal);
-                            if (final.matchData[row].round != "Third Place") {
-                                Match.update({
-                                    _id: id
-                                }, updateObj).exec(
-                                    function (err, match) {
-                                        console.log("updated");
-                                    });
-                            }
-                            i++;
-                            row++;
-                            callback(null, final);
-                        },
-                        function (err) {
-                            callback(null, final);
-                        });
-                },
-                function (final, callback) {
-                    if (data.thirdPlace == "yes") {
-                        Match.findOne({
-                            sport: data.sport,
-                            round: "Final"
-                        }).lean().exec(function (err, found) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                if (_.isEmpty(found)) {
-                                    callback(null, []);
-                                } else {
-
-                                    var updateObj = {
-                                        $set: {
-                                            prevMatch: found.prevMatch
+                                        round: {
+                                            $regex: "third place",
+                                            $options: "i"
                                         }
-                                    };
-                                    Match.update({
-                                        sport: data.sport,
-                                        round: "Third Place"
                                     }, updateObj).exec(
                                         function (err, match) {
                                             callback(null, final);
@@ -2458,8 +2522,9 @@ var model = {
                 if (singleData.error) {
                     callback(null, singleData);
                 } else {
+                    data.isLeagueKnockout = true;
                     data.sport = singleData[0].success.sport;
-                    Match.addPreviousLeagueKnockoutMatch(data, function (err, sportData) {
+                    Match.addPreviousMatch(data, function (err, sportData) {
                         callback(null, singleData);
                     });
                 }
@@ -5559,6 +5624,8 @@ var model = {
                     }
                 }
             });
-    }
+    },
+
+
 };
 module.exports = _.assign(module.exports, exports, model);
