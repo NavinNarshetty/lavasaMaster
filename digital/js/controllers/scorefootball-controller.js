@@ -404,6 +404,15 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       }
     }
     // REMOVE MATCH SCORESHEET END
+    // MATCH DRAW
+    $scope.matchDraw = function(){
+      if ($scope.match.resultFootball.isDraw == false) {
+        $scope.match.resultFootball.isDraw = true;
+      } else {
+        $scope.match.resultFootball.isDraw = false;
+      }
+    }
+    // MATCH DRAW END
     // FUNCTIONS END
 
     // API CALLS
@@ -419,6 +428,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
               }
                 $scope.match = data.data;
                 $scope.match.matchId = $scope.matchData.matchId;
+                // $scope.match.resultFootball.isDraw = false;
                 _.each($scope.match.resultFootball.teams[0].teamResults.sets, function(n,key){
                   $scope.setLength[key] = {
                     setShow : true
@@ -469,7 +479,15 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     // DESTROY AUTO SAVE END
     // AUTO SAVE END
     // MATCH COMPLETE
+    // FOR KNOCKOUT
     $scope.completePopup = function(){
+      if($scope.match.resultFootball.matchPhoto.length == 0){
+        toastr.error('Please upload match photo.', 'Data Incomplete');
+      } else if ($scope.match.resultFootball.scoreSheet.length == 0) {
+        toastr.error('Please upload scoresheet.', 'Data Incomplete');
+      }else if(!$scope.match.resultFootball.winner.player){
+        toastr.error('Please select a winner.', 'Data Incomplete');
+      }  else {
       var modalCompleteMatch;
         $rootScope.modalInstance = $uibModal.open({
           animation: true,
@@ -479,7 +497,43 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
           templateUrl: 'views/modal/confirmcomplete.html',
           windowClass: 'completematch-modal'
         })
+      }
     };
+    // FOR KNOCKOUT END
+    // FOR LEAGUE
+    $scope.completePopupDraw = function(){
+      if($scope.match.resultFootball.matchPhoto.length == 0){
+        toastr.error('Please upload match photo.', 'Data Incomplete');
+      } else if ($scope.match.resultFootball.scoreSheet.length == 0) {
+        toastr.error('Please upload scoresheet.', 'Data Incomplete');
+      } else {
+        if ($scope.match.resultFootball.isDraw == true) {
+          $scope.match.resultFootball.winner = {};
+          $rootScope.modalInstance = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            // backdrop: 'static',
+            // keyboard: false,
+            templateUrl: 'views/modal/confirmcomplete.html',
+            windowClass: 'completematch-modal'
+          })
+        } else{
+          if(!$scope.match.resultFootball.winner.player){
+            toastr.error('Please select a winner.', 'Data Incomplete');
+          } else {
+            $rootScope.modalInstance = $uibModal.open({
+              animation: true,
+              scope: $scope,
+              // backdrop: 'static',
+              // keyboard: false,
+              templateUrl: 'views/modal/confirmcomplete.html',
+              windowClass: 'completematch-modal'
+            })
+          }
+        }
+      }
+    };
+    // FOR LEAGUE END
     $scope.matchComplete = function(){
       if ($scope.match.resultFootball) {
         $scope.match.resultFootball.status = "IsCompleted";

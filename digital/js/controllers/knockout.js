@@ -448,7 +448,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
                             $scope.roundsList = allData.data.roundsList;
                             if ($scope.roundsListName.length === 0 || $scope.roundsList.length === 0) {
                                 toastr.error("No Data Found", 'Error Message');
-                                $state.go('digital-home');
+                                $state.go('championshipschedule');
                             }
                             _.each($scope.roundsList, function (key) {
                                 _.each(key.match, function (value) {
@@ -458,13 +458,43 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
                                             _.each(obj.studentTeam, function (value) {
                                                 value.fullName = value.studentId.firstName + ' ' + value.studentId.surname;
                                             });
-                                            // obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
-                                            // console.log(obj, "objjjjjj");
+                                        }
 
-
-
+                                        if (value && value.resultsRacquet) {
+                                            value.isNoMatch = value.resultsRacquet.isNoMatch;
+                                            value.status = value.resultsRacquet.status;
+                                            // value.teams
 
                                         }
+                                        if (value.resultsRacquet && value.resultsRacquet.winner) {
+                                            if (obj._id === value.resultsRacquet.winner.player) {
+                                                obj.isWinner = true;
+                                                value.isWinner = obj.isWinner;
+
+                                            } else {
+                                                obj.isWinner = false;
+                                            }
+                                        }
+
+                                        if (value.resultsRacquet !== undefined && value.resultsRacquet.teams) {
+                                            _.each(value.resultsRacquet.teams, function (n) {
+                                                n.walkover = Boolean(n.walkover);
+                                                n.noShow = Boolean(n.noShow);
+                                            });
+                                            $scope.tempWakover = _.find(value.resultsRacquet.teams, ['walkover', true]);
+                                            $scope.tempNoshow = _.find(value.resultsRacquet.teams, ['noShow', true]);
+                                            if ($scope.tempWakover) {
+                                                value.walkover = $scope.tempWakover.walkover;
+                                            }
+                                            if ($scope.tempNoshow) {
+                                                value.noShow = $scope.tempNoshow.noShow;
+
+                                            }
+                                        }
+
+
+
+
 
                                     });
 
