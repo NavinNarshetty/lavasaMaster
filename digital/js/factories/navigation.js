@@ -33,7 +33,7 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 method: "POST",
                 data: formData
             }).success(function (data) {
-                console.log(data, "nav");
+                // console.log(data, "nav");
                 callback(data)
             });
         },
@@ -47,22 +47,21 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 callback(data)
             });
         },
-        saveMatchPp: function (match, callback) {
+        saveMatchPp: function (match,resultVar,callback) {
             // console.log(formData, 'saveMatch');
-            console.log(match);
-            var resulrVar = ResultSportInitialization.getResultVariable(match.sportsName);
-
-            var obj = {};
-            obj[resulrVar] = match[resulrVar];
+            // console.log(match);
+            // console.log(resultVar);
+            var obj={};
+            obj[resultVar] = match[resultVar];
             obj.matchId = match.matchId;
-            console.log(obj);
-            // $http({
-            //     url: adminurl + "match/updateResult",
-            //     method: "POST",
-            //     data: formData
-            // }).success(function (data) {
-            //     callback(data)
-            // });
+            // console.log(obj);
+            $http({
+                url: adminurl + "match/updateResult",
+                method: "POST",
+                data: obj
+            }).success(function (data) {
+                callback(data)
+            });
         },
         saveFootball: function (formData, callback) {
             // console.log(formData, 'saveMatch');
@@ -114,12 +113,12 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                     _.remove(arrToSort, function (n) {
                         return n == null;
                     });
-                    console.log("match1", match1);
-                    console.log("match2", match2);
+                    // console.log("match1", match1);
+                    // console.log("match2", match2);
                     var sortedArr = _.cloneDeep(arrToSort);
 
                     if (_.isEmpty(arrToSort)) {
-                        console.log("------------------------------------------");
+                        // console.log("------------------------------------------");
 
                         return [{}, {}];
                     } else if (arrToSort.length == 1) {
@@ -132,9 +131,9 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                             sortedArr[0] = arrToSort[0];
                             sortedArr[1] = {};
                         }
-                        console.log("sortedArr", sortedArr);
-                        console.log("arrayLength 1");
-                        console.log("------------------------------------------");
+                        // console.log("sortedArr", sortedArr);
+                        // console.log("arrayLength 1");
+                        // console.log("------------------------------------------");
 
                         return sortedArr;
                     } else if (arrToSort.length == 2) {
@@ -145,9 +144,9 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                             sortedArr[0] = arrToSort[0];
                             sortedArr[1] = arrToSort[1];
                         }
-                        console.log("sortedArr", sortedArr);
-                        console.log("arrayLength 2");
-                        console.log("------------------------------------------");
+                        // console.log("sortedArr", sortedArr);
+                        // console.log("arrayLength 2");
+                        // console.log("------------------------------------------");
 
                         return sortedArr;
                     }

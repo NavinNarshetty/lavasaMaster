@@ -1,16 +1,27 @@
-myApp.controller('BasketballScoreCtrl', function ($scope, TemplateService, NavigationService,ResultSportInitialization,$timeout, $uibModal, $stateParams, $state, $interval, toastr) {
+myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationService, ResultSportInitialization, $timeout, $uibModal, $stateParams, $state, $interval, toastr) {
 
   $scope.matchData = {};
-  $scope.stateParams = {
+  $scope.stateParam = {
     "id": $stateParams.id,
     "drawFormat": $stateParams.drawFormat,
     "sport": $stateParams.sport
+  };
+  $scope.matchId = $stateParams.id;
+  var teamSelectionModal;
+  var playerScoreModal;
+  var resultVar;
+
+  var initPage = function () {
+    $scope.template = TemplateService.getHTML("content/" + $scope.matchData.html);
+    TemplateService.title = "Score Basketball"; //This is the Title of the Website
+    $scope.navigation = NavigationService.getNavigation();
   }
-  var teamSelection;
 
   $scope.getOneMatch = function () {
-    
-    NavigationService.getOneMatch({matchId:$stateParams.id}, function (data) {
+
+    NavigationService.getOneMatch({
+      matchId: $stateParams.id
+    }, function (data) {
       if (data.value == true) {
         if (data.data.error) {
           $scope.matchError = data.data.error;
@@ -19,12 +30,15 @@ myApp.controller('BasketballScoreCtrl', function ($scope, TemplateService, Navig
         }
         $scope.match = data.data;
         $scope.match.matchId = $stateParams.id;
-        $scope.matchData=ResultSportInitialization.getResultVariable($scope.match.sportsName);
+        $scope.matchData = ResultSportInitialization.getResultVariable($scope.match.sportsName);
+        resultVar = $scope.matchData.resultVar;
         $scope.matchData.matchId = $stateParams.id;
+        initPage();
         console.log($scope.match);
         console.log($scope.matchData);
-        if ($scope.match.resultBasketball.teams[0] == "" || $scope.match.resultBasketball.teams[0].formation == "" || $scope.match.resultBasketball.teams[1].coach == "" || $scope.match.resultBasketball.teams[1] == '') {
-          $scope.selectTeam($scope.match.resultBasketball);
+        console.log(resultVar);
+        if ($scope.match[resultVar].teams[0] == "" || $scope.match[resultVar].teams[0].formation == "" || $scope.match[resultVar].teams[1].coach == "" || $scope.match[resultVar].teams[1] == '') {
+          $scope.selectTeam($scope.match);
         }
       } else {
         console.log("ERROR IN getOneMatch");
@@ -33,31 +47,32 @@ myApp.controller('BasketballScoreCtrl', function ($scope, TemplateService, Navig
   };
   $scope.getOneMatch();
 
-  $scope.template = TemplateService.getHTML($scope.matchData.html);
-  TemplateService.title = "Score Basketball"; //This is the Title of the Website
-  $scope.navigation = NavigationService.getNavigation();
 
 
-  // SELECT TEAM
+  //Common Modal For All Matches
+  //SELECT TEAM
   $scope.selectTeam = function (match) {
     $scope.clonedMatch = _.cloneDeep(match);
-    $scope.result=clonedMatch.resultBasketball;
-    teamSelection = $uibModal.open({
+    console.log($scope.clonedMatch);
+    $scope.result = $scope.clonedMatch[resultVar];
+    console.log($scope.result);
+    teamSelectionModal = $uibModal.open({
       animation: true,
       scope: $scope,
-      // backdrop: 'static',
-      // keyboard: false,
+      backdrop: 'static',
+      keyboard: false,
       size: 'lg',
       templateUrl: 'views/modal/teamselection-modal.html',
       windowClass: 'teamselection-modal'
     })
   }
-  // SELECT PLAYING
+  //SELECT PLAYING
+  //Common Modal For All Matches ends
+
+
   $scope.selectPlaying = function (team, player) {
-    $scope.isPlayer = player;
-    $scope.playingTeam = team;
     $scope.playingCount = 0;
-    _.each($scope.playingTeam.players, function (n) {
+    _.each(team.players, function (n) {
       if (n.isPlaying == true) {
         $scope.playingCount = $scope.playingCount + 1;
       }
@@ -66,28 +81,27 @@ myApp.controller('BasketballScoreCtrl', function ($scope, TemplateService, Navig
     console.log($scope.playingCount, 'playingCount');
     console.log("minTeamPlayers", $scope.match.minTeamPlayers);
 
-
-    if ($scope.isPlayer.isPlaying == false) {
+    if (player.isPlaying == false) {
       if ($scope.playingCount < $scope.match.maxTeamPlayers) {
-        if ($scope.isPlayer.isPlaying == true) {
-          $scope.isPlayer.isPlaying = false;
+        if (player.isPlaying == true) {
+          player.isPlaying = false;
         } else {
-          $scope.isPlayer.isPlaying = true;
+          player.isPlaying = true;
         }
       } else {
         toastr.warning('Maximum players selected');
       }
     } else {
-      if ($scope.isPlayer.isPlaying == true) {
-        $scope.isPlayer.isPlaying = false;
+      if (player.isPlaying == true) {
+        player.isPlaying = false;
       } else {
-        $scope.isPlayer.isPlaying = true;
+        player.isPlaying = true;
       }
     }
-
-    console.log($scope.isPlayer, 'playa');
   }
   // SELECT PLAYING END
+
+
   $scope.savePlayingTeam = function (result) {
     console.log(result, 'result');
     var saveCounter = 0;
@@ -117,22 +131,24 @@ myApp.controller('BasketballScoreCtrl', function ($scope, TemplateService, Navig
         matchId: $scope.matchData.matchId
       }
       console.log($scope.matchResult, "matchResult");
-      $scope.saveMatch($scope.matchResult);
+      $scope.saveMatch($scope.matchResult, '1');
     }
   }
   // SELECT TEAM END
 
   // PLAYER POINTS MODAL
-  $scope.modalPlayerPoints = function (player, index) {
+  $scope.modalPlayerPoints = function (player, teamIndex, playerIndex) {
+    $scope.updateTeamIndex = teamIndex;
+    $scope.updatePlayerIndex = playerIndex;
     $scope.selectedPlayer = _.cloneDeep(player);
-    var playerScoreModal;
+
     playerScoreModal = $uibModal.open({
       animation: true,
       scope: $scope,
       // backdrop: 'static',
       keyboard: false,
       size: 'lg',
-      templateUrl: 'views/modal/scoreplayer-basketball.html',
+      templateUrl: 'views/modal/' + $scope.matchData.scoringModal,
       windowClass: 'scoreplayer-football-modal'
     })
   }
@@ -149,6 +165,11 @@ myApp.controller('BasketballScoreCtrl', function ($scope, TemplateService, Navig
     console.log('inPP');
   };
   // PLAYER SCORE INCREMENT END
+
+  $scope.updatePlayerDetails = function (player) {
+    $scope.match[resultVar].teams[$scope.updateTeamIndex].players[$scope.updatePlayerIndex] = player;
+    playerScoreModal.close();
+  }
   // PLAYER POINTS MODAL END
 
   // TEAM SCORE INCREMENT
@@ -181,23 +202,39 @@ myApp.controller('BasketballScoreCtrl', function ($scope, TemplateService, Navig
   // REMOVE MATCH SCORESHEET END
 
   // SAVE RESULT
-  $scope.saveMatch = function (match) {
-    NavigationService.saveMatchPp(match, function (data) {
+  //1-save AND getONE
+  //2-just save i.e. for autoSave
+  //3-complete and save
+  $scope.saveMatch = function (match, flag) {
+    if (flag == '3') {
+      match[resultVar].status = "IsCompleted";
+    };
+    NavigationService.saveMatchPp(match, $scope.matchData.resultVar, function (data) {
       if (data.value == true) {
-        $scope.getOneMatch();
-        teamSelection.close();
+        //for saving players selected
+        if (flag == '1') {
+          $scope.getOneMatch();
+          teamSelectionModal.close();
+        } else if (flag == '2') {
+          //Do Nothing
+        } else if (flag == '3') {
+          $state.go('knockout-team', {
+            drawFormat: $stateParams.drawFormat,
+            id: $stateParams.sport
+          });
+        }
       } else {
         toastr.error('Save Failed, Please Try Again');
       }
     });
-  }
+  };
 
 
   // AUTO SAVE
   $scope.autoSave = function () {
     $scope.$on('$viewContentLoaded', function (event) {
       promise = $interval(function () {
-        $scope.saveMatch($scope.match);
+        $scope.saveMatch($scope.match, '2');
       }, 10000);
     })
   }
@@ -208,5 +245,29 @@ myApp.controller('BasketballScoreCtrl', function ($scope, TemplateService, Navig
     $interval.cancel(promise);
   })
   // AUTO SAVE FUNCTION END
- 
+
+  $scope.matchComplete = function () {
+    if ($scope.match.resultVolleyball) {
+      $scope.match.resultVolleyball.status = "IsCompleted";
+      $scope.matchResult = {
+        resultVolleyball: $scope.match.resultVolleyball,
+        matchId: $scope.matchData.matchId
+      }
+      NavigationService.saveMatch($scope.matchResult, function (data) {
+        if (data.value == true) {
+          $state.go('knockout-team', {
+            drawFormat: $stateParams.drawFormat,
+            id: $stateParams.sport
+          });
+          console.log('save success');
+        } else {
+          toastr.error('Data save failed. Please try again.', 'Save Error');
+        }
+      });
+      console.log($scope.matchResult, 'result#');
+    } else {
+      toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
+    }
+  }
+
 });

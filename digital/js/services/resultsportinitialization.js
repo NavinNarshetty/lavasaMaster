@@ -74,9 +74,10 @@ myApp.factory('ResultSportInitialization', function () {
         },
 
         getTeamTemplate: function (sportName, team) {
-            // console.log("getTeamTemplate", team);
+            console.log("getTeamTemplate", team);
             var format = {
-                teamId: team._id,
+                teamId: team.teamId,
+                team:team._id,
                 noShow: false,
                 walkover: false,
                 coach: "",
@@ -197,7 +198,7 @@ myApp.factory('ResultSportInitialization', function () {
                     returnResult.resultHockey = format;
                     obj.initializeTeamAndPlayers(sportName, returnResult.resultHockey, match);
                     return returnResult;
-                    
+                     
                 case "Kabaddi":
                     returnResult.resultKabaddi = format;
                     obj.initializeTeamAndPlayers(sportName, returnResult.resultKabaddi, match);
@@ -234,25 +235,25 @@ myApp.factory('ResultSportInitialization', function () {
 
             switch (sportName) {
                 case "Basketball":
-                    return {resultVar:"resultBasketball",html:"content/scorebasketball-controller.js"};
+                    return {resultVar:"resultBasketball",html:"scorebasketball.html",scoringModal:"scoreplayer-basketball.html"};
                     
                 case "Football":
-                    return {resultVar:"resultFootball",html:"content/scorebasketball-controller.js"};
+                    return {resultVar:"resultFootball",html:"scorefootball.html",scoringModal:"scoreplayer-football.html"};
                     
                 case "Hockey":
-                    return {resultVar:"resultHockey",html:"content/scorebasketball-controller.js"};
+                    return {resultVar:"resultHockey",html:"scorehockey.html",scoringModal:"scoreplayer-hockey.html"};
                     
                 case "Kabaddi":
-                    return {resultVar:"resultKabaddi",html:"content/scorebasketball-controller.js"};
+                    return {resultVar:"resultKabaddi",html:"scorekabaddi.html",scoringModal:"scoreplayer-kabaddi.html"};
                     
                 case "Volleyball":
-                    return {resultVar:"resultVolleyball",html:"content/scorebasketball-controller.js"}; 
+                    return {resultVar:"resultVolleyball",html:"scorevolleyball.html",scoringModal:"scoreplayer-volleyball.html"}; 
                     
                 case "Handball":
-                    return {resultVar:"resultHandball",html:"content/scorebasketball-controller.js"};
+                    return {resultVar:"resultHandball",html:"scorehandball.html",scoringModal:"scorehandball.html"};
                     
                 case "Water Polo":
-                    return {resultVar:"resultWaterPolo",html:"content/scorebasketball-controller.js"};
+                    return {resultVar:"resultWaterPolo",html:"scorewaterpolo.html",scoringModal:"scorewaterpolo.html"};
                     
             }
         }

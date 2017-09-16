@@ -22,11 +22,11 @@
           </div>
         </div>
       </div>
-      <div class="row">
+      <!--<div class="row">
         <button type="button" name="button" class="btn" ng-click="selectTeam(match)" ng-if="!match.resultBasketball.teamInitialized"> Select Players</button>
         <button type="button" name="button" class="btn" ng-click="selectTeam(match)" ng-if="match.resultBasketball.teamInitialized"> View Selected Players</button>
         
-      </div>
+      </div>-->
       <!-- TEAM HEADERS -->
       <!-- TEAM SCORING -->
       <div class="teamscoring-section">
@@ -40,7 +40,7 @@
               </div>
               <div class="team-playing" ng-repeat="player in match.resultBasketball.teams[0].players track by $index">
                
-                <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="modalPlayerPoints(player,$index)">
+                <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="modalPlayerPoints(player,0,$index)">
                   <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
                 </div>
               </div>
@@ -82,7 +82,7 @@
               </div>
               <!-- <pre>{{match.resultBasketball.teams[0].players}}</pre> -->
               <div class="team-playing" ng-repeat="player in match.resultBasketball.teams[1].players track by $index">
-                <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="modalPlayerPoints(player,$index)">
+                <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="modalPlayerPoints(player,1,$index)">
                   <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
                 </div>
               </div>
@@ -185,7 +185,7 @@
             <button class="btn btn-green-outline btn-scoring" promise-btn="yourPromise" ng-click="saveResult(match)">Save</button>
           </div>
           <div class="col-md-4 col-sm-4">
-            <button class="btn btn-green-outline btn-scoring" ng-click="matchComplete();">complete</button>
+            <button class="btn btn-green-outline btn-scoring" ng-click="saveMatch(match,'3');">complete</button>
           </div>
         </div>
         <!-- FINAL BUTTONS END -->
