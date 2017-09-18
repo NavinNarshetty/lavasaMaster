@@ -69,11 +69,11 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
     // DESTROY AUTO SAVE END
     // MATCH COMPLETE
     $scope.completePopup = function(){
-      if($scope.match.resultVolleyball.matchPhoto.length == 0){
+      if($scope.match.resultsCombat.matchPhoto.length == 0){
         toastr.error('Please upload match photo.', 'Data Incomplete');
-      } else if ($scope.match.resultVolleyball.scoreSheet.length == 0) {
+      } else if ($scope.match.resultsCombat.scoreSheet.length == 0) {
         toastr.error('Please upload scoresheet.', 'Data Incomplete');
-      } else if(!$scope.match.resultVolleyball.winner.player){
+      } else if(!$scope.match.resultsCombat.winner.player){
         toastr.error('Please select a winner.', 'Data Incomplete');
       } else {
 

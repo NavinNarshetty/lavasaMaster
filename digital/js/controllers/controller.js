@@ -1,4 +1,4 @@
-myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout) {
+myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal) {
         $scope.template = TemplateService.getHTML("content/home.html");
         TemplateService.title = "Home"; //This is the Title of the Website
         $scope.navigation = NavigationService.getNavigation();
@@ -18,6 +18,20 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
             i++;
             console.log("This is a button Click");
         };
+
+        // DEMO STUFF
+        $scope.tableOption = function(){
+          $uibModal.open({
+            animation: true,
+            scope: $scope,
+            // backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'views/modal/result-rank.html',
+            // size: 'lg',
+            windowClass: 'match-nomatch'
+          })
+        }
+        // DEMO STUFF END
 
 
 
