@@ -139,6 +139,22 @@ myApp.factory('NavigationService', function ($http) {
             classis: "activeColor",
             sref: "#/faq",
             icon: "phone"
+        }, {
+            name: "Certificate",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Certificate Banner",
+                classis: "",
+                sref: "#/certificatebanner",
+                icon: "phone"
+            }, {
+                name: "Certificate Details",
+                classis: "",
+                sref: "#/certificatedetails",
+                icon: "phone"
+            }]
         },
         // {
         //     name: "Student Team",

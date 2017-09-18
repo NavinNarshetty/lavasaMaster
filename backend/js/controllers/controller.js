@@ -1677,6 +1677,20 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
             });
         };
         $scope.getOneOldSchoolById();
+        $scope.dateOptions = {
+            dateFormat: "dd/mm/yy",
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "1900:2050"
+        };
+        $scope.changeFromDate = function (data) {
+            console.log("ChangeDate Called");
+            $scope.formData.fromDate = data;
+        };
+        $scope.changeToDate = function (data) {
+            console.log("ChangeDate Called");
+            $scope.formData.toDate = data;
+        };
         $scope.saveData = function (data) {
             console.log(data);
             if (data) {
@@ -1702,6 +1716,20 @@ myApp.controller('DetailSportsCtrl', function ($scope, TemplateService, Navigati
         };
     } else {
         $scope.title = "Create";
+        $scope.dateOptions = {
+            dateFormat: "dd/mm/yy",
+            changeYear: true,
+            changeMonth: true,
+            yearRange: "1900:2050"
+        };
+        $scope.changeFromDate = function (data) {
+            console.log("ChangeDate Called");
+            $scope.formData.fromDate = data;
+        };
+        $scope.changeToDate = function (data) {
+            console.log("ChangeDate Called");
+            $scope.formData.toDate = data;
+        };
         $scope.saveData = function (data, formvalid) {
             console.log(data);
             if (data) {
@@ -4429,6 +4457,295 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.navigation = NavigationService.getnav();
     })
 
+//Certificate Banner
+
+myApp.controller('CertificateBannerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tablecertificatebanner");
+    $scope.menutitle = NavigationService.makeactive("Certificate Banner");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    // $scope.selectedStatus = 'All';
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
+    $scope.viewTable = function () {
+        $scope.url = "CertificateBanner/search";
+        $scope.formData.page = $scope.formData.page++;
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
+
+        });
+
+    }
+    $scope.viewTable();
+
+    $scope.confDel = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: "views/modal/delete.html",
+            backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+        });
+
+    };
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    }
+
+    $scope.delete = function (data) {
+        $scope.url = "CertificateBanner/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            console.log(data.value);
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'Certificate Banner Meaasge');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something went wrong', 'Certificate Banner Message');
+            }
+        });
+    }
+
+});
+
+//Detail Certificate Banner
+myApp.controller('DetailCertificateBannerCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailcertificatebanner");
+    $scope.menutitle = NavigationService.makeactive("Detail Certificate Banner");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+    if ($stateParams.id != '') {
+        $scope.title = "Edit";
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = "CertificateBanner/getOne";
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.formData = data.data;
+            });
+        };
+        $scope.getOneOldSchoolById();
+        $scope.saveData = function (data) {
+            $scope.title = "Create";
+            if (data) {
+
+                $scope.url = "CertificateBanner/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.data.nModified == '1') {
+                        toastr.success(" Updated Successfully", "Certificate Banner Message");
+                        $state.go('certificatebanner');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "Certificate Banner Message");
+            }
+        };
+
+
+    } else {
+        $scope.title = "Create";
+        $scope.saveData = function (data) {
+
+            if (data) {
+
+                $scope.url = "CertificateBanner/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true) {
+                        toastr.success(" Saved Successfully", "Certificate Banner Message");
+                        $state.go('certificatebanner');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "Certificate Banner Message");
+            }
+        };
+
+    }
+
+
+
+    $scope.onCancel = function (sendTo) {
+        $state.go(sendTo);
+    }
+
+
+});
+
+//Certificate Details
+
+myApp.controller('CertificateDetailsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, $uibModal, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("tablecertificatedetails");
+    $scope.menutitle = NavigationService.makeactive("Certificate Details");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.formData = {};
+    $scope.formData.page = 1;
+    $scope.formData.type = '';
+    $scope.formData.keyword = '';
+    // $scope.selectedStatus = 'All';
+    $scope.searchInTable = function (data) {
+        $scope.formData.page = 1;
+        if (data.length >= 2) {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        } else if (data.length == '') {
+            $scope.formData.keyword = data;
+            $scope.viewTable();
+        }
+    }
+    $scope.viewTable = function () {
+        $scope.url = "CertificateDetails/search";
+        $scope.formData.page = $scope.formData.page++;
+        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+            console.log("data.value", data);
+            $scope.items = data.data.results;
+            $scope.totalItems = data.data.total;
+            $scope.maxRow = data.data.options.count;
+
+        });
+
+    }
+    $scope.viewTable();
+
+    $scope.confDel = function (data) {
+        $scope.id = data;
+        $scope.modalInstance = $uibModal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: "views/modal/delete.html",
+            backdrop: 'static',
+            keyboard: false,
+            size: 'sm',
+            scope: $scope
+        });
+
+    };
+
+    $scope.noDelete = function () {
+        $scope.modalInstance.close();
+    }
+
+    $scope.delete = function (data) {
+        $scope.url = "CertificateDetails/delete";
+        $scope.constraints = {};
+        $scope.constraints._id = data;
+        NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+            console.log(data.value);
+            if (data.value) {
+                toastr.success('Successfully Deleted', 'Certificate Details Meaasge');
+                $scope.modalInstance.close();
+                $scope.viewTable();
+            } else {
+                toastr.error('Something went wrong', 'Certificate Details Message');
+            }
+        });
+    }
+
+});
+
+//Detail Certificate Details
+myApp.controller('DetailCertificateDetailsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, $stateParams, toastr) {
+    //registration filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("detailcertificatedetails");
+    $scope.menutitle = NavigationService.makeactive("Detail Certificate Details");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+
+    if ($stateParams.id != '') {
+        $scope.title = "Edit";
+        $scope.getOneOldSchoolById = function () {
+            $scope.url = "CertificateDetails/getOne";
+            $scope.constraints = {};
+            $scope.constraints._id = $stateParams.id;
+            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+                $scope.formData = data.data;
+            });
+        };
+        $scope.getOneOldSchoolById();
+        $scope.saveData = function (data) {
+            $scope.title = "Create";
+            if (data) {
+
+                $scope.url = "CertificateDetails/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.data.nModified == '1') {
+                        toastr.success(" Updated Successfully", "Certificate Details Message");
+                        $state.go('certificatedetails');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "Certificate Details Message");
+            }
+        };
+
+
+    } else {
+        $scope.title = "Create";
+        $scope.saveData = function (data) {
+
+            if (data) {
+
+                $scope.url = "CertificateDetails/save";
+                NavigationService.apiCall($scope.url, data, function (data) {
+                    console.log("data.value", data);
+                    if (data.value === true) {
+                        toastr.success(" Saved Successfully", "Certificate Details Message");
+                        $state.go('certificatedetails');
+
+                    }
+
+                });
+            } else {
+                toastr.error("Invalid Data", "Certificate Details Message");
+            }
+        };
+
+    }
+
+
+
+    $scope.onCancel = function (sendTo) {
+        $state.go(sendTo);
+    }
+
+
+});
 myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("dashboard");

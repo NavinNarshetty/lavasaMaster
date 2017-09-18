@@ -23,7 +23,7 @@ module.exports = {
     port: 1337,
     // realHost: "https://sfa.wohlig.co.in",
     // realHost: "http://sfa2.wohlig.co.in",
-    // realHost: "http://testmumbaicollege.sfanow.in",
+    // realHost: "http://mumbaischool.sfanow.in",
     realHost: "http://wohlig.io:1337",
     // realHost: "https://sfabackend.sfanow.in",
     emails: ["chintan@wohlig.com", "raj@wohlig.com", "supriya.bhartiya@wohlig.com", "rahi.shah@sfanow.in", "shiva.singh@sfanow.in", "sunil.rathod@sfanow.in", "venkatesh.rathod@sfanow.in", "neeraj.jaiswal@sfanow.in", "suksha.khodake@wohlig.com", "pratik.patel@wohlig.com", "sagar.mulchandani@wohlig.com", "navin.narshetty@wohlig.com"]

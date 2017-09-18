@@ -359,7 +359,30 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailFaqCtrl'
         })
-
+        //certificate banner
+        .state('certificatebanner', {
+            url: "/certificatebanner",
+            templateUrl: "views/template.html",
+            controller: 'CertificateBannerCtrl'
+        })
+        //detail certificate banner
+        .state('detailcertificatebanner', {
+            url: "/detailcertificatebanner/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailCertificateBannerCtrl'
+        })
+        //certificate detail
+        .state('certificatedetails', {
+            url: "/certificatedetails",
+            templateUrl: "views/template.html",
+            controller: 'CertificateDetailsCtrl'
+        })
+        //detail certificate detail
+        .state('detailcertificatedetails', {
+            url: "/detailcertificatedetails/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailCertificateDetailsCtrl'
+        })
 
         .state('jagz', {
             url: "/jagz",
