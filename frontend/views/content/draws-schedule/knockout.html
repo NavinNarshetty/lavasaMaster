@@ -266,7 +266,7 @@
                   </p>
                   <p class="m-clear" ng-if="card.resultsCombat && card.opponentsSingle.length>1">
                     <span class="pull-right combatreasonresult" ng-if="card.reason && card.reason!=='undefined' && roundsList[0].match[0].sport.sportslist.name === 'Boxing' && card.reason!=='Bye' ">Reason:{{card.reason}}</span>
-                    <span ng-if="!card.isNoMatch"><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point}} </span></span>
+                    <span ng-if="!card.isNoMatch && card.reason!=='Bye'"><span class="combatscoreresult" ng-repeat="score in card.resultsCombat.players track by $index">{{score.sets[0].point}} </span></span>
                   </p>
                 </div>
               </div>

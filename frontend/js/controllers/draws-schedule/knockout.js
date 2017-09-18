@@ -1,4 +1,4 @@
-myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, $uibModal) {
+myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, $uibModal, knockoutService) {
     $scope.template = TemplateService.getHTML("content/draws-schedule/knockout.html");
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -53,75 +53,10 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                     }
                 }
             });
-        }, 300)
+        }, 300);
     });
     // END SWIPER
 
-
-    // KNOCKOUT JSON
-    $scope.knockoutMatch = [{
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }],
-        date: '27th July, 2017',
-        time: '10.30am'
-    }, {
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }],
-        matchcenter: true
-    }, {
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }],
-        date: '27th July, 2017',
-        time: '10.30am'
-    }, {
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }],
-        matchcenter: true
-    }]
-    // END KNOCK OUT JSON
-
-    $scope.round2 = [{
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }],
-        date: '27th July, 2017',
-        time: '10.30am'
-    }, {
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }],
-        matchcenter: true
-    }]
 
     $scope.winnersCard = [{
         player: 'Harshit shah',
@@ -143,15 +78,9 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
         schoolname: 'Dhirubhai Ambani Intertional',
         medal: 'bronze'
 
-    }]
-
-    $scope.roundName = [{
-        roundname: 'Round 1'
-    }, {
-        roundname: 'Round 2'
-    }, {
-        roundname: 'Round 3'
     }];
+
+
     $scope.constraints = {};
     $scope.getSportSpecificRounds = function (roundName) {
         if ($stateParams.id) {
@@ -175,72 +104,22 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                                         _.each(value.opponentsSingle, function (obj, index) {
                                             if (obj && obj.athleteId) {
                                                 obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
-                                                if (value.resultsCombat) {
-                                                    console.log(" im in resultsCombat");
-                                                    if (value.resultsCombat.players) {
-                                                        _.each(value.resultsCombat.players, function (key) {
-                                                            key.walkover = Boolean(key.walkover);
-                                                            key.noShow = Boolean(key.noShow);
-                                                        });
-                                                        $scope.tempWakover = _.find(value.resultsCombat.players, ['walkover', true]);
-                                                        $scope.tempNoshow = _.find(value.resultsCombat.players, ['noShow', true]);
-                                                        if ($scope.tempWakover) {
-                                                            value.walkover = $scope.tempWakover.walkover;
-                                                        }
-                                                        if ($scope.tempNoshow) {
-                                                            value.noShow = $scope.tempNoshow.noShow;
-
-                                                        }
-                                                    }
-                                                    value.status = value.resultsCombat.status;
-                                                    value.isNoMatch = value.resultsCombat.isNoMatch;
-                                                    value.video = value.resultsCombat.video;
-                                                    if (value.resultsCombat.winner) {
-                                                        value.reason = value.resultsCombat.winner.reason;
-                                                        if (obj.athleteId._id === value.resultsCombat.winner.player) {
-                                                            obj.isWinner = true;
-                                                            value.isWinner = obj.isWinner;
-                                                        } else {
-                                                            obj.isWinner = false;
-                                                        }
-                                                    }
-
-                                                } else if (value && value.resultsRacquet) {
-                                                    _.each(value.resultsRacquet.players, function (key) {
-                                                        key.walkover = Boolean(key.walkover);
-                                                        key.noShow = Boolean(key.noShow);
-                                                    });
-                                                    $scope.tempWakover = _.find(value.resultsRacquet.players, ['walkover', true]);
-                                                    $scope.tempNoshow = _.find(value.resultsRacquet.players, ['noShow', true]);
-                                                    if ($scope.tempWakover) {
-                                                        value.walkover = $scope.tempWakover.walkover;
-                                                    }
-                                                    if ($scope.tempNoshow) {
-                                                        value.noShow = $scope.tempNoshow.noShow;
-                                                    }
-                                                    value.status = value.resultsRacquet.status;
-                                                    value.isNoMatch = value.resultsRacquet.isNoMatch;
-                                                    value.video = value.resultsRacquet.video;
-                                                    if (value.resultsRacquet.winner) {
-                                                        value.reason = value.resultsRacquet.winner.reason;
-                                                        if (obj && obj.athleteId && (obj.athleteId._id === value.resultsRacquet.winner.player)) {
-                                                            obj.isWinner = true;
-                                                            value.isWinner = obj.isWinner;
-                                                        } else {
-                                                            obj.isWinner = false;
-                                                        }
-                                                    }
-                                                }
                                             }
+                                            if (value && value.resultsRacquet) {
+                                                value.finalResult = value.resultsRacquet;
+                                                knockoutService.sortKnockoutResult($scope.roundsList);
 
+                                            } else if (value && value.resultsCombat) {
+                                                value.finalResult = value.resultsCombat;
+                                                knockoutService.sortKnockoutResult($scope.roundsList);
+                                            }
                                         });
 
                                     });
-                                });
-                            }
 
-                            console.log($scope.roundsListName, " $scope.roundsListName ");
-                            console.log($scope.roundsList, " $scope.roundsList ");
+                                });
+
+                            }
                         }
                     } else {
                         toastr.error(allData.message, 'Error Message');
