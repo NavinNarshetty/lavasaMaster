@@ -91,7 +91,7 @@
                 </div>
                 <div class="inline-block  knockout-cardplayername ver-mid">
                   <p class="m-clear knockout-winner-name" title="{{player.fullName }}">{{player.fullName | truncate:'25'}}</p>
-                  <p class="m-clear" title="{{players.schoolName}}">{{players.schoolName | truncate:'25'}}</p>
+                  <p class="m-clear winner-knockout-school" title="{{players.schoolName}}">{{players.schoolName | truncate:'25'}}</p>
                 </div>
               </div>
             </div>
@@ -100,7 +100,7 @@
             <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true , 'knockout-live-foot': card.status === 'IsLive'}">
               <p class="m-clear " ng-if="!card.status || card.status===''">
                 <a class="pull-right link-white text-uppercase" ng-click="startScoring(card);">
-                  <span>Start Scoring</span>
+                  <span>score</span>
                 </a>
                 <span class="knockout-date"><span>{{card.scheduleDate|englishNumeralDate}}</span> | <span>{{card.scheduleTime}} </span></span>
                         </p>
@@ -116,7 +116,7 @@
                         <div ng-if="!card.walkover">
                             <p class="m-clear knockout-live-text pull-right" ng-if="card.status==='IsLive'">
                               <a class="pull-right link-white text-uppercase" ng-click="startScoring(card);">
-                                  <span>Start Scoring</span>
+                                  <span>score</span>
                               </a>
                                 <span class="knockout-dot-live"><i class="fa fa-circle"></i></span> <span>Live</span>
                             </p>
@@ -137,7 +137,7 @@
                     <!-- <div class="knockout-card-content">
                         <p class="m-clear ">
                             <a class="pull-right link-white text-uppercase" ng-click="startScoring(card);">
-                                <span>Start Scoring</span>
+                                <span>score</span>
                             </a>
                             <span class="knockout-date"><span>{{card.scheduleDate|englishNumeralDate}}</span> | <span>{{card.scheduleTime}} </span></span>
                         </p>
@@ -168,14 +168,14 @@
                                     </div>
                                     <div class="inline-block  knockout-cardplayername ver-mid ">
                                         <p class="m-clear knockout-winner-name" title="{{player.fullName}}">{{player.fullName}}</p>
-                                        <p class="m-clear" title="{{players.schoolname}}">{{players.schoolName | truncate:'25'}}</p>
+                                        <p class="m-clear winner-knockout-school" title="{{players.schoolname}}">{{players.schoolName | truncate:'25'}}</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true , 'knockout-live-foot': card.status === 'IsLive'}">
                               <p class="m-clear " ng-if="!card.status || card.status===''">
                                 <a class="pull-right link-white text-uppercase" ng-click="startScoring(card);">
-                                  <span>Start Scoring</span>
+                                  <span>score</span>
                                 </a>
                                 <span class="knockout-date"><span>{{card.scheduleDate|englishNumeralDate}}</span> | <span>{{card.scheduleTime}} </span></span>
                                         </p>
@@ -191,7 +191,7 @@
                                         <div ng-if="!card.walkover">
                                             <p class="m-clear knockout-live-text pull-right" ng-if="card.status==='IsLive'">
                                               <a class="pull-right link-white text-uppercase" ng-click="startScoring(card);">
-                                                  <span>Start Scoring</span>
+                                                  <span>score</span>
                                               </a>
                                                 <span class="knockout-dot-live"><i class="fa fa-circle"></i></span> <span>Live</span>
                                             </p>
@@ -226,14 +226,14 @@
                                     </div>
                                     <div class="inline-block  knockout-cardplayername ver-mid ">
                                         <p class="m-clear knockout-winner-name " title="{{player.fullName}}">{{player.fullName}}</p>
-                                        <p class="m-clear " title="{{players.schoolname}}">{{players.schoolName | truncate:'25'}}</p>
+                                        <p class="m-clear winner-knockout-school" title="{{players.schoolname}}">{{players.schoolName | truncate:'25'}}</p>
                                     </div>
                                 </div>
                             </div>
                             <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true , 'knockout-live-foot': card.status === 'IsLive'}">
                               <p class="m-clear " ng-if="!card.status || card.status===''">
                                 <a class="pull-right link-white text-uppercase" ng-click="startScoring(card);">
-                                  <span>Start Scoring</span>
+                                  <span>score</span>
                                 </a>
                                 <span class="knockout-date"><span>{{card.scheduleDate|englishNumeralDate}}</span> | <span>{{card.scheduleTime}} </span></span>
                                         </p>
@@ -249,7 +249,7 @@
                                         <div ng-if="!card.walkover">
                                             <p class="m-clear knockout-live-text pull-right" ng-if="card.status==='IsLive'">
                                               <a class="pull-right link-white text-uppercase" ng-click="startScoring(card);">
-                                                  <span>Start Scoring</span>
+                                                  <span>score</span>
                                               </a>
                                                 <span class="knockout-dot-live"><i class="fa fa-circle"></i></span> <span>Live</span>
                                             </p>
@@ -281,7 +281,7 @@
                             </div>
                             <div class="knockout-winnercardplayername inline-block ">
                                 <p class="m-clear sport-color-primary">{{doubles.player}}</p>
-                                <p class="m-clear">{{doubles.schoolname | truncate:25}}</p>
+                                <p class="m-clear winner-knockout-school">{{doubles.schoolname | truncate:25}}</p>
                             </div>
                         </div>
 

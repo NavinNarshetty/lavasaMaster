@@ -765,6 +765,9 @@ $sport-table-grey:#efeeee !default;
   border-bottom: 1px solid #c6c6c6;
   border-left: 10px solid transparent;
 }
+.knockout-custom-padding {
+  padding: 10px 5px;
+}
 
 .knockout-winner-name {
   color: $sport-primary;
