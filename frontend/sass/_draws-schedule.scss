@@ -78,6 +78,9 @@ $sport-table-grey:#efeeee !default;
 
 // END FONT FAMILY IMPORTS
 // COMMON CLASS
+.display-block{
+  display: block;
+}
 .sport-type-head {
   color: $sport-type-head;
 }

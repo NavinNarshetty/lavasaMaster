@@ -1,15 +1,15 @@
 // JavaScript Document
 myApp.filter('myFilter', function () {
-        // In the return function, we must pass in a single parameter which will be the data we will work on.
-        // We have the ability to support multiple other parameters that can be passed into the filter optionally
-        return function (input, optional1, optional2) {
+    // In the return function, we must pass in a single parameter which will be the data we will work on.
+    // We have the ability to support multiple other parameters that can be passed into the filter optionally
+    return function (input, optional1, optional2) {
 
-            var output;
+        var output;
 
-            // Do filter work here
-            return output;
-        };
-    })
+        // Do filter work here
+        return output;
+    };
+})
 
     .filter('ageYearFilter', function () {
         function calculateAge(birthday) { // birthday is a date
@@ -171,7 +171,13 @@ myApp.filter('myFilter', function () {
             }
         };
     })
-
+    .filter('englishNumeralDateOne', function () {
+        return function (value) {
+            if (value) {
+                return moment(new Date(value)).format(" Do MMM YYYY");
+            }
+        };
+    })
     .filter('serverimage', function () {
         return function (image) {
             if (image && image !== null) {
@@ -282,7 +288,6 @@ myApp.filter('myFilter', function () {
             }
         };
     })
-
     .filter('truncate', function () {
         return function (value, limit) {
             if (value) {
@@ -301,6 +306,15 @@ myApp.filter('myFilter', function () {
                 return age + '-' + event;
             } else {
                 return age;
+            }
+        };
+    })
+    .filter('filterConcate', function () {
+        return function (first, second) {
+            if (first != undefined) {
+                return first + ' - ' + second;
+            } else {
+                return first;
             }
         };
     });

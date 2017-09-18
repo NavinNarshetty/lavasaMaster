@@ -504,7 +504,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
 });
 
 //knockout Team ctrl
-myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, $uibModal) {
+myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, knockoutService, $rootScope, $uibModal) {
     $scope.template = TemplateService.getHTML("content/draws-schedule/knockout-team.html");
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -668,13 +668,7 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
     }];
 
 
-    $scope.roundName = [{
-        roundname: 'Round 1'
-    }, {
-        roundname: 'Round 2'
-    }, {
-        roundname: 'Round 3'
-    }];
+
     console.log("im in konckout team");
 
     $scope.constraints = {};
@@ -697,38 +691,34 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
                             _.each($scope.roundsList, function (key) {
                                 _.each(key.match, function (value) {
                                     if (value && value.resultVolleyball && value.resultVolleyball.teams) {
-                                        value.status = value.resultVolleyball.status;
-                                        value.isNoMatch = value.resultVolleyball.isNoMatch;
-                                        _.each(value.resultVolleyball.teams, function (n) {
-                                            n.walkover = Boolean(n.walkover);
-                                            n.noShow = Boolean(n.noShow);
-                                        });
-                                        $scope.tempWakover = _.find(value.resultVolleyball.teams, ['walkover', true]);
-                                        $scope.tempNoshow = _.find(value.resultVolleyball.teams, ['noShow', true]);
-                                        if ($scope.tempWakover) {
-                                            value.walkover = $scope.tempWakover.walkover;
-                                        }
-                                        if ($scope.tempNoshow) {
-                                            value.noShow = $scope.tempNoshow.noShow;
+                                        value.finalResult = value.resultVolleyball;
+                                        knockoutService.sortResult($scope.roundsList);
 
-                                        }
-                                        _.each(value.opponentsTeam, function (team) {
-                                            if (team._id && value.resultVolleyball && value.resultVolleyball.winner) {
-                                                if (team._id === value.resultVolleyball.winner.player) {
-                                                    team.isWinner = true;
-
-                                                } else {
-                                                    team.isWinner = false;
-                                                }
-                                            }
-
-                                        });
+                                    } else if (value && value.resultHockey && value.resultHockey.teams) {
+                                        value.finalResult = value.resultHockey;
+                                        knockoutService.sortResult($scope.roundsList);
+                                    } else if (value && value.resultBasketball && value.resultBasketball.teams) {
+                                        value.finalResult = value.resultBasketball;
+                                        knockoutService.sortResult($scope.roundsList);
+                                    } else if (value && value.resultHandball && value.resultHandball.teams) {
+                                        value.finalResult = value.resultHandball;
+                                        knockoutService.sortResult($scope.roundsList);
+                                    } else if (value && value.resultWaterPolo && value.resultWaterPolo.teams) {
+                                        value.finalResult = value.resultWaterPolo;
+                                        knockoutService.sortResult($scope.roundsList);
+                                    } else if (value && value.resultKabaddi && value.resultKabaddi.teams) {
+                                        value.finalResult = value.resultKabaddi;
+                                        knockoutService.sortResult($scope.roundsList);
+                                    } else if (value && value.resultsCombat && value.resultsCombat.teams) {
+                                        value.finalResult = value.resultsCombat;
+                                        knockoutService.sortResult($scope.roundsList);
+                                    } else {
+                                        console.log("no Sport Result Found");
                                     }
-
                                 });
                             });
-                            console.log($scope.roundsListName, " $scope.roundsListName ");
-                            console.log($scope.roundsList, " $scope.roundsList ");
+
+
                         }
                     } else {
                         toastr.error(allData.message, 'Error Message');

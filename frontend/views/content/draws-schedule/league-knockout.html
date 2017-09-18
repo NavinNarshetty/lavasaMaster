@@ -63,13 +63,13 @@
               </td>
               <td>
                 <div class="text-capitalize" title="{{data.opponentsTeam[0].schoolName}}">
-                  <span>{{data.opponentsTeam[0].teamId}} - {{data.opponentsTeam[0].schoolName | truncate:'30'}}</span>
+                  <span>{{data.opponentsTeam[0].teamId | filterConcate : data.opponentsTeam[0].schoolName |  truncate:'30' }}</span>
 
                 </div>
               </td>
               <td>
                 <div class="text-capitalize">
-                  <span title="{{data.opponentsTeam[1].schoolName}}">{{data.opponentsTeam[1].teamId}} - {{data.opponentsTeam[1].schoolName | truncate:'30'}}</span>
+                  <span title="{{data.opponentsTeam[1].schoolName}}">{{data.opponentsTeam[1].teamId | filterConcate : data.opponentsTeam[1].schoolName |  truncate:'30' }}</span>
                 </div>
               </td>
               <td>
@@ -77,7 +77,9 @@
                   {{data.score}}
                 </div>
                 <div class="text-capitalize" ng-if="!data.score">
-                  -
+                  <span class="display-block">{{data.scheduleDate | englishNumeralDateOne}}</span>
+                  <span>{{data.scheduleTime}}</span>
+
                 </div>
               </td>
               <td>
@@ -101,7 +103,7 @@
 
 
       <!--POINTS TABLE-->
-      <div class="league-knockout-pointstable">
+      <div class="league-knockout-pointstable" ng-if="tablePoint.length>0">
         <!--HEAD-->
         <div class="league-knockout-pointshead">
           <h3 class="d-fjalla-one text-uppercase sport-color-primary">points table</h3>
@@ -111,11 +113,12 @@
         <!--ACCORDIAN POINTS -->
         <div class="time-trial-accordian league-knockout-pointsaccordian">
           <uib-accordion close-others="oneAtATime">
-            <div uib-accordion-group class="panel-default" is-open="points.open" ng-repeat="points in pointTable  track by $index">
+            <div uib-accordion-group class="panel-default" is-open="points.open" ng-repeat="pool in tablePoint |limitTo :pointsLimit  track by $index"
+              ng-init="limitValue=2">
               <uib-accordion-heading class="clearfix">
                 <!--<a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a>-->
                 <a href="">
-                  <h4 class="d-fjalla-one text-uppercase  text-center sport-color-primary m-clear">{{points.round}}</h4>
+                  <h4 class="d-fjalla-one text-uppercase  text-center sport-color-primary m-clear">{{pool.name}}</h4>
                 </a>
                 <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
               </uib-accordion-heading>
@@ -163,7 +166,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="content in points.detail track by $index">
+                      <tr ng-repeat="content in pool.points | orderBy :'-points' track by $index">
                         <td>
                           <div class="text-capitalize">
                             {{$index+1}}
@@ -171,22 +174,22 @@
                         </td>
                         <td>
                           <div class="text-capitalize">
-                            {{content.team1}}
+                            {{content.teamid | filterConcate : content.schoolName | truncate:40}}
                           </div>
                         </td>
                         <td>
                           <div class="text-capitalize">
-                            {{content.match}}
+                            {{content.matchCount}}
                           </div>
                         </td>
                         <td>
                           <div class="text-capitalize">
-                            {{content.won}}
+                            {{content.win}}
                           </div>
                         </td>
                         <td>
                           <div class="text-capitalize">
-                            {{content.lost}}
+                            {{content.loss}}
                           </div>
                         </td>
                         <td>
@@ -208,8 +211,11 @@
             </div>
           </uib-accordion>
           <!--VIEW BUTTON TIME TRIAL-->
-          <div class="league-knockout-pointsviewmore text-right ">
+          <div class="league-knockout-pointsviewmore text-right " ng-click="showMorePoints(true)" ng-if="!showPoints && tablePoint.length>3">
             <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+          </div>
+          <div class="league-knockout-pointsviewmore text-right " ng-click="showMorePoints(false)" ng-if="showPoints">
+            <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
           </div>
           <!--END VIEW BUTTON FOR TIME TRIAL-->
         </div>
@@ -282,20 +288,21 @@
                         </td>
                         <td>
                           <div class="text-capitalize">
-                            <span>{{content.opponentsTeam[0].teamId}} - {{content.opponentsTeam[0].schoolName | truncate:'30'}}</span>
+                            <span>{{content.opponentsTeam[0].teamId | filterConcate : content.opponentsTeam[0].schoolName | truncate:'30'}} </span>
                           </div>
                         </td>
                         <td>
                           <div class="text-capitalize">
-                            <span>{{content.opponentsTeam[1].teamId}} - {{content.opponentsTeam[1].schoolName | truncate:'30'}}</span>
+                            <span>{{content.opponentsTeam[1].teamId | filterConcate : content.opponentsTeam[1].schoolName | truncate:'30'}} </span>
                           </div>
                         </td>
                         <td>
                           <div class="text-capitalize" ng-if="content.opponentsTeam[0].finalPoint && content.opponentsTeam[1].finalPoint">
-                            <span>{{content.opponentsTeam[0].finalPoint}} </span> - <span>{{content.opponentsTeam[1].finalPoint}}</span>
+                            <span>{{content.opponentsTeam[0].finalPoint | filterConcate : content.opponentsTeam[1].finalPoint}} </span>
                           </div>
                           <div class="text-capitalize" ng-if="!content.opponentsTeam[0].finalPoint && !content.opponentsTeam[1].finalPoint">
-                            -
+                            <span class="display-block">{{content.scheduleDate |englishNumeralDateOne}}</span>
+                            <span>{{content.scheduleTime}}</span>
                           </div>
                         </td>
                         <td>

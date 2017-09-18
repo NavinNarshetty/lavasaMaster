@@ -467,6 +467,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
 
                                         }
                                         if (value.resultsRacquet && value.resultsRacquet.winner) {
+                                            value.reason = value.resultsRacquet.winner.reason;
                                             if (obj._id === value.resultsRacquet.winner.player) {
                                                 obj.isWinner = true;
                                                 value.isWinner = obj.isWinner;
@@ -491,11 +492,6 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
 
                                             }
                                         }
-
-
-
-
-
                                     });
 
                                 });

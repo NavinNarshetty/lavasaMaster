@@ -1,4 +1,4 @@
-myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope, $uibModal, ResultSportInitialization) {
+myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope, $uibModal, ResultSportInitialization, knockoutService) {
   $scope.template = TemplateService.getHTML("content/knockout-team.html");
   TemplateService.title = "Time Trial"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -62,60 +62,47 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
         $scope.constraints.round = roundName;
       }
       $scope.constraints.sport = $stateParams.id;
-      NavigationService.getSportSpecificRounds($scope.constraints, function (data) { 
+      NavigationService.getSportSpecificRounds($scope.constraints, function (data) {
         errorService.errorCode(data, function (allData) {
           if (!allData.message) {
             if (allData.value) {
               $scope.roundsListName = allData.data.roundsListName;
               $scope.roundsList = allData.data.roundsList;
-              console.log($scope.roundsListName,"roundsListName");
-              console.log($scope.roundsList,"roundsList");              
               if ($scope.roundsListName.length === 0 || $scope.roundsList.length === 0) {
                 toastr.error("No Data Found", 'Error Message');
-                $state.go('digital-home');
+                $state.go('championshipschedule');
               }
-              sportName = $scope.roundsList[0].match[0].sport.sportslist.name;
-              $scope.resultVar = ResultSportInitialization.getResultVariable(sportName);
-              //ResultSportInitialization--for getting Result Variable End
-              var resultVar = $scope.resultVar.resultVar;
               _.each($scope.roundsList, function (key) {
                 _.each(key.match, function (value) {
-                  _.each(value.opponentsSingle, function (obj, index) {
-                    if (obj && obj._id) {
-                      obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                  if (value && value.resultVolleyball && value.resultVolleyball.teams) {
+                    value.finalResult = value.resultVolleyball;
+                    knockoutService.sortResult($scope.roundsList);
 
-
-                      if (value[resultVar]) {
-                        console.log("resultsCombat", value[resultVar]);
-                        console.log(" im in resultsCombat");
-                        if (value[resultVar].players[index]) {
-                          obj.noShow = Boolean(value[resultVar].players[index].noShow);
-                          obj.walkover = Boolean(value[resultVar].players[index].walkover);
-                        }
-
-                        value.status = value[resultVar].status;
-                        value.isNoMatch = value[resultVar].isNoMatch;
-                        value.video = value[resultVar].video;
-                        if (obj.walkover) {
-                          value.walkover = obj.walkover;
-                        }
-                        if (value[resultVar].winner) {
-                          value.reason = value[resultVar].winner.reason;
-                          if (obj.athleteId._id === value[resultVar].winner.player) {
-                            obj.isWinner = true;
-                            value.isWinner = obj.isWinner;
-                          } else {
-                            obj.isWinner = false;
-                          }
-                        }
-
-                      }
-                    }
-
-                  });
-
+                  } else if (value && value.resultHockey && value.resultHockey.teams) {
+                    value.finalResult = value.resultHockey;
+                    knockoutService.sortResult($scope.roundsList);
+                  } else if (value && value.resultBasketball && value.resultBasketball.teams) {
+                    value.finalResult = value.resultBasketball;
+                    knockoutService.sortResult($scope.roundsList);
+                  } else if (value && value.resultHandball && value.resultHandball.teams) {
+                    value.finalResult = value.resultHandball;
+                    knockoutService.sortResult($scope.roundsList);
+                  } else if (value && value.resultWaterPolo && value.resultWaterPolo.teams) {
+                    value.finalResult = value.resultWaterPolo;
+                    knockoutService.sortResult($scope.roundsList);
+                  } else if (value && value.resultKabaddi && value.resultKabaddi.teams) {
+                    value.finalResult = value.resultKabaddi;
+                    knockoutService.sortResult($scope.roundsList);
+                  } else if (value && value.resultsCombat && value.resultsCombat.teams) {
+                    value.finalResult = value.resultsCombat;
+                    knockoutService.sortResult($scope.roundsList);
+                  } else {
+                    console.log("no Sport Result Found");
+                  }
                 });
               });
+
+
             }
           } else {
             toastr.error(allData.message, 'Error Message');

@@ -827,6 +827,13 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 data: request
             }).then(callback);
         },
+        getSportStandings: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'match/getStandings',
+                method: 'POST',
+                data: request
+            }).then(callback);
+        },
         getSportSpecificRounds: function (request, callback) {
 
             $http({
