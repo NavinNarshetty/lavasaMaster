@@ -3018,24 +3018,87 @@ var model = {
                     obj["SCHOOL 1"] = mainData.opponentsTeam[0].schoolName;
                     // console.log(JSON.stringify(mainData.resultsCombat, null, "    "),"-------------");                                    
                     if (mainData.resultsCombat) {
-                        if (mainData.opponentsTeam[0].athleteId._id.equals(mainData.resultsCombat.winner[0].player)) {
+                        if (mainData.opponentsTeam[0]._id.equals(mainData.resultsCombat.winner.player)) {
                             obj["RESULT 1"] = "Won";
                         } else {
                             obj["RESULT 1"] = "Lost";
                         }
                         var i;
-                        for (i = 0; i < mainData.resultsCombat.players[0].sets.length; i++) {
+                        for (i = 0; i < mainData.resultsCombat.teams[0].sets.length; i++) {
                             if (i == 0) {
-                                obj["SCORE 1"] = "Set" + i + "-" + mainData.resultsCombat.players[0].sets[i].point;
-                                obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets[i];
+                                obj["SCORE 1"] = "Set" + i + "-" + mainData.resultsCombat.teams[0].sets[i].point;
+                                obj["DATA POINTS 1"] = mainData.resultsCombat.teams[0].sets[i];
 
                             } else {
-                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsCombat.players[0].sets[i].point;
-                                obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + mainData.resultsCombat.players[0].sets[i];
+                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsCombat.teams[0].sets[i].point;
+                                obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + mainData.resultsCombat.teams[0].sets[i];
                             }
 
                         }
-                        // obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets;
+                        // obj["DATA POINTS 1"] = mainData.resultsCombat.teams[0].sets;
+                    } else if (mainData.resultsRacquet) {
+                        if (mainData.opponentsTeam[0]._id === mainData.resultsRacquet.winner.player) {
+                            obj["RESULT 1"] = "Won";
+                        } else {
+                            if (mainData.resultsRacquet.isNoMatch == false) {
+                                if (mainData.resultsRacquet.teams[0].walkover == false && mainData.resultsRacquet.teams[0].noShow == false) {
+                                    obj["RESULT 1"] = "Lost";
+                                } else if (mainData.resultsRacquet.teams[0].walkover == true) {
+                                    obj["RESULT 1"] = "walkover";
+                                } else {
+                                    obj["RESULT 1"] = "noShow";
+                                }
+                            } else {
+                                obj["RESULT 1"] = "No Match";
+                            }
+                        }
+                        var i;
+                        for (i = 0; i < mainData.resultsRacquet.teams[0].sets.length; i++) {
+                            if (i == 0) {
+                                obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultsRacquet.teams[0].sets[i].point;
+                                obj["DATA POINTS 1"] = "Set" + sNo + "{ point:" + mainData.resultsRacquet.teams[0].sets[i].point + "ace:" + mainData.resultsRacquet.teams[0].sets[i].ace + "winner:" + mainData.resultsRacquet.teams[0].sets[i].winner + "unforcedError:" + mainData.resultsRacquet.teams[0].sets[i].unforcedError + "serviceError:" + mainData.resultsRacquet.teams[0].sets[i].serviceError + "doubleFaults:" + mainData.resultsRacquet.teams[0].sets[i].doubleFaults + "}";
+                                sNo++;
+                            } else {
+                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsRacquet.teams[0].sets[i].point;
+                                obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "{ point:" + mainData.resultsRacquet.teams[0].sets[i].point + "ace:" + mainData.resultsRacquet.teams[0].sets[i].ace + "winner:" + mainData.resultsRacquet.teams[0].sets[i].winner + "unforcedError:" + mainData.resultsRacquet.teams[0].sets[i].unforcedError + "serviceError:" + mainData.resultsRacquet.teams[0].sets[i].serviceError + "doubleFaults:" + mainData.resultsRacquet.teams[0].sets[i].doubleFaults + "}";
+                                sNo++;
+                            }
+                        }
+                        // obj["DATA POINTS 2"] = mainData.resultsRacquet.teams[1].sets[;
+                    } else {
+                        obj["RESULT 1"] = "";
+                        obj["SCORE 1"] = "";
+                        obj["DATA POINTS 1"] = "";
+                    }
+                    if (mainData.resultBasketball) {
+                        if (mainData.opponentsTeam[0]._id === mainData.resultBasketball.winner.player) {
+                            obj["RESULT 1"] = "Won";
+                        } else {
+                            if (mainData.resultBasketball.isNoMatch == false) {
+                                if (mainData.resultBasketball.teams[0].walkover == false && mainData.resultBasketball.teams[0].noShow == false) {
+                                    obj["RESULT 1"] = "Lost";
+                                } else if (mainData.resultBasketball.teams[0].walkover == true) {
+                                    obj["RESULT 1"] = "walkover";
+                                } else {
+                                    obj["RESULT 1"] = "noShow";
+                                }
+                            } else {
+                                obj["RESULT 1"] = "No Match";
+                            }
+                        }
+                        var i;
+                        for (i = 0; i < mainData.resultBasketball.teams[0].sets.length; i++) {
+                            if (i == 0) {
+                                obj["QUARTER SCORE 1"] = "Q" + sNo + "-" + mainData.resultBasketball.teams[0].teamResults.quarterPoints[i].basket;
+                                sNo++;
+                            } else {
+                                obj["QUARTER SCORE 1"] = obj["QUARTER SCORE 1"] + "," + "Q" + i + "-" + mainData.resultBasketball.teams[0].teamResults.quarterPoints[i].basket;
+                                sNo++;
+                            }
+                        }
+                    } else {
+                        obj["RESULT 1"] = "";
+                        obj["QUARTER SCORE 1"] = "";
                     }
                 } else {
                     obj["TEAMID 1"] = "";
@@ -3050,30 +3113,30 @@ var model = {
                     obj["TEAMID 2"] = mainData.opponentsTeam[1].teamId;
                     obj["SCHOOL 2"] = mainData.opponentsTeam[1].schoolName;
                     if (mainData.resultsCombat) {
-                        if (mainData.opponentsTeam[1].athleteId._id === mainData.resultsCombat.winner[0].player) {
+                        if (mainData.opponentsTeam[1]._id === mainData.resultsCombat.winner.player) {
                             obj["RESULT 2"] = "Won";
                         } else {
                             obj["RESULT 2"] = "Lost";
                         }
                         var i;
-                        for (i = 0; i < mainData.resultsCombat.players[1].sets.length; i++) {
+                        for (i = 0; i < mainData.resultsCombat.teams[1].sets.length; i++) {
                             if (i == 0) {
-                                obj["SCORE 2"] = "Set" + i + "-" + mainData.resultsCombat.players[1].sets[i].point;
-                                obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets[i];
+                                obj["SCORE 2"] = "Set" + i + "-" + mainData.resultsCombat.teams[1].sets[i].point;
+                                obj["DATA POINTS 2"] = mainData.resultsCombat.teams[1].sets[i];
                             } else {
-                                obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + i + "-" + mainData.resultsCombat.players[1].sets[i].point;
-                                obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + mainData.resultsCombat.players[1].sets[i];
+                                obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + i + "-" + mainData.resultsCombat.teams[1].sets[i].point;
+                                obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + mainData.resultsCombat.teams[1].sets[i];
                             }
                         }
-                        // obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets[;
+                        // obj["DATA POINTS 2"] = mainData.resultsCombat.teams[1].sets[;
                     } else if (mainData.resultsRacquet) {
-                        if (mainData.opponentsTeam[1].athleteId._id === mainData.resultsRacquet.winner.player) {
+                        if (mainData.opponentsTeam[1]._id === mainData.resultsRacquet.winner.player) {
                             obj["RESULT 2"] = "Won";
                         } else {
                             if (mainData.resultsRacquet.isNoMatch == false) {
-                                if (mainData.resultsRacquet.players[1].walkover == false && mainData.resultsRacquet.players[1].noShow == false) {
+                                if (mainData.resultsRacquet.teams[1].walkover == false && mainData.resultsRacquet.teams[1].noShow == false) {
                                     obj["RESULT 2"] = "Lost";
-                                } else if (mainData.resultsRacquet.players[1].walkover == true) {
+                                } else if (mainData.resultsRacquet.teams[1].walkover == true) {
                                     obj["RESULT 2"] = "walkover";
                                 } else {
                                     obj["RESULT 2"] = "noShow";
@@ -3083,18 +3146,58 @@ var model = {
                             }
                         }
                         var i;
-                        for (i = 0; i < mainData.resultsRacquet.players[1].sets.length; i++) {
+                        for (i = 0; i < mainData.resultsRacquet.teams[1].sets.length; i++) {
                             if (i == 0) {
-                                obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultsRacquet.players[1].sets[i].point;
-                                obj["DATA POINTS 1"] = "Set" + sNo + "{ point:" + mainData.resultsRacquet.players[1].sets[i].point + "ace:" + mainData.resultsRacquet.players[1].sets[i].ace + "winner:" + mainData.resultsRacquet.players[1].sets[i].winner + "unforcedError:" + mainData.resultsRacquet.players[1].sets[i].unforcedError + "serviceError:" + mainData.resultsRacquet.players[1].sets[i].serviceError + "doubleFaults:" + mainData.resultsRacquet.players[1].sets[i].doubleFaults + "}";
+                                obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultsRacquet.teams[1].sets[i].point;
+                                obj["DATA POINTS 1"] = "Set" + sNo + "{ point:" + mainData.resultsRacquet.teams[1].sets[i].point + "ace:" + mainData.resultsRacquet.teams[1].sets[i].ace + "winner:" + mainData.resultsRacquet.teams[1].sets[i].winner + "unforcedError:" + mainData.resultsRacquet.teams[1].sets[i].unforcedError + "serviceError:" + mainData.resultsRacquet.teams[1].sets[i].serviceError + "doubleFaults:" + mainData.resultsRacquet.teams[1].sets[i].doubleFaults + "}";
                                 sNo++;
                             } else {
-                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsRacquet.players[1].sets[i].point;
-                                obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "{ point:" + mainData.resultsRacquet.players[1].sets[i].point + "ace:" + mainData.resultsRacquet.players[1].sets[i].ace + "winner:" + mainData.resultsRacquet.players[1].sets[i].winner + "unforcedError:" + mainData.resultsRacquet.players[1].sets[i].unforcedError + "serviceError:" + mainData.resultsRacquet.players[1].sets[i].serviceError + "doubleFaults:" + mainData.resultsRacquet.players[1].sets[i].doubleFaults + "}";
+                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsRacquet.teams[1].sets[i].point;
+                                obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "{ point:" + mainData.resultsRacquet.teams[1].sets[i].point + "ace:" + mainData.resultsRacquet.teams[1].sets[i].ace + "winner:" + mainData.resultsRacquet.teams[1].sets[i].winner + "unforcedError:" + mainData.resultsRacquet.teams[1].sets[i].unforcedError + "serviceError:" + mainData.resultsRacquet.teams[1].sets[i].serviceError + "doubleFaults:" + mainData.resultsRacquet.teams[1].sets[i].doubleFaults + "}";
                                 sNo++;
                             }
                         }
-                        // obj["DATA POINTS 2"] = mainData.resultsRacquet.players[1].sets[;
+                        // obj["DATA POINTS 2"] = mainData.resultsRacquet.teams[1].sets[;
+                    } else {
+                        obj["RESULT 2"] = "";
+                        obj["SCORE 2"] = "";
+                        obj["DATA POINTS 2"] = "";
+                    }
+                    if (mainData.resultBasketball) {
+                        if (mainData.opponentsTeam[0]._id === mainData.resultBasketball.winner.player) {
+                            obj["RESULT 2"] = "Won";
+                        } else {
+                            if (mainData.resultBasketball.isNoMatch == false) {
+                                if (mainData.resultBasketball.teams[1].walkover == false && mainData.resultBasketball.teams[1].noShow == false) {
+                                    obj["RESULT 2"] = "Lost";
+                                } else if (mainData.resultBasketball.teams[1].walkover == true) {
+                                    obj["RESULT 2"] = "walkover";
+                                } else {
+                                    obj["RESULT 2"] = "noShow";
+                                }
+                            } else {
+                                obj["RESULT 2"] = "No Match";
+                            }
+                        }
+                        var i;
+                        for (i = 0; i < mainData.resultBasketball.teams[1].teamResults.quarterPoints.length; i++) {
+                            if (i == 0) {
+                                obj["QUARTER SCORE 2"] = "Q" + sNo + "-" + mainData.resultBasketball.teams[1].teamResults.quarterPoints[i].basket;
+                                sNo++;
+                            } else {
+                                obj["QUARTER SCORE 2"] = obj["QUARTER SCORE 1"] + "," + "Q" + i + "-" + mainData.resultBasketball.teams[1].teamResults.quarterPoints[i].basket;
+                                sNo++;
+                            }
+                        }
+                        if (mainData.opponentsTeam[1]) {
+                            obj["FINAL SCORE"] = mainData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + mainData.resultBasketball.teams[1].teamResults.finalGoalPoints;
+                        } else {
+                            obj["FINAL SCORE"] = mainData.resultBasketball.teams[0].teamResults.finalGoalPoints;
+                        }
+                    } else {
+                        obj["RESULT 2"] = "";
+                        obj["QUARTER SCORE 2"] = "";
+                        obj["FINAL SCORE"] = "";
                     }
                 } else {
                     obj["TEAMID 2"] = "";
