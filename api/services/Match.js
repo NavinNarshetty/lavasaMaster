@@ -229,7 +229,7 @@ var model = {
                     start: (page - 1) * maxRow,
                     count: maxRow
                 };
-                var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId.school opponentsTeam";
+                var deepSearch = "sport.sportslist.drawFormat, sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup opponentsSingle.athleteId.school opponentsTeam";
                 Match.find({
                         sport: sportDetails._id
                     }).lean().sort({
@@ -359,6 +359,8 @@ var model = {
                         }
                         finalData.minTeamPlayers = found.sport.minTeamPlayers;
                         finalData.maxTeamPlayers = found.sport.maxTeamPlayers;
+                        finalData.scheduleDate = found.scheduleDate;
+                        finalData.scheduleTime = found.scheduleTime;
                         finalData.sportType = found.sport.sportslist.sportsListSubCategory.sportsListCategory.name;
                         if (!_.isEmpty(found.opponentsSingle)) {
                             finalData.players = [];
@@ -2553,7 +2555,7 @@ var model = {
                             if (_.isEmpty(match)) {
                                 callback(null, []);
                             } else {
-                                console.log("found0", match);
+                                // console.log("found0", match);
                                 callback(null, match);
                             }
                         }
@@ -3707,108 +3709,143 @@ var model = {
 
     },
 
-    generateLeagueKnockout: function (match, callback) {
-        var i = 1;
-        async.concatSeries(match, function (mainData, callback) {
-                var obj = {};
-                // console.log(JSON.stringify(mainData, null, "    "));
-                obj["MATCH ID"] = mainData.matchId;
-                var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
-                obj.DATE = dateTime;
-                obj.TIME = mainData.scheduleTime;
-                obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
-                if (mainData.sport.gender == "male") {
-                    obj.GENDER = "Male";
-                } else if (mainData.sport.gender == "female") {
-                    obj.GENDER = "Female";
-                } else {
-                    obj.GENDER = "Male & Female"
-                }
-                obj["AGE GROUP"] = mainData.sport.ageGroup.name;
-                obj.EVENT = mainData.sport.sportslist.name;
-                if (mainData.sport.weight) {
-                    obj["WEIGHT CATEGORIES"] = mainData.sport.weight.name;
-                } else {
-                    obj["WEIGHT CATEGORIES"] = "";
-                }
-                obj["STAGE"] = mainData.excelType;
-                obj["ROUND"] = mainData.round;
-                obj["MATCH NO"] = "MATCH " + i++;
-                console.log(JSON.stringify(mainData.opponentsTeam, null, "    "), "-------------");
-                if (mainData.opponentsTeam.length > 0) {
-                    obj["TEAM 1"] = mainData.opponentsTeam[0].teamId;
-                    obj["TEAM NAME 1"] = mainData.opponentsTeam[0].name;
-                    obj["SCHOOL 1"] = mainData.opponentsTeam[0].schoolName;
-                    // console.log(JSON.stringify(mainData.resultsCombat, null, "    "),"-------------");                                    
-                    if (mainData.resultFootball) {
-                        obj["COACH NAME 1"] = mainData.resultFootball.coachName;
-                        if (mainData.opponentsTeam[0].athleteId._id.equals(mainData.resultFootball.winner[0].player)) {
-                            obj["RESULT 1"] = "Won";
+    generateLeagueKnockout: function (data, res) {
+        async.waterfall([
+                function (callback) {
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                    Match.find({
+                        sport: data.sport
+                    }).lean().deepPopulate(deepSearch).exec(function (err, match) {
+                        if (err) {
+                            callback(err, null);
                         } else {
-                            obj["RESULT 1"] = "Lost";
-                        }
-                        var i;
-                        for (i = 0; i < mainData.resultFootball.players[0].sets.length; i++) {
-                            if (i == 0) {
-                                obj["SCORE 1"] = "Set" + i + "-" + mainData.resultFootball.players[0].sets[i].point;
-                                obj["DATA POINTS 1"] = mainData.resultFootball.players[0].sets[i];
-
+                            if (_.isEmpty(match)) {
+                                callback(null, []);
                             } else {
-                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultFootball.players[0].sets[i].point;
-                                obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + mainData.resultFootball.players[0].sets[i];
-                            }
-
-                        }
-                        // obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets;
-                    }
-                } else {
-                    obj["TEAM 1"] = "";
-                    obj["TEAM NAME 1"] = "";
-                    obj["SCHOOL 1"] = "";
-                    obj["RESULT 1"] = "";
-                    obj["SCORE 1"] = "";
-                    obj["DATA POINTS 1"] = "";
-                }
-
-                if (mainData.opponentsTeam.length > 1) {
-                    obj["TEAM 2"] = mainData.opponentsTeam[1].teamId;
-                    obj["TEAM NAME 2"] = mainData.opponentsTeam[0].name;
-                    obj["SCHOOL 2"] = mainData.opponentsTeam[1].schoolName;
-                    if (mainData.resultFootball) {
-                        obj["COACH NAME 2"] = mainData.resultFootball.coachName;
-                        if (mainData.opponentsTeam[1].athleteId._id === mainData.resultsCombat.winner[0].player) {
-                            obj["RESULT 2"] = "Won";
-                        } else {
-                            obj["RESULT 2"] = "Lost";
-                        }
-                        var i;
-                        for (i = 0; i < mainData.resultFootball.players[1].sets.length; i++) {
-                            if (i == 0) {
-                                obj["SCORE 2"] = "Set" + i + "-" + mainData.resultFootball.players[1].sets[i].point;
-                                obj["DATA POINTS 2"] = mainData.resultFootball.players[1].sets[i];
-                            } else {
-                                obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + i + "-" + mainData.resultFootball.players[1].sets[i].point;
-                                obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + mainData.resultFootball.players[1].sets[i];
+                                // console.log("found0", match);
+                                callback(null, match);
                             }
                         }
-                        // obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets[;
-                    }
-                } else {
-                    obj["TEAM 2"] = "";
-                    obj["TEAM NAME 2"] = "";
-                    obj["SCHOOL 2"] = "";
-                    obj["RESULT 2"] = "";
-                    obj["SCORE 2"] = "";
-                    obj["DATA POINTS 2"] = "";
-                }
-                // console.log(obj,"---------------------------");
-                callback(null, obj);
+                    });
+                },
+                function (match, callback) {
+                    var i = 1;
+                    async.concatSeries(match, function (mainData, callback) {
+                            var obj = {};
+                            console.log("mainData*************", mainData.excelType);
+                            obj["MATCH ID"] = mainData.matchId;
+                            var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
+                            obj.DATE = dateTime;
+                            obj.TIME = mainData.scheduleTime;
+                            obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
+                            if (mainData.sport.gender == "male") {
+                                obj.GENDER = "Male";
+                            } else if (mainData.sport.gender == "female") {
+                                obj.GENDER = "Female";
+                            } else {
+                                obj.GENDER = "Male & Female"
+                            }
+                            obj["AGE GROUP"] = mainData.sport.ageGroup.name;
+                            obj.EVENT = mainData.sport.sportslist.name;
+                            if (mainData.sport.weight) {
+                                obj["WEIGHT CATEGORIES"] = mainData.sport.weight.name;
+                            } else {
+                                obj["WEIGHT CATEGORIES"] = "";
+                            }
+                            obj["STAGE"] = mainData.excelType;
+                            obj["ROUND"] = mainData.round;
+                            obj["MATCH NO"] = "MATCH " + i++;
+                            // console.log(JSON.stringify(mainData.opponentsTeam, null, "    "), "-------------");
+                            if (mainData.opponentsTeam.length > 0) {
+                                obj["TEAM 1"] = mainData.opponentsTeam[0].teamId;
+                                obj["TEAM NAME 1"] = mainData.opponentsTeam[0].name;
+                                obj["SCHOOL 1"] = mainData.opponentsTeam[0].schoolName;
+                                // console.log(JSON.stringify(mainData.resultsCombat, null, "    "),"-------------");                                    
+                                if (mainData.resultFootball) {
+                                    obj["COACH NAME 1"] = mainData.resultFootball.coachName;
+                                    if (mainData.opponentsTeam[0].athleteId._id.equals(mainData.resultFootball.winner[0].player)) {
+                                        obj["RESULT 1"] = "Won";
+                                    } else {
+                                        obj["RESULT 1"] = "Lost";
+                                    }
+                                    var i;
+                                    for (i = 0; i < mainData.resultFootball.players[0].sets.length; i++) {
+                                        if (i == 0) {
+                                            obj["SCORE 1"] = "Set" + i + "-" + mainData.resultFootball.players[0].sets[i].point;
+                                            obj["DATA POINTS 1"] = mainData.resultFootball.players[0].sets[i];
 
-            },
-            function (err, singleData) {
-                // Config.generateExcel("KnockoutIndividual", singleData, res);
-                callback(null, singleData);
+                                        } else {
+                                            obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultFootball.players[0].sets[i].point;
+                                            obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + mainData.resultFootball.players[0].sets[i];
+                                        }
+
+                                    }
+                                    // obj["DATA POINTS 1"] = mainData.resultsCombat.players[0].sets;
+                                }
+                            } else {
+                                obj["TEAM 1"] = "";
+                                obj["TEAM NAME 1"] = "";
+                                obj["SCHOOL 1"] = "";
+                                obj["RESULT 1"] = "";
+                                obj["SCORE 1"] = "";
+                                obj["DATA POINTS 1"] = "";
+                            }
+
+                            if (mainData.opponentsTeam.length > 1) {
+                                obj["TEAM 2"] = mainData.opponentsTeam[1].teamId;
+                                obj["TEAM NAME 2"] = mainData.opponentsTeam[0].name;
+                                obj["SCHOOL 2"] = mainData.opponentsTeam[1].schoolName;
+                                if (mainData.resultFootball) {
+                                    obj["COACH NAME 2"] = mainData.resultFootball.coachName;
+                                    if (mainData.opponentsTeam[1].athleteId._id === mainData.resultsCombat.winner[0].player) {
+                                        obj["RESULT 2"] = "Won";
+                                    } else {
+                                        obj["RESULT 2"] = "Lost";
+                                    }
+                                    var i;
+                                    for (i = 0; i < mainData.resultFootball.players[1].sets.length; i++) {
+                                        if (i == 0) {
+                                            obj["SCORE 2"] = "Set" + i + "-" + mainData.resultFootball.players[1].sets[i].point;
+                                            obj["DATA POINTS 2"] = mainData.resultFootball.players[1].sets[i];
+                                        } else {
+                                            obj["SCORE 2"] = obj["SCORE 2"] + "," + "Set" + i + "-" + mainData.resultFootball.players[1].sets[i].point;
+                                            obj["DATA POINTS 2"] = obj["DATA POINTS 2"] + "," + mainData.resultFootball.players[1].sets[i];
+                                        }
+                                    }
+                                    // obj["DATA POINTS 2"] = mainData.resultsCombat.players[1].sets[;
+                                }
+                            } else {
+                                obj["TEAM 2"] = "";
+                                obj["TEAM NAME 2"] = "";
+                                obj["SCHOOL 2"] = "";
+                                obj["RESULT 2"] = "";
+                                obj["SCORE 2"] = "";
+                                obj["DATA POINTS 2"] = "";
+                            }
+                            // console.log(obj,"---------------------------");
+                            callback(null, obj);
+
+                        },
+                        function (err, singleData) {
+                            Config.generateExcel("KnockoutIndividual", singleData, res);
+                            // callback(null, singleData);
+                        });
+
+                },
+            ],
+            function (err, excelData) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (excelData) {
+                    if (_.isEmpty(excelData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, excelData);
+                    }
+                }
             });
+
 
     },
 

@@ -139,6 +139,7 @@ var controller = {
                                 });
 
                             } else if (req.body.resultType == "knockout" && req.body.playerType == "team") {
+                                req.body.isLeagueKnockout = false;
                                 Match.saveKnockoutTeam(importData, req.body, function (err, complete) {
                                     if (err || _.isEmpty(complete)) {
                                         callback(err, null);
@@ -146,7 +147,6 @@ var controller = {
                                         callback(null, complete);
                                     }
                                 });
-
                             } else if (req.body.resultType == "heat" && req.body.playerType == "individual") {
                                 async.waterfall([
                                         function (callback) {
@@ -426,7 +426,7 @@ var controller = {
                             "value": false
                         })
                     } else {
-                        console.log("sports", sportData);
+                        // console.log("sports", sportData);
                         req.body.sport = sportData.sportId;
                         if (req.body.resultType == "knockout") {
                             Match.generateExcelKnockout(req.body, res);
@@ -438,6 +438,8 @@ var controller = {
                             Match.generateExcelQualifying(req.body, res);
                         } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "knockout") {
                             Match.generateExcelQualifyingKnockout(req.body, res);
+                        } else if (req.body.resultType == "league-cum-knockout") {
+                            Match.generateLeagueKnockout(req.body, res);
                         } else {
                             res.json({
                                 "data": "Body not Found",
