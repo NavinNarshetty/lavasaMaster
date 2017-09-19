@@ -1092,13 +1092,19 @@ var model = {
                         _.each(matchesPerPool[name], function (match) {
                             console.log("match", match);
                             var team = {};
+                            var team1 = {};
                             if (match.opponentsTeam[0]) {
                                 team.id = match.opponentsTeam[0];
+                                console.log("team7777", team);
                                 teams.push(team);
+
+                                console.log("teams1", teams);
                             }
                             if (match.opponentsTeam[1]) {
-                                team.id = match.opponentsTeam[1];
-                                teams.push(team);
+                                team1.id = match.opponentsTeam[1];
+                                console.log("team2222", team1);
+                                teams.push(team1);
+                                console.log("Teams2", teams);
                             }
                         });
                         console.log("teams****", teams);
