@@ -1108,7 +1108,7 @@ var model = {
                             }
                         });
                         console.log("teams****", teams);
-                        var t = _.uniq(teams, 'id');
+                        var t = _.uniq(teams, 'id._id');
                         console.log("unique", t);
                         match.teams = t;
                         teams = [];
