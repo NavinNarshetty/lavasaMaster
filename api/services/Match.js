@@ -1086,7 +1086,9 @@ var model = {
                         var match = {};
                         var name = arr[i];
                         match.name = arr[i];
+
                         var n = matchesPerPool[name].length;
+                        console.log("n", n);
                         _.each(matchesPerPool[name], function (match) {
                             var team = {};
                             if (match.opponentsTeam[0]) {
