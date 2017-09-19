@@ -1093,11 +1093,11 @@ var model = {
                             console.log("match", match);
                             var team = {};
                             if (match.opponentsTeam[0]) {
-                                team.id = match.opponentsTeam[0]._id;
+                                team.id = match.opponentsTeam[0];
                                 teams.push(team);
                             }
                             if (match.opponentsTeam[1]) {
-                                team.id = match.opponentsTeam[1]._id;
+                                team.id = match.opponentsTeam[1];
                                 teams.push(team);
                             }
                         });
