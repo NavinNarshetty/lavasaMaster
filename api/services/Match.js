@@ -1098,7 +1098,9 @@ var model = {
                                 teams.push(team);
                             }
                         });
+                        console.log("teams****", teams);
                         var t = _.uniq(teams, 'id');
+                        console.log("unique", t);
                         match.teams = t;
                         teams = [];
                         // match.match = matchesPerPool[name];
@@ -1108,7 +1110,7 @@ var model = {
                     callback(null, standings);
                 },
                 function (standings, callback) {
-                    // final.standings = standings;
+                    console.log("unique", standings);
                     async.eachSeries(standings, function (n, callback) {
                         // console.log("*****", n);
                         Match.getPointsPerPool(n, data, function (err, complete) {
