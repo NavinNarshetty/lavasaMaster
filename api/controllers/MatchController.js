@@ -87,7 +87,6 @@ var controller = {
                                 callback(null, resData);
                             }
                         } else if (req.body.resultType == "league-cum-knockout") {
-
                             var knockout = _.groupBy(importData, 'STAGE');
                             var i = 0;
                             var excelLength = 0;
@@ -97,7 +96,6 @@ var controller = {
                                 } else {
                                     excelLength = n.length;
                                 }
-
                             });
                             // var excelLength = importData.length;
                             var range = req.body.range;
@@ -365,6 +363,24 @@ var controller = {
                             });
                         } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "knockout") {
                             Match.updateQualifyingKnockout(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else if (req.body.resultType == "league-cum-knockout") {
+                            var knockout = _.groupBy(importData, 'STAGE');
+                            var i = 0;
+                            var excelData;
+                            _.each(knockout, function (n) {
+                                if (i == 0) {
+                                    i++;
+                                } else {
+                                    excelData = n;
+                                }
+                            });
+                            Match.updateKnockoutFootball(excelData, req.body, function (err, complete) {
                                 if (err || _.isEmpty(complete)) {
                                     callback(err, null);
                                 } else {
