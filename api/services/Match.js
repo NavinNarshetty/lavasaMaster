@@ -1094,14 +1094,14 @@ var model = {
                             var team = {};
                             var team1 = {};
                             if (match.opponentsTeam[0]) {
-                                team.id = match.opponentsTeam[0];
+                                team = match.opponentsTeam[0];
                                 console.log("team7777", team);
                                 teams.push(team);
 
                                 console.log("teams1", teams);
                             }
                             if (match.opponentsTeam[1]) {
-                                team1.id = match.opponentsTeam[1];
+                                team1 = match.opponentsTeam[1];
                                 console.log("team2222", team1);
                                 teams.push(team1);
                                 console.log("Teams2", teams);
@@ -1111,7 +1111,6 @@ var model = {
                         var t = _.uniq(teams, function (x) {
                             return x;
                         });
-
                         console.log("unique", t);
                         match.teams = t;
                         teams = [];
@@ -1156,10 +1155,10 @@ var model = {
             async.waterfall([
                     function (callback) {
                         var teamData = {};
-                        teamData.teamId = team.id.teamId;
-                        teamData.schoolName = team.id.schoolName;
-                        teamData._id = team.id._id;
-                        var teamid = team.id._id.toString();
+                        teamData.teamId = team.teamId;
+                        teamData.schoolName = team.schoolName;
+                        teamData._id = team._id;
+                        var teamid = team._id.toString();
                         Match.find({
                             sport: data.sport,
                             excelType: {
