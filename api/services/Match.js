@@ -1090,6 +1090,7 @@ var model = {
                         var n = matchesPerPool[name].length;
                         console.log("n", n, "matchName", matchesPerPool[name]);
                         _.each(matchesPerPool[name], function (match) {
+                            console.log("match", match);
                             var team = {};
                             if (match.opponentsTeam[0]) {
                                 team.id = match.opponentsTeam[0];
