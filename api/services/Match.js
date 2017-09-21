@@ -60,7 +60,7 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         "sport": {
-            select: '_id sportslist gender ageGroup maxTeamPlayers minTeamPlayers'
+            select: '_id sportslist gender ageGroup maxTeamPlayers minTeamPlayers weight'
         },
         "opponentsSingle": {
             select: '_id athleteId sportsListSubCategory createdBy'
@@ -1211,9 +1211,21 @@ var model = {
                         scores.points = 0;
                         scores.loss = 0;
                         scores.matchCount = 0;
+                        scores.noShow = 0;
 
                         _.each(teamData.matches, function (match) {
                             scores.matchCount = teamData.matches.length;
+                            if (match.resultFootball.teams.length == 2) {
+                                if (teamData._id == match.resultFootball.teams[0].team && match.resultFootball.teams[0].noShow == true) {
+                                    scores.noShow = ++scores.noShow;
+                                } else if (teamData._id == match.resultFootball.teams[1].team && match.resultFootball.teams[1].noShow == true) {
+                                    scores.noShow = ++scores.noShow;
+                                }
+                            } else {
+                                if (teamData._id == match.resultFootball.teams[0].team && match.resultFootball.teams[0].noShow == true) {
+                                    scores.noShow = ++scores.noShow;
+                                }
+                            }
                             if (teamData._id == match.resultFootball.winner.player) {
                                 scores.win = ++scores.win;
                                 scores.points = scores.points + 3;
