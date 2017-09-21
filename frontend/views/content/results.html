@@ -1,0 +1,92 @@
+<div class="resultpage">
+  <div class="container">
+    <!-- RESULT TITLE SECTION -->
+    <div class="result-titlesection">
+      <div class="result-title">School Result <span class="resulttitle-dropdown"> Sfa mumbai 2015-2016 <span  class="fa fa-angle-down"></span></span></div>
+    </div>
+    <!-- RESULT TITLE SECTION END -->
+
+    <!-- SCHOOL RANKING SECTION  -->
+    <div class="result-schoolsection">
+      <div class="result-schooltitle">
+        <h3>school ranking table</h3>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam culpa in, inventore similique unde nesciunt odit sint impedit distinctio tenetur dolore maiores omnis alias, veniam quis facere dolores suscipit doloribus.</p>
+      </div>
+      <!-- RESULT SCHOOL TABLE -->
+      <div class="result-schooltableholder">
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>
+                <div class="text-uppercase">
+                  rank
+                </div>
+              </th>
+              <th>
+                <div class="text-uppercase">
+                  school name
+                </div>
+              </th>
+              <th>
+                <div class="text-uppercase text-center">
+                  <p class="m-clear">5 points</p>
+                </div>
+              </th>
+              <th>
+                <div class="text-uppercase text-center">
+                  <p class="m-clear">3 points</p>
+                </div>
+              </th>
+              <th>
+                <div class="text-uppercase text-center">
+                  <p class="m-clear">1 point</p>
+                </div>
+              </th>
+              <th>
+                <div class="text-uppercase text-center">
+                  total points
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="school in rankTable track by $index">
+              <td>
+                <div class="">
+                  {{school.rank}}
+                </div>
+              </td>
+              <td>
+                <div class="text-left">
+                  {{school.school}}
+                </div>
+              </td>
+              <td>
+                <div class="">
+                  {{school.goldPoints}}
+                </div>
+              </td>
+              <td>
+                <div class="">
+                  {{school.silverPoints}}
+                </div>
+              </td>
+              <td>
+                <div class="">
+                  {{school.bronzePoints}}
+                </div>
+              </td>
+              <td>
+                <div class="">
+                  {{school.totalPoints}} <span class="fa fa-angle-down"></span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- RESULT SCHOOL TABLE END -->
+    </div>
+    <!-- SCHOOL RANKING SECTION END -->
+  </div>
+</div>
