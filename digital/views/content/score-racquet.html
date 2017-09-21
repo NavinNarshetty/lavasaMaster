@@ -63,7 +63,7 @@
                 <div class="relate mtb-10" ng-if="match.sportsName=='Tennis Singles'">
                   <label class="datapoint-name">Ace</label>
                   <button class="btn score-buttons score-decrement" ng-click="decrementScore(set,'ace');"><i class="fa fa-minus"></i></button>
-                  <input type="number" ng-model="set.ace" min="0" max="99" class="score-number display-inline form-control">
+                  <input type="number" ng-model="set.ace" min="0" placeholder="0" max="99" class="score-number display-inline form-control">
                   <button class="btn score-buttons score-increment" ng-click="incrementScore(set,'ace');"><i class="fa fa-plus"></i></button>
                 </div>
                 <!-- ACE DATA POINT -->
@@ -71,7 +71,7 @@
                 <div class="relate mtb-10">
                   <label class="datapoint-name">Winner</label>
                   <button class="btn score-buttons score-decrement" ng-click="decrementScore(set,'winner');"><i class="fa fa-minus"></i></button>
-                  <input type="number" ng-model="set.winner" min="0" max="99" class="score-number display-inline form-control">
+                  <input type="number" ng-model="set.winner" min="0" placeholder="0" max="99" class="score-number display-inline form-control">
                   <button class="btn score-buttons score-increment" ng-click="incrementScore(set,'winner');"><i class="fa fa-plus"></i></button>
                 </div>
                 <!-- WINNER DATA POINT -->
@@ -79,7 +79,7 @@
                 <div class="relate mtb-10">
                   <label class="datapoint-name">Unforced Error</label>
                   <button class="btn score-buttons score-decrement" ng-click="decrementScore(set,'unforcedError');"><i class="fa fa-minus"></i></button>
-                  <input type="number" ng-model="set.unforcedError" min="0" max="99" class="score-number display-inline form-control">
+                  <input type="number" ng-model="set.unforcedError" min="0" placeholder="0" max="99" class="score-number display-inline form-control">
                   <button class="btn score-buttons score-increment" ng-click="incrementScore(set,'unforcedError');"><i class="fa fa-plus"></i></button>
                 </div>
                 <!-- UNFORCED ERROR DATA POINT -->
@@ -87,7 +87,7 @@
                 <div class="relate mtb-10" ng-if="match.sportsName=='Badminton Singles' || match.sportsName == 'Table Tennis Singles' || match.sportsName == 'Squash'">
                   <label class="datapoint-name">Service Error</label>
                   <button class="btn score-buttons score-decrement" ng-click="decrementScore(set,'serviceError');"><i class="fa fa-minus"></i></button>
-                  <input type="number" ng-model="set.serviceError" min="0" max="99" class="score-number display-inline form-control">
+                  <input type="number" ng-model="set.serviceError" min="0" placeholder="0" max="99" class="score-number display-inline form-control">
                   <button class="btn score-buttons score-increment" ng-click="incrementScore(set,'serviceError');"><i class="fa fa-plus"></i></button>
                 </div>
                 <!-- SERVICE ERROR DATA POINT -->
@@ -95,7 +95,7 @@
                 <div class="relate mtb-10" ng-if="match.sportsName=='Tennis Singles'">
                   <label class="datapoint-name">Double Faults</label>
                   <button class="btn score-buttons score-decrement" ng-click="decrementScore(set,'doubleFaults');"><i class="fa fa-minus"></i></button>
-                  <input type="number" ng-model="set.doubleFaults" min="0" max="99" class="score-number display-inline form-control">
+                  <input type="number" ng-model="set.doubleFaults" min="0" placeholder="0" max="99" class="score-number display-inline form-control">
                   <button class="btn score-buttons score-increment" ng-click="incrementScore(set,'doubleFaults');"><i class="fa fa-plus"></i></button>
                 </div>
                 <!-- DOUBLE FAULTS DATA POINT -->
@@ -114,7 +114,7 @@
           </div>
           <div class="relate setpoint-element" ng-repeat="set in player.sets track by $index">
             <label for="player1score" class="text-uppercase" >SET <span>{{$index+1}}</span></label>
-            <input type="number" ng-model="set.point" id="player1score" min="0" max="99" class="score-number display-inline form-control">
+            <input type="number" ng-model="set.point" id="player1score" min="0" placeholder="0" max="99" class="score-number display-inline form-control">
           </div>
         </div>
       </div>

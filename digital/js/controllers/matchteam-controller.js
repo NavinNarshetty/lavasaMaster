@@ -77,7 +77,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                             saves: "",
                                             fouls: "",
                                             offSide: "",
-                                            cleanSheet: ""
+                                            cleanSheet: false
                                         }
                                     }
                                     _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
