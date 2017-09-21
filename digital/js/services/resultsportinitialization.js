@@ -5,7 +5,7 @@ myApp.factory('ResultSportInitialization', function () {
         getPlayerTemplate: function (sportName, player) {
             var format = {
                 player: player._id,
-                sfaId:player._id,
+                sfaId:player.sfaId,
                 jerseyNo: "",
                 isPlaying: false,
                 noShow: false,
