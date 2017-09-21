@@ -35,7 +35,8 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label>Sport</label>
-                        <input type="text" name="incrementalId" ng-model="matchData.sport" class="form-control" placeholder="Sport" readonly>
+                        <input type="text" name="incrementalId" ng-model="formData.sport.sportslist.sportsListSubCategory.name" class="form-control"
+                          placeholder="Sport" readonly>
                         <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
                       </div>
                     </div>
@@ -44,7 +45,7 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label>Gender</label>
-                        <input type="text" name="gender" ng-model="matchData.gender" class="form-control" placeholder="Gender" readonly>
+                        <input type="text" name="gender" ng-model="formData.sport.gender" class="form-control" placeholder="Gender" readonly>
                         <div class="error-msg" ng-if="detailForm.gender.$invalid && detailForm.gender.$touched">Please Enter Valid Match Id *</div>
                       </div>
                     </div>
@@ -53,7 +54,7 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label>Age-group</label>
-                        <input type="text" name="agegroup" ng-model="matchData.agegroup" class="form-control" placeholder="Age" readonly>
+                        <input type="text" name="agegroup" ng-model="formData.sport.ageGroup.name" class="form-control" placeholder="Age" readonly>
                         <div class="error-msg" ng-if="detailForm.agegroup.$invalid && detailForm.agegroup.$touched">Please Enter Valid Match Id *</div>
                       </div>
                     </div>
@@ -62,13 +63,13 @@
                     <div class="col-md-2">
                       <div class="form-group">
                         <label>Event-Category</label>
-                        <input type="text" name="event" ng-model="matchData.event" class="form-control" placeholder="Event" readonly>
+                        <input type="text" name="event" ng-model="formData.sport.sportslist.name" class="form-control" placeholder="Event" readonly>
                         <div class="error-msg" ng-if="detailForm.event.$invalid && detailForm.event.$touched">Please Enter Event *</div>
                       </div>
                     </div>
                     <!-- EVENT END -->
                     <!-- WEIGHT -->
-                    <div class="col-md-2">
+                    <div class="col-md-2" ng-if !="formData.sport.sportslist.name=='Football'">
                       <div class="form-group">
                         <label>Weight-Category</label>
                         <input type="text" name="weight" ng-model="matchData.weight" class="form-control" placeholder="Weight" readonly>
@@ -95,7 +96,7 @@
 
                   <!-- DATE && TIME HOLDER -->
                   <div class="row">
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                       <!-- DATE -->
                       <div class="form-group">
                         <label class="date-mb40">Schedule Date</label>
@@ -104,12 +105,13 @@
                       </div>
                       <!-- END DATE -->
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                       <!-- TIME -->
                       <div class="form-group">
-                        <label>Schedule Time</label>
+                        <label class="date-mb40">Schedule Time</label>
+                        <input name="schDate" ng-model="formData.scheduleTime" class="form-control" placeholder="Enter Schedule Time">
                         <!-- <input type="text" name="schTime" ng-model="formData.nextMatch" class="form-control" placeholder="Enter Schedule Time"> -->
-                        <div uib-timepicker ng-model="formData.scheduleTime" hour-step="1" minute-step="1" show-meridian="true"></div>
+                        <!-- <div uib-timepicker ng-model="formData.scheduleTime" hour-step="1" minute-step="1" show-meridian="true"></div> -->
                         <div class="error-msg" ng-if="detailForm.schTime.$invalid && detailForm.schTime.$touched">Please Enter Schedule Time *</div>
                       </div>
                       <!-- END TIME -->
@@ -122,14 +124,14 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Stage</label>
-                        <input type="text" name="round" ng-model="formData.sportType" class="form-control" placeholder="Enter Round" readonly>
+                        <input type="text" name="round" ng-model="formData.excelType" class="form-control" placeholder="Enter Round" readonly>
                         <div class="error-msg" ng-if="detailForm.round.$invalid && detailForm.round.$touched">Please Enter Valid Round *</div>
                       </div>
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
                         <label>Pool</label>
-                        <input type="text" name="round" ng-model="formData.sportType" class="form-control" placeholder="Enter Round" readonly>
+                        <input type="text" name="round" ng-model="formData.round" class="form-control" placeholder="Enter Round" readonly>
                         <div class="error-msg" ng-if="detailForm.round.$invalid && detailForm.round.$touched">Please Enter Valid Round *</div>
                       </div>
                     </div>
@@ -142,7 +144,7 @@
                       <!-- ROUND -->
                       <div class="form-group">
                         <label>Round</label>
-                        <input type="text" name="round" ng-model="formData.sportType" class="form-control" placeholder="Enter Round" readonly>
+                        <input type="text" name="round" ng-model="formData.round" class="form-control" placeholder="Enter Round" readonly>
                         <div class="error-msg" ng-if="detailForm.round.$invalid && detailForm.round.$touched">Please Enter Valid Round *</div>
                       </div>
                       <!-- END ROUND -->
@@ -151,7 +153,8 @@
                       <!-- SPORT NAME -->
                       <div class="form-group">
                         <label>Sport Name</label>
-                        <input type="text" name="sportname" ng-model="formData.sportsName" class="form-control" placeholder="Enter Sport" readonly>
+                        <input type="text" name="sportname" ng-model="formData.sport.sportslist.name" class="form-control" placeholder="Enter Sport"
+                          readonly>
                         <div class="error-msg" ng-if="detailForm.sportname.$invalid && detailForm.sportname.$touched">Please Enter Filter*</div>
                       </div>
                       <!-- END SPORT NAME -->
@@ -1321,8 +1324,10 @@
                 <!-- ****************KABADDI HOLDER END ***************************** -->
 
                 <!-- *******************FOOTBALL HOLDER********************************* -->
-                <div class="team-football-holder" ng-repeat="team in match.resultFootball.teams track by $index " ng-init="teamIndex = $index">
+                <div class="team-football-holder" ng-if="formData.sport.sportslist.name==='Football'" ng-repeat="team in match.resultFootball.teams track by $index "
+                  ng-init="teamIndex = $index">
                   <!-- TEAM CARDS -->
+                  <p>Navin</p>
                   <div class="team-header">
                     <h5 class="text-uppercase text-center">Team Details </h5>
                   </div>

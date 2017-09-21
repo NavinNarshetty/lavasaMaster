@@ -22,6 +22,7 @@ myApp.controller('DetailHeatCtrl', function ($scope, TemplateService, Navigation
 
 
         // })
+
         console.log($scope.formData, "****************form")
         _.each($scope.formData.opponentsSingle, function (key) {
           // console.log($scope.formData.players, 'plr');
@@ -35,22 +36,27 @@ myApp.controller('DetailHeatCtrl', function ($scope, TemplateService, Navigation
           // $scope.formData.resultHeat.players[i]
         });
         var i = 0;
-        _.each($scope.formData.resultHeat.players, function (n) {
-          console.log("******", n);
-          if (n.id) {
-            n.fullname = $scope.formData.opponentsSingle[i].fullname;
-            n.sfaId = $scope.formData.opponentsSingle[i].sfaId;
-            n.schoolname = $scope.formData.opponentsSingle[i].schoolname;
-            i++;
-          } else {
-            n.fullname = "-";
-            n.sfaId = "-";
-            n.schoolname = "-";
-          }
-        });
+        if ($scope.formData.resultHeat) {
+          _.each($scope.formData.resultHeat.players, function (n) {
+            console.log("******", n);
+            if (n.id) {
+              n.fullname = $scope.formData.opponentsSingle[i].fullname;
+              n.sfaId = $scope.formData.opponentsSingle[i].sfaId;
+              n.schoolname = $scope.formData.opponentsSingle[i].schoolname;
+              i++;
+            } else {
+              n.fullname = "-";
+              n.sfaId = "-";
+              n.schoolname = "-";
+            }
+          });
+        }
+
 
 
         console.log($scope.formData)
+
+
 
       } else {
         console.log("ERROR IN getOneMatch");
@@ -66,25 +72,29 @@ myApp.controller('DetailHeatCtrl', function ($scope, TemplateService, Navigation
   // SAVE
   $scope.saveDataMatch = function () {
     console.log($scope.formData, "save");
-    $scope.result = {};
     // result.result = $scope.formData.resultHeat;
     // $scope.obj = $.jStorage.get("detail")
-    _.each($scope.formData.resultHeat.players, function (key) {
-      key.show = false;
-    })
+    if ($scope.formData.resultHeat) {
+      _.each($scope.formData.resultHeat.players, function (key) {
+        key.show = false;
+      })
+    } else {
+      console.log("in else and save")
+    }
+
     NavigationService.saveMatch($scope.formData, function (data) {
       if (data.value == true) {
         console.log("in")
         console.log($scope.formData, "suksha");
-        $scope.getOneBackend()
+
 
 
         // $scope.draw = $scope.data.sport.sportslist.drawFormat.name
         // console.log(draw, "in draw")
-        toastr.success("Data saved successfully", 'Success');
+        // toastr.success("Data saved successfully", 'Success');
         $state.go('format-table', {
           type: $scope.formData.sport.sportslist.drawFormat.name
-        })
+        });
       } else {
         toastr.error("Data save failed ,please try again or check your internet connection", 'Save error');
       }
@@ -192,34 +202,38 @@ myApp.controller('DetailQualifyingCtrl', function ($scope, TemplateService, Navi
 
         // })
         console.log($scope.formData, "****************form")
-        _.each($scope.formData.opponentsSingle, function (key) {
-          // console.log($scope.formData.players, 'plr');
-          key.sfaId = key.athleteId.sfaId;
-          key.schoolname = key.athleteId.school.name
-          $scope.formData.resultQualifyingRound.player.schoolname = key.schoolname
-          $scope.formData.resultQualifyingRound.player.sfaId = key.sfaId
-          if (key.athleteId.middleName == undefined || key.athleteId.middleName == '') {
-            key.fullname = key.athleteId.firstName + ' ' + key.athleteId.surname
-            $scope.formData.resultQualifyingRound.player.fullname = key.fullname;
-          } else {
-            key.fullname = key.athleteId.firstName + ' ' + key.middleName + ' ' + key.athleteId.surname
-            $scope.formData.resultQualifyingRound.player.fullname = key.fullname;
-          }
-          // $scope.formData.resultHeat.players[i]
-        });
-        var i = 0;
-        _.each($scope.formData.resultQualifyingRound.player.attempt, function (n) {
-          console.log("******", n);
-          if (i == 0) {
-            $scope.formData.resultQualifyingRound.player.set = n;
-            i++;
-          } else {
-            $scope.formData.resultQualifyingRound.player.set = $scope.formData.resultQualifyingRound.player.set + ',' + n;
-          }
-        });
+        if ($scope.formData.resultQualifyingRound) {
+          _.each($scope.formData.opponentsSingle, function (key) {
+            // console.log($scope.formData.players, 'plr');
+            key.sfaId = key.athleteId.sfaId;
+            key.schoolname = key.athleteId.school.name
+            $scope.formData.resultQualifyingRound.player.schoolname = key.schoolname
+            $scope.formData.resultQualifyingRound.player.sfaId = key.sfaId
+            if (key.athleteId.middleName == undefined || key.athleteId.middleName == '') {
+              key.fullname = key.athleteId.firstName + ' ' + key.athleteId.surname
+              $scope.formData.resultQualifyingRound.player.fullname = key.fullname;
+            } else {
+              key.fullname = key.athleteId.firstName + ' ' + key.middleName + ' ' + key.athleteId.surname
+              $scope.formData.resultQualifyingRound.player.fullname = key.fullname;
+            }
+            // $scope.formData.resultHeat.players[i]
+          });
+          var i = 0;
+          _.each($scope.formData.resultQualifyingRound.player.attempt, function (n) {
+            console.log("******", n);
+            if (i == 0) {
+              $scope.formData.resultQualifyingRound.player.set = n;
+              i++;
+            } else {
+              $scope.formData.resultQualifyingRound.player.set = $scope.formData.resultQualifyingRound.player.set + ',' + n;
+            }
+          });
 
 
-        console.log($scope.formData)
+          console.log($scope.formData)
+
+        }
+
 
       } else {
         console.log("ERROR IN getOneMatch");
@@ -255,6 +269,15 @@ myApp.controller('DetailQualifyingCtrl', function ($scope, TemplateService, Navi
 
   }
   // SAVE-END
+
+  // CANCEL
+  $scope.cancelQualifying = function (data) {
+    // $state.go
+    $state.go('format-table', {
+      type: data
+    })
+  }
+  // CANCEL END
 
   $scope.heat = [{
     sfaId: 1234,

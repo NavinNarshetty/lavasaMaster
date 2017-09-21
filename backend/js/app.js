@@ -303,7 +303,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         // detailteamsport
         .state('detailtsport-team', {
-            url: "/detailsport-team",
+            url: "/detailsport-team/:id",
             templateUrl: "views/template.html",
             controller: 'DetailSportTeamCtrl'
         })
@@ -311,6 +311,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/format-table/:type",
             templateUrl: "views/template.html",
             controller: 'FormatTableCtrl'
+        })
+        .state('format-teamtable', {
+            url: "/format-teamtable/:type",
+            templateUrl: "views/template.html",
+            controller: 'FormatTableTeamCtrl'
         })
         .state('detail-heats', {
             url: "/detail-heats/:id",

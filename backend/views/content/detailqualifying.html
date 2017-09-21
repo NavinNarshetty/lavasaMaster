@@ -54,9 +54,10 @@
                   <div class="col-md-6">
                     <!-- TIME -->
                     <div class="form-group">
-                      <label>Schedule Time</label>
+                      <label class="date-mb40">Schedule Time</label>
                       <!-- <input type="text" name="schTime" ng-model="formData.nextMatch" class="form-control" placeholder="Enter Schedule Time"> -->
-                      <div uib-timepicker ng-model="formData.scheduleTime" hour-step="1" minute-step="1" show-meridian="true"></div>
+                      <input name="schDate" ng-model="formData.scheduleTime" class="form-control" placeholder="Enter Schedule Date">
+                      <!-- <div uib-timepicker ng-model="formData.scheduleTime" hour-step="1" minute-step="1" show-meridian="true"></div> -->
                       <div class="error-msg" ng-if="detailForm.schTime.$invalid && detailForm.schTime.$touched">Please Enter Schedule Time *</div>
                     </div>
                     <!-- END TIME -->
@@ -111,120 +112,176 @@
                 </div>
                 <!-- GENDER + AGE + EVENT + ROUND END -->
                 <!-- TABLE OF HEAT PLAYERS -->
-                <div class="table-heat-players text-center">
-                  <table class="table">
-                    <thead>
-                      <th>
-                        <div class="text-center">
-                          SFA ID
-                        </div>
-                      </th>
-                      <th>
-                        <div class="text-center">
-                          Name
-                        </div>
-                      </th>
-                      <th>
-                        <div class="text-center">
-                          School Name
-                        </div>
-                      </th>
-                      <th>
-                        <div class="text-center">
-                          Score/No of jump
-                        </div>
-                      </th>
-                      <th>
-                        <div class="text-center">
-                          Result
-                        </div>
-                      </th>
-                      <th>
-                        <div class="text-center">
-                          Function
-                        </div>
-                      </th>
-                    </thead>
-                    <tbody>
-                      <tr ng-repeat="player in formData.resultQualifyingRound track by $index">
-                        <td>
-                          <div class="display-content-holder" ng-if="!show">
-                            <p>
-                              {{player.sfaId}}
-                            </p>
+                <!-- HIDE THE DIV FOR THE HEATS PLAYER -->
+                <div ng-if="formData.sport.sportslist.sportsListSubCategory.name==='Athletics' && formData.resultQualifyingRound">
+                  <div class="table-heat-players text-center">
+                    <table class="table">
+                      <thead>
+                        <th>
+                          <div class="text-center">
+                            SFA ID
                           </div>
-                          <div class="edit-content-holder" ng-if="show">
-                            <input type="text" name="incrementalId" ng-model="player.sfaId" class="form-control" placeholder="Sport">
-                            <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
+                        </th>
+                        <th>
+                          <div class="text-center">
+                            Name
                           </div>
-                        </td>
-                        <td>
-                          <div class="display-content-holder" ng-if="!show">
-                            <p>{{player.fullname}}</p>
+                        </th>
+                        <th>
+                          <div class="text-center">
+                            School Name
                           </div>
-                          <div class="edit-content-holder" ng-if="show">
-                            <input type="text" name="incrementalId" ng-model="player.fullname" class="form-control" placeholder="Sport" readonly>
-                            <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
+                        </th>
+                        <th>
+                          <div class="text-center">
+                            Score/No of jump
                           </div>
-                        </td>
-                        <td>
-                          <div class="display-content-holder" ng-if="!show">
-                            <p>{{player.schoolname}}</p>
+                        </th>
+                        <th>
+                          <div class="text-center">
+                            Result
                           </div>
-                          <div class="edit-content-holder" ng-if="show">
-                            <input type="text" name="incrementalId" ng-model="player.schoolname" class="form-control" placeholder="Sport" readonly>
-                            <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
+                        </th>
+                        <th>
+                          <div class="text-center">
+                            Function
                           </div>
-                        </td>
-                        <td>
-                          <div class="display-content-holder" ng-if="!show">
-                            <p>{{player.attempt.length}}</p>
-                          </div>
-                          <!-- <div class="edit-content-holder" ng-if="show" ng-repeat="set in player.attempt track by $index">
-                            <input type="text" name="incrementalId" ng-model="player.attempt" class="form-control" placeholder="Sport">
-                            <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
-                          </div> -->
-                        </td>
-                        <td>
-                          <div class="display-content-holder" ng-if="!show">
-                            <p>{{player.result}}</p>
-                          </div>
-                          <div class="edit-content-holder" ng-if="show">
-                            <input type="text" name="incrementalId" ng-model="player.result" class="form-control" placeholder="Sport">
-                            <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
-                          </div>
-                        </td>
-                        <td>
-                          <div class="display-content-holder mt10">
-                            <p>
-                              <a class="btn btn-primary" target="_blank" ng-click="editHeat()">
-                                                      <i class="fa fa-pencil"></i>
-                                                    </a>
-                              <a class="btn btn-danger" ng-click="confDel(item._id)">
-                                                      <i class="fa fa-trash"></i>
-                                                    </a>
-                            </p>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <!-- TABLE OF HEAT PLAYERS END -->
-                <div class="row">
-                  <div class="col-md-4" ng-repeat="attp in formData.resultQualifyingRound.player.attempt track by $index">
-                    <div class="attempt-holder-highjump form-group">
-                      <label for="">Attempt{{$index + 1}}</label>
-                      <input type="text" name="incrementalId" ng-model="formData.resultQualifyingRound.player.attempt[$index]" class="form-control"
-                        placeholder="Sport">
+                        </th>
+                      </thead>
+                      <tbody>
+                        <tr ng-repeat="player in formData.resultQualifyingRound track by $index">
+                          <td>
+                            <div class="display-content-holder" ng-if="!show">
+                              <p>
+                                {{player.sfaId}}
+                              </p>
+                            </div>
+                            <div class="edit-content-holder" ng-if="show">
+                              <input type="text" name="incrementalId" ng-model="player.sfaId" class="form-control" placeholder="Sport">
+                              <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="display-content-holder" ng-if="!show">
+                              <p>{{player.fullname}}</p>
+                            </div>
+                            <div class="edit-content-holder" ng-if="show">
+                              <input type="text" name="incrementalId" ng-model="player.fullname" class="form-control" placeholder="Sport" readonly>
+                              <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="display-content-holder" ng-if="!show">
+                              <p>{{player.schoolname}}</p>
+                            </div>
+                            <div class="edit-content-holder" ng-if="show">
+                              <input type="text" name="incrementalId" ng-model="player.schoolname" class="form-control" placeholder="Sport" readonly>
+                              <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="display-content-holder" ng-if="!show">
+                              <p>{{player.attempt.length}}</p>
+                            </div>
+                            <div class="edit-content-holder" ng-if="show">
+                              <input type="text" name="incrementalId" ng-model="player.attempt.length" class="form-control" placeholder="Sport" ng-if="show">
+                              <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="display-content-holder" ng-if="!show">
+                              <p>{{player.result}}</p>
+                            </div>
+                            <div class="edit-content-holder" ng-if="show">
+                              <input type="text" name="incrementalId" ng-model="player.result" class="form-control" placeholder="Sport">
+                              <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Valid Match Id *</div>
+                            </div>
+                          </td>
+                          <td>
+                            <div class="display-content-holder mt10">
+                              <p>
+                                <a class="btn btn-primary" target="_blank" ng-click="editHeat()">
+                                                            <i class="fa fa-pencil"> EDIT</i>
+                                                          </a>
+                                <!-- <a class="btn btn-danger" ng-click="confDel(item._id)">
+                                                            <i class="fa fa-trash"></i>
+                                                          </a> -->
+                              </p>
+                            </div>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <!-- TABLE OF HEAT PLAYERS END -->
+                  <div class="row">
+                    <div class="col-md-4" ng-repeat="attp in formData.resultQualifyingRound.player.attempt track by $index">
+                      <div class="attempt-holder-highjump form-group input-group">
+                        <span class="pull-right" ng-click="removeField()" ng-if="show"><i class="fa fa-times" aria-hidden="true"></i></span>
+                        <label for="">Attempt {{$index + 1}}</label>
+                        <input type="text" name="attempt" ng-model="formData.resultQualifyingRound.player.attempt[$index]" class="form-control" placeholder="Sport"
+                          ng-if="!show" readonly>
+                        <input type="text" name="attempt" ng-model="formData.resultQualifyingRound.player.attempt[$index]" class="form-control" placeholder="Sport"
+                          ng-if="show">
+                      </div>
                     </div>
                   </div>
                 </div>
 
+                <!-- INDIAN BOW -->
+                <div class="excel-qualifying-holder" ng-if="formData.excelType=='qualifying'">
+                  <div class="row">
+                    <h4>Player Details</h4>
+                    <div class="col-md-4 ">
+                      <div class="form-group ">
+                        <label>SFAId</label>
+                        <input type="text " name="round " ng-model="formData.resultQualifyingRound.player.sfaId " class="form-control " placeholder="Round "
+                          readonly>
+                        <div class="error-msg " ng-if="detailForm.round.$invalid && detailForm.round.$touched ">Please Enter Round *</div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 ">
+                      <div class="form-group ">
+                        <label>Name</label>
+                        <input type="text " name="round " ng-model="formData.resultQualifyingRound.player.fullname " class="form-control " placeholder="Round "
+                          readonly>
+                        <div class="error-msg " ng-if="detailForm.round.$invalid && detailForm.round.$touched ">Please Enter Round *</div>
+                      </div>
+                    </div>
+                    <div class="col-md-4 ">
+                      <div class="form-group ">
+                        <label>School</label>
+                        <input type="text " name="round " ng-model="formData.resultQualifyingRound.player.schoolname " class="form-control " placeholder="Round "
+                          readonly>
+                        <div class="error-msg " ng-if="detailForm.round.$invalid && detailForm.round.$touched ">Please Enter Round *</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6" ng-repeat="bow in formData.resultQualifyingRound.player.attempt track by $index">
+                      <div class="form-group ">
+                        <label for="">Attempt {{$index +1 }}</label>
+                        <input type="text " name="round " ng-model="formData.resultQualifyingRound.player.attempt[$index] " class="form-control "
+                          placeholder="Round ">
+                        <div class="error-msg " ng-if="detailForm.round.$invalid && detailForm.round.$touched ">Please Enter Round *</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label for="">Final Score</label>
+                        <input type="text " name="round " ng-model="formData.resultQualifyingRound.player.finalScore" class="form-control " placeholder="Round ">
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- INDIAN BOW END -->
               </div>
               <div class=" text-center mt20 odd-even-button ">
                 <button class="btn btn-default " type="submit " ng-click="saveDataMatch(formData) ">Save</button>
-                <button class="btn btn-default " ui-sref='matches'>Cancel</button>
+                <button class="btn btn-default " ng-click="cancelQualifying(formData.sport.sportslist.drawFormat.name) ">Cancel</button>
               </div>
             </div>
           </form>
