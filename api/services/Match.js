@@ -3049,7 +3049,6 @@ var model = {
                                 obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsCombat.teams[0].sets[i].point;
                                 obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + mainData.resultsCombat.teams[0].sets[i];
                             }
-
                         }
                         // obj["DATA POINTS 1"] = mainData.resultsCombat.teams[0].sets;
                     } else if (mainData.resultsRacquet) {
@@ -3075,7 +3074,7 @@ var model = {
                                 obj["DATA POINTS 1"] = "Set" + sNo + "{ point:" + mainData.resultsRacquet.teams[0].sets[i].point + "ace:" + mainData.resultsRacquet.teams[0].sets[i].ace + "winner:" + mainData.resultsRacquet.teams[0].sets[i].winner + "unforcedError:" + mainData.resultsRacquet.teams[0].sets[i].unforcedError + "serviceError:" + mainData.resultsRacquet.teams[0].sets[i].serviceError + "doubleFaults:" + mainData.resultsRacquet.teams[0].sets[i].doubleFaults + "}";
                                 sNo++;
                             } else {
-                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + i + "-" + mainData.resultsRacquet.teams[0].sets[i].point;
+                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + sNo + "-" + mainData.resultsRacquet.teams[0].sets[i].point;
                                 obj["DATA POINTS 1"] = obj["DATA POINTS 1"] + "," + "Set" + sNo + "{ point:" + mainData.resultsRacquet.teams[0].sets[i].point + "ace:" + mainData.resultsRacquet.teams[0].sets[i].ace + "winner:" + mainData.resultsRacquet.teams[0].sets[i].winner + "unforcedError:" + mainData.resultsRacquet.teams[0].sets[i].unforcedError + "serviceError:" + mainData.resultsRacquet.teams[0].sets[i].serviceError + "doubleFaults:" + mainData.resultsRacquet.teams[0].sets[i].doubleFaults + "}";
                                 sNo++;
                             }
@@ -3103,18 +3102,50 @@ var model = {
                             }
                         }
                         var i;
-                        for (i = 0; i < mainData.resultBasketball.teams[0].sets.length; i++) {
+                        for (i = 0; i < mainData.resultBasketball.teams[0].teamResults.quarterPoints.length; i++) {
                             if (i == 0) {
                                 obj["QUARTER SCORE 1"] = "Q" + sNo + "-" + mainData.resultBasketball.teams[0].teamResults.quarterPoints[i].basket;
                                 sNo++;
                             } else {
-                                obj["QUARTER SCORE 1"] = obj["QUARTER SCORE 1"] + "," + "Q" + i + "-" + mainData.resultBasketball.teams[0].teamResults.quarterPoints[i].basket;
+                                obj["QUARTER SCORE 1"] = obj["QUARTER SCORE 1"] + "," + "Q" + sNo + "-" + mainData.resultBasketball.teams[0].teamResults.quarterPoints[i].basket;
                                 sNo++;
                             }
                         }
                     } else {
                         obj["RESULT 1"] = "";
                         obj["QUARTER SCORE 1"] = "";
+                    }
+                    if (mainData.resultVolleyball) {
+                        if (mainData.opponentsTeam[0]._id === mainData.resultVolleyball.winner.player) {
+                            obj["RESULT 1"] = "Won";
+                        } else {
+                            if (mainData.resultVolleyball.isNoMatch == false) {
+                                if (mainData.resultVolleyball.teams[0].walkover == false && mainData.resultVolleyball.teams[0].noShow == false) {
+                                    obj["RESULT 1"] = "Lost";
+                                } else if (mainData.resultVolleyball.teams[0].walkover == true) {
+                                    obj["RESULT 1"] = "walkover";
+                                } else {
+                                    obj["RESULT 1"] = "noShow";
+                                }
+                            } else {
+                                obj["RESULT 1"] = "No Match";
+                            }
+                        }
+                        var i;
+                        for (i = 0; i < mainData.resultVolleyball.teams[0].teamResults.sets.length; i++) {
+                            if (i == 0) {
+                                obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultVolleyball.teams[0].teamResults.sets[i].points;
+                                sNo++;
+                            } else {
+                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + sNo + "-" + mainData.resultVolleyball.teams[0].teamResults.quarterPoints[i].basket;
+                                sNo++;
+                            }
+                        }
+                        obj["DATA POINTS 1"] = "Spike:" + mainData.resultsRacquet.teams[0].teamResults.spike + ",Fouls:" + mainData.resultsRacquet.teams[0].teamResults.fouls + ",Block:" + mainData.resultsRacquet.teams[0].teamResults.block;
+                    } else {
+                        obj["RESULT 1"] = "";
+                        obj["SCORE 1"] = "";
+                        obj["DATA POINTS 1"] = "";
                     }
                 } else {
                     obj["TEAMID 1"] = "";
@@ -3179,8 +3210,9 @@ var model = {
                         obj["SCORE 2"] = "";
                         obj["DATA POINTS 2"] = "";
                     }
+
                     if (mainData.resultBasketball) {
-                        if (mainData.opponentsTeam[0]._id === mainData.resultBasketball.winner.player) {
+                        if (mainData.opponentsTeam[1]._id === mainData.resultBasketball.winner.player) {
                             obj["RESULT 2"] = "Won";
                         } else {
                             if (mainData.resultBasketball.isNoMatch == false) {
@@ -3214,6 +3246,39 @@ var model = {
                         obj["RESULT 2"] = "";
                         obj["QUARTER SCORE 2"] = "";
                         obj["FINAL SCORE"] = "";
+                    }
+
+                    if (mainData.resultVolleyball) {
+                        if (mainData.opponentsTeam[1]._id === mainData.resultVolleyball.winner.player) {
+                            obj["RESULT 1"] = "Won";
+                        } else {
+                            if (mainData.resultVolleyball.isNoMatch == false) {
+                                if (mainData.resultVolleyball.teams[1].walkover == false && mainData.resultVolleyball.teams[1].noShow == false) {
+                                    obj["RESULT 1"] = "Lost";
+                                } else if (mainData.resultVolleyball.teams[1].walkover == true) {
+                                    obj["RESULT 1"] = "walkover";
+                                } else {
+                                    obj["RESULT 1"] = "noShow";
+                                }
+                            } else {
+                                obj["RESULT 1"] = "No Match";
+                            }
+                        }
+                        var i;
+                        for (i = 0; i < mainData.resultVolleyball.teams[1].teamResults.sets.length; i++) {
+                            if (i == 0) {
+                                obj["SCORE 1"] = "Set" + sNo + "-" + mainData.resultVolleyball.teams[1].teamResults.sets[i].points;
+                                sNo++;
+                            } else {
+                                obj["SCORE 1"] = obj["SCORE 1"] + "," + "Set" + sNo + "-" + mainData.resultVolleyball.teams[1].teamResults.quarterPoints[i].basket;
+                                sNo++;
+                            }
+                        }
+                        obj["DATA POINTS 1"] = "Spike:" + mainData.resultsRacquet.teams[1].teamResults.spike + ",Fouls:" + mainData.resultsRacquet.teams[0].teamResults.fouls + ",Block:" + mainData.resultsRacquet.teams[0].teamResults.block;
+                    } else {
+                        obj["RESULT 1"] = "";
+                        obj["SCORE 1"] = "";
+                        obj["DATA POINTS 1"] = "";
                     }
                 } else {
                     obj["TEAMID 2"] = "";
