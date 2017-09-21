@@ -39,7 +39,7 @@
               </div>
               <div class="team-playing" ng-repeat="player in match.resultHandball.teams[0].players track by $index">
                 <!-- <p ng-if="$index==0">Players</p> -->
-                <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="addPlayerPoints(player,$index)">
+                <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="modalPlayerPoints(player,0,$index)">
                   <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
                 </div>
               </div>
@@ -61,37 +61,32 @@
           <!-- TEAM SCORES -->
           <div class="col-md-2 col-sm-2" ng-repeat="team in match.resultHandball.teams track by $index">
             <div class="team-teampoints">
-              <!-- finalGoalPoints DATA POINT -->
-              <div class="relate teamscore-point mtb-10">
-                <label class="teamdatapoint-name">Final goal points</label>
-                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreGoalPoints(team,'finalGoalPoints','-');"><i class="fa fa-minus"></i></button>
-                <input type="number" ng-model="team.teamResults.finalGoalPoints" min="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
-                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreGoalPoints(team,'finalGoalPoints','+');"><i class="fa fa-plus"></i></button>
-              </div>
-              <!-- finalGoalPoints DATA POINT -->
               <!-- shotsOnGoal DATA POINT -->
               <div class="relate teamscore-point mtb-10">
                 <label class="teamdatapoint-name">Shots on Goal</label>
-                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreGoalPoints(team,'shotsOnGoal','-');"><i class="fa fa-minus"></i></button>
-                <input type="number" ng-model="team.teamResults.shotsOnGoal" min="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
-                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreGoalPoints(team,'shotsOnGoal','+');"><i class="fa fa-plus"></i></button>
+                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreTeamPoints(team,'shotsOnGoal','-');"><i class="fa fa-minus"></i></button>
+                <input type="number" placeholder="0" ng-model="team.teamResults.shotsOnGoal" min="0" max="99" class="score-number teamscore-number display-inline form-control"
+                  limit-to-max>
+                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreTeamPoints(team,'shotsOnGoal','+');"><i class="fa fa-plus"></i></button>
               </div>
               <!-- shotsOnGoal DATA POINT -->
               <!-- penalty DATA POINT -->
               <div class="relate teamscore-point mtb-10">
                 <label class="teamdatapoint-name">Penalty</label>
-                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreGoalPoints(team,'penalty','-');"><i class="fa fa-minus"></i></button>
-                <input type="number" ng-model="team.teamResults.penalty" min="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
-                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreGoalPoints(team,'penalty','+');"><i class="fa fa-plus"></i></button>
+                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreTeamPoints(team,'penalty','-');"><i class="fa fa-minus"></i></button>
+                <input type="number" placeholder="0" ng-model="team.teamResults.penalty" min="0" max="99" class="score-number teamscore-number display-inline form-control"
+                  limit-to-max>
+                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreTeamPoints(team,'penalty','+');"><i class="fa fa-plus"></i></button>
               </div>
               <!-- penalty DATA POINT -->
 
               <!-- saves DATA POINT -->
               <div class="relate teamscore-point mtb-10">
                 <label class="teamdatapoint-name">Saves</label>
-                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreGoalPoints(team,'saves','-');"><i class="fa fa-minus"></i></button>
-                <input type="number" ng-model="team.teamResults.saves" min="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
-                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreGoalPoints(team,'saves','+');"><i class="fa fa-plus"></i></button>
+                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreTeamPoints(team,'saves','-');"><i class="fa fa-minus"></i></button>
+                <input type="number" placeholder="0" ng-model="team.teamResults.saves" min="0" max="99" class="score-number teamscore-number display-inline form-control"
+                  limit-to-max>
+                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreTeamPoints(team,'saves','+');"><i class="fa fa-plus"></i></button>
               </div>
               <!-- saves DATA POINT -->
             </div>
@@ -106,7 +101,7 @@
               </div>
               <!-- <pre>{{match.resultBasketball.teams[0].players}}</pre> -->
               <div class="team-playing" ng-repeat="player in match.resultHandball.teams[1].players track by $index">
-                <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="addPlayerPoints(player,$index)">
+                <div class="teamplayer" ng-if="player.isPlaying==true"  ng-click="modalPlayerPoints(player,1,$index)">
                   <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
                 </div>
               </div>
@@ -132,12 +127,14 @@
               <img ng-src="{{match.teams[$index].photograph|serverimage}}" alt="{{match.teams[$index].schoolName}}" class="img-responsive">
             </div>
             <div class="relate setpoint-element">
-              <label for="player1score" class="text-uppercase">Half Point </label>
-              <input type="number" ng-model="quater.basket" id="player1score" min="0" max="99" class="score-number display-inline form-control" limit-to-max>
+              <label for="player1score" class="text-uppercase">Half Time </label>
+              <input type="number" placeholder="0" ng-model="team.teamResults.halfPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control"
+                limit-to-max>
             </div>
             <div class="relate setpoint-element">
               <label for="player1score" class="text-uppercase">Full Time </label>
-              <input type="number" ng-model="team.finalPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control" limit-to-max>
+              <input type="number" placeholder="0" ng-model="team.teamResults.finalPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control"
+                limit-to-max>
             </div>
           </div>
         </div>
@@ -197,7 +194,7 @@
             <div class="col-md-4 col-sm-6">
               <div class="text-left">
                 <label for="">For Penalties</label>
-                <button class="btn btn-scoring btn-green-outline" ng-click="startPenalty()">Penalty Shootouts</button>
+                <button class="btn btn-scoring btn-green-outline" ng-click="modalPenaltyShootout()">Penalty Shootouts</button>
               </div>
             </div>
           </div>
@@ -206,13 +203,13 @@
         <!-- FINAL BUTTONS -->
         <div class="row">
           <div class="col-md-4 col-sm-4">
-            <button class="btn btn-green-outline btn-scoring" ui-sref="matchstart({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
+            <button class="btn btn-green-outline btn-scoring" ui-sref="matchteam({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
           </div>
           <div class="col-md-4 col-sm-4">
-            <button class="btn btn-green-outline btn-scoring" promise-btn="yourPromise" ng-click="saveResult(match)">Save</button>
+            <button class="btn btn-green-outline btn-scoring" promise-btn="yourPromise" ng-click="saveMatch(match,'2')">Save</button>
           </div>
           <div class="col-md-4 col-sm-4">
-            <button class="btn btn-green-outline btn-scoring" ng-click="matchComplete();">complete</button>
+            <button class="btn btn-green-outline btn-scoring" ng-click="saveMatch(match,'3');">complete</button>
           </div>
         </div>
         <!-- FINAL BUTTONS END -->

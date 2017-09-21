@@ -78,7 +78,8 @@
           </div>
           <div class="input-group">
             <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.personalFoul[selectedPlayer.playerPoints.personalFoul.length-1].time"
-              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.personalFoul.length <= 0" ng-readonly="selectedPlayer.playerPoints.personalFoul.length==0">
+              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.personalFoul.length <= 0"
+              ng-readonly="selectedPlayer.playerPoints.personalFoul.length==0">
             <span class="input-group-addon">Min</span>
           </div>
         </div>
@@ -98,12 +99,55 @@
           </div>
           <div class="input-group">
             <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.technicalFoul[selectedPlayer.playerPoints.technicalFoul.length-1].time"
-              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.technicalFoul.length <= 0" ng-readonly="selectedPlayer.playerPoints.technicalFoul.length==0">
+              placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.technicalFoul.length <= 0"
+              ng-readonly="selectedPlayer.playerPoints.technicalFoul.length==0">
             <span class="input-group-addon">Min</span>
           </div>
         </div>
       </div>
       <!-- TECHNICAL FOUL END-->
+      <!-- OUT -->
+      <div class="col-md-3 col-sm-3">
+        <div class="teamscore-pointholder">
+          <label for=""> Out </label>
+          <!--<div class="relate teamscore-point mtb-10">
+            <input type="number" placeholder="0" ng-model="selectedPlayer.playerPoints.out.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
+              readonly>
+            <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scorePlayerPoints(selectedPlayer,'out','+')"
+              ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
+          </div>-->
+          <div class="custom-toggle">
+            <label class="switch">
+          <input type="checkbox" ng-model="selectedPlayer.isPlaying">
+          <div class="slider round"></div>
+        </label>
+          </div>
+          <div class="input-group">
+            <input type="number" class="form-control" ng-model="inOutTime.time" placeholder="Time" ng-disabled="selectedPlayer.out.length <= 0"
+              ng-readonly="selectedPlayer.isPlaying">
+            <span class="input-group-addon">Min</span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <!-- OUT -->
+      <!-- IN -->
+      <div class="col-md-3 col-sm-3" ng-if="!selectedPlayer.isPlaying">
+        <div class="teamscore-pointholder">
+          <div class="match-selectwinner">
+            <label for="">Select substitute {{substitutePlayer.player}}</label>
+            <ui-select id="matchWinnerPlayer" ng-model="substitutePlayer.player" theme="bootstrap">
+              <ui-select-match placeholder="Select Winner">{{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+              <ui-select-choices repeat="player as player in match[matchData.resultVar].teams[selectedTeamIndex].players | filter: $select.search">
+                <p class="opponentsingle-selector" ng-if="player.isPlaying == false "> {{player.firstName}} {{player.surname}} </p>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+      </div>
+      <!-- IN -->
     </div>
   </div>
   <div class="row">
@@ -112,7 +156,7 @@
 </div>
 <div class="modal-footer">
   <div class="scoreplayer-save">
-    <button class="btn btn-green-outline text-center" type="button" ng-click="updatePlayerDetails(selectedPlayer)">Done</button>
+    <button class="btn btn-green-outline text-center" type="button" ng-click="updatePlayerDetails(selectedPlayer,substitutePlayer.player)">Done</button>
     <button class="btn btn-green-outline text-center" type="button" ng-click="$dismiss()">Cancel</button>
   </div>
 </div>

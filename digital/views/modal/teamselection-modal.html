@@ -16,7 +16,7 @@
                                 <label for="{{team.teamId}}.coach">Enter Coach</label>
                                 <input type="text" id="{{team.teamId}}.coach" placeholder="Enter Coach Name" ng-model="team.coach" class="form-control" required/>
                             </div>
-                            <div class="select-teamcoach" ng-if="match.sportsName !='Basketball'">
+                            <div class="select-teamcoach" ng-if="match.sportsName =='Football'">
                                 <label for="{{team.teamId}}.formation">Enter Formation</label>
                                 <input type="text" id="{{team.teamId}}.formation" placeholder="Enter Formation" ng-model="team.formation" class="form-control"
                                     cleave="options.formation" required/>
@@ -64,7 +64,7 @@
                                         </td>
                                         <td>
                                             <div class="relate teamselect-jersey">
-                                                <input type="number" ng-model="player.jerseyNo" min="0" max="99" class="score-number teamscore-number display-inline form-control">
+                                                <input type="number" placeholder="0" ng-model="player.jerseyNo" min="0" max="99" class="score-number teamscore-number display-inline form-control">
                                             </div>
                                         </td>
                                         <td>

@@ -2,10 +2,8 @@ var resultHockey = {
     team[{
         teamId: _id,
         teamResults:{
-            goalPoints:[{
-                goal:20,
-            }],
-            finalGoalPoints:22,
+            halfPoints:10,
+            finalPoints:22,
             shotsOnGoal: 2,
             totalShots:2,
             penalityPoints:10,
@@ -21,11 +19,9 @@ var resultHockey = {
             color: "Blue/Red",
             playerPoints: {
                 goal:[{
-                    points:1,
                     time:11am
                 }],
                 assist:[{
-                    count:1,
                     time:11am
                 }],
                 redCard:[{
@@ -75,24 +71,18 @@ var resultBasketball = {
             color: "Blue/Red",
             playerPoints: {
                 freeThrow:[{
-                    count:1,
                     time:11am
                 }],
                 Points2:[{
-                    count:1,
                     time:11am
-
                     }],
                 Points3:[{
-                    count:1,
                     time:11am
                 }],
                 personalFoul:[{
-                    count:1,
                     time:11am
                 }],
                 technicalFoul:[{
-                    count:1,
                     time:11am
                 }],
             }
@@ -147,10 +137,8 @@ var resultHandball = {
     team[{
         teamId: _id,
         teamResults:{
-            goalPoints:[{
-                goal:20,
-            }],
-            finalGoalPoints:22,
+            halfPoints:10,
+            finalPoints:22,
             shotsOnGoal: 2,
             penality:10,
             saves:1
@@ -162,7 +150,6 @@ var resultHandball = {
             color: "Blue/Red",
             playerPoints: {
                 goal:[{
-                    points:1,
                     time:11am
                 }],
                 yellowCard:[{
@@ -212,12 +199,9 @@ var resultWaterPolo = {
             color: "Blue/Red",
             playerPoints: {
                 goal:[{
-                    points:1,
                     time:11am
                 }],
-                penalityPoint:[{
-                    count:1
-                }],
+                penalityPoint:"1",
                 in:[{
                     time:11am
                 }],
@@ -242,11 +226,11 @@ var resultKabaddi = {
     team[{
         teamId: _id,
         teamResults:{
-        halfPoints:10,
-        finalPoints:22,
-        finalGoalPoints:22,
-        superTackle:1,
-        allOut:1
+            halfPoints:10,
+            finalPoints:22,
+            finalGoalPoints:22,
+            superTackle:1,
+            allOut:1
         }
         players: [{
         player: id,
@@ -255,11 +239,9 @@ var resultKabaddi = {
         color: "Blue/Red",
         playerPoints: {
             raids:[{
-                count:1,
                 time:11am
             }],
             bonusPoint:[{
-                count:1,
                 time:11am
             }],
             finalGoalPoints:22,
@@ -273,19 +255,15 @@ var resultKabaddi = {
             color: "Blue/Red",
             playerPoints: {
                 raids:[{
-                    count:1,
                     time:11am
                 }],
                 bonusPoint:[{
-                    count:1,
                     time:11am
                 }],
                 superRaid:[{
-                    count:1,
                     time:11am
                 }],
                 tackle:[{
-                    count:1,
                     time:11am
                 }],
                 in:[{
@@ -333,11 +311,9 @@ var resultFootball = {
             jerseyNo:12,
             playerPoints: {
                 goal:[{
-                    points:1,
                     time:11am
                 }],
                 assist:[{
-                    count:1,
                     time:11am
                 }],
                 redCard:[{
@@ -346,9 +322,7 @@ var resultFootball = {
                 yellowCard:[{
                     time:11am
                 }],
-                penalityPoint:[{
-                    count:1
-                }],
+                penalityPoint:"1",
                 in:[{
                     time:11am
                 }],

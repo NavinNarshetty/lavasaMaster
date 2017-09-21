@@ -1,0 +1,124 @@
+<div class="modal-header">
+    <h4 class="modal-title"><span class="pull-right">Jersey No: <span>{{selectedPlayer.jerseyNo}}</span></span> Score</h4>
+</div>
+<div class="modal-body">
+    <div class="scoreteam-playerpoints">
+        <div class="row">
+            <!-- GOALS -->
+            <div class="col-md-3 col-sm-3">
+                <div class="teamscore-pointholder">
+                    <label for=""> Goal </label>
+                    <div class="relate teamscore-point mtb-10">
+                        <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scorePlayerPoints(selectedPlayer,'goals','-');"
+                            ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus"></i></button>
+                        <input type="number" ng-model="selectedPlayer.playerPoints.goals.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
+                            readonly>
+                        <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scorePlayerPoints(selectedPlayer,'goals','+');"
+                            ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.goals[selectedPlayer.playerPoints.goals.length-1].time"
+                            placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false" ng-readonly="selectedPlayer.playerPoints.goals.length==0">
+                        <span class="input-group-addon">Min</span>
+                    </div>
+                </div>
+            </div>
+            <!-- GOALS -->
+            <!-- ASSIST -->
+            <div class="col-md-3 col-sm-3">
+                <div class="teamscore-pointholder">
+                    <label for=""> Assits </label>
+                    <div class="relate teamscore-point mtb-10">
+                        <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scorePlayerPoints(selectedPlayer,'assist','-');"
+                            ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus"></i></button>
+                        <input type="number" ng-model="selectedPlayer.playerPoints.assist.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
+                            readonly>
+                        <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scorePlayerPoints(selectedPlayer,'assist','+');"
+                            ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.assist[selectedPlayer.playerPoints.assist.length-1].time"
+                            placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false" ng-readonly="selectedPlayer.playerPoints.assist.length==0">
+                        <span class="input-group-addon">Min</span>
+                    </div>
+                </div>
+            </div>
+            <!-- ASSIST -->
+            <!-- RED CARDS -->
+            <div class="col-md-3 col-sm-3">
+                <div class="teamscore-pointholder">
+                    <label for=""> Red Cards </label>
+                    <div class="relate teamscore-point mtb-10">
+                        <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scorePlayerPoints(selectedPlayer,'redCard','-');"
+                            ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus"></i></button>
+                        <input type="number" ng-model="selectedPlayer.playerPoints.redCard.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
+                            readonly>
+                        <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scorePlayerPoints(selectedPlayer,'redCard','+');"
+                            ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.redCard[selectedPlayer.playerPoints.redCard.length-1].time"
+                            placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.redCard.length <= 0"
+                            ng-readonly="selectedPlayer.playerPoints.redCard.length==0">
+                        <span class="input-group-addon">Min</span>
+                    </div>
+                </div>
+            </div>
+            <!-- RED CARDS -->
+            <!-- YELLOW CARD -->
+            <div class="col-md-3 col-sm-3">
+                <div class="teamscore-pointholder">
+                    <label for=""> Yellow Card </label>
+                    <div class="relate teamscore-point mtb-10">
+                        <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scorePlayerPoints(selectedPlayer,'yellowCard','-');"
+                            ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus" ></i></button>
+                        <input type="number" ng-model="selectedPlayer.playerPoints.yellowCard.length" min="0" max="99" class="score-number teamscore-number display-inline form-control"
+                            readonly>
+                        <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scorePlayerPoints(selectedPlayer,'yellowCard','+');"
+                            ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.yellowCard[selectedPlayer.playerPoints.yellowCard.length-1].time"
+                            placeholder="Time" ng-disabled="selectedPlayer.isPlaying ==  false && selectedPlayer.yellowCard.length <= 0"
+                            ng-readonly="selectedPlayer.playerPoints.yellowCard.length==0">
+                        <span class="input-group-addon">Min</span>
+                    </div>
+                </div>
+            </div>
+            <!-- YELLOW CARD -->
+        </div>
+        <div class="row">
+            <!-- OUT -->
+            <div class="col-md-3 col-sm-3">
+                <div class="teamscore-pointholder">
+                    <label for=""> Out </label>
+                    <div class="custom-toggle">
+                        <label class="switch">
+                        <input type="checkbox" ng-model="selectedPlayer.isPlaying">
+                        <div class="slider round">
+                        </div>
+                        </label>
+                    </div>
+                    <div class="input-group">
+                        <input type="number" class="form-control" ng-model="inOutTime.time" placeholder="Time" ng-disabled="selectedPlayer.out.length <= 0">
+                        <span class="input-group-addon">Min</span>
+                    </div>
+                </div>
+            </div>
+            <!-- OUT -->
+            <!-- IN -->
+            
+            <!-- IN -->
+        </div>
+    </div>
+    <!-- <div class="row">
+      <pre>{{selectedInPlayer|json}}</pre>
+        <pre>{{selectedPlayer|json}}</pre>
+    </div> -->
+</div>
+<div class="modal-footer">
+    <div class="scoreplayer-save">
+        <button class="btn btn-green-outline text-center" type="button" ng-click="updatePlayerDetails(selectedPlayer)">Done</button>
+        <button class="btn btn-green-outline text-center" type="button" ng-click="$dismiss()">Cancel</button>
+    </div>
+</div>

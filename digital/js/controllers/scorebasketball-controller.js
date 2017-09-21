@@ -67,7 +67,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
     })
   }
   //SELECT PLAYING
-  //Common Modal For All Matches ends
+  //Common Modal For All Matches ends 
 
 
   $scope.selectPlaying = function (team, player) {
@@ -82,7 +82,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
     console.log("minTeamPlayers", $scope.match.minTeamPlayers);
 
     if (player.isPlaying == false) {
-      if ($scope.playingCount < $scope.match.maxTeamPlayers) {
+      if ($scope.playingCount < $scope.match.minTeamPlayers) {
         if (player.isPlaying == true) {
           player.isPlaying = false;
         } else {
@@ -126,10 +126,10 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
     });
     if (saveCounter == 2) {
       result.teamInitialized = true;
-      $scope.matchResult = {
-        resultBasketball: result,
-        matchId: $scope.matchData.matchId
-      }
+      $scope.matchResult = {};
+      $scope.matchResult[resultVar] = result
+      $scope.matchResult.matchId = $scope.matchData.matchId;
+
       console.log($scope.matchResult, "matchResult");
       $scope.saveMatch($scope.matchResult, '1');
     }
@@ -138,9 +138,16 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
   // PLAYER POINTS MODAL
   $scope.modalPlayerPoints = function (player, teamIndex, playerIndex) {
-    $scope.updateTeamIndex = teamIndex;
-    $scope.updatePlayerIndex = playerIndex;
+    $scope.selectedTeamIndex = teamIndex;
+    $scope.selectedPlayerIndex = playerIndex;
     $scope.selectedPlayer = _.cloneDeep(player);
+
+    // in out section
+    $scope.inOutTime = {
+      time: ""
+    };
+    $scope.substitutePlayer = {};
+    // in out section end
 
     playerScoreModal = $uibModal.open({
       animation: true,
@@ -152,6 +159,8 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       windowClass: 'scoreplayer-football-modal'
     })
   }
+
+
 
   // PLAYER SCORE INCREMENT
   $scope.scorePlayerPoints = function (player, pointVar, flag) {
@@ -166,14 +175,42 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   };
   // PLAYER SCORE INCREMENT END
 
-  $scope.updatePlayerDetails = function (player) {
-    $scope.match[resultVar].teams[$scope.updateTeamIndex].players[$scope.updatePlayerIndex] = player;
-    playerScoreModal.close();
+
+
+
+  $scope.updatePlayerDetails = function (playingPlayer, substitutePlayer) {
+    console.log(playingPlayer);
+    var playingPlayerIndex = _.findIndex($scope.match[resultVar].teams[$scope.selectedTeamIndex].players, ['player', playingPlayer.player]);
+    if (!playingPlayer.isPlaying) {
+      if (!_.isEmpty(substitutePlayer)) {
+        if ($scope.inOutTime.time != '') {
+          var substitutePlayerIndex = _.findIndex($scope.match[resultVar].teams[$scope.selectedTeamIndex].players, ['player', substitutePlayer.player]);
+          playingPlayer.isPlaying = false;
+          substitutePlayer.isPlaying = true;
+          playingPlayer.playerPoints.out.push($scope.inOutTime);
+          substitutePlayer.playerPoints.in.push($scope.inOutTime);
+          $scope.match[resultVar].teams[$scope.selectedTeamIndex].players[playingPlayerIndex] = playingPlayer;
+          $scope.match[resultVar].teams[$scope.selectedTeamIndex].players[substitutePlayerIndex] = substitutePlayer;
+          playerScoreModal.close();
+        } else {
+          toastr.error("Please Enter Out Time");
+        }
+      } else {
+        toastr.error("SUBSTITUTE is required");
+      }
+    } else {
+      $scope.match[resultVar].teams[$scope.selectedTeamIndex].players[playingPlayerIndex] = playingPlayer;
+      playerScoreModal.close();
+    }
+
   }
   // PLAYER POINTS MODAL END
 
   // TEAM SCORE INCREMENT
-  $scope.scoreGoalPoints = function (team, pointVar, flag) {
+  $scope.scoreTeamPoints = function (team, pointVar, flag) {
+    // console.log(team.teamResults,Array.isArray(team.teamResults[pointVar]));
+    // var obj=ResultSportInitialization.getFormattedObject(Array.isArray(team.teamResults[pointVar]));
+    // if(){}
     if (flag == '+') {
       if (!team.teamResults[pointVar]) {
         team.teamResults[pointVar] = 1;
@@ -187,7 +224,6 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         --team.teamResults[pointVar];
       }
     }
-
   };
   // TEAM SCORE INCREMENT END
 
@@ -201,13 +237,51 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   }
   // REMOVE MATCH SCORESHEET END
 
+
+  $scope.modalPenaltyShootout = function (matchPenalty) {
+    // var matchPenalty;
+    $scope.matchPenalty = matchPenalty;
+    _.each($scope.matchPenalty.teams, function (n) {
+      if (!n.teamResults.penaltyPoints) {
+        n.teamResults.penaltyPoints = "";
+      }
+    });
+    $rootScope.modalInstance = $uibModal.open({
+      animation: true,
+      scope: $scope,
+      backdrop: 'static',
+      keyboard: false,
+      size: 'lg',
+      templateUrl: 'views/modal/penaltyshootouts.html',
+      windowClass: 'penaltyshootouts-modal'
+    })
+  }
+
+
   // SAVE RESULT
   //1-save AND getONE 
   //2-just save i.e. for autoSave
   //3-complete and save
   $scope.saveMatch = function (match, flag) {
     if (flag == '3') {
-      match[resultVar].status = "IsCompleted";
+      console.log(match);
+      if (match[resultVar].matchPhoto.length != 0) {
+        if (match[resultVar].scoreSheet.length != 0) {
+          if (match[resultVar].winner && match[resultVar].winner.player && match[resultVar].winner.player != "") {
+            match[resultVar].status = "IsCompleted";
+          } else {
+            toastr.error('Winner is compulsury BEFORE completing match');
+            return;
+          }
+        } else {
+          toastr.error('Please upload atleast one scoresheets photo');
+          return;
+        }
+      } else {
+        toastr.error('Please upload atleast one match photo');
+        return;
+      }
+
     };
     NavigationService.saveMatchPp(match, $scope.matchData.resultVar, function (data) {
       if (data.value == true) {

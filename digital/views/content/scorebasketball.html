@@ -65,9 +65,9 @@
               <!-- finalGoalPoints DATA POINT -->
               <div class="relate teamscore-point mtb-10">
                 <label class="teamdatapoint-name">Final goal points</label>
-                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreGoalPoints(team,'finalGoalPoints','-');" ><i class="fa fa-minus"></i></button>
+                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreTeamPoints(team,'finalGoalPoints','-');" ><i class="fa fa-minus"></i></button>
                 <input type="number" placeholder="0" ng-model="team.teamResults.finalGoalPoints" min="0" max="200" class="score-number teamscore-number display-inline form-control" limit-to-max>
-                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreGoalPoints(team,'finalGoalPoints','+');" ><i class="fa fa-plus"></i></button>
+                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreTeamPoints(team,'finalGoalPoints','+');" ><i class="fa fa-plus"></i></button>
               </div>
               <!-- finalGoalPoints DATA POINT -->
             </div>
@@ -179,7 +179,7 @@
         <!-- FINAL BUTTONS -->
         <div class="row">
           <div class="col-md-4 col-sm-4">
-            <button class="btn btn-green-outline btn-scoring" ui-sref="matchstart({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
+            <button class="btn btn-green-outline btn-scoring" ui-sref="matchteam({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
           </div>
           <div class="col-md-4 col-sm-4">
             <button class="btn btn-green-outline btn-scoring" promise-btn="yourPromise" ng-click="saveMatch(match,'2')">Save</button>

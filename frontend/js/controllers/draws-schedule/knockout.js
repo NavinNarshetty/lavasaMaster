@@ -323,6 +323,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
                             }
                             _.each($scope.roundsList, function (key) {
                                 _.each(key.match, function (value) {
+                                    console.log(value.opponentsTeam);
                                     _.each(value.opponentsTeam, function (obj) {
                                         console.log(obj, "obj");
                                         if (obj) {

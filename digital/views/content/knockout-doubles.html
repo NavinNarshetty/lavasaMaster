@@ -6,7 +6,7 @@
         <span>{{roundsList[0].match[0].sport.gender}}</span> |
         <span>{{roundsList[0].match[0].sport.ageGroup.name}}</span></h3>
             <div class="draws-downloadpdf draws-a">
-                <a href="#">Download the schedule in pdf format</a>
+                <a href="#">Download the schedule in pdf format</a> 
             </div>
         </div>
         <!--SPORT NAME END-->
@@ -161,7 +161,7 @@
                 <div class="knockout-doubles-cardholder-round2 relate" ng-repeat="card in roundsList[1].match track by $index">
                     <div class="get-center knockout-round-width">
                         <div class=" knockout-doubles-cardholder">
-                            <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index">
+                            <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index">{{$index}}
                                 <div class="knockout-card " ng-repeat="player in players.studentTeam track by $index " ng-class="{'knockout-winnercard':player.winner==true}">
                                     <div class="knockout-cardimage inline-block  ver-mid ">
                                         <img src="/img/dishapatani1.jpg" alt=" " class="img-responsive ">
