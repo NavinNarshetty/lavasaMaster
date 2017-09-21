@@ -2211,7 +2211,6 @@ var model = {
                                 if (_.isEmpty(found)) {
                                     callback(null, []);
                                 } else {
-
                                     var updateObj = {
                                         $set: {
                                             prevMatch: found.prevMatch
@@ -6130,7 +6129,7 @@ var model = {
                                 async.parallel([
                                     function (callback) {
                                         Match.update({
-                                            matchId: found[0].matchId
+                                            matchId: found[1].matchId
                                         }, updateObj).exec(
                                             function (err, match) {
                                                 if (err) {
@@ -6146,7 +6145,7 @@ var model = {
                                     },
                                     function (callback) {
                                         Match.update({
-                                            matchId: found[1].matchId
+                                            matchId: found[0].matchId
                                         }, updateObj1).exec(
                                             function (err, match) {
                                                 if (err) {
