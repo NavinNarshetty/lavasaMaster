@@ -254,8 +254,6 @@ myApp.factory('ResultSportInitialization', function () {
                 };
             } else if (sportType == "Combat Sports") {
                 switch (sportName) {
-                    case "Kho Kho":
-                    case "Throwball":
                     case "Karate Team Kumite":
                         return {
                             resultVar: "resultsCombat",
@@ -323,6 +321,16 @@ myApp.factory('ResultSportInitialization', function () {
                             resultVar: "resultWaterPolo",
                             html: "scorewaterpolo.html",
                             scoringModal: "scoreplayer-waterpolo.html",
+                            opponentsVar: "opponentsTeam"
+                        };
+                    case "Throwball":
+                        return {
+                            resultVar: "resultsCombat",
+                            opponentsVar: "opponentsTeam"
+                        };
+                    case "Kho Kho":
+                        return {
+                            resultVar: "resultsCombat",
                             opponentsVar: "opponentsTeam"
                         };
                 }
