@@ -2013,7 +2013,7 @@ var model = {
                                     paramData.opponentsTeam = [];
                                     paramData.matchId = data.matchId;
                                     paramData.round = singleData["ROUND NAME"];
-                                    if (_.isEmpty(singleData["PARTICIPANT 1"]) || _.isEmpty(singleData["PARTICIPANT 2"])) {
+                                    if (_.isEmpty(singleData["PARTICIPANT 1"]) && _.isEmpty(singleData["PARTICIPANT 2"])) {
                                         paramData.opponentsTeam = "";
                                     } else if (_.isEmpty(singleData["PARTICIPANT 1"])) {
                                         paramData.opponentsTeam.push(singleData["PARTICIPANT 2"]);
