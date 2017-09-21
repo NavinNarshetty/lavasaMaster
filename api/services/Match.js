@@ -3238,7 +3238,7 @@ var model = {
     generateExcelHeat: function (data, res) {
         async.waterfall([
                 function (callback) {
-                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsTeam.athleteId.school opponentsTeam.studentTeam.studentId";
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
                     Match.find({
                         sport: data.sport
                     }).lean().deepPopulate(deepSearch).exec(function (err, match) {
