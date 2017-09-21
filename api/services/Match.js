@@ -5271,6 +5271,7 @@ var model = {
                                                     result.players.push(player);
                                                 } else {
                                                     player.laneNo = n.success["LANE NUMBER"];
+                                                    result.players.push(player);
                                                 }
                                                 paramData.sport = n.success.SPORT;
                                                 paramData.scheduleDate = moment(n.success.DATE).format();
