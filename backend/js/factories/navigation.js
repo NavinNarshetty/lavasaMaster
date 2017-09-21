@@ -437,7 +437,7 @@ myApp.factory('NavigationService', function ($http) {
         },
 
         saveMatch: function (formData, callback) {
-            // console.log(formData, 'saveMatch');
+            console.log(formData, 'saveMatch');
             $http({
                 url: adminurl + "match/updateBackend",
                 method: "POST",

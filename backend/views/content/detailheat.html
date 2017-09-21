@@ -45,8 +45,8 @@
                   <div class="col-md-6">
                     <!-- DATE -->
                     <div class="form-group">
-                      <label class="date-mb40">Schedule Date</label>
-                      <input name="schDate" ui-date="dateOptions" ng-model="formData.scheduleDate" class="form-control" placeholder="Enter Schedule Date">
+                      <label class="date-mb40">Schedule Date</label>{{formData.scheduleDate}}
+                      <input name="schDate" type="text" ui-date="dateOptions" ng-model="formData.scheduleDate" class="form-control" placeholder="Enter Schedule Date">
                       <div class="error-msg" ng-if="detailForm.schDate.$invalid && detailForm.schDate.$touched">Please Enter Schedule Date *</div>
                     </div>
                     <!-- END DATE -->
@@ -54,9 +54,10 @@
                   <div class="col-md-6">
                     <!-- TIME -->
                     <div class="form-group">
-                      <label>Schedule Time</label>
+                      <label class="date-mb40">Schedule Time</label>
                       <!-- <input type="text" name="schTime" ng-model="formData.nextMatch" class="form-control" placeholder="Enter Schedule Time"> -->
-                      <div uib-timepicker ng-model="formData.scheduleTime" hour-step="1" minute-step="1" show-meridian="true"></div>
+                      <input name="schtime" type="text" ng-model="formData.scheduleTime" class="form-control" placeholder="HH:MM">
+                      <!-- <div uib-timepicker ng-model="formData.scheduleTime" hour-step="1" minute-step="1" show-meridian="true"></div> -->
                       <div class="error-msg" ng-if="detailForm.schTime.$invalid && detailForm.schTime.$touched">Please Enter Schedule Time *</div>
                     </div>
                     <!-- END TIME -->
@@ -123,7 +124,7 @@
                 </div>
                 <!-- ROUND AND HEAT END -->
                 <!-- TABLE OF HEAT PLAYERS -->
-                <div class="table-heat-players text-center">
+                <div class="table-heat-players text-center" ng-if="formData.resultHeat">
                   <table class="table">
                     <thead>
                       <th>

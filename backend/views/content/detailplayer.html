@@ -49,7 +49,8 @@
                 <!-- DATE -->
                 <div class="form-group">
                   <label>Schedule Date</label>
-                  <input name="schDate" ui-date="dateOptions" ng-model="formData.scheduleDate" class="form-control" ng-required="true" placeholder="Enter Schedule Date">
+                  <input name="schDate" ui-date="dateOptions" ng-change="changeDate(formData.scheduleDate)" ng-model="formData.scheduleDate"
+                    class="form-control" ng-required="true" placeholder="Enter Schedule Date">
                   <div class="error-msg" ng-if="detailForm.schDate.$invalid && detailForm.schDate.$touched">Please Enter Schedule Date *</div>
                 </div>
                 <!-- END DATE -->
@@ -57,7 +58,8 @@
                 <div class="form-group">
                   <label>Schedule Time</label>
                   <!-- <input type="text" name="schTime" ng-model="formData.nextMatch" class="form-control" placeholder="Enter Schedule Time"> -->
-                  <div uib-timepicker ng-model="formData.scheduleTime" hour-step="1" minute-step="1" show-meridian="true"></div>
+                  <input name="schDate" type="text" ng-model="formData.scheduleTime" class="form-control" ng-required="true" placeholder="Enter Schedule Date">
+                  <!-- <div uib-timepicker ng-model="formData.scheduleTime" hour-step="1" minute-step="1" show-meridian="true"></div> -->
                   <div class="error-msg" ng-if="detailForm.schTime.$invalid && detailForm.schTime.$touched">Please Enter Schedule Time *</div>
                 </div>
                 <!-- END TIME -->

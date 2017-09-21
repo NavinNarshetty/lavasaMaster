@@ -56,8 +56,9 @@
                 <!-- END DATE -->
                 <div class="form-group">
                   <label>Schedule Time</label>
+                  <input name="schDate" ng-model="formData.scheduleTime" class="form-control" ng-required="true" placeholder="Enter Schedule Time">
                   <!-- <input type="text" name="schTime" ng-model="formData.nextMatch" class="form-control" placeholder="Enter Schedule Time"> -->
-                  <div uib-timepicker ng-model="formData.scheduleTime" hour-step="1" minute-step="1" show-meridian="true"></div>
+                  <!-- <div uib-timepicker ng-model="formData.scheduleTime" hour-step="1" minute-step="1" show-meridian="true"></div> -->
                   <div class="error-msg" ng-if="detailForm.schTime.$invalid && detailForm.schTime.$touched">Please Enter Schedule Time *</div>
                 </div>
                 <!-- END TIME -->
@@ -82,11 +83,11 @@
                 <!-- CHECKBOX -->
                 <div class="checkbox from-group">
                   <div class="row">
-                    <div class="col-md-6">{{formData.resultsCombat.isDraw}}
-                      <label><input type="checkbox" ng-model="formData.resultsCombat.isDraw" value="formData.resultsCombat.isdraw"> isdraw</label>
+                    <div class="col-md-6">{{formData.resultsRacquet.isDraw}}
+                      <label><input type="checkbox" ng-model="formData.resultsRacquet.isDraw" value="formData.resultsCombat.isdraw"> isdraw</label>
                     </div>
-                    <div class="col-md-6">{{formData.resultsCombat.isNoMatch}}
-                      <label><input type="checkbox" ng-model="formData.resultsCombat.isNoMatch" value="formData.resultsCombat.isNoMatch"> isNoMatch</label>
+                    <div class="col-md-6">{{formData.resultsRacquet.isNoMatch}}
+                      <label><input type="checkbox" ng-model="formData.resultsRacquet.isNoMatch" value="formData.resultsCombat.isNoMatch"> isNoMatch</label>
                     </div>
                   </div>
                 </div>
@@ -95,14 +96,18 @@
                 <!-- SCORE CARD -->
                 <div class="form-group" fields>
                   <label>Score Card <span ng-show="type.required">*</span></label>
-                  <upload-image ng-model="formData.scorecard" multiple inObj></upload-image>
+                  <div ng-repeat="photo in formData.resultsRacquet.scoreSheet track by $index">
+                    <upload-image ng-model="formData.resultsRacquet.scoreSheet[$index]" multiple inObj></upload-image>
+                  </div>
                 </div>
                 <!-- END SCORE CARD -->
 
                 <!-- MATCH PHOTO -->
                 <div class="form-group">
                   <label>Match<span ng-show="type.required">*</span></label>
-                  <upload-image ng-model="formData.resultsCombat.matchPhoto" multiple inObj></upload-image>
+                  <div ng-repeat="photo in formData.resultsRacquet.matchPhoto track by $index">
+                    <upload-image ng-model="formData.resultsRacquet.matchPhoto[$index]" multiple inObj></upload-image>
+                  </div>
                 </div>
                 <!-- END MATCH PHOTO -->
 
@@ -223,7 +228,7 @@
 
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-default" type="submit" ng-click="saveDataMatch(formData)">Save</button>
-                  <button class="btn btn-default" ui-sref='matches'>Cancel</button>
+                  <button class="btn btn-default" ng-click="back()">Cancel</button>
                 </div>
               </div>
             </div>

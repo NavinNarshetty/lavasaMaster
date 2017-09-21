@@ -4247,9 +4247,17 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             NavigationService.setDetail(data, function (data) {
                 console.log('got it');
             });
-            $state.go('format-table', {
-                type: data.sportslist.drawFormat.name
-            });
+            if ($scope.form.sportslist.sportsListSubCategory.isTeam) {
+                console.log("in tema");
+                $state.go('format-teamtable', {
+                    type: data.sportslist.drawFormat.name
+                })
+            } else {
+                $state.go('format-table', {
+                    type: data.sportslist.drawFormat.name
+                });
+            }
+
 
             $scope.viewTable(data);
         }
