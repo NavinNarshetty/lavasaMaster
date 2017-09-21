@@ -192,12 +192,12 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
     $scope.addSet = function(){
       _.each($scope.match.resultsRacquet.teams, function(n){
         n.sets.push({
-              point: 0,
-              ace: 0,
-              winner: 0,
-              unforcedError: 0,
-              serviceError: 0,
-              doubleFaults: 0
+              point: "",
+              ace: "",
+              winner: "",
+              unforcedError: "",
+              serviceError: "",
+              doubleFaults: ""
         });
       })
       _.each($scope.match.resultsRacquet.teams[0].sets, function(n,key){
@@ -205,6 +205,7 @@ myApp.controller('RacquetDoublesScoreCtrl', function($scope, TemplateService, Na
           setShow : true
         }
       })
+      $scope.setDisplay.value = $scope.match.resultsRacquet.teams[0].sets.length - 1;
     }
     // ADD SET END
     // REMOVE SET

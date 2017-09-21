@@ -45,6 +45,7 @@ module.exports = [
   // Services
   'digital/js/services/template.js',
   'digital/js/services/errorService.js',
+  'digital/js/services/knockoutService.js',
 
   //Factories
   'digital/js/factories/navigation.js',

@@ -793,7 +793,17 @@ myApp.directive('img', function($compile, $parse) {
 
             }
         };
+    })
+    // profileathlete-card
+    .directive('profileAthleteCard', function () {
+        return {
+            restrict: 'E',
+            scope: {},
+            templateUrl: 'views/directive/profileathlete-card.html',
+            link: function () {}
+        }
     });
+    // end profileathlete-card;
 // .directive('onlyDigits', function () {
 //     return {
 //         require: 'ngModel',

@@ -1,15 +1,25 @@
 <div class="resultpage">
   <div class="container">
+
     <!-- RESULT TITLE SECTION -->
     <div class="result-titlesection">
-      <div class="result-title">School Result <span class="resulttitle-dropdown"> Sfa mumbai 2015-2016 <span  class="fa fa-angle-down"></span></span></div>
+      <div class="result-title">School Result
+         <span class="result-dropdown resulttitle-dropdown" ng-click="viewEvent();"> {{defaultEvent}} <span  class="fa " ng-class = " { 'fa-angle-up' : showEventFilter == true , 'fa-angle-down' :  showEventFilter == false } "></span>
+           <div class="landingschool-schoolfilter" ng-show="showEventFilter">
+             <ul class="list-unstyled">
+               <li ng-repeat="event in eventList track by $index" ng-click="selectEvent(event);"> {{event}}</li>
+             </ul>
+           </div>
+         </span>
+       </div>
     </div>
     <!-- RESULT TITLE SECTION END -->
-
     <!-- SCHOOL RANKING SECTION  -->
     <div class="result-schoolsection">
       <div class="result-schooltitle">
         <h3>school ranking table</h3>
+      </div>
+      <div class="result-schooldesc">
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam culpa in, inventore similique unde nesciunt odit sint impedit distinctio tenetur dolore maiores omnis alias, veniam quis facere dolores suscipit doloribus.</p>
       </div>
       <!-- RESULT SCHOOL TABLE -->
@@ -86,7 +96,142 @@
         </table>
       </div>
       <!-- RESULT SCHOOL TABLE END -->
+      <div class="viewmore">
+        <a type="button" class="btn btn-viewmore">View More</a>
+      </div>
     </div>
     <!-- SCHOOL RANKING SECTION END -->
+    <!-- AD SPACE -->
+    <div class="adv-space  hidden-sm hidden-xs">
+      <div class="highlight-adspace relate">
+        <h1 class="m-clear get-center text-uppercase">Ad Space</h1>
+      </div>
+    </div>
+    <!-- AD SPACE END -->
+    <!-- SPORT WISE SCHOOL RANKING -->
+    <div class="result-sportwise">
+      <div class="result-schooltitle">
+        <h3>school ranking basis specific sport</h3>
+      </div>
+      <div class="result-sportfilter">
+        <label >Sport</label>
+      </div>
+      <!--SCHOOL TABLE-->
+      <div class="schoolrank-table">
+        <div class="row">
+          <div class="col-md-7 col-sm-12 col-xs-12">
+            <div class="schoolranktable-head">
+              <h3 class="text-uppercase color-sport-lightblue fjalla-one">
+                Archery
+              </h3>
+            </div>
+            <div class="schooltable-bg">
+              <div class="schooltable-holder">
+                <div class="schooltable-content table-responsive">
+                  <table class=" table ">
+                    <thead>
+                      <tr class="bag-blue">
+                        <th>
+                          <div class="schooltable-head">
+                            Rank
+                          </div>
+                        </th>
+                        <th>
+                          <div class="schooltable-head">
+                            School Name
+                          </div>
+                        </th>
+                        <th>
+                          <div class="table-medalimage">
+                            <div class="profile-bluemedals">
+                              <img ng-src="{{'gold' |medalicon:'white'}}" alt="" class="img-responsive">
+                            </div>
+                            <p class="schoolmedal-points m-clear">5 points</p>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="table-medalimage">
+                            <div class="profile-bluemedals">
+                              <img ng-src="{{'silver' | medalicon:'white'}}" alt="" class="img-responsive">
+                            </div>
+                            <p class="schoolmedal-points m-clear">3 points</p>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="table-medalimage">
+                            <div class="profile-bluemedals">
+                              <img ng-src="{{'bronze' | medalicon:'white'}}" alt="" class="img-responsive">
+                            </div>
+                            <p class="schoolmedal-points m-clear">2 points</p>
+                          </div>
+                        </th>
+                        <th>
+                          <div class="schooltable-head">Points</div>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in rankTable track by $index">
+                        <td>
+                          <div class="">
+                            {{item.rank}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="schoolranktable-sportwise">
+                            {{item.school}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="">
+                            {{item.goldPoints}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="">
+                            {{item.silverPoints}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="">
+                            {{item.bronzePoints}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="">
+                            {{item.totalPoints}}
+                          </div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-5">
+            <div class="resultsport-player">
+              <p class="text-uppercase">Athlete of the season</p>
+              <div class="topplayer-holder">
+                <div class="resultsport-topplayer">
+                  <profile-athlete-card></profile-athlete-card>
+                </div>
+                <div class="resultsport-topplayer">
+                  <profile-athlete-card></profile-athlete-card>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="resultsport-viewmedalwinner">
+          <a class="btn-viewmore">View All Medal Winners</a>
+          <div class="result-viewall-medalwinners">
+            <p>You can also view medal winners by selecting the specific gender, age and event category</p>
+          </div>
+        </div>
+      </div>
+      <!--END SCHOOL TABLE-->
+    </div>
+    <!-- SPORT WISE SCHOOL RANKING END -->
   </div>
 </div>

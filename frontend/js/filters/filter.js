@@ -317,4 +317,16 @@ myApp.filter('myFilter', function () {
                 return first;
             }
         };
-    });
+    })
+
+    // FILTER MEDALS
+    .filter('medalicon', function(){
+      return function(input, type){
+        var input = input.toLowerCase();
+        var type = type.toLowerCase();
+        var medalImg = "";
+        medalImg = "img/medal-icon/" + input + "-" + type + ".png";
+        return medalImg;
+      }
+    })
+    // FILTER MEDALS;

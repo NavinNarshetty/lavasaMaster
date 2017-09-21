@@ -213,12 +213,12 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
     $scope.addSet = function(){
       _.each($scope.match.resultsRacquet.players, function(n){
         n.sets.push({
-              point: 0,
-              ace: 0,
-              winner: 0,
-              unforcedError: 0,
-              serviceError: 0,
-              doubleFaults: 0
+              point: "",
+              ace: "",
+              winner: "",
+              unforcedError: "",
+              serviceError: "",
+              doubleFaults: ""
         });
       })
       _.each($scope.match.resultsRacquet.players[0].sets, function(n,key){
@@ -226,32 +226,10 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
           setShow : true
         }
       })
+      $scope.setDisplay = $scope.match.resultsRacquet.players[0].sets.length - 1;
     }
     // ADD SET END
     // REMOVE SET
-    // REMOVE LAST SET
-    // $scope.removeSet = function(){
-    //   _.each($scope.match.resultsRacquet.players, function(n){
-    //     if(n.sets.length>1){
-    //       var length = n.sets.length - 1;
-    //       _.remove(n.sets,function(m,index){
-    //         return length==index;
-    //       })
-    //       console.log(n.sets, 'sets');
-    //     } else {
-    //       console.log('atleast 1 set');
-    //       toastr.warning('Minimum 1 Set required');
-    //     }
-    //   });
-    //   $scope.setLength = [];
-    //   _.each($scope.match.resultsRacquet.players[0].sets, function(n,key){
-    //     $scope.setLength[key] = {
-    //       setShow : true
-    //     }
-    //   });
-    // }
-    // REMOVE LAST SET END
-
     $scope.removeSets = function(){
       var modalSetDelete;
         $rootScope.modalInstance = $uibModal.open({

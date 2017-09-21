@@ -3,6 +3,31 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     TemplateService.title = "Direct Final"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
 
+    // VARIABLE INITITALISE
+    $scope.showEventFilter = false;
+    $scope.defaultEvent = "sfa mumbai 2015-16";
+    // VARIABLE INITITALISE END
+
+    // FUNCTIONS
+    // SELECT CITY FILTER
+    $scope.viewEvent = function(){
+      if($scope.showEventFilter == false){
+        $scope.showEventFilter = true;
+      } else {
+        $scope.showEventFilter = false;
+      }
+    }
+    $scope.selectEvent = function(event){
+      $scope.selectEvent = event;
+      $scope.defaultEvent = event;
+      $scope.viewEvent();
+      console.log($scope.selectEvent, 'selected event');
+    }
+    // SELECT CITY FILTER END
+    // FUNCTIONS END
+
+    // JSONS
+    $scope.eventList = ['sfa mumbai 2015-16', 'sfa ahmedabad 2015-16', 'sfa hyderabad 2015-16'];
     // SCHOOL RANKING TABLE
     $scope.rankTable = [{
       rank: 1,
@@ -41,5 +66,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       totalPoints: 200
     }];
     // SCHOOL RANKING TABLE END
+    // JSONS END
 
-  })
+  //
+})

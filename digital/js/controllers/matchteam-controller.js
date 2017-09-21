@@ -14,26 +14,6 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
     $scope.removeReset = true;
     // VARIABLE INITIALISE END
 
-    // INITIALSE SWIPER
-    $scope.swiperInit = function () {
-        $scope.$on('$viewContentLoaded', function (event) {
-            $timeout(function () {
-                var athleteKnow = new Swiper('.scorescard-swiper .swiper-container', {
-                    paginationClickable: true,
-                    loop: true,
-                    grabCursor: true,
-                    spaceBetween: 10,
-                    nextButton: '.scorecard-next',
-                    prevButton: '.scorecard-prev',
-                    touchEventsTarget: 'container',
-                })
-            }, 100);
-        })
-    }
-    $scope.swiperInit();
-    // INITIALSE SWIPER END
-    $scope.mySlides = ['1', '2', '3', '4', '5'];
-
     //INTEGRATION
     // GET MATCH
     $scope.getOneMatch = function () {
@@ -88,29 +68,29 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                         "formation": "",
                                         "players": [],
                                         "teamResults": {
-                                            halfPoints: 0,
-                                            finalPoints: 0,
-                                            shotsOnGoal: 0,
-                                            totalShots: 0,
-                                            corners: 0,
-                                            penalty: 0,
-                                            saves: 0,
-                                            fouls: 0,
-                                            offSide: 0,
-                                            cleanSheet: 0
+                                            halfPoints: "",
+                                            finalPoints: "",
+                                            shotsOnGoal: "",
+                                            totalShots: "",
+                                            corners: "",
+                                            penalty: "",
+                                            saves: "",
+                                            fouls: "",
+                                            offSide: "",
+                                            cleanSheet: ""
                                         }
                                     }
                                     _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
                                         $scope.formData.teams[key].players[mkey] = {
                                             "player": m.studentId._id,
                                             "isPlaying": false,
-                                            "jerseyNo": 0,
+                                            "jerseyNo": "",
                                             "playerPoints": {
                                                 "goals": [],
                                                 "assist": [],
                                                 "redCard": [],
                                                 "yellowCard": [],
-                                                "penaltyPoint": 0,
+                                                "penaltyPoint": "",
                                                 "in": [],
                                                 "out": []
                                             }
@@ -152,18 +132,18 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                         "players": [],
                                         "teamResults": {
                                             sets: [{
-                                                points: 0
+                                                points: ""
                                             }],
-                                            spike: 0,
-                                            fouls: 0,
-                                            block: 0,
+                                            spike: "",
+                                            fouls: "",
+                                            block: "",
                                         }
                                     }
                                     _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
                                         $scope.formData.teams[key].players[mkey] = {
                                             "player": m.studentId._id,
                                             "isPlaying": false,
-                                            "jerseyNo": 0,
+                                            "jerseyNo": "",
                                             "playerPoints": {
                                                 "in": [],
                                                 "out": []
