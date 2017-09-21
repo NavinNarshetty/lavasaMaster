@@ -284,7 +284,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
     $scope.getMatchPhoto = function(detail) {
         console.log(detail, 'pic return');
         $scope.showMatchPhoto = true;
-        $scope.swiperInit();
+        // $scope.swiperInit();
     };
     // GET MATCH SCORESHEET END
     // REMOVE MATCH SCORESHEET
