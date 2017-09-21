@@ -405,6 +405,16 @@ var model = {
                         } else {
                             finalData.resultFootball = found.resultFootball;
                         }
+                        if (_.isEmpty(found.resultHandball)) {
+                            finalData.resultHandball = "";
+                        } else {
+                            finalData.resultHandball = found.resultHandball;
+                        }
+                        if (_.isEmpty(found.resultKabaddi)) {
+                            finalData.resultKabaddi = "";
+                        } else {
+                            finalData.resultKabaddi = found.resultKabaddi;
+                        }
                         callback(null, finalData);
                     }
 
@@ -4125,7 +4135,22 @@ var model = {
                             }
                         };
                         callback(null, matchObj);
+                    } else if (data.resultHandball) {
+                        var matchObj = {
+                            $set: {
+                                resultHandball: data.resultHandball
+                            }
+                        };
+                        callback(null, matchObj);
+                    } else if (data.resultKabaddi) {
+                        var matchObj = {
+                            $set: {
+                                resultKabaddi: data.resultKabaddi
+                            }
+                        };
+                        callback(null, matchObj);
                     }
+
                 },
                 function (matchObj, callback) {
                     Match.update({
