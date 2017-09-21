@@ -75,6 +75,8 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
         toastr.error('Please upload scoresheet.', 'Data Incomplete');
       } else if(!$scope.match.resultsCombat.winner.player){
         toastr.error('Please select a winner.', 'Data Incomplete');
+      } else if ($scope.match.sportsName == 'Boxing' && !$scope.match.resultsCombat.winner.reason) {
+        toastr.error('Please select reason.', 'Data Incomplete');
       } else {
 
       var modalCompleteMatch;
@@ -93,25 +95,26 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
             resultsCombat : $scope.match.resultsCombat,
             matchId: $scope.matchData.matchId
           }
-          NavigationService.saveMatch($scope.matchResult, function(data){
-            if(data.value == true){
-              if ($stateParams.drawFormat === 'Knockout') {
-                  $state.go('knockout', {
-                    drawFormat: $stateParams.drawFormat,
-                    id: $stateParams.sport
-                  });
-              } else if ($stateParams.drawFormat === 'Heats') {
-                  $state.go('heats', {
-                    drawFormat: $stateParams.drawFormat,
-                    id: $stateParams.sport
-                  });
-              }
-              console.log('save success');
-            } else{
-              // alert('fail save');
-              toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
-            }
-          });
+          console.log('YO');
+          // NavigationService.saveMatch($scope.matchResult, function(data){
+          //   if(data.value == true){
+          //     if ($stateParams.drawFormat === 'Knockout') {
+          //         $state.go('knockout', {
+          //           drawFormat: $stateParams.drawFormat,
+          //           id: $stateParams.sport
+          //         });
+          //     } else if ($stateParams.drawFormat === 'Heats') {
+          //         $state.go('heats', {
+          //           drawFormat: $stateParams.drawFormat,
+          //           id: $stateParams.sport
+          //         });
+          //     }
+          //     console.log('save success');
+          //   } else{
+          //     // alert('fail save');
+          //     toastr.error('Data save failed. Please try again or check your internet connection.', 'Save Error');
+          //   }
+          // });
           console.log($scope.matchResult, 'result#');
       } else {
         toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
