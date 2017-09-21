@@ -249,6 +249,15 @@ var controller = {
                                     }
                                 });
 
+                            } else if (req.body.resultType == "swiss-league") {
+                                Match.saveSwissLeague(importData, req.body, function (err, complete) {
+                                    if (err || _.isEmpty(complete)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, complete);
+                                    }
+                                });
+
                             } else {
                                 callback(null, importData);
                             }
