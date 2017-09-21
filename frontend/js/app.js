@@ -330,6 +330,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/knockout-doubles/:id",
             templateUrl: tempateURL,
             controller: 'KnockoutDoublesCtrl'
+        })
+        .state('results', {
+            url: "/wohlig/results",
+            templateUrl: tempateURL,
+            controller: 'ResultsCtrl'
         });
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {
