@@ -3,9 +3,11 @@ myApp.factory('ResultSportInitialization', function () {
 
     //for getting TEPLATE for result"Spotname" eg:resultFootball,resultBasketball etc
     getPlayerTemplate: function (sportName, player) {
+      console.log(player, "-----------------------");
       var format = {
-        player: player._id,
-        jerseyNo: 0,
+        player: player.studentId._id,
+        sfaId: player.studentId.sfaId,
+        jerseyNo: "",
         isPlaying: false,
         noShow: false,
         walkover: false,
@@ -22,13 +24,6 @@ myApp.factory('ResultSportInitialization', function () {
           format.playerPoints.Points3 = [];
           format.playerPoints.personalFoul = [];
           format.playerPoints.technicalFoul = [];
-          break;
-        case "Football":
-          format.playerPoints.goal = [];
-          format.playerPoints.assist = [];
-          format.playerPoints.redCard = [];
-          format.playerPoints.yellowCard = [];
-          format.playerPoints.penaltyPoint = 0;
           format.playerPoints.in = [];
           format.playerPoints.out = [];
           break;
@@ -50,10 +45,6 @@ myApp.factory('ResultSportInitialization', function () {
           format.playerPoints.in = [];
           format.playerPoints.out = [];
           break;
-        case "Volleyball":
-          format.playerPoints.in = [];
-          format.playerPoints.out = [];
-          break;
         case "Handball":
           format.playerPoints.goal = [];
           format.playerPoints.yellowCard = [];
@@ -63,7 +54,20 @@ myApp.factory('ResultSportInitialization', function () {
           break;
         case "Water Polo":
           format.playerPoints.goal = [];
-          format.playerPoints.penaltyPoint = [];
+          format.playerPoints.penaltyPoint = "";
+          format.playerPoints.in = [];
+          format.playerPoints.out = [];
+          break;
+        case "Volleyball":
+          format.playerPoints.in = [];
+          format.playerPoints.out = [];
+          break;
+        case "Football":
+          format.playerPoints.goal = [];
+          format.playerPoints.assist = [];
+          format.playerPoints.redCard = [];
+          format.playerPoints.yellowCard = [];
+          format.playerPoints.penaltyPoint = "";
           format.playerPoints.in = [];
           format.playerPoints.out = [];
           break;
@@ -98,6 +102,57 @@ myApp.factory('ResultSportInitialization', function () {
           }];
           format.teamResults.finalGoalPoints = "";
           break;
+        case "Handball":
+          format.teamResults.halfPoints = "";
+          format.teamResults.finalPoints = "";
+          format.teamResults.shotsOnGoal = "";
+          format.teamResults.penalty = "";
+          format.teamResults.saves = "";
+          break;
+        case "Hockey":
+          format.teamResults.halfPoints = "";
+          format.teamResults.finalPoints = "";
+          format.teamResults.shotsOnGoal = "";
+          format.teamResults.totalShots = "";
+          format.teamResults.penaltyPoint = "";
+          format.teamResults.penaltyCorners = "";
+          format.teamResults.penaltyStroke = "";
+          format.teamResults.saves = "";
+          format.teamResults.fouls = "";
+
+          break;
+        case "Kabaddi":
+          format.teamResults.halfPoints = "";
+          format.teamResults.finalPoints = "";
+          // format.teamResults.goalPoints = [];
+          // format.teamResults.finalGoalPoints = "";
+          format.teamResults.superTackle = "";
+          format.teamResults.allOut = "";
+          break;
+
+        case "Water Polo":
+          format.teamResults.quarterPoints = [{
+            points: '',
+          }, {
+            points: '',
+          }, {
+            points: '',
+          }, {
+            points: '',
+          }];
+          format.teamResults.finalGoalPoints = "";
+          format.teamResults.shotsOnGoal = "";
+          format.teamResults.totalShots = "";
+          format.teamResults.penaltyPoint = "";
+          format.teamResults.penalty = "";
+          format.teamResults.saves = "";
+          break;
+        case "Volleyball":
+          format.teamResults.set = [];
+          format.teamResults.fouls = "";
+          format.teamResults.spike = "";
+          format.teamResults.block = "";
+          break;
         case "Football":
           format.formation = "";
           format.teamResults.halfPoints = 0;
@@ -112,46 +167,6 @@ myApp.factory('ResultSportInitialization', function () {
           format.teamResults.cleanSheet = 0;
           format.teamResults.noShow = 0;
           format.teamResults.walkover = 0;
-          break;
-        case "Hockey":
-          format.teamResults.goalPoints = [];
-          format.teamResults.finalGoalPoints = "";
-          format.teamResults.shotsOnGoal = "";
-          format.teamResults.totalShots = "";
-          format.teamResults.penaltyPoints = "";
-          format.teamResults.penaltyCorners = "";
-          format.teamResults.penaltyStroke = "";
-          format.teamResults.saves = "";
-          format.teamResults.fouls = "";
-
-          break;
-        case "Kabaddi":
-          format.teamResults.goalPoints = [];
-          format.teamResults.finalGoalPoints = "";
-          format.teamResults.superTackle = "";
-          format.teamResults.allOut = "";
-          break;
-        case "Volleyball":
-          format.teamResults.set = [];
-          format.teamResults.fouls = "";
-          format.teamResults.spike = "";
-          format.teamResults.block = "";
-          break;
-        case "Handball":
-          format.teamResults.goalPoints = [];
-          format.teamResults.finalGoalPoints = "";
-          format.teamResults.shotsOnGoal = "";
-          format.teamResults.penalty = "";
-          format.teamResults.saves = "";
-          break;
-        case "Water Polo":
-          format.teamResults.quarterPoints = [];
-          format.teamResults.finalGoalPoints = "";
-          format.teamResults.shotsOnGoal = "";
-          format.teamResults.totalShots = "";
-          format.teamResults.penaltyPoints = "";
-          format.teamResults.penalty = "";
-          format.teamResults.saves = "";
           break;
       };
 
@@ -235,13 +250,22 @@ myApp.factory('ResultSportInitialization', function () {
       if (sportType == "Racquet Sports") {
         return {
           resultVar: "resultsRacquet",
-          opponentsVar: "opponentsSingle"
+          opponentsVar: "opponentsTeam"
         };
       } else if (sportType == "Combat Sports") {
-        return {
-          resultVar: "resultsCombat",
-          opponentsVar: "opponentsSingle"
-        };
+        switch (sportName) {
+          case "Karate Team Kumite":
+            return {
+              resultVar: "resultsCombat",
+              opponentsVar: "opponentsTeam"
+            };
+          default:
+            return {
+              resultVar: "resultsCombat",
+              opponentsVar: "opponentsSingle"
+            };
+        }
+
       } else {
         switch (sportName) {
           case "Basketball":
@@ -288,7 +312,7 @@ myApp.factory('ResultSportInitialization', function () {
             return {
               resultVar: "resultHandball",
               html: "scorehandball.html",
-              scoringModal: "scorehandball.html",
+              scoringModal: "scoreplayer-handball.html",
               opponentsVar: "opponentsTeam"
             };
 
@@ -296,15 +320,38 @@ myApp.factory('ResultSportInitialization', function () {
             return {
               resultVar: "resultWaterPolo",
               html: "scorewaterpolo.html",
-              scoringModal: "scorewaterpolo.html",
+              scoringModal: "scoreplayer-waterpolo.html",
+              opponentsVar: "opponentsTeam"
+            };
+          case "Throwball":
+            return {
+              resultVar: "resultsCombat",
+              opponentsVar: "opponentsTeam"
+            };
+          case "Kho Kho":
+            return {
+              resultVar: "resultsCombat",
               opponentsVar: "opponentsTeam"
             };
         }
       }
 
 
+    },
+    //for getting result variable that sport contains ends     
+
+    getFormattedObject: function (isArray) {
+      var obj = {
+        isObj: false
+      }
+      if (isArray) {
+        obj.isObj = true;
+        obj.obj = {
+          time: ""
+        };
+      }
+      return obj;
     }
-    //for getting result variable that sport contains ends        
 
   }
   return obj;
