@@ -187,8 +187,13 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
           var substitutePlayerIndex = _.findIndex($scope.match[resultVar].teams[$scope.selectedTeamIndex].players, ['player', substitutePlayer.player]);
           playingPlayer.isPlaying = false;
           substitutePlayer.isPlaying = true;
-          playingPlayer.playerPoints.out.push($scope.inOutTime);
-          substitutePlayer.playerPoints.in.push($scope.inOutTime);
+          var outTimeObj=_.cloneDeep($scope.inOutTime);
+          outTimeObj.substitute=substitutePlayer.player;
+          var inTimeObj=_.cloneDeep($scope.inOutTime);
+          inTimeObj.substitute=playingPlayer.player;
+          playingPlayer.playerPoints.out.push(outTimeObj);
+          substitutePlayer.playerPoints.in.push(inTimeObj);
+
           $scope.match[resultVar].teams[$scope.selectedTeamIndex].players[playingPlayerIndex] = playingPlayer;
           $scope.match[resultVar].teams[$scope.selectedTeamIndex].players[substitutePlayerIndex] = substitutePlayer;
           playerScoreModal.close();
