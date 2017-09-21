@@ -931,11 +931,14 @@ var model = {
         var matchData2 = [];
         async.waterfall([
             function (callback) {
-                var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                // var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
                 Match.find({
                     sport: data.sport,
-                    excelType: "League"
-                }).lean().deepPopulate(deepSearch).sort({
+                    excelType: {
+                        $regex: "league",
+                        $options: "i"
+                    }
+                }).lean().sort({
                     createdAt: 1
                 }).exec(function (err, found) {
                     // console.log("found",found);
@@ -946,7 +949,7 @@ var model = {
                             callback(null, []);
                         } else {
                             var matches = _.groupBy(found, 'round');
-                            // console.log("matches",matches);
+                            console.log("matches", matches);
                             callback(null, matches);
                         }
                     }
@@ -988,11 +991,14 @@ var model = {
                 }
             },
             function (sendObj, callback) {
-                var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                // var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
                 Match.find({
                     sport: data.sport,
-                    excelType: "Knockout "
-                }).lean().deepPopulate(deepSearch).sort({
+                    excelType: {
+                        $regex: "knockout",
+                        $options: "i"
+                    }
+                }).lean().sort({
                     createdAt: 1
                 }).exec(function (err, found) {
                     console.log("found", found);
