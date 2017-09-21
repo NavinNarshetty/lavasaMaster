@@ -3323,7 +3323,7 @@ var model = {
                             obj["LANE NUMBER"] = mainData.laneNo;
                             // obj["SFA ID"] = mainData.athleteId.sfaId;
                             if (mainData.id) {
-                                obj["SFA ID"] = matchData.opponentsTeam[i].athleteId.sfaId;
+                                obj["SFA ID"] = matchData.opponentsSingle[i].athleteId.sfaId;
                                 if (matchData.opponentsSingle[i].athleteId.middleName) {
                                     obj["NAME"] = matchData.opponentsSingle[i].athleteId.firstName + " " + matchData.opponentsSingle[i].athleteId.middleName + " " + matchData.opponentsSingle[i].athleteId.surname;
                                 } else {
