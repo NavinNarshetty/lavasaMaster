@@ -3,10 +3,10 @@ myApp.factory('ResultSportInitialization', function () {
 
         //for getting TEPLATE for result"Spotname" eg:resultFootball,resultBasketball etc
         getPlayerTemplate: function (sportName, player) {
-            console.log(player,"-----------------------");
+            console.log(player, "-----------------------");
             var format = {
                 player: player.studentId._id,
-                sfaId:player.studentId.sfaId,
+                sfaId: player.studentId.sfaId,
                 jerseyNo: "",
                 isPlaying: false,
                 noShow: false,
@@ -253,10 +253,21 @@ myApp.factory('ResultSportInitialization', function () {
                     opponentsVar: "opponentsTeam"
                 };
             } else if (sportType == "Combat Sports") {
-                return {
-                    resultVar: "resultsCombat",
-                    opponentsVar: "opponentsSingle"
-                };
+                switch (sportName) {
+                    case "Kho Kho":
+                    case "Throwball":
+                    case "Karate Team Kumite":
+                        return {
+                            resultVar: "resultsCombat",
+                            opponentsVar: "opponentsTeam"
+                        };
+                    default:
+                        return {
+                            resultVar: "resultsCombat",
+                            opponentsVar: "opponentsSingle"
+                        };
+                }
+
             } else {
                 switch (sportName) {
                     case "Basketball":
