@@ -931,14 +931,14 @@ var model = {
         var matchData2 = [];
         async.waterfall([
             function (callback) {
-                // var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                var deepSearch = "opponentsTeam.studentTeam.studentId";
                 Match.find({
                     sport: data.sport,
                     excelType: {
                         $regex: "league",
                         $options: "i"
                     }
-                }).lean().sort({
+                }).lean().deepPopulate(deepSearch).sort({
                     createdAt: 1
                 }).exec(function (err, found) {
                     // console.log("found",found);
@@ -992,13 +992,14 @@ var model = {
             },
             function (sendObj, callback) {
                 // var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                var deepSearch = "opponentsTeam.studentTeam.studentId";
                 Match.find({
                     sport: data.sport,
                     excelType: {
                         $regex: "knockout",
                         $options: "i"
                     }
-                }).lean().sort({
+                }).lean().deepPopulate(deepSearch).sort({
                     createdAt: 1
                 }).exec(function (err, found) {
                     console.log("found", found);
