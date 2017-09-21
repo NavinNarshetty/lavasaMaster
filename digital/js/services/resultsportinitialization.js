@@ -3,9 +3,10 @@ myApp.factory('ResultSportInitialization', function () {
 
         //for getting TEPLATE for result"Spotname" eg:resultFootball,resultBasketball etc
         getPlayerTemplate: function (sportName, player) {
+            console.log(player,"-----------------------");
             var format = {
-                player: player._id,
-                sfaId:player.sfaId,
+                player: player.studentId._id,
+                sfaId:player.studentId.sfaId,
                 jerseyNo: "",
                 isPlaying: false,
                 noShow: false,
@@ -26,7 +27,6 @@ myApp.factory('ResultSportInitialization', function () {
                     format.playerPoints.in = [];
                     format.playerPoints.out = [];
                     break;
-
                 case "Hockey":
                     format.playerPoints.goal = [];
                     format.playerPoints.assist = [];
