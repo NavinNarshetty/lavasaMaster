@@ -404,6 +404,14 @@ var controller = {
                                     callback(null, complete);
                                 }
                             });
+                        } else if (req.body.resultType == 'swiss-league') {
+                            Match.updateSwiss(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
                         } else {
                             callback(null, importData);
                         }
@@ -465,6 +473,8 @@ var controller = {
                             Match.generateExcelQualifyingKnockout(req.body, res);
                         } else if (req.body.resultType == "league-cum-knockout") {
                             Match.generateLeagueKnockout(req.body, res);
+                        } else if (req.body.resultType == "swiss-league") {
+                            Match.generateExcelSwiss(req.body, res);
                         } else {
                             res.json({
                                 "data": "Body not Found",
