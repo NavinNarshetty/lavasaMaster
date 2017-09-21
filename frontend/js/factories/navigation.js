@@ -834,6 +834,13 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 data: request
             }).then(callback);
         },
+        getOneSportDetail: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'sport/getOne',
+                method: 'POST',
+                data: request
+            }).then(callback);
+        },
         getSportSpecificRounds: function (request, callback) {
 
             $http({
@@ -875,7 +882,7 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                                 sortedArr[0] = arrToSort[0];
                                 sortedArr[1] = {};
                             }
-                            // console.log("sortedArr", sortedArr);
+                            console.log("sortedArr", sortedArr);
                             // console.log("arrayLength 1");
                             // console.log("------------------------------------------");
 
@@ -898,6 +905,7 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                     _.each(knockout.roundsList, function (round, key) {
                         if (key > 0 && key < 3) {
                             _.each(round.match, function (match, index) {
+                                console.log(match);
                                 var match1, match2;
 
                                 if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
@@ -906,8 +914,9 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                                 if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                     match2 = knockout.roundsList[key - 1].match[index * 2 + 1][resultVar.opponentsVar];
                                 }
-                                console.log(match, match[resultVar.opponentsVar], resultVar.opponentsVar, "resultVar.opponentsVar");
+                                console.log(match[resultVar.opponentsVar], "resultVar.opponentsVar");
                                 match[resultVar.opponentsVar] = sortOpponents(match[resultVar.opponentsVar], match1, match2, key);
+                                console.log(match[resultVar.opponentsVar], "resultVar.opponentsVar");
                             });
                         }
                     });
@@ -954,6 +963,14 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 url: adminUrl2 + 'Weight/getAll',
                 method: 'POST'
             }).then(callback);
+        },
+        Boolean: function (str) {
+
+            if (str == 'true' || str) {
+                return true;
+            } else {
+                return false;
+            }
         }
     };
 });

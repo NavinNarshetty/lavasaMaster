@@ -351,8 +351,8 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
 
                                         if (value.resultsRacquet !== undefined && value.resultsRacquet.teams) {
                                             _.each(value.resultsRacquet.teams, function (n) {
-                                                n.walkover = Boolean(n.walkover);
-                                                n.noShow = Boolean(n.noShow);
+                                                n.walkover = NavigationService.Boolean(n.walkover);
+                                                n.noShow = NavigationService.Boolean(n.noShow);
                                             });
                                             $scope.tempWakover = _.find(value.resultsRacquet.teams, ['walkover', true]);
                                             $scope.tempNoshow = _.find(value.resultsRacquet.teams, ['noShow', true]);

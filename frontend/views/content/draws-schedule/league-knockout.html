@@ -3,9 +3,9 @@
     <!--SPORT NAME-->
     <div class="league-knockout-sportname text-center">
       <h3 class="text-uppercase d-fjalla-one sport-type-head">
-        <span ng-bind-html="matches[0].match[0].sport.sportslist.name"></span> |
-        <span ng-bind-html="matches[0].match[0].sport.gender"></span> |
-        <span ng-bind-html="matches[0].match[0].sport.ageGroup.name"> </span>
+        <span ng-bind-html="oneSportDetail.sportslist.name"></span> |
+        <span ng-bind-html="oneSportDetail.gender"></span> |
+        <span ng-bind-html="oneSportDetail.ageGroup.name"> </span>
       </h3>
       <div class="draws-downloadpdf draws-a">
         <a href="#">Download the schedule in pdf format</a>
@@ -63,23 +63,29 @@
               </td>
               <td>
                 <div class="text-capitalize" title="{{data.opponentsTeam[0].schoolName}}">
+                  <span class="knockout-dot-live v-mid" ng-if="data.opponentsTeam[0].isWinner"><i class="fa fa-circle"></i></span>
                   <span>{{data.opponentsTeam[0].teamId | filterConcate : data.opponentsTeam[0].schoolName |  truncate:'30' }}</span>
-
+                  <span ng-if="data.opponentsTeam[0].teamId === undefined">-</span>
                 </div>
               </td>
               <td>
                 <div class="text-capitalize">
+                  <span class="knockout-dot-live v-mid" ng-if="data.opponentsTeam[1].isWinner"><i class="fa fa-circle"></i></span>
                   <span title="{{data.opponentsTeam[1].schoolName}}">{{data.opponentsTeam[1].teamId | filterConcate : data.opponentsTeam[1].schoolName |  truncate:'30' }}</span>
+                  <span ng-if="data.opponentsTeam[1].teamId === undefined">-</span>
                 </div>
               </td>
               <td>
-                <div class="text-capitalize" ng-if="data.score">
-                  {{data.score}}
-                </div>
-                <div class="text-capitalize" ng-if="!data.score">
-                  <span class="display-block">{{data.scheduleDate | englishNumeralDateOne}}</span>
-                  <span>{{data.scheduleTime}}</span>
-
+                <div class="text-capitalize">
+                  <div ng-if="data.status === 'Pending' || !data.status"> <span class="display-block">{{data.scheduleDate |englishNumeralDateOne}}</span>
+                    <span>{{data.scheduleTime}}</span>
+                  </div>
+                  <span ng-if="data.status === 'IsLive'" class="text-uppercase knockout-live-text">
+                      <span class="knockout-dot-live v-mid"><i class="fa fa-circle"></i></span>
+                  <span class="v-mid">Live</span>
+                  </span>
+                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.isNoMatch">-</span>
+                  <span class="display-block" ng-if="data.status === 'IsCompleted' && !data.isNoMatch">Match Center</span>
                 </div>
               </td>
               <td>
@@ -160,6 +166,11 @@
                         </th>
                         <th>
                           <div>
+                            <h4 class="m-clear">No Show</h4>
+                          </div>
+                        </th>
+                        <th>
+                          <div>
                             <h4 class="m-clear">Points</h4>
                           </div>
                         </th>
@@ -195,6 +206,12 @@
                         <td>
                           <div class="text-capitalize">
                             {{content.draw}}
+                          </div>
+                        </td>
+                        <td>
+                          <div class="text-capitalize">
+                            <span> {{content.noShow}}</span>
+
                           </div>
                         </td>
                         <td>
@@ -288,21 +305,33 @@
                         </td>
                         <td>
                           <div class="text-capitalize">
+                            <span class="knockout-dot-live v-mid" ng-if="content.opponentsTeam[0].isWinner"><i class="fa fa-circle"></i></span>
                             <span>{{content.opponentsTeam[0].teamId | filterConcate : content.opponentsTeam[0].schoolName | truncate:'30'}} </span>
+                            <span ng-if="content.opponentsTeam[0].teamId === undefined">-</span>
                           </div>
                         </td>
                         <td>
                           <div class="text-capitalize">
+                            <span class="knockout-dot-live v-mid" ng-if="content.opponentsTeam[1].isWinner"><i class="fa fa-circle"></i></span>
                             <span>{{content.opponentsTeam[1].teamId | filterConcate : content.opponentsTeam[1].schoolName | truncate:'30'}} </span>
+                            <span ng-if="content.opponentsTeam[1].teamId === undefined">-</span>
                           </div>
                         </td>
                         <td>
-                          <div class="text-capitalize" ng-if="content.opponentsTeam[0].finalPoint && content.opponentsTeam[1].finalPoint">
+                          <!-- <div class="text-capitalize" ng-if="content.opponentsTeam[0].finalPoint && content.opponentsTeam[1].finalPoint">
                             <span>{{content.opponentsTeam[0].finalPoint | filterConcate : content.opponentsTeam[1].finalPoint}} </span>
-                          </div>
-                          <div class="text-capitalize" ng-if="!content.opponentsTeam[0].finalPoint && !content.opponentsTeam[1].finalPoint">
-                            <span class="display-block">{{content.scheduleDate |englishNumeralDateOne}}</span>
-                            <span>{{content.scheduleTime}}</span>
+                          </div> -->
+                          <div class="text-capitalize">
+                            <div ng-if="content.status === 'Pending'||!content.status ">
+                              <span class="display-block">{{content.scheduleDate |englishNumeralDateOne}}</span>
+                              <span>{{content.scheduleTime}}</span>
+                            </div>
+                            <span ng-if="content.status === 'IsLive'" class="text-uppercase knockout-live-text">
+                            <span class="knockout-dot-live v-mid"><i class="fa fa-circle"></i></span>
+                            <span class="v-mid">Live</span>
+                            </span>
+                            <span class="display-block" ng-if="content.status === 'IsCompleted' && content.isNoMatch">-</span>
+                            <span class="display-block" ng-if="content.status === 'IsCompleted' && !content.isNoMatch">Match Center</span>
                           </div>
                         </td>
                         <td>

@@ -70,28 +70,32 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
         errorService.errorCode(data, function (allData) {
           if (!allData.message) {
             if (allData.value) {
-              $scope.knockout = allData.data.knockout.roundsList;
-              $scope.qualifying = allData.data.qualifying.roundsList;
-              $scope.knockout = $scope.knockout.reverse();
-              _.each($scope.knockout, function (data, index) {
-                _.each(data.match, function (key) {
-                  _.each(key.opponentsSingle, function (obj) {
-                    obj.athleteId.fullName = obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+              if (allData.data.qualifying != undefined && allData.data.qualifying.roundsList.length > 0) {
+                $scope.qualifying = allData.data.qualifying.roundsList;
+              }
+              if (allData.data.knockout.roundsList.length > 0) {
+                $scope.knockout = allData.data.knockout.roundsList;
+                $scope.knockout = $scope.knockout.reverse();
+                _.each($scope.knockout, function (data, index) {
+                  _.each(data.match, function (key) {
+                    _.each(key.opponentsSingle, function (obj) {
+                      obj.athleteId.fullName = obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                    });
                   });
-                });
 
-              });
-              _.each($scope.knockout, function (data) {
-                $scope.knockoutArr.push(data.match);
-              });
-              $scope.knockout = _.flattenDeep($scope.knockoutArr);
-              _.each($scope.qualifying, function (data, index) {
-                _.each(data.match, function (key) {
-                  _.each(key.opponentsSingle, function (obj) {
-                    obj.athleteId.fullName = obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                });
+                _.each($scope.knockout, function (data) {
+                  $scope.knockoutArr.push(data.match);
+                });
+                $scope.knockout = _.flattenDeep($scope.knockoutArr);
+                _.each($scope.qualifying, function (data, index) {
+                  _.each(data.match, function (key) {
+                    _.each(key.opponentsSingle, function (obj) {
+                      obj.athleteId.fullName = obj.athleteId.firstName + ' ' + obj.athleteId.surname;
+                    });
                   });
                 });
-              });
+              }
             }
           } else {
             toastr.error(allData.message, 'Error Message');

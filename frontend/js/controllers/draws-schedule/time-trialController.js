@@ -68,7 +68,7 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
         $scope.constraints.round = roundName;
       }
       $scope.constraints.sport = $stateParams.id;
-      NavigationService.getSportSpecificRounds($scope.constraints, function (data) {
+      NavigationService.getSportSpecificQualifyingRound($scope.constraints, function (data) {
         errorService.errorCode(data, function (allData) {
           if (!allData.message) {
             if (allData.value) {

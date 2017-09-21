@@ -198,8 +198,8 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                                                 console.log("resultsCombat", value.resultsCombat);
                                                 console.log(" im in resultsCombat");
                                                 if (value.resultsCombat.players[index]) {
-                                                    obj.noShow = Boolean(value.resultsCombat.players[index].noShow);
-                                                    obj.walkover = Boolean(value.resultsCombat.players[index].walkover);
+                                                    obj.noShow = NavigationService.Boolean(value.resultsCombat.players[index].noShow);
+                                                    obj.walkover = NavigationService.Boolean(value.resultsCombat.players[index].walkover);
                                                 }
                                                 value.status = value.resultsCombat.status;
                                                 value.isNoMatch = value.resultsCombat.isNoMatch;
@@ -220,8 +220,8 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                                             } else if (value && value.resultsRacquet && value.resultsRacquet.players[index]) {
                                                 console.log("im in resultsRacquet");
                                                 console.log(value.resultsRacquet.players[index]);
-                                                obj.noShow = Boolean(value.resultsRacquet.players[index].noShow);
-                                                obj.walkover = Boolean(value.resultsRacquet.players[index].walkover);
+                                                obj.noShow = NavigationService.Boolean(value.resultsRacquet.players[index].noShow);
+                                                obj.walkover = NavigationService.Boolean(value.resultsRacquet.players[index].walkover);
                                                 value.status = value.resultsRacquet.status;
                                                 value.isNoMatch = value.resultsRacquet.isNoMatch;
                                                 value.video = value.resultsRacquet.video;
@@ -479,8 +479,8 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
 
                                         if (value.resultsRacquet !== undefined && value.resultsRacquet.teams) {
                                             _.each(value.resultsRacquet.teams, function (n) {
-                                                n.walkover = Boolean(n.walkover);
-                                                n.noShow = Boolean(n.noShow);
+                                                n.walkover = NavigationService.NavigationService.Boolean(n.walkover);
+                                                n.noShow = NavigationService.NavigationService.Boolean(n.noShow);
                                             });
                                             $scope.tempWakover = _.find(value.resultsRacquet.teams, ['walkover', true]);
                                             $scope.tempNoshow = _.find(value.resultsRacquet.teams, ['noShow', true]);

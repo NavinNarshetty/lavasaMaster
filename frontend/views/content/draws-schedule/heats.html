@@ -35,7 +35,7 @@
         <!--END FINAL HEAD-->
         <!--FINAL TABLE-->
         <div class="heats-final-table table-responsive q-orange-table table-responsive" ng-if="roundsList[0].match[0].opponentsSingle.length>0 || roundsList[0].match[0].opponentsTeam.length>0">
-          <table class=" table-draws-schedule table-six" ng-if="showFinalHeadng">
+          <table class=" table-draws-schedule table-six">
             <thead>
               <tr>
                 <th>
@@ -78,7 +78,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="final in roundsList[0].match[0].opponentsSingle|orderBy: 'result'| limitTo:finalLimit " ng-if="final.athleteId">
+              <tr ng-repeat="final in roundsList[0].match[0].opponentsSingle|orderBy: 'result'| limitTo:finalLimit">
                 <td>
                   <div class="text-capitalize ">
                     {{final.laneNo}}
@@ -86,12 +86,14 @@
                 </td>
                 <td>
                   <div class="text-capitalize ">
-                    {{final.athleteId.fullName}}
+                    <span ng-if="final.athleteId">{{final.athleteId.fullName}}</span>
+                    <span ng-if="!final.athleteId">-</span>
                   </div>
                 </td>
                 <td>
                   <div class="text-capitalize ">
-                    {{final.athleteId.school.name}}
+                    <span ng-if="final.athleteId">{{final.athleteId.school.name}}</span>
+                    <span ng-if="!final.athleteId">-</span>
                   </div>
                 </td>
                 <td>
@@ -115,7 +117,7 @@
                 </td>
               </tr>
 
-              <tr ng-repeat="final in roundsList[0].match[0].opponentsTeam|orderBy: 'result'| limitTo:finalLimit " ng-if="roundsList[0].match[0].opponentsTeam.length>0 && final.schoolNameWithTeamId">
+              <tr ng-repeat="final in roundsList[0].match[0].opponentsTeam|orderBy: 'result'| limitTo:finalLimit " ng-if="roundsList[0].match[0].opponentsTeam.length>0">
                 <td>
                   <div class="text-capitalize ">
                     {{final.laneNo}}
@@ -171,12 +173,12 @@
         <div ng-if="roundsList[1].match[0].scheduleDate || roundsList[1].match[0].scheduleTime">
           <p class="sport-color-primary"><span>{{roundsList[1].match[0].scheduleDate |englishNumeralDate}}</span>
             <span>|</span>
-            <span>{{roundsList[1].match[0].scheduleTime }}</span></p>
+            <span>{{roundsList[1].match[0].scheduleTime}}</span></p>
         </div>
 
       </div>
       <!--END HEAD-->
-      <div ng-if="showSemiFinal">
+      <div ng-if="roundsList[1].match[0].opponentsSingle.length>0 || roundsList[1].match[0].opponentsTeam.length>0">
         <div class="heats-semiqualifying-holder">
 
 
@@ -232,7 +234,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr ng-repeat="semifinal in semi.opponentsSingle track by $index" ng-if="semifinal.athleteId">
+                        <tr ng-repeat="semifinal in semi.opponentsSingle track by $index">
                           <td>
                             <div class="text-capitalize">
                               {{semifinal.laneNo}}
@@ -240,32 +242,30 @@
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              {{semifinal.athleteId.fullName}}
+                              <span> {{semifinal.athleteId.fullName}}</span>
+                              <span ng-if="!semifinal.athleteId">-</span>
                             </div>
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              {{semifinal.athleteId.school.name}}
+                              <span>{{semifinal.athleteId.school.name}}</span>
+                              <span ng-if="!semifinal.athleteId">-</span>
                             </div>
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              {{semifinal.result}}
-                            </div>
-                            <div class="text-capitalize" ng-if="!semifinal.result">
-                              -
+                              <span>{{semifinal.result}}</span>
+                              <span ng-if="!semifinal.result">-</span>
                             </div>
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              {{semifinal.time}}
-                            </div>
-                            <div class="text-capitalize" ng-if="!semifinal.time">
-                              -
+                              <span>{{semifinal.time}}</span>
+                              <span ng-if="!semifinal.time">-</span>
                             </div>
                           </td>
                         </tr>
-                        <tr ng-repeat="semifinal in semi.opponentsTeam track by $index" ng-if="semifinal.teamId">
+                        <tr ng-repeat="semifinal in semi.opponentsTeam track by $index">
                           <td>
                             <div class="text-capitalize">
                               {{semifinal.laneNo}}
@@ -273,23 +273,20 @@
                           </td>
                           <td>
                             <div class="text-capitalize " title="{{final.schoolNameWithTeamId}}">
-                              {{semifinal.schoolNameWithTeamId | truncate:'35'}}
+                              <span>  {{semifinal.schoolNameWithTeamId | truncate:'35'}}</span>
+                              <span ng-if="!semifinal.schoolNameWithTeamId">-</span>
                             </div>
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              {{semifinal.result}}
-                            </div>
-                            <div class="text-capitalize" ng-if="!semifinal.result">
-                              -
+                              <span> {{semifinal.result}}</span>
+                              <span ng-if="!semifinal.result">-</span>
                             </div>
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              {{semifinal.time}}
-                            </div>
-                            <div class="text-capitalize" ng-if="!semifinal.time">
-                              -
+                              <span> {{semifinal.time}}</span>
+                              <span ng-if="!semifinal.time">-</span>
                             </div>
                           </td>
                         </tr>
@@ -297,8 +294,6 @@
                     </table>
                   </div>
                 </div>
-
-
               </div>
             </uib-accordion>
           </div>
@@ -386,7 +381,7 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr ng-repeat="semifinal in semi.opponentsSingle track by $index" ng-if="semifinal.athleteId">
+                        <tr ng-repeat="semifinal in semi.opponentsSingle track by $index" ng-if="semi.opponentsSingle.length>0">
                           <td>
                             <div class="text-capitalize">
                               {{semifinal.laneNo}}
@@ -394,32 +389,30 @@
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              {{semifinal.athleteId.fullName}}
+                              <span>{{semifinal.athleteId.fullName}}</span>
+                              <span ng-if="!semifinal.athleteId">-</span>
                             </div>
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              {{semifinal.athleteId.school.name}}
+                              <span> {{semifinal.athleteId.school.name}}</span>
+                              <span ng-if="!semifinal.athleteId">-</span>
                             </div>
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              {{semifinal.result}}
-                            </div>
-                            <div class="text-capitalize" ng-if="!semifinal.result">
-                              -
+                              <span>{{semifinal.result}}</span>
+                              <span ng-if="!semifinal.result">-</span>
                             </div>
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              {{semifinal.time}}
-                            </div>
-                            <div class="text-capitalize" ng-if="!semifinal.time">
-                              -
+                              <span> {{semifinal.time}}</span>
+                              <span ng-if="!semifinal.time">-</span>
                             </div>
                           </td>
                         </tr>
-                        <tr ng-repeat="semifinal in semi.opponentsTeam track by $index" ng-if="semifinal.schoolNameWithTeamId">
+                        <tr ng-repeat="semifinal in semi.opponentsTeam track by $index">
                           <td>
                             <div class="text-capitalize">
                               {{semifinal.laneNo}}
@@ -427,7 +420,8 @@
                           </td>
                           <td>
                             <div class="text-capitalize " title="{{final.schoolNameWithTeamId}}">
-                              {{semifinal.schoolNameWithTeamId | truncate:'35'}}
+                              <span>{{semifinal.schoolNameWithTeamId | truncate:'35'}}</span>
+                              <span ng-if="!semifinal.schoolNameWithTeamId">-</span>
                             </div>
                           </td>
                           <td>
@@ -440,13 +434,10 @@
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              {{semifinal.time}}
-                            </div>
-                            <div class="text-capitalize" ng-if="!semifinal.time">
-                              -
+                              <span> {{semifinal.time}}</span>
+                              <span ng-if="!semifinal.time">-</span>
                             </div>
                           </td>
-
                         </tr>
                       </tbody>
                     </table>

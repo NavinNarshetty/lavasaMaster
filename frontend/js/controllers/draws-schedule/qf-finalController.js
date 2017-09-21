@@ -164,9 +164,21 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
                         obj.noOfJumps = value.resultQualifyingRound.player.attempt.length;
                         obj.score = value.resultQualifyingRound.player.attempt[index1];
                         if (value.resultQualifyingRound.player.attempt.length > 0) {
-                          obj.bestattempt = Math.max.apply(Math, value.resultQualifyingRound.player.attempt);
-                          value.bestAttempt = obj.bestattempt;
+                          obj.bestAttempt = value.resultQualifyingRound.player.bestAttempt;
+                          obj.noShow = NavigationService.Boolean(value.resultQualifyingRound.player.noShow);
+                          // obj.bestattempt = Math.max.apply(Math, value.resultQualifyingRound.player.attempt);
+                          console.log(obj.noShow);
+
                         }
+
+                      }
+                      console.log("value", value.resultShooting);
+                      if (value.resultShooting != undefined) {
+                        obj.laneNo = value.resultShooting.laneNo;
+                        obj.detail = value.resultShooting.detail;
+                        obj.finalScore = value.resultShooting.finalScore;
+                        obj.noShow = value.resultShooting.noShow;
+                        obj.result = value.resultShooting.result;
 
                       }
 

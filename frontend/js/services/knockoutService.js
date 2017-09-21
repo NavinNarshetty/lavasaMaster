@@ -7,8 +7,8 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
           value.status = value.finalResult.status;
           value.isNoMatch = value.finalResult.isNoMatch;
           _.each(value.finalResult.teams, function (n) {
-            n.walkover = Boolean(n.walkover);
-            n.noShow = Boolean(n.noShow);
+            n.walkover = NavigationService.Boolean(n.walkover);
+            n.noShow = NavigationService.Boolean(n.noShow);
           });
           var tempWakover = _.find(value.finalResult.teams, ['walkover', true]);
           var tempNoshow = _.find(value.finalResult.teams, ['noShow', true]);
@@ -49,8 +49,8 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
             obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
             if (value && value.finalResult) {
               _.each(value.finalResult.players, function (key) {
-                key.walkover = Boolean(key.walkover);
-                key.noShow = Boolean(key.noShow);
+                key.walkover = NavigationService.Boolean(key.walkover);
+                key.noShow = NavigationService.Boolean(key.noShow);
               });
               var tempWakover = _.find(value.finalResult.players, ['walkover', true]);
               var tempNoshow = _.find(value.finalResult.players, ['noShow', true]);
@@ -81,6 +81,46 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
     });
     return roundsList;
 
+  };
+
+  //for league-knockout 
+  this.sortLeagueKnockoutResult = function (result) {
+    if (result.opponentsTeam) {
+      _.each(result.opponentsTeam, function (team, index) {
+        if (result.resultFootball !== undefined) {
+          if (team._id === result.resultFootball.winner.player) {
+            team.isWinner = true;
+          }
+        }
+        if (result.resultFootball !== undefined && result.resultFootball.teams) {
+          _.each(result.resultFootball.teams, function (n) {
+            n.walkover = NavigationService.Boolean(n.walkover);
+            n.noShow = NavigationService.Boolean(n.noShow);
+            team.finalPoint = result.resultFootball.teams[index].teamResults.finalPoints;
+
+          });
+          var tempWakover = _.find(result.resultFootball.teams, ['walkover', true]);
+          var tempNoshow = _.find(result.resultFootball.teams, ['noShow', true]);
+          if (tempWakover) {
+            result.walkover = tempWakover.walkover;
+          }
+          if (tempNoshow) {
+            result.noShow = tempNoshow.noShow;
+          }
+
+        }
+
+      });
+    }
+    if (result.resultFootball) {
+      result.isNoMatch = result.resultFootball.isNoMatch;
+      result.isDraw = result.resultFootball.isDraw;
+      result.status = result.resultFootball.status;
+    } else {
+      console.log("im in else");
+    }
+
+    return result;
   };
 
 
