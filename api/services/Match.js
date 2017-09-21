@@ -1959,7 +1959,7 @@ var model = {
                                         paramData.sport = singleData.SPORT;
                                         Match.getTeamId(paramData, function (err, complete) {
                                             if (err || _.isEmpty(complete)) {
-                                                singleData["PARTICIPANT 1"] = null;
+                                                singleData["PARTICIPANT 1"] = "";
                                                 err = "PARTICIPANT 1 may have wrong values";
                                                 callback(null, {
                                                     error: err,
@@ -1991,7 +1991,7 @@ var model = {
                                         paramData.sport = singleData.SPORT;
                                         Match.getTeamId(paramData, function (err, complete) {
                                             if (err || _.isEmpty(complete)) {
-                                                singleData["PARTICIPANT 2"] = null;
+                                                singleData["PARTICIPANT 2"] = "";
                                                 err = "TEAMID 2 may have wrong values";
                                                 callback(err, null);
                                             } else {
