@@ -697,13 +697,11 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(sportslist)) {
-                        console.log("******", sportslist);
                         sendObj.drawFormat = sportslist.drawFormat.name;
                         sendObj.isTeam = sportslist.sportsListSubCategory.isTeam;
                         sendObj.sportType = sportslist.sportsListSubCategory.sportsListCategory.name;
                         callback(null, sportslist);
                     } else {
-                        console.log(matchObj.sportslist, "SportList Not Found");
                         callback("No Data Found", null);
                     }
                 });
@@ -717,14 +715,27 @@ var model = {
                         sendObj.sport = sportDetails._id;
                         callback(null, sendObj);
                     } else {
-                        console.log(matchObj, "Sport Not Found with this selection");
                         callback(null, "No Data Found");
                     }
 
                 });
+            },
+            function(sendObj, callback){
+                console.log(sendObj, "----------------------sendObj---------------");
+                Match.findOne({"sport":sendObj.sport}).exec(function(err,data){
+                    console.log(data,"---------------matchFound-------------------");
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(data)) {
+                        sendObj.matchFound = true;
+                        callback(null, sendObj);
+                    } else {
+                        sendObj.matchFound = false;
+                        callback(null, sendObj);
+                    }
+                });
             }
         ], function (err, result) {
-            console.log("Final Callback");
             if (err) {
                 callback(err, null);
             } else {

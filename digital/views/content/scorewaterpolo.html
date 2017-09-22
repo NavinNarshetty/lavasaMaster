@@ -136,9 +136,9 @@
                             <img ng-src="{{match.teams[$index].photograph|serverimage}}" alt="{{match.teams[$index].schoolName}}" class="img-responsive">
                         </div>
                         <div class="relate setpoint-element" ng-repeat="quater in team.teamResults.quarterPoints track by $index">
-                            <div class="score-quaterpoints">
+                            <div class="score-quaterpoints" >
                                 <label for="player1score" class="text-uppercase">Quarter {{$index+1}} </label>
-                                <input type="number" ng-model="quater.points" id="player1score" min="0" max="99" class="score-number display-inline form-control"
+                                <input type="number" placeholder="0" ng-model="quater.points" id="player1score" min="0" max="99" class="score-number display-inline form-control"
                                     limit-to-max>
                             </div>
                             <!-- <div class="relate setpoint-element">
@@ -146,10 +146,15 @@
                   <input type="number" ng-model="team.finalPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control">
                 </div> -->
                         </div>
-
+                        <div class="relate setpoint-element" ng-if="match.resultWaterPolo.teams[0] && match.resultWaterPolo.teams[0].teamResults && match.resultWaterPolo.teams[0].teamResults.penaltyPoints && match.resultWaterPolo.teams[1] && match.resultWaterPolo.teams[1].teamResults && match.resultWaterPolo.teams[1].teamResults.penaltyPoints && match.resultWaterPolo.teams[0].teamResults.penaltyPoints !='' && match.resultWaterPolo.teams[1].teamResults.penaltyPoints !=''">
+                            <label for="player1score" class="text-uppercase">Penalty Points </label>
+                            <input type="number" ng-model="team.teamResults.penaltyPoints" id="player1score" min="0" placeholder="0" max="99" class="score-number display-inline form-control">
+                        </div>
                     </div>
+
                 </div>
                 <!-- HALF TIME FULL TIME END -->
+
             </div>
             <!-- TEAM SCORING END -->
             <!-- FINAL DETAILS SECTION -->
@@ -205,7 +210,7 @@
                         <div class="col-md-4 col-sm-6">
                             <div class="text-left">
                                 <label for="">For Penalties</label>
-                                <button class="btn btn-scoring btn-green-outline" ng-click="modalPenaltyShootout()">Penalty Shootouts</button>
+                                <button class="btn btn-scoring btn-green-outline" ng-click="modalPenaltyShootout(match.resultWaterPolo)">Penalty Shootouts</button>
                             </div>
                         </div>
                     </div>
