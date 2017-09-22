@@ -65,14 +65,14 @@
                 <div class="text-capitalize" title="{{data.opponentsTeam[0].schoolName}}">
                   <span class="knockout-dot-live v-mid" ng-if="data.opponentsTeam[0].isWinner"><i class="fa fa-circle"></i></span>
                   <span>{{data.opponentsTeam[0].teamId | filterConcate : data.opponentsTeam[0].schoolName |  truncate:'30' }}</span>
-                  <span ng-if="data.opponentsTeam[0].teamId === undefined">-</span>
+                  <span ng-if="data.opponentsTeam[0].teamId === undefined">TBD</span>
                 </div>
               </td>
               <td>
                 <div class="text-capitalize">
                   <span class="knockout-dot-live v-mid" ng-if="data.opponentsTeam[1].isWinner"><i class="fa fa-circle"></i></span>
                   <span title="{{data.opponentsTeam[1].schoolName}}">{{data.opponentsTeam[1].teamId | filterConcate : data.opponentsTeam[1].schoolName |  truncate:'30' }}</span>
-                  <span ng-if="data.opponentsTeam[1].teamId === undefined">-</span>
+                  <span ng-if="data.opponentsTeam[1].teamId === undefined">TBD</span>
                 </div>
               </td>
               <td>
