@@ -122,28 +122,53 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       $scope.team = team;
       switch (point) {
         case 'totalShots':
-          $scope.team.teamResults.totalShots = $scope.team.teamResults.totalShots + 1;
+          if ($scope.team.teamResults.totalShots == "") {
+            $scope.team.teamResults.totalShots = 1;
+          } else {
+            $scope.team.teamResults.totalShots = $scope.team.teamResults.totalShots + 1;
+          }
         break;
         case 'shotsOnGoal':
-          $scope.team.teamResults.shotsOnGoal = $scope.team.teamResults.shotsOnGoal + 1;
+          if ($scope.team.teamResults.shotsOnGoal == "") {
+            $scope.team.teamResults.shotsOnGoal = 1;
+          } else {
+            $scope.team.teamResults.shotsOnGoal = $scope.team.teamResults.shotsOnGoal + 1;
+          }
         break;
         case 'corners':
-          $scope.team.teamResults.corners = $scope.team.teamResults.corners + 1;
+          if ($scope.team.teamResults.corners == "") {
+            $scope.team.teamResults.corners = 1;
+          } else {
+            $scope.team.teamResults.corners = $scope.team.teamResults.corners + 1;
+          }
         break;
         case 'penalty':
-          $scope.team.teamResults.penalty = $scope.team.teamResults.penalty + 1;
+          if ($scope.team.teamResults.penalty == "") {
+            $scope.team.teamResults.penalty = 1;
+          } else {
+            $scope.team.teamResults.penalty = $scope.team.teamResults.penalty + 1;
+          }
         break;
         case 'saves':
-          $scope.team.teamResults.saves = $scope.team.teamResults.saves + 1;
+          if ($scope.team.teamResults.saves == "") {
+            $scope.team.teamResults.saves = 1;
+          } else {
+            $scope.team.teamResults.saves = $scope.team.teamResults.saves + 1;
+          }
         break;
         case 'fouls':
-          $scope.team.teamResults.fouls = $scope.team.teamResults.fouls + 1;
+          if ($scope.team.teamResults.fouls =="") {
+            $scope.team.teamResults.fouls = 1;
+          } else {
+            $scope.team.teamResults.fouls = $scope.team.teamResults.fouls + 1;
+          }
         break;
         case 'offSide':
-          $scope.team.teamResults.offSide = $scope.team.teamResults.offSide + 1;
-        break;
-        case 'cleanSheet':
-          $scope.team.teamResults.cleanSheet = $scope.team.teamResults.cleanSheet + 1;
+          if ($scope.team.teamResults.offSide == "") {
+            $scope.team.teamResults.offSide = 1;
+          } else {
+            $scope.team.teamResults.offSide = $scope.team.teamResults.offSide + 1;
+          }
         break;
       }
       console.log(point,'inTP');
@@ -204,38 +229,42 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
       switch (point) {
         case 'goals':
           $scope.player.playerPoints.goals.push({
-            time: 0
+            time: ""
           });
         break;
         case 'assist':
           $scope.player.playerPoints.assist.push({
-            time: 0
+            time: ""
           });
         break;
         case 'redCard':
           $scope.player.playerPoints.redCard.push({
-            time: 0
+            time: ""
           });
         break;
         case 'yellowCard':
           $scope.player.playerPoints.yellowCard.push({
-            time: 0
+            time: ""
           });
         break;
         case 'in':
           $scope.player.playerPoints.in.push({
-            time: 0
+            time: ""
           });
           $scope.player.isPlaying = true;
         break;
         case 'out':
           $scope.player.playerPoints.out.push({
-            time: 0
+            time: ""
           });
           $scope.player.isPlaying = false;
         break;
         case 'penaltyPoint':
-          $scope.player.playerPoints.penaltyPoint =  $scope.player.playerPoints.penaltyPoint + 1;
+          if ($scope.player.playerPoints.penaltyPoint == "") {
+            $scope.player.playerPoints.penaltyPoint = 1;
+          } else {
+            $scope.player.playerPoints.penaltyPoint =  $scope.player.playerPoints.penaltyPoint + 1;
+          }
         break;
       }
       console.log('inPP');

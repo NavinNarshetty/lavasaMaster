@@ -62,7 +62,7 @@
                     <div class="col-md-2 col-sm-2" ng-repeat="team in match.resultsCombat.teams track by $index">
                         <div class="team-teampoints">
                             <!-- totalShots DATA POINT -->
-                            <div class="relate teamscore-point mtb-10" ng-repeat="set in  team.teamResults.sets track by $index">
+                            <div class="relate teamscore-point mtb-10" ng-repeat="set in team.sets track by $index">
                                 <label class="teamdatapoint-name">Points</label>
                                 <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementScore(set,'point');"><i class="fa fa-minus"></i></button>
                                 <input type="number" ng-model="set.point" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control">
@@ -157,7 +157,7 @@
                 <!-- FINAL BUTTONS -->
                 <div class="row">
                     <div class="col-md-4 col-sm-4">
-                        <button class="btn btn-green-outline btn-scoring" ui-sref="matchteam({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
+                        <button class="btn btn-green-outline btn-scoring" ui-sref="matchstart({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
                     </div>
                     <div class="col-md-4 col-sm-4">
                         <button class="btn btn-green-outline btn-scoring" promise-btn="yourPromise" ng-click="saveResult(match)">Save</button>

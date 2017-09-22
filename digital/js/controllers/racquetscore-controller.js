@@ -158,19 +158,39 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
       $scope.set = set;
       switch (model) {
         case 'ace':
-          $scope.set.ace = $scope.set.ace + 1;
+          if ($scope.set.ace == 1) {
+            $scope.set.point = 1;
+          } else {
+            $scope.set.ace = $scope.set.ace + 1;
+          }
         break;
         case 'winner':
-          $scope.set.winner = $scope.set.winner + 1;
+          if ($scope.set.winner == "") {
+            $scope.set.winner = 1;
+          } else {
+            $scope.set.winner = $scope.set.winner + 1;
+          }
         break;
         case 'unforcedError':
-          $scope.set.unforcedError = $scope.set.unforcedError + 1;
+          if ($scope.set.unforcedError == "") {
+            $scope.set.unforcedError = 1;
+          } else{
+            $scope.set.unforcedError = $scope.set.unforcedError + 1;
+          }
         break;
         case 'serviceError':
-          $scope.set.serviceError = $scope.set.serviceError + 1;
+          if ($scope.set.serviceError == "") {
+            $scope.set.serviceError = 1;
+          } else {
+            $scope.set.serviceError = $scope.set.serviceError + 1;
+          }
         break;
         case 'doubleFaults':
-          $scope.set.doubleFaults = $scope.set.doubleFaults + 1;
+          if ($scope.set.doubleFaults == "") {
+            $scope.set.doubleFaults = 1;
+          } else {
+            $scope.set.doubleFaults = $scope.set.doubleFaults + 1;
+          }
         break;
       }
       console.log("increment");

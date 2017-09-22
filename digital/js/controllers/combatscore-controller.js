@@ -129,8 +129,12 @@ myApp.controller('CombatScoreCtrl', function($scope, TemplateService, Navigation
         $scope.set = set;
         switch (model) {
             case 'point':
+              if ($scope.set.point == "") {
+                $scope.set.point = 1;
+              } else {
                 $scope.set.point = $scope.set.point + 1;
-                break;
+              }
+            break;
         }
         console.log("increment");
     };
