@@ -1,51 +1,58 @@
-var generator = require('generate-password');
 var schema = new Schema({
-
-    deleteStatus: Boolean,
-    hours: String,
-    minutes: String,
-    timer: String,
-    via: String,
-    payment: String,
-    sfaid: String,
-    school: {
-        type: Schema.Types.ObjectId,
-        ref: 'School',
-        index: true
-    },
-    lastname: String,
-    firstname: String,
-    middlename: String,
     gender: String,
-    dob: Date,
-    address: String,
-    contact: String,
-    email: String,
-    dateOfForm: String,
-    name: String,
-    image: [{
-        type: String
-    }],
-    video: [{
-        type: String
-    }],
-
     year: String,
-    totalPoints: Number,
-    totalPoints2015: Number,
-    totalPoints2016: Number,
-    totalPoints2017: Number,
-    status: Boolean
+    minPlayers: Number,
+    maxPlayers: Number,
+    sportslist: {
+        _id: {
+            type: Schema.Types.ObjectId,
+            ref: 'SportsList'
+        },
+        name: String,
+        sporttype: String
+    },
+    agegroup: {
+        _id: {
+            type: Schema.Types.ObjectId,
+            ref: 'Agegroup'
+        },
+        name: String
+    },
+    firstcategory: {
+        _id: {
+            type: Schema.Types.ObjectId,
+            ref: 'FirstCategory'
+        },
+        name: String
+    },
+    secondcategory: {
+
+        _id: {
+            type: Schema.Types.ObjectId,
+            ref: 'SecondCategory'
+        },
+        name: String
+
+    },
+    thirdcategory: {
+
+        _id: {
+            type: Schema.Types.ObjectId,
+            ref: 'ThirdCategory'
+        },
+        name: String
+
+    },
+    drawFormat: String
 });
 
 schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
-module.exports = mongoose.model('OldAthlete', schema);
+module.exports = mongoose.model('OldSport', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
-
     getAllStudent: function (data, callback) {
         async.waterfall([
             function (callback) {
@@ -151,5 +158,8 @@ var model = {
             }
         });
     },
+
+
+
 };
 module.exports = _.assign(module.exports, exports, model);

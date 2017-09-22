@@ -113,7 +113,8 @@ var schema = new Schema({
     utm_source: String,
     utm_campaign: String,
     panNo: String,
-    gstNo: String
+    gstNo: String,
+    oldId: String,
 });
 
 schema.plugin(deepPopulate, {});
