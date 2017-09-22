@@ -84,8 +84,9 @@
                         <span class="knockout-dot-live v-mid"><i class="fa fa-circle"></i></span>
                   <span class="v-mid">Live</span>
                   </span>
-                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.isNoMatch">-</span>
-                  <span class="display-block" ng-if="data.status === 'IsCompleted' && !data.isNoMatch">Match Center</span>
+                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.walkover">Won by walkover</span>
+                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.isNoMatch">No match</span>
+                  <span class="display-block" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover">Match Center</span>
                 </div>
               </td>
               <td>
