@@ -348,6 +348,11 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                 date2: '17',
                 month: 'Dec'
             }, {
+                sport: 'Basketball',
+                date1: '6',
+                date2: '17',
+                month: 'Dec'
+            }, {
                 sport: 'Boxing',
                 date1: '13',
                 date2: '17',
@@ -413,6 +418,11 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                 sport: 'Tennis',
                 date1: '7',
                 date2: '13',
+                month: 'Dec'
+            }, {
+                sport: 'Volleyball',
+                date1: '6',
+                date2: '17',
                 month: 'Dec'
             }, {
                 sport: 'Water Polo',
