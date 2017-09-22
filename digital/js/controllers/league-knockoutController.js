@@ -1,4 +1,4 @@
-myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope) {
+myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, knockoutService, $rootScope) {
   $scope.template = TemplateService.getHTML("content/league-knockout.html");
   TemplateService.title = "League Knockout"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -9,197 +9,30 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
     isFirstOpen: true,
     isFirstDisabled: false
   };
-
-  $scope.knockTabe = [{
-    name: "manav mehta",
-    team1: "dirubhai ambani internationational school",
-    team2: "dirubhai ambani internationational school",
-    score: "1-5",
-    round: "final"
-  }, {
-    name: "manav mehta",
-    team1: "dirubhai ambani internationational school",
-    team2: "dirubhai ambani internationational school",
-    score: "1-5",
-    round: "semi-final"
-  }, {
-    name: "manav mehta",
-    team1: "dirubhai ambani internationational school",
-    team2: "dirubhai ambani internationational school",
-    score: "1-5",
-    round: "semi-final"
-  }];
-
-
-  $scope.pointTable = [{
-    round: "Pool A",
-    detail: [{
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }, {
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }, {
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }]
-  }, {
-    round: "Pool B",
-    detail: [{
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }, {
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }, {
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }]
-  }, {
-    round: "Pool C",
-    detail: [{
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }, {
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }, {
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }]
-  }, {
-    round: "Pool d",
-    detail: [{
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }, {
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }, {
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }]
-  }, {
-    round: "Pool E",
-    detail: [{
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }, {
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    }, {
-      name: "manav mehta",
-      team1: "dirubhai ambani internationational school",
-      team2: "dirubhai ambani internationational school",
-      score: "1-5",
-      match: "3",
-      won: "2",
-      lost: "1",
-      draw: "1",
-      points: "6"
-    },]
-  }];
-
   $scope.constraints = {};
+  $scope.knockoutLimit = 8;
+  $scope.limitValue = 8;
+  $scope.pointsLimit = 3;
   $scope.knockoutArr = [];
+
+  $scope.getOneSport = function (id) {
+    $scope.objId = {};
+    $scope.objId._id = id;
+    NavigationService.getOneSportDetail($scope.objId, function (data) {
+      errorService.errorCode(data, function (allData) {
+        if (!allData.message) {
+          if (allData.value) {
+            $scope.oneSportDetail = allData.data;
+          }
+        } else {
+          toastr.error(allData.message, 'Error Message');
+        }
+      });
+    });
+
+
+  };
+
   $scope.getSportSpecificRounds = function (roundName) {
     if ($stateParams.id) {
       if (roundName) {
@@ -210,15 +43,27 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
         errorService.errorCode(data, function (allData) {
           if (!allData.message) {
             if (allData.value) {
-              console.log("alldata", allData.data);
               $scope.knockout = allData.data.knockout.roundsList;
               _.each($scope.knockout, function (n) {
                 $scope.knockoutArr.push(n.match);
 
               });
               $scope.knockout = _.flattenDeep($scope.knockoutArr);
+              $scope.knockout.reverse();
+              console.log("  $scope.knockout", $scope.knockout);
+              if ($scope.knockout.length > 0) {
+                _.each($scope.knockout, function (key) {
+                  knockoutService.sortLeagueKnockoutResult(key);
+                });
+              }
               if (allData.data.qualifying) {
                 $scope.matches = allData.data.qualifying.roundsList;
+                $scope.getOneSport($scope.matches[0].match[0].sport);
+                _.each($scope.matches, function (data) {
+                  _.each(data.match, function (key) {
+                    knockoutService.sortLeagueKnockoutResult(key);
+                  });
+                });
               }
 
               console.log($scope.knockout, "$scope.knockout");
@@ -232,8 +77,8 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
     }
   };
   $scope.getSportSpecificRounds();
-  $scope.knockoutLimit = 8;
-  $scope.limitValue = 8;
+
+  //for Knockout Tables
   $scope.showMoreData = function (bool, type) {
     if (type === 'knockout') {
       if (bool) {
@@ -244,7 +89,6 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
         $scope.showKnockout = false;
         $scope.knockoutLimit = 8;
       }
-
     } else {
       if (bool) {
         $scope.showMatch = true;
@@ -256,6 +100,34 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
     }
 
   };
+  //For Points table
+  if ($stateParams.id) {
+    var Obj = {};
+    Obj.sport = $stateParams.id;
+    NavigationService.getSportStandings(Obj, function (data) {
+      console.log(data, "data");
+      errorService.errorCode(data, function (allData) {
+        if (!allData.message) {
+          if (allData.value) {
+            $scope.tablePoint = allData.data.tablePoint;
+          }
+        } else {
+          toastr.error(allData.message, 'Error Message');
+        }
+      });
+    });
+  }
+  //for Points Table 
+  $scope.showMorePoints = function (bool) {
+    if (bool) {
+      $scope.showPoints = true;
+      $scope.pointsLimit = 5000;
+    } else {
+      $scope.showPoints = false;
+      $scope.pointsLimit = 3;
+    }
+  };
+
 
   // START SCORING
   $scope.startScoring = function (card) {
@@ -263,16 +135,17 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
     if (_.isEmpty(card.opponentsTeam[0]) && _.isEmpty(card.opponentsTeam[1])) {
       toastr.error('No players found for match.', 'No match');
     } else {
-      // if (card && card[$scope.resultVar.resultVar] && card[$scope.resultVar.resultVar].status == 'IsCompleted') {
-      //   toastr.warning("This match has already been scored.", 'Scoring Completed');
-      // } else {
+      if (card && card.status == 'IsCompleted') {
+        toastr.warning("This match has already been scored.", 'Scoring Completed');
+      } else {
         $state.go("matchteam", {
           drawFormat: $stateParams.drawFormat,
           sport: $stateParams.id,
           id: card.matchId
         });
-      // }
+      }
     }
-  }
+  };
   // START SCORING END
+
 });

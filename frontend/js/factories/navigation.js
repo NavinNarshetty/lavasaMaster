@@ -965,8 +965,7 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             }).then(callback);
         },
         Boolean: function (str) {
-
-            if (str == 'true' || str) {
+            if (str == 'true' || str || str === true) {
                 return true;
             } else {
                 return false;

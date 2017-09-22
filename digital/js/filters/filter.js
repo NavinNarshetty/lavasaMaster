@@ -98,8 +98,24 @@ myApp.filter('englishNumeralDate', function () {
 myApp.filter('filterPlayers', function () {
     return function (players) {
         console.log(players);
-       players=_.filter(players, ['noShow', false]);
-       console.log(players);
-       return players;
-    }; 
+        players = _.filter(players, ['noShow', false]);
+        console.log(players);
+        return players;
+    };
+});
+myApp.filter('filterConcate', function () {
+    return function (first, second) {
+        if (first != undefined) {
+            return first + ' - ' + second;
+        } else {
+            return first;
+        }
+    };
+});
+myApp.filter('englishNumeralDateOne', function () {
+    return function (value) {
+        if (value) {
+            return moment(new Date(value)).format(" Do MMM YYYY");
+        }
+    };
 });

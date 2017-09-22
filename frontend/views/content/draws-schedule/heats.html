@@ -98,19 +98,17 @@
                 </td>
                 <td>
                   <div class="text-capitalize ">
-                    {{final.result}}
+                    <span> {{final.result}}</span>
+                    <span ng-if="!final.result">-</span>
                   </div>
-                  <div class="text-capitalize" ng-if="!final.result">
-                    -
-                  </div>
+
                 </td>
                 <td>
                   <div class="text-capitalize ">
-                    {{final.time}}
+                    <span>{{final.time}}</span>
+                    <span ng-if="!final.time">-</span>
                   </div>
-                  <div class="text-capitalize " ng-if="!final.time">
-                    -
-                  </div>
+
                 </td>
                 <td>
                   <div class="text-capitalize "></div>
@@ -125,28 +123,22 @@
                 </td>
                 <td>
                   <div class="text-capitalize " title="{{final.schoolNameWithTeamId}}">
-                    {{final.schoolNameWithTeamId | truncate:'35'}}
+                    <span>{{final.schoolNameWithTeamId | truncate:'35'}}</span>
+                    <span ng-if="!final.schoolNameWithTeamId">-</span>
                   </div>
                 </td>
 
                 <td>
                   <div class="text-capitalize">
-                    {{final.result}}
-                  </div>
-                  <div class="text-capitalize" ng-if="!final.result">
-                    -
+                    <span>{{final.result}}</span>
+                    <span ng-if="!final.result">-</span>
                   </div>
                 </td>
                 <td>
                   <div class="text-capitalize">
-                    {{final.time}}
+                    <span>{{final.time}}</span>
+                    <span ng-if="!final.time">-</span>
                   </div>
-                  <div class="text-capitalize " ng-if="!final.time">
-                    -
-                  </div>
-                </td>
-                <td>
-                  <div class="text-capitalize "></div>
                 </td>
               </tr>
             </tbody>
@@ -242,7 +234,7 @@
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              <span> {{semifinal.athleteId.fullName}}</span>
+                              <span>{{semifinal.athleteId.fullName}}</span>
                               <span ng-if="!semifinal.athleteId">-</span>
                             </div>
                           </td>
@@ -273,19 +265,19 @@
                           </td>
                           <td>
                             <div class="text-capitalize " title="{{final.schoolNameWithTeamId}}">
-                              <span>  {{semifinal.schoolNameWithTeamId | truncate:'35'}}</span>
+                              <span>{{semifinal.schoolNameWithTeamId | truncate:'35'}}</span>
                               <span ng-if="!semifinal.schoolNameWithTeamId">-</span>
                             </div>
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              <span> {{semifinal.result}}</span>
+                              <span>{{semifinal.result}}</span>
                               <span ng-if="!semifinal.result">-</span>
                             </div>
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              <span> {{semifinal.time}}</span>
+                              <span>{{semifinal.time}}</span>
                               <span ng-if="!semifinal.time">-</span>
                             </div>
                           </td>
@@ -426,10 +418,8 @@
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              {{semifinal.result}}
-                            </div>
-                            <div class="text-capitalize" ng-if="!semifinal.result">
-                              -
+                              <span> {{semifinal.result}}</span>
+                              <span ng-if="!semifinal.result">-</span>
                             </div>
                           </td>
                           <td>

@@ -1,26 +1,26 @@
 var uploadurl = adminurl + "upload/";
 myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
     var navigation = [{
-            name: "Home",
+        name: "Home",
+        classis: "active",
+        anchor: "home",
+        subnav: [{
+            name: "Subnav1",
             classis: "active",
-            anchor: "home",
-            subnav: [{
-                name: "Subnav1",
-                classis: "active",
-                anchor: "home"
-            }]
-        }, {
-            name: "Form",
-            classis: "active",
-            anchor: "form",
-            subnav: []
-        },
-        {
-            name: "Grid",
-            classis: "active",
-            anchor: "grid",
-            subnav: []
-        }
+            anchor: "home"
+        }]
+    }, {
+        name: "Form",
+        classis: "active",
+        anchor: "form",
+        subnav: []
+    },
+    {
+        name: "Grid",
+        classis: "active",
+        anchor: "grid",
+        subnav: []
+    }
     ];
 
     return {
@@ -98,6 +98,13 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 data: request
             }).then(callback);
         },
+        getSportStandings: function (request, callback) {
+            $http({
+                url: adminurl + 'match/getStandings',
+                method: 'POST',
+                data: request
+            }).then(callback);
+        },
         getSportSpecificRounds: function (request, callback) {
 
             $http({
@@ -109,8 +116,8 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                     var knockout = data.data.data;
                     var sportType = knockout.roundsList[0].match[0].sport.sportslist.sportsListSubCategory.sportsListCategory.name;
                     var sportName = knockout.roundsList[0].match[0].sport.sportslist.name;
-                    console.log(sportType,sportName);
-                    var resultVar = ResultSportInitialization.getResultVariable(sportName,sportType);
+                    console.log(sportType, sportName);
+                    var resultVar = ResultSportInitialization.getResultVariable(sportName, sportType);
                     console.log(resultVar);
                     function sortOpponents(arrToSort, match1, match2, key) {
                         console.log("arrToSort", arrToSort);
@@ -171,9 +178,9 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                                 if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                     match2 = knockout.roundsList[key - 1].match[index * 2 + 1][resultVar.opponentsVar];
                                 }
-                                console.log(match[resultVar.opponentsVar],"resultVar.opponentsVar");
+                                console.log(match[resultVar.opponentsVar], "resultVar.opponentsVar");
                                 match[resultVar.opponentsVar] = sortOpponents(match[resultVar.opponentsVar], match1, match2, key);
-                                console.log(match[resultVar.opponentsVar],"resultVar.opponentsVar");
+                                console.log(match[resultVar.opponentsVar], "resultVar.opponentsVar");
                             });
                         }
                     });
@@ -197,11 +204,25 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
             }).then(callback);
         },
         getSportLeagueKnockoutRounds: function (request, callback) {
-           $http({
-               url: adminurl + 'match/getSportLeagueKnockoutRounds',
-               method: 'POST',
-               data: request
-           }).then(callback);
-       }
+            $http({
+                url: adminurl + 'match/getSportLeagueKnockoutRounds',
+                method: 'POST',
+                data: request
+            }).then(callback);
+        },
+        getOneSportDetail: function (request, callback) {
+            $http({
+                url: adminurl + 'sport/getOne',
+                method: 'POST',
+                data: request
+            }).then(callback);
+        },
+        Boolean: function (str) {
+            if (str == 'true' || str || str === true) {
+                return true;
+            } else {
+                return false;
+            }
+        }
     };
 });
