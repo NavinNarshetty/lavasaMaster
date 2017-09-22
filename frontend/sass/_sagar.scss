@@ -6,6 +6,8 @@ $sport-danger: #da495b !default; //red
 $sport-info: #000072 !default; //lighter-blue
 $sport-base: #1a1a1a !default; //black
 $sport-lightblue:#00aaff !default;
+$sport-grey: #e1e1e1 !default;
+$sport-darkgrey: #757575 !default;
 // COLORS END
 // COMMON CLASSES
 .inline-block{
@@ -475,7 +477,8 @@ $sport-lightblue:#00aaff !default;
 .result-viewall-medalwinners{
   padding: 10px;
   border: 2px solid #b7b7b7;
-  color: #b7b7b7;
+  margin: 20px 0;
+  color: $sport-darkgrey;
 }
 // RESULTS PAGE END
 // DROPDOWN
@@ -553,3 +556,65 @@ $sport-lightblue:#00aaff !default;
     border-radius: 50%;
   }
 }
+
+//VIEW ALL WINNER CARD
+.allmedal-filterlabel{
+  color: $base;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.allmedal-filter {
+    padding: 0 10px;
+}
+.viewallmedal-winnertitle{
+  margin: 0;
+  color: $base;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.viewallmedal-winnerholder{
+  border-top: 1px solid $base;
+  padding: 10px 10px 0;
+}
+.viewall-winnerrow{
+  padding: 5px 0;
+  border-bottom: 1px solid $sport-grey;
+  &:last-child{
+    border-bottom: none;
+  }
+}
+.allmedal-winnercard {
+    padding: 5px;
+}
+.allmedal-medalholder {
+    width: 18px;
+    margin-left: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.allmedal-profilepic {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+}
+.allmedal-studentdetails {
+    width: calc(100% - 100px);
+    padding: 0 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.allmedal-studentname {
+  margin: 0;
+  color: $sport-primary;
+  font-size: 16px;
+  font-weight: 700;
+}
+.allmedal-studentschool {
+  margin: 0;
+  color: $sport-darkgrey;
+  font-size: 12px;
+}
+//VIEW ALL WINNER CARD END

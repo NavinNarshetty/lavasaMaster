@@ -246,7 +246,7 @@ myApp.controller('RacquetScoreCtrl', function($scope, TemplateService, Navigatio
           setShow : true
         }
       })
-      $scope.setDisplay = $scope.match.resultsRacquet.players[0].sets.length - 1;
+      $scope.setDisplay.value = $scope.match.resultsRacquet.players[0].sets.length - 1;
     }
     // ADD SET END
     // REMOVE SET

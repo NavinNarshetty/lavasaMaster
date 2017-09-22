@@ -1,3 +1,30 @@
  @media (max-width: $screen-xs-max) {
      // Mobile
+    //  ATHLETE PROFILE CARD
+    .profileathleteimage-holder{
+      width: 55px;
+      height: 55px;
+    }
+    .profileathlete-cardcontent{
+      width: calc(100% - 70px);
+    }
+    .athletecard-starflag{
+      top: -10px;
+    }
+    .athletecard-starholder{
+      width: 25px;
+    }
+    .athletecard-flagholder{
+      width: 25px;
+    }
+    .profile-bluemedals{
+      width: 15px;
+    }
+    //  ATHLETE PROFILE CARD END
+    .resultsport-topplayer {
+        width: auto;
+        margin-right: 0;
+        float: none;
+    }
+     // Mobile End
  }

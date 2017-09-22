@@ -92,8 +92,6 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
         var tKey = nKey + 1;
         if(n.coach == ""){
           toastr.error("Please enter coach of Team " + tKey, "Enter Details");
-        } else if (n.formation == "") {
-          toastr.error("Please enter formation of Team " + tKey, "Enter Details");
         } else{
           _.each(n.players, function(m, mkey){
             if(m.isPlaying == true){

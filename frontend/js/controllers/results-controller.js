@@ -6,6 +6,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     // VARIABLE INITITALISE
     $scope.showEventFilter = false;
     $scope.defaultEvent = "sfa mumbai 2015-16";
+    $scope.showAllMedalWinner = false;
     // VARIABLE INITITALISE END
 
     // FUNCTIONS
@@ -24,6 +25,15 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       console.log($scope.selectEvent, 'selected event');
     }
     // SELECT CITY FILTER END
+    // VIEW MEDAL WINNER
+    $scope.showMedalWinner = function(){
+      if ($scope.showAllMedalWinner == true) {
+        $scope.showAllMedalWinner = false;
+      } else {
+        $scope.showAllMedalWinner = true;
+      }
+    }
+    // VIEW MEDAL WINNER END
     // FUNCTIONS END
 
     // JSONS
@@ -66,6 +76,121 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       totalPoints: 200
     }];
     // SCHOOL RANKING TABLE END
+
+    // ALL MEDAL WINNERS
+    $scope.medalWinners = [{
+      sport: "Athletics",
+      eventName: "50m",
+      age: "U-6",
+      winners:[
+        {
+          gender: "male",
+          list: [{
+            name: "Anwar Hatela",
+            school: "jamnabai high school",
+            medal: 'gold'
+          },{
+            name: "Dawood Ibrahim",
+            school: "jamnabai high school",
+            medal: 'silver'
+          },{
+            name: "Chota Shakeel",
+            school: "jamnabai high school",
+            medal: 'bronze'
+          }]
+        },{
+          gender: "female",
+          list: [{
+            name: "Anwar Hatela",
+            school: "jamnabai high school",
+            medal: 'gold'
+          },{
+            name: "Dawood Ibrahim",
+            school: "jamnabai high school",
+            medal: 'silver'
+          },{
+            name: "Chota Shakeel",
+            school: "jamnabai high school",
+            medal: 'bronze'
+          }]
+        }
+      ]
+    },{
+      sport: "Athletics",
+      eventName: "100m",
+      age: "U-12",
+      winners:[
+        {
+          gender: "male",
+          list: [{
+            name: "Anwar Hatela",
+            school: "jamnabai high school",
+            medal: 'gold'
+          },{
+            name: "Dawood Ibrahim",
+            school: "jamnabai high school",
+            medal: 'silver'
+          },{
+            name: "Chota Shakeel",
+            school: "jamnabai high school",
+            medal: 'bronze'
+          }]
+        },{
+          gender: "female",
+          list: [{
+            name: "Anwar Hatela",
+            school: "jamnabai high school",
+            medal: 'gold'
+          },{
+            name: "Dawood Ibrahim",
+            school: "jamnabai high school",
+            medal: 'silver'
+          },{
+            name: "Chota Shakeel",
+            school: "jamnabai high school",
+            medal: 'bronze'
+          }]
+        }
+      ]
+    },{
+      sport: "Athletics",
+      eventName: "200m",
+      age: "U-16",
+      winners:[
+        {
+          gender: "male",
+          list: [{
+            name: "Anwar Hatela",
+            school: "jamnabai high school",
+            medal: 'gold'
+          },{
+            name: "Dawood Ibrahim",
+            school: "jamnabai high school",
+            medal: 'silver'
+          },{
+            name: "Chota Shakeel",
+            school: "jamnabai high school",
+            medal: 'bronze'
+          }]
+        },{
+          gender: "female",
+          list: [{
+            name: "Anwar Hatela",
+            school: "jamnabai high school",
+            medal: 'gold'
+          },{
+            name: "Dawood Ibrahim",
+            school: "jamnabai high school",
+            medal: 'silver'
+          },{
+            name: "Chota Shakeel",
+            school: "jamnabai high school",
+            medal: 'bronze'
+          }]
+        }
+      ]
+    }];
+    // ALL MEDAL WINNERS END
     // JSONS END
 
   //

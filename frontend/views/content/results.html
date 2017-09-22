@@ -16,6 +16,7 @@
     <!-- RESULT TITLE SECTION END -->
     <!-- SCHOOL RANKING SECTION  -->
     <div class="result-schoolsection">
+      <button class="btn btn-primary" ng-click="matchCenter()">Match Center</button>
       <div class="result-schooltitle">
         <h3>school ranking table</h3>
       </div>
@@ -23,7 +24,7 @@
         <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam culpa in, inventore similique unde nesciunt odit sint impedit distinctio tenetur dolore maiores omnis alias, veniam quis facere dolores suscipit doloribus.</p>
       </div>
       <!-- RESULT SCHOOL TABLE -->
-      <div class="result-schooltableholder">
+      <div class="result-schooltableholder table-responsive">
         <table class="table table-striped">
           <thead>
             <tr>
@@ -209,7 +210,7 @@
               </div>
             </div>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-5 col-sm-12 col-xs-12">
             <div class="resultsport-player">
               <p class="text-uppercase">Athlete of the season</p>
               <div class="topplayer-holder">
@@ -224,28 +225,28 @@
           </div>
         </div>
         <div class="resultsport-viewmedalwinner">
-          <a class="btn-viewmore">View All Medal Winners</a>
-          <div class="result-viewall-medalwinners">
-            <p>You can also view medal winners by selecting the specific gender, age and event category</p>
+          <a class="btn-viewmore" ng-click="showMedalWinner();">View All Medal Winners</a>
+          <div class="result-viewall-medalwinners" ng-show="showAllMedalWinner">
             <!-- FILTER -->
             <div class="allmedals-filterholder">
+              <p>You can also view medal winners by selecting the specific gender, age and event category</p>
               <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-4 col-xs-6">
                   <div class="allmedal-filter">
-                    <label for="">Gender</label>
+                    <label for="" class="allmedal-filterlabel">Gender</label>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-4 col-xs-6">
                   <div class="allmedal-filter">
-                    <label for="">age</label>
+                    <label for="" class="allmedal-filterlabel">age</label>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-4 col-xs-6">
                   <div class="allmedal-filter">
-                    <label for="">Event</label>
+                    <label for="" class="allmedal-filterlabel">Event</label>
                   </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-3 col-sm-4 col-xs-6">
                   <div class="allmedal-filter">
                     <button class="btn">Apply</button>
                   </div>
@@ -254,18 +255,29 @@
             </div>
             <!-- FILTER END -->
             <div class="viewallmedal-winner">
-              <div class="viewallmedal-winnerholder">
-                <p>UNDer - 50 m</p>
-                <div class="row">
-                  <div class="col-md-4">
-                    <div class="allmedal-winnercard">
-                      <div class="allmedal-medalholder">
-                        <img src="imgm/jmmmmm mkmmmmmmmmmmmmmmfkdemmmm" alt="" class="img-responsive">
-                      </divhifjhfjdfd
+              <!-- MEDAL WINNER -->
+              <div class="viewallmedal-winnerholder" ng-repeat = "medalWinner in medalWinners track by $index">
+                <p class="viewallmedal-winnertitle"><span>{{medalWinner.age}} {{medalWinner.eventName}}</span></p>
+                <div class="viewall-winnerrow" ng-repeat="winnerList in medalWinner.winners track by $index">
+                  <div class="row">
+                    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat = "winner in winnerList.list track by $index">
+                      <div class="allmedal-winnercard">
+                        <div class="allmedal-medalholder">
+                          <img ng-src="{{winner.medal|medalicon:'blue'}}" alt="" class="img-responsive">
+                        </div>
+                        <div class="allmedal-profilepic">
+                          <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
+                        </div>
+                        <div class="allmedal-studentdetails">
+                          <p class="allmedal-studentname">{{winner.name}}</p>
+                          <p class="allmedal-studentschool">{{winner.school}}</p>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+              <!-- MEDAL WINNER END -->
             </div>
           </div>
         </div>

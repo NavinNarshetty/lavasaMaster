@@ -748,7 +748,7 @@ $sport-table-grey:#efeeee !default;
 }
 
 .knockout-cardholder {
-  min-height: 160px; // box-shadow: 0 0 10px $sport-grey-year; 
+  min-height: 160px; // box-shadow: 0 0 10px $sport-grey-year;
   border: 1px solid #c6c6c6;
   margin-bottom: 15px;
   position: relative;
@@ -978,13 +978,26 @@ $sport-table-grey:#efeeee !default;
 // MATCH CENTER MODAL
 // MATCH CENTER
 .matchcenter-modal {
-  // color: red;
+  .modal-content{
+    border-radius: 0;
+  }
   .matchwinner-title {
     font-size: 16px;
     font-weight: 700;
   }
   .modal-header {
     padding: 0px;
+  }
+  .matchcenter-sporticon{
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    width: 65px;
+  }
+  .matchwinner {
+    position: absolute;
+    top: 0;
+    left: 90px;
   }
   .combatscore-page {
     min-height: calc(100vh - 60px);
@@ -1012,8 +1025,11 @@ $sport-table-grey:#efeeee !default;
     width: 60px;
     height: 60px;
     padding: 5px 10px;
-    margin: 0 auto;
+    border: none;
+    margin: 0 10px;
+    background-color: #e1e1e1;
     font-size: 24px;
+    font-weight: 700;
     text-align: center;
   }
   .score-buttons {
@@ -1080,10 +1096,14 @@ $sport-table-grey:#efeeee !default;
   }
   .matchstart-header {
     padding: 10px 15px;
+    padding-left: 90px;
     background-color: $brand-primary;
     color: #fff;
     font-size: 16px;
     text-transform: uppercase;
+  }
+  .matchcenter-heading{
+    font-weight: 700;
   }
   .matchplayer-card {
     padding: 10px;

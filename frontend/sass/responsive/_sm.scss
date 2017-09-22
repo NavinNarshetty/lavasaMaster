@@ -1,3 +1,17 @@
  @media (max-width: $screen-sm-max) {
      // Tablet
+    //  RESULTS PAGE
+    .resultsport-player {
+      margin: 30px 0 10px;
+    }
+    .result-dropdown{
+      display: block;
+    }
+    .resultsport-topplayer {
+        width: 48%;
+        margin-right: 10px;
+        float: left;
+    }
+    //  RESULTS PAGE END
+    // Tablet End
  }

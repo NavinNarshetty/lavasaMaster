@@ -7,7 +7,8 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     $scope.data = [1, 2, 3, 4, 5, 6, 7, 8];
     // MODAL
     var modal;
-    $scope.matchCenter = function () {
+    $scope.matchCenter = function (card) {
+      $scope.currentMatch = card;
         modal = $uibModal.open({
             animation: true,
             scope: $scope,
@@ -17,6 +18,7 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
             size: 'lg',
             windowClass: 'matchcenter-modal'
         })
+        console.log($scope.currentMatch, 'current');
     }
     // MODAL END
     $scope.oneAtATime = true;
