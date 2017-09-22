@@ -28,7 +28,8 @@ mongoose = require('mongoose');
 // global["database"] = "sfa1";
 // global["database"] = "live-sfa";
 // global["database"] = "test-sfa";
-global["database"] = "sfa";
+// global["database"] = "sfa";
+global["database"] = "migration";
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/' + database, function (err) {
     if (err) {
