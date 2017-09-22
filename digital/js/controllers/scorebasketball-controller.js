@@ -9,6 +9,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   $scope.matchId = $stateParams.id;
   var teamSelectionModal;
   var playerScoreModal;
+  var penaltyShootoutModal;
   var resultVar;
 
   var initPage = function () {
@@ -164,14 +165,32 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
   // PLAYER SCORE INCREMENT
   $scope.scorePlayerPoints = function (player, pointVar, flag) {
+    var isArray = Array.isArray(player.playerPoints[pointVar]);
+    console.log(player, pointVar, flag);
     if (flag == '+') {
-      player.playerPoints[pointVar].push({
-        time: ''
-      });
+      if (isArray) {
+        player.playerPoints[pointVar].push({
+          time: ''
+        });
+      } else {
+        if (!player.playerPoints[pointVar]) {
+          player.playerPoints[pointVar] = 1;
+        } else {
+          ++player.playerPoints[pointVar];
+        }
+      }
     } else {
-      player.playerPoints[pointVar].pop();
+      if (isArray) {
+        player.playerPoints[pointVar].pop();
+      } else {
+        if (!player.playerPoints[pointVar]) {
+
+        } else {
+          --player.playerPoints[pointVar];
+        }
+      }
+
     }
-    console.log('inPP');
   };
   // PLAYER SCORE INCREMENT END
 
@@ -183,14 +202,14 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
     var playingPlayerIndex = _.findIndex($scope.match[resultVar].teams[$scope.selectedTeamIndex].players, ['player', playingPlayer.player]);
     if (!playingPlayer.isPlaying) {
       if (!_.isEmpty(substitutePlayer)) {
-        if ($scope.inOutTime.time != '') {
+        if ($scope.inOutTime && $scope.inOutTime.time && $scope.inOutTime.time != '') {
           var substitutePlayerIndex = _.findIndex($scope.match[resultVar].teams[$scope.selectedTeamIndex].players, ['player', substitutePlayer.player]);
           playingPlayer.isPlaying = false;
           substitutePlayer.isPlaying = true;
-          var outTimeObj=_.cloneDeep($scope.inOutTime);
-          outTimeObj.substitute=substitutePlayer.player;
-          var inTimeObj=_.cloneDeep($scope.inOutTime);
-          inTimeObj.substitute=playingPlayer.player;
+          var outTimeObj = _.cloneDeep($scope.inOutTime);
+          var inTimeObj = _.cloneDeep($scope.inOutTime);
+          outTimeObj.substitute = substitutePlayer.player;
+          inTimeObj.substitute = playingPlayer.player;
           playingPlayer.playerPoints.out.push(outTimeObj);
           substitutePlayer.playerPoints.in.push(inTimeObj);
 
@@ -198,7 +217,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
           $scope.match[resultVar].teams[$scope.selectedTeamIndex].players[substitutePlayerIndex] = substitutePlayer;
           playerScoreModal.close();
         } else {
-          toastr.error("Please Enter Out Time");
+          toastr.error("Please Enter, OUT Time");
         }
       } else {
         toastr.error("SUBSTITUTE is required");
@@ -245,19 +264,16 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
   $scope.modalPenaltyShootout = function (matchPenalty) {
     // var matchPenalty;
-    $scope.matchPenalty = matchPenalty;
-    _.each($scope.matchPenalty.teams, function (n) {
-      if (!n.teamResults.penaltyPoints) {
-        n.teamResults.penaltyPoints = "";
-      }
-    });
-    $rootScope.modalInstance = $uibModal.open({
+    console.log(matchPenalty);
+    $scope.matchPenalty = _.cloneDeep(matchPenalty);
+
+    penaltyShootoutModal = $uibModal.open({
       animation: true,
       scope: $scope,
       backdrop: 'static',
       keyboard: false,
       size: 'lg',
-      templateUrl: 'views/modal/penaltyshootouts.html',
+      templateUrl: 'views/modal/penaltyshootoutsteam.html',
       windowClass: 'penaltyshootouts-modal'
     })
   }
@@ -267,6 +283,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   //1-save AND getONE 
   //2-just save i.e. for autoSave
   //3-complete and save
+  //
   $scope.saveMatch = function (match, flag) {
     if (flag == '3') {
       console.log(match);
@@ -286,7 +303,6 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         toastr.error('Please upload atleast one match photo');
         return;
       }
-
     };
     NavigationService.saveMatchPp(match, $scope.matchData.resultVar, function (data) {
       if (data.value == true) {
@@ -307,6 +323,13 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       }
     });
   };
+
+
+  $scope.savePenaltyScore=function(result){
+    $scope.match[resultVar]=result;
+    $scope.saveMatch($scope.match,'2');
+    penaltyShootoutModal.close();
+  }
 
 
   // AUTO SAVE

@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <h4 class="modal-title">Penalty Shootouts</h4>
+</div>
+<div class="modal-body">
+    <div class="penaltyshootouts-content">
+        <div class="row">
+            <div class="col-md-6 col-sm-6" ng-repeat="team in matchPenalty.teams track by $index" ng-init="teamIndex = $index">
+                <div class="teamcard mainteamcard">
+                    <div class="teamcard-header text-uppercase">
+                        <p>{{match.teams[$index].schoolName}}</p>
+                        <p>Team ID: <span> {{match.teams[$index].teamId}} </span></p>
+                    </div>
+                </div>
+                <div class="teamplaying">
+                    <div class="teamplaying-title">
+                        <p class="teamplaying-nametitle"><span class="pull-right">Jersey No</span><span>Players</span></p>
+                        <p class="inline-block mlr-10">Point</p>
+                    </div>
+                    <div class="team-playing" ng-repeat="player in team.players track by $index">
+                        <!-- <p ng-if="$index==0">Players</p> -->
+                        <div class="teamplayer" ng-if="player.isPlaying==true">
+                            <div class="penaltyshoot-player">
+                                <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[teamIndex].studentTeam[$index].studentId.firstName}} {{match.teams[teamIndex].studentTeam[$index].studentId.surname}}</span></p>
+                            </div>
+                            <!-- PENALTY POINTS -->
+                            <div class="relate penalty-point">
+                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scorePlayerPoints(player,'penaltyPoint','-');"><i class="fa fa-minus" ></i></button>
+                                <input type="number" ng-model="player.playerPoints.penaltyPoint" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
+                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scorePlayerPoints(player,'penaltyPoint','+');"><i class="fa fa-plus"></i></button>
+                            </div>
+                            <!-- PENALTY POINTS -->
+                        </div>
+                    </div>
+                </div>
+                <div class="team-penaltypoints">
+                  <div class="select-teamcoach">
+                      <label for="{{team.teamId}}.coach">Final Penalty Points</label>
+                      <input type="number" id="{{team.teamId}}.coach" placeholder="0" ng-model="team.teamResults.penaltyPoints" class="form-control" required/>
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <div class="scoreplayer-save">
+        <button class="btn btn-green-outline text-center" type="button" ng-click="savePenaltyScore(matchPenalty)">Done</button>
+        <button class="btn btn-green-outline text-center" type="button" ng-click="$dismiss()">Cancel</button>
+    </div>
+</div>
+<!-- <div class="">
+<pre>{{matchPenalty.teams|json}}</pre>
+</div> -->

@@ -312,7 +312,7 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                     }
                                     break;
                                 case 'Aquatics Sports':
-                                    $state.go('time-trial', {
+                                    $state.go('knockout-team', {
                                         id: $scope.drawDetails.sport,
                                         name: $scope.nameOfSport
                                     });

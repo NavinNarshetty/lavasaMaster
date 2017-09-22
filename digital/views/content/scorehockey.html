@@ -80,9 +80,9 @@
                             <!-- penaltyPoints DATA POINT -->
                             <div class="relate teamscore-point mtb-10">
                                 <label class="teamdatapoint-name">Penalties</label>
-                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreTeamPoints(team,'penaltyPoints','-');"><i class="fa fa-minus"></i></button>
-                                <input type="number" placeholder="0" ng-model="team.teamResults.penaltyPoints" min="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
-                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreTeamPoints(team,'penaltyPoints','+');"><i class="fa fa-plus"></i></button>
+                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="scoreTeamPoints(team,'penalty','-');"><i class="fa fa-minus"></i></button>
+                                <input type="number" placeholder="0" ng-model="team.teamResults.penalty" min="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
+                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="scoreTeamPoints(team,'penalty','+');"><i class="fa fa-plus"></i></button>
                             </div>
                             <!-- penaltyPoints DATA POINT -->
                             <!-- penaltyCorners DATA POINT -->
@@ -155,11 +155,15 @@
                     </div>
                     <div class="relate setpoint-element" >
                       <label for="player1score" class="text-uppercase" >Half Time </label>
-                      <input type="number" ng-model="team.halfPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control">
+                      <input type="number" placeholder="0" ng-model="team.halfPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control">
                     </div>
                     <div class="relate setpoint-element" >
                       <label for="player1score" class="text-uppercase" >Full Time </label>
-                      <input type="number" ng-model="team.finalPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control">
+                      <input type="number" placeholder="0" ng-model="team.finalPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control">
+                    </div>
+                    <div class="relate setpoint-element" ng-if="match.resultHockey.teams[0] && match.resultHockey.teams[0].teamResults && match.resultHockey.teams[0].teamResults.penaltyPoints && match.resultHockey.teams[1] && match.resultHockey.teams[1].teamResults && match.resultHockey.teams[1].teamResults.penaltyPoints && match.resultHockey.teams[0].teamResults.penaltyPoints !='' && match.resultHockey.teams[1].teamResults.penaltyPoints !=''">
+                      <label for="player1score" class="text-uppercase" >Penalty Points </label>
+                      <input type="number" ng-model="team.teamResults.penaltyPoints" id="player1score" min="0" placeholder="0" max="99" class="score-number display-inline form-control">
                     </div>
                   </div>
                 </div>
@@ -201,11 +205,11 @@
                 <!-- RESULT SELECTS -->
                 <div class="combatscore-selects">
                     <div class="row">
-                        <div class="col-md-offset-2 col-md-4 col-sm-6">
+                        <div class="col-md-offset-2 col-md-4 col-sm-6"> 
                             <div class="match-selectwinner text-left">
                                 <label for="matchWinnerPlayer" class="text-uppercase">Select Winner</label>
                                 <!-- UI SELECT -->
-                                <ui-select id="matchWinnerPlayer" ng-model="match.resultsCombat.winner.player" theme="bootstrap">
+                                <ui-select id="matchWinnerPlayer" ng-model="match.resultHockey.winner.player" theme="bootstrap">
                                     <ui-select-match placeholder="Select Winner"> {{$select.selected.schoolName}}</ui-select-match>
                                     <ui-select-choices repeat="team._id as team in match.teams | filter: $select.search">
                                         <p class="opponentsingle-selector">{{team.schoolName}}</p>
@@ -217,7 +221,7 @@
                         <div class="col-md-4 col-sm-6">
                           <div class="text-left">
                             <label for="">For Penalties</label>
-                            <button class="btn btn-scoring btn-green-outline" ng-click="modalPenaltyShootout()">Penalty Shootouts</button>
+                            <button class="btn btn-scoring btn-green-outline" ng-click="modalPenaltyShootout(match.resultHockey)">Penalty Shootouts</button>
                           </div>
                         </div>
                     </div>

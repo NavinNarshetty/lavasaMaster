@@ -114,7 +114,8 @@ myApp.factory('ResultSportInitialization', function () {
                     format.teamResults.finalPoints = "";
                     format.teamResults.shotsOnGoal = "";
                     format.teamResults.totalShots = "";
-                    format.teamResults.penaltyPoint = "";
+                    format.teamResults.penalty = "";
+                    format.teamResults.penaltyPoints = "";
                     format.teamResults.penaltyCorners = "";
                     format.teamResults.penaltyStroke = "";
                     format.teamResults.saves = "";
@@ -143,7 +144,8 @@ myApp.factory('ResultSportInitialization', function () {
                     format.teamResults.finalGoalPoints = "";
                     format.teamResults.shotsOnGoal = "";
                     format.teamResults.totalShots = "";
-                    format.teamResults.penaltyPoint = "";
+                    format.teamResults.penalty = "";                    
+                    format.teamResults.penaltyPoints = "";
                     format.teamResults.penalty = "";
                     format.teamResults.saves = "";
                     break;
