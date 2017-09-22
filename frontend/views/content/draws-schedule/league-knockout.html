@@ -65,14 +65,14 @@
                 <div class="text-capitalize" title="{{data.opponentsTeam[0].schoolName}}">
                   <span class="knockout-dot-live v-mid" ng-if="data.opponentsTeam[0].isWinner"><i class="fa fa-circle"></i></span>
                   <span>{{data.opponentsTeam[0].teamId | filterConcate : data.opponentsTeam[0].schoolName |  truncate:'30' }}</span>
-                  <span ng-if="data.opponentsTeam[0].teamId === undefined">-</span>
+                  <span ng-if="data.opponentsTeam[0].teamId === undefined">TBD</span>
                 </div>
               </td>
               <td>
                 <div class="text-capitalize">
                   <span class="knockout-dot-live v-mid" ng-if="data.opponentsTeam[1].isWinner"><i class="fa fa-circle"></i></span>
                   <span title="{{data.opponentsTeam[1].schoolName}}">{{data.opponentsTeam[1].teamId | filterConcate : data.opponentsTeam[1].schoolName |  truncate:'30' }}</span>
-                  <span ng-if="data.opponentsTeam[1].teamId === undefined">-</span>
+                  <span ng-if="data.opponentsTeam[1].teamId === undefined">TBD</span>
                 </div>
               </td>
               <td>
@@ -84,8 +84,9 @@
                       <span class="knockout-dot-live v-mid"><i class="fa fa-circle"></i></span>
                   <span class="v-mid">Live</span>
                   </span>
-                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.isNoMatch">-</span>
-                  <span class="display-block" ng-if="data.status === 'IsCompleted' && !data.isNoMatch">Match Center</span>
+                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.walkover">Won by walkover</span>
+                  <span class="display-block" ng-if="data.status === 'IsCompleted' && data.isNoMatch">No match</span>
+                  <span class="display-block" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover">Match Center</span>
                 </div>
               </td>
               <td>
@@ -330,14 +331,15 @@
                             <span class="knockout-dot-live v-mid"><i class="fa fa-circle"></i></span>
                             <span class="v-mid">Live</span>
                             </span>
-                            <span class="display-block" ng-if="content.status === 'IsCompleted' && content.isNoMatch">-</span>
-                            <span class="display-block" ng-if="content.status === 'IsCompleted' && !content.isNoMatch">Match Center</span>
+                            <span class="display-block" ng-if="content.status === 'IsCompleted' && content.walkover">Won by walkover</span>
+                            <span class="display-block" ng-if="content.status === 'IsCompleted' && content.isNoMatch">No Match</span>
+                            <span class="display-block" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover">Match Center</span>
                           </div>
                         </td>
                         <td>
-                          <div class="text-capitalize">
-                            <a href="">
-                        <img src="img/sf-play.png" alt="">
+                          <div class="text-capitalize ">
+                            <a href=" ">
+                        <img src="img/sf-play.png " alt=" ">
                       </a>
                           </div>
                         </td>
@@ -349,7 +351,8 @@
               <!--MATCHES TABLE END-->
             </div>
           </uib-accordion>
-          <div class="league-knockout-viewmore text-right" ng-click="showMoreData(true,'match');" ng-if="!showMatch && matches.length>8">
+          <div class="league-knockout-viewmore text-right " ng-click="showMoreData(true, 'match'); " ng-if="!showMatch
+                              && matches.length>8">
             <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
           </div>
           <div class="league-knockout-viewmore text-right" ng-click="showMoreData(false,'match');" ng-if="showMatch">
