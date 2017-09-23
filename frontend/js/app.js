@@ -302,7 +302,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'qfFinalCtrl'
         })
         .state('swiss-league', {
-            url: "/swiss-league",
+            url: "/swiss-league/:id",
             templateUrl: tempateURL,
             controller: 'swissLeagueCtrl'
         })
