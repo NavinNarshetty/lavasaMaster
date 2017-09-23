@@ -101,7 +101,6 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
     if (bool) {
       $scope.roundsList[index].limitVale = 50000;
       $scope.roundsList[index].showMore = false;
-
     } else {
       $scope.roundsList[index].limitVale = 8;
       $scope.roundsList[index].showMore = true;
