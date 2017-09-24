@@ -103,29 +103,6 @@ myApp.controller('DetailHeatCtrl', function ($scope, TemplateService, Navigation
   }
   // SAVE-END
 
-
-  $scope.heat = [{
-    laneno: 1,
-    sfaId: 1234,
-    name: "shiva",
-    school: "joseph",
-    time: 10,
-    result: "Q"
-  }, {
-    laneno: 1,
-    sfaId: 1234,
-    name: "shiva",
-    school: "joseph",
-    time: 10,
-    result: "Q"
-  }, {
-    laneno: 1,
-    sfaId: 1234,
-    name: "shiva",
-    school: "joseph",
-    time: 10,
-    result: "Q"
-  }]
   // EDIT
   $scope.editHeat = function (index) {
     console.log(index)

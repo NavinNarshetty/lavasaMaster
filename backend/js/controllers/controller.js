@@ -4249,10 +4249,12 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             });
             if ($scope.form.sportslist.sportsListSubCategory.isTeam) {
                 console.log("in tema");
+                // TEAM SPORTS PAGE
                 $state.go('format-teamtable', {
                     type: data.sportslist.drawFormat.name
                 })
             } else {
+                // REMANING SPORT PAGE
                 $state.go('format-table', {
                     type: data.sportslist.drawFormat.name
                 });
@@ -4262,28 +4264,28 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             $scope.viewTable(data);
         }
 
-        $scope.specificFormat = function (draw, matchid, team) {
-            console.log("click")
-            console.log(team)
-            if (team == false) {
-                console.log("team fasle")
-                if (draw == "Combat Sports" || "Racquet Sports") {
-                    $state.go('detailplayer', {
-                        id: matchid
-                    });
-                } else {
-                    toastr.error("Something went wrong")
-                }
-            } else if (team == true) {
-                if (draw == "Combat Sports" || "Racquet Sports") {
-                    $state.go('detailteam', {
-                        id: matchid
-                    });
-                } else {
-                    toastr.error("team error")
-                }
-            }
-        }
+        // $scope.specificFormat = function (draw, matchid, team) {
+        //     console.log("click")
+        //     console.log(team)
+        //     if (team == false) {
+        //         console.log("team fasle")
+        //         if (draw == "Combat Sports" || "Racquet Sports") {
+        //             $state.go('detailplayer', {
+        //                 id: matchid
+        //             });
+        //         } else {
+        //             toastr.error("Something went wrong")
+        //         }
+        //     } else if (team == true) {
+        //         if (draw == "Combat Sports" || "Racquet Sports") {
+        //             $state.go('detailteam', {
+        //                 id: matchid
+        //             });
+        //         } else {
+        //             toastr.error("team error")
+        //         }
+        //     }
+        // }
 
 
         $scope.genderList = [];
