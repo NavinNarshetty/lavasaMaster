@@ -416,7 +416,7 @@ var model = {
                         } else {
                             finalData.resultKabaddi = found.resultKabaddi;
                         }
-                         if (_.isEmpty(found.resultWaterPolo)) {
+                        if (_.isEmpty(found.resultWaterPolo)) {
                             finalData.resultWaterPolo = "";
                         } else {
                             finalData.resultWaterPolo = found.resultWaterPolo;
@@ -720,10 +720,12 @@ var model = {
 
                 });
             },
-            function(sendObj, callback){
+            function (sendObj, callback) {
                 console.log(sendObj, "----------------------sendObj---------------");
-                Match.findOne({"sport":sendObj.sport}).exec(function(err,data){
-                    console.log(data,"---------------matchFound-------------------");
+                Match.findOne({
+                    "sport": sendObj.sport
+                }).exec(function (err, data) {
+                    console.log(data, "---------------matchFound-------------------");
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(data)) {
@@ -2599,6 +2601,7 @@ var model = {
     },
 
     saveSwissLeague: function (importData, data, callback) {
+        var countError;
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
@@ -5005,7 +5008,7 @@ var model = {
                                             opponentsTeam: lostPlayer
                                         }
                                     };
-                                }else {
+                                } else {
                                     callback(null, data.found);
                                 }
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam) && !_.isEmpty(found[1].opponentsTeam)) {
@@ -5114,7 +5117,7 @@ var model = {
                                                 opponentsTeam: lostPlayer
                                             }
                                         };
-                                    }else {
+                                    } else {
                                         callback(null, data.found);
                                     }
                                 } else {
@@ -5202,7 +5205,7 @@ var model = {
                                             opponentsTeam: winPlayer
                                         }
                                     };
-                                }else if (data.found.resultWaterPolo && data.found.resultWaterPolo.status == 'IsCompleted' && data.found.resultWaterPolo.isNoMatch == false) {
+                                } else if (data.found.resultWaterPolo && data.found.resultWaterPolo.status == 'IsCompleted' && data.found.resultWaterPolo.isNoMatch == false) {
                                     winPlayer.push(data.found.resultWaterPolo.winner.player);
                                     console.log("player", winPlayer);
                                     updateObj = {
@@ -5250,7 +5253,7 @@ var model = {
                                                 opponentsTeam: winPlayer
                                             }
                                         };
-                                    }else if (data.found.resultWaterPolo && data.found.resultWaterPolo.status == "IsCompleted" && data.found.resultWaterPolo.isNoMatch == false) {
+                                    } else if (data.found.resultWaterPolo && data.found.resultWaterPolo.status == "IsCompleted" && data.found.resultWaterPolo.isNoMatch == false) {
                                         winPlayer.push(data.found.resultWaterPolo.winner.player);
                                         console.log("player", winPlayer);
                                         updateObj = {
