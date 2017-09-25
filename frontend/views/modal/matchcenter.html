@@ -10,6 +10,7 @@
         </div>
         <p class="m-clear"><span>{{currentMatch.sport.sportslist.sportsListSubCategory.name}}</span> - <span>{{currentMatch.sport.ageGroup.name}}</span> <span>{{currentMatch.sport.gender}}</span> <span>{{currentMatch.round}}</span></p>
       </div>
+      <p>volleyball u12 male</p>
 
     </div>
   </div>
@@ -23,11 +24,11 @@
         <div class="racquet-setscore">
           <div class="scoring-set form-group" ng-repeat="player in currentMatch.resultsRacquet.players track by $index">
             <div class="matchplayer-image" title="{{currentMatch.opponentsSingle[$index].athleteId.fullName}} | {{currentMatch.opponentsSingle[$index].athleteId.sfaId}}">
-              <img ng-src="{{currentMatch.opponentsSingle[$index].athleteId.photograph|serverimage}}" src="img/dishapatani1.jpg" alt="{{currentMatch.opponentsSingle[$index].athleteId.fullName}}"
+              <img ng-src="{{currentMatch.opponentsSingle[$index].athleteId.photograph|serverimage}}" alt="{{currentMatch.opponentsSingle[$index].athleteId.fullName}}"
                 class="img-responsive">
             </div>
             <div class="relate setpoint-element" ng-repeat="set in player.sets track by $index">
-              <label for="player1score" class="text-uppercase">SET <span>{{$index+1}}</span></label>
+              <label class="text-uppercase setpointlabel">SET <span>{{$index+1}}</span></label>
               <input type="number" ng-model="set.point" class="score-number display-inline form-control" readonly>
             </div>
           </div>
@@ -35,53 +36,26 @@
       </div>
       <div class="row">
         <!-- PLAYER CARDS -->
-        <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="card in data | limitTo:2 track by $index">
+        <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="player in currentMatch.resultsRacquet.players track by $index">
           <div class="combatscore-player">
             <div class="matchplayer-card {{player.player}}">
               <div class="matchplayer-playerid">
-                <p>SFA ID: <span>{{player.sfaId}}123456789123</span></p>
+                <p>SFA ID: <span>{{currentMatch.opponentsSingle[$index].athleteId.sfaId}}</span></p>
               </div>
               <div class="matchplayer-image">
-                <img ng-src="img/dishapatani1.jpg" alt="{player.firstName}} {{player.surname}}" class="img-responsive">
+                <img ng-src="{{currentMatch.opponentsSingle[$index].athleteId.photograph | serverimage}}" alt="{{currentMatch.opponentsSingle[$index].athleteId.fullName}}" class="img-responsive">
               </div>
               <div class="matchplayer-details">
-                <p class="matchplayer-name"><span> {{player.firstName}}dishapatani1 </span> <span> {{player.surname}}dishapatani1 </span></p>
-                <p class="matchplayer-school">{{player.school.name | truncate:'22'}} Jamnabai Narsee School</p>
+                <p class="matchplayer-name"><span> {{currentMatch.opponentsSingle[$index].athleteId.fullName}}</span></p>
+                <p class="matchplayer-school">{{currentMatch.opponentsSingle[$index].athleteId.school.name | truncate:'22'}}</p>
               </div>
             </div>
           </div>
           <!-- PLAYER RESULT SET END -->
-          <div class="row" ng-repeat="d in data | limitTo:3 track by $index" hidden>
-            <div class="">
-              <h4>Set {{$index+1}}</h4>
-              <div class="col-md-4 col-sm-4 col-xs-6">
-                <label for="">Ace</label>
-                <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-              </div>
-              <div class="col-md-4 col-sm-4 col-xs-6">
-                <label for="">Winner</label>
-                <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-              </div>
-              <div class="col-md-4 col-sm-4 col-xs-6">
-                <label>Unforced Error</label>
-                <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-              </div>
-              <div class="col-md-4 col-sm-4 col-xs-6">
-                <label>Unforced Error</label>
-                <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-              </div>
-              <div class="col-md-4 col-sm-4 col-xs-6">
-                <label>Unforced Error</label>
-                <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-              </div>
-            </div>
-
-          </div>
-          <uib-accordion close-others="oneAtATime">
-            <div uib-accordion-group class="panel-default" is-open="s.open" ng-repeat="d in data | limitTo:3 track by $index">
+          <uib-accordion close-others="oneAtATime" class="hello">
+            <div uib-accordion-group class="panel-default" is-open="set.open" ng-repeat = "set in player.sets track by $index">
               <uib-accordion-heading class="clearfix">
-                <!-- <a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a> -->
-                <span class="pull-right edit-team-button">Final Point:</span>
+                <span class="pull-right fa " ng-class="{'fa-angle-up': set.open, 'fa-angle-down': !set.open}"></span>
                 <a href="">
                   <p class="d-fjalla-one text-uppercase sport-color-primary m-clear">
                     <span>Set {{$index + 1}}</span> <span class="teamplayer-fullname"></span>
@@ -90,26 +64,25 @@
               </uib-accordion-heading>
               <div class="row">
                 <div class="">
-                  <!-- <h4>Set {{$index+1}}</h4> -->
                   <div class="col-md-4 col-sm-4 col-xs-6">
-                    <label for="">Ace</label>
-                    <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                    <label class="text-uppercase setpoint-label">Ace</label>
+                    <input type="number" ng-model="set.ace" class="display-inline form-control" readonly placeholder="0">
                   </div>
                   <div class="col-md-4 col-sm-4 col-xs-6">
-                    <label for="">Winner</label>
-                    <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                    <label class="text-uppercase setpoint-label">Winner</label>
+                    <input type="number" ng-model="set.winner" class="display-inline form-control" readonly placeholder="0">
                   </div>
                   <div class="col-md-4 col-sm-4 col-xs-6">
-                    <label>Unforced Error</label>
-                    <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                    <label class="text-uppercase setpoint-label">Unforced Error</label>
+                    <input type="number" ng-model="set.unforcedError" class="display-inline form-control" readonly placeholder="0">
                   </div>
                   <div class="col-md-4 col-sm-4 col-xs-6">
-                    <label>Unforced Error</label>
-                    <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                    <label class="text-uppercase setpoint-label">Service Error</label>
+                    <input type="number" ng-model="set.serviceError" class="display-inline form-control" readonly placeholder="0">
                   </div>
                   <div class="col-md-4 col-sm-4 col-xs-6">
-                    <label>Unforced Error</label>
-                    <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+                    <label class="text-uppercase setpoint-label">Double Faults</label>
+                    <input type="number" ng-model="set.doubleFaults" class="display-inline form-control" readonly placeholder="0">
                   </div>
                 </div>
 

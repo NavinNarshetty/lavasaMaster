@@ -1123,11 +1123,32 @@ $sport-table-grey:#efeeee !default;
     right: 0;
     padding: 5px;
     font-size: 12px;
+    color: $sport-dark-grey;
+  }
+  .modal-container{
+    padding: 0;
+  }
+  .hello{
+    .panel-default > .panel-heading{
+      border-bottom: 1px solid #ddd;
+      background-color: transparent;
+    }
+    .panel-group .panel{
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .setpoint-label{
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .panel-default > .panel-heading + .panel-collapse > .panel-body{
+      border: none;
+    }
   }
   .matchplayer-image {
     width: 60px;
     height: 60px;
-    border: 1px solid red;
     border-radius: 100%;
     margin: 0 10px;
     display: inline-block;
@@ -1140,6 +1161,8 @@ $sport-table-grey:#efeeee !default;
     display: inline-block;
     vertical-align: middle;
     .matchplayer-name {
+      margin: 0;
+      color: $sport-primary;
       font-size: 16px;
       font-weight: 700;
     }
@@ -1216,11 +1239,16 @@ $sport-table-grey:#efeeee !default;
     margin: 0px 10px;
   }
   .racquet-setscore {
-    margin: 20px 0;
+    margin: 0;
     text-align: center;
     .scoring-set {
       border: none;
       margin: 0px;
+      &:last-child{
+        .setpointlabel{
+          display: none;
+        }
+      }
     }
   }
   .setpoint-element {

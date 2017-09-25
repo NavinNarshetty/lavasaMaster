@@ -43,11 +43,19 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
       if (card && card[$scope.resultVar.resultVar] && card[$scope.resultVar.resultVar].status == 'IsCompleted') {
         toastr.warning("This match has already been scored.", 'Scoring Completed');
       } else {
-        $state.go("matchteam", {
-          drawFormat: $stateParams.drawFormat,
-          sport: $stateParams.id,
-          id: card.matchId
-        });
+        if (card.sport.sportslist.name == 'Kho Kho' || card.sport.sportslist.name == 'Throwball') {
+          $state.go("matchstart",{
+            drawFormat: $stateParams.drawFormat,
+            sport: $stateParams.id,
+            id: card.matchId
+          });
+        } else {
+          $state.go("matchteam", {
+            drawFormat: $stateParams.drawFormat,
+            sport: $stateParams.id,
+            id: card.matchId
+          });
+        }
       }
     }
   }

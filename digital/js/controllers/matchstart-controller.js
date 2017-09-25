@@ -45,6 +45,10 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                           _.each($scope.matchDetails.players, function(n, key) {
                               $scope.formData.players[key] = {
                                   "player": n._id,
+                                  "firstName": n.firstName,
+                                  "surname": n.surname,
+                                  "fullName": n.firstName + " " + n.surname,
+                                  "sfaId": n.sfaId,
                                   "noShow": false,
                                   "walkover": false,
                                   "sets": [{
@@ -98,6 +102,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                                   "firstName": m.studentId.firstName,
                                   "surname": m.studentId.surname,
                                   "fullName": m.studentId.firstName + " " + m.studentId.surname,
+                                  "sfaId": m.sfaId,
                                   "isPlaying": false,
                                   "jerseyNo": "",
                               }
@@ -193,6 +198,16 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                                       doubleFaults: ""
                                   }]
                               }
+                              _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
+                                  $scope.formData.teams[key].players[mkey] = {
+                                      "player": m.studentId._id,
+                                      "firstName": m.studentId.firstName,
+                                      "surname": m.studentId.surname,
+                                      "fullName": m.studentId.firstName + " " + m.studentId.surname,
+                                      "sfaId": m.studentId.sfaId,
+                                      "isPlaying": false,
+                                  }
+                              })
                           })
                       } else{
                         $scope.formData = $scope.matchDetails.resultsRacquet;
@@ -246,6 +261,7 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
                                       "firstName": m.studentId.firstName,
                                       "surname": m.studentId.surname,
                                       "fullName": m.studentId.firstName + " " + m.studentId.surname,
+                                      "sfaId": m.studentId.sfaId,
                                       "isPlaying": false,
                                       "jerseyNo": "",
                                   }

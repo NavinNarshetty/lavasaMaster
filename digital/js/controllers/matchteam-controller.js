@@ -83,6 +83,10 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                     _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
                                         $scope.formData.teams[key].players[mkey] = {
                                             "player": m.studentId._id,
+                                            "firstName": m.studentId.firstName,
+                                            "surname": m.studentId.surname,
+                                            "fullName": m.studentId.firstName + " " + m.studentId.surname,
+                                            "sfaId": m.studentId.sfaId,
                                             "isPlaying": false,
                                             "jerseyNo": "",
                                             "playerPoints": {
@@ -142,6 +146,10 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                     _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {
                                         $scope.formData.teams[key].players[mkey] = {
                                             "player": m.studentId._id,
+                                            "firstName": m.studentId.firstName,
+                                            "surname": m.studentId.surname,
+                                            "fullName": m.studentId.firstName + " " + m.studentId.surname,
+                                            "sfaId": m.studentId.sfaId,
                                             "isPlaying": false,
                                             "jerseyNo": "",
                                             "playerPoints": {
