@@ -129,38 +129,44 @@
               <tr ng-repeat="round in data.match | limitTo:data.limitVale track by $index ">
                 <td>
                   <div class="text-center">
-                    {{$index + 1}}
-                    <!-- {{round.player1.standing}} -->
+
+                    <span>{{round.opponentsSingle[0].rank}}</span>
+                    <span ng-if="!round.opponentsSingle[0].rank">-</span>
                   </div>
                 </td>
                 <td>
-                  <div class="text-left ">
-                    <p class="m-clear text-capitalize ">{{round.opponentsSingle[0].athleteId.fullName}}</p>
+
+                  <div class="text-left relate">
+                    <p class="m-clear text-capitalize ">
+                      <span class="swiss-dot-live" ng-if="round.opponentsSingle[0].isWinner"><i class="fa fa-circle"></i></span>
+                      <span> {{round.opponentsSingle[0].athleteId.fullName}}</span>
+                    </p>
                     <p class="m-clear text-capitalize ">{{round.opponentsSingle[0].athleteId.school.name}}</p>
                   </div>
                 </td>
                 <td>
                   <div>
-                    <span>-</span>
-                    <span>{{round.player1.points}}</span>
+                    <span>{{round.opponentsSingle[0].score}}</span>
+                    <span ng-if="!round.opponentsSingle[0].score">-</span>
                   </div>
                 </td>
                 <td>
                   <div class="text-center">
-                    <span> {{round.player2.standing}}</span>
-                    <span>-</span>
+                    <span>{{round.opponentsSingle[1].rank}}</span>
+                    <span ng-if="!round.opponentsSingle[1].rank">-</span>
                   </div>
                 </td>
                 <td>
-                  <div class="text-left ">
+                  <div class="text-left relate">
+                    <span class="swiss-dot-live" ng-if="round.opponentsSingle[1].isWinner"><i class="fa fa-circle"></i></span>
                     <p class="m-clear text-capitalize ">{{round.opponentsSingle[1].athleteId.fullName}}</p>
                     <p class="m-clear text-capitalize ">{{round.opponentsSingle[1].athleteId.school.name}}</p>
                   </div>
                 </td>
                 <td>
                   <div class="text-center">
-                    <span>{{round.player2.points}}</span>
-                    <span>-</span>
+                    <span>{{round.opponentsSingle[1].score}}</span>
+                    <span ng-if="!round.opponentsSingle[1].score">-</span>
                   </div>
                 </td>
               </tr>

@@ -78,10 +78,35 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
               _.each($scope.roundsList, function (data) {
                 data.showMore = true;
                 data.limitVale = 8;
-                _.each(data.match, function (key) {
-                  _.each(key.opponentsSingle, function (n) {
-                    n.athleteId.fullName = n.athleteId.firstName + '  ' + n.athleteId.surname;
-                  });
+                _.each(data.match, function (value) {
+                  if (value.opponentsSingle.length > 0) {
+
+                    if (value.opponentsSingle.length < value.resultSwiss.players.length) {
+                      _.each(value.resultSwiss.players, function (player) {
+                        if (player.id === undefined) {
+                          var tempObjIndex = _.findIndex(value.resultSwiss.players, player);
+                          value.opponentsSingle.splice(tempObjIndex, 0, {});
+                        }
+                      });
+                    }
+                    _.each(value.opponentsSingle, function (obj, index1) {
+                      if (!_.isEmpty(obj.athleteId)) {
+                        obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                      }
+                      if (value.resultSwiss.players !== undefined && value.resultSwiss.players[index1] && value.resultSwiss.players[index1] !== undefined && value.resultSwiss.players[index1] !== null && value.resultSwiss.players.length === value.opponentsSingle.length) {
+                        obj.rank = value.resultSwiss.players[index1].rank;
+                        obj.score = value.resultSwiss.players[index1].score;
+
+                      }
+                      if (obj._id === value.resultSwiss.winner.player) {
+                        obj.isWinner = true;
+                      } else {
+                        obj.isWinner = false;
+                      }
+                    });
+                  }
+
+
                 });
               });
 
