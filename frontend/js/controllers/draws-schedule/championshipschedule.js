@@ -660,10 +660,27 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                                         }
                                         break;
                                     case 'Aquatics Sports':
-                                        $state.go('time-trial', {
-                                            id: $scope.drawDetails.sport,
-                                            name: $scope.nameOfSport
-                                        });
+                                        switch ($scope.drawDetails.drawFormat) {
+                                            case 'Knockout':
+                                                if ($scope.drawDetails.isTeam === true) {
+                                                    $state.go('knockout-team', {
+                                                        id: $scope.drawDetails.sport
+                                                    });
+                                                } else {
+                                                    $state.go('knockout', {
+                                                        id: $scope.drawDetails.sport
+                                                    });
+                                                }
+                                                break;
+
+                                            default:
+                                                $state.go('time-trial', {
+                                                    id: $scope.drawDetails.sport,
+                                                    name: $scope.nameOfSport
+                                                });
+                                                break;
+                                        }
+
                                         break;
                                     default:
                                         toastr.error("Found New Sport Type");
