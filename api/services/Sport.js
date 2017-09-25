@@ -29,7 +29,8 @@ var schema = new Schema({
         index: true
     },
     fromDate: Date,
-    toDate: Date
+    toDate: Date,
+    oldId: String,
 });
 
 schema.plugin(deepPopulate, {
