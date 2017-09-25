@@ -34,7 +34,36 @@ var controller = {
         if (req.body) {
             if (req.body.email && req.body.email !== "" && req.body.sfaid && req.body.sfaid !== "" && req.body.type && req.body.type !== "") {
                 if (req.body.type == "school") {
-                    Login.forgotPassword(req.body, res.callback);
+                    async.waterfall([
+                            function (callback) {
+                                ConfigProperty.find().lean().exec(function (err, property) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        if (_.isEmpty(property)) {
+                                            callback(null, []);
+                                        } else {
+                                            callback(null, property);
+                                        }
+                                    }
+                                });
+                            },
+                            function (property, callback) {
+                                req.body.property = property[0];
+                                Login.forgotPassword(req.body, res.callback);
+
+                            }
+                        ],
+                        function (err, data2) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else {
+                                callback(null, data2);
+                            }
+
+                        });
+
                 } else {
                     res.json({
                         value: false,
@@ -61,7 +90,36 @@ var controller = {
             if (req.body.email && req.body.email !== "" && req.body.sfaid && req.body.sfaid !== "" && req.body.type && req.body.type !== "") {
                 if (req.body.type == "athlete") {
                     console.log('enter');
-                    Login.forgotPassword(req.body, res.callback);
+                    async.waterfall([
+                            function (callback) {
+                                ConfigProperty.find().lean().exec(function (err, property) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        if (_.isEmpty(property)) {
+                                            callback(null, []);
+                                        } else {
+                                            callback(null, property);
+                                        }
+                                    }
+                                });
+                            },
+                            function (property, callback) {
+                                req.body.property = property[0];
+                                Login.forgotPassword(req.body, res.callback);
+
+                            }
+                        ],
+                        function (err, data2) {
+                            if (err) {
+                                console.log(err);
+                                callback(err, null);
+                            } else {
+                                callback(null, data2);
+                            }
+
+                        });
+
                 } else {
                     res.json({
                         value: false,

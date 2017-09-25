@@ -1327,6 +1327,26 @@ var model = {
                                     });
                                 }
 
+                            } else {
+                                if (data.registrationFee == "cash") {
+                                    console.log("cash or cheque payment mail");
+                                    Athelete.unregistedCashPaymentMailSms(data, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+                                } else if (data.registrationFee == "online PAYU") {
+                                    console.log("online payment mail");
+                                    Athelete.unregistedOnlinePaymentMailSms(data, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+                                }
                             }
                         }
                     });
