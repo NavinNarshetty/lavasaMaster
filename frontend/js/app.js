@@ -18,6 +18,7 @@ var myApp = angular.module('myApp', [
     'infinite-scroll',
     'angularPromiseButtons',
     'ui.swiper',
+    'cleave.js'
 
 ]);
 

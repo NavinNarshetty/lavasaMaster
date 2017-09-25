@@ -33,6 +33,7 @@ module.exports = [
   'bower_components/jStorage/jstorage.min.js',
   'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
   'bower_components/angular-promise-buttons/dist/angular-promise-buttons.min.js',
+  "bower_components/cleave.js/dist/cleave-angular.min.js",
 
   //App.js
   'frontend/js/app.js',

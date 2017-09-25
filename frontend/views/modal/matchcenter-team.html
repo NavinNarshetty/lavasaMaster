@@ -1,162 +1,491 @@
-<div class="matchcenter-modal">
-  <div class="modal-header">
-    <div class="matchstart-header clearfix">
-      <div class="pull-right">
-        <p class="m-clear">match id: <span>{{match.matchId}}123456789</span> </p>
-      </div>
-      <p class="m-clear"><span>{{match.sportsName}}Tennis</span> - <span>{{match.age}}U-19</span> <span>{{match.gender}}M</span> <span>{{match.round}}1</span></p>
+<div class="teammatchcenter">
+    <div class="modal-header">
+        <div class="matchstart-header relate ">
+            <div class="matchcenter-sporticon">
+                <img src="img/icons/Badminton.png" alt="" class="img-responsive">
+            </div>
+            <div class="matchcenter-heading">
+                <div class="pull-right hidden-xs">
+                    <p class="m-clear">match id: <span>{{currentMatch.matchId}}</span> </p>
+                </div>
+                <p class="m-clear"><span>{{currentMatch.sport.sportslist.sportsListSubCategory.name}}</span> - <span>{{currentMatch.sport.ageGroup.name}}</span> <span>{{currentMatch.sport.gender}}</span> <span>{{currentMatch.round}}</span></p>
+                <p class="m-clear visible-xs">match id: <span>{{currentMatch.matchId}}</span> </p>
+            </div>
 
+        </div>
     </div>
-  </div>
-  <div class="modal-body">
-    <div class="modal-container">
-      <div class="row">
-        <div class="matchwinner text-center">
-          <p>Match Winner: <span class="matchwinner-title"> <span>Jamnabai Narsee School</span>
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <!-- PLAYER CARDS -->
-        <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="card in data | limitTo:2 track by $index">
-          <div class="combatscore-player">
-            <div class="matchplayer-card {{player.player}}">
-              <div class="matchplayer-playerid">
-                <p>Team ID: <span>{{player.sfaId}}123456789123</span></p>
-              </div>
-              <div class="matchplayer-image">
-                <img ng-src="img/dishapatani1.jpg" alt="{player.firstName}} {{player.surname}}" class="img-responsive">
-              </div>
-              <div class="matchplayer-details">
-                <!-- <p class="matchplayer-name"><span> {{player.firstName}}dishapatani1 </span> <span> {{player.surname}}dishapatani1 </span></p> -->
-                <p class="matchplayer-school matchplayer-name">{{player.school.name | truncate:'22'}} Jamnabai Narsee School</p>
-              </div>
+    <div class="modal-body">
+        <div class="modal-container">
+            <div class="matchwinner">
+                <p>Match Winner: <span class="matchwinner-title"><span>Jamnabai Narsee School</span></p>
             </div>
-          </div>
-        </div>
-        <!-- PLAYER CARDS END -->
-      </div>
-
-      <div class="team-player-accordian-holder">
-        <!-- TEAM DATA POINTS ACCORDIAN -->
-        <div class="row">
-          <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="team in data | limitTo:2 track by $index">
-
-            <uib-accordion close-others="oneAtATime">
-              <div uib-accordion-group class="panel-default" is-open="s.open">
-                <uib-accordion-heading class="clearfix">
-                  <!-- <a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a> -->
-                  <!-- <span class="pull-right edit-team-button">Winner: <span>Jamnabai Narsee School</span> </span> -->
-                  <a href="">
-                    <p class="d-fjalla-one text-uppercase sport-color-primary m-clear">
-                      <span>Team  </span> <span class="teamplayer-fullname"></span>
-                    </p>
-                  </a>
-                </uib-accordion-heading>
-                <div class="">
-                  <div class="">
-
-                    <div class="row">
-                      <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="s in data | limitTo:4 track by $index">
-                        <label for="">sets {{$index + 1}}</label>
-                        <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-                      </div>
-                    </div>
-                    <div class="row">
-                      <div class="col-md-4 col-sm-6 col-xs-12">
-                        <label for="">fouls</label>
-                        <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-                      </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
-                        <label for="">spike</label>
-                        <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-                      </div>
-                      <div class="col-md-4 col-sm-6 col-xs-12">
-                        <label for="">block</label>
-                        <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-            </uib-accordion>
-
-            </div>
-          </div>
-        </div>
-        <!-- TEAM DATA POINTS ACCORDIAN END -->
-        <!-- PLAYER ACCORDIAN -->
-        <div class="row">
-          <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="tea in team  track by $index">
-            <uib-accordion close-others="oneAtATime">
-              <div uib-accordion-group class="panel-default" is-open="s.open">
-                <uib-accordion-heading class="clearfix">
-                  <!-- <a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a> -->
-                  <!-- <span class="pull-right edit-team-button">Winner: <span>Jamnabai Narsee School</span> </span> -->
-                  <a href="">
-                    <p class="d-fjalla-one text-uppercase sport-color-primary m-clear">
-                      <span>Players </span> <span class="teamplayer-fullname"></span>
-                    </p>
-                  </a>
-                </uib-accordion-heading>
-                <div class="col-md-12 col-sm-12 col-xs-12">
-                  <uib-accordion close-others="oneAtATime">
-                    <div uib-accordion-group class="panel-default" is-open="p.open" ng-repeat="p in tea.players track by $index">
-                      <uib-accordion-heading class="clearfix">
-                        <!-- <a href="" class="text-right"><i class="fa fa-play-circle-o" aria-hidden="true"></i></a> -->
-                        <span class="pull-right edit-team-button"> </span>
-                        <a href="">
-                          <p class="d-fjalla-one text-uppercase sport-color-primary m-clear">
-                            <span>{{p.firstName}}  </span> <span class="teamplayer-fullname"></span>
-                          </p>
-                        </a>
-                      </uib-accordion-heading>
-                      <div class="">
-                        <div class="row">
-                          <div class="">
-                            <!-- <h4>Set {{$index+1}}</h4> -->
-                            <div class="col-md-6 col-sm-4 col-xs-6">
-                              <label for="">Ace</label>
-                              <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
+            <div class="row">
+                <!-- <pre>{{currentMatch.result| json}}</pre> -->
+                <!-- TEAM CARDS -->
+                <div class="col-md-6 col-sm-6 col-xs-12 matchcenter-teamcol" ng-repeat="team in currentMatch.result.teams track by $index">
+                    <div class="teamdetail-holder">
+                        <!-- TEAM FORMATION -->
+                        <div class="team-formationholder" ng-if="currentMatch.sportName == 'Football'">
+                            <div class="team-formationicon">
+                                <img src="img/medal-icon/formation.png" alt="Formation" class="img-responsive">
                             </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6">
-                              <label for="">Winner</label>
-                              <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-                            </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6">
-                              <label>Unforced Error</label>
-                              <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-                            </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6">
-                              <label>Unforced Error</label>
-                              <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-                            </div>
-                            <div class="col-md-6 col-sm-4 col-xs-6">
-                              <label>Unforced Error</label>
-                              <input type="number" ng-model="set.ace" min="0" class="display-inline form-control">
-                            </div>
-                          </div>
-
+                            <input type="text" ng-model="team.formation" cleave="options.formation" class="formaton-input" placeholdere="0-0-0-0" readonly>
                         </div>
-                      </div>
-
-
-                  </uib-accordion>
-                  </div>
+                        <!-- TEAM FORMATION END -->
+                        <!-- TEAM CARD -->
+                        <div class="combatscore-player">
+                            <div class="matchplayer-card">
+                                <div class="matchplayer-playerid">
+                                    <p>Team ID: <span>{{team.teamId}}</span></p>
+                                </div>
+                                <div class="matchplayer-image">
+                                    <img ng-src="{{currentMatch.opponentsTeam[index].photograph|serverimage}}" src="img/dishapatani1.jpg" alt="" class="img-responsive">
+                                </div>
+                                <div class="matchplayer-details">
+                                    <p class="matchplayer-school matchplayer-name">{{team.schoolName}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- TEAM CARD END -->
+                        <!-- TEAM POINTS -->
+                        <div class="teamdetail-pointholder">
+                          <!-- <pre>{{team.teamResults | json}}</pre> -->
+                            <!-- TEAM POINTS HOCKEY -->
+                            <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Hockey'">
+                                <div class="row">
+                                    <!-- shotsOnGoal -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Shots On Goal</label>
+                                        <input type="number" ng-model="team.teamResults.shotsOnGoal" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- shotsOnGoal END -->
+                                    <!-- totalShots -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Total Shots</label>
+                                        <input type="number" ng-model="team.teamResults.totalShots" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- totalShots END -->
+                                    <!-- penalty -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Penalties</label>
+                                        <input type="number" ng-model="team.teamResults.penalty" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- penalty END -->
+                                    <!-- penaltyCorners -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Penalty Corners</label>
+                                        <input type="number" ng-model="team.teamResults.penaltyCorners" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- penaltyCorners END -->
+                                    <!-- penaltyStroke -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Penalty Stroke</label>
+                                        <input type="number" ng-model="team.teamResults.penaltyStroke" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- penaltyStroke END -->
+                                    <!-- saves -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Saves</label>
+                                        <input type="number" ng-model="team.teamResults.saves" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- saves END -->
+                                    <!-- fouls -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Fouls</label>
+                                        <input type="number" ng-model="team.teamResults.fouls" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- fouls END -->
+                                </div>
+                            </div>
+                            <!-- TEAM POINTS HOCKEY END -->
+                            <!-- TEAM POINTS FOOTBALL -->
+                            <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Football'">
+                              <!-- <pre>{{team.teamResults|json}}</pre> -->
+                                <div class="row">
+                                    <!-- shotsOnGoal -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Shots On Goal</label>
+                                        <input type="number" ng-model="team.teamResults.shotsOnGoal" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- shotsOnGoal END -->
+                                    <!-- totalShots -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Total Shots</label>
+                                        <input type="number" ng-model="team.teamResults.totalShots" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- totalShots END -->
+                                    <!-- corners -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Corners</label>
+                                        <input type="number" ng-model="team.teamResults.corners" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- corners END -->
+                                    <!-- fouls -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Fouls</label>
+                                        <input type="number" ng-model="team.teamResults.fouls" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- fouls END -->
+                                    <!-- penalty -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Penalties</label>
+                                        <input type="number" ng-model="team.teamResults.penalty" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- penalty END -->
+                                    <!-- offSide -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Offside</label>
+                                        <input type="number" ng-model="team.teamResults.offSide" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- offSide END -->
+                                    <!-- saves -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                        <label class="text-uppercase setpoint-label">Saves</label>
+                                        <input type="number" ng-model="team.teamResults.saves" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                    </div>
+                                    <!-- saves END -->
+                                    <!-- fouls -->
+                                    <div class="col-md-4 col-sm-6 col-xs-6 relate">
+                                        <label class="text-uppercase setpoint-label">Clean Sheet</label>
+                                    </div>
+                                    <!-- fouls END -->
+                                </div>
+                            </div>
+                            <!-- TEAM POINTS FOOTBALL END -->
+                            <!-- TEAM POINTS VOLLEYBALL -->
+                            <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Volleyball'">
+                              <div class="row">
+                                <!-- sets -->
+                                <div class="col-md-4 col-sm-6 col-xs-6" ng-repeat="set in team.teamResults.sets track by $index">
+                                    <label class="text-uppercase setpoint-label">Set {{$index + 1}}</label>
+                                    <input type="number" ng-model="set.points" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- sets END -->
+                                <!-- spike -->
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <label class="text-uppercase setpoint-label">Spike</label>
+                                    <input type="number" ng-model="team.teamResults.spike" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- spike END -->
+                                <!-- fouls -->
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <label class="text-uppercase setpoint-label">Fouls</label>
+                                    <input type="number" ng-model="team.teamResults.fouls" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- fouls END -->
+                                <!-- block -->
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <label class="text-uppercase setpoint-label">Block</label>
+                                    <input type="number" ng-model="team.teamResults.block" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- block END -->
+                              </div>
+                            </div>
+                            <!-- TEAM POINTS VOLLEYBALL END -->
+                            <!-- TEAM POINTS BASKETBALL -->
+                            <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Basketball'">
+                              <div class="row">
+                                <!-- sets -->
+                                <div class="col-md-4 col-sm-6 col-xs-6" ng-repeat="quarter in team.teamResults.quarterPoints track by $index">
+                                    <label class="text-uppercase setpoint-label">Quarter {{$index + 1}} </label>
+                                    <input type="number" ng-model="quarter.basket" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- sets END -->
+                              </div>
+                            </div>
+                            <!-- TEAM POINTS BASKETBALL END -->
+                            <!-- TEAM POINTS THROWBALL -->
+                            <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Handball'">
+                              <div class="row">
+                                <!-- shotsOnGoal -->
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <label class="text-uppercase setpoint-label">Shots On Goal</label>
+                                    <input type="number" ng-model="team.teamResults.shotsOnGoal" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- shotsOnGoal END -->
+                                <!-- penalty -->
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <label class="text-uppercase setpoint-label">Penalties</label>
+                                    <input type="number" ng-model="team.teamResults.penalty" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- penalty END -->
+                                <!-- saves -->
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <label class="text-uppercase setpoint-label">Saves</label>
+                                    <input type="number" ng-model="team.teamResults.saves" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- saves END -->
+                              </div>
+                            </div>
+                            <!-- TEAM POINTS THROWBALL END -->
+                            <!-- TEAM POINTS KABADDI -->
+                            <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Kabaddi'">
+                              <div class="row">
+                                <!-- superTackle -->
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <label class="text-uppercase setpoint-label">Super Tackle</label>
+                                    <input type="number" ng-model="team.teamResults.superTackle" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- superTackle END -->
+                                <!-- allOut -->
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <label class="text-uppercase setpoint-label">All Out</label>
+                                    <input type="number" ng-model="team.teamResults.allOut" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- allOut END -->
+                              </div>
+                            </div>
+                            <!-- TEAM POINTS KABADDI END -->
+                            <!-- TEAM POINTS WATERPOLO -->
+                            <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Water Polo'">
+                              <div class="row">
+                                <!-- shotsOnGoal -->
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <label class="text-uppercase setpoint-label">Shots On Goal</label>
+                                    <input type="number" ng-model="team.teamResults.shotsOnGoal" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- shotsOnGoal END -->
+                                <!-- totalShots -->
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <label class="text-uppercase setpoint-label">Total Shots</label>
+                                    <input type="number" ng-model="team.teamResults.totalShots" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- totalShots END -->
+                                <!-- penalty -->
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <label class="text-uppercase setpoint-label">Penalties</label>
+                                    <input type="number" ng-model="team.teamResults.penalty" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- penalty END -->
+                                <!-- saves -->
+                                <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <label class="text-uppercase setpoint-label">Saves</label>
+                                    <input type="number" ng-model="team.teamResults.saves" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                </div>
+                                <!-- saves END -->
+                              </div>
+                            </div>
+                            <!-- TEAM POINTS WATERPOLO END -->
+                        </div>
+                        <!-- TEAM POINTS END -->
+                    </div>
+                    <!-- PLAYER LIST -->
+                    <div class="team-player-accordian-holder">
+                        <div class="playerheader-accordion">
+                            Players
+                        </div>
+                        <!-- PLAYER ACCORDIAN -->
+                        <uib-accordion close-others="oneAtATime" class="teamplayer-accordion">
+                            <div uib-accordion-group class="panel-default" is-open="player.open" ng-repeat="player in team.players track by $index">
+                                <uib-accordion-heading class="clearfix">
+                                    <span class="pull-right playerangle-accordion fa " ng-class="{'fa-angle-up': player.open, 'fa-angle-down': !player.open}"></span>
+                                    <p class="m-clear playerhead-accordion">
+                                        <span>{{player.fullName}}</span>
+                                    </p>
+                                </uib-accordion-heading>
+                                <div class="matchcenter-playerpointholder">
+                                  <!-- <pre>{{player.playerPoints|json}}</pre> -->
+                                  <!-- HOCKEY PLAYER POINTS -->
+                                  <div class="playerddetails-points" ng-if="currentMatch.sportName == 'Hockey'">
+                                    <div class="row">
+                                      <!-- goal -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Goals</label>
+                                          <input type="number" ng-model="player.playerPoints.goal.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- goal END -->
+                                      <!-- assist -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Assits</label>
+                                          <input type="number" ng-model="player.playerPoints.assist.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- assist END -->
+                                      <!-- redCard -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Red Cards</label>
+                                          <input type="number" ng-model="player.playerPoints.redCard.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- redCard END -->
+                                      <!-- yellowCard -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Yellow Cards</label>
+                                          <input type="number" ng-model="player.playerPoints.yellowCard.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- yellowCard END -->
+                                      <!-- greenCard -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Green Cards</label>
+                                          <input type="number" ng-model="player.playerPoints.greenCard.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- greenCard END -->
+                                      <!-- penaltyPoint -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Penalty Points</label>
+                                          <input type="number" ng-model="player.playerPoints.penaltyPoint" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- penaltyPoint END -->
+                                    </div>
+                                  </div>
+                                  <!-- HOCKEY PLAYER POINTS END -->
+                                  <!-- FOOTBALL PLAYER POINTS -->
+                                  <div class="playerddetails-points" ng-if="currentMatch.sportName == 'Football'">
+                                    <div class="row">
+                                      <!-- goals -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Goals</label>
+                                          <input type="number" ng-model="player.playerPoints.goals.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- goals END -->
+                                      <!-- assist -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Assits</label>
+                                          <input type="number" ng-model="player.playerPoints.assist.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- assist END -->
+                                      <!-- redCard -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Red Cards</label>
+                                          <input type="number" ng-model="player.playerPoints.redCard.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- redCard END -->
+                                      <!-- yellowCard -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Yellow Cards</label>
+                                          <input type="number" ng-model="player.playerPoints.yellowCard.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- yellowCard END -->
+                                      <!-- penaltyPoint -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Penalty Points</label>
+                                          <input type="number" ng-model="player.playerPoints.penaltyPoint" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- penaltyPoint END -->
+                                    </div>
+                                  </div>
+                                  <!-- FOOTBALL PLAYER POINTS END -->
+                                  <!-- VOLLEYBALL PLAYER POINTS -->
+                                  <div class="playerddetails-points" ng-if="currentMatch.sportName == 'Volleyball'">
+                                      <p>Jersey No: <span>{{player.jerseyNo}}</span></p>
+                                  </div>
+                                  <!-- VOLLEYBALL PLAYER POINTS END -->
+                                  <!-- BASKETBALL PLAYER POINTS -->
+                                  <div class="playerddetails-points" ng-if="currentMatch.sportName == 'Basketball'">
+                                    <div class="row">
+                                      <!-- freeThrow -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Free Throw</label>
+                                          <input type="number" ng-model="player.playerPoints.freeThrow.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- freeThrow END -->
+                                      <!-- Points2 -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">2 Pointer</label>
+                                          <input type="number" ng-model="player.playerPoints.Points2.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- Points2 END -->
+                                      <!-- Points3 -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">3 Pointer</label>
+                                          <input type="number" ng-model="player.playerPoints.Points3.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- Points3 END -->
+                                      <!-- personalFoul -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Personal Foul</label>
+                                          <input type="number" ng-model="player.playerPoints.personalFoul.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- personalFoul END -->
+                                      <!-- technicalFoul -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Technical Foul</label>
+                                          <input type="number" ng-model="player.playerPoints.technicalFoul.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- technicalFoul END -->
+                                    </div>
+                                  </div>
+                                  <!-- BASKETBALL PLAYER POINTS END -->
+                                  <!-- HANDBALL PLAYER POINTS -->
+                                  <div class="playerddetails-points" ng-if="currentMatch.sportName == 'Handball'">
+                                    <div class="row">
+                                      <!-- goal -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Goals</label>
+                                          <input type="number" ng-model="player.playerPoints.goal.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- goal END -->
+                                      <!-- yellowCard -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Yellow Cards</label>
+                                          <input type="number" ng-model="player.playerPoints.yellowCard.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- yellowCard END -->
+                                      <!-- greenCard -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Green Cards</label>
+                                          <input type="number" ng-model="player.playerPoints.greenCard.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- greenCard END -->
+                                    </div>
+                                  </div>
+                                  <!-- HANDBALL PLAYER POINTS END -->
+                                  <!-- KABADDI PLAYER POINTS -->
+                                  <div class="playerddetails-points" ng-if="currentMatch.sportName == 'Kabaddi'">
+                                    <div class="row">
+                                      <!-- raids -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Raids</label>
+                                          <input type="number" ng-model="player.playerPoints.raids.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- raids END -->
+                                      <!-- superRaid -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Super Raids</label>
+                                          <input type="number" ng-model="player.playerPoints.superRaid.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- superRaid END -->
+                                      <!-- bonusPoint -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Bonus Points</label>
+                                          <input type="number" ng-model="player.playerPoints.bonusPoint.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- bonusPoint END -->
+                                      <!-- tackle -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Tackle</label>
+                                          <input type="number" ng-model="player.playerPoints.tackle.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- tackle END -->
+                                    </div>
+                                  </div>
+                                  <!-- KABADDI PLAYER POINTS END -->
+                                  <!-- WATERPOLO PLAYER POINTS -->
+                                  <div class="playerddetails-points" ng-if="currentMatch.sportName == 'Water Polo'">
+                                    <div class="row">
+                                      <!-- goal -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Goals</label>
+                                          <input type="number" ng-model="player.playerPoints.goal.length" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- goal END -->
+                                      <!-- penaltyPoint -->
+                                      <div class="col-md-4 col-sm-6 col-xs-6">
+                                          <label class="text-uppercase setpoint-label">Penalty Points</label>
+                                          <input type="number" ng-model="player.playerPoints.penaltyPoint" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                                      </div>
+                                      <!-- penaltyPoint END -->
+                                    </div>
+                                  </div>
+                                  <!-- WATERPOLO PLAYER POINTS END -->
+                                </div>
+                            </div>
+                        </uib-accordion>
+                    </div>
+                    <!-- PLAYER ACCORDIAN END -->
                 </div>
-            </uib-accordion>
+                <!-- PLAYER LIST END -->
             </div>
-
-
-            <!-- PLAYER ACCORDIAN END -->
-          </div>
-
-
-
+            <!-- TEAM CARDS END -->
         </div>
-        <div class="modal-footer">
-          <button class="btn btn-warning" type="button" ng-click="$dismiss()">Cancel</button>
-          <!-- <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button> -->
-        </div>
-      </div>
+    </div>
+</div>
+</div>

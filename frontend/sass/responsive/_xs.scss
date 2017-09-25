@@ -26,5 +26,28 @@
         margin-right: 0;
         float: none;
     }
+    // MATCH CENTER
+    .matchcenter-modal{
+      .racquet-setscore .scoring-set{
+        &:last-child{
+          .setpointlabel{
+            display: block;
+          }
+        }
+      }
+      .setpoint-element{
+        margin: 5px 0;
+      }
+      .matchplayer-image{
+        width: 40px;
+        height: 40px;
+      }
+      .score-number{
+        width: 40px;
+        height: 40px;
+        font-size: 18px;
+      }
+    }
+    // MATCH CENTER END
      // Mobile End
  }

@@ -1,4 +1,4 @@
-myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, knockoutService, $rootScope) {
+myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, knockoutService, $rootScope, $uibModal) {
   $scope.template = TemplateService.getHTML("content/draws-schedule/league-knockout.html");
   TemplateService.title = "League Knockout"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -117,7 +117,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
       });
     });
   }
-  //for Points Table 
+  //for Points Table
   $scope.showMorePoints = function (bool) {
     if (bool) {
       $scope.showPoints = true;
@@ -127,5 +127,36 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
       $scope.pointsLimit = 3;
     }
   };
+
+  // MATCH CENTER MODAL
+  $scope.matchCenter = function (card) {
+    $scope.currentMatch = card;
+    console.log(card, 'card');
+    $scope.currentMatch.sportName = 'Football';
+    $scope.currentMatch.result = $scope.currentMatch.resultFootball;
+      modal = $uibModal.open({
+          animation: true,
+          scope: $scope,
+          keyboard: false,
+          templateUrl: 'views/modal/matchcenter-team.html',
+          size: 'lg',
+          windowClass: 'teammatchcenter-modal'
+      })
+      console.log($scope.currentMatch, 'current');
+  }
+  // MATCH CENTER MODAL END
+  // CLEAVE FUNCTION OPTIONS
+  $scope.options = {
+    formation: {
+          blocks: [1, 1, 1, 1],
+          uppercase: true,
+          delimiters: ['-']
+      },
+      score: {
+        blocks: [2],
+        numeral: true
+      }
+  }
+  // CLEAVE FUNCTION OPTIONS END
 
 });

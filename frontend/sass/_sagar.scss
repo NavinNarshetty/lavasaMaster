@@ -393,6 +393,7 @@ $sport-darkgrey: #757575 !default;
         color: #fff;
         >th{
           border: none;
+          vertical-align: middle;
         }
     }
     >tbody>tr>td{
@@ -479,6 +480,10 @@ $sport-darkgrey: #757575 !default;
   border: 2px solid #b7b7b7;
   margin: 20px 0;
   color: $sport-darkgrey;
+}
+.result-tablemedal {
+    width: 20px;
+    margin: 0 auto;
 }
 // RESULTS PAGE END
 // DROPDOWN
@@ -618,3 +623,171 @@ $sport-darkgrey: #757575 !default;
   font-size: 12px;
 }
 //VIEW ALL WINNER CARD END
+
+// TEAM MATCH CENTER
+.teammatchcenter-modal{
+  .modal-content{
+    border-radius: 0;
+  }
+  .modal-header {
+    padding: 0px;
+  }
+  .modal-container{
+    padding: 15px 0;
+  }
+  .matchstart-header {
+    padding: 10px 15px;
+    padding-left: 90px;
+    background-color: #337ab7;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+  .matchcenter-sporticon {
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    width: 65px;
+  }
+  .matchcenter-heading{
+    font-weight: 700;
+  }
+  .matchwinner{
+    position: absolute;
+    top: 0;
+    left: 90px;
+  }
+  .matchwinner-title{
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .matchplayer-card {
+    padding: 10px;
+    margin: 20px auto 0;
+    box-shadow: 0 0 10px #a0a0a0;
+    position: relative;
+  }
+  .matchplayer-playerid {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    font-size: 12px;
+    color: #757575;
+  }
+  .matchplayer-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    margin: 0 10px;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+  }
+  .matchplayer-details{
+    width: calc(100% - 125px);
+    margin-top: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    .matchplayer-school{
+      margin: 0;
+      color: #0a1a72;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+  .playerangle-accordion{
+    font-size: 21px;
+  }
+  .teamplayer-accordion{
+    .panel{
+      border: none;
+      border-radius: 0px;
+      box-shadow: none;
+    }
+    .panel-default > .panel-heading{
+      padding: 5px 10px;
+      border: 0;
+      border-bottom: 1px solid #ddd;
+      background-color: transparent;
+    }
+    .panel-body{
+      border: none;
+    }
+    .panel-open{
+      .panel-heading{
+        border-radius: 0;
+        background-color: #e1e1e1;
+      }
+      .panel-body{
+        border: 1px solid #e1e1e1;
+      }
+    }
+    .panel-title{
+      font-size: 14px;
+    }
+  }
+  .playerheader-accordion{
+    padding: 5px;
+    margin-bottom: 5px;
+    background: #ffb026;
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .team-formationholder {
+    padding-left: 25px;
+    margin-top: 15px;
+    position: relative;
+  }
+  .team-formationicon {
+    width: 30px;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    @include transform(translateY(-50%));
+  }
+  .formaton-input{
+    width: 80px;
+    border: none;
+    background-color: #5aeca5;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .matchcenter-teamcol{
+    &:nth-child(even){
+      .team-formationholder{
+        padding-left: 0;
+        padding-right: 25px;
+        text-align: right;
+      }
+      .team-formationicon{
+        left: auto;
+        right: 0;
+      }
+    }
+  }
+  .team-player-accordian-holder {
+    margin: 20px 0;
+  }
+  .teamdetail-pointholder{
+    padding: 10px;
+    border: 1px solid #e1e1e1;
+  }
+  .setpoint-label {
+    font-weight: 600;
+    font-size: 12px;
+  }
+  .matchcenter-playerpoint {
+    border: none;
+    background-color: #e1e1e1;
+    font-size: 21px;
+    font-weight: 700;
+  }
+}
+// TEAM MATCH CENTER END

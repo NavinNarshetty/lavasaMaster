@@ -973,7 +973,11 @@ $sport-table-grey:#efeeee !default;
 .swiss-league-sportname {
   margin-bottom: 30px;
 }
-
+.swiss-dot-live{
+  position: absolute;
+  top: 5px;
+  left: -15px;
+}
 // ***********************SWISS LEAGUE END*************************
 // MATCH CENTER MODAL
 // MATCH CENTER
@@ -1031,6 +1035,12 @@ $sport-table-grey:#efeeee !default;
     font-size: 24px;
     font-weight: 700;
     text-align: center;
+  }
+  .matchcenter-playerpoint{
+    border: none;
+    background-color: #e1e1e1;
+    font-size: 24px;
+    font-weight: 700;
   }
   .score-buttons {
     padding: 10px 13px;
@@ -1128,7 +1138,7 @@ $sport-table-grey:#efeeee !default;
   .modal-container{
     padding: 0;
   }
-  .hello{
+  .playerpoint-accordion{
     .panel-default > .panel-heading{
       border-bottom: 1px solid #ddd;
       background-color: transparent;
@@ -1243,7 +1253,7 @@ $sport-table-grey:#efeeee !default;
     text-align: center;
     .scoring-set {
       border: none;
-      margin: 0px;
+      margin: 10px 0;
       &:last-child{
         .setpointlabel{
           display: none;
@@ -1258,6 +1268,12 @@ $sport-table-grey:#efeeee !default;
       display: block;
     }
   } // RACKET-SCORE PAGE END
+  .playerhead-accordion{
+    font-weight: 700;
+  }
+  .playerangle-accordion{
+    font-size: 24px;
+  }
 }
 
 // MATCH CENTER END

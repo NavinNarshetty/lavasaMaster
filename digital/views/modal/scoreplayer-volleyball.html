@@ -25,7 +25,7 @@
               <div class="match-selectwinner">
                 <label for="">Select substitute</label>
                 <ui-select id="matchWinnerPlayer" ng-model="selectedInPlayer.player" theme="bootstrap" ng-disabled="selectedPlayer.isPlaying">
-                    <ui-select-match placeholder="Select Winner">{{$select.selected.studentId.firstName}} {{$select.selected.studentId.surname}}</ui-select-match>
+                    <ui-select-match placeholder="Select Substitute">{{$select.selected.studentId.firstName}} {{$select.selected.studentId.surname}}</ui-select-match>
                     <ui-select-choices repeat="player.studentId._id as player in selectedTeam.studentTeam | filter: $select.search">
                         <p class="opponentsingle-selector" ng-if="player.isPlaying == false "> {{player.studentId.firstName}} {{player.studentId.surname}} </p>
                     </ui-select-choices>
