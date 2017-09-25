@@ -4660,19 +4660,8 @@ var model = {
                 },
             ],
             function (err, excelData) {
-                if (err) {
-                    console.log(err);
-                    callback(null, []);
-                } else if (excelData) {
-                    if (_.isEmpty(excelData)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, excelData);
-                    }
-                }
+                Config.generateExcel("KnockoutIndividual", excelData, res);
             });
-
-
     },
 
     //  ----------------------------  UPDATE SCORE RESULT  --------------------------------------
