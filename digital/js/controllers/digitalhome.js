@@ -269,16 +269,18 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                         switch ($scope.drawDetails.drawFormat) {
                                             case 'Heats':
                                                 console.log("im in else");
-                                                $state.go('heats', {
-                                                    id: $scope.drawDetails.sport,
-                                                    sportName: $scope.nameOfSport
-                                                });
+                                                toastr.error('Scoring not applicable for this event', 'Error Message');
+                                                // $state.go('heats', {
+                                                //     id: $scope.drawDetails.sport,
+                                                //     sportName: $scope.nameOfSport
+                                                // });
                                                 break;
                                             case 'Qualifying Round':
-                                                $state.go('qf-final', {
-                                                    id: $scope.drawDetails.sport,
-                                                    name: $scope.nameOfSport
-                                                });
+                                                toastr.error('Scoring not applicable for this event', 'Error Message');
+                                                // $state.go('qf-final', {
+                                                //     id: $scope.drawDetails.sport,
+                                                //     name: $scope.nameOfSport
+                                                // });
                                                 break;
                                             case 'Knockout':
                                                 $state.go('knockout', {
@@ -287,7 +289,8 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                                 });
                                                 break;
                                             case 'Swiss League':
-                                                $state.go('swiss-league');
+                                                toastr.error('Scoring not applicable for this event', 'Error Message');
+                                                // $state.go('swiss-league');
                                                 break;
                                             default:
                                                 toastr.error("Case :Individual Sports ,New Draw Format Found ");
@@ -297,15 +300,17 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                     case 'Target Sports':
                                         switch ($scope.drawDetails.drawFormat) {
                                             case 'Qualifying Knockout':
-                                                $state.go('qf-knockout', {
-                                                    id: $scope.drawDetails.sport,
-                                                });
+                                                toastr.error('Scoring not applicable for this event', 'Error Message');
+                                                // $state.go('qf-knockout', {
+                                                //     id: $scope.drawDetails.sport,
+                                                // });
                                                 break;
                                             case 'Qualifying Round':
-                                                $state.go('qf-final', {
-                                                    id: $scope.drawDetails.sport,
-                                                    name: $scope.nameOfSport
-                                                });
+                                                toastr.error('Scoring not applicable for this event', 'Error Message');
+                                                // $state.go('qf-final', {
+                                                //     id: $scope.drawDetails.sport,
+                                                //     name: $scope.nameOfSport
+                                                // });
                                                 break;
 
                                             default:
