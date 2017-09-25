@@ -53,110 +53,99 @@ module.exports = mongoose.model('OldSport', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
-    getAllStudent: function (data, callback) {
+
+    getAllTeam: function (data, callback) {
         async.waterfall([
-            function (callback) {
-                OldAthlete.find({
-                    year: data.year
-                }).lean().exec(function (err, oldSchoolData) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(oldSchoolData)) {
-                            callback(null, []);
+                function (callback) {
+                    OldSport.find({
+                        year: data.year,
+                        "sportslist.sporttype": "Team"
+                    }).lean().exec(function (err, oldSportData) {
+                        if (err) {
+                            callback(err, null);
                         } else {
-                            callback(null, oldSchoolData);
-                        }
-                    }
-                });
-            },
-            function (oldSchoolData, callback) {
-                async.each(oldSchoolData, function (mainData, callback) {
-                        async.waterfall([
-                            function (callback) {
-                                Registration.find({
-                                    oldId: mainData.school
-                                }).lean().exec(function (err, schoolData) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else {
-                                        if (_.isEmpty(schoolData)) {
-                                            callback(null, []);
-                                        } else {
-                                            callback(null, schoolData);
-                                        }
-                                    }
-                                });
-                            },
-                            function (schoolData, callback) {
-                                var final = {};
-                                final.atheleteID = mainData.sfaid;
-                                var year = data.year.substr(2, 2);
-                                final.sfaId = "M" + "A" + year + mainData.sfaid;
-                                final.status = "Verified";
-                                final.school = schoolData.oldId;
-                                final.year = data.year;
-                                final.surname = mainData.lastname;
-                                final.firstName = mainData.firstname;
-                                final.middleName = mainData.middlename;
-                                final.password = generator.generate({
-                                    length: 8,
-                                    numbers: true
-                                });
-                                final.gender = mainData.gender;
-                                final.dob = mainData.dob;
-
-                                var today = new Date();
-                                var birthDate = new Date(mainData.dob);
-                                var age = today.getFullYear() - birthDate.getFullYear();
-                                var m = today.getMonth() - birthDate.getMonth();
-                                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-                                    age--;
-                                }
-                                final.age = age;
-                                final.playedTournaments = false;
-                                final.sportLevel = [];
-                                final.mobile = mainData.contact;
-                                final.email = mainData.email;
-                                final.address = mainData.address;
-                                final.addressLine2 = mainData.location;
-                                final.state = "Maharastra";
-                                final.city = "Mumbai";
-                                final.termsAndCondition = true;
-                                final.parentDetails = [];
-                                final.registrationFee = "cash";
-                                final.paymentStatus = "Paid";
-                                final.verifyCount = 1;
-                                final.oldId = mainData._id;
-                                Athelete.saveData(final, function (err, complete) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, complete);
-                                    }
-                                });
-
-                            }
-                        ], function (err, found) {
-                            if (found) {
-                                callback(null, found);
+                            if (_.isEmpty(oldSportData)) {
+                                callback(null, []);
                             } else {
-                                callback(null, found);
+                                callback(null, oldSportData);
                             }
-                        });
-
-                    },
-                    function (err) {
-                        callback(null, "All data Stored");
+                        }
                     });
-            }
-        ], function (err, found) {
-            if (found) {
-                callback(null, found);
-            } else {
-                callback(null, found);
-            }
-        });
+                },
+                function (oldSportData, callback) {
+                    var team = _.groupBy(oldSportData, "sportslist.name");
+                    var arr = _.keys(team);
+                    async.waterfall([
+                        function (callback) {
+                            async.each(arr, function (sportData, callback) {
+                                    async.parallel([
+                                        function (callback) {
+                                            var sportsCategory = {};
+                                            sportsCategory.name = sportData.sportslist.sporttype + "Sports";
+                                            SportsListCategory.saveData(sportsCategory, function (err, category) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else {
+                                                    if (_.isEmpty(category)) {
+                                                        callback(null, []);
+                                                    } else {
+                                                        callback(null, category);
+                                                    }
+                                                }
+                                            });
+                                        },
+                                        function (callback) {
+                                            var sportsCategory = {};
+                                            sportsCategory.name = sportData.sportslist.sporttype + "Sports";
+                                            SportsListCategory.saveData(sportsCategory, function (err, category) {
+                                                if (err) {
+                                                    callback(err, null);
+                                                } else {
+                                                    if (_.isEmpty(category)) {
+                                                        callback(null, []);
+                                                    } else {
+                                                        callback(null, category);
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    ], function (err, found) {
+                                        if (found) {
+                                            callback(null, found);
+                                        } else {
+                                            callback(null, found);
+                                        }
+                                    });
+                                },
+                                function (err) {
+                                    callback(null, "All data Stored");
+                                });
+                        },
+                        function (oldSchoolData, callback) {
+                            async.each(oldSchoolData, function (mainData, callback) {
+
+                                },
+                                function (err) {
+                                    callback(null, "All data Stored");
+                                });
+                        }
+                    ], function (err, found) {
+                        if (found) {
+                            callback(null, found);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+
+                }
+            ],
+            function (err, found) {
+                if (found) {
+                    callback(null, found);
+                } else {
+                    callback(null, found);
+                }
+            });
     },
 
 
