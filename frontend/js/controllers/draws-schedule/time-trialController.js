@@ -93,9 +93,9 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
                   }
                   if (value.opponentsTeam.length > 0) {
                     _.each(value.opponentsTeam, function (obj, index1) {
-                      obj.result = value.resultHeat.players[index1].result;
-                      obj.laneNo = value.resultHeat.players[index1].laneNo;
-                      obj.time = value.resultHeat.players[index1].time;
+                      obj.result = value.resultHeat.teams[index1].result;
+                      obj.laneNo = value.resultHeat.teams[index1].laneNo;
+                      obj.time = value.resultHeat.teams[index1].time;
                     });
                   }
                 });

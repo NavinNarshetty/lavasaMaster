@@ -62,9 +62,6 @@
                       <!--<td>{{($index + 1)}}</td>-->
                       <td>{{item.matchId}}</td>
                       <td>{{item.round}}
-                        <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
-                                                  <pre>{{item.matchId}}</pre>
-                                                  <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
                       </td>
                       <td>
                         {{item.heatNo}}
@@ -77,11 +74,6 @@
                                                       <i class="fa fa-trash"></i> Delete
                                                     </a>
                       </td>
-                      <!--<td ng-repeat="but in json.json.action">
-                                                                        <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
-                                                                            <i class="fa" ng-class="but.icon"></i>{{but.name}}
-                                                                        </a>
-                                                                    </td>-->
                     </tr>
                   </tbody>
                 </table>
@@ -419,7 +411,7 @@
                       <td>
                         <!-- <span ng-repeat="set in item.resultsRacquet.teams[0].sets track by $index">{{item.resultsRacquet.teams[0].sets[$index].point}} <span ng-if="item.resultsRacquet.teams.length > 1">-</span>                        {{item.resultsRacquet.teams[1].sets[$index].point}} <span ng-if="item.resultsRacquet.teams[0].sets.length!==1 && item.resultsRacquet.teams[0].sets.length!==0 && $index!==item.resultsRacquet.teams[0].sets.length-1">,</span>                        </span> -->
                         <!-- <span ng-repeat="set in item.resultsRacquestqq"></span> -->
-                        <span>{{item.resultHandball.teams[0].teamResults.finalGoalPoints}}</span> <span>-</span> <span>{{item.resultHandball.teams[1].teamResults.finalGoalPoints}}</span>
+                        <span>{{item.resultHandball.teams[0].teamResults.finalPoints}}</span> <span>-</span> <span>{{item.resultHandball.teams[1].teamResults.finalPoints}}</span>
 
                       </td>
                       <td>
