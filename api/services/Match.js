@@ -2583,6 +2583,7 @@ var model = {
     },
 
     saveSwissLeague: function (importData, data, callback) {
+        var countError;
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
