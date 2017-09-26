@@ -130,9 +130,12 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
 
   // MATCH CENTER MODAL
   $scope.matchCenter = function (card) {
+    console.log($scope.oneSportDetail,'oneSportDetail');
     $scope.currentMatch = card;
     console.log(card, 'card');
-    $scope.currentMatch.sportName = 'Football';
+    $scope.currentMatch.sport = {};
+    $scope.currentMatch.sport = $scope.oneSportDetail;
+    $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
     $scope.currentMatch.result = $scope.currentMatch.resultFootball;
       modal = $uibModal.open({
           animation: true,

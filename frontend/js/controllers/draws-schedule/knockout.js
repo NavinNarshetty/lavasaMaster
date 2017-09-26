@@ -9,6 +9,7 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     var modal;
     $scope.matchCenter = function (card) {
       $scope.currentMatch = card;
+      $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
         modal = $uibModal.open({
             animation: true,
             scope: $scope,

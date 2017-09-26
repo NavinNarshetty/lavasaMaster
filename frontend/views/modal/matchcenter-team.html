@@ -2,7 +2,7 @@
     <div class="modal-header">
         <div class="matchstart-header relate ">
             <div class="matchcenter-sporticon">
-                <img src="img/icons/Badminton.png" alt="" class="img-responsive">
+                <img ng-src="{{currentMatch.sportName | sporticon:'icon'}}" alt="" class="img-responsive">
             </div>
             <div class="matchcenter-heading">
                 <div class="pull-right hidden-xs">
@@ -11,13 +11,40 @@
                 <p class="m-clear"><span>{{currentMatch.sport.sportslist.sportsListSubCategory.name}}</span> - <span>{{currentMatch.sport.ageGroup.name}}</span> <span>{{currentMatch.sport.gender}}</span> <span>{{currentMatch.round}}</span></p>
                 <p class="m-clear visible-xs">match id: <span>{{currentMatch.matchId}}</span> </p>
             </div>
-
         </div>
     </div>
     <div class="modal-body">
         <div class="modal-container">
             <div class="matchwinner">
-                <p>Match Winner: <span class="matchwinner-title"><span>Jamnabai Narsee School</span></p>
+                <p ng-if="currentMatch.result.isDraw == false || !currentMatch.result.isDraw">Match Winner: <span class="matchwinner-title"><span>Jamnabai Narsee School</span></p>
+                <p ng-if="currentMatch.result.isDraw == true"><span class="matchwinner-title">Draw Match</span></p>
+            </div>
+            <div class="matchcenter-teamfinalholder">
+              <div class="matchcenter-teampoints" ng-repeat = "team in currentMatch.result.teams track by $index">
+                <div class="matchcenter-teamschool">
+                  <p>{{team.schoolName}}</p>
+                </div>
+                <div class="sportwise-finalpointholder" ng-if = "currentMatch.sportName == 'Hockey'">
+                  <!-- halfPoints -->
+                  <div class="relate setpoint-element">
+                    <label class="text-uppercase setpointlabel">Half Point</label>
+                    <input type="number" ng-model="team.teamResult.halfPoints" class="score-number display-inline form-control" readonly>
+                  </div>
+                  <!-- halfPoints END -->
+                  <!-- finalPoints -->
+                  <div class="relate setpoint-element">
+                    <label class="text-uppercase setpointlabel">Final Point</label>
+                    <input type="number" ng-model="team.teamResult.finalPoints" class="score-number display-inline form-control" readonly>
+                  </div>
+                  <!-- finalPoints END -->
+                  <!-- penaltyPoints -->
+                  <div class="relate setpoint-element" ng-if="team.teamResult.penaltyPoints">
+                    <label class="text-uppercase setpointlabel">Penalty Point</label>
+                    <input type="number" ng-model="team.teamResult.penaltyPoints" class="score-number display-inline form-control" readonly>
+                  </div>
+                  <!-- penaltyPoints END -->
+                </div>
+              </div>
             </div>
             <div class="row">
                 <!-- <pre>{{currentMatch.result| json}}</pre> -->
@@ -276,9 +303,9 @@
                         </div>
                         <!-- PLAYER ACCORDIAN -->
                         <uib-accordion close-others="oneAtATime" class="teamplayer-accordion">
-                            <div uib-accordion-group class="panel-default" is-open="player.open" ng-repeat="player in team.players track by $index">
+                            <div uib-accordion-group class="panel-default" is-open="player.open" ng-repeat="player in team.players track by $index" is-disabled="currentMatch.sportName == 'Volleyball'">
                                 <uib-accordion-heading class="clearfix">
-                                    <span class="pull-right playerangle-accordion fa " ng-class="{'fa-angle-up': player.open, 'fa-angle-down': !player.open}"></span>
+                                    <span class="pull-right playerangle-accordion fa " ng-class="{'fa-angle-up': player.open, 'fa-angle-down': !player.open}" ng-hide="currentMatch.sportName == 'Volleyball'"></span>
                                     <p class="m-clear playerhead-accordion">
                                         <span>{{player.fullName}}</span>
                                     </p>
