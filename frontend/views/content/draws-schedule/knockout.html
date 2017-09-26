@@ -95,8 +95,8 @@
               </div>
 
               <div class="display-inline knockout-cardplayername ver-mid">
-                <p class="m-clear knockout-winner-name d-opensans-regular" title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'25'}}</p>
-                <p class="m-clear knockout-winner-school" title="{{player.athleteId.school.name}}">{{player.athleteId.school.name | truncate:'25'}}</p>
+                <p class="m-clear knockout-winner-name d-opensans-regular" title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'15'}}</p>
+                <p class="m-clear knockout-winner-school" title="{{player.athleteId.school.name}}">{{player.athleteId.school.name | truncate:'20'}}</p>
               </div>
             </div>
 
@@ -110,7 +110,7 @@
 
             <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true , 'knockout-live-foot': card.status === 'IsLive'}">
 
-              <p class="m-clear " ng-if="!card.status || card.status===''">
+              <p class="m-clear scheduledata-knockout" ng-if="!card.status || card.status===''">
 
                <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">{{card.scheduleTime}} </span>
             </p>
@@ -161,8 +161,8 @@
                 <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt=" " class="img-responsive ">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid ">
-                <p class="m-clear knockout-winner-name " title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'25'}}</p>
-                <p class="m-clear knockout-winner-school" title="{{player.athleteId.school.name}}">{{player.athleteId.school.name | truncate:'25'}}</p>
+                <p class="m-clear knockout-winner-name " title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'15'}}</p>
+                <p class="m-clear knockout-winner-school" title="{{player.athleteId.school.name}}">{{player.athleteId.school.name | truncate:'20'}}</p>
               </div>
             </div>
 
@@ -175,7 +175,7 @@
               </div>
             </div>
             <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true ,'knockout-live-foot': card.status === 'IsLive'}">
-              <p class="m-clear " ng-if="!card.status || card.status===''">
+              <p class="m-clear scheduledata-knockout" ng-if="!card.status || card.status===''">
                 <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
               </p>
               <p class="m-clear" ng-if="card.reason ==='Bye'">
@@ -227,8 +227,8 @@
                 <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt=" " class="img-responsive ">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid ">
-                <p class="m-clear knockout-winner-name " title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'25'}}</p>
-                <p class="m-clear knockout-winner-school" title="{{player.athleteId.school.name}}">{{player.athleteId.school.name | truncate:'25'}}</p>
+                <p class="m-clear knockout-winner-name " title="{{player.athleteId.fullName}}">{{player.athleteId.fullName | truncate:'15'}}</p>
+                <p class="m-clear knockout-winner-school" title="{{player.athleteId.school.name}}">{{player.athleteId.school.name | truncate:'20'}}</p>
               </div>
             </div>
 
@@ -242,7 +242,7 @@
             </div>
             <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true ,'knockout-live-foot': card.status === 'IsLive'}">
 
-              <p class="m-clear " ng-if="!card.status || card.status===''">
+              <p class="m-clear scheduledata-knockout" ng-if="!card.status || card.status===''">
                 <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
               </p>
               <p class="m-clear" ng-if="card.reason === 'Bye'">
