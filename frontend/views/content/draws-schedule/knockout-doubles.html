@@ -66,15 +66,15 @@
                 <img src="/img/dishapatani1.jpg" alt="" class="img-responsive">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid">
-                <p class="m-clear knockout-winner-name" title="{{player.fullName }}">{{player.fullName | truncate:20}}</p>
-                <p class="m-clear winner-knockout-school" title="{{players.schoolName}}">{{players.schoolName | truncate:20}}</p>
+                <p class="m-clear knockout-winner-name" title="{{player.fullName }}">{{player.fullName | truncate:15}}</p>
+                <p class="m-clear winner-knockout-school" title="{{players.schoolName}}">{{players.schoolName | truncate:18}}</p>
               </div>
             </div>
             </div>
 
             <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true , 'knockout-live-foot': card.status === 'IsLive'}">
              
-              <p class="m-clear "  ng-if="!card.status || card.status===''">
+              <p class="m-clear scheduledata-knockout"  ng-if="!card.status || card.status===''">
                   <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
             </p>
             <p class="m-clear " ng-if="card.reason ==='Bye'">
@@ -123,14 +123,14 @@
                     <img src="/img/dishapatani1.jpg" alt=" " class="img-responsive ">
                   </div>
                   <div class="display-inline knockout-cardplayername ver-mid ">
-                    <p class="m-clear knockout-winner-name" title="{{player.fullName}}">{{player.fullName}}</p>
-                    <p class="m-clear winner-knockout-school" title="{{players.schoolName}}">{{players.schoolName | truncate:'25'}}</p>
+                    <p class="m-clear knockout-winner-name" title="{{player.fullName}}">{{player.fullName | truncate:'15'}}</p>
+                    <p class="m-clear winner-knockout-school" title="{{players.schoolName}}">{{players.schoolName | truncate:'18'}}</p>
                   </div>
                 </div>
               </div>
               <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true , 'knockout-live-foot': card.status === 'IsLive'}">
 
-                <p class="m-clear " ng-if="!card.status || card.status===''">
+                <p class="m-clear scheduledata-knockout " ng-if="!card.status || card.status===''">
                   <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
                 </p>
                 <p class="m-clear " ng-if="card.reason ==='Bye'">
@@ -188,7 +188,7 @@
               </div>
               <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true , 'knockout-live-foot': card.status === 'IsLive'}">
 
-                <p class="m-clear " ng-if="!card.status || card.status===''">
+                <p class="m-clear scheduledata-knockout " ng-if="!card.status || card.status===''">
                   <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
                 </p>
                 <p class="m-clear" ng-if="card.reason ==='Bye'">
