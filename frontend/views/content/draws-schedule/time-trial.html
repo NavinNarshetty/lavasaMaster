@@ -166,12 +166,14 @@
                       </td>
                       <td>
                         <div class="text-capitalize">
-                          {{qualify.result}}
+                          <span> {{qualify.result}}</span>
+                          <span ng-if="!qualify.result">-</span>
                         </div>
                       </td>
                       <td>
                         <div class="text-capitalize">
-                          {{qualify.time}}
+                          <span>{{qualify.time}}</span>
+                          <span ng-if="!qualify.time">-</span>
                         </div>
                       </td>
                     </tr>
@@ -194,12 +196,14 @@
                       </td>
                       <td>
                         <div class="text-capitalize">
-                          {{qualify.result}}
+                          <span> {{qualify.result}}</span>
+                          <span ng-if="!qualify.result">-</span>
                         </div>
                       </td>
                       <td>
                         <div class="text-capitalize">
-                          {{qualify.time}}
+                          <span>{{qualify.time}}</span>
+                          <span ng-if="!qualify.time">-</span>
                         </div>
                       </td>
                     </tr>
