@@ -115,8 +115,6 @@ var model = {
                                             if (_.isEmpty(drawFormat)) {
                                                 callback(null, []);
                                             } else {
-                                                console.log("drawFormat", drawFormat);
-                                                sport.sportslist = drawFormat._id;
                                                 callback(null, drawFormat);
                                             }
                                         }
@@ -134,7 +132,413 @@ var model = {
                                                                 if (_.isEmpty(ageData)) {
                                                                     callback(null, []);
                                                                 } else {
+                                                                    sport.sportslist = drawFormat._id;
                                                                     sport.ageGroup = ageData._id;
+                                                                    console.log("drawFormat", sport);
+                                                                    callback(null, sport);
+                                                                }
+                                                            }
+                                                        });
+                                                    },
+                                                    function (sport, callback) {
+                                                        OldSport.saveSport(singleData, sport, function (err, drawFormat) {
+                                                            if (err) {
+                                                                callback(err, null);
+                                                            } else {
+                                                                if (_.isEmpty(drawFormat)) {
+                                                                    callback(null, []);
+                                                                } else {
+                                                                    callback(null, drawFormat);
+                                                                }
+                                                            }
+                                                        });
+                                                    },
+                                                ],
+                                                function (err, found) {
+                                                    if (found) {
+                                                        callback(null, found);
+                                                    } else {
+                                                        callback(null, found);
+                                                    }
+                                                });
+                                        },
+                                        function (err, found) {
+                                            callback(null, found);
+                                        });
+                                },
+                            ], function (err, found) {
+                                sport = {};
+                                callback(null, found);
+                            });
+                        },
+                        function (err, found) {
+                            callback(null, found);
+                        });
+                }
+            ],
+            function (err, found) {
+                if (found) {
+                    callback(null, found);
+                } else {
+                    callback(null, found);
+                }
+            });
+    },
+
+    getAllRacquetSingle: function (data, callback) {
+        var sport = {};
+        async.waterfall([
+                function (callback) {
+                    OldSport.find({
+                        year: data.year,
+                        "sportslist.sporttype": "Racquet",
+                        "firstcategory.name": "Singles"
+                    }).lean().exec(function (err, oldSportData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(oldSportData)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, oldSportData);
+                            }
+                        }
+                    });
+                },
+                function (oldSportData, callback) {
+                    var team = _.groupBy(oldSportData, "sportslist.name");
+                    var arr = _.keys(team);
+
+                    var sportlist;
+                    // callback(null, team);
+                    async.eachSeries(team, function (sportData, callback) {
+                            console.log("sportData", sportData.length);
+                            async.waterfall([
+                                function (callback) {
+                                    OldSport.saveCategory(sportData, function (err, category) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(category)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, category);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (category, callback) {
+                                    console.log("category", category);
+                                    OldSport.saveSportsListSubCategory(sportData, category, function (err, subCategory) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(subCategory)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, subCategory);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (subCategory, callback) {
+                                    console.log("sportlist inside", subCategory);
+                                    OldSport.saveSportsList(sportData, subCategory, function (err, drawFormat) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(drawFormat)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, drawFormat);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (drawFormat, callback) {
+                                    async.eachSeries(sportData, function (singleData, callback) {
+                                            console.log("category", singleData);
+                                            async.waterfall([
+                                                    function (callback) {
+                                                        OldSport.saveAge(singleData, function (err, ageData) {
+                                                            if (err) {
+                                                                callback(err, null);
+                                                            } else {
+                                                                if (_.isEmpty(ageData)) {
+                                                                    callback(null, []);
+                                                                } else {
+                                                                    sport.sportslist = drawFormat._id;
+                                                                    sport.ageGroup = ageData._id;
+                                                                    console.log("drawFormat", sport);
+                                                                    callback(null, sport);
+                                                                }
+                                                            }
+                                                        });
+                                                    },
+                                                    function (sport, callback) {
+                                                        OldSport.saveSport(singleData, sport, function (err, drawFormat) {
+                                                            if (err) {
+                                                                callback(err, null);
+                                                            } else {
+                                                                if (_.isEmpty(drawFormat)) {
+                                                                    callback(null, []);
+                                                                } else {
+                                                                    callback(null, drawFormat);
+                                                                }
+                                                            }
+                                                        });
+                                                    },
+                                                ],
+                                                function (err, found) {
+                                                    if (found) {
+                                                        callback(null, found);
+                                                    } else {
+                                                        callback(null, found);
+                                                    }
+                                                });
+                                        },
+                                        function (err, found) {
+                                            callback(null, found);
+                                        });
+                                },
+                            ], function (err, found) {
+                                sport = {};
+                                callback(null, found);
+                            });
+                        },
+                        function (err, found) {
+                            callback(null, found);
+                        });
+                }
+            ],
+            function (err, found) {
+                if (found) {
+                    callback(null, found);
+                } else {
+                    callback(null, found);
+                }
+            });
+
+    },
+
+    getAllRacquetDouble: function (data, callback) {
+        var sport = {};
+        async.waterfall([
+                function (callback) {
+                    OldSport.find({
+                        year: data.year,
+                        "sportslist.sporttype": "Racquet",
+                        "firstcategory.name": "Doubles"
+                    }).lean().exec(function (err, oldSportData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(oldSportData)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, oldSportData);
+                            }
+                        }
+                    });
+                },
+                function (oldSportData, callback) {
+                    var team = _.groupBy(oldSportData, "sportslist.name");
+                    var arr = _.keys(team);
+
+                    var sportlist;
+                    // callback(null, team);
+                    async.eachSeries(team, function (sportData, callback) {
+                            console.log("sportData", sportData.length);
+                            async.waterfall([
+                                function (callback) {
+                                    OldSport.saveCategory(sportData, function (err, category) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(category)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, category);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (category, callback) {
+                                    console.log("category", category);
+                                    OldSport.saveSportsListSubCategory(sportData, category, function (err, subCategory) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(subCategory)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, subCategory);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (subCategory, callback) {
+                                    console.log("sportlist inside", subCategory);
+                                    OldSport.saveSportsList(sportData, subCategory, function (err, drawFormat) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(drawFormat)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, drawFormat);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (drawFormat, callback) {
+                                    async.eachSeries(sportData, function (singleData, callback) {
+                                            console.log("category", singleData);
+                                            async.waterfall([
+                                                    function (callback) {
+                                                        OldSport.saveAge(singleData, function (err, ageData) {
+                                                            if (err) {
+                                                                callback(err, null);
+                                                            } else {
+                                                                if (_.isEmpty(ageData)) {
+                                                                    callback(null, []);
+                                                                } else {
+                                                                    sport.sportslist = drawFormat._id;
+                                                                    sport.ageGroup = ageData._id;
+                                                                    console.log("drawFormat", sport);
+                                                                    callback(null, sport);
+                                                                }
+                                                            }
+                                                        });
+                                                    },
+                                                    function (sport, callback) {
+                                                        OldSport.saveSport(singleData, sport, function (err, drawFormat) {
+                                                            if (err) {
+                                                                callback(err, null);
+                                                            } else {
+                                                                if (_.isEmpty(drawFormat)) {
+                                                                    callback(null, []);
+                                                                } else {
+                                                                    callback(null, drawFormat);
+                                                                }
+                                                            }
+                                                        });
+                                                    },
+                                                ],
+                                                function (err, found) {
+                                                    if (found) {
+                                                        callback(null, found);
+                                                    } else {
+                                                        callback(null, found);
+                                                    }
+                                                });
+                                        },
+                                        function (err, found) {
+                                            callback(null, found);
+                                        });
+                                },
+                            ], function (err, found) {
+                                sport = {};
+                                callback(null, found);
+                            });
+                        },
+                        function (err, found) {
+                            callback(null, found);
+                        });
+                }
+            ],
+            function (err, found) {
+                if (found) {
+                    callback(null, found);
+                } else {
+                    callback(null, found);
+                }
+            });
+
+    },
+
+    getAllAcquatics: function (data, callback) {
+        var sport = {};
+        async.waterfall([
+                function (callback) {
+                    OldSport.find({
+                        year: data.year,
+                        "sportslist.sporttype": "Aquatics"
+                    }).lean().exec(function (err, oldSportData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(oldSportData)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, oldSportData);
+                            }
+                        }
+                    });
+                },
+                function (oldSportData, callback) {
+                    var team = _.groupBy(oldSportData, "sportslist.name");
+                    var arr = _.keys(team);
+                    var sportlist;
+                    async.eachSeries(team, function (sportData, callback) {
+                            async.waterfall([
+                                function (callback) {
+                                    OldSport.saveCategory(sportData, function (err, category) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(category)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, category);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (category, callback) {
+                                    console.log("category", category);
+                                    OldSport.saveSportsListSubCategory(sportData, category, function (err, subCategory) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(subCategory)) {
+                                                callback(null, []);
+                                            } else {
+                                                callback(null, subCategory);
+                                            }
+                                        }
+                                    });
+                                },
+
+                                function (subCategory, callback) {
+                                    async.eachSeries(sportData, function (singleData, callback) {
+                                            console.log("category", singleData);
+                                            async.waterfall([
+                                                    function (callback) {
+                                                        console.log("sportlist inside", subCategory);
+                                                        OldSport.saveSportsListAcquatics(singleData, subCategory, function (err, drawFormat) {
+                                                            if (err) {
+                                                                callback(err, null);
+                                                            } else {
+                                                                if (_.isEmpty(drawFormat)) {
+                                                                    callback(null, []);
+                                                                } else {
+                                                                    callback(null, drawFormat);
+                                                                }
+                                                            }
+                                                        });
+                                                    },
+                                                    function (drawFormat, callback) {
+                                                        OldSport.saveAge(singleData, function (err, ageData) {
+                                                            if (err) {
+                                                                callback(err, null);
+                                                            } else {
+                                                                if (_.isEmpty(ageData)) {
+                                                                    callback(null, []);
+                                                                } else {
+                                                                    sport.sportslist = drawFormat._id;
+                                                                    sport.ageGroup = ageData._id;
+                                                                    console.log("drawFormat", sport);
                                                                     callback(null, sport);
                                                                 }
                                                             }
@@ -189,24 +593,53 @@ var model = {
         console.log("inside", data[0], "sub", subCategory);
         async.waterfall([
             function (callback) {
-                var drawFormat = {};
-                drawFormat.name = data[0].drawFormat;
-                DrawFormat.saveData(drawFormat, function (err, drawFormat) {
+                DrawFormat.find({
+                    name: data[0].drawFormat
+                }).lean().exec(function (err, found) {
                     if (err) {
                         callback(err, null);
                     } else {
-                        if (_.isEmpty(drawFormat)) {
-                            callback(null, []);
-                        } else {
-                            console.log("drawFormat", drawFormat);
-                            callback(null, drawFormat);
-                        }
+                        console.log("found", found);
+                        callback(null, found);
                     }
                 });
             },
+            function (found, callback) {
+                if (found.length == 0) {
+                    var drawFormat = {};
+                    drawFormat.name = data[0].drawFormat;
+                    DrawFormat.saveData(drawFormat, function (err, drawFormat) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(drawFormat)) {
+                                callback(null, []);
+                            } else {
+                                console.log("drawFormat", drawFormat);
+                                callback(null, drawFormat);
+                            }
+                        }
+                    });
+                } else {
+                    var drawFormat = found[0];
+                    callback(null, drawFormat);
+                }
+            },
             function (drawFormat, callback) {
                 var sportslist = {};
-                sportslist.name = data[0].sportslist.name;;
+                if (data[0].firstcategory) {
+                    if (data[0].firstcategory.name == "Singles" || data[0].firstcategory.name == "Doubles") {
+                        if (data[0].sportslist.name == "Squash") {
+                            sportslist.name = data[0].sportslist.name;
+                        } else {
+                            sportslist.name = data[0].sportslist.name + " " + data[0].firstcategory.name;
+                        }
+                    } else {
+                        sportslist.name = data[0].sportslist.name;
+                    }
+                } else {
+                    sportslist.name = data[0].sportslist.name;
+                }
                 sportslist.sportsListSubCategory = subCategory._id;
                 sportslist.drawFormat = drawFormat._id;
                 SportsList.saveData(sportslist, function (err, sportslist) {
@@ -234,38 +667,189 @@ var model = {
 
     },
 
-    saveSportsListSubCategory: function (data, category, callback) {
-        var sportsSubCategory = {};
-        sportsSubCategory.name = data[0].sportslist.name;
-        sportsSubCategory.sportsListCategory = category._id;
-        sportsSubCategory.isTeam = true;
-        SportsListSubCategory.saveData(sportsSubCategory, function (err, subCategory) {
+    saveSportsListAcquatics: function (data, subCategory, callback) {
+        console.log("inside", data, "sub", subCategory);
+        async.waterfall([
+            function (callback) {
+                DrawFormat.find({
+                    name: data.drawFormat
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        console.log("found", found);
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                if (found.length == 0) {
+                    var drawFormat = {};
+                    drawFormat.name = data.drawFormat;
+                    DrawFormat.saveData(drawFormat, function (err, drawFormat) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(drawFormat)) {
+                                callback(null, []);
+                            } else {
+                                console.log("drawFormat", drawFormat);
+                                callback(null, drawFormat);
+                            }
+                        }
+                    });
+                } else {
+                    var drawFormat = found[0];
+                    callback(null, drawFormat);
+                }
+            },
+            function (drawFormat, callback) {
+                SportsList.find({
+                    name: data.firstcategory.name
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        var final = {};
+                        final.found = found;
+                        final.drawFormat = drawFormat;
+                        console.log("found", found);
+                        callback(null, final);
+                    }
+                });
+            },
+            function (final, callback) {
+                if (final.found.length == 0) {
+                    var sportslist = {};
+                    sportslist.name = data.firstcategory.name;
+                    sportslist.sportsListSubCategory = subCategory._id;
+                    sportslist.drawFormat = final.drawFormat._id;
+                    SportsList.saveData(sportslist, function (err, sportslist) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(sportslist)) {
+                                callback(null, []);
+                            } else {
+                                // sportlist = sportslist._id;
+                                callback(null, sportslist);
+                            }
+                        }
+                    });
+                } else {
+                    callback(null, final.found[0]);
+                }
+            },
+        ], function (err, found) {
             if (err) {
                 callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, []);
             } else {
-                if (_.isEmpty(subCategory)) {
-                    callback(null, []);
-                } else {
-                    callback(null, subCategory);
-                }
+                callback(null, found);
             }
         });
+
+    },
+
+    saveSportsListSubCategory: function (data, category, callback) {
+        async.waterfall([
+            function (callback) {
+                SportsListSubCategory.find({
+                    name: data[0].sportslist.name
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        console.log("found", found);
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                console.log("length", found.length);
+                if (found.length == 0) {
+                    var sportsSubCategory = {};
+                    sportsSubCategory.name = data[0].sportslist.name;
+                    sportsSubCategory.sportsListCategory = category._id;
+                    if (category.name == "Team Sport") {
+                        sportsSubCategory.isTeam = true;
+                    } else {
+                        sportsSubCategory.isTeam = false;
+                    }
+                    SportsListSubCategory.saveData(sportsSubCategory, function (err, subCategory) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(subCategory)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, subCategory);
+                            }
+                        }
+                    });
+                } else {
+                    callback(null, found[0]);
+                }
+            },
+        ], function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, []);
+            } else {
+                callback(null, found);
+            }
+        });
+
     },
 
     saveCategory: function (data, callback) {
-        var sportsCategory = {};
-        sportsCategory.name = data[0].sportslist.sporttype + "Sports";
-        SportsListCategory.saveData(sportsCategory, function (err, category) {
+        async.waterfall([
+            function (callback) {
+                SportsListCategory.find({
+                    name: {
+                        $regex: data[0].sportslist.sporttype
+                    }
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        console.log("found", found);
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                console.log("length", found.length);
+                if (found.length == 0) {
+                    var sportsCategory = {};
+                    sportsCategory.name = data[0].sportslist.sporttype + " Sports";
+                    SportsListCategory.saveData(sportsCategory, function (err, category) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(category)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, category);
+                            }
+                        }
+                    });
+                } else {
+                    callback(null, found[0]);
+                }
+            },
+        ], function (err, found) {
             if (err) {
                 callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, []);
             } else {
-                if (_.isEmpty(category)) {
-                    callback(null, []);
-                } else {
-                    callback(null, category);
-                }
+                callback(null, found);
             }
         });
+
     },
 
     saveAge: function (data, callback) {
@@ -300,7 +884,7 @@ var model = {
                         }
                     });
                 } else {
-                    callback(null, found);
+                    callback(null, found[0]);
                 }
             },
         ], function (err, found) {
@@ -315,6 +899,7 @@ var model = {
     },
 
     saveSport: function (data, data1, callback) {
+        console.log("data1", data1);
         var sport = {};
         if (data.gender == 'Boys') {
             sport.gender = "male";
@@ -323,7 +908,7 @@ var model = {
         } else {
             sport.gender = "both";
         }
-        sport.sportslist = data1.SportsList;
+        sport.sportslist = data1.sportslist;
         sport.ageGroup = data1.ageGroup;
         if (data1.weight) {
             sport.weight = data1.weight;
@@ -343,8 +928,6 @@ var model = {
             }
         });
     },
-
-
 
 };
 module.exports = _.assign(module.exports, exports, model);
