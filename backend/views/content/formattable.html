@@ -155,6 +155,74 @@
             </div>
             <!-- HEATS HOLDER END -->
 
+            <!-- SWISS LEAGUE HOLDER -->
+            <div class="heats-holder" ng-if="drawType==='Swiss League'">
+              <div class="table-responsive">
+                <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>#</th>
+                      <th>
+                        Match Id
+                      </th>
+                      <th>
+                        Round
+                      </th>
+                      <th>
+                        PLAYER 1
+                      </th>
+                      <th>
+                        PLAYER 2
+                      </th>
+                      <th>
+                        SCORE
+                      </th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <!--<tr ng-repeat="item in items">-->
+                    <!-- <tr ng-repeat="item in items"> -->
+                    <tr ng-repeat="item in items|filter:item.matchId">
+                      <!--<tr>-->
+                      <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
+                      <!--<td>{{($index + 1)}}</td>-->
+                      <td>{{item.matchId}}</td>
+                      <td>{{item.round}}
+                        <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
+                                                  <pre>{{item.matchId}}</pre>
+                                                  <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
+                      </td>
+                      <td>
+                        {{item.resultSwiss.players[0].fullName}}
+                      </td>
+                      <td>
+                        {{item.resultSwiss.players[1].fullName}}
+                      </td>
+                      <td>
+                        <span>{{item.resultSwiss.players[0].score}}</span>- <span>{{item.resultSwiss.players[1].score}}</span>
+                      </td>
+                      <td>
+                        <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item)">
+                                                      <i class="fa fa-pencil"></i> Edit
+                                                    </a>
+                        <a class="btn btn-danger" ng-click="confDel(item._id)">
+                                                      <i class="fa fa-trash"></i> Delete
+                                                    </a>
+                      </td>
+                      <!--<td ng-repeat="but in json.json.action">
+                                                                        <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
+                                                                            <i class="fa" ng-class="but.icon"></i>{{but.name}}
+                                                                        </a>
+                                                                    </td>-->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- SWISS LEAGUE END -->
+
             <!-- QUALIFYING ROUND -->
             <div class="qualifying-holder" ng-if="drawType==='Qualifying Round'">
               <div class="table-responsive">

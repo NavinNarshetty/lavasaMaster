@@ -435,7 +435,16 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
             $scope.result.push(resultKnockout);
 
           } else if (data.sport.sportslist.drawFormat.name == 'Swiss League') {
+            _.each(data.opponentsSingle, function (key, index) {
+              console.log(key, "key in each")
+              if (key.athleteId.middleName == undefined) {
+                key.athleteId.fullName = key.athleteId.firstName + ' ' + key.athleteId.surname;
+              } else {
+                key.athleteId.fullName = key.athleteId.firstName + key.athleteId.middleName + key.athleteId.surname;
+              }
+              data.resultSwiss.players[index].fullName = key.athleteId.fullName;
 
+            })
           }
         }
       });
@@ -547,6 +556,11 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
         $state.go('detail-heats', {
           id: data.matchId
         });
+      } else if (data.sport.sportslist.drawFormat.name == "Swiss League") {
+        console.log("i am in swiss");
+        $state.go('detailplayer', {
+          id: data.matchId
+        });
       }
     }
 
@@ -570,23 +584,39 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
   // STATUS LIST
   $scope.statusList = ["IsLive", "IsPending", "IsCompleted"];
   // STATUS LIST END
-  $scope.getOneMatch = function () {
+  $scope.getOneBackend = function () {
     $scope.matchData.matchId = $stateParams.id;
-    NavigationService.getOneMatch($scope.matchData, function (data) {
+    console.log($scope.matchData, "match id")
+    NavigationService.getOneBackend($scope.matchData, function (data) {
+      console.log(data, "get data");
       if (data.value == true) {
         $scope.matchDetails = data.data;
         $scope.matchDetails.matchId = $scope.matchData.matchId;
         $scope.formData = data.data;
-        _.each($scope.formData.players, function (key) {
-          console.log($scope.formData.players, 'plr');
-          key.fullName = key.firstName + ' ' + key.surname;
-          _.each($scope.formData.resultsCombat.players, function (value) {
-            key.noShow = value.noShow;
-            key.walkover = value.walkover;
-            _.each(value.sets, function (data) {
-              key.point = data.point;
+        _.each($scope.formData.opponentsSingle, function (key, index) {
+          console.log($scope.formData.opponentsSingle, 'plr');
+          if (key.athleteId.middleName == undefined) {
+            key.athleteId.fullName = key.athleteId.firstName + ' ' + key.athleteId.surname;
+          } else {
+            key.athleteId.fullName = key.athleteId.firstName + key.athleteId.middleName + key.athleteId.surname;
+          }
+
+          // key.fullName = key.firstName + ' ' + key.surname;
+
+          if ($scope.formData.resultsCombat) {
+            _.each($scope.formData.resultsCombat.players, function (value) {
+              key.noShow = value.noShow;
+              key.walkover = value.walkover;
+              _.each(value.sets, function (data) {
+                key.point = data.point;
+              })
             })
-          })
+          } else if ($scope.formData.resultSwiss) {
+            $scope.formData.resultSwiss.players[index].fullName = key.athleteId.fullName;
+            $scope.formData.resultSwiss.players[index].schoolName = key.athleteId.school.name;
+
+          }
+
         })
 
         console.log($scope.formData)
@@ -598,7 +628,7 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
       }
     })
   };
-  $scope.getOneMatch();
+  $scope.getOneBackend();
   console.log($scope.formData, "last");
   $scope.dateOptions = {
     dateFormat: "dd/mm/yy",
@@ -621,7 +651,7 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
   // BACK END
   // SAVE
   $scope.saveDataMatch = function () {
-    // $scope.formData.scheduleDate = new Date($scope.formData.scheduleDate);
+    $scope.formData.matchId = $stateParams.id;
     console.log($scope.formData, "save");
     $scope.obj = $.jStorage.get("detail")
     NavigationService.saveMatch($scope.formData, function (data) {
