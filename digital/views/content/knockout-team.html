@@ -139,7 +139,7 @@
                                         <img src="img/sf-play.png" alt="play" class="img-responsive">
                                     </a>
                                 </div>
-                                <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter()">
+                                <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter(card)">
                                     <span class="custom-knockout-color">Match Center</span>
                                 </p>
 
@@ -208,7 +208,7 @@
                                                     <img src="img/sf-play.png" alt="play" class="img-responsive">
                                                 </a>
                                     </div>
-                                    <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter()">
+                                    <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter(card)">
                                         <span class="custom-knockout-color">Match Center</span>
                                     </p>
 
@@ -280,7 +280,7 @@
                                                     <img src="img/sf-play.png" alt="play" class="img-responsive">
                                                 </a>
                                     </div>
-                                    <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter()">
+                                    <p class="m-clear pointer" ng-if="card.reason!=='Bye' && !card.isNoMatch" ng-click="matchCenter(card)">
                                         <span class="custom-knockout-color">Match Center</span>
                                     </p>
 

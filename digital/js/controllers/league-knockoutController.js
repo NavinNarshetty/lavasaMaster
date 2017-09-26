@@ -1,4 +1,4 @@
-myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, knockoutService, $rootScope) {
+myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, knockoutService, $rootScope, $uibModal) {
   $scope.template = TemplateService.getHTML("content/league-knockout.html");
   TemplateService.title = "League Knockout"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -117,7 +117,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
       });
     });
   }
-  //for Points Table 
+  //for Points Table
   $scope.showMorePoints = function (bool) {
     if (bool) {
       $scope.showPoints = true;
@@ -147,5 +147,39 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
     }
   };
   // START SCORING END
+
+  // MATCH CENTER MODAL
+  $scope.matchCenter = function (card) {
+    console.log($scope.oneSportDetail,'oneSportDetail');
+    $scope.currentMatch = card;
+    console.log(card, 'card');
+    $scope.currentMatch.sport = {};
+    $scope.currentMatch.sport = $scope.oneSportDetail;
+    $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
+    $scope.currentMatch.result = $scope.currentMatch.resultFootball;
+      modal = $uibModal.open({
+          animation: true,
+          scope: $scope,
+          keyboard: false,
+          templateUrl: 'views/modal/matchcenter-team.html',
+          size: 'lg',
+          windowClass: 'teammatchcenter-modal'
+      })
+      console.log($scope.currentMatch, 'current');
+  }
+  // MATCH CENTER MODAL END
+  // CLEAVE FUNCTION OPTIONS
+  $scope.options = {
+    formation: {
+          blocks: [1, 1, 1, 1],
+          uppercase: true,
+          delimiters: ['-']
+      },
+      score: {
+        blocks: [2],
+        numeral: true
+      }
+  }
+  // CLEAVE FUNCTION OPTIONS END
 
 });

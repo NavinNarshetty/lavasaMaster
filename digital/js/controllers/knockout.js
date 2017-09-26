@@ -3,22 +3,6 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
 
-    // MODAL
-    $scope.data = [1, 2, 3, 4, 5, 6, 7, 8];
-    // MODAL
-    var modal;
-    $scope.matchCenter = function () {
-        modal = $uibModal.open({
-            animation: true,
-            scope: $scope,
-            // backdrop: 'static',
-            keyboard: false,
-            templateUrl: 'views/modal/matchcenter.html',
-            size: 'lg',
-            windowClass: 'matchcenter-modal'
-        })
-    }
-    // MODAL END
     $scope.oneAtATime = true;
     $scope.status = {
         isCustomHeaderOpen: false,
@@ -218,6 +202,23 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
         }
     };
     $scope.getSportSpecificRounds();
+
+    // MATCH CENTER
+    $scope.matchCenter = function (card) {
+      $scope.currentMatch = card;
+      $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
+        modal = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            // backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'views/modal/matchcenter.html',
+            size: 'lg',
+            windowClass: 'matchcenter-modal'
+        })
+        console.log($scope.currentMatch, 'current');
+    }
+    // MATCH CENTER END
 
 
 });

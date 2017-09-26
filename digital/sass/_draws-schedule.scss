@@ -978,13 +978,26 @@ $sport-table-grey:#efeeee !default;
 // MATCH CENTER MODAL
 // MATCH CENTER
 .matchcenter-modal {
-  // color: red;
+  .modal-content{
+    border-radius: 0;
+  }
   .matchwinner-title {
     font-size: 16px;
     font-weight: 700;
   }
   .modal-header {
     padding: 0px;
+  }
+  .matchcenter-sporticon{
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    width: 65px;
+  }
+  .matchwinner {
+    position: absolute;
+    top: 0;
+    left: 90px;
   }
   .combatscore-page {
     min-height: calc(100vh - 60px);
@@ -1012,9 +1025,18 @@ $sport-table-grey:#efeeee !default;
     width: 60px;
     height: 60px;
     padding: 5px 10px;
-    margin: 0 auto;
+    border: none;
+    margin: 0 10px;
+    background-color: #e1e1e1;
     font-size: 24px;
+    font-weight: 700;
     text-align: center;
+  }
+  .matchcenter-playerpoint{
+    border: none;
+    background-color: #e1e1e1;
+    font-size: 24px;
+    font-weight: 700;
   }
   .score-buttons {
     padding: 10px 13px;
@@ -1080,10 +1102,14 @@ $sport-table-grey:#efeeee !default;
   }
   .matchstart-header {
     padding: 10px 15px;
+    padding-left: 90px;
     background-color: $brand-primary;
     color: #fff;
     font-size: 16px;
     text-transform: uppercase;
+  }
+  .matchcenter-heading{
+    font-weight: 700;
   }
   .matchplayer-card {
     padding: 10px;
@@ -1103,11 +1129,32 @@ $sport-table-grey:#efeeee !default;
     right: 0;
     padding: 5px;
     font-size: 12px;
+    color: $sport-dark-grey;
+  }
+  .modal-container{
+    padding: 0;
+  }
+  .playerpoint-accordion{
+    .panel-default > .panel-heading{
+      border-bottom: 1px solid #ddd;
+      background-color: transparent;
+    }
+    .panel-group .panel{
+      border: none;
+      border-radius: 0;
+      box-shadow: none;
+    }
+    .setpoint-label{
+      font-weight: 600;
+      font-size: 12px;
+    }
+    .panel-default > .panel-heading + .panel-collapse > .panel-body{
+      border: none;
+    }
   }
   .matchplayer-image {
     width: 60px;
     height: 60px;
-    border: 1px solid red;
     border-radius: 100%;
     margin: 0 10px;
     display: inline-block;
@@ -1120,6 +1167,8 @@ $sport-table-grey:#efeeee !default;
     display: inline-block;
     vertical-align: middle;
     .matchplayer-name {
+      margin: 0;
+      color: $sport-primary;
       font-size: 16px;
       font-weight: 700;
     }
@@ -1196,11 +1245,16 @@ $sport-table-grey:#efeeee !default;
     margin: 0px 10px;
   }
   .racquet-setscore {
-    margin: 20px 0;
+    margin: 0;
     text-align: center;
     .scoring-set {
       border: none;
-      margin: 0px;
+      margin: 10px 0;
+      &:last-child{
+        .setpointlabel{
+          display: none;
+        }
+      }
     }
   }
   .setpoint-element {
@@ -1210,13 +1264,14 @@ $sport-table-grey:#efeeee !default;
       display: block;
     }
   } // RACKET-SCORE PAGE END
+  .playerhead-accordion{
+    font-weight: 700;
+    color: #646464;
+  }
+  .playerangle-accordion{
+    font-size: 24px;
+  }
 }
 
-// BASKETBALL
-.score-quaterpoints {
-  margin: 0 10px;
-}
-
-// BASKETBALL END
 // MATCH CENTER END
 // MATCH CENTER MODAL END

@@ -121,5 +121,58 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
   };
   $scope.getSportSpecificRounds();
 
+  // MATCH CENTER MODAL
+  $scope.matchCenter = function (card) {
+    $scope.currentMatch = card;
+    $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
+    switch ($scope.currentMatch.sportName) {
+      case "Basketball":
+        $scope.currentMatch.result = $scope.currentMatch.resultBasketball;
+      break;
+      case "Handball":
+        $scope.currentMatch.result = $scope.currentMatch.resultHandball;
+      break;
+      case "Hockey":
+        $scope.currentMatch.result = $scope.currentMatch.resultHockey;
+      break;
+      case "Kabaddi":
+        $scope.currentMatch.result = $scope.currentMatch.resultKabaddi;
+      break;
+      case "Water Polo":
+        $scope.currentMatch.result = $scope.currentMatch.resultWaterPolo;
+      break;
+      case "Volleyball":
+        $scope.currentMatch.result = $scope.currentMatch.resultVolleyball;
+      break;
+      case "Kho Kho":
+      case "Throwball":
+        $scope.currentMatch.result = $scope.currentMatch.resultsCombat;
+      break;
+    }
+      modal = $uibModal.open({
+          animation: true,
+          scope: $scope,
+          keyboard: false,
+          templateUrl: 'views/modal/matchcenter-team.html',
+          size: 'lg',
+          windowClass: 'teammatchcenter-modal'
+      })
+      console.log($scope.currentMatch, 'current');
+  }
+  // MATCH CENTER MODAL END
+  // CLEAVE FUNCTION OPTIONS
+  $scope.options = {
+    formation: {
+          blocks: [1, 1, 1, 1],
+          uppercase: true,
+          delimiters: ['-']
+      },
+      score: {
+        blocks: [2],
+        numeral: true
+      }
+  }
+  // CLEAVE FUNCTION OPTIONS END
+
 
 });

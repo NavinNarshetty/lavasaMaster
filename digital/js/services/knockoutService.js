@@ -25,6 +25,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
                 team.isWinner = true;
                 value.isWinner = team.isWinner;
                 value.reason = value.finalResult.winner.reason;
+                value.winnerName = team.schoolName;
 
               } else {
                 team.isWinner = false;
@@ -68,6 +69,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
                 if (obj && obj.athleteId && (obj.athleteId._id === value.finalResult.winner.player)) {
                   obj.isWinner = true;
                   value.isWinner = obj.isWinner;
+                  value.winnerName = obj.athleteId.fullName;
                 } else {
                   obj.isWinner = false;
                 }
@@ -83,7 +85,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
 
   };
 
-  //for league-knockout 
+  //for league-knockout
   this.sortLeagueKnockoutResult = function (result) {
     if (result.opponentsTeam) {
       _.each(result.opponentsTeam, function (team, index) {

@@ -319,11 +319,25 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                         }
                                         break;
                                     case 'Aquatics Sports':
-                                        toastr.error('Scoring not applicable for this event', 'Error Message');
-                                        // $state.go('knockout-team', {
-                                        //     id: $scope.drawDetails.sport,
-                                        //     name: $scope.nameOfSport
-                                        // });
+                                        switch ($scope.drawDetails.drawFormat) {
+                                            case 'Knockout':
+                                                if ($scope.drawDetails.isTeam === true) {
+                                                    $state.go('knockout-team', {
+                                                      drawFormat: $scope.drawDetails.drawFormat,
+                                                        id: $scope.drawDetails.sport
+                                                    });
+                                                } else {
+                                                    $state.go('knockout', {
+                                                      drawFormat: $scope.drawDetails.drawFormat,
+                                                        id: $scope.drawDetails.sport
+                                                    });
+                                                }
+                                                break;
+
+                                            default:
+                                                toastr.error('Scoring not applicable for this event', 'Error Message');
+                                                break;
+                                        }
                                         break;
                                     default:
                                         toastr.error("Found New Sport Type");
