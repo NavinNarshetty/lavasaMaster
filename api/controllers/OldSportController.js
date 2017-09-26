@@ -117,7 +117,7 @@ var controller = {
             // ], function (err, found) {
             //     res.callback(null, found);
             // });
-            OldSport.getAllJudo(req.body, res.callback);
+            OldSport.getAllBoxing(req.body, res.callback);
         } else {
             res.json({
                 "data": "Data not Found",
