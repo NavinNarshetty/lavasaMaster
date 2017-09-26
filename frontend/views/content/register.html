@@ -405,12 +405,12 @@
                     <li>26+ Sports* </li>
                 </ul>
                 <ul class="list-unstyled date-venue removeDash" ng-if="isCollege == false">
-                    <li>Dates: 1st Dec – 17th Dec {{year}}** </li>
+                    <li>Dates: 6th Dec – 17th Dec {{year}}** </li>
                     <li>Venue: DY Patil Sports Academy, Nerul | University Sports Pavilion (Athletics) | Mumbai Hockey Association,
                         Churchgate (Hockey)</li>
                 </ul>
                 <ul class="list-unstyled date-venue" ng-if="isCollege == true">
-                    <li>Dates: 1st Dec – 17th Dec {{year}}* </li>
+                    <li>Dates: 6th Dec – 17th Dec {{year}}* </li>
                     <li>Venue: DY Patil Sports Academy, Nerul | Mumbai Hockey Association, Churchgate (Hockey)</li>
                 </ul>
                 <div class="venue-bottom ">
@@ -494,14 +494,20 @@
                             <p><b>Register as an athlete for SFA {{sfaCity}} {{eventYear}}:</b>
                             </p>
                             <ul class="list-unstyled athlete-list f-s">
-                                <li ng-if="isCollege == false"> Fill out the online ‘Athlete Registration Form’ & pay the registration amount of INR 200/-
+                                <li> Fill out the online ‘Athlete Registration Form’ & pay the registration amount of INR
+                                    <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">100</span>/-
                                     (inclusive of all applicable taxes)<br>
-                                    <span class="f-14">*In the event that your school does not register for SFA {{sfaCity}} {{eventYear}} by the 30th of September,
-                                    an additional fee of INR 400/- (Inclusive of all applicable taxes) will be levied.</span>
+                                    <span class="f-14">*In the event that your school does not register for SFA {{sfaCity}} {{eventYear}} by the<span
+                                        ng-if="isCollege == false"> 30th of September</span>
+                                    <span ng-if="isCollege == true"> 15th of October</span>, an additional fee of INR
+                                    <span
+                                        ng-if="isCollege == false">400</span>
+                                        <span ng-if="isCollege == true">200</span>/- (Inclusive of all applicable taxes)
+                                        will be levied.</span>
                                 </li>
-                                <li ng-if="isCollege == true">Fill out the athlete registration form & pay the athlete registration fees.</li>
+                                <!-- <li ng-if="isCollege == true">Fill out the athlete registration form & pay the athlete registration fees.</li>
                                 <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 300 will be charged to each athlete registering
-                                    for SFA Mumbai 2017</li>
+                                    for SFA Mumbai 2017</li> -->
                                 <li>After the verification process, SFA will issue a unique athlete SFA ID and password. (This
                                     process may take up to 2 working days).
                                     <!--**<br><span class="f-14">**Please keep your SFA ID and password safe as you will require this to register yourself for 
@@ -518,7 +524,7 @@
                             <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
                             from their school registrations. </p>-->
                             <p class="custom-a mb-33" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year, eventYear) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
-                            <p class="custom-a mb91" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year, eventYear) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
+                            <p class="custom-a mb-75" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year, eventYear) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
                         </div>
                         <div class="text-center mb-20 "><a ui-sref="formathlete"><button class="btn-category orange "> Click here for Athlete Registration Form</button></a></div>
                     </div>
@@ -1371,7 +1377,7 @@
                     <li>20+ Sports* </li>
                 </ul>
                 <ul class="list-unstyled date-venue" ng-if="isCollege == false">
-                    <li>Dates: 4th – 17th NOVEMBER {{year}}</li>
+                    <li>Dates: 4th – 18th NOVEMBER {{year}}</li>
                     <li>Venue: Gachibowli Sports Complex | LB Stadium (Tennis)</li>
                 </ul>
                 <ul class="list-unstyled date-venue" ng-if="isCollege == true">

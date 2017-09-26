@@ -13,12 +13,13 @@
                         us to create a personalized sporting experience for you on our website www.sfanow.in to highlight
                         your performances in sport by way of profiles, records maintenance, match videos, statistics and
                         reports.
-                        <br> The annual Athlete registration fee for SFA {{sfaCity}} {{eventYear}} is Rs. <span ng-if="isCollege == false">200 <br>In the event
-                        that your {{type}} does not register for SFA {{sfaCity}} {{eventYear}} by the 30th of September an additional fee
-                        of Rs. <span ng-if="sfaCity == 'Hyderabad'">200</span> <span ng-if="sfaCity == 'Mumbai'">400</span>/-
+                        <br> The annual Athlete registration fee for SFA {{sfaCity}} {{eventYear}} is Rs. <span ng-if="isCollege == false">200</span>
+                        <span ng-if="isCollege == true">100</span><br>In the event that your {{type}} does not register for
+                        SFA {{sfaCity}} {{eventYear}} by the<span ng-if="isCollege == false"> 30th of September</span>
+                        <span ng-if="isCollege == true"> 15th of October</span> an additional fee of Rs. <span ng-if="sfaCity == 'Hyderabad'">200</span>                        <span ng-if="sfaCity == 'Mumbai' && isCollege == false">400</span> <span ng-if="sfaCity == 'Mumbai' && isCollege == true">200</span>/-
                         (Inclusive of all applicable taxes) will be levied. This discounted fee for registered {{type}} athletes
                         is a step to encourage {{type}}s to support their athletes and sports.</span>
-                        <span ng-if="isCollege == true">300</span> (Inclusive of all applicable taxes).
+                        <!-- <span ng-if="isCollege == true">300</span> (Inclusive of all applicable taxes). -->
                         <br>
                         <a ng-click="athBenModal(type, sfaCity, year, eventYear)"><strong>Click here</strong></a> to view
                         registered athlete benefits for SFA {{sfaCity}} {{eventYear}}.
@@ -891,7 +892,7 @@
                             <input ng-model="formData.registrationFee" type="radio" id="radio13" name="radio" value="online PAYU">
                             <label for="radio13" class="padd-lr sf-list" ng-click="show=6"><span></span>Online Payment</label>
                             <p ng-if="show==6" class="ft12">Online Payment: Selecting this option will enable you to pay the registration fee of Rs.
-                                <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">300</span> (Inclusive
+                                <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">100</span> (Inclusive
                                 of all applicable taxes) via one of the following methods: 1) Credit Card 2) Debit Card 3)
                                 Net Banking
                             </p>
@@ -899,7 +900,7 @@
                             <label for="radio12" class="padd-lr sf-list"><span></span>Cheque</label>-->
                             <p ng-if="show==5" class="ft12">
                                 Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs.
-                                <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">300</span> (Inclusive
+                                <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">100</span> (Inclusive
                                 of all applicable taxes) by Cash/Cheque/Demand Draft in favour of ‘SFA Events Private Limited’
                                 which is to be couriered/hand delivered to: <span ng-if="sfaCity == 'Mumbai'">1306, Panchratna Building, Opera House (Next
                                 to Roxy Cinema), Charni Road, Mumbai – 400004</span><span ng-if="sfaCity == 'Hyderabad'">‘SFA Events Private Limited’ C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor, Advant Delta, Plot No. 4, Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081.<br><span style="font-size:12px">(Head Office: SFA Events Pvt. Ltd., Panchratna Building, Opera House, Mumbai - 400004)</span></span>
@@ -911,7 +912,7 @@
                                 <label for="radio11" class="padd-lr sf-list" ng-click="show=5"><span></span>Cash/Cheque/Demand Draft</label>
                                 <p ng-if="show==5" class="ft12">
                                     Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs.
-                                    <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">300</span>                                    (Inclusive of all applicable taxes) by Cash/Cheque/Demand Draft in favour of ‘SFA Events
+                                    <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">100</span>                                    (Inclusive of all applicable taxes) by Cash/Cheque/Demand Draft in favour of ‘SFA Events
                                     Private Limited’ which is to be couriered/hand delivered to: <span ng-if="sfaCity == 'Mumbai'">1306, Panchratna Building, Opera House (Next
                                 to Roxy Cinema), Charni Road, Mumbai – 400004</span><span ng-if="sfaCity == 'Hyderabad'">‘SFA Events Private Limited’ C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor, Advant Delta, Plot No. 4, Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081.<br><span style="font-size:12px">(Head Office: SFA Events Pvt. Ltd., Panchratna Building, Opera House, Mumbai - 400004)</span></span>
                                 </p>
@@ -920,7 +921,7 @@
                                 <input ng-model="formData.registrationFee" type="radio" id="radio13" name="radioxs" value="online PAYU">
                                 <label for="radio13" class="padd-lr sf-list" ng-click="show=6"><span></span>Online Payment</label>
                                 <p ng-if="show==6" class="ft12">Online Payment: Selecting this option will enable you to pay the registration fee of Rs.
-                                    <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">300</span>                                    (Inclusive of all applicable taxes) via one of the following methods: 1) Credit Card
+                                    <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">100</span>                                    (Inclusive of all applicable taxes) via one of the following methods: 1) Credit Card
                                     2) Debit Card 3) Net Banking
                                 </p>
                             </div>

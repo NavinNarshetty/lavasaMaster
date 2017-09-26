@@ -235,7 +235,7 @@ var model = {
 
     forgotPassword: function (data, callback) {
         var sfatype = data.sfaid.charAt(1);
-        console.log(sfatype);
+        console.log(sfatype, data);
         if (data.type == "school" && sfatype == 'S') {
             Registration.findOne({
                 sfaID: data.sfaid,
@@ -269,9 +269,16 @@ var model = {
                             } else if (data3) {
                                 console.log("New password generated");
                                 var emailData = {};
-                                emailData.from = "info@sfanow.in";
+                                emailData.from = data.property.infoId;
                                 emailData.sfaid = found.sfaID;
                                 emailData.email = found.email;
+                                emailData.city = data.property.sfaCity;
+                                emailData.year = data.property.year;
+                                emailData.eventYear = data.property.eventYear;
+                                emailData.infoId = data.property.infoId;
+                                emailData.infoNo = data.property.infoNo;
+                                emailData.cityAddress = data.property.cityAddress;
+                                emailData.ddFavour = data.property.ddFavour;
                                 emailData.password = newPassword;
                                 emailData.filename = "forgotPassword.ejs";
                                 emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
@@ -326,9 +333,16 @@ var model = {
                             } else if (data3) {
                                 console.log("New password generated");
                                 var emailData = {};
-                                emailData.from = "info@sfanow.in";
+                                emailData.from = data.property.infoId;
                                 emailData.sfaid = found.sfaId;
                                 emailData.email = found.email;
+                                emailData.city = data.property.sfaCity;
+                                emailData.year = data.property.year;
+                                emailData.eventYear = data.property.eventYear;
+                                emailData.infoId = data.property.infoId;
+                                emailData.infoNo = data.property.infoNo;
+                                emailData.cityAddress = data.property.cityAddress;
+                                emailData.ddFavour = data.property.ddFavour;
                                 emailData.password = newPassword;
                                 emailData.filename = "forgotPassword.ejs";
                                 emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";

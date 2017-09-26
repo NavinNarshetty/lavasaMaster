@@ -135,14 +135,25 @@
                                     <p>If you do not receive an email from us within the stipulated time<br> please call us
                                         on <span style="font-family:TitilliumWeb-Bold;"> <%=infoNo%></span> or
                                         <br> email us at <span style="font-family:TitilliumWeb-Bold;"><%=infoId%></span></p>
-                                    <p style="font-family:TitilliumWeb-Bold;">In the event that your school does not register by 30th September 2017 an additional
-                                        fee of
-                                        <i class="fa fa-inr" aria-hidden="true"></i>
-                                        <%if(infoId == 'info@sfanow.in'){%>
-                                            400/-.
-                                            <%} else if(infoId == 'info.hyd@sfanow.in'){%>
-                                                200/-.
-                                                <%}%> will be levied.</p>
+                                    <p style="font-family:TitilliumWeb-Bold;">In the event that your
+                                        <%=type%> does not register by
+                                            <%if(type == 'school'){%>
+                                                30th September
+                                                <%=year%>
+                                                    <%} else {%>
+                                                        15th October
+                                                        <%=year%>
+                                                            <%}%> an additional fee of
+                                                                <i class="fa fa-inr" aria-hidden="true"></i>
+                                                                <%if(infoId == 'info@sfanow.in'){%>
+                                                                    <%if(type == 'school'){%>
+                                                                        400/-.
+                                                                        <%} else {%>
+                                                                            200/-.
+                                                                            <%}%>
+                                                                                <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                                                                    200/-.
+                                                                                    <%}%> will be levied.</p>
                                     <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA<br></p>
 
                     </div>

@@ -10,8 +10,8 @@ var schema = new Schema({
         ref: 'DrawFormat',
         index: true
     },
-    // inactiveimage: String,
-    // image: String
+    inactiveimage: String,
+    image: String
 });
 
 schema.plugin(deepPopulate, {

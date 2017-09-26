@@ -355,8 +355,17 @@
                         <p style="margin-bottom: 0px;"> 5) In the event that your
                             <%=type%> <span style="font-weight: bold;">DOES NOT </span>register for SFA
                                 <%=city%>
-                                    <%=eventYear%> by the <span style="font-weight: bold;">30th September <%=year%> an additional fee of Rs. <%if(infoId == 'info@sfanow.in'){%>
+                                    <%=eventYear%> by the <span style="font-weight: bold;">
+                                            <%if(type == 'school'){%>
+                                                30th September <%=year%>                                                <%} else {%> 
+                                                    15th October <%=year%>
+                                                    <%}%>
+                                         an additional fee of Rs. <%if(infoId == 'info@sfanow.in'){%>
+                                        <%if(type == 'school'){%>
                                 400/-.
+                                <%} else {%> 
+                                    200/-.
+                                    <%}%>
                                 <%} else if(infoId == 'info.hyd@sfanow.in'){%> 
                                     200/-.
                                     <%}%>(inclusive of all applicable taxes) </span>will be levied <span style="font-weight: bold;">PER ATHLETE</span>.

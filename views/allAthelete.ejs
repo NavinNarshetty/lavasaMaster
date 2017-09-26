@@ -109,18 +109,23 @@
                     <div style="padding: 0px 18px; font-family: TitilliumWeb-Regular;font-size: 17px;">
                         <p> Dear Sir/Madam,</p>
 
-                        <p style="font-family:TitilliumWeb-Bold;"> Congratulations, Your school has officially registered for SFA
-                            <%=city%>
-                                <%=eventYear%>.
+                        <p style="font-family:TitilliumWeb-Bold;"> Congratulations, Your
+                            <%=type%> has officially registered for SFA
+                                <%=city%>
+                                    <%=eventYear%>.
                         </p>
                         <p>Your registration process is now complete and you are<b> not </b> required to make the additional
                             payment of
                             <i class="fa fa-inr" aria-hidden="true"></i>
                             <%if(infoId == 'info@sfanow.in'){%>
-                                400/-.
-                                <%} else if(infoId == 'info.hyd@sfanow.in'){%>
-                                    200/-.
-                                    <%}%>
+                                <%if(type == 'school'){%>
+                                    400/-.
+                                    <%} else {%>
+                                        200/-
+                                        <%}%>
+                                            <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                                200/-.
+                                                <%}%>
                         </p>
                         <p>For further queries please call us on <span style="font-family:TitilliumWeb-Bold;"><%=infoNo%></span>                            or<br> email us at <span style="font-family:TitilliumWeb-Bold;"><%=infoId%></span></p>
                         <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>

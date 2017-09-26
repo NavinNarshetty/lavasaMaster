@@ -47,6 +47,14 @@
                   </ui-select>
                   <div class="error-msg" ng-if="detailForm.selectsdrawformat.$invalid && detailForm.selectsdrawformat.$touched">Please Enter Draw Format*</div>
                 </div>
+                <div class="form-group">
+                  <label>Active Image</label>
+                  <upload-image ng-model="detailForm.image"></upload-image>
+                </div>
+                <div class="form-group">
+                  <label>Inactive Image</label>
+                  <upload-image ng-model="detailForm.inactiveimage"></upload-image>
+                </div>
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-default" type="submit" ng-click="saveData(formData ,detailForm)">Save</button>
                   <button class="btn btn-default" ng-click="onCancel('sportslist')">Cancel</button>
