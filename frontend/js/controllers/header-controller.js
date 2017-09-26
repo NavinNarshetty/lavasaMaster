@@ -1,10 +1,10 @@
 // For Test
-// var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
-// var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
-// var globalLinkForAll = "http://testmumbai.sfanow.in/";
-var globalLinkSchoolRegister = "http://testhyderabadschool.sfanow.in";
-var globalLinkCollegeRegister = "http://testhyderabadcollege.sfanow.in";
-var globalLinkForAll = "http://testhyderabad.sfanow.in/";
+var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
+var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
+var globalLinkForAll = "http://testmumbai.sfanow.in/";
+// var globalLinkSchoolRegister = "http://testhyderabadschool.sfanow.in";
+// var globalLinkCollegeRegister = "http://testhyderabadcollege.sfanow.in";
+// var globalLinkForAll = "http://testhyderabad.sfanow.in/";
 // var globalLinkSchoolRegister = "http://testahmedabadschool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testahmedabadcollege.sfanow.in";
 // var globalLinkForAll = "http://testahmedabad.sfanow.in/";
