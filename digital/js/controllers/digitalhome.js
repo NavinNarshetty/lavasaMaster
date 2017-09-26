@@ -319,10 +319,11 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                         }
                                         break;
                                     case 'Aquatics Sports':
-                                        $state.go('knockout-team', {
-                                            id: $scope.drawDetails.sport,
-                                            name: $scope.nameOfSport
-                                        });
+                                        toastr.error('Scoring not applicable for this event', 'Error Message');
+                                        // $state.go('knockout-team', {
+                                        //     id: $scope.drawDetails.sport,
+                                        //     name: $scope.nameOfSport
+                                        // });
                                         break;
                                     default:
                                         toastr.error("Found New Sport Type");
