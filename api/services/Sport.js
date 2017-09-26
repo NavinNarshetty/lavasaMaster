@@ -29,7 +29,8 @@ var schema = new Schema({
         index: true
     },
     fromDate: Date,
-    toDate: Date
+    toDate: Date,
+    eventPdf: String,
 });
 
 schema.plugin(deepPopulate, {
@@ -3230,5 +3231,66 @@ var model = {
             });
         }
     },
+
+    setEventPdf: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var matchObj = {};
+                    if (data.weight) {
+                        matchObj = {
+                            sportslis: data.sportslist,
+                            ageGroup: data.ageGroup,
+                            gender: data.gender,
+                            weight: data.weight
+                        }
+                    } else {
+                        matchObj = {
+                            sportslis: data.sportslist,
+                            ageGroup: data.ageGroup,
+                            gender: data.gender,
+                        }
+                    }
+                    Sport.findOne(matchObj).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (_.isEmpty(found)) {
+                        callback(null, found);
+                    } else {
+                        var updateObj = {
+                            $set: {
+                                eventPdf: data.eventPdf
+                            }
+                        };
+                        Match.update({
+                            _id: found._id
+                        }, updateObj).exec(
+                            function (err, match) {
+                                callback(null, "Updated Successfully !");
+                            });
+                    }
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(err, null);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    }
 };
 module.exports = _.assign(module.exports, exports, model);
