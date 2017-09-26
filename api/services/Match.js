@@ -6920,6 +6920,12 @@ var model = {
                     resultWaterPolo: data.resultWaterPolo
                 }
             };
+        } else if (data.resultSwiss) {
+            var matchObj = {
+                $set: {
+                    resultSwiss: data.resultSwiss
+                }
+            };
         }
 
         Match.update({
