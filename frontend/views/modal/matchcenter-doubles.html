@@ -1,0 +1,110 @@
+<div class="matchcenter-modal">
+  <div class="modal-header">
+    <div class="matchstart-header relate ">
+      <div class="matchcenter-sporticon">
+        <img ng-src="{{currentMatch.sportName | sporticon:'icon'}}" alt="" class="img-responsive">
+      </div>
+      <div class="matchcenter-heading">
+        <div class="pull-right hidden-xs">
+          <p class="m-clear">match id: <span>{{currentMatch.matchId}}</span> </p>
+        </div>
+        <p class="m-clear"><span>{{currentMatch.sport.sportslist.sportsListSubCategory.name}}</span> - <span>{{currentMatch.sport.ageGroup.name}}</span> <span>{{currentMatch.sport.gender}}</span> <span>{{currentMatch.round}}</span></p>
+        <p class="m-clear visible-xs">match id: <span>{{currentMatch.matchId}}</span> </p>
+      </div>
+
+    </div>
+  </div>
+  <div class="modal-body">
+    <div class="modal-container">
+      <div class="row">
+        <div class="matchwinner">
+          <p>Match Winner: <span class="matchwinner-title"> {{currentMatch.winnerName}} </span>
+          </p>
+        </div>
+        <div class="racquet-setscore">
+          <div class="scoring-set form-group" ng-repeat="team in currentMatch.resultsRacquet.teams track by $index">
+            <div class="scoringset-school">
+              <p class="m-clear">{{currentMatch.opponentsTeam[$index].schoolName}}</p>
+            </div>
+            <div class="relate setpoint-element" ng-repeat="set in team.sets track by $index">
+              <label class="text-uppercase setpointlabel">SET <span>{{$index+1}}</span></label>
+              <input type="number" ng-model="set.point" class="score-number display-inline form-control" placeholder ="0" readonly>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <!-- PLAYER CARDS -->
+        <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="team in currentMatch.resultsRacquet.teams track by $index">
+          <!-- TEAM CARD HOLDER -->
+          <div class="teamdetail-holder">
+            <!-- TEAM CARD -->
+            <div class="combatscore-player">
+              <div class="matchplayer-card {{player.player}}">
+                <div class="matchplayer-playerid">
+                  <p>Team ID: <span>{{currentMatch.opponentsTeam[$index].teamId}}</span></p>
+                </div>
+                <div class="matchplayer-image">
+                  <img ng-src="{{currentMatch.opponentsTeam[$index].photograph | serverimage}}" alt="{{currentMatch.opponentsTeam[$index].schoolName}}" class="img-responsive">
+                </div>
+                <div class="matchplayer-details">
+                  <p class="matchplayer-name"><span> {{currentMatch.opponentsTeam[$index].schoolName | truncate:'25'}}</span></p>
+                </div>
+              </div>
+            </div>
+            <!-- TEAM CARD END -->
+            <!-- TEAM PLAYERS -->
+            <!-- TEAM PLAYERS -->
+            <div class="teamdetail-playerholder">
+              <div class="teamdetail-player" ng-repeat = "player in currentMatch.opponentsTeam[$index].studentTeam track by $index">
+                <p class="m-clear"><span class="pull-right"> Sfa ID: {{player.studentId.sfaId}}</span><span>{{player.studentId.firstName}} {{player.studentId.surname}}</span></p>
+              </div>
+            </div>
+            <!-- TEAM PLAYERS END -->
+          </div>
+          <!-- TEAM CARD HOLDER END -->
+          <!-- PLAYER RESULT SET END -->
+          <uib-accordion close-others="oneAtATime" class="playerpoint-accordion">
+            <div uib-accordion-group class="panel-default" is-open="set.open" ng-repeat = "set in team.sets track by $index">
+              <uib-accordion-heading class="clearfix">
+                <span class="pull-right playerangle-accordion fa " ng-class="{'fa-angle-up': set.open, 'fa-angle-down': !set.open}"></span>
+                <a href="">
+                  <p class="text-uppercase m-clear playerhead-accordion">
+                    <span>Set {{$index + 1}}</span> <span class="teamplayer-fullname"></span>
+                  </p>
+                </a>
+              </uib-accordion-heading>
+              <div class="row">
+                <div class="">
+                  <div class="col-md-4 col-sm-6 col-xs-6" ng-if="currentMatch.sport.sportslist.name=='Tennis Doubles'">
+                    <label class="text-uppercase setpoint-label">Ace</label>
+                    <input type="number" ng-model="set.ace" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                  </div>
+                  <div class="col-md-4 col-sm-6 col-xs-6">
+                    <label class="text-uppercase setpoint-label">Winner</label>
+                    <input type="number" ng-model="set.winner" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                  </div>
+                  <div class="col-md-4 col-sm-6 col-xs-6">
+                    <label class="text-uppercase setpoint-label">Unforced Error</label>
+                    <input type="number" ng-model="set.unforcedError" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                  </div>
+                  <div class="col-md-4 col-sm-6 col-xs-6" ng-if="currentMatch.sport.sportslist.name=='Badminton Doubles' || currentMatch.sport.sportslist.name == 'Table Tennis Doubles' || currentMatch.sport.sportslist.name == 'Squash'">
+                    <label class="text-uppercase setpoint-label">Service Error</label>
+                    <input type="number" ng-model="set.serviceError" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                  </div>
+                  <div class="col-md-4 col-sm-6 col-xs-6" ng-if="currentMatch.sport.sportslist.name=='Tennis Doubles'">
+                    <label class="text-uppercase setpoint-label">Double Faults</label>
+                    <input type="number" ng-model="set.doubleFaults" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </uib-accordion>
+          <!-- PLAYER RESULT SET END -->
+        </div>
+        <!-- PLAYER CARDS END -->
+      </div>
+    </div>
+  </div>
+</div>

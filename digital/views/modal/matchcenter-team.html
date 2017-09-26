@@ -94,10 +94,10 @@
                                     <p>Team ID: <span>{{team.teamId}}</span></p>
                                 </div>
                                 <div class="matchplayer-image">
-                                    <img ng-src="{{currentMatch.opponentsTeam[index].photograph|serverimage}}" src="img/dishapatani1.jpg" alt="" class="img-responsive">
+                                    <img ng-src="{{currentMatch.opponentsTeam[index].photograph|serverimage}}" src="img/dishapatani1.jpg" alt="{{team.schoolName}}" class="img-responsive">
                                 </div>
                                 <div class="matchplayer-details">
-                                    <p class="matchplayer-school matchplayer-name">{{team.schoolName}}</p>
+                                    <p class="matchplayer-school matchplayer-name">{{team.schoolName|truncate:'20'}}</p>
                                 </div>
                             </div>
                         </div>

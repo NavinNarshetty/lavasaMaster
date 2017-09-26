@@ -1,4 +1,4 @@
-// COLOR VARIABLES
+  // COLOR VARIABLES
 $sport-primary: #0a1a72!default; //blue
 $sport-success: #27b465 !default; //green
 $sport-warning: #ffb026 !default; //yellow
@@ -1113,9 +1113,26 @@ $sport-table-grey:#efeeee !default;
   }
   .matchplayer-card {
     padding: 10px;
-    margin: 20px auto;
+    margin: 20px auto 0;
     box-shadow: 0 0 10px #a0a0a0;
     position: relative;
+  }
+  .teamdetail-playerholder {
+    padding: 10px;
+    border: 1px solid #e1e1e1;
+  }
+  .scoringset-school {
+    width: 200px;
+    display: inline-block;
+    font-weight: 600;
+    text-align: left;
+  }
+  .teamdetail-player{
+    padding: 5px;
+    border-bottom: 1px solid #e1e1e1;
+    &:last-child{
+      border-bottom: none;
+    }
   }
   .player1 {
     border-bottom: 10px solid #7fdfff;
@@ -1146,7 +1163,7 @@ $sport-table-grey:#efeeee !default;
     }
     .setpoint-label{
       font-weight: 600;
-      font-size: 12px;
+      font-size: 11px;
     }
     .panel-default > .panel-heading + .panel-collapse > .panel-body{
       border: none;
@@ -1248,6 +1265,7 @@ $sport-table-grey:#efeeee !default;
     margin: 0;
     text-align: center;
     .scoring-set {
+      padding: 0;
       border: none;
       margin: 10px 0;
       &:last-child{

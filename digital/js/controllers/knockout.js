@@ -227,6 +227,8 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
     $scope.template = TemplateService.getHTML("content/knockout-doubles.html");
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
+
+    $scope.oneAtATime = true;
     // SWIPER
     $scope.$on('$viewContentLoaded', function (event) {
 
@@ -433,6 +435,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
                                             if (obj._id === value.resultsRacquet.winner.player) {
                                                 obj.isWinner = true;
                                                 value.isWinner = obj.isWinner;
+                                                value.winnerName = obj.schoolName;
 
                                             } else {
                                                 obj.isWinner = false;
@@ -487,4 +490,20 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
         }
     };
     // START SCORING FUNCTION END
+
+    // MATCH CENTER
+    $scope.matchCenter = function (card) {
+      $scope.currentMatch = card;
+      $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
+        modal = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            keyboard: false,
+            templateUrl: 'views/modal/matchcenter-doubles.html',
+            size: 'lg',
+            windowClass: 'matchcenter-modal'
+        })
+        console.log($scope.currentMatch, 'current');
+    }
+    // MATCH CENTER END
 });

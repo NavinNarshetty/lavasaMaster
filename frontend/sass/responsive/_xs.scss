@@ -47,7 +47,87 @@
         height: 40px;
         font-size: 18px;
       }
+      .scoringset-school{
+        width: auto;
+        display: block;
+        padding: 0 10px;
+      }
+      .matchwinner{
+        position: static;
+        font-size: 14px;
+        padding: 0 10px;
+        p{
+          margin: 0;
+        }
+      }
+      .matchstart-header{
+        padding-left: 15px;
+      }
+      .matchcenter-sporticon{
+        width: 50px;
+        display: inline-block;
+        position: static;
+        vertical-align: middle;
+      }
+      .matchcenter-heading{
+        width: calc(100% - 55px);
+        display: inline-block;
+        font-size: 14px;
+        vertical-align: middle;
+      }
+      .matchwinner-title{
+        font-size: 14px;
+      }
     }
     // MATCH CENTER END
+    // TEAM MATCH CENTER
+    .teammatchcenter-modal{
+      .modal-container{
+        padding: 0;
+      }
+       .matchstart-header{
+         padding-left: 15px;
+       }
+       .matchwinner{
+         position: static;
+         font-size: 14px;
+         p{
+           margin: 0;
+         }
+       }
+       .matchcenter-teamschool{
+         width: auto;
+         display: block;
+       }
+       .matchcenter-sporticon{
+         width: 50px;
+         display: inline-block;
+         position: static;
+         vertical-align: middle;
+       }
+       .matchcenter-heading{
+         width: calc(100% - 55px);
+         display: inline-block;
+         font-size: 14px;
+         vertical-align: middle;
+       }
+       .matchwinner-title{
+         font-size: 14px;
+       }
+       .matchcenter-teamcol{
+         &:nth-child(even){
+           .team-formationholder{
+              padding-left: 25px;
+              padding-right: 0px;
+              text-align: left;
+           }
+           .team-formationicon{
+             left: 0;
+             right: auto;
+           }
+         }
+       }
+    }
+    // TEAM MATCH CENTER END
      // Mobile End
  }
