@@ -636,16 +636,8 @@ var model = {
                                             },
                                             function (callback) {
                                                 console.log("inside payment check");
-                                                if (athleteData.registrationFee == "cash" && data.property.institutionType == "school") {
+                                                if (athleteData.registrationFee == "cash") {
                                                     Athelete.atheletePaymentMail(athleteData, function (err, vData) {
-                                                        if (err) {
-                                                            callback(err, null);
-                                                        } else if (vData) {
-                                                            callback(null, vData);
-                                                        }
-                                                    });
-                                                } else if (athleteData.registrationFee == "cash" && data.property.institutionType == "college") {
-                                                    Athelete.atheletePaymentMailCollege(athleteData, function (err, vData) {
                                                         if (err) {
                                                             callback(err, null);
                                                         } else if (vData) {
@@ -655,6 +647,25 @@ var model = {
                                                 } else {
                                                     callback(null, athleteData);
                                                 }
+                                                // if (athleteData.registrationFee == "cash" && data.property.institutionType == "school") {
+                                                //     Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                //         if (err) {
+                                                //             callback(err, null);
+                                                //         } else if (vData) {
+                                                //             callback(null, vData);
+                                                //         }
+                                                //     });
+                                                // } else if (athleteData.registrationFee == "cash" && data.property.institutionType == "college") {
+                                                //     Athelete.atheletePaymentMailCollege(athleteData, function (err, vData) {
+                                                //         if (err) {
+                                                //             callback(err, null);
+                                                //         } else if (vData) {
+                                                //             callback(null, vData);
+                                                //         }
+                                                //     });
+                                                // } else {
+                                                //     callback(null, athleteData);
+                                                // }
                                             }
                                         ],
                                         function (err, data2) {
@@ -719,16 +730,8 @@ var model = {
                                                         },
                                                         function (callback) {
                                                             console.log("inside payment check");
-                                                            if (athleteData.registrationFee == "cash" && data.property.institutionType == "school") {
+                                                            if (athleteData.registrationFee == "cash") {
                                                                 Athelete.atheletePaymentMail(athleteData, function (err, vData) {
-                                                                    if (err) {
-                                                                        callback(err, null);
-                                                                    } else if (vData) {
-                                                                        callback(null, vData);
-                                                                    }
-                                                                });
-                                                            } else if (athleteData.registrationFee == "cash" && data.property.institutionType == "college") {
-                                                                Athelete.atheletePaymentMailCollege(athleteData, function (err, vData) {
                                                                     if (err) {
                                                                         callback(err, null);
                                                                     } else if (vData) {
@@ -738,6 +741,25 @@ var model = {
                                                             } else {
                                                                 callback(null, athleteData);
                                                             }
+                                                            // if (athleteData.registrationFee == "cash" && data.property.institutionType == "school") {
+                                                            //     Athelete.atheletePaymentMail(athleteData, function (err, vData) {
+                                                            //         if (err) {
+                                                            //             callback(err, null);
+                                                            //         } else if (vData) {
+                                                            //             callback(null, vData);
+                                                            //         }
+                                                            //     });
+                                                            // } else if (athleteData.registrationFee == "cash" && data.property.institutionType == "college") {
+                                                            //     Athelete.atheletePaymentMailCollege(athleteData, function (err, vData) {
+                                                            //         if (err) {
+                                                            //             callback(err, null);
+                                                            //         } else if (vData) {
+                                                            //             callback(null, vData);
+                                                            //         }
+                                                            //     });
+                                                            // } else {
+                                                            //     callback(null, athleteData);
+                                                            // }
                                                         }
                                                     ],
                                                     function (err, data2) {
@@ -1036,23 +1058,30 @@ var model = {
                                     } else if (data3) {
                                         async.parallel([
                                                 function (callback) {
-                                                    if (property[0].institutionType == "school") {
-                                                        Athelete.atheletePaymentMail(found, function (err, vData) {
-                                                            if (err) {
-                                                                callback(err, null);
-                                                            } else if (vData) {
-                                                                callback(null, vData);
-                                                            }
-                                                        });
-                                                    } else {
-                                                        Athelete.atheletePaymentMailCollege(found, function (err, vData) {
-                                                            if (err) {
-                                                                callback(err, null);
-                                                            } else if (vData) {
-                                                                callback(null, vData);
-                                                            }
-                                                        });
-                                                    }
+                                                    Athelete.atheletePaymentMail(found, function (err, vData) {
+                                                        if (err) {
+                                                            callback(err, null);
+                                                        } else if (vData) {
+                                                            callback(null, vData);
+                                                        }
+                                                    });
+                                                    // if (property[0].institutionType == "school") {
+                                                    //     Athelete.atheletePaymentMail(found, function (err, vData) {
+                                                    //         if (err) {
+                                                    //             callback(err, null);
+                                                    //         } else if (vData) {
+                                                    //             callback(null, vData);
+                                                    //         }
+                                                    //     });
+                                                    // } else {
+                                                    //     Athelete.atheletePaymentMailCollege(found, function (err, vData) {
+                                                    //         if (err) {
+                                                    //             callback(err, null);
+                                                    //         } else if (vData) {
+                                                    //             callback(null, vData);
+                                                    //         }
+                                                    //     });
+                                                    // }
 
                                                 },
                                                 function (callback) {
