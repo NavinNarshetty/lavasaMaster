@@ -80,30 +80,34 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
                 data.limitVale = 8;
                 _.each(data.match, function (value) {
                   if (value.opponentsSingle.length > 0) {
+                    console.log(value.resultSwiss);
+                    if (value.resultSwiss != undefined && value.resultSwiss.players) {
+                      if (value.opponentsSingle.length < value.resultSwiss.players.length) {
+                        _.each(value.resultSwiss.players, function (player) {
+                          if (player.id === undefined) {
+                            var tempObjIndex = _.findIndex(value.resultSwiss.players, player);
+                            value.opponentsSingle.splice(tempObjIndex, 0, {});
+                          }
+                        });
+                      }
 
-                    if (value.opponentsSingle.length < value.resultSwiss.players.length) {
-                      _.each(value.resultSwiss.players, function (player) {
-                        if (player.id === undefined) {
-                          var tempObjIndex = _.findIndex(value.resultSwiss.players, player);
-                          value.opponentsSingle.splice(tempObjIndex, 0, {});
+                      _.each(value.opponentsSingle, function (obj, index1) {
+                        if (!_.isEmpty(obj.athleteId)) {
+                          obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
+                        }
+                        if (value.resultSwiss.players !== undefined && value.resultSwiss.players[index1] && value.resultSwiss.players[index1] !== undefined && value.resultSwiss.players[index1] !== null && value.resultSwiss.players.length === value.opponentsSingle.length) {
+                          obj.rank = value.resultSwiss.players[index1].rank;
+                          obj.score = value.resultSwiss.players[index1].score;
+
+                        }
+                        if (obj._id === value.resultSwiss.winner.player) {
+                          obj.isWinner = true;
+                        } else {
+                          obj.isWinner = false;
                         }
                       });
                     }
-                    _.each(value.opponentsSingle, function (obj, index1) {
-                      if (!_.isEmpty(obj.athleteId)) {
-                        obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
-                      }
-                      if (value.resultSwiss.players !== undefined && value.resultSwiss.players[index1] && value.resultSwiss.players[index1] !== undefined && value.resultSwiss.players[index1] !== null && value.resultSwiss.players.length === value.opponentsSingle.length) {
-                        obj.rank = value.resultSwiss.players[index1].rank;
-                        obj.score = value.resultSwiss.players[index1].score;
 
-                      }
-                      if (obj._id === value.resultSwiss.winner.player) {
-                        obj.isWinner = true;
-                      } else {
-                        obj.isWinner = false;
-                      }
-                    });
                   }
 
 

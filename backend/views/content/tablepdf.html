@@ -1,0 +1,91 @@
+<div class=" panel-content">
+  <div class="row ">
+    <div class="col-md-12 ">
+      <div class="widget ">
+        <div class="table-area ">
+          <div class="widget-title ">
+
+
+            <div class="row match-head-holder">
+              <div class="col-md-8">
+                <h3 class="m-clear">List of Matches<span class=" tableTotal ">(Total : {{totalItems}}) </span></h3>
+              </div>
+              <div class="col-md-4">
+                <form class="search-form mr-form">
+                  <input type="text" class="form-control" ng-change="searchInTable(search)" placeholder="Search Here...
+                                     " ng-model="search" />
+                </form>
+              </div>
+            </div>
+            <div class="row">
+              <div class="match-button-holder text-right">
+                <div class="col-md-2">
+                  <div class="btn btn-success form-control" ui-sref="detailpdf">
+                    Create
+                  </div>
+                </div>
+                <div class="col-md-10">
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="table-responsive">
+            <!--<div class="table-responsive " ng-show="totalItems>0 ">-->
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>
+                    Gender
+                  </th>
+                  <th>
+                    Sport Name
+                  </th>
+                  <th>Age Group</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!--<tr ng-repeat="item in items">-->
+                <!-- <tr ng-repeat="item in items"> -->
+                <tr ng-repeat="item in items|filter:item.matchId">
+                  <!--<tr>-->
+                  <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
+                  <!--<td>{{($index + 1)}}</td>-->
+                  <td>{{item.matchId}}</td>
+                  <td>{{item.round}}
+                    <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
+                    <pre>{{item.matchId}}</pre>
+                    <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
+                  </td>
+                  <td>
+                    <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item.sport.sportslist.sportslistSubCategory.sportsListCategory,item.matchId,item.sport.sportslist.sportsListSubCategory.isTeam)">
+                        <i class="fa fa-pencil"></i> Edit
+                      </a>
+                    <a class="btn btn-danger" ng-click="confDel(item._id)">
+                        <i class="fa fa-trash"></i> Delete
+                      </a>
+                  </td>
+                  <!--<td ng-repeat="but in json.json.action">
+                                          <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">
+                                              <i class="fa" ng-class="but.icon"></i>{{but.name}}
+                                          </a>
+                                      </td>-->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tableData " ng-show="totalItems===0 ">
+            <h5>No data found</h5>
+          </div>
+          <div class="tableData " ng-show="totalItems===undefined ">
+            <h5>Loading Data</h5>
+          </div>
+          <ul ng-if="totalItems" ng-change="viewTable()" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="form.page"
+            max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

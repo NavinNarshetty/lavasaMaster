@@ -37,7 +37,7 @@ myApp.directive('uploadImage', function ($http, $filter, $timeout) {
         },
         link: function ($scope, element, attrs) {
             console.log($scope.model);
-            $scope.showImage = function () {};
+            $scope.showImage = function () { };
             $scope.check = true;
             if (!$scope.type) {
                 $scope.type = "image";
@@ -143,6 +143,142 @@ myApp.directive('uploadImage', function ($http, $filter, $timeout) {
         }
     };
 });
+myApp.directive('uploadPdf', function ($http, $filter, $timeout) {
+    return {
+        templateUrl: 'views/directive/uploadFile.html',
+        scope: {
+            model: '=ngModel',
+            type: "@type",
+            ispdf: "@ispdf",
+            callback: "&ngCallback"
+        },
+        link: function ($scope, element, attrs) {
+            console.log($scope.model);
+            $scope.showImage = function () { };
+            $scope.check = true;
+
+            if (!$scope.type) {
+                $scope.type = "image";
+            }
+
+            $scope.isMultiple = false;
+            $scope.inObject = false;
+            if (attrs.multiple || attrs.multiple === "") {
+                $scope.isMultiple = true;
+                $("#inputImage").attr("multiple", "ADD");
+            }
+            if (attrs.noView || attrs.noView === "") {
+                $scope.noShow = true;
+            }
+
+
+            $scope.$watch("image", function (newVal, oldVal) {
+                console.log(newVal, oldVal);
+                isArr = _.isArray(newVal);
+                if (!isArr && newVal && newVal.file) {
+                    console.log("im if");
+                    if ($scope.type === 'pdf' && $scope.ispdf == 'true') {
+                        if (_.endsWith(newVal.file.name, ".pdf")) {
+                            $scope.uploadNow(newVal);
+                            console.log("pdf Successs");
+                            $scope.incorrectFile = false;
+                        }
+                    } else {
+                        console.log("Incorrect Filesssssss");
+                        $scope.incorrectFile = true;
+                        $scope.uploadNow(newVal);
+                    }
+
+                } else if (isArr && newVal.length > 0 && newVal[0].file) {
+                    console.log("im else");
+                    $timeout(function () {
+                        console.log(oldVal, newVal);
+                        console.log(newVal.length);
+                        _.each(newVal, function (newV, key) {
+                            if (newV && newV.file) {
+                                $scope.uploadNow(newV);
+                            }
+                        });
+                    }, 100);
+
+                }
+            });
+
+            if ($scope.model) {
+                if (_.isArray($scope.model)) {
+                    $scope.image = [];
+                    _.each($scope.model, function (n) {
+                        $scope.image.push({
+                            url: n
+                        });
+                    });
+                } else {
+                    if (_.endsWith($scope.model, ".pdf")) {
+                        $scope.type = "pdf";
+                    }
+                }
+
+            }
+            if (attrs.inobj || attrs.inobj === "") {
+                $scope.inObject = true;
+            }
+            $scope.clearOld = function () {
+                $scope.model = [];
+            };
+            $scope.uploadNow = function (image) {
+                console.log("image", image.file.name);
+                console.log("$scope.type", $scope.type);
+                console.log(" $scope.ispdf", $scope.ispdf);
+                $scope.uploadStatus = "uploading";
+
+                $scope.type = "pdf";
+                var Template = this;
+                image.hide = true;
+                var formData = new FormData();
+                formData.append('file', image.file, image.name);
+                $http.post(uploadurl, formData, {
+                    headers: {
+                        'Content-Type': undefined
+                    },
+                    transformRequest: angular.identity
+                }).then(function (data) {
+                    data = data.data;
+                    $scope.uploadStatus = "uploaded";
+                    if ($scope.isMultiple) {
+                        if ($scope.inObject) {
+                            $scope.model.push({
+                                "image": data[0]
+                            });
+                        } else {
+                            if (!$scope.model) {
+                                $scope.clearOld();
+                            }
+                            $scope.model.push(data[0]);
+                        }
+                    } else {
+                        if (_.endsWith(data.data[0], ".pdf")) {
+                            $scope.type = "pdf";
+                        } else {
+                            $scope.type = "image";
+                        }
+                        $scope.model = data.data[0];
+                        console.log($scope.model, 'model means blob')
+
+                    }
+                    $timeout(function () {
+                        $scope.callback();
+                    }, 100);
+
+                });
+
+            }
+
+
+        };
+    }
+};
+});
+
 
 
 
