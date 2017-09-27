@@ -84,10 +84,10 @@ var model = {
                             function (schoolData, callback) {
                                 var final = {};
                                 final.atheleteID = mainData.sfaid;
-                                var year = data.year.substr(2, 2);
-                                final.sfaId = "M" + "A" + year + mainData.sfaid;
+                                // var year = data.year.substr(2, 2);
+                                final.sfaId = "M" + "A" + "16" + mainData.sfaid;
                                 final.status = "Verified";
-                                final.school = schoolData.oldId;
+                                final.school = mainData.school;
                                 final.year = data.year;
                                 final.surname = mainData.lastname;
                                 final.firstName = mainData.firstname;

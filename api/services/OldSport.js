@@ -2052,7 +2052,7 @@ var model = {
                     var ageGroup = {};
                     ageGroup.name = data.agegroup.name;
                     if (data.agegroup._id) {
-                        ageGroup.oldId = data.agegroup.name;
+                        ageGroup.oldId = data.agegroup._id;
                     }
                     AgeGroup.saveData(ageGroup, function (err, ageGroup) {
                         if (err) {
