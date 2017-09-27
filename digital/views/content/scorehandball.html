@@ -101,7 +101,7 @@
               </div>
               <!-- <pre>{{match.resultBasketball.teams[0].players}}</pre> -->
               <div class="team-playing" ng-repeat="player in match.resultHandball.teams[1].players track by $index">
-                <div class="teamplayer" ng-if="player.isPlaying==true"  ng-click="modalPlayerPoints(player,1,$index)">
+                <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="modalPlayerPoints(player,1,$index)">
                   <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
                 </div>
               </div>
@@ -135,6 +135,10 @@
               <label for="player1score" class="text-uppercase">Full Time </label>
               <input type="number" placeholder="0" ng-model="team.teamResults.finalPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control"
                 limit-to-max>
+            </div>
+            <div class="relate setpoint-element" ng-if="match.resultHandball.teams[0] && match.resultHandball.teams[0].teamResults && match.resultHandball.teams[0].teamResults.penaltyPoints && match.resultHandball.teams[1] && match.resultHandball.teams[1].teamResults && match.resultHandball.teams[1].teamResults.penaltyPoints && match.resultHandball.teams[0].teamResults.penaltyPoints !='' && match.resultHandball.teams[1].teamResults.penaltyPoints !=''">
+              <label for="player1score" class="text-uppercase">Penalty Points </label>
+              <input type="number" ng-model="team.teamResults.penaltyPoints" id="player1score" min="0" placeholder="0" max="99" class="score-number display-inline form-control">
             </div>
           </div>
         </div>
@@ -194,7 +198,7 @@
             <div class="col-md-4 col-sm-6">
               <div class="text-left">
                 <label for="">For Penalties</label>
-                <button class="btn btn-scoring btn-green-outline" ng-click="modalPenaltyShootout()">Penalty Shootouts</button>
+                <button class="btn btn-scoring btn-green-outline" ng-click="modalPenaltyShootout(match.resultHandball)">Penalty Shootouts</button>
               </div>
             </div>
           </div>

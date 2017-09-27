@@ -1876,6 +1876,41 @@ var model = {
 
     },
 
+    searchForEventPdf: function (data, callback) {
+        var Model = this;
+        var Const = this(data);
+        var maxRow = Config.maxRow;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['eventPdf'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var deepSearch = "sportslist ageGroup weight";
+        var Search = Model.find({
+                eventPdf: data.eventPdf
+            })
+            .order(options)
+            .deepPopulate(deepSearch)
+            .keyword(options)
+            .page(options, callback);
+
+    },
+
     saveSport: function (data, callback) {
         if (_.isEmpty(data.weight)) {
             data.weight = undefined;
@@ -3238,14 +3273,14 @@ var model = {
                     var matchObj = {};
                     if (data.weight) {
                         matchObj = {
-                            sportslis: data.sportslist,
+                            sportslist: data.sportslist,
                             ageGroup: data.ageGroup,
                             gender: data.gender,
                             weight: data.weight
                         }
                     } else {
                         matchObj = {
-                            sportslis: data.sportslist,
+                            sportslist: data.sportslist,
                             ageGroup: data.ageGroup,
                             gender: data.gender,
                         }
@@ -3266,16 +3301,17 @@ var model = {
                     if (_.isEmpty(found)) {
                         callback(null, found);
                     } else {
+                        console.log(found, "inside");
                         var updateObj = {
                             $set: {
                                 eventPdf: data.eventPdf
                             }
                         };
-                        Match.update({
+                        Sport.update({
                             _id: found._id
                         }, updateObj).exec(
                             function (err, match) {
-                                callback(null, "Updated Successfully !");
+                                callback(null, match);
                             });
                     }
                 }
