@@ -446,23 +446,30 @@ var model = {
                                                                 });
                                                             },
                                                             function (callback) {
-                                                                if (data.complete.institutionType == "school") {
-                                                                    Registration.saveVerify(data, schoolData, function (err, vData) {
-                                                                        if (err) {
-                                                                            callback(err, null);
-                                                                        } else if (vData) {
-                                                                            callback(null, vData);
-                                                                        }
-                                                                    });
-                                                                } else {
-                                                                    Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
-                                                                        if (err) {
-                                                                            callback(err, null);
-                                                                        } else if (vData) {
-                                                                            callback(null, vData);
-                                                                        }
-                                                                    });
-                                                                }
+                                                                Registration.saveVerify(data, schoolData, function (err, vData) {
+                                                                    if (err) {
+                                                                        callback(err, null);
+                                                                    } else if (vData) {
+                                                                        callback(null, vData);
+                                                                    }
+                                                                });
+                                                                // if (data.complete.institutionType == "school") {
+                                                                //     Registration.saveVerify(data, schoolData, function (err, vData) {
+                                                                //         if (err) {
+                                                                //             callback(err, null);
+                                                                //         } else if (vData) {
+                                                                //             callback(null, vData);
+                                                                //         }
+                                                                //     });
+                                                                // } else {
+                                                                //     Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
+                                                                //         if (err) {
+                                                                //             callback(err, null);
+                                                                //         } else if (vData) {
+                                                                //             callback(null, vData);
+                                                                //         }
+                                                                //     });
+                                                                // }
 
 
                                                             }
@@ -480,30 +487,6 @@ var model = {
                                             // data.sfaId = sfa;
 
                                         } else {
-                                            if (data.complete.institutionType == "school") {
-                                                Registration.saveVerify(data, schoolData, function (err, vData) {
-                                                    if (err) {
-                                                        callback(err, null);
-                                                    } else if (vData) {
-                                                        callback(null, vData);
-                                                    }
-                                                });
-                                            } else {
-                                                Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
-                                                    if (err) {
-                                                        callback(err, null);
-                                                    } else if (vData) {
-                                                        callback(null, vData);
-                                                    }
-                                                });
-                                            }
-
-                                        }
-
-
-
-                                    } else {
-                                        if (data.complete.institutionType == "school") {
                                             Registration.saveVerify(data, schoolData, function (err, vData) {
                                                 if (err) {
                                                     callback(err, null);
@@ -511,18 +494,29 @@ var model = {
                                                     callback(null, vData);
                                                 }
                                             });
-                                        } else {
-                                            Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
-                                                if (err) {
-                                                    callback(err, null);
-                                                } else if (vData) {
-                                                    callback(null, vData);
-                                                }
-                                            });
+                                            // if (data.complete.institutionType == "school") {
+                                            //     Registration.saveVerify(data, schoolData, function (err, vData) {
+                                            //         if (err) {
+                                            //             callback(err, null);
+                                            //         } else if (vData) {
+                                            //             callback(null, vData);
+                                            //         }
+                                            //     });
+                                            // } else {
+                                            //     Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
+                                            //         if (err) {
+                                            //             callback(err, null);
+                                            //         } else if (vData) {
+                                            //             callback(null, vData);
+                                            //         }
+                                            //     });
+                                            // }
+
                                         }
-                                    }
-                                } else {
-                                    if (data.complete.institutionType == "school") {
+
+
+
+                                    } else {
                                         Registration.saveVerify(data, schoolData, function (err, vData) {
                                             if (err) {
                                                 callback(err, null);
@@ -530,15 +524,49 @@ var model = {
                                                 callback(null, vData);
                                             }
                                         });
-                                    } else {
-                                        Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else if (vData) {
-                                                callback(null, vData);
-                                            }
-                                        });
+                                        // if (data.complete.institutionType == "school") {
+                                        //     Registration.saveVerify(data, schoolData, function (err, vData) {
+                                        //         if (err) {
+                                        //             callback(err, null);
+                                        //         } else if (vData) {
+                                        //             callback(null, vData);
+                                        //         }
+                                        //     });
+                                        // } else {
+                                        //     Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
+                                        //         if (err) {
+                                        //             callback(err, null);
+                                        //         } else if (vData) {
+                                        //             callback(null, vData);
+                                        //         }
+                                        //     });
+                                        // }
                                     }
+                                } else {
+                                    Registration.saveVerify(data, schoolData, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+                                    // if (data.complete.institutionType == "school") {
+                                    //     Registration.saveVerify(data, schoolData, function (err, vData) {
+                                    //         if (err) {
+                                    //             callback(err, null);
+                                    //         } else if (vData) {
+                                    //             callback(null, vData);
+                                    //         }
+                                    //     });
+                                    // } else {
+                                    //     Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
+                                    //         if (err) {
+                                    //             callback(err, null);
+                                    //         } else if (vData) {
+                                    //             callback(null, vData);
+                                    //         }
+                                    //     });
+                                    // }
                                 }
 
                             }
