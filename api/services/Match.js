@@ -4996,6 +4996,66 @@ var model = {
                                             opponentsTeam: lostPlayer
                                         }
                                     };
+                                } else if (data.found.resultKabaddi && data.found.resultKabaddi.status == 'IsCompleted' && data.found.resultKabaddi.isNoMatch == false) {
+                                    if (data.found.opponentsTeam[0].equals(data.found.resultKabaddi.winner.player)) {
+                                        lostPlayer.push(data.found.opponentsTeam[1]);
+                                        winPlayer.push(data.found.resultKabaddi.winner.player);
+                                        console.log("player", winPlayer);
+                                    } else {
+                                        lostPlayer.push(data.found.opponentsTeam[0]);
+                                        winPlayer.push(data.found.resultKabaddi.winner.player);
+                                        console.log("player", winPlayer);
+                                    }
+                                    updateObj = {
+                                        $set: {
+                                            opponentsTeam: winPlayer
+                                        }
+                                    };
+                                    updateObj1 = {
+                                        $set: {
+                                            opponentsTeam: lostPlayer
+                                        }
+                                    };
+                                } else if (data.found.resultHandball && data.found.resultHandball.status == 'IsCompleted' && data.found.resultHandball.isNoMatch == false) {
+                                    if (data.found.opponentsTeam[0].equals(data.found.resultHandball.winner.player)) {
+                                        lostPlayer.push(data.found.opponentsTeam[1]);
+                                        winPlayer.push(data.found.resultHandball.winner.player);
+                                        console.log("player", winPlayer);
+                                    } else {
+                                        lostPlayer.push(data.found.opponentsTeam[0]);
+                                        winPlayer.push(data.found.resultHandball.winner.player);
+                                        console.log("player", winPlayer);
+                                    }
+                                    updateObj = {
+                                        $set: {
+                                            opponentsTeam: winPlayer
+                                        }
+                                    };
+                                    updateObj1 = {
+                                        $set: {
+                                            opponentsTeam: lostPlayer
+                                        }
+                                    };
+                                } else if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
+                                    if (data.found.opponentsTeam[0].equals(data.found.resultsCombat.winner.player)) {
+                                        lostPlayer.push(data.found.opponentsTeam[1]);
+                                        winPlayer.push(data.found.resultsCombat.winner.player);
+                                        console.log("player", winPlayer);
+                                    } else {
+                                        lostPlayer.push(data.found.opponentsTeam[0]);
+                                        winPlayer.push(data.found.resultsCombat.winner.player);
+                                        console.log("player", winPlayer);
+                                    }
+                                    updateObj = {
+                                        $set: {
+                                            opponentsTeam: winPlayer
+                                        }
+                                    };
+                                    updateObj1 = {
+                                        $set: {
+                                            opponentsTeam: lostPlayer
+                                        }
+                                    };
                                 } else {
                                     callback(null, data.found);
                                 }
@@ -5105,6 +5165,66 @@ var model = {
                                                 opponentsTeam: lostPlayer
                                             }
                                         };
+                                    } else if (data.found.resultKabaddi && data.found.resultKabaddi.status == 'IsCompleted' && data.found.resultKabaddi.isNoMatch == false) {
+                                        if (data.found.opponentsTeam[0].equals(data.found.resultKabaddi.winner.player)) {
+                                            lostPlayer.push(data.found.opponentsTeam[1]);
+                                            winPlayer.push(data.found.resultKabaddi.winner.player);
+                                            console.log("player", winPlayer);
+                                        } else {
+                                            lostPlayer.push(data.found.opponentsTeam[0]);
+                                            winPlayer.push(data.found.resultKabaddi.winner.player);
+                                            console.log("player", winPlayer);
+                                        }
+                                        updateObj = {
+                                            $set: {
+                                                opponentsTeam: winPlayer
+                                            }
+                                        };
+                                        updateObj1 = {
+                                            $set: {
+                                                opponentsTeam: lostPlayer
+                                            }
+                                        };
+                                    } else if (data.found.resultHandball && data.found.resultHandball.status == 'IsCompleted' && data.found.resultHandball.isNoMatch == false) {
+                                        if (data.found.opponentsTeam[0].equals(data.found.resultHandball.winner.player)) {
+                                            lostPlayer.push(data.found.opponentsTeam[1]);
+                                            winPlayer.push(data.found.resultHandball.winner.player);
+                                            console.log("player", winPlayer);
+                                        } else {
+                                            lostPlayer.push(data.found.opponentsTeam[0]);
+                                            winPlayer.push(data.found.resultHandball.winner.player);
+                                            console.log("player", winPlayer);
+                                        }
+                                        updateObj = {
+                                            $set: {
+                                                opponentsTeam: winPlayer
+                                            }
+                                        };
+                                        updateObj1 = {
+                                            $set: {
+                                                opponentsTeam: lostPlayer
+                                            }
+                                        };
+                                    } else if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
+                                        if (data.found.opponentsTeam[0].equals(data.found.resultsCombat.winner.player)) {
+                                            lostPlayer.push(data.found.opponentsTeam[1]);
+                                            winPlayer.push(data.found.resultsCombat.winner.player);
+                                            console.log("player", winPlayer);
+                                        } else {
+                                            lostPlayer.push(data.found.opponentsTeam[0]);
+                                            winPlayer.push(data.found.resultsCombat.winner.player);
+                                            console.log("player", winPlayer);
+                                        }
+                                        updateObj = {
+                                            $set: {
+                                                opponentsTeam: winPlayer
+                                            }
+                                        };
+                                        updateObj1 = {
+                                            $set: {
+                                                opponentsTeam: lostPlayer
+                                            }
+                                        };
                                     } else {
                                         callback(null, data.found);
                                     }
@@ -5201,6 +5321,30 @@ var model = {
                                             opponentsTeam: winPlayer
                                         }
                                     };
+                                } else if (data.found.resultKabaddi && data.found.resultKabaddi.status == 'IsCompleted' && data.found.resultKabaddi.isNoMatch == false) {
+                                    winPlayer.push(data.found.resultKabaddi.winner.player);
+                                    console.log("player", winPlayer);
+                                    updateObj = {
+                                        $set: {
+                                            opponentsTeam: winPlayer
+                                        }
+                                    };
+                                } else if (data.found.resultHandball && data.found.resultHandball.status == 'IsCompleted' && data.found.resultHandball.isNoMatch == false) {
+                                    winPlayer.push(data.found.resultHandball.winner.player);
+                                    console.log("player", winPlayer);
+                                    updateObj = {
+                                        $set: {
+                                            opponentsTeam: winPlayer
+                                        }
+                                    };
+                                }else if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
+                                    winPlayer.push(data.found.resultsCombat.winner.player);
+                                    console.log("player", winPlayer);
+                                    updateObj = {
+                                        $set: {
+                                            opponentsTeam: winPlayer
+                                        }
+                                    };
                                 } else {
                                     callback(null, data.found);
                                 }
@@ -5243,6 +5387,30 @@ var model = {
                                         };
                                     } else if (data.found.resultWaterPolo && data.found.resultWaterPolo.status == "IsCompleted" && data.found.resultWaterPolo.isNoMatch == false) {
                                         winPlayer.push(data.found.resultWaterPolo.winner.player);
+                                        console.log("player", winPlayer);
+                                        updateObj = {
+                                            $set: {
+                                                opponentsTeam: winPlayer
+                                            }
+                                        };
+                                    }else if (data.found.resultKabaddi && data.found.resultKabaddi.status == "IsCompleted" && data.found.resultKabaddi.isNoMatch == false) {
+                                        winPlayer.push(data.found.resultKabaddi.winner.player);
+                                        console.log("player", winPlayer);
+                                        updateObj = {
+                                            $set: {
+                                                opponentsTeam: winPlayer
+                                            }
+                                        };
+                                    }else if (data.found.resultHandball && data.found.resultHandball.status == "IsCompleted" && data.found.resultHandball.isNoMatch == false) {
+                                        winPlayer.push(data.found.resultHandball.winner.player);
+                                        console.log("player", winPlayer);
+                                        updateObj = {
+                                            $set: {
+                                                opponentsTeam: winPlayer
+                                            }
+                                        };
+                                    }else if (data.found.resultsCombat && data.found.resultsCombat.status == "IsCompleted" && data.found.resultsCombat.isNoMatch == false) {
+                                        winPlayer.push(data.found.resultsCombat.winner.player);
                                         console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
