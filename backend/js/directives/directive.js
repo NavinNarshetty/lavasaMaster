@@ -271,12 +271,12 @@ myApp.directive('uploadPdf', function ($http, $filter, $timeout) {
 
                 });
 
-            }
 
 
-        };
-    }
-};
+
+            };
+        }
+    };
 });
 
 
