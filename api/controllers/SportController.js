@@ -91,6 +91,17 @@ var controller = {
         }
     },
 
+    searchForEventPdf: function (req, res) {
+        if (req.body) {
+            Sport.searchForEventPdf(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
     setEventPdf: function (req, res) {
         if (req.body) {
             Sport.setEventPdf(req.body, res.callback);

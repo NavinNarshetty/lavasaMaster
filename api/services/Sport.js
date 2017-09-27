@@ -1876,6 +1876,41 @@ var model = {
 
     },
 
+    searchForEventPdf: function (data, callback) {
+        var Model = this;
+        var Const = this(data);
+        var maxRow = Config.maxRow;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['eventPdf'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var deepSearch = "sportslist ageGroup weight";
+        var Search = Model.find({
+                eventPdf: data.eventPdf
+            })
+            .order(options)
+            .deepPopulate(deepSearch)
+            .keyword(options)
+            .page(options, callback);
+
+    },
+
     saveSport: function (data, callback) {
         if (_.isEmpty(data.weight)) {
             data.weight = undefined;
