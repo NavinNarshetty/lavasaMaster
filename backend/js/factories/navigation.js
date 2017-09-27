@@ -123,6 +123,12 @@ myApp.factory('NavigationService', function ($http) {
             icon: "phone"
         },
         {
+            name: "Event Pdf",
+            classis: "activeColor",
+            sref: "#/tablepdf",
+            icon: "phone",
+        },
+        {
             name: "Medals",
             classis: "activeColor",
             sref: "#/medals",
@@ -450,6 +456,17 @@ myApp.factory('NavigationService', function ($http) {
         getOneBackend: function (formData, callback) {
             $http({
                 url: adminurl + "match/getOneBackend",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                console.log(data, "nav");
+                callback(data)
+            });
+        },
+
+        setEventPdf: function (formData, callback) {
+            $http({
+                url: adminurl + "Sport/setEventPdf",
                 method: "POST",
                 data: formData
             }).success(function (data) {

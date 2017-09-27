@@ -33,11 +33,12 @@ myApp.directive('uploadImage', function ($http, $filter, $timeout) {
         scope: {
             model: '=ngModel',
             type: "@type",
+            ispdf: "@ispdf",
             callback: "&ngCallback"
         },
         link: function ($scope, element, attrs) {
             console.log($scope.model);
-            $scope.showImage = function () {};
+            $scope.showImage = function () { };
             $scope.check = true;
             if (!$scope.type) {
                 $scope.type = "image";
@@ -61,7 +62,20 @@ myApp.directive('uploadImage', function ($http, $filter, $timeout) {
                 console.log(newVal, oldVal);
                 isArr = _.isArray(newVal);
                 if (!isArr && newVal && newVal.file) {
-                    $scope.uploadNow(newVal);
+                    if ($scope.type === 'pdf' && $scope.ispdf == 'true') {
+                        $scope.uploadStatus = '';
+                        if (_.endsWith(newVal.file.name, ".pdf")) {
+                            $scope.uploadNow(newVal);
+                            console.log("pdf Successs");
+                            $scope.incorrectFile = false;
+                        } else {
+                            console.log("Incorrect Filesssssss");
+                            $scope.incorrectFile = true;
+                        }
+                    } else {
+
+                        $scope.uploadNow(newVal);
+                    }
                 } else if (isArr && newVal.length > 0 && newVal[0].file) {
 
                     $timeout(function () {
@@ -143,6 +157,7 @@ myApp.directive('uploadImage', function ($http, $filter, $timeout) {
         }
     };
 });
+
 
 
 

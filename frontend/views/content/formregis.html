@@ -385,7 +385,7 @@
                             <div class="form-group hidden-xs">
                                 <div class="col-md-12 col-sm-12 col-xs-12 d-padd pl13">
                                     <label class="mobileno-padd padd-bott">*Email:</label>
-                                    <input name="email1" ng-model="formData.email" type="email" class="bor-t sfa-drop" required>
+                                    <input name="email1" placeholder="Preferred Gmail Id" ng-model="formData.email" type="email" class="bor-t sfa-drop" required>
                                     <a class="btn btn-default sub-mit send-otp" ng-click="sendOTP(formData.email)">Send OTP </a>
                                     <label class="enter-otp"> *Enter OTP:</label>
                                     <input ng-model="formData.enterOTP" ng-change="checkOTP(formData.enterOTP)" only-Digits type="text" maxlength="4" class="bor-t sfa-drop width-100"
@@ -402,7 +402,7 @@
                                 <div class="col-md-12 col-sm-12 col-xs-12 d-padd pl13">
                                     <label class="mobileno-padd">*Email:</label>
                                     <div class="pl13">
-                                        <input name="email2" ng-model="formData.email" type="email" class="bor-t sfa-drop" required>
+                                        <input name="email2" placeholder="Preferred Gmail Id" ng-model="formData.email" type="email" class="bor-t sfa-drop" required>
                                         <a class="btn btn-default sub-mit send-otp" ng-click="sendOTP(formData.email)">Send OTP </a>
                                         <div class="validate-col noerrPos" ng-if="formRegister.email2.$invalid && formRegister.email2.$touched">Please Enter Your Email Id</div>
                                     </div>

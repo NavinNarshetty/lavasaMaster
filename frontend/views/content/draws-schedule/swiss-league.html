@@ -131,7 +131,7 @@
                   <div class="text-center">
 
                     <span>{{round.opponentsSingle[0].rank}}</span>
-                    <span ng-if="!round.opponentsSingle[0].rank">-</span>
+                    <span ng-if="round.opponentsSingle[0].rank == undefined">-</span>
                   </div>
                 </td>
                 <td>
@@ -147,13 +147,13 @@
                 <td>
                   <div>
                     <span>{{round.opponentsSingle[0].score}}</span>
-                    <span ng-if="!round.opponentsSingle[0].score">-</span>
+                    <span ng-if="round.opponentsSingle[0].score == undefined">-</span>
                   </div>
                 </td>
                 <td>
                   <div class="text-center">
                     <span>{{round.opponentsSingle[1].rank}}</span>
-                    <span ng-if="!round.opponentsSingle[1].rank">-</span>
+                    <span ng-if="round.opponentsSingle[1].rank == undefined">-</span>
                   </div>
                 </td>
                 <td>
@@ -166,7 +166,7 @@
                 <td>
                   <div class="text-center">
                     <span>{{round.opponentsSingle[1].score}}</span>
-                    <span ng-if="!round.opponentsSingle[1].score">-</span>
+                    <span ng-if="round.opponentsSingle[1].score == undefined">-</span>
                   </div>
                 </td>
               </tr>

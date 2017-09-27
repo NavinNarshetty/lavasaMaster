@@ -282,6 +282,17 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'MatchesCtrl'
         })
+        //Event pdf
+        .state('tablepdf', {
+            url: "/tablepdf",
+            templateUrl: "views/template.html",
+            controller: 'TablePdfCtrl'
+        })
+        .state('detailpdf', {
+            url: "/detailpdf",
+            templateUrl: "views/template.html",
+            controller: 'DetailPdfCtrl'
+        })
         //detailmatches
         .state('detailmatches', {
             url: "/detailmatches",

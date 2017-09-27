@@ -680,7 +680,7 @@
                     </div>
                     <div class="form-group hidden-xs">
                         <label class="emailid-padd email-mob3 sf-list">*Email:</label>
-                        <input type="email" name="email1" ng-model="formData.email" class="bor-t sfa-drop" required>
+                        <input type="email" name="email1" ng-model="formData.email" class="bor-t sfa-drop" placeholder="Preferred Gmail Id" required>
                         <a class="btn btn-default sub-mit send-otp sf-list" ng-click="sendEmailOTP(formData.email)">Send OTP </a>
                         <label class="enter-otp sf-list"> *Enter OTP:</label>
                         <input type="text" ng-model="formData.emailOTP" ng-change="checkEmailOTP(formData.emailOTP)" class="bor-t sfa-drop width-100"
@@ -705,7 +705,7 @@
                         <div class="col-xs-12 d-padd">
                             <label class="mobileno-padd padd0">*Email:</label>
                             <div class="padd0">
-                                <input type="email" name="email" ng-model="formData.email" class="bor-t sfa-drop" required>
+                                <input type="email" name="email" ng-model="formData.email" class="bor-t sfa-drop" placeholder="Preferred Gmail Id" required>
                                 <a class="btn btn-default sub-mit send-otp sf-list" ng-click="sendEmailOTP(formData.email)">Send OTP </a>
                                 <div class="validate-col noerrPos" ng-if="formAthlete.email.$invalid && formAthlete.email.$touched">Please Enter Your Email Id</div>
                             </div>

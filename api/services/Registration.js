@@ -446,23 +446,30 @@ var model = {
                                                                 });
                                                             },
                                                             function (callback) {
-                                                                if (data.complete.institutionType == "school") {
-                                                                    Registration.saveVerify(data, schoolData, function (err, vData) {
-                                                                        if (err) {
-                                                                            callback(err, null);
-                                                                        } else if (vData) {
-                                                                            callback(null, vData);
-                                                                        }
-                                                                    });
-                                                                } else {
-                                                                    Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
-                                                                        if (err) {
-                                                                            callback(err, null);
-                                                                        } else if (vData) {
-                                                                            callback(null, vData);
-                                                                        }
-                                                                    });
-                                                                }
+                                                                Registration.saveVerify(data, schoolData, function (err, vData) {
+                                                                    if (err) {
+                                                                        callback(err, null);
+                                                                    } else if (vData) {
+                                                                        callback(null, vData);
+                                                                    }
+                                                                });
+                                                                // if (data.complete.institutionType == "school") {
+                                                                //     Registration.saveVerify(data, schoolData, function (err, vData) {
+                                                                //         if (err) {
+                                                                //             callback(err, null);
+                                                                //         } else if (vData) {
+                                                                //             callback(null, vData);
+                                                                //         }
+                                                                //     });
+                                                                // } else {
+                                                                //     Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
+                                                                //         if (err) {
+                                                                //             callback(err, null);
+                                                                //         } else if (vData) {
+                                                                //             callback(null, vData);
+                                                                //         }
+                                                                //     });
+                                                                // }
 
 
                                                             }
@@ -480,30 +487,6 @@ var model = {
                                             // data.sfaId = sfa;
 
                                         } else {
-                                            if (data.complete.institutionType == "school") {
-                                                Registration.saveVerify(data, schoolData, function (err, vData) {
-                                                    if (err) {
-                                                        callback(err, null);
-                                                    } else if (vData) {
-                                                        callback(null, vData);
-                                                    }
-                                                });
-                                            } else {
-                                                Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
-                                                    if (err) {
-                                                        callback(err, null);
-                                                    } else if (vData) {
-                                                        callback(null, vData);
-                                                    }
-                                                });
-                                            }
-
-                                        }
-
-
-
-                                    } else {
-                                        if (data.complete.institutionType == "school") {
                                             Registration.saveVerify(data, schoolData, function (err, vData) {
                                                 if (err) {
                                                     callback(err, null);
@@ -511,18 +494,29 @@ var model = {
                                                     callback(null, vData);
                                                 }
                                             });
-                                        } else {
-                                            Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
-                                                if (err) {
-                                                    callback(err, null);
-                                                } else if (vData) {
-                                                    callback(null, vData);
-                                                }
-                                            });
+                                            // if (data.complete.institutionType == "school") {
+                                            //     Registration.saveVerify(data, schoolData, function (err, vData) {
+                                            //         if (err) {
+                                            //             callback(err, null);
+                                            //         } else if (vData) {
+                                            //             callback(null, vData);
+                                            //         }
+                                            //     });
+                                            // } else {
+                                            //     Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
+                                            //         if (err) {
+                                            //             callback(err, null);
+                                            //         } else if (vData) {
+                                            //             callback(null, vData);
+                                            //         }
+                                            //     });
+                                            // }
+
                                         }
-                                    }
-                                } else {
-                                    if (data.complete.institutionType == "school") {
+
+
+
+                                    } else {
                                         Registration.saveVerify(data, schoolData, function (err, vData) {
                                             if (err) {
                                                 callback(err, null);
@@ -530,15 +524,49 @@ var model = {
                                                 callback(null, vData);
                                             }
                                         });
-                                    } else {
-                                        Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else if (vData) {
-                                                callback(null, vData);
-                                            }
-                                        });
+                                        // if (data.complete.institutionType == "school") {
+                                        //     Registration.saveVerify(data, schoolData, function (err, vData) {
+                                        //         if (err) {
+                                        //             callback(err, null);
+                                        //         } else if (vData) {
+                                        //             callback(null, vData);
+                                        //         }
+                                        //     });
+                                        // } else {
+                                        //     Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
+                                        //         if (err) {
+                                        //             callback(err, null);
+                                        //         } else if (vData) {
+                                        //             callback(null, vData);
+                                        //         }
+                                        //     });
+                                        // }
                                     }
+                                } else {
+                                    Registration.saveVerify(data, schoolData, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
+                                        }
+                                    });
+                                    // if (data.complete.institutionType == "school") {
+                                    //     Registration.saveVerify(data, schoolData, function (err, vData) {
+                                    //         if (err) {
+                                    //             callback(err, null);
+                                    //         } else if (vData) {
+                                    //             callback(null, vData);
+                                    //         }
+                                    //     });
+                                    // } else {
+                                    //     Registration.saveVerifyCollege(data, schoolData, function (err, vData) {
+                                    //         if (err) {
+                                    //             callback(err, null);
+                                    //         } else if (vData) {
+                                    //             callback(null, vData);
+                                    //         }
+                                    //     });
+                                    // }
                                 }
 
                             }
@@ -1256,7 +1284,7 @@ var model = {
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
                                 emailData.filename = "allAthelete.ejs";
-                                emailData.subject = "SFA: Your school has officially registered for SFA " + emailData.city + " " + emailData.eventYear;
+                                emailData.subject = "SFA: Your " + emailData.type + " has officially registered for SFA " + emailData.city + " " + emailData.eventYear;
                                 console.log("emaildata", emailData);
 
                                 Config.email(emailData, function (err, emailRespo) {
@@ -1350,6 +1378,7 @@ var model = {
                                         emailData.receiptNo = receipt;
                                         emailData.city = property[0].sfaCity;
                                         emailData.year = property[0].year;
+                                        emailData.type = property[0].institutionType;
                                         emailData.eventYear = property[0].eventYear;
                                         emailData.typeAmount = property[0].totalAmountType;
                                         emailData.amountInWords = property[0].totalAmountInWordsType;
@@ -1376,7 +1405,7 @@ var model = {
                                         }];
                                         // emailData.email = found.email;
                                         emailData.filename = "receipt.ejs";
-                                        emailData.subject = "SFA: Your Payment Receipt as School for SFA " + emailData.city + " " + emailData.eventYear + ".";
+                                        emailData.subject = "SFA: Your Payment Receipt as " + emailData.type + " for SFA " + emailData.city + " " + emailData.eventYear + ".";
                                         Config.emailTo(emailData, function (err, emailRespo) {
                                             if (err) {
                                                 console.log(err);
@@ -1419,6 +1448,7 @@ var model = {
                                         }
                                         emailData.city = property[0].sfaCity;
                                         emailData.year = property[0].year;
+                                        emailData.type = property[0].institutionType;
                                         emailData.eventYear = property[0].eventYear;
                                         emailData.typeAmount = property[0].totalAmountType;
                                         emailData.amountInWords = property[0].totalAmountInWordsType;
@@ -1450,7 +1480,7 @@ var model = {
                                         }];
                                         // emailData.email = found.email;
                                         emailData.filename = "envoice.ejs";
-                                        emailData.subject = "SFA: Your Payment Invoice as School for SFA " + emailData.city + " " + emailData.eventYear + ".";
+                                        emailData.subject = "SFA: Your Payment Invoice as " + emailData.type + " for SFA " + emailData.city + " " + emailData.eventYear + ".";
                                         console.log("emaildata", emailData);
 
                                         Config.emailTo(emailData, function (err, emailRespo) {
