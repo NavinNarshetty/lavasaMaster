@@ -110,7 +110,7 @@
             <div class="relate setpoint-element" ng-repeat="quarter in team.teamResults.quarterPoints track by $index">
               <div class="score-quaterpoints">
                 <label for="player1score" class="text-uppercase">Quarter {{$index+1}} </label>
-                <input type="number" placeholder="0" ng-model="quarter.basket" id="player1score" min="0" max="99" class="score-number display-inline form-control" limit-to-max>
+                <input type="number" placeholder="0" ng-model="quarter.basket" id="player1score" min="0" max="999" class="score-number display-inline form-control" limit-to-max>
               </div>
               <!-- <div class="relate setpoint-element">
                 <label for="player1score" class="text-uppercase">Full Time </label>
