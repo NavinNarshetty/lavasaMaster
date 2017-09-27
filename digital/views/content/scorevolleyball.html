@@ -22,25 +22,9 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="row">
-                <button type="button" name="button" class="btn" ng-click="selectTeam(match.resultVolleyball)"> Team init</button>
-            </div> -->
             <!-- TEAM HEADERS -->
             <!-- TEAM SCORING -->
             <div class="teamscoring-section">
-              <div class="showhide-set clearfix">
-                  <div class="addset">
-                      <button class="btn btn-green-outline" ng-click="addSet();">Add Set</button>
-                      <button class="btn btn-green-outline" ng-click="removeSets();">Remove Set</button>
-                  </div>
-                  <ul class="list-inline">
-                      <li class="setshow-element" ng-repeat="length in setLength track by $index">
-                          <div class="form-group">
-                              <label for="set{{$index}}"><input type="radio" name="setShowRadio" id="set{{$index}}" ng-value="$index" ng-model="setDisplay.value"> Set {{$index + 1}}</label>
-                          </div>
-                      </li>
-                  </ul>
-              </div>
                 <div class="row">
                     <!-- TEAM 1 PLAYER DETAILS -->
                     <div class="col-md-4 col-sm-4">
@@ -73,19 +57,11 @@
                     <!-- TEAM SCORES -->
                     <div class="col-md-2 col-sm-2" ng-repeat="team in match.resultVolleyball.teams track by $index">
                         <div class="team-teampoints">
-                            <!-- SETS DATA POINT -->
-                            <div class="relate teamscore-point mtb-10" ng-repeat="set in team.teamResults.sets track by $index" ng-if= "setDisplay.value == $index">
-                                <label class="teamdatapoint-name">Set {{$index + 1}}</label>
-                                <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementScore(set,'points');"><i class="fa fa-minus"></i></button>
-                                <input type="number" ng-model="set.points" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control">
-                                <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementScore(set,'points');"><i class="fa fa-plus"></i></button>
-                            </div>
-                            <!-- SETS DATA POINT -->
                             <!-- fouls DATA POINT -->
                             <div class="relate teamscore-point mtb-10">
                                 <label class="teamdatapoint-name">Fouls</label>
                                 <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementTeamPoint(team, 'fouls');"><i class="fa fa-minus"></i></button>
-                                <input type="number" ng-model="team.teamResults.fouls" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control">
+                                <input type="number" ng-model="team.teamResults.fouls" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
                                 <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementTeamPoint(team, 'fouls');"><i class="fa fa-plus"></i></button>
                             </div>
                             <!-- fouls DATA POINT -->
@@ -93,7 +69,7 @@
                             <div class="relate teamscore-point mtb-10">
                                 <label class="teamdatapoint-name">Spike</label>
                                 <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementTeamPoint(team, 'spike');"><i class="fa fa-minus"></i></button>
-                                <input type="number" ng-model="team.teamResults.spike" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control">
+                                <input type="number" ng-model="team.teamResults.spike" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
                                 <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementTeamPoint(team, 'spike');"><i class="fa fa-plus"></i></button>
                             </div>
                             <!-- spike DATA POINT -->
@@ -101,7 +77,7 @@
                             <div class="relate teamscore-point mtb-10">
                                 <label class="teamdatapoint-name">Block</label>
                                 <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementTeamPoint(team, 'block');"><i class="fa fa-minus"></i></button>
-                                <input type="number" ng-model="team.teamResults.block" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control">
+                                <input type="number" ng-model="team.teamResults.block" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
                                 <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementTeamPoint(team, 'block');"><i class="fa fa-plus"></i></button>
                             </div>
                             <!-- block DATA POINT -->
@@ -137,6 +113,37 @@
                 </div>
             </div>
             <!-- TEAM SCORING END -->
+            <!-- ADD/ REMOVE SET -->
+            <div class="showhide-set clearfix">
+                <div class="addset">
+                    <button class="btn btn-green-outline" ng-click="addSet();">Add Set</button>
+                    <button class="btn btn-green-outline" ng-click="removeSets();">Remove Set</button>
+                </div>
+            </div>
+            <!-- ADD/ REMOVE SET END -->
+            <!-- HALF TIME FULL TIME -->
+            <div class="racquet-setscore">
+              <div class="scoring-set form-group" ng-repeat="team in match.resultVolleyball.teams track by $index">
+                <div class="matchplayer-image" title="{{match.teams[$index].schoolName}} | {{match.teams[$index].sfaId}}">
+                  <img ng-src="{{match.teams[$index].photograph|serverimage}}" alt="{{match.teams[$index].schoolName}}" class="img-responsive">
+                </div>
+                <!-- QUARTER POINTS -->
+                <div class="relate setpoint-element" ng-repeat="set in team.teamResults.sets track by $index">
+                  <div class="score-quaterpoints">
+                    <label for="player1score" class="text-uppercase">Quarter {{$index+1}} </label>
+                    <input type="number" placeholder="0" ng-model="set.points" id="player1score" min="0" max="99" class="score-number display-inline form-control" limit-to-max>
+                  </div>
+                </div>
+                <!-- QUARTER POINTS END -->
+                <!-- FINAL POINTS -->
+                <div class="relate setpoint-element">
+                  <label for="player1score" class="text-uppercase">Final oints</label>
+                  <input type="number" ng-model="team.teamResults.finalPoints" id="player1score" min="0" placeholder="0" max="99" class="score-number display-inline form-control" limit-to-max>
+                </div>
+                <!-- FINAL POINTS END -->
+              </div>
+            </div>
+            <!-- HALF TIME FULL TIME END -->
             <!-- FINAL DETAILS SECTION -->
             <div class="combatscore-uploads text-center">
                 <!-- RESULT PICS -->

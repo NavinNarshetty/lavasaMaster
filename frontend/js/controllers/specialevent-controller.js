@@ -7,15 +7,127 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
     // VARIABLE INITITALISE END
 
     // FUNCTIONS
+    // INITIALSE EVENT COLOR CLASS
+    $scope.initialiseColor = function(){
+      _.each($scope.events, function(n){
+        _.each(n.dates, function(m){
+          m.colorClass = "";
+          color = m.color.toLowerCase();
+          switch (color) {
+            case "yellow":
+              m.colorClass = "eventcard-yellow";
+            break;
+            case "blue":
+              m.colorClass = "eventcard-blue";
+            break;
+            case "green":
+              m.colorClass = "eventcard-green";
+            break;
+          }
+        });
+      });
+    }
+    $scope.initialiseColor();
+    // INITIALSE EVENT COLOR CLASS END
     // FUNCTIONS END
 
     // JSONS
-    $scope.event = [{
+    $scope.events = [{
       name: 'December 2017',
       dates: [{
-        date: ' 6 December 2017',
+        date: ' 6',
         day: 'Wednesday',
+        color: 'yellow',
+        colorClass : "eventcard-yellow",
+        type: 'card1',
+        section1: {
+          type: 'text',
+          header: 'welcome to sfa mumbai 2017',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        }
+      },{
+        date: ' 6',
+        day: 'Wednesday',
+        color: 'blue',
+        colorClass : "eventcard-blue",
+        type: 'card3',
+        section1: {
+          type: 'image',
+          name: 'img/dishapatani1.jpg',
+        },
+        section2: {
+          type: 'text',
+          header: 'welcome to sfa mumbai 2017',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        },
+        section3: {
+          type: 'image',
+          name: 'img/dishapatani1.jpg',
+        }
+      },{
+        date: ' 6',
+        day: 'Wednesday',
+        color: 'green',
+        colorClass : "eventcard-green",
+        type: 'card2',
+        section1: {
+          type: 'image',
+          name: 'img/sfamps.jpg',
+        },
+        section2: {
+          type: 'text',
+          header: 'welcome to sfa mumbai 2017',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        }
+      }]
+    },{
+      name: 'February 2018',
+      dates: [{
+        date: ' 6',
+        day: 'Wednesday',
+        color: 'yellow',
+        colorClass : "eventcard-yellow",
+        type: 'card1',
+        section1: {
+          type: 'text',
+          header: 'welcome to sfa mumbai 2017',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        }
+      },{
+        date: ' 6',
+        day: 'Wednesday',
+        color: 'blue',
+        colorClass : "eventcard-blue",
+        type: 'card3',
+        section1: {
+          type: 'text',
+          header: 'welcome to sfa mumbai 2017',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        },
+        section2: {
+          type: 'image',
+          name: 'img/dishapatani1.jpg',
 
+        },
+        section3: {
+          type: 'image',
+          name: 'img/dishapatani1.jpg',
+        }
+      },{
+        date: ' 6',
+        day: 'Wednesday',
+        color: 'green',
+        colorClass : "eventcard-green",
+        type: 'card2',
+        section1: {
+          type: 'image',
+          name: 'img/sfamps.jpg',
+        },
+        section2: {
+          type: 'text',
+          header: 'welcome to sfa mumbai 2017',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        }
       }]
     }];
     // JSONS END

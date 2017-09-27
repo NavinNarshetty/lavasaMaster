@@ -141,6 +141,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                             spike: "",
                                             fouls: "",
                                             block: "",
+                                            finalPoints: "",
                                         }
                                     }
                                     _.each($scope.matchDetails.teams[key].studentTeam, function (m, mkey) {

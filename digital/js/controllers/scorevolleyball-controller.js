@@ -402,7 +402,7 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
                     setShow : true
                   }
                 });
-                if($scope.match.resultVolleyball.teams[0] == "" || $scope.match.resultVolleyball.teams[0].formation == "" ||$scope.match.resultVolleyball.teams[1].coach == "" || $scope.match.resultVolleyball.teams[1] == ''){
+                if($scope.match.resultVolleyball.teams[0] == "" ||$scope.match.resultVolleyball.teams[1].coach == "" || $scope.match.resultVolleyball.teams[1] == ''){
                   $scope.selectTeam($scope.match.resultVolleyball);
                 }
             } else {
