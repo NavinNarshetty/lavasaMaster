@@ -1810,6 +1810,9 @@ var model = {
                 } else {
                     sportslist.name = data[0].sportslist.name;
                 }
+                if (data[0].sportslist._id) {
+                    sportslist.oldId = data[0].sportslist._id;
+                }
                 sportslist.sportsListSubCategory = subCategory._id;
                 sportslist.drawFormat = drawFormat._id;
                 SportsList.saveData(sportslist, function (err, sportslist) {
@@ -1898,6 +1901,9 @@ var model = {
                     } else {
                         sportslist.drawFormat = final.drawFormat._id;
                     }
+                    if (data.sportslist._id) {
+                        sportslist.oldId = data.sportslist._id;
+                    }
                     SportsList.saveData(sportslist, function (err, sportslist) {
                         if (err) {
                             callback(err, null);
@@ -1924,7 +1930,6 @@ var model = {
         });
 
     },
-
 
     saveSportsListSubCategory: function (data, category, callback) {
         async.waterfall([
@@ -2036,7 +2041,7 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else {
-                        console.log("found", found);
+                        // console.log("found", found);
                         callback(null, found);
                     }
                 });
@@ -2046,6 +2051,9 @@ var model = {
                 if (found.length == 0) {
                     var ageGroup = {};
                     ageGroup.name = data.agegroup.name;
+                    if (data.agegroup._id) {
+                        ageGroup.oldId = data.agegroup.name;
+                    }
                     AgeGroup.saveData(ageGroup, function (err, ageGroup) {
                         if (err) {
                             callback(err, null);

@@ -1,7 +1,8 @@
 var schema = new Schema({
     name: {
         type: String,
-    }
+    },
+    oldId: String,
 });
 
 schema.plugin(deepPopulate, {});
@@ -11,9 +12,9 @@ module.exports = mongoose.model('AgeGroup', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
-    getAll: function(data, callback) {
+    getAll: function (data, callback) {
 
-        AgeGroup.find().lean().exec(function(err, found) {
+        AgeGroup.find().lean().exec(function (err, found) {
             if (err) {
                 callback(err, null);
             } else {
