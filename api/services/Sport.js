@@ -3238,14 +3238,14 @@ var model = {
                     var matchObj = {};
                     if (data.weight) {
                         matchObj = {
-                            sportslis: data.sportslist,
+                            sportslist: data.sportslist,
                             ageGroup: data.ageGroup,
                             gender: data.gender,
                             weight: data.weight
                         }
                     } else {
                         matchObj = {
-                            sportslis: data.sportslist,
+                            sportslist: data.sportslist,
                             ageGroup: data.ageGroup,
                             gender: data.gender,
                         }
@@ -3266,16 +3266,17 @@ var model = {
                     if (_.isEmpty(found)) {
                         callback(null, found);
                     } else {
+                        console.log(found, "inside");
                         var updateObj = {
                             $set: {
                                 eventPdf: data.eventPdf
                             }
                         };
-                        Match.update({
+                        Sport.update({
                             _id: found._id
                         }, updateObj).exec(
                             function (err, match) {
-                                callback(null, "Updated Successfully !");
+                                callback(null, match);
                             });
                     }
                 }

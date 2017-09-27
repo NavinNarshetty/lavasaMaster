@@ -20,7 +20,10 @@
                   <div class="error-msg" ng-if="detailForm.selectgender.$invalid && detailForm.selectgender.$touched">Please Enter Gender*</div>
                 </div>
                 <!-- END GENDER -->
-
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
                 <!-- SPORT LIST -->
                 <div class="form-group">
                   <label>Sports List</label>
@@ -36,6 +39,11 @@
                   <div class="error-msg" ng-if="detailForm.selectsportslist.$invalid && detailForm.selectsportslist.$touched">Please Enter Sport List *</div>
                 </div>
                 <!-- SPORT LIST END -->
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-12">
                 <!-- AGE GROUP -->
                 <div class="form-group">
                   <label>Age Group</label>
@@ -51,7 +59,12 @@
                   <div class="error-msg" ng-if="detailForm.selectSchoolName.$invalid && detailForm.selectSchoolName.$touched">Please Enter Age Group *</div>
                 </div>
                 <!-- AGE GROUP END -->
+              </div>
+            </div>
 
+
+            <div class="row">
+              <div class="col-md-12">
                 <!-- WEIGHT -->
                 <div class="form-group">
                   <label>Weight</label>
@@ -66,18 +79,30 @@
                   <div class="error-msg" ng-if="detailForm.selectWeight.$invalid && detailForm.selectWeight.$touched">Please Enter Weight *</div>
                 </div>
                 <!-- WEIGHT END -->
+              </div>
+            </div>
 
+
+            <div class="row">
+              <div class="col-md-12">
                 <div class="pdf-hoder">
-                  <upload-pdf ng-model="formData.resultsRacquet.scoreSheet" type="pdf" ispdf=true></upload-pdf>
+                  <upload-pdf ng-model="form.eventPdf" type="pdf" ispdf=true></upload-pdf>
                 </div>
+              </div>
+            </div>
 
+            <div class="row">
+              <div class="col-md-12">
                 <!-- BUTTONS -->
                 <div class="text-center mt20 odd-even-button">
-                  <button class="btn btn-default" type="submit" ng-click="" ng-disabled="detailForm.$invalid">Save</button>
+                  <button class="btn btn-default" type="submit" ng-click="saveDataMatch(form)" ng-disabled="detailForm.$invalid">Save</button>
                 </div>
                 <!-- BUTTONS END -->
               </div>
             </div>
+
+
+
 
           </form>
         </div>
