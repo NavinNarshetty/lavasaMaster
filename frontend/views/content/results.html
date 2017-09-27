@@ -24,7 +24,7 @@
       </div>
       <!-- RESULT SCHOOL TABLE -->
       <div class="result-schooltableholder table-responsive">
-        <table class="table table-striped">
+        <table class="table table-striped" id="schoolRankTable">
           <thead>
             <tr>
               <th>
@@ -95,9 +95,9 @@
                   {{school.bronzePoints}}
                 </div>
               </td>
-              <td>
+              <td ng-click="addMedalDetail($index, school);" class="pointer">
                 <div class="">
-                  {{school.totalPoints}} <span class="fa fa-angle-down"></span>
+                  {{school.totalPoints}} <span class="pointer fa " ng-class="{'fa-angle-down': school.rowDetail == false, 'fa-angle-up':school.rowDetail == true }" ></span>
                 </div>
               </td>
             </tr>

@@ -680,16 +680,44 @@ myApp.controller('MatchStartCtrl', function($scope, TemplateService, NavigationS
       }
       NavigationService.saveMatch($scope.matchResult, function(data){
         if(data.value == true){
-          if ($stateParams.drawFormat === 'Knockout') {
-              $state.go('knockout-doubles', {
-                drawFormat: $stateParams.drawFormat,
-                id: $stateParams.sport
-              });
-          } else if ($stateParams.drawFormat === 'Heats') {
-              $state.go('heats', {
-                drawFormat: $stateParams.drawFormat,
-                id: $stateParams.sport
-              });
+          switch ($scope.matchDetails.sportType) {
+            case "Combat Sports":
+            if ($stateParams.drawFormat === 'Knockout') {
+                $state.go('knockout-teams', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+            } else if ($stateParams.drawFormat === 'Heats') {
+                $state.go('heats', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+            }
+            break;
+            case "Racquet Sports":
+            if ($stateParams.drawFormat === 'Knockout') {
+                $state.go('knockout-doubles', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+            } else if ($stateParams.drawFormat === 'Heats') {
+                $state.go('heats', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
+            }
+            break;
+            case "Team Sports":
+              switch ($scope.matchDetails.sportsName) {
+                case "Kho Kho":
+                case "Throwball":
+                  $state.go('knockout-team', {
+                    drawFormat: $stateParams.drawFormat,
+                    id: $stateParams.sport
+                  });
+                break;
+              }
+            break;
           }
         } else{
           alert('fail save');

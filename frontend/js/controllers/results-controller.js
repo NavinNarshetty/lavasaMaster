@@ -1,4 +1,4 @@
-myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal) {
+myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout) {
     $scope.template = TemplateService.getHTML("content/results.html");
     TemplateService.title = "Direct Final"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -34,6 +34,30 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       }
     }
     // VIEW MEDAL WINNER END
+
+    $scope.addMedalDetail = function(index, detail){
+      console.log(detail, 'detail');
+      console.log(index, 'indexS');
+      var index = $(this).closest('tr').index();
+      index = index + 2;
+      if (detail.rowDetail == true) {
+        document.getElementById("schoolRankTable").deleteRow(index);
+        detail.rowDetail = false;
+      } else{
+        $timeout(function () {
+          detail.rowDetail = true;
+          console.log(index, 'index + 2');
+          var rankTable = document.getElementById("schoolRankTable");
+          var rowDetail = rankTable.insertRow(index);
+          var cell = rowDetail.insertCell(0);
+          cell.innerHTML = "NEW CELL1";
+          console.log(rowDetail, 'rowDetail');
+          console.log('cell', cell);
+          console.log(rankTable,'table');
+        }, 100);
+      }
+    };
+
     // FUNCTIONS END
 
     // JSONS
@@ -45,36 +69,120 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       goldPoints: 20,
       silverPoints: 20,
       bronzePoints: 20,
-      totalPoints: 200
+      totalPoints: 200,
+      details: [{
+        name: 'Athletics',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      },{
+        name: 'Archery ',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      },{
+        name: 'Badminton',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      }]
     },{
       rank: 2,
       school: 'jamnabai high school',
       goldPoints: 20,
       silverPoints: 20,
       bronzePoints: 20,
-      totalPoints: 200
+      totalPoints: 200,
+      details: [{
+        name: 'Athletics',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      },{
+        name: 'Archery ',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      },{
+        name: 'Badminton',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      }]
     },{
       rank: 3,
       school: 'jamnabai high school',
       goldPoints: 20,
       silverPoints: 20,
       bronzePoints: 20,
-      totalPoints: 200
+      totalPoints: 200,
+      details: [{
+        name: 'Athletics',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      },{
+        name: 'Archery ',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      },{
+        name: 'Badminton',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      }]
     },{
       rank: 4,
       school: 'jamnabai high school',
       goldPoints: 20,
       silverPoints: 20,
       bronzePoints: 20,
-      totalPoints: 200
+      totalPoints: 200,
+      details: [{
+        name: 'Athletics',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      },{
+        name: 'Archery ',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      },{
+        name: 'Badminton',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      }]
     },{
       rank: 5,
       school: 'jamnabai high school',
       goldPoints: 20,
       silverPoints: 20,
       bronzePoints: 20,
-      totalPoints: 200
+      totalPoints: 200,
+      details: [{
+        name: 'Athletics',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      },{
+        name: 'Archery ',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      },{
+        name: 'Badminton',
+        gold: 2,
+        silver: 2,
+        bronze: 2
+      }]
     }];
+
+    _.each($scope.rankTable, function(n){
+      n.rowDetail = false;
+    });
     // SCHOOL RANKING TABLE END
 
     // ALL MEDAL WINNERS

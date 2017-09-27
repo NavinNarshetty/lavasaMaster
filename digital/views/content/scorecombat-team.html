@@ -6,7 +6,7 @@
                 <p class="m-clear">match id: <span>{{match.matchId}}</span> </p>
             </div>
             <p class="m-clear"><span>{{match.sportsName}}</span> - <span>{{match.age}}</span> <span>{{match.gender}}</span> <span>{{match.round}}</span></p>
-            <!-- <p style="color:red">{{match.resultsRacquet.status}}</p> -->
+            <!-- <p style="color:red">{{match.resultsCombat.status}}</p> -->
         </div>
     </div>
     <div class="football-scoring">
@@ -30,7 +30,7 @@
             <div class="teamscoring-section">
                 <div class="row">
                     <!-- TEAM 1 PLAYER DETAILS -->
-                    <div class="col-md-4 col-sm-4">
+                    <div class="col-md-6 col-sm-6">
                         <p class="clearfix m-clear"><span class="pull-right">Jersey No.</span><span>Player Name</span></p>
                         <div class="teamplaying">
                             <div class="teamplaying-title">
@@ -59,7 +59,7 @@
                     </div>
                     <!-- TEAM 1 PLAYER DETAILS END -->
                     <!-- TEAM SCORES -->
-                    <div class="col-md-2 col-sm-2" ng-repeat="team in match.resultsCombat.teams track by $index">
+                    <div class="col-md-2 col-sm-2" ng-repeat="team in match.resultsCombat.teams track by $index" hidden>
                         <div class="team-teampoints">
                             <!-- totalShots DATA POINT -->
                             <div class="relate teamscore-point mtb-10" ng-repeat="set in team.sets track by $index">
@@ -73,7 +73,7 @@
                     </div>
                     <!-- TEAM SCORES END -->
                     <!-- TEAM 2 PLAYER DETAILS -->
-                    <div class="col-md-4 col-sm-4">
+                    <div class="col-md-6 col-sm-6">
                         <p class="clearfix m-clear"><span class="pull-right">Jersey No.</span><span>Player Name</span></p>
                         <div class="teamplaying">
                             <div class="teamplaying-title">
@@ -103,6 +103,20 @@
 
             </div>
             <!-- TEAM SCORING END -->
+            <!-- FINAL POINTS UPLOADS -->
+            <div class="racquet-setscore">
+                <div class="scoring-set no-border form-group" ng-repeat="team in match.resultsCombat.teams track by $index">
+                  <!-- <pre>{{team|json}}</pre> -->
+                    <div class="matchteam-combatname">
+                        <p>{{team.schoolName}}</p>
+                    </div>
+                    <div class="relate setpoint-element" ng-repeat="set in team.sets track by $index">
+                        <label for="player1score" class="text-uppercase">Final Points</label>
+                        <input type="number" ng-model="set.point" id="player1score" min="0" placeholder="0" max="99" class="score-number display-inline form-control">
+                    </div>
+                </div>
+            </div>
+            <!-- FINAL POINTS UPLOADS END -->
             <!-- FINAL DETAILS SECTION -->
             <div class="combatscore-uploads text-center">
                 <!-- RESULT PICS -->

@@ -336,6 +336,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/wohlig/results",
             templateUrl: tempateURL,
             controller: 'ResultsCtrl'
+        })
+        .state('specialevents', {
+            url: "/wohlig/specialevents",
+            templateUrl: tempateURL,
+            controller: 'SpecialEventCtrl'
         });
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {

@@ -83,4 +83,5 @@ module.exports = [
   'frontend/js/controllers/draws-schedule/knockout.js',
   'frontend/js/controllers/draws-schedule/swissleague.js',
   'frontend/js/controllers/results-controller.js',
+  'frontend/js/controllers/specialevent-controller.js',
 ];

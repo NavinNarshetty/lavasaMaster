@@ -10,6 +10,9 @@ $sport-grey: #e1e1e1 !default;
 $sport-darkgrey: #757575 !default;
 // COLORS END
 // COMMON CLASSES
+.pointer{
+  cursor: pointer;
+}
 .inline-block{
   display: inline-block;
 }
@@ -831,3 +834,9 @@ $sport-darkgrey: #757575 !default;
   }
 }
 // TEAM MATCH CENTER END
+// SPECIAL EVENTS PAGE
+.specialevets-page{
+  min-height: 100vh;
+  padding: 60px 0px 50px;
+}
+// SPECIAL EVENTS PAGE END
