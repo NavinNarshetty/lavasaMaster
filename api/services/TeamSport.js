@@ -259,6 +259,7 @@ var model = {
     },
 
     saveInTeam: function (data, callback) {
+        console.log(data);
         async.waterfall([
                 function (callback) {
                     TeamSport.findOne().sort({
