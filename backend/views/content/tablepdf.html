@@ -51,16 +51,17 @@
                 <!-- <tr ng-repeat="item in items"> -->
                 <tr ng-repeat="item in items|filter:item.matchId">
                   <!--<tr>-->
-                  <td>{{($index + 1)+((form.page-1)*maxRow)}}</td>
+                  <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                   <!--<td>{{($index + 1)}}</td>-->
-                  <td>{{item.matchId}}</td>
-                  <td>{{item.round}}
+                  <td>{{item.gender}}</td>
+                  <td>{{item.sportslist.name}}
                     <!-- <pre>{{item.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}</pre>
                     <pre>{{item.matchId}}</pre>
                     <pre>{{item.sport.sportslist.sportsListSubCategory.isTeam}}</pre> -->
                   </td>
+                  <td>{{item.ageGroup.name}}</td>
                   <td>
-                    <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item.sport.sportslist.sportslistSubCategory.sportsListCategory,item.matchId,item.sport.sportslist.sportsListSubCategory.isTeam)">
+                    <a class="btn btn-primary" target="_blank" ui-sref="detailpdf({id:item._id})">
                         <i class="fa fa-pencil"></i> Edit
                       </a>
                     <a class="btn btn-danger" ng-click="confDel(item._id)">
@@ -82,7 +83,7 @@
           <div class="tableData " ng-show="totalItems===undefined ">
             <h5>Loading Data</h5>
           </div>
-          <ul ng-if="totalItems" ng-change="viewTable()" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="form.page"
+          <ul ng-if="totalItems" ng-change="viewTable()" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
             max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
         </div>
       </div>

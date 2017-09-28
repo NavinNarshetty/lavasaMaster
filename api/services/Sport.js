@@ -1900,14 +1900,53 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        var deepSearch = "sportslist ageGroup weight";
-        var Search = Model.find({
-                eventPdf: data.eventPdf
-            })
-            .order(options)
-            .deepPopulate(deepSearch)
-            .keyword(options)
-            .page(options, callback);
+        async.waterfall([
+            function (callback) {
+                var deepSearch = "sportslist ageGroup weight";
+                Sport.find(data.keyword)
+                    .order(options)
+                    .deepPopulate(deepSearch)
+                    .keyword(options)
+                    // .limit(maxRow)
+                    // .skip(options.start)
+                    .exec(function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, complete);
+                        }
+                    });
+
+            },
+            function (complete, callback) {
+                var final = {};
+                final.results = [];
+                // final.total = complete.length;
+                async.eachSeries(complete, function (singleData, callback) {
+                    if (singleData.eventPdf) {
+                        final.results.push(singleData);
+                        callback(null, final);
+                    } else {
+                        callback(null, singleData);
+                    }
+                }, function (err) {
+                    var finalData = {};
+                    console.log("final", final);
+                    finalData.options = options;
+                    finalData.results = final.results;
+                    finalData.total = final.results.length;
+                    // finalData.total = final.total;
+                    console.log("finalData", finalData);
+                    callback(null, finalData);
+                });
+            }
+        ], function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, found);
+            }
+        })
 
     },
 

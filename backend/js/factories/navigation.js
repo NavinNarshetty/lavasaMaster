@@ -474,6 +474,19 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data)
             });
         },
+        searchForEventPdf: function (formData, callback) {
+            console.log(formData, 'search');
+
+            $http({
+                url: adminurl + "Sport/searchForEventPdf",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                console.log(data, "nav");
+                callback(data)
+            });
+        },
+
 
         setDetail: function (data, callback) {
             if (data) {

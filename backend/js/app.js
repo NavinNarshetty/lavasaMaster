@@ -289,7 +289,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'TablePdfCtrl'
         })
         .state('detailpdf', {
-            url: "/detailpdf",
+            url: "/detailpdf/:id",
             templateUrl: "views/template.html",
             controller: 'DetailPdfCtrl'
         })
