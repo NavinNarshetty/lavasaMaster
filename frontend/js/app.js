@@ -337,6 +337,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'ResultsCtrl'
         })
+        .state('sponsors-partner', {
+            url: "/sponsors-partner",
+            templateUrl: tempateURL,
+            controller: 'SponserPartnerCtrl'
+        })
         .state('specialevents', {
             url: "/wohlig/specialevents",
             templateUrl: tempateURL,
