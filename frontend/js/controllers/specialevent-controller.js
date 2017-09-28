@@ -38,7 +38,7 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
         date: ' 6',
         day: 'Wednesday',
         color: 'yellow',
-        colorClass : "eventcard-yellow",
+        colorClass : "eventcard-green",
         type: 'card1',
         section1: {
           type: 'text',
@@ -49,7 +49,7 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
         date: ' 6',
         day: 'Wednesday',
         color: 'blue',
-        colorClass : "eventcard-blue",
+        colorClass : "eventcard-yellow",
         type: 'card3',
         section1: {
           type: 'image',
@@ -61,8 +61,9 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
           content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         },
         section3: {
-          type: 'image',
-          name: 'img/dishapatani1.jpg',
+          type: 'text',
+          header: 'welcome to sfa mumbai 2017',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         }
       },{
         date: ' 6',
@@ -72,7 +73,7 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
         type: 'card2',
         section1: {
           type: 'image',
-          name: 'img/sfamps.jpg',
+          name: 'img/sl1.jpg',
         },
         section2: {
           type: 'text',
@@ -104,11 +105,11 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
           header: 'welcome to sfa mumbai 2017',
           content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
         },
-        section2: {
-          type: 'image',
-          name: 'img/dishapatani1.jpg',
-
-        },
+        // section2: {
+        //   type: 'image',
+        //   name: 'img/dishapatani1.jpg',
+        //
+        // },
         section3: {
           type: 'image',
           name: 'img/dishapatani1.jpg',
@@ -120,13 +121,14 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
         colorClass : "eventcard-green",
         type: 'card2',
         section1: {
-          type: 'image',
-          name: 'img/sfamps.jpg',
-        },
-        section2: {
           type: 'text',
           header: 'welcome to sfa mumbai 2017',
           content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        },
+        section2: {
+          type: 'image',
+          name: 'img/sl1.jpg',
+
         }
       }]
     }];

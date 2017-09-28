@@ -767,43 +767,65 @@ myApp.directive('img', function($compile, $parse) {
 })
 
 .directive('rules', function($document, $uibModal, $state, toastr) {
-        return {
-            restrict: 'E',
-            replace: false,
-            templateUrl: "views/directive/rules.html",
-            scope: {
-                items: "=value"
-            },
-            link: function(scope, element, attr) {
-                console.log('enter');
-
-            }
-        };
-    })
-    .directive('faqtable', function($document, $uibModal, $state, toastr) {
-        return {
-            restrict: 'E',
-            replace: false,
-            templateUrl: "views/directive/faqtable.html",
-            scope: {
-                items: "=value"
-            },
-            link: function(scope, element, attr) {
-                console.log('enter');
-
-            }
-        };
-    })
-    // profileathlete-card
-    .directive('profileAthleteCard', function () {
-        return {
-            restrict: 'E',
-            scope: {},
-            templateUrl: 'views/directive/profileathlete-card.html',
-            link: function () {}
+    return {
+        restrict: 'E',
+        replace: false,
+        templateUrl: "views/directive/rules.html",
+        scope: {
+            items: "=value"
+        },
+        link: function(scope, element, attr) {
+            console.log('enter');
         }
-    });
-    // end profileathlete-card;
+    };
+})
+.directive('faqtable', function($document, $uibModal, $state, toastr) {
+    return {
+        restrict: 'E',
+        replace: false,
+        templateUrl: "views/directive/faqtable.html",
+        scope: {
+            items: "=value"
+        },
+        link: function(scope, element, attr) {
+            console.log('enter');
+        }
+    };
+})
+// profileathlete-card
+.directive('profileAthleteCard', function () {
+    return {
+        restrict: 'E',
+        scope: {},
+        templateUrl: 'views/directive/profileathlete-card.html',
+        link: function () {}
+    }
+})
+// end profileathlete-card;
+// SET HEIGHT OF TILE
+.directive('setHeight', function($compile, $parse){
+  return{
+    restrict: 'A',
+    link: function($scope, element, value){
+      console.log(value.setHeight, 'val');
+      if (value.setHeight == '') {
+        var multiple = 1;
+        console.log(value.setHeight,'hello', multiple);
+      } else {
+        var multiple = value.setHeight;
+        console.log(value.setHeight,'chalo', multiple);
+      }
+      var $element = $(element);
+      var $width = $($element).width();
+      console.log($width,'no multi');
+      var $width = $width * multiple;
+      console.log($width,'multi');
+      // console.log($width, 'width');
+      $($element).height($width);
+    }
+  }
+});
+    // SET HEIGHT OF TILE END
 // .directive('onlyDigits', function () {
 //     return {
 //         require: 'ngModel',
