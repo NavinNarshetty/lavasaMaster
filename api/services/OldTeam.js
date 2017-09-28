@@ -13,13 +13,12 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     getAllTeam: function (data, callback) {
-        var team = {};
-        team.athleteTeam = [];
+        var final = [];
         async.waterfall([
                 function (callback) {
                     OldTeam.find({
                         year: data.year
-                    }).lean().exec(function (err, found) {
+                    }).lean().limit(10).exec(function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -28,7 +27,9 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    async.concat(found, function (sportData, callback) {
+                    async.eachSeries(found, function (sportData, callback) {
+                            var team = {};
+                            team.athleteTeam = [];
                             async.waterfall([
                                     function (callback) {
                                         var sportParam = {};
@@ -55,7 +56,8 @@ var model = {
                                         });
                                     },
                                     function (sportData, callback) {
-                                        // console.log("players", sportData.players);
+                                        // var data = sportData.players.length;
+                                        console.log("count", sportData);
                                         async.eachSeries(sportData.players, function (player, callback) {
                                                 // console.log("player", player);
                                                 var playerData = {};
@@ -67,17 +69,26 @@ var model = {
                                                         if (_.isEmpty(sport)) {
                                                             callback(null, []);
                                                         } else {
-                                                            console.log("athleteData", sport);
-                                                            team.athleteTeam.push(sport._id);
+                                                            team.id = sportData._id;
+                                                            var studentTeam = {};
+                                                            studentTeam.studentId = sport._id;
+                                                            if (sport._id.equals(sportData.captain)) {
+                                                                studentTeam.isCaptain = true;
+                                                            } else {
+                                                                studentTeam.isCaptain = false;
+                                                            }
+                                                            studentTeam.isGoalKeeper = false;
+                                                            team.athleteTeam.push(studentTeam);
                                                             team.school = sport.school;
                                                             team.schoolName = sport.schoolName;
-                                                            callback(null, sport);
+                                                            callback(null, team);
                                                         }
                                                     }
                                                 });
                                             },
                                             function (err) {
                                                 callback(null, team);
+                                                final.push(team);
                                             });
                                     }
                                 ],
@@ -87,12 +98,13 @@ var model = {
                                     } else if (_.isEmpty(found)) {
                                         callback(null, []);
                                     } else {
+
                                         callback(null, found);
                                     }
                                 });
                         },
-                        function (err, founddata) {
-                            callback(null, founddata);
+                        function (err) {
+                            callback(null, final);
                         });
                 }
             ],
@@ -233,7 +245,7 @@ var model = {
                             if (err || _.isEmpty(athleteData)) {
                                 callback(null, []);
                             } else {
-                                console.log("school", athleteData);
+                                // console.log("school", athleteData);
                                 athlete._id = found._id;
                                 athlete.school = athleteData._id;
                                 athlete.schoolName = athleteData.schoolName;
