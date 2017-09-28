@@ -287,7 +287,7 @@ var model = {
                             } else if (mainData.property.sfaCity == "Hyderabad") {
                                 console.log("autoID", team.autoID);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
-                                var teamid = "M" + "T" + year + ++team.autoID;
+                                var teamid = "H" + "T" + year + ++team.autoID;
                                 console.log("teamid", teamid);
                                 callback(null, teamid);
                             } else {
