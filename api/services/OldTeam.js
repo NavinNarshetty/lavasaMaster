@@ -18,7 +18,7 @@ var model = {
                 function (callback) {
                     OldTeam.find({
                         year: data.year
-                    }).lean().limit(10).exec(function (err, found) {
+                    }).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -27,7 +27,7 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    async.eachSeries(found, function (sportData, callback) {
+                    async.eachLimit(found, 10, function (sportData, callback) {
                             var team = {};
                             team.athleteTeam = [];
                             async.waterfall([
@@ -41,7 +41,6 @@ var model = {
                                             sportParam.gender = "female";
                                         }
                                         sportParam.weight = undefined;
-                                        // console.log("sportParam", sportParam);
                                         OldTeam.getSportId(sportParam, function (err, sport) {
                                             if (err) {
                                                 callback(err, null);
@@ -56,10 +55,8 @@ var model = {
                                         });
                                     },
                                     function (sportData, callback) {
-                                        // var data = sportData.players.length;
                                         console.log("count", sportData);
                                         async.eachSeries(sportData.players, function (player, callback) {
-                                                // console.log("player", player);
                                                 var playerData = {};
                                                 playerData.athlete = player;
                                                 OldTeam.getAthleteId(playerData, function (err, sport) {
@@ -81,6 +78,8 @@ var model = {
                                                             team.athleteTeam.push(studentTeam);
                                                             team.school = sport.school;
                                                             team.schoolName = sport.schoolName;
+                                                            team.createdBy = "School";
+                                                            team.name = sportData.name;
                                                             callback(null, team);
                                                         }
                                                     }
@@ -90,6 +89,19 @@ var model = {
                                                 callback(null, team);
                                                 final.push(team);
                                             });
+                                    },
+                                    function (team, callback) {
+                                        OldTeam.teamConfirm(team, function (err, sport) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else {
+                                                if (_.isEmpty(sport)) {
+                                                    callback(null, []);
+                                                } else {
+                                                    callback(null, sportData);
+                                                }
+                                            }
+                                        });
                                     }
                                 ],
                                 function (err, found) {
@@ -106,7 +118,7 @@ var model = {
                         function (err) {
                             callback(null, final);
                         });
-                }
+                },
             ],
             function (err, found) {
                 if (err) {
@@ -265,11 +277,6 @@ var model = {
     },
 
     teamConfirm: function (data, callback) {
-        // var sport = data.name;
-        // var index = sport.indexOf("-");
-        // var tempName = sport.slice(++index, sport.length);
-        // var indexNext = tempName.indexOf("-");
-        // data.linkSportName = tempName.slice(0, indexNext);
         console.log("data", data);
         async.waterfall([
                 function (callback) {
@@ -295,7 +302,7 @@ var model = {
                     if (data.isVideoAnalysis) {
                         team.isVideoAnalysis = data.isVideoAnalysis;
                     }
-                    data.property = property[0];
+                    // data.property = property[0];
                     callback(null, team);
                 },
                 function (team, callback) {
