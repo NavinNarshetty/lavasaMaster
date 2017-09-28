@@ -3,10 +3,10 @@ var schema = new Schema({
         type: String,
         enum: ["gold", "silver", "bronze"]
     },
-    sport:[{
+    sport:{
         type:Schema.Types.ObjectId,
         ref:'Sport'
-    }],
+    },
     school:[{
         type:Schema.Types.ObjectId,
         ref:'School'
@@ -42,5 +42,11 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('Medal', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
-var model = {};
+var model = {
+
+    saveMedal:function(){
+        
+    }
+
+};
 module.exports = _.assign(module.exports, exports, model);
