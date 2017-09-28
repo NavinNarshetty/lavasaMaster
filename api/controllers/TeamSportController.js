@@ -12,12 +12,14 @@ var controller = {
                                 if (_.isEmpty(property)) {
                                     callback(null, []);
                                 } else {
+                                    console.log('controller property', property);
                                     callback(null, property);
                                 }
                             }
                         });
                     },
                     function (property, callback) {
+                        console.log('controller property', property);
                         req.body.property = property[0];
                         TeamSport.saveInTeam(req.body, function (err, teamData) {
                             if (err) {
