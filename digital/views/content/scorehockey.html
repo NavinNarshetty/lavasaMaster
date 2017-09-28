@@ -155,11 +155,11 @@
                     </div>
                     <div class="relate setpoint-element" >
                       <label for="player1score" class="text-uppercase" >Half Time </label>
-                      <input type="number" placeholder="0" ng-model="team.teamResults.halfPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control">
+                      <input type="number" placeholder="0" ng-model="team.teamResults.halfPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control" limit-to-max>
                     </div>
                     <div class="relate setpoint-element" >
                       <label for="player1score" class="text-uppercase" >Full Time </label>
-                      <input type="number" placeholder="0" ng-model="team.teamResults.finalPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control">
+                      <input type="number" placeholder="0" ng-model="team.teamResults.finalPoints" id="player1score" min="0" max="99" class="score-number display-inline form-control" limit-to-max>
                     </div>
                     <div class="relate setpoint-element" ng-if="match.resultHockey.teams[0] && match.resultHockey.teams[0].teamResults && match.resultHockey.teams[0].teamResults.penaltyPoints && match.resultHockey.teams[1] && match.resultHockey.teams[1].teamResults && match.resultHockey.teams[1].teamResults.penaltyPoints && match.resultHockey.teams[0].teamResults.penaltyPoints !='' && match.resultHockey.teams[1].teamResults.penaltyPoints !=''">
                       <label for="player1score" class="text-uppercase" >Penalty Points </label>
@@ -205,7 +205,7 @@
                 <!-- RESULT SELECTS -->
                 <div class="combatscore-selects">
                     <div class="row">
-                        <div class="col-md-offset-2 col-md-4 col-sm-6"> 
+                        <div class="col-md-offset-2 col-md-4 col-sm-6">
                             <div class="match-selectwinner text-left">
                                 <label for="matchWinnerPlayer" class="text-uppercase">Select Winner</label>
                                 <!-- UI SELECT -->

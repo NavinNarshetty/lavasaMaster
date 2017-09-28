@@ -42,7 +42,7 @@
                 <!-- <pre>{{player.sets.length}}</pre> -->
                 <div class="relate">
                   <button class="btn score-buttons score-decrement" ng-click="decrementScore(set,'point');"><i class="fa fa-minus"></i></button>
-                  <input type="number" ng-model="set.point" id="{{player.player}}{{$index}}" min="0" placeholder="0" max="99" class="score-number display-inline form-control">
+                  <input type="number" ng-model="set.point" id="{{player.player}}{{$index}}" min="0" placeholder="0" max="99" class="score-number display-inline form-control" limit-to-max>
                   <button class="btn score-buttons score-increment" ng-click="incrementScore(set,'point');"><i class="fa fa-plus"></i></button>
                 </div>
               </div>

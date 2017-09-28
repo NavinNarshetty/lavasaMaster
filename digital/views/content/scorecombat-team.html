@@ -65,7 +65,7 @@
                             <div class="relate teamscore-point mtb-10" ng-repeat="set in team.sets track by $index">
                                 <label class="teamdatapoint-name">Points</label>
                                 <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementScore(set,'point');"><i class="fa fa-minus"></i></button>
-                                <input type="number" ng-model="set.point" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control">
+                                <input type="number" ng-model="set.point" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control" limit-to-max>
                                 <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementScore(set,'point');"><i class="fa fa-plus"></i></button>
                             </div>
                             <!-- totalShots DATA POINT -->
@@ -112,7 +112,7 @@
                     </div>
                     <div class="relate setpoint-element" ng-repeat="set in team.sets track by $index">
                         <label for="player1score" class="text-uppercase">Final Points</label>
-                        <input type="number" ng-model="set.point" id="player1score" min="0" placeholder="0" max="99" class="score-number display-inline form-control">
+                        <input type="number" ng-model="set.point" id="player1score" min="0" placeholder="0" max="99" class="score-number display-inline form-control" limit-to-max>
                     </div>
                 </div>
             </div>

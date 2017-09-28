@@ -35,7 +35,7 @@
                 <div class="team-penaltypoints">
                   <div class="select-teamcoach">
                       <label for="{{team.teamId}}.coach">Final Penalty Points</label>
-                      <input type="number" id="{{team.teamId}}.coach" placeholder="0" ng-model="team.teamResults.penaltyPoints" class="form-control" required/>
+                      <input type="number" id="{{team.teamId}}.coach" placeholder="0" ng-model="team.teamResults.penaltyPoints" class="form-control"limit-to-max min="0" max="99"  required/>
                   </div>
                 </div>
             </div>
