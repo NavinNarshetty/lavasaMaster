@@ -807,20 +807,14 @@ myApp.directive('img', function($compile, $parse) {
   return{
     restrict: 'A',
     link: function($scope, element, value){
-      console.log(value.setHeight, 'val');
       if (value.setHeight == '') {
         var multiple = 1;
-        console.log(value.setHeight,'hello', multiple);
       } else {
         var multiple = value.setHeight;
-        console.log(value.setHeight,'chalo', multiple);
       }
       var $element = $(element);
       var $width = $($element).width();
-      console.log($width,'no multi');
       var $width = $width * multiple;
-      console.log($width,'multi');
-      // console.log($width, 'width');
       $($element).height($width);
     }
   }

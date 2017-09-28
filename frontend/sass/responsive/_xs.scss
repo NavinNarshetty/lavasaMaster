@@ -129,5 +129,33 @@
        }
     }
     // TEAM MATCH CENTER END
+    // SPECIAL EVENT
+    .event-card {
+      margin: 5px 0;
+    }
+    .evencard-datetile{
+      padding: 10px;
+    }
+    .eventcard-date{
+      font-size: 48px;
+    }
+    .eventcard-day{
+      font-size: 20px;
+    }
+    .eventdetail-title{
+      padding: 0;
+      font-size: 14px;
+      line-height: 1;
+    }
+    .eventdetail-content{
+      padding: 0;
+      line-height: 1;
+    }
+    .datearrow-card1, .datearrow-card3{
+      &:after{
+        border-width: 8px !important;
+      }
+    }
+    // SPECIAL EVENT END
      // Mobile End
  }

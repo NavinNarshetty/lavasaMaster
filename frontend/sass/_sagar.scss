@@ -847,9 +847,14 @@ $sport-darkgrey: #757575 !default;
   font-size: 30px;
   font-weight: 600;
 }
+.specialevent-title {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-weight: 600;
+}
 .specialevent{
   margin: 20px 0;
-  padding: 20px 0;
+  // padding: 20px 0;
   .row{
     margin-left: -2px;
     margin-right: -2px;
@@ -940,18 +945,17 @@ $sport-darkgrey: #757575 !default;
 // DATE ARROW END
 .event-tile{
   width: 50%;
-  // height: 275px;
-  // border: 1px solid;
   position: relative;
   float: left;
-  // background-color: #fff;
   overflow: hidden;
 }
 // EVENT DATE CARD
 .evencard-datetile {
+  width: 100%;
+  padding: 20px;
   position: absolute;
   top: 50%;
-  left: 20px;
+  left: 0;
   color: #fff;
   font-weight: 700;
   @include transform(translateY(-50%));
