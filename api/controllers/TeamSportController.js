@@ -3,7 +3,40 @@ var controller = {
 
     saveInTeam: function (req, res) {
         if (req.body) {
-            TeamSport.saveInTeam(req.body, res.callback);
+            async.waterfall([
+                    function (callback) {
+                        ConfigProperty.find().lean().exec(function (err, property) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(property)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, property);
+                                }
+                            }
+                        });
+                    },
+                    function (property, callback) {
+                        req.body.property = property[0];
+                        TeamSport.saveInTeam(req.body, function (err, teamData) {
+                            if (err) {
+                                console.log("err", err);
+                                callback("There was an error ", null);
+                            } else {
+                                if (_.isEmpty(teamData)) {
+                                    callback("No data found", null);
+                                } else {
+                                    callback(null, teamData);
+                                }
+                            }
+                        });
+
+                    }
+                ],
+                function (err, data2) {
+                    res.callback(null, data2)
+                });
         } else {
             res.json({
                 value: false,

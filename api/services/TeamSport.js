@@ -267,16 +267,41 @@ var model = {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(team)) {
-                            var year = new Date().getFullYear().toString().substr(2, 2);
-                            var teamid = "M" + "T" + year + 1;
-                            callback(null, teamid);
+                            if (data.property.sfaCity == 'Mumbai') {
+                                var year = new Date().getFullYear().toString().substr(2, 2);
+                                var teamid = "M" + "T" + year + 1;
+                                callback(null, teamid);
+                            } else if (data.property.sfaCity == "Hyderabad") {
+                                var year = new Date().getFullYear().toString().substr(2, 2);
+                                var teamid = "H" + "T" + year + 1;
+                                callback(null, teamid);
+                            } else {
+                                var city = data.property.sfaCity.substr(0, 1);
+                                var year = new Date().getFullYear().toString().substr(2, 2);
+                                var teamid = city + "T" + year + 1;
+                                callback(null, teamid);
+                            }
                         } else {
-                            console.log("autoID", team.autoID);
-                            var year = new Date().getFullYear().toString().substr(2, 2);
-                            var teamid = "M" + "T" + year + ++team.autoID;
-                            console.log("teamid", teamid);
-                            callback(null, teamid);
-
+                            if (data.property.sfaCity == 'Mumbai') {
+                                console.log("autoID", team.autoID);
+                                var year = new Date().getFullYear().toString().substr(2, 2);
+                                var teamid = "M" + "T" + year + ++team.autoID;
+                                console.log("teamid", teamid);
+                                callback(null, teamid);
+                            } else if (data.property.sfaCity == "Hyderabad") {
+                                console.log("autoID", team.autoID);
+                                var year = new Date().getFullYear().toString().substr(2, 2);
+                                var teamid = "M" + "T" + year + ++team.autoID;
+                                console.log("teamid", teamid);
+                                callback(null, teamid);
+                            } else {
+                                console.log("autoID", team.autoID);
+                                var city = data.property.sfaCity.substr(0, 1);
+                                var year = new Date().getFullYear().toString().substr(2, 2);
+                                var teamid = city + "T" + year + ++team.autoID;
+                                console.log("teamid", teamid);
+                                callback(null, teamid);
+                            }
                         }
                     });
                 },
