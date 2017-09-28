@@ -261,39 +261,51 @@ var model = {
     saveInTeam: function (data, callback) {
         async.waterfall([
                 function (callback) {
-                    TeamSport.findOne().sort({
-                        autoID: -1
-                    }).exec(function (err, team) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(team)) {
-                            var year = new Date().getFullYear().toString().substr(2, 2);
-                            var teamid = "M" + "T" + year + 1;
-                            callback(null, teamid);
-                        } else {
-                            console.log("autoID", team.autoID);
-                            var year = new Date().getFullYear().toString().substr(2, 2);
-                            var teamid = "M" + "T" + year + ++team.autoID;
-                            console.log("teamid", teamid);
-                            callback(null, teamid);
-
-                        }
-                    });
+                    if (data.sfaid) {
+                        // var year = new Date().getFullYear().toString().substr(2, 2);
+                        var teamid = "M" + "T" + data.sfaid;
+                        callback(null, teamid);
+                    } else {
+                        TeamSport.findOne().sort({
+                            autoID: -1
+                        }).exec(function (err, team) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(team)) {
+                                var year = new Date().getFullYear().toString().substr(2, 2);
+                                var teamid = "M" + "T" + year + 1;
+                                callback(null, teamid);
+                            } else {
+                                console.log("autoID", team.autoID);
+                                var year = new Date().getFullYear().toString().substr(2, 2);
+                                var teamid = "M" + "T" + year + ++team.autoID;
+                                console.log("teamid", teamid);
+                                callback(null, teamid);
+                            }
+                        });
+                    }
                 },
                 function (teamid, callback) {
                     data.teamId = teamid;
-                    TeamSport.saveData(data, function (err, teamData) {
-                        if (err) {
-                            console.log("err", err);
-                            callback("There was an error ", null);
-                        } else {
-                            if (_.isEmpty(teamData)) {
-                                callback("No data found", null);
+                    if (data.sfaid) {
+                        TeamSport.saveData(data, function (err, teamData) {
+                            if (err) {
+                                console.log("err", err);
+                                callback("There was an error ", null);
                             } else {
-                                callback(null, teamData);
+                                if (_.isEmpty(teamData)) {
+                                    callback("No data found", null);
+                                } else {
+                                    callback(null, teamData);
+                                }
                             }
-                        }
-                    });
+                        });
+                    } else {
+                        callback(null, {
+                            error: "no team",
+                            data: data
+                        });
+                    }
                 }
             ],
             function (err, data2) {
