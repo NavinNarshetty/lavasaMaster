@@ -78,15 +78,20 @@ $sport-table-grey:#efeeee !default;
 
 // END FONT FAMILY IMPORTS
 // COMMON CLASS
-.display-block{
+.display-block {
   display: block;
 }
+
 .sport-type-head {
   color: $sport-type-head;
 }
 
 .sport-color-primary {
   color: $sport-primary;
+}
+
+.sport-color-info {
+  color: $sport-info;
 }
 
 .sport-color-warning {
@@ -818,7 +823,7 @@ $sport-table-grey:#efeeee !default;
   }
 }
 
-.combatscoreresultforkata{
+.combatscoreresultforkata {
   visibility: hidden;
 }
 
@@ -973,16 +978,18 @@ $sport-table-grey:#efeeee !default;
 .swiss-league-sportname {
   margin-bottom: 30px;
 }
-.swiss-dot-live{
+
+.swiss-dot-live {
   position: absolute;
   top: 5px;
   left: -15px;
 }
+
 // ***********************SWISS LEAGUE END*************************
 // MATCH CENTER MODAL
 // MATCH CENTER
 .matchcenter-modal {
-  .modal-content{
+  .modal-content {
     border-radius: 0;
   }
   .matchwinner-title {
@@ -992,7 +999,7 @@ $sport-table-grey:#efeeee !default;
   .modal-header {
     padding: 0px;
   }
-  .matchcenter-sporticon{
+  .matchcenter-sporticon {
     position: absolute;
     top: 5px;
     left: 20px;
@@ -1036,7 +1043,7 @@ $sport-table-grey:#efeeee !default;
     font-weight: 700;
     text-align: center;
   }
-  .matchcenter-playerpoint{
+  .matchcenter-playerpoint {
     border: none;
     background-color: #e1e1e1;
     font-size: 24px;
@@ -1112,7 +1119,7 @@ $sport-table-grey:#efeeee !default;
     font-size: 16px;
     text-transform: uppercase;
   }
-  .matchcenter-heading{
+  .matchcenter-heading {
     font-weight: 700;
   }
   .matchplayer-card {
@@ -1131,10 +1138,10 @@ $sport-table-grey:#efeeee !default;
     font-weight: 600;
     text-align: left;
   }
-  .teamdetail-player{
+  .teamdetail-player {
     padding: 5px;
     border-bottom: 1px solid #e1e1e1;
-    &:last-child{
+    &:last-child {
       border-bottom: none;
     }
   }
@@ -1152,24 +1159,24 @@ $sport-table-grey:#efeeee !default;
     font-size: 12px;
     color: $sport-dark-grey;
   }
-  .modal-container{
+  .modal-container {
     padding: 0;
   }
-  .playerpoint-accordion{
-    .panel-default > .panel-heading{
+  .playerpoint-accordion {
+    .panel-default>.panel-heading {
       border-bottom: 1px solid #ddd;
       background-color: transparent;
     }
-    .panel-group .panel{
+    .panel-group .panel {
       border: none;
       border-radius: 0;
       box-shadow: none;
     }
-    .setpoint-label{
+    .setpoint-label {
       font-weight: 600;
       font-size: 12px;
     }
-    .panel-default > .panel-heading + .panel-collapse > .panel-body{
+    .panel-default>.panel-heading+.panel-collapse>.panel-body {
       border: none;
     }
   }
@@ -1272,8 +1279,8 @@ $sport-table-grey:#efeeee !default;
       padding: 0;
       border: none;
       margin: 10px 0;
-      &:last-child{
-        .setpointlabel{
+      &:last-child {
+        .setpointlabel {
           display: none;
         }
       }
@@ -1286,13 +1293,34 @@ $sport-table-grey:#efeeee !default;
       display: block;
     }
   } // RACKET-SCORE PAGE END
-  .playerhead-accordion{
+  .playerhead-accordion {
     font-weight: 700;
   }
-  .playerangle-accordion{
+  .playerangle-accordion {
     font-size: 24px;
   }
 }
 
 // MATCH CENTER END
 // MATCH CENTER MODAL END
+// SPONSER PAGE
+.sponsor-partner-page {
+  padding: 50px 0px;
+}
+
+.sponser-partner-title {
+  h2 {
+    font-size: 48px;
+  }
+}
+
+.above-content-holder {
+  text-align: justify;
+}
+
+.sponser-image-holder,
+.partner-image-holder {
+  margin: 10px 0px;
+}
+
+// SPONSER PAGE END

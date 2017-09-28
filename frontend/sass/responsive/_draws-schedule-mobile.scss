@@ -26,6 +26,10 @@
   .chamionshipschedule-page {
     padding: 0;
   } // CHAMPIONSHIP SCHEDULE END
+  // SPONSER_PAGE
+  .sponsor-partner-page {
+    padding: 30px 0px;
+  } // SPONSER_PAGE END
 }
 
 @media screen and (max-width: 991px) {
@@ -68,6 +72,13 @@
   .swiss-league-round {
     margin-top: 92px;
   } // SWISS LEAGUE END
+  // SPONSPER PAGE
+  .sponser-partner-title h2 {
+    font-size: 30px;
+  }
+  .sponser-partner-title {
+    margin-top: 90px;
+  } // SPONSPER PAGE END
 }
 
 @media screen and (max-width: 767px) {
@@ -130,6 +141,9 @@
   .swiss-league-round {
     margin-top: 40px;
   } // SWISS LEAGUE END
+  .sponser-partner-title {
+    margin-top: 10px;
+  }
 }
 
 @media screen and (max-width: 480px) {
@@ -205,5 +219,8 @@
     h3 {
       font-size: 21px;
     }
+  }
+  .sponser-partner-title h2 {
+    font-size: 24px;
   }
 }

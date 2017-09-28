@@ -3,5 +3,5 @@ myApp.controller('SponserPartnerCtrl', function ($scope, TemplateService, $state
   TemplateService.title = "Direct Final"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
 
-  $scope.data = [1, 2, 3, 4, 5, 6];
+  $scope.data = [1, 2, 3, 4, 5, 6, 7];
 });
