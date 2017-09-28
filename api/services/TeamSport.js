@@ -57,18 +57,12 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     // Team Confirm function (save in teamSport,StudentTeam and triggers email to all)
-    teamConfirm: function (data, callback) { // Data -> array of (StudentID, Sport,isCaptain,isGoalkeeper)
-        //      Waterfall
-        //          1. CreateTeamSportWithSchool 
-        //          2. async.each(data,fuction() { SaveInTeam })
-        //          3. FindAthelete $in ID
-        //          4. Send Emails  
+    teamConfirm: function (data, callback) {
         var sport = data.name;
         var index = sport.indexOf("-");
         var tempName = sport.slice(++index, sport.length);
         var indexNext = tempName.indexOf("-");
         data.linkSportName = tempName.slice(0, indexNext);
-        console.log("data", data);
         async.waterfall([
                 function (callback) {
                     ConfigProperty.find().lean().exec(function (err, property) {
@@ -108,10 +102,11 @@ var model = {
                         team.isVideoAnalysis = data.isVideoAnalysis;
                     }
                     data.property = property[0];
+                    console.log("data", data);
                     callback(null, team);
                 },
                 function (team, callback) {
-                    TeamSport.saveInTeam(team, function (err, complete) {
+                    TeamSport.saveInTeam(team, data, function (err, complete) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -258,8 +253,8 @@ var model = {
             });
     },
 
-    saveInTeam: function (data, callback) {
-        console.log(data);
+    saveInTeam: function (data, mainData, callback) {
+        console.log("mainData", mainData);
         async.waterfall([
                 function (callback) {
                     TeamSport.findOne().sort({
@@ -268,28 +263,28 @@ var model = {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(team)) {
-                            if (data.property.sfaCity == 'Mumbai') {
+                            if (mainData.property.sfaCity == 'Mumbai') {
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = "M" + "T" + year + 1;
                                 callback(null, teamid);
-                            } else if (data.property.sfaCity == "Hyderabad") {
+                            } else if (mainData.property.sfaCity == "Hyderabad") {
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = "H" + "T" + year + 1;
                                 callback(null, teamid);
                             } else {
-                                var city = data.property.sfaCity.substr(0, 1);
+                                var city = mainData.property.sfaCity.substr(0, 1);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = city + "T" + year + 1;
                                 callback(null, teamid);
                             }
                         } else {
-                            if (data.property.sfaCity == 'Mumbai') {
+                            if (mainData.property.sfaCity == 'Mumbai') {
                                 console.log("autoID", team.autoID);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = "M" + "T" + year + ++team.autoID;
                                 console.log("teamid", teamid);
                                 callback(null, teamid);
-                            } else if (data.property.sfaCity == "Hyderabad") {
+                            } else if (mainData.property.sfaCity == "Hyderabad") {
                                 console.log("autoID", team.autoID);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = "M" + "T" + year + ++team.autoID;
@@ -297,7 +292,7 @@ var model = {
                                 callback(null, teamid);
                             } else {
                                 console.log("autoID", team.autoID);
-                                var city = data.property.sfaCity.substr(0, 1);
+                                var city = mainData.property.sfaCity.substr(0, 1);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = city + "T" + year + ++team.autoID;
                                 console.log("teamid", teamid);
