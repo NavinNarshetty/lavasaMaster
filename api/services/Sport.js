@@ -3307,6 +3307,7 @@ var model = {
     },
 
     setEventPdf: function (data, callback) {
+        console.log("inside js", data);
         async.waterfall([
                 function (callback) {
                     var matchObj = {};
@@ -3329,8 +3330,10 @@ var model = {
                             callback(err, null);
                         } else {
                             if (_.isEmpty(found)) {
+                                console.log("empty", found);
                                 callback(null, []);
                             } else {
+                                console.log("sport", found);
                                 callback(null, found);
                             }
                         }

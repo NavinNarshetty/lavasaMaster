@@ -8,6 +8,9 @@
     <a href="{{model|uploadpath}}" target="_new">
       <img ng-src="../../img/pdf.png" class="img-responsive uploadingImage" ng-if="type=='pdf' && uploadStatus === 'uploaded'" />
     </a>
+    <a href="{{model|uploadpath}}" target="_new">
+        <img ng-src="../../img/pdf.png" class="img-responsive uploadingImage" ng-if="type=='pdf' && uploadStatus !== 'uploaded'" />
+      </a>
   </div>
   <div class="clearfix" ng-if="model && isMultiple" ng-hide="noShow">
     <pre>{{model}}</pre>

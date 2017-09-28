@@ -100,15 +100,11 @@
                 </div>
               </div>
             </div>
+            <!-- <button class="btn btn-default" ng-if="form.eventPdf" >Remove PDF</button> -->
 
-            <div class="row">
-              <div class="col-md-12">
-                <!-- BUTTONS -->
-                <div class="text-center mt20 odd-even-button">
-                  <button class="btn btn-default" type="submit" ng-click="saveDataMatch(form)" ng-disabled="detailForm.$invalid">Save</button>
-                </div>
-                <!-- BUTTONS END -->
-              </div>
+            <div class="text-center mt20 odd-even-button">
+              <button class="btn btn-default" type="submit" ng-click="saveDataMatch(form)" ng-disabled="detailForm.$invalid">Save</button>
+              <button class="btn btn-default" ui-sref='tablepdf'>Cancel</button>
             </div>
 
 

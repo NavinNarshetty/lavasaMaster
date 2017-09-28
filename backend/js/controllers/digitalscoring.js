@@ -10,7 +10,7 @@ myApp.controller('DetailMatchesCtrl', function ($scope, TemplateService, Navigat
 // DETAIL MATCHES END
 
 // TABLE PDF
-myApp.controller('TablePdfCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+myApp.controller('TablePdfCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
   //Used to name the .html file
   $scope.template = TemplateService.changecontent("tablepdf");
   $scope.menutitle = NavigationService.makeactive("Table Pdf");
@@ -21,6 +21,26 @@ myApp.controller('TablePdfCtrl', function ($scope, TemplateService, NavigationSe
   $scope.formData.type = '';
   $scope.formData.keyword = '';
 
+  $scope.removepdf = function (data) {
+    console.log(data, "remove");
+    // delete data.eventPdf;
+    data.eventPdf = '';
+    // $scope.searchForEventPdf();
+    console.log(data);
+    if (data) {
+      $scope.url = "Sport/saveSport";
+      NavigationService.apiCall($scope.url, data, function (data) {
+        console.log("data.value", data);
+        if (data.data.nModified == '1') {
+          toastr.success(" Saved Successfully", "Sport Message");
+          $state.go('tablepdf');
+        }
+      });
+
+    } else {
+      toastr.error("Something went wrong", "Error");
+    }
+  }
 
   $scope.searchForEventPdf = function () {
     $scope.formData.page = $scope.formData.page++;
@@ -56,6 +76,8 @@ myApp.controller('DetailPdfCtrl', function ($scope, TemplateService, NavigationS
       $scope.viewTable();
     }
   }
+
+
   console.log("$stateParams.id", $stateParams.id);
   if ($stateParams.id != '') {
     console.log("edit")
@@ -70,6 +92,7 @@ myApp.controller('DetailPdfCtrl', function ($scope, TemplateService, NavigationS
         console.log("data.value sportlist", data);
         $scope.form.gender = data.data.gender;
         $scope.form = data.data;
+        // $scope.form.eventPdf = data.data.eventPdf;
       });
     }
     $scope.getOneOldSchoolById();
@@ -129,15 +152,16 @@ myApp.controller('DetailPdfCtrl', function ($scope, TemplateService, NavigationS
 
   // SAVE
   $scope.saveDataMatch = function (formData) {
+    console.log(formData, "check this");
     var paramValue = {};
-    paramValue.sportslist = formData.sportslist._id;
+    paramValue.sportslist = formData.sportslist;
     paramValue.gender = formData.gender;
     paramValue.ageGroup = formData.ageGroup._id;
     paramValue.eventPdf = formData.eventPdf;
+    paramValue.weight = formData.weight._id;
 
     // $scope.formData.matchId = $stateParams.id;
     console.log(paramValue, "save");
-    // $scope.obj = $.jStorage.get("detail")
     NavigationService.setEventPdf(paramValue, function (data) {
       if (data.value == true) {
         console.log("res", data);
@@ -149,7 +173,9 @@ myApp.controller('DetailPdfCtrl', function ($scope, TemplateService, NavigationS
       }
     })
 
+
   }
+
   // SAVE-END
 
 });
