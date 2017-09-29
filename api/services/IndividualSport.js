@@ -1374,10 +1374,10 @@ var model = {
             function (schoolData, callback) {
                 Registration.findOne({
                     schoolName: schoolData.name
-                }).exec(function (err, resgisterSchool) {
+                }).exec(function (err, registerSchool) {
                     if (err) {
                         callback(err, null);
-                    } else if (_.isEmpty(resgisterSchool)) {
+                    } else if (_.isEmpty(registerSchool)) {
                         callback("Incorrect Login Details", null);
                     } else {
                         finalData.school = registerSchool.schoolName;
