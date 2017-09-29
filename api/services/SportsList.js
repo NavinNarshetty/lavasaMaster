@@ -10,9 +10,11 @@ var schema = new Schema({
         ref: 'DrawFormat',
         index: true
     },
-    oldId: String,
-    // inactiveimage: String,
-    // image: String
+    oldId: {
+        type: Schema.Types.ObjectId,
+        index: true
+    },
+
 });
 
 schema.plugin(deepPopulate, {

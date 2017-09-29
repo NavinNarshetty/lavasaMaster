@@ -263,14 +263,11 @@ var model = {
 
     getAthleteId: function (data, mainData, callback) {
         var athlete = {};
-        var id = data.athlete.toString();
+        // var id = data.athlete.toString();
         async.waterfall([
                 function (callback) {
                     Athelete.findOne({
-                        oldId: {
-                            $regex: id,
-                            $options: "i"
-                        }
+                        oldId: data.athlete
                     }).lean().exec(function (err, found) {
                         if (err || _.isEmpty(found)) {
                             callback(err, {

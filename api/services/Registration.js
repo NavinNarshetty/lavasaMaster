@@ -114,7 +114,11 @@ var schema = new Schema({
     utm_campaign: String,
     panNo: String,
     gstNo: String,
-    oldId: String,
+    oldId: {
+        type: Schema.Types.ObjectId,
+        ref: 'OldSchool',
+        index: true
+    }
 });
 
 schema.plugin(deepPopulate, {});

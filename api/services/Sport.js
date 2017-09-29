@@ -30,7 +30,11 @@ var schema = new Schema({
     },
     fromDate: Date,
     toDate: Date,
-    oldId: String,
+    oldId: {
+        type: Schema.Types.ObjectId,
+        ref: 'OldSport',
+        index: true
+    }
 });
 
 schema.plugin(deepPopulate, {

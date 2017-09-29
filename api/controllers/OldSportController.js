@@ -73,6 +73,16 @@ var controller = {
             })
         }
     },
+    getAllIndividual: function (req, res) {
+        if (req.body) {
+            OldSport.getAllIndividual(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Data not Found",
+                "value": false
+            })
+        }
+    },
 
     getAllCombat: function (req, res) {
         if (req.body) {

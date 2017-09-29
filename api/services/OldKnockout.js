@@ -134,7 +134,8 @@ var model = {
 
         var pipeline = [{
                 $match: {
-                    "participantType": "player"
+                    "participantType": "player",
+                    "year": data.year
                 }
             },
             // Stage 2
@@ -171,7 +172,8 @@ var model = {
                 });
             },
             function (complete, callback) {
-                async.Series(complete, function (singleData, callback) {
+                async.concatSeries(complete, function (singleData, callback) {
+                    console.log("singleData", singleData);
                     async.waterfall([
                         function (callback) {
                             OldKnockout.getAthleteId(singleData, function (err, athelete) {
@@ -192,21 +194,40 @@ var model = {
                             });
                         },
                         function (singleData, callback) {
-                            _.each(singleData.sport, function (n) {
-                                var param = {};
-                                param.sport = n;
-                                OldKnockout.getSportId(param, function (err, sport) {
-                                    if (!_.isEmpty(sport)) {
-                                        individualSport.sport.push(sport);
-                                        individualSport.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
-                                    }
+                            if (singleData.error) {
+                                callback(null, singleData);
+                            } else {
+                                _.each(singleData.sport, function (n) {
+                                    var param = {};
+                                    param.sport = n;
+                                    OldKnockout.getSportId(param, function (err, sport) {
+                                        if (!sport.errot) {
+                                            console.log("sport", sport);
+                                            individualSport.sport.push(sport);
+                                            individualSport.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
+                                        }
+                                    });
                                 });
-                            });
-                            callback(null, singleData);
-
+                                callback(null, singleData);
+                            }
                         },
                         function (singleData, callback) {
-
+                            if (singleData.error) {
+                                callback(null, sportData);
+                            } else {
+                                individualSport.createdBy = "School";
+                                IndividualSport.saveData(individualSport, function (err, saveData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        if (_.isEmpty(saveData)) {
+                                            callback(null, []);
+                                        } else {
+                                            callback(null, saveData);
+                                        }
+                                    }
+                                });
+                            }
                         }
                     ], function (err, data3) {
                         if (err) {
@@ -227,10 +248,9 @@ var model = {
                         callback(null, complete);
                     }
                 });
-            }
+            },
         ], function (err, data3) {
             if (err) {
-                console.log(err);
                 callback(err, null);
             } else {
                 if (_.isEmpty(data3)) {
@@ -243,8 +263,10 @@ var model = {
     },
 
     getSportId: function (data, callback) {
-        var deepSearch = "sport.sportslist.sportsListSubCategory";
+        console.log("_id", data.sport);
+        var deepSearch = "sportslist.sportsListSubCategory";
         var sport = {};
+        var param = data.sport.toString();
         Sport.findOne({
             oldId: data.sport
         }).lean().deepPopulate(deepSearch).exec(function (err, found) {
@@ -254,6 +276,7 @@ var model = {
                     success: data
                 });
             } else {
+                console.log("found", found);
                 callback(null, found);
             }
         });
@@ -262,10 +285,7 @@ var model = {
 
     getAthleteId: function (data, callback) {
         Athelete.findOne({
-            oldId: {
-                $regex: data.id,
-                $options: "i"
-            }
+            oldId: data._id
         }).lean().exec(function (err, found) {
             if (err || _.isEmpty(found)) {
                 callback(err, {

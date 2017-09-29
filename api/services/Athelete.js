@@ -102,7 +102,11 @@ var schema = new Schema({
     utm_medium: String,
     utm_source: String,
     utm_campaign: String,
-    oldId: String,
+    oldId: {
+        type: Schema.Types.ObjectId,
+        ref: 'OldAthlete',
+        index: true
+    }
 });
 
 schema.plugin(deepPopulate, {
