@@ -884,10 +884,10 @@ $sport-darkgrey: #757575 !default;
     color: $sport-warning;
   }
   // DATE ARROW
-  .datearrow-card1:after{
+  .datearrow-left:after{
     border-left: 15px solid $sport-warning;
   }
-  .datearrow-card3:after{
+  .datearrow-bottom:after{
     border-bottom: 15px solid $sport-warning;
   }
   // DATE ARROW
@@ -899,10 +899,10 @@ $sport-darkgrey: #757575 !default;
     color: $sport-lightblue;
   }
   // DATE ARROW
-  .datearrow-card1:after{
+  .datearrow-left:after{
     border-left: 15px solid $sport-lightblue;
   }
-  .datearrow-card3:after{
+  .datearrow-bottom:after{
     border-bottom: 15px solid $sport-lightblue;
   }
   // DATE ARROW
@@ -914,16 +914,16 @@ $sport-darkgrey: #757575 !default;
     color: $sport-success;
   }
   // DATE ARROW
-  .datearrow-card1:after{
+  .datearrow-left:after{
     border-left: 15px solid $sport-success;
   }
-  .datearrow-card3:after{
+  .datearrow-bottom:after{
     border-bottom: 15px solid $sport-success;
   }
   // DATE ARROW
 }
 // DATE ARROW
-.datearrow-card1:after {
+.datearrow-left:after {
   content: '';
   position: absolute;
   top: 50%;
@@ -934,18 +934,7 @@ $sport-darkgrey: #757575 !default;
   z-index: 2;
 }
 
-.datearrow-card3:after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  border-right: 15px solid transparent;
-  border-left: 15px solid transparent;
-  @include transform(translateX(-50%));
-  z-index: 2;
-}
-
-.datearrow-card2:after{
+.datearrow-bottom:after {
   content: '';
   position: absolute;
   left: 50%;

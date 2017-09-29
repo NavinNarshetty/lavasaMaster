@@ -15,16 +15,16 @@
             <div class="col-md-6 col-sm-6 masonry-brick" ng-repeat= "date in event.dates track by $index">
               <div class="event-card {{date.colorClass}}">
                 <!-- CARD 1 OR card 3  -->
-                <div class="clearfix" ng-if="date.type == 'card1' || date.type == 'card3'">
+                <div class="clearfix" ng-if="date.format == 'card2' || date.format == 'card4'">
                   <!-- TILE 1  -->
                   <div class="eventcard-tile event-tile tile-single" set-height>
                     <!-- DATE ARROW -->
-                    <div class="datearrow-card3" ng-if="date.type == 'card3'"></div>
+                    <div class="datearrow-bottom" ng-if="date.format == 'card4'"></div>
                     <!-- DATE ARROW END -->
                     <!-- DATE TILE -->
-                    <div class="eventcard-datetile" ng-if="date.type == 'card1'">
+                    <div class="eventcard-datetile" ng-if="date.format == 'card2'">
                       <div class="eventcard-date">
-                        {{date.date}}
+                        {{date.eventDate}}
                       </div>
                       <div class="eventcard-day">
                         {{date.day}}
@@ -32,17 +32,17 @@
                     </div>
                     <!-- DATE TILE END -->
                     <!-- IMAGE TILE -->
-                    <div class="eventcard-image" ng-if="date.type == 'card3' && date.section1.type == 'image'" style="background-image: url({{date.section1.name}});">
+                    <div class="eventcard-image" ng-if="date.format == 'card4' && date.section1.type == 'image'" style="background-image: url({{date.section1.image.name}});" title="{{date.section1.image.header}}">
                       <!-- <img ng-src="{{date.section1.name}}" alt="" class="img-responsive"> -->
                     </div>
                     <!-- IMAGE TILE END -->
                     <!-- DETAIL TILE -->
-                    <div class="eventcard-detail" ng-if="date.type == 'card3' && date.section1.type == 'text'">
+                    <div class="eventcard-detail" ng-if="date.format == 'card4' && date.section1.type == 'text'">
                       <div class="eventdetail-title">
-                        {{date.section1.header}}
+                        {{date.section1.text.header}}
                       </div>
                       <div class="eventdetail-content">
-                        {{date.section1.content}}
+                        {{date.section1.text.content}}
                       </div>
                     </div>
                     <!-- DETAIL TILE END -->
@@ -50,57 +50,57 @@
                   <!-- TILE 1 END  -->
                   <!-- TILE 2   -->
                   <div class="eventcard-tile event-tile tile-single" set-height>
-                    <!-- IF CARD1 -->
-                    <div class="full-height" ng-if="date.type == 'card1'">
+                    <!-- IF card2 -->
+                    <div class="full-height" ng-if="date.format == 'card2'">
                       <!-- DATE ARROW -->
-                      <div class="datearrow-card1"></div>
+                      <div class="datearrow-left"></div>
                       <!-- DATE ARROW END -->
                       <!-- IMAGE TILE -->
-                      <div class="eventcard-image" ng-if="date.section1.type == 'image'" style="background-image: url({{date.section1.name}});">
+                      <div class="eventcard-image" ng-if="date.section1.type == 'image'" style="background-image: url({{date.section1.image.name}});" title="{{date.section1.image.header}}">
                       </div>
                       <!-- IMAGE TILE END -->
                       <!-- DETAIL TILE -->
                       <div class="eventcard-detail" ng-if="date.section1.type == 'text'">
                         <div class="eventdetail-title">
-                          {{date.section1.header}}
+                          {{date.section1.text.header}}
                         </div>
                         <div class="eventdetail-content">
-                          {{date.section1.content}}
+                          {{date.section1.text.content}}
                         </div>
                       </div>
                       <!-- DETAIL TILE END -->
                     </div>
-                    <!-- IF CARD1 END -->
-                    <!-- IF CARD3 -->
-                    <div class="full-height" ng-if="date.type == 'card3'">
+                    <!-- IF card2 END -->
+                    <!-- IF card4 -->
+                    <div class="full-height" ng-if="date.format == 'card4'">
                       <!-- IMAGE TILE -->
-                      <div class="eventcard-image" ng-if="date.section2.type == 'image'" style="background-image: url({{date.section2.name}});">
+                      <div class="eventcard-image" ng-if="date.section2.type == 'image'" style="background-image: url({{date.section2.image.name}});" title="{{date.section2.image.header}}">
                       </div>
                       <!-- IMAGE TILE END -->
                       <!-- DETAIL TILE -->
                       <div class="eventcard-detail" ng-if="date.section2.type == 'text'">
                         <div class="eventdetail-title">
-                          {{date.section2.header}}
+                          {{date.section2.text.header}}
                         </div>
                         <div class="eventdetail-content">
-                          {{date.section2.content}}
+                          {{date.section2.text.content}}
                         </div>
                       </div>
                       <!-- DETAIL TILE END -->
                     </div>
-                    <!-- IF CARD3 END -->
+                    <!-- IF card4 END -->
                   </div>
                   <!-- TILE 2 END  -->
                 </div>
                 <!-- CARD 1 OR card 3 END  -->
                 <!-- CARD 3  -->
-                <div class="clearfix" ng-if="date.type == 'card3'">
+                <div class="clearfix" ng-if="date.format == 'card4'">
                   <!-- TILE 3   -->
                   <div class="eventcard-tile event-tile tile-single" set-height>
                     <!-- DATE TILE -->
                     <div class="eventcard-datetile">
                       <div class="eventcard-date">
-                        {{date.date}}
+                        {{date.eventDate}}
                       </div>
                       <div class="eventcard-day">
                         {{date.day}}
@@ -112,17 +112,17 @@
                   <!-- TILE 4  -->
                   <div class="eventcard-tile event-tile tile-single" set-height>
                     <!-- IMAGE TILE -->
-                    <div class="eventcard-image" ng-if="date.section3.type == 'image'" style="background-image: url({{date.section3.name}});">
+                    <div class="eventcard-image" ng-if="date.section3.type == 'image'" style="background-image: url({{date.section3.image.name}});" title="{{date.section3.image.header}}">
                       <!-- <img ng-src="{{date.section1.name}}" alt="" class="img-responsive"> -->
                     </div>
                     <!-- IMAGE TILE END -->
                     <!-- DETAIL TILE -->
-                    <div class="eventcard-detail" ng-if="date.type == 'card3' && date.section3.type == 'text'">
+                    <div class="eventcard-detail" ng-if="date.format == 'card4' && date.section3.type == 'text'">
                       <div class="eventdetail-title">
-                        {{date.section3.header}}
+                        {{date.section3.text.header}}
                       </div>
                       <div class="eventdetail-content">
-                        {{date.section3.content}}
+                        {{date.section3.text.content}}
                       </div>
                     </div>
                     <!-- DETAIL TILE END -->
@@ -131,21 +131,21 @@
                 </div>
                 <!-- CARD 3 END -->
                 <!-- CARD 2 -->
-                <div class="clearfix" ng-if="date.type == 'card2'">
+                <div class="clearfix" ng-if="date.format == 'card3'">
                   <!-- TILE 1 -->
                   <div class="eventcard-tile event-tile tile-single" set-height="2">
                     <!-- IMAGE TILE -->
-                    <div class="eventcard-image" ng-if="date.section1.type == 'image'" style="background-image: url({{date.section1.name}});">
+                    <div class="eventcard-image" ng-if="date.section1.type == 'image'" style="background-image: url({{date.section1.image.name}});" title="{{date.section1.image.header}}">
                       <!-- <img ng-src="{{date.section1.name}}" alt="" class="img-responsive"> -->
                     </div>
                     <!-- IMAGE TILE END -->
                     <!-- DETAIL TILE -->
                     <div class="eventcard-detail" ng-if="date.section1.type == 'text'">
                       <div class="eventdetail-title">
-                        {{date.section1.header}}
+                        {{date.section1.text.header}}
                       </div>
                       <div class="eventdetail-content">
-                        {{date.section1.content}}
+                        {{date.section1.text.content}}
                       </div>
                     </div>
                     <!-- DETAIL TILE END -->
@@ -154,20 +154,20 @@
                   <!-- TILE 2  -->
                   <div class="eventcard-tile event-tile tile-single" set-height>
                     <!-- DATE ARROW -->
-                    <div class="datearrow-card3"></div>
+                    <div class="datearrow-bottom"></div>
                     <!-- DATE ARROW END -->
                     <!-- IMAGE TILE -->
-                    <div class="eventcard-image" ng-if="date.section2.type == 'image'" style="background-image: url({{date.section2.name}});">
+                    <div class="eventcard-image" ng-if="date.section2.type == 'image'" style="background-image: url({{date.section2.image.name}});" title="{{date.section2.image.header}}">
                       <!-- <img ng-src="{{date.section1.name}}" alt="" class="img-responsive"> -->
                     </div>
                     <!-- IMAGE TILE END -->
                     <!-- DETAIL TILE -->
                     <div class="eventcard-detail" ng-if="date.section2.type == 'text'">
                       <div class="eventdetail-title">
-                        {{date.section2.header}}
+                        {{date.section2.text.header}}
                       </div>
                       <div class="eventdetail-content">
-                        {{date.section2.content}}
+                        {{date.section2.text.content}}
                       </div>
                     </div>
                     <!-- DETAIL TILE END -->
@@ -178,7 +178,7 @@
                     <!-- DATE TILE -->
                     <div class="eventcard-datetile">
                       <div class="eventcard-date">
-                        {{date.date}}
+                        {{date.eventDate}}
                       </div>
                       <div class="eventcard-day">
                         {{date.day}}
