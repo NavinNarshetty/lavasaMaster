@@ -65,4 +65,5 @@ module.exports = [
     'backend/js/controllers/heats.js',
     'backend/js/controllers/teamsports.js',
     'backend/js/controllers/individualsports.js',
+    'backend/js/controllers/calender.js',
 ];

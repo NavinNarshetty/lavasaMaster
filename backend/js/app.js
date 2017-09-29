@@ -399,6 +399,18 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailCertificateDetailsCtrl'
         })
+        // table calender
+        .state('calender', {
+            url: "/calender",
+            templateUrl: "views/template.html",
+            controller: 'TableCalenderCtrl'
+        })
+        // detail calender
+        .state('detail-calender', {
+            url: "/detail-calender",
+            templateUrl: "views/template.html",
+            controller: 'DetailCalenderCtrl'
+        })
 
         .state('jagz', {
             url: "/jagz",

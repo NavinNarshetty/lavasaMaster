@@ -1395,7 +1395,35 @@
          -moz-appearance: none;
          appearance: none;
      }
+ } //  TILE WIREFRAME
+ .tileholder {
+     width: 202px;
+     margin: 10px;
+     border: 1px solid #000;
+     display: inline-block;
  }
 
+ .tile {
+     width: 100px;
+     height: 100px;
+     padding: 35px 0px;
+     border: 1px solid #fff;
+     float: left;
+     position: relative;
+     background-color: #fb7700;
+     text-transform: uppercase;
+     font-weight: 600;
+     text-align: center;
+     color: #fff;
+ }
+
+ .tile2 {
+     height: 200px;
+ }
+
+ .tiledate {
+     background-color: #ccc;
+ } //////////////////////////////CSS END
+ //  TILE WIREFRAME END
  @import "fancybox-override";
  @import "other/mobile";
