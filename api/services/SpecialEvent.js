@@ -9,7 +9,7 @@ require('mongoose-middleware').initialize(mongoose);
 var Schema = mongoose.Schema;
 
 var schema = new Schema({
-    eventDate: date,
+    eventDate: Date,
     color: {
         type: String,
         enum: ["yellow", "green", "blue"]
