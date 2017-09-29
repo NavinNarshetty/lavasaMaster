@@ -143,6 +143,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'QfKnockoutCtrl'
         })
+        .state('scoringimages', {
+            url: "/scoringimages",
+            templateUrl: tempateURL,
+            controller: 'ScoringImagestCtrl'
+        })
         .state('form', {
             url: "/form",
             templateUrl: tempateURL,
