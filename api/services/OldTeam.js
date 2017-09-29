@@ -92,6 +92,7 @@ var model = {
                                                                     team.createdBy = "School";
                                                                     team.name = sportData.name;
                                                                     team.sfaid = sportData.sfaid;
+                                                                    team.oldId = sportData._id;
                                                                     callback(null, team);
                                                                 }
                                                             }
@@ -335,6 +336,7 @@ var model = {
                     if (data.isVideoAnalysis) {
                         team.isVideoAnalysis = data.isVideoAnalysis;
                     }
+                    team.oldId = data.oldId;
                     // data.property = property[0];
                     callback(null, team);
                 },
