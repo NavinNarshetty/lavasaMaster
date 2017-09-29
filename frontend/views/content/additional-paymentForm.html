@@ -1,0 +1,94 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class=" school regis">Additional Payment Form</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-push-2 col-xs-12">
+            <form class="form-horizontal" name="formPaymentAdditional" ng-submit="savePaymentAdditional(formData,formPaymentAdditional)">
+                <div class="wid-hei top-mar">
+                </div>
+                <div class="box box-padd">
+                    <div class="d-padd pl13 para2" ng-init="show=4">
+                        <div class="row">
+                            <div class="col-md-8 col-md-push-2 col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-md-3 col-sm-3 col-xs-12 sf-list">*SFA ID:</label>
+                                    <div class="col-md-9 col-sm-9 col-xs-12">
+                                        <input type="text" ng-model="formData.sfaId" placeholder="Enter Valid SFA Id." touppercase name="sfaid" class="sfa-drop sf-list form-control"
+                                            required>
+                                        <div class="validate-col" ng-if="formPaymentAdditional.sfaid.$invalid && formPaymentAdditional.sfaid.$touched">Please Enter Your SFA ID</div>
+                                    </div>
+                                </div>
+                                <div class="stu-data">
+                                    <div class="form-group hidden-xs">
+                                        <input ng-model="formData.feeType" type="radio" id="radio11" name="radio" value="cash">
+                                        <label for="radio11" class="padd-lr sf-list" ng-click="show=5"><span></span>Cash/Cheque/Demand Draft</label>
+                                        <input ng-model="formData.feeType" type="radio" id="radio13" name="radio" value="online PAYU">
+                                        <label for="radio13" class="padd-lr sf-list" ng-click="show=6"><span></span>Online Payment</label>
+                                        <p ng-if="show==6" class="ft12">Online Payment: Selecting this option will enable you to pay the registration fee
+                                            of Rs.
+                                            <span ng-if="isCollege == false && sfaCity == 'Mumbai'">400</span>
+                                            <span ng-if="isCollege == false && sfaCity == 'Hyderabad'">200</span>
+                                            <span ng-if="isCollege == true">200</span> (Inclusive of all applicable taxes)
+                                            via one of the following methods: 1) Credit Card 2) Debit Card 3) Net Banking
+                                        </p>
+                                        <!--<input ng-model="formData.feeType" type="radio" id="radio12" name="radio" value="cheque">
+                                        <label for="radio12" class="padd-lr sf-list"><span></span>Cheque</label>-->
+                                        <p ng-if="show==5" class="ft12">
+                                            Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs.
+                                            <span ng-if="isCollege == false && sfaCity == 'Mumbai'">400</span>
+                                            <span ng-if="isCollege == false && sfaCity == 'Hyderabad'">200</span>
+                                            <span ng-if="isCollege == true">200</span> (Inclusive of all applicable taxes)
+                                            by Cash/Cheque/Demand Draft in favour of ‘SFA Events Private Limited’ which is
+                                            to be couriered/hand delivered to:
+                                            <span ng-if="sfaCity == 'Mumbai'">1306, Panchratna Building, Opera House (Next
+                                            to Roxy Cinema), Charni Road, Mumbai – 400004</span>
+                                            <span ng-if="sfaCity == 'Hyderabad'">‘SFA Events Private Limited’ C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor,
+                                            Advant Delta, Plot No. 4, Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081.<br>
+                                            <span
+                                                style="font-size:12px">(Head Office: SFA Events Pvt. Ltd., Panchratna Building, Opera House, Mumbai - 400004)</span>
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="stu-data">
+                                    <div class="form-group visible-xs">
+                                        <div class="">
+                                            <input ng-model="formData.feeType" type="radio" id="radio11" name="radioxs" value="cash">
+                                            <label for="radio11" class="padd-lr sf-list" ng-click="show=5"><span></span>Cash/Cheque/Demand Draft</label>
+                                            <p ng-if="show==5" class="ft12">
+                                                Cash/Cheque/Demand Draft: Selecting this option will enable you to pay the registration fee of Rs.
+                                                <span ng-if="isCollege == false && sfaCity == 'Mumbai'">400</span>
+                                                <span ng-if="isCollege == false && sfaCity == 'Hyderabad'">200</span>
+                                                <span ng-if="isCollege == true">200</span> (Inclusive of all applicable taxes)
+                                                by Cash/Cheque/Demand Draft in favour of ‘SFA Events Private Limited’ which
+                                                is to be couriered/hand delivered to: <span ng-if="sfaCity == 'Mumbai'">1306, Panchratna Building, Opera House (Next
+                                            to Roxy Cinema), Charni Road, Mumbai – 400004</span><span ng-if="sfaCity == 'Hyderabad'">‘SFA Events Private Limited’ C/O Wizcraft International Entertainment Pvt. Ltd., 1st Floor, Advant Delta, Plot No. 4, Kavuri Hills, Phase 1, Jubilee Hills Road, Hyderabad - 500081.<br><span style="font-size:12px">(Head Office: SFA Events Pvt. Ltd., Panchratna Building, Opera House, Mumbai - 400004)</span></span>
+                                            </p>
+                                        </div>
+                                        <div class="">
+                                            <input ng-model="formData.feeType" type="radio" id="radio13" name="radioxs" value="online PAYU">
+                                            <label for="radio13" class="padd-lr sf-list" ng-click="show=6"><span></span>Online Payment</label>
+                                            <p ng-if="show==6" class="ft12">Online Payment: Selecting this option will enable you to pay the registration
+                                                fee of Rs.
+                                                <span ng-if="isCollege == false && sfaCity == 'Mumbai'">400</span>
+                                                <span ng-if="isCollege == false && sfaCity == 'Hyderabad'">200</span>
+                                                <span ng-if="isCollege == true">200</span> (Inclusive of all applicable taxes)
+                                                via one of the following methods: 1) Credit Card 2) Debit Card 3) Net Banking
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center sub-padd">
+                    <button class="btn btn-default sub-mit" ng-disabled="isDisabled==true" type="submit"> Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

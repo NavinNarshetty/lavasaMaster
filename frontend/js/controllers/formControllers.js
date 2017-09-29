@@ -1788,6 +1788,89 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
 
 });
 
+
+myApp.controller('AdditionalPaymentFormCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal, GoogleAdWordsService, $location, $state, errorService, toastr, configService) {
+    //Used to name the .html file
+    $scope.template = TemplateService.getHTML("content/additional-paymentForm.html");
+    TemplateService.title = "Additional Payment Form";
+    TemplateService.footer = "";
+    $scope.navigation = NavigationService.getNavigation();
+    $scope.formData = {};
+    configService.getDetail(function (data) {
+        $scope.city = data.city;
+        $scope.district = data.district;
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
+        $scope.formData.type = data.type;
+        $scope.formData.sfaCity = data.sfaCity;
+        $scope.formData.isCollege = data.isCollege;
+        $scope.formData.eventYear = data.eventYear;
+    });
+
+    $scope.savePaymentAdditional = function (formData, formvalid) {
+        if (formvalid.$valid) {
+            var isRegistrationFee = function (form) {
+                if (!form.feeType) {
+                    $scope.openPaymentModal();
+                    $timeout(function () {
+                        $scope.paymentInstances.close();
+                    }, 3000);
+                } else {
+                    return true;
+                }
+            };
+            if (!isRegistrationFee(formData)) {
+                return;
+            }
+            console.log(formData);
+            $scope.openModal(formData.type, formData.sfaCity, formData.isCollege, formData.eventYear);
+            if (formData.feeType == "online PAYU") {
+                var id = formData.sfaId;
+                console.log("true and in payment");
+                var url = "payU/additionalPayment?id=" + id;
+                window.location.href = adminUrl2 + url;
+            } else {
+                console.log("opening modal");
+                $scope.openModal(data.data.type, data.data.sfaCity, data.data.isCollege, data.data.eventYear);
+            }
+            // NavigationService.savePaymentAdditional(formData, function (data) {
+            //     if (data.value === true) {
+
+            //     }
+            // });
+        }
+    }
+
+    $scope.openModal = function (type, sfaCity, isCollege, eventYear) {
+        var modalInstance = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            backdrop: 'static',
+            keyboard: false,
+            // size: 'sm',
+            templateUrl: "views/modal/forAdditionalPayment.html"
+        });
+    };
+
+    $scope.openPaymentModal = function () {
+        $scope.paymentInstances = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            backdrop: 'static',
+            keyboard: false,
+            // size: 'sm',
+            templateUrl: "views/modal/errorPayment.html"
+        });
+    };
+
+
+});
+
+
 myApp.controller('PaymentSuccessCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state, GoogleAdWordsService) {
     //Used to name the .html file
 
