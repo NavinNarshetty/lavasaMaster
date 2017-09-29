@@ -1254,12 +1254,14 @@ var model = {
                                 data.sfaid = found.sfaID;
                                 data.email = found.email;
                                 data.mobile = found.mobile;
+                                console.log('schoolDetail', data);
                                 callback(null, data);
                             }
                         });
                     }
                 },
                 function (data, callback) {
+                    console.log('saveInAthlete', data);
                     var atheleteName = [];
                     var results = [];
                     async.each(data.individual, function (n, callback) {
@@ -1325,6 +1327,7 @@ var model = {
                 },
                 function (atheleteName, callback) {
                     console.log("atheleteName", atheleteName);
+                    console.log('atheleteName-----data', data);
                     IndividualSport.mailersAthleteIndividual(atheleteName, data, function (err, mailData) {
                         if (err) {
                             callback(err, null);
@@ -1463,6 +1466,7 @@ var model = {
                             //email
                             function (callback) {
                                 console.log("event", n);
+                                console.log("event", data);
                                 var emailData = {};
                                 emailData.schoolSFA = data.sfaid;
                                 emailData.schoolName = data.school;
@@ -1824,6 +1828,7 @@ var model = {
     },
 
     mailersAthleteIndividual: function (atheleteName, data, callback) {
+        console.log('mailersAthleteI', data);
         async.waterfall([
                 function (callback) {
                     var atheleteUniq = atheleteName;
