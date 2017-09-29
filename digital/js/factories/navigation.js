@@ -105,6 +105,13 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 data: request
             }).then(callback);
         },
+        getSportSpecificQualifyingRound: function (request, callback) {
+            $http({
+                url: adminurl + 'match/getSportSpecificRounds',
+                method: 'POST',
+                data: request
+            }).then(callback);
+        },
         getSportSpecificRounds: function (request, callback) {
 
             $http({

@@ -71,4 +71,9 @@ module.exports = [
   "digital/js/services/resultsportinitialization.js",
   'digital/js/controllers/league-knockoutController.js',
   'digital/js/controllers/scoreteamcombat-controller.js',
+  'digital/js/controllers/swissleague.js',
+  'digital/js/controllers/time-trialController.js',
+  'digital/js/controllers/qf-finalController.js',
+  'digital/js/controllers/qf-knockoutController.js',
+  'digital/js/controllers/heats-Controller.js',
 ];

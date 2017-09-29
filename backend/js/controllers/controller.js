@@ -4500,14 +4500,14 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
         $scope.getAllAthletes();
         $scope.schoolList = [];
-        $scope.getSchoolNameFun = function (constraintsObj, url, _id) {
+        $scope.getSchoolNameFun = function (constraintsObj, url, uniqueId) {
             NavigationService.getOneSchool(constraintsObj, url, function (data) {
                 if (data.data.value) {
                     console.log(data.data.data, "data");
                     $scope.schoolInfo = {};
                     $scope.schoolInfo.schoolId = data.data.data._id;
                     $scope.schoolInfo.schoolName = data.data.data.schoolName;
-                    $scope.schoolInfo.uniqueId = _id;
+                    $scope.schoolInfo.uniqueId = uniqueId;
                     if (!data.data.data.schoolName) {
                         $scope.schoolInfo.schoolName = data.data.data.name;
                     }
@@ -4519,7 +4519,6 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         }
         $scope.getSchoolName = function (schoolId) {
             console.log(schoolId, "schoolId");
-
             $scope.constraintsObj = {};
             if (!schoolId.teamId) {
                 if (schoolId.atheleteSchoolName || schoolId.school) {
@@ -4529,7 +4528,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                         $scope.tempObj.uniqueId = schoolId._id;
                         $scope.tempObj.schoolName = schoolId.atheleteSchoolName;
                         $scope.medalInfoForm.school.push($scope.tempObj);
-                        console.log($scope.schoolList, " $scope.schoolList");
+                        console.log($scope.medalInfoForm.school, "  $scope.medalInfoForm.school");
                     } else {
                         $scope.urlTosend = 'school/getOne';
                         if (!_.isEmpty(schoolId.school)) {
@@ -4543,7 +4542,6 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 //for team 
                 $scope.urlTosend = 'registration/getOne'
                 $scope.constraintsObj._id = schoolId.school;
-                console.log(schoolId, "schoolId ELSE");
                 $scope.getSchoolNameFun($scope.constraintsObj, $scope.urlTosend, schoolId._id);
             }
 
@@ -4566,30 +4564,10 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.getAllTeams();
 
         $scope.removeSchool = function (item) {
-            console.log("item", item);
-
-            if (item.atheleteSchoolName || item.school) {
-                if (!_.isEmpty(item.atheleteSchoolName)) {
-                    console.log('$scope.schoolList', $scope.schoolList);
-                    var findIndex = _.findIndex($scope.medalInfoForm.school, { 'uniqueId': item._id });
-                    console.log("findIndex", findIndex);
-                    $scope.medalInfoForm.school.splice(findIndex, 1);
-                } else {
-                    if (!_.isEmpty(item.school)) {
-                        var findIndex = _.findIndex($scope.medalInfoForm.school, { 'uniqueId': item._id });
-                        console.log("findIndex", findIndex);
-                        $scope.medalInfoForm.school.splice(findIndex, 1);
-
-                    }
-                }
-
-            } else {
-                //for team 
+            if (item) {
                 var findIndex = _.findIndex($scope.medalInfoForm.school, { 'uniqueId': item._id });
-                console.log("findIndex", findIndex);
                 $scope.medalInfoForm.school.splice(findIndex, 1);
             }
-
 
         }
 
@@ -4602,6 +4580,18 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                     }
                 })
             }
+        }
+        $scope.filterObj = {};
+        $scope.selectSport = function (type, id) {
+            if (type === 'sportName') {
+                $scope.filterObj.sportName = id;
+            } else if (type === 'gender') {
+                $scope.filterObj.gender = id;
+            } else if (type === 'weight') {
+                $scope.filterObj.weight = id;
+            } else if (type === 'ageGroup')
+                $scope.filterObj.ageGroup = id;
+            console.log($scope.filterObj, " $scope.filterObj");
         }
 
 
