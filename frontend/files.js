@@ -34,6 +34,16 @@ module.exports = [
   'bower_components/ngInfiniteScroll/build/ng-infinite-scroll.min.js',
   'bower_components/angular-promise-buttons/dist/angular-promise-buttons.min.js',
   "bower_components/cleave.js/dist/cleave-angular.min.js",
+  "bower_components/ev-emitter/ev-emitter.js",
+  "bower_components/desandro-matches-selector/matches-selector.js",
+  "bower_components/fizzy-ui-utils/utils.js",
+  "bower_components/get-size/get-size.js",
+  "bower_components/outlayer/item.js",
+  "bower_components/outlayer/outlayer.js",
+  "bower_components/masonry/masonry.js",
+  "bower_components/imagesloaded/imagesloaded.js",
+  "bower_components/masonry/dist/masonry.pkgd.min.js",
+  // "bower_components/angular-masonry/angular-masonry.js",
 
   //App.js
   'frontend/js/app.js',
@@ -57,6 +67,7 @@ module.exports = [
   'frontend/js/services/configService.js',
   'frontend/js/services/knockoutService.js',
   'frontend/js/services/resultsportinitializayion.js',
+  'frontend/js/services/masonry-edited.js',
 
   //Factories
   'frontend/js/factories/navigation.js',

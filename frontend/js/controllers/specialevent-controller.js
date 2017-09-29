@@ -29,6 +29,14 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
     }
     $scope.initialiseColor();
     // INITIALSE EVENT COLOR CLASS END
+    // $scope.$on('$viewContentLoaded', function (event){
+    //   $timeout(function () {
+    //     $('.grid').masonry({
+    //       // options
+    //       itemSelector: '.grid-item',
+    //     });
+    //   }, 300);
+    // });
     // FUNCTIONS END
 
     // JSONS
@@ -76,6 +84,52 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
           name: 'img/sl1.jpg',
         },
         section2: {
+          type: 'text',
+          header: 'welcome to sfa mumbai 2017',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        }
+      },{
+        date: ' 6',
+        day: 'Wednesday',
+        color: 'blue',
+        colorClass : "eventcard-yellow",
+        type: 'card3',
+        section1: {
+          type: 'image',
+          name: 'img/dishapatani1.jpg',
+        },
+        section2: {
+          type: 'text',
+          header: 'welcome to sfa mumbai 2017',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        },
+        section3: {
+          type: 'text',
+          header: 'welcome to sfa mumbai 2017',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        }
+      },{
+        date: ' 6',
+        day: 'Wednesday',
+        color: 'green',
+        colorClass : "eventcard-green",
+        type: 'card2',
+        section1: {
+          type: 'image',
+          name: 'img/sl1.jpg',
+        },
+        section2: {
+          type: 'text',
+          header: 'welcome to sfa mumbai 2017',
+          content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+        }
+      },{
+        date: ' 6',
+        day: 'Wednesday',
+        color: 'yellow',
+        colorClass : "eventcard-yellow",
+        type: 'card1',
+        section1: {
           type: 'text',
           header: 'welcome to sfa mumbai 2017',
           content: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'

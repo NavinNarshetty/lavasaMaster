@@ -865,7 +865,17 @@ $sport-darkgrey: #757575 !default;
   }
 }
 .event-card{
-  margin: 5px 0;
+  margin: 2px 0;
+  ::-webkit-scrollbar {
+     width: 5px;
+     height: 5px;
+ }
+  ::-webkit-scrollbar-track {
+     background-color: transparent;
+ }
+  ::-webkit-scrollbar-thumb {
+     background-color: $sport-grey;
+ }
 }
 .eventcard-yellow{
   border: 3px solid $sport-warning;
@@ -1002,3 +1012,33 @@ $sport-darkgrey: #757575 !default;
 }
 // EVENT DETAIL CARD END
 // SPECIAL EVENTS PAGE END
+
+// TILE CARD WIREFRAME
+.tileholder{
+  width: 302px;
+  margin: 10px;
+  border: 1px solid #000;
+  display: inline-block;
+}
+.tile{
+  width: 150px;
+  height: 150px;
+  border: 1px solid #fff;
+  float: left;
+  position: relative;
+  background-color: #ffb026;
+  color: #fff;
+}
+.tile2{
+  height: 300px;
+}
+.tiledate{
+  background-color: #ccc;
+}
+.get-center{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  @include transform(tranlate(-50%, -50%));
+}
+// TILE CARD WIREFRAME END
