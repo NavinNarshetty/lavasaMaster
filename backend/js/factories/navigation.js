@@ -7,178 +7,178 @@ var uploadurl = imgurl;
 
 myApp.factory('NavigationService', function ($http) {
     var navigation = [{
-            name: "School",
-            classis: "activeColor",
-            sref: "",
-            icon: "phone",
-            subnav: [{
-                name: "Edit School",
-                classis: "",
-                sref: "#/page/viewRegistration//",
-                icon: "phone"
-            }, {
-                name: "View School",
-                classis: "",
-                sref: "#/school",
-                icon: "phone"
-            }]
-        },
-        {
-            name: "Athlete",
-            classis: "activeColor",
-            sref: "",
-            icon: "phone",
-            subnav: [{
-                name: "Edit Athlete",
-                classis: "",
-                sref: "#/page/viewAthelete//",
-                icon: "phone"
-            }, {
-                name: "View Athlete",
-                classis: "",
-                sref: "#/athlete",
-                icon: "phone"
-            }]
-        },
-        {
-            name: "Old School",
-            classis: "activeColor",
-            sref: "",
-            icon: "phone",
-            subnav: [{
-                name: "Edit Old School",
-                classis: "",
-                sref: "#/page/viewOldSchool//",
-                icon: "phone"
-            }, {
-                name: "View Old School",
-                classis: "",
-                sref: "#/oldschool",
-                icon: "phone"
-            }]
-        }, {
-            name: "Age Group",
-            classis: "activeColor",
-            sref: "#/agegroup",
-            icon: "phone"
-        },
-        {
-            name: "Rules",
-            classis: "activeColor",
-            sref: "#/rules",
-            icon: "phone"
-        },
-        {
-            name: "Weight",
-            classis: "activeColor",
-            sref: "#/firstcategory",
-            icon: "phone"
-        },
-        {
-            name: "Draw Format",
-            classis: "activeColor",
-            sref: "#/drawformat",
-            icon: "phone"
-        },
-        {
-            name: "Category",
-            classis: "activeColor",
-            sref: "#/sports-list-cat",
-            icon: "phone"
-        },
-        {
-            name: "Sub Category",
-            classis: "activeColor",
-            sref: "#/sports-list-subcat",
-            icon: "phone"
-        },
-        {
-            name: "Sports List",
-            classis: "activeColor",
-            sref: "#/sports-list",
-            icon: "phone"
-        },
-        {
-            name: "Sports",
-            classis: "activeColor",
-            sref: "#/sports",
-            icon: "phone"
-        },
-        {
-            name: "Team Sport",
-            classis: "activeColor",
-            sref: "#/teamsport",
-            icon: "phone"
-        },
-        {
-            name: "Rounds",
-            classis: "activeColor",
-            sref: "#/rounds",
-            icon: "phone"
-        },
-        {
-            name: "Matches",
-            classis: "activeColor",
-            sref: "#/matches",
-            icon: "phone"
-        },
-        {
-            name: "Event Pdf",
-            classis: "activeColor",
-            sref: "#/tablepdf",
-            icon: "phone",
-        },
-        {
-            name: "Medals",
-            classis: "activeColor",
-            sref: "#/medals",
-            icon: "phone"
-        },
-        {
-            name: "Gallery",
-            classis: "activeColor",
-            sref: "#/gallery",
-            icon: "phone"
-        },
-        {
-            name: "Faq",
-            classis: "activeColor",
-            sref: "#/faq",
+        name: "School",
+        classis: "activeColor",
+        sref: "",
+        icon: "phone",
+        subnav: [{
+            name: "Edit School",
+            classis: "",
+            sref: "#/page/viewRegistration//",
             icon: "phone"
         }, {
-            name: "Certificate",
-            classis: "activeColor",
-            sref: "",
-            icon: "phone",
-            subnav: [{
-                name: "Certificate Banner",
-                classis: "",
-                sref: "#/certificatebanner",
-                icon: "phone"
-            }, {
-                name: "Certificate Details",
-                classis: "",
-                sref: "#/certificatedetails",
-                icon: "phone"
-            }]
-        },
-        // {
-        //     name: "Student Team",
-        //     classis: "activeColor",
-        //     sref: "#/student-team",
-        //     icon: "phone"
-        // },
-        {
-            name: "Individual Sport",
-            classis: "activeColor",
-            sref: "#/individual-sport",
+            name: "View School",
+            classis: "",
+            sref: "#/school",
+            icon: "phone"
+        }]
+    },
+    {
+        name: "Athlete",
+        classis: "activeColor",
+        sref: "",
+        icon: "phone",
+        subnav: [{
+            name: "Edit Athlete",
+            classis: "",
+            sref: "#/page/viewAthelete//",
             icon: "phone"
         }, {
-            name: "ConfigProperty",
-            classis: "activeColor",
-            sref: "#/page/viewConfigProperty//",
-            icon: "phone",
-        },
+            name: "View Athlete",
+            classis: "",
+            sref: "#/athlete",
+            icon: "phone"
+        }]
+    },
+    {
+        name: "Old School",
+        classis: "activeColor",
+        sref: "",
+        icon: "phone",
+        subnav: [{
+            name: "Edit Old School",
+            classis: "",
+            sref: "#/page/viewOldSchool//",
+            icon: "phone"
+        }, {
+            name: "View Old School",
+            classis: "",
+            sref: "#/oldschool",
+            icon: "phone"
+        }]
+    }, {
+        name: "Age Group",
+        classis: "activeColor",
+        sref: "#/agegroup",
+        icon: "phone"
+    },
+    {
+        name: "Rules",
+        classis: "activeColor",
+        sref: "#/rules",
+        icon: "phone"
+    },
+    {
+        name: "Weight",
+        classis: "activeColor",
+        sref: "#/firstcategory",
+        icon: "phone"
+    },
+    {
+        name: "Draw Format",
+        classis: "activeColor",
+        sref: "#/drawformat",
+        icon: "phone"
+    },
+    {
+        name: "Category",
+        classis: "activeColor",
+        sref: "#/sports-list-cat",
+        icon: "phone"
+    },
+    {
+        name: "Sub Category",
+        classis: "activeColor",
+        sref: "#/sports-list-subcat",
+        icon: "phone"
+    },
+    {
+        name: "Sports List",
+        classis: "activeColor",
+        sref: "#/sports-list",
+        icon: "phone"
+    },
+    {
+        name: "Sports",
+        classis: "activeColor",
+        sref: "#/sports",
+        icon: "phone"
+    },
+    {
+        name: "Team Sport",
+        classis: "activeColor",
+        sref: "#/teamsport",
+        icon: "phone"
+    },
+    {
+        name: "Rounds",
+        classis: "activeColor",
+        sref: "#/rounds",
+        icon: "phone"
+    },
+    {
+        name: "Matches",
+        classis: "activeColor",
+        sref: "#/matches",
+        icon: "phone"
+    },
+    {
+        name: "Event Pdf",
+        classis: "activeColor",
+        sref: "#/tablepdf",
+        icon: "phone",
+    },
+    {
+        name: "Medals",
+        classis: "activeColor",
+        sref: "#/medals",
+        icon: "phone"
+    },
+    {
+        name: "Gallery",
+        classis: "activeColor",
+        sref: "#/gallery",
+        icon: "phone"
+    },
+    {
+        name: "Faq",
+        classis: "activeColor",
+        sref: "#/faq",
+        icon: "phone"
+    }, {
+        name: "Certificate",
+        classis: "activeColor",
+        sref: "",
+        icon: "phone",
+        subnav: [{
+            name: "Certificate Banner",
+            classis: "",
+            sref: "#/certificatebanner",
+            icon: "phone"
+        }, {
+            name: "Certificate Details",
+            classis: "",
+            sref: "#/certificatedetails",
+            icon: "phone"
+        }]
+    },
+    // {
+    //     name: "Student Team",
+    //     classis: "activeColor",
+    //     sref: "#/student-team",
+    //     icon: "phone"
+    // },
+    {
+        name: "Individual Sport",
+        classis: "activeColor",
+        sref: "#/individual-sport",
+        icon: "phone"
+    }, {
+        name: "ConfigProperty",
+        classis: "activeColor",
+        sref: "#/page/viewConfigProperty//",
+        icon: "phone",
+    },
 
         // {
         //     name: "Second Category",
@@ -486,7 +486,54 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data)
             });
         },
+        getAllSpotsList: function (constraints, callback) {
+            $http({
+                url: adminurl + 'sportsList/search',
+                method: 'POST',
+                data: constraints,
+                withCredentials: true
+            }).success(callback);
+        },
+        getAllAgeGroups: function (callback) {
+            $http({
+                url: adminurl + 'AgeGroup/getAll',
+                method: 'POST'
+            }).then(callback);
+        },
+        getAllWeights: function (callback) {
+            $http({
+                url: adminurl + 'Weight/getAll',
+                method: 'POST'
+            }).then(callback);
+        },
+        getAllAthletes: function (constraints, callback) {
+            $http({
+                url: adminurl + 'athelete/search',
+                method: 'POST'
+            }).then(callback);
+        },
+        getAllTeams: function (constraints, callback) {
+            $http({
+                url: adminurl + 'teamsport/search',
+                method: 'POST'
+            }).then(callback);
+        },
+        getOneSchool: function (constraints, url, callback) {
+            console.log("constraints", constraints);
+            $http({
+                url: adminurl + url,
+                data: constraints,
+                method: 'POST'
 
+            }).then(callback);
+        },
+        saveMedalData: function (medalData, callback) {
+            $http({
+                url: adminurl + 'Medal/saveMedal',
+                data: medalData,
+                method: 'POST'
+            }).then(callback);
+        },
 
         setDetail: function (data, callback) {
             if (data) {
