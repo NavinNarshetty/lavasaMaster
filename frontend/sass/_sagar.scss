@@ -838,7 +838,7 @@ $sport-darkgrey: #757575 !default;
 }
 // TEAM MATCH CENTER END
 // SPECIAL EVENTS PAGE
-.specialevets-page{
+.specialevents-page{
   min-height: 100vh;
   padding: 60px 0px 50px;
 }
@@ -863,6 +863,9 @@ $sport-darkgrey: #757575 !default;
     padding-left: 2px;
     padding-right: 2px;
   }
+}
+.event-card{
+  margin: 5px 0;
 }
 .eventcard-yellow{
   border: 3px solid $sport-warning;
@@ -950,7 +953,7 @@ $sport-darkgrey: #757575 !default;
   overflow: hidden;
 }
 // EVENT DATE CARD
-.evencard-datetile {
+.eventcard-datetile {
   width: 100%;
   padding: 20px;
   position: absolute;
@@ -971,7 +974,7 @@ $sport-darkgrey: #757575 !default;
 }
 // EVENT DATE CARD END
 // EVENT IMAGE CARD
-.evencard-image{
+.eventcard-image{
   width: 100%;
   height: 100%;
   background-position: 50% 50%;

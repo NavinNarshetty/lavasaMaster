@@ -38,7 +38,7 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
         date: ' 6',
         day: 'Wednesday',
         color: 'yellow',
-        colorClass : "eventcard-green",
+        colorClass : "eventcard-blue",
         type: 'card1',
         section1: {
           type: 'text',
