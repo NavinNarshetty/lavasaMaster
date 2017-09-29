@@ -1,0 +1,199 @@
+<div class="qualifying-knockout-round">
+  <div class="container">
+    <!--SPORT NAME-->
+    <div class="qf-knockout-sportname text-center">
+      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>{{knockout[0].sport.sportslist.sportsListSubCategory.name}}</span> |
+        <span>{{knockout[0].sport.gender}}</span> |
+        <span>{{knockout[0].sport.ageGroup.name}}</span></h3>
+      <div class="draws-downloadpdf draws-a">
+        <a href="#">Download the schedule in pdf format</a>
+      </div>
+    </div>
+    <!--END SPORT NAME-->
+
+    <!--SPORT EVENT NAME-->
+    <div class="qf-knockout-sporteventname text-center">
+      <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">{{knockout[0].match[0].sport.sportslist.name}}</h3>
+    </div>
+    <!--SPORT END EVENT NAME-->
+
+    <!--OUT DIV HOLDER-->
+    <div class="qf-knockout-holder">
+      <!--KNOCKOUT HEAD-->
+      <div class="qf-knockout-knockouthead">
+        <h3 class="d-fjalla-one text-uppercase sport-color-primary">knockout</h3>
+      </div>
+      <!--END KNOCKOUT HEAD-->
+      <!--KNOCKOUT TABLE-->
+      <div class="qf-knockout-table q-orange-table table-responsive ">
+        <table class="table-draws-schedule table-five" ng-if="knockout.length>0">
+          <thead>
+            <tr>
+              <th>
+                <div>
+                  <h4 class="m-clear">Round</h4>
+                </div>
+              </th>
+              <th>
+                <div class="text-left">
+                  <h4 class="m-clear">Opponent1</h4>
+                </div>
+              </th>
+              <th>
+                <div class="text-left">
+                  <h4 class="m-clear">Opponent2</h4>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <h4 class="m-clear">Score</h4>
+                </div>
+              </th>
+              <th hidden>
+                <div>
+                  <h4 class="m-clear">Video</h4>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="data in knockout| limitTo:limitKnockout track by $index">
+              <td>
+                <div class="text-capitalize">
+                  {{data.round}}
+                </div>
+              </td>
+              <td>
+                <div class="text-left">
+                  <p class="m-clear text-capitalize">{{data.opponentsSingle[0].athleteId.fullName}}</p>
+                  <p class="m-clear text-capitalize">{{data.opponentsSingle[0].athleteId.school.name}}</p>
+                </div>
+              </td>
+              <td>
+                <div class="text-left">
+                  <p class="m-clear text-capitalize">{{data.opponentsSingle[1].athleteId.fullName}}</p>
+                  <p class="m-clear text-capitalize">{{data.opponentsSingle[1].athleteId.school.name}}</p>
+                </div>
+              </td>
+              <td>
+                <div>
+                  {{data.resultKnockout.finalScore}}
+                </div>
+              </td>
+              <td hidden>
+                <div>
+                  <a href="">
+                        <img src="img/sf-play.png" alt="">
+                      </a>
+
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="qf-knockout-viewmore text-right " ng-if="!showKnockout && knockout.length>8 " ng-click="showMoreData(true,'knockout');">
+          <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+        </div>
+        <div class="qf-knockout-viewmore text-right " ng-click="showMoreData(false,'knockout');" ng-if="showKnockout">
+          <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
+        </div>
+      </div>
+      <!--END KNOCKOUT TABLE-->
+      <!--QUALIFYING HEAD-->
+      <div class="qf-knockout-qualifyinghead">
+        <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Qualifying</h3>
+        <p class="sport-color-primary" ng-if="qualifying[0].match[0].scheduleDate"><span>{{qualifying[0].match[0].scheduleDate |englishNumeralDate}}</span>
+          <span> |</span>
+          <span>{{qualifying[0].match[0].scheduleTime}}</span></p>
+      </div>
+      <!--END QUALIFYING HEAD-->
+
+      <!--QUALIFYING TABLE-->
+      <div class="qf-knouckout-qftable q-blue-table table-responsive">
+        <table class="table-draws-schedule table-six" ng-if="qualifying[0].match.length>0">
+          <thead>
+            <tr>
+              <th>
+                <div>
+                  <h4 class="m-clear">sr.no</h4>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <h4 class="m-clear">Name</h4>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <h4 class="m-clear">school</h4>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <h4 class="m-clear">score</h4>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <h4 class="m-clear">result</h4>
+                </div>
+              </th>
+              <th hidden>
+                <div>
+                  <h4 class="m-clear">video</h4>
+                </div>
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr ng-repeat="qualify in qualifying[0].match | limitTo:limitValue track by $index">
+              <td>
+                <div>
+                  {{$index+1}}
+                </div>
+              </td>
+              <td>
+                <div class="text-capitalize">
+                  {{qualify.opponentsSingle[0].athleteId.fullName}}
+                </div>
+              </td>
+              <td>
+                <div class="text-capitalize">
+                  {{qualify.opponentsSingle[0].athleteId.school.name}}
+                </div>
+              </td>
+              <td>
+                <div>
+                  {{qualify.resultQualifyingRound.player.finalScore}}
+                </div>
+              </td>
+              <td>
+                <div class="text-uppercase">
+                  {{qualify.resultQualifyingRound.player.result}}
+                </div>
+              </td>
+              <td hidden>
+                <div>
+                  <a href="">
+                        <img src="img/sf-play.png" alt="">
+                      </a>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="qf-knockout-qualify-viewmore text-right" ng-click="showMoreData(true,'qualifying')" ng-if="!showMore && qualifying[0].match.length>8">
+          <button class="btn sport-btn-blue-outline text-uppercase">View More</button>
+        </div>
+
+        <div class="qf-knockout-qualify-viewmore text-right" ng-click="showMoreData(false,'qualifying')" ng-if="showMore">
+          <button class="btn sport-btn-blue-outline text-uppercase">View Less</button>
+        </div>
+      </div>
+      <!--END QUALIFYING TABLE-->
+    </div>
+
+    <!--END OUT DIV HOLDER-->
+  </div>
+</div>

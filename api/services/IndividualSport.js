@@ -1125,6 +1125,7 @@ var model = {
     },
 
     saveInIndividual: function (data, callback) {
+        console.log('saveInIndividual', data);
         var sportData = {};
         async.waterfall([
                 function (callback) {
@@ -1189,7 +1190,7 @@ var model = {
 
                 },
                 function (atheleteName, callback) {
-                    // console.log(arrayAth);
+                    console.log('athleteName', data);
                     IndividualSport.mailers(atheleteName, data, function (err, mailData) {
                         if (err) {
                             callback(err, null);
@@ -1232,7 +1233,6 @@ var model = {
                             callback(null, found);
                         }
                     });
-
                 },
                 function (found, callback) {
                     if (found.atheleteSchoolName) {
@@ -1242,24 +1242,26 @@ var model = {
                         data.mobile = found.mobile;
                         callback(null, data);
                     } else {
-                        School.findOne({
-                            _id: found.school
-                        }).exec(function (err, schoolData) {
+                        IndividualSport.getschoolSfa(found, function (err, schoolsfa) {
                             if (err) {
                                 callback(err, null);
-                            } else if (_.isEmpty(schoolData)) {
-                                callback("Incorrect Login Details", null);
                             } else {
-                                data.school = schoolData.name;
-                                data.sfaid = found.sfaID;
-                                data.email = found.email;
-                                data.mobile = found.mobile;
-                                callback(null, data);
+                                if (_.isEmpty(schoolsfa)) {
+                                    callback(null, []);
+                                } else {
+                                    data.school = schoolsfa.school;
+                                    data.sfaid = schoolsfa.sfaid;
+                                    data.email = found.email;
+                                    data.mobile = found.mobile;
+                                    console.log('schoolDetail', data);
+                                    callback(null, data)
+                                }
                             }
                         });
                     }
                 },
                 function (data, callback) {
+                    console.log('saveInAthlete', data);
                     var atheleteName = [];
                     var results = [];
                     async.each(data.individual, function (n, callback) {
@@ -1325,6 +1327,7 @@ var model = {
                 },
                 function (atheleteName, callback) {
                     console.log("atheleteName", atheleteName);
+                    console.log('atheleteName-----data', data);
                     IndividualSport.mailersAthleteIndividual(atheleteName, data, function (err, mailData) {
                         if (err) {
                             callback(err, null);
@@ -1352,7 +1355,48 @@ var model = {
             });
     },
 
+    getschoolSfa: function (data, callback) {
+        var finalData = {};
+        async.waterfall([
+            function (callback) {
+                School.findOne({
+                    _id: data.school
+                }).exec(function (err, schoolData) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(schoolData)) {
+                        callback("Incorrect Login Details", null);
+                    } else {
+                        callback(null, schoolData);
+                    }
+                });
+            },
+            function (schoolData, callback) {
+                Registration.findOne({
+                    schoolName: schoolData.name
+                }).exec(function (err, registerSchool) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(registerSchool)) {
+                        callback("Incorrect Login Details", null);
+                    } else {
+                        finalData.school = registerSchool.schoolName;
+                        finalData.sfaid = registerSchool.sfaID;
+                        callback(null, finalData);
+                    }
+                });
+            }
+        ], function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, found);
+            }
+        });
+    },
+
     mailers: function (atheleteName, data, callback) {
+        console.log('mailers', data);
         async.parallel([
                 //athlete email and sms
                 function (callback) {
@@ -1444,6 +1488,7 @@ var model = {
     },
 
     smsMailsAthlete: function (data, n, callback) {
+        console.log("smsMailsAthlete", data);
         async.waterfall([
                 function (callback) {
                     ConfigProperty.find().lean().exec(function (err, property) {
@@ -1463,6 +1508,7 @@ var model = {
                             //email
                             function (callback) {
                                 console.log("event", n);
+                                console.log("event", data);
                                 var emailData = {};
                                 emailData.schoolSFA = data.sfaid;
                                 emailData.schoolName = data.school;
@@ -1824,6 +1870,7 @@ var model = {
     },
 
     mailersAthleteIndividual: function (atheleteName, data, callback) {
+        console.log('mailersAthleteI', data);
         async.waterfall([
                 function (callback) {
                     var atheleteUniq = atheleteName;

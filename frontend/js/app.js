@@ -343,6 +343,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'SponserPartnerCtrl'
         })
+        .state('additional-paymentForm', {
+            url: "/additional-paymentForm",
+            templateUrl: tempateURL,
+            controller: 'AdditionalPaymentFormCtrl'
+        })
         .state('specialevents', {
             url: "/wohlig/specialevents",
             templateUrl: tempateURL,
