@@ -1233,7 +1233,6 @@ var model = {
                             callback(null, found);
                         }
                     });
-
                 },
                 function (found, callback) {
                     if (found.atheleteSchoolName) {
@@ -1243,20 +1242,20 @@ var model = {
                         data.mobile = found.mobile;
                         callback(null, data);
                     } else {
-                        School.findOne({
-                            _id: found.school
-                        }).exec(function (err, schoolData) {
+                        IndividualSport.getschoolSfa(found, function (err, schoolsfa) {
                             if (err) {
                                 callback(err, null);
-                            } else if (_.isEmpty(schoolData)) {
-                                callback("Incorrect Login Details", null);
                             } else {
-                                data.school = schoolData.name;
-                                data.sfaid = found.sfaID;
-                                data.email = found.email;
-                                data.mobile = found.mobile;
-                                console.log('schoolDetail', data);
-                                callback(null, data);
+                                if (_.isEmpty(schoolsfa)) {
+                                    callback(null, []);
+                                } else {
+                                    data.school = schoolsfa.school;
+                                    data.sfaid = schoolsfa.sfaid;
+                                    data.email = found.email;
+                                    data.mobile = found.mobile;
+                                    console.log('schoolDetail', data);
+                                    callback(null, data)
+                                }
                             }
                         });
                     }
@@ -1354,6 +1353,46 @@ var model = {
                     }
                 }
             });
+    },
+
+    getschoolSfa: function (data, callback) {
+        var finalData = {};
+        async.waterfall([
+            function (callback) {
+                School.findOne({
+                    _id: data.school
+                }).exec(function (err, schoolData) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(schoolData)) {
+                        callback("Incorrect Login Details", null);
+                    } else {
+                        callback(null, schoolData);
+                    }
+                });
+            },
+            function (schoolData, callback) {
+                Registration.findOne({
+                    schoolName: schoolData.name
+                }).exec(function (err, resgisterSchool) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(resgisterSchool)) {
+                        callback("Incorrect Login Details", null);
+                    } else {
+                        finalData.school = registerSchool.schoolName;
+                        finalData.sfaid = registerSchool.sfaID;
+                        callback(null, finalData);
+                    }
+                });
+            }
+        ], function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, found);
+            }
+        });
     },
 
     mailers: function (atheleteName, data, callback) {
