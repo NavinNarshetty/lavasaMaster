@@ -1125,6 +1125,7 @@ var model = {
     },
 
     saveInIndividual: function (data, callback) {
+        console.log('saveInIndividual', data);
         var sportData = {};
         async.waterfall([
                 function (callback) {
@@ -1189,7 +1190,7 @@ var model = {
 
                 },
                 function (atheleteName, callback) {
-                    // console.log(arrayAth);
+                    console.log('athleteName', data);
                     IndividualSport.mailers(atheleteName, data, function (err, mailData) {
                         if (err) {
                             callback(err, null);
@@ -1356,6 +1357,7 @@ var model = {
     },
 
     mailers: function (atheleteName, data, callback) {
+        console.log('mailers', data);
         async.parallel([
                 //athlete email and sms
                 function (callback) {
@@ -1447,6 +1449,7 @@ var model = {
     },
 
     smsMailsAthlete: function (data, n, callback) {
+        console.log("smsMailsAthlete", data);
         async.waterfall([
                 function (callback) {
                     ConfigProperty.find().lean().exec(function (err, property) {
