@@ -13,12 +13,12 @@ var year16 = '2016-17';
 var eventYear = '2017-18';
 
 //For Live
-var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in";
-var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
-var globalLinkForAll = "https://mumbai.sfanow.in/";
-// var globalLinkSchoolRegister = "http://hyderabadschool.sfanow.in";
-// var globalLinkCollegeRegister = "http://hyderabadcollege.sfanow.in";
-// var globalLinkForAll = "https://hyderabad.sfanow.in/";
+// var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in";
+// var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
+// var globalLinkForAll = "https://mumbai.sfanow.in/";
+var globalLinkSchoolRegister = "http://hyderabadschool.sfanow.in";
+var globalLinkCollegeRegister = "http://hyderabadcollege.sfanow.in";
+var globalLinkForAll = "https://hyderabad.sfanow.in/";
 // var year15 = '2015';
 // var year16 = '2016';
 // var eventYear = '2017';
