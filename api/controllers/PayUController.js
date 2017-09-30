@@ -126,7 +126,7 @@ var controller = {
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/paymentSuccess");
 
-                        res.redirect("http://testhyderabadschool.sfanow.in/paymentSuccess");
+                        // res.redirect("http://testhyderabadschool.sfanow.in/paymentSuccess");
 
                         // res.redirect("http://testhyderabadcollege.sfanow.in/paymentSuccess");
 
@@ -134,7 +134,7 @@ var controller = {
 
                         // res.redirect("http://testahmedabadcollege.sfanow.in/paymentSuccess");
 
-                        // res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
+                        res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
 
                         // res.redirect("http://mumbaicollege.sfanow.in/paymentSuccess");
 
@@ -171,7 +171,7 @@ var controller = {
                             } else {
                                 console.log("found", found);
 
-                                // res.redirect("http://mumbaischool.sfanow.in/paymentFailure");
+                                res.redirect("http://mumbaischool.sfanow.in/paymentFailure");
 
                                 // res.redirect("http://mumbaicollege.sfanow.in/paymentFailure");
 
@@ -187,7 +187,7 @@ var controller = {
 
                                 // res.redirect("http://testmumbaicollege.sfanow.in/paymentFailure");
 
-                                res.redirect("http://testhyderabadschool.sfanow.in/paymentFailure");
+                                // res.redirect("http://testhyderabadschool.sfanow.in/paymentFailure");
 
                                 // res.redirect("http://testhyderabadcollege.sfanow.in/paymentFailure");
 
@@ -236,7 +236,7 @@ var controller = {
                             data: "Invalid Request"
                         });
                     } else {
-                        // res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
+                        res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
 
                         // res.redirect("http://mumbaicollege.sfanow.in/paymentSuccess");
 
@@ -252,7 +252,7 @@ var controller = {
 
                         // res.redirect("http://testmumbaicollege.sfanow.in/paymentSuccess");
 
-                        res.redirect("http://testhyderabadschool.sfanow.in/paymentSuccess");
+                        // res.redirect("http://testhyderabadschool.sfanow.in/paymentSuccess");
 
                         // res.redirect("http://testhyderabadcollege.sfanow.in/paymentSuccess");
 
@@ -287,7 +287,7 @@ var controller = {
                             } else {
                                 console.log("found", found);
 
-                                // res.redirect("http://mumbaischool.sfanow.in/sorryAthelete");
+                                res.redirect("http://mumbaischool.sfanow.in/sorryAthelete");
 
                                 // res.redirect("http://mumbaicollege.sfanow.in/sorryAthelete");
 
@@ -301,7 +301,7 @@ var controller = {
 
                                 // res.redirect("http://testhyderabadcollege.sfanow.in/sorryAthelete");
 
-                                res.redirect("http://testhyderabadschool.sfanow.in/sorryAthelete");
+                                // res.redirect("http://testhyderabadschool.sfanow.in/sorryAthelete");
 
                                 // res.redirect("http://testahmedabadcollege.sfanow.in/sorryAthelete");
 
@@ -330,26 +330,50 @@ var controller = {
 
     successError: function (req, res) {
         var data = req.allParams();
-        var param = {};
-
-        param.firstName = data.firstname;
-        param.surname = data.lastname;
-        param.email = data.email;
-        param.transactionid = data.mihpayid;
-        var status = data.status;
-
         console.log('Inside SuccesssErrorrr', data);
         console.log(data.status != "success");
         if (req) {
             if (data.status == "success") {
                 console.log('yes success');
-                Athelete.updatePaymentStatus(param, function (err, data) {
-                    if (err) {
-                        console.log('amount not match issue');
-                        res.json({
-                            value: false,
-                            data: "Invalid Request"
+                var finalData = {};
+                async.waterfall([
+                    function (callback) {
+                        Athelete.findOne({
+                            firstName: data.firstName,
+                            surname: data.surname,
+                            email: data.email,
+                        }).exec(function (err, athleteData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(athleteData)) {
+                                callback(null, "Data is empty");
+                            } else {
+                                console.log("found", athleteData);
+                                callback(null, athleteData);
+                            }
                         });
+                    },
+                    function (athleteData, callback) {
+                        var finalData = {};
+                        finalData.transactionid = data.mihpayid;
+                        finalData.paymentStatus = 'Paid';
+                        finalData.feeType = 'online PAYU';
+                        finalData.athleteId = athleteData._id;
+                        AdditionalPayment.saveData(finalData, function (err, saveData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(saveData)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, saveData);
+                                }
+                            }
+                        });
+                    }
+                ], function (err, found) {
+                    if (err) {
+                        callback(err, null);
                     } else {
                         // res.redirect("http://mumbaischool.sfanow.in/paymentSuccess");
 
@@ -378,62 +402,32 @@ var controller = {
                         // res.redirect("https://sfanow.in/paymentSuccess");
                     }
                 });
-
             } else {
-                console.log('some errror');
-                Athelete.findOne({
-                    firstName: param.firstName,
-                    surname: param.surname,
-                    email: param.email,
-                }).exec(function (err, data) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(data)) {
-                        callback(null, "Data is empty");
-                    } else {
-                        console.log("found", data);
-                        Athelete.remove({ //finds one with refrence to id
-                            _id: data._id
-                        }).exec(function (err, found) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (_.isEmpty(found)) {
-                                callback(null, "Data is empty");
-                            } else {
-                                console.log("found", found);
+                // res.redirect("http://mumbaischool.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://mumbaischool.sfanow.in/sorryAthelete");
+                // res.redirect("http://mumbaicollege.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://mumbaicollege.sfanow.in/sorryAthelete");
+                // res.redirect("http://hyderabadschool.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://hyderabadschool.sfanow.in/sorryAthelete");
+                // res.redirect("http://hyderabadcollege.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://hyderabadcollege.sfanow.in/sorryAthelete");
+                // res.redirect("http://ahmedabadschool.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://ahmedabadschool.sfanow.in/sorryAthelete");
+                // res.redirect("http://ahmedabadcollege.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://ahmedabadcollege.sfanow.in/sorryAthelete");
+                // res.redirect("http://testhyderabadcollege.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://testhyderabadcollege.sfanow.in/sorryAthelete");
+                res.redirect("http://testhyderabadschool.sfanow.in/sorryAthelete");
 
-                                res.redirect("http://testhyderabadschool.sfanow.in/sorryAthelete");
+                // res.redirect("http://testahmedabadcollege.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://testahmedabadcollege.sfanow.in/sorryAthelete");
+                // res.redirect("http://testahmedabadschool.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://testahmedabadschool.sfanow.in/sorryAthelete");
+                // res.redirect("http://testmumbaicollege.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://testmumbaicollege.sfanow.in/sorryAthelete");
+                // res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
 
-                                // res.redirect("http://testmumbaischool.sfanow.in/sorryAthelete");
-
-                                // res.redirect("https://sfanow.in/sorryAthelete");
-                            }
-
-                        });
-                    }
-
-
-                });
+                // res.redirect("https://sfanow.in/sorryAthelete");
             }
         } else {
             res.json({
