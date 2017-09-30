@@ -1063,10 +1063,11 @@ myApp.controller('FormathleteCtrl', function ($scope, TemplateService, $element,
         });
     };
     $scope.openModal = function () {
-        // $timeout(function () {
-        // fbq('track', 'CompleteRegistration');
-        // GoogleAdWordsService.sendRegisterCustomerConversion();
-        // });
+        $timeout(function () {
+            // fbq('track', 'CompleteRegistration');
+            fbq('track', 'CompleteRegistration');
+            // GoogleAdWordsService.sendRegisterCustomerConversion();
+        });
         var modalInstance = $uibModal.open({
             animation: true,
             scope: $scope,
@@ -1293,10 +1294,11 @@ myApp.controller('FormregisCtrl', function ($scope, TemplateService, NavigationS
     $scope.formdata = {};
 
     $scope.openModal = function () {
-        // $timeout(function () {
-        // fbq('track', 'CompleteRegistration');
-        // GoogleAdWordsService.sendRegisterCustomerConversion();
-        // });
+        $timeout(function () {
+            // fbq('track', 'CompleteRegistration');
+            fbq('track', 'CompleteRegistration');
+            // GoogleAdWordsService.sendRegisterCustomerConversion();
+        });
         var modalInstance = $uibModal.open({
             animation: true,
             scope: $scope,
