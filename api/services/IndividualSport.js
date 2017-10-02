@@ -20,7 +20,8 @@ var schema = new Schema({
     nominatedSchoolName: String,
     nominatedContactDetails: String,
     nominatedEmailId: String,
-    isVideoAnalysis: Boolean
+    isVideoAnalysis: Boolean,
+    oldId: String,
 });
 
 schema.plugin(deepPopulate, {
