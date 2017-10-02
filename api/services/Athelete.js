@@ -1127,8 +1127,6 @@ var model = {
                 }
 
             });
-
-
     },
 
     receiptMail: function (data, callback) {

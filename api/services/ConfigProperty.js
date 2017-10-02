@@ -49,6 +49,8 @@ var schema = new Schema({
     additionalFeeInWords: String,
     amoutWithoutTaxAdditional: Number,
     amoutWithoutTaxAdditionalInWords: String,
+    taxTotalAmountAdditionalInWords: String,
+    taxTotalAmountAdditional: Number,
     cgstAmoutAdditional: Number,
     cgstPercentAdditional: Number,
     sgstAmoutAdditional: Number,

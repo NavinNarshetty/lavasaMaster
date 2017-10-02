@@ -350,6 +350,22 @@
         "validation": ["", "trim", ""],
         "url": ""
     }, {
+        "name": "Total Tax Amount In Words for Additional",
+        "type": "text",
+        "tableRef": "taxTotalAmountAdditionalInWords",
+        "placeholder": "Select Tax Amount",
+        "id": "taxTotalAmountAdditionalInWords",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
+        "name": "Total Tax Amount for Additional",
+        "type": "number",
+        "tableRef": "taxTotalAmountAdditional",
+        "placeholder": "Select Amount",
+        "id": "taxTotalAmount",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
         "name": "CGST Amout",
         "type": "number",
         "tableRef": "cgstAmoutAdditional",
