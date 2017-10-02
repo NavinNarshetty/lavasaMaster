@@ -347,7 +347,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         //detailmedal
         .state('detailmedal', {
-            url: "/detailmedal",
+            url: "/detailmedal/:id",
             templateUrl: "views/template.html",
             controller: 'DetailMedalCtrl'
         })

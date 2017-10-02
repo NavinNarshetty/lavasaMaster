@@ -55,10 +55,10 @@
                                     <!--<td>{{($index + 1)}}</td>-->
                                     <td>{{item.name}}</td>
                                     <td>
-                                        {{item.medalType}}
+                                        {{item.medalType|firstcapitalize}}
                                     </td>
                                     <td>
-                                        {{item.school}}
+                                        {{item.school.schoolName}}
                                     </td>
                                     <td>
                                         {{item.sport}}
