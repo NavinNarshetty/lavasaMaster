@@ -50,7 +50,14 @@ var model = {
                     info: {
                         $push: {
                             "format": "$format",
-                            "eventDate": "$eventDate",
+                            "eventDate": {
+                                dayOfWeek: {
+                                    $dayOfWeek: "$eventDate"
+                                },
+                                day: {
+                                    $dayOfMonth: "$eventDate"
+                                },
+                            },
                             "color": "$color",
                             "section1": "$section1",
                             "section2": "$section2",
