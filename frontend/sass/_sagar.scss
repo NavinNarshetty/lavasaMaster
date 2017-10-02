@@ -866,6 +866,9 @@ $sport-darkgrey: #757575 !default;
 }
 .event-card{
   margin: 2px 0;
+  &:hover{
+    box-shadow: 0 0 10px #000;
+  }
   ::-webkit-scrollbar {
      width: 5px;
      height: 5px;
@@ -991,7 +994,6 @@ $sport-darkgrey: #757575 !default;
 .eventdetail-title {
   padding: 0 10px;
   font-size: 21px;
-  font-weight: 600;
   text-transform: capitalize;
 }
 .eventdetail-content {

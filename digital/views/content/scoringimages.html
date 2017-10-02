@@ -1,3 +1,62 @@
 <div class="scoringimages-page">
-  <H1>HELLO</H1>
+  <!-- MATCH HEADER -->
+  <div class="matchstart-header clearfix">
+    <div class="container">
+      <div class="pull-right">
+        <p class="m-clear">match id: <span>{{match.matchId}}</span> </p>
+      </div>
+      <p class="m-clear"><span>{{match.sportsName}} </span> - <span>{{match.age}} </span> - <span> {{match.gender}}</span> </p>
+      <!-- <p style="color:red">{{match.resultImages.status}}</p> -->
+    </div>
+  </div>
+  <!-- MATCH HEADER END -->
+  <div class="scoringimages-section">
+    <div class="container">
+      <div class="combatscore-uploads text-center">
+        <div class="combatscore-pics">
+          <div class="row">
+          <div class="col-md-offset-1 col-md-5 col-sm-6">
+            <div class="matchstart-uploadholder text-uppercase ">
+              <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Picture</button>
+              <upload-image ng-model="match.resultImages.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+            </div>
+            <div class=" digital-swiper">
+            <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultImages.matchPhoto track by $index">
+              <span class="remove-pic" ng-click="removeMatchScore(pic,'matchPhoto')"><i class="fa fa-times"></i></span>
+              <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
+            </div>
+          </div>
+          </div>
+          <div class="col-md-5 col-sm-6">
+            <div class="matchstart-uploadholder text-uppercase ">
+              <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Scorecard</button>
+              <upload-image ng-model="match.resultImages.scoreSheet" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+            </div>
+            <div class="digital-swiper">
+            <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultImages.scoreSheet">
+              <span class="remove-pic" ng-click="removeMatchScore(pic,'scoreSheet')"><i class="fa fa-times"></i></span>
+              <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
+            </div>
+          </div>
+          </div>
+        </div>
+        </div>
+
+        <div class="scoreimage-btns">
+          <div class="row">
+          <div class="col-md-offset-2 col-md-4 col-sm-6">
+              <button class="btn btn-green-outline btn-scoring" ui-sref="matchstart({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
+          </div>
+          <div class="col-md-4 col-sm-6">
+              <button class="btn btn-green-outline btn-scoring" ng-click="completePopup();">complete</button>
+          </div>
+        </div>
+        </div>
+
+        <!-- <div class="row" style="text-align: left;">
+          <pre>{{match.resultImages|json}}</pre>
+        </div> -->
+      </div>
+    </div>
+  </div>
 </div>

@@ -604,6 +604,9 @@ $sport-table-grey:#efeeee !default;
   .panel-default {
     border-color: #fff;
   }
+  .panel-body{
+    position: relative;
+  }
 }
 
 .time-trial-accordioncontent {
@@ -1293,3 +1296,13 @@ $sport-table-grey:#efeeee !default;
 
 // MATCH CENTER END
 // MATCH CENTER MODAL END
+
+// HEATS / TIME TRIAL SCORING
+.btn-scoreheat{
+  padding: 5px;
+  position: absolute;
+  top: -35px;
+  right: 0px;
+  z-index: 5;
+}
+// HEATS / TIME TRIAL SCORING END

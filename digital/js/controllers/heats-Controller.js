@@ -230,5 +230,20 @@ myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, Navigat
     }
   };
 
+  // START SCORING FUNCTION
+  $scope.startScoring = function (match) {
+    console.log(match, 'startScoring');
+    if (match.status == 'IsCompleted') {
+      toastr.warning("This match has already been scored.", 'Scoring Completed');
+    } else {
+      $state.go("scoringimages", {
+        sportName: $stateParams.sportName,
+        id: $stateParams.id,
+        id: match.matchId
+      });
+    }
+  }
+  // START SCORING FUNCTION END
+
 
 });

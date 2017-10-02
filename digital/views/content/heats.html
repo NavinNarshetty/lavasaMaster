@@ -24,6 +24,7 @@
       <div class="">
         <!--FINAL HEAD-->
         <div class="heats-finalhead">
+          <a class="text-uppercase" ng-click="startScoring(roundsList[0].match[0]);">Score</a>
           <h3 class="d-fjalla-one sport-color-primary m-clear text-uppercase">{{roundsList[0].name}}</h3>
           <div ng-if="roundsList[0].match[0].scheduleDate || roundsList[0].match[0].scheduleTime">
             <p class="sport-color-primary"><span>{{roundsList[0].match[0].scheduleDate |englishNumeralDate}}</span>
@@ -188,6 +189,7 @@
 
                   <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
                 </uib-accordion-heading>
+                <a class="btn-scoreheat text-uppercase" ng-click="startScoring(semi);">Score</a>
                 <div class="time-trial-accordioncontent heat-trial-accordiancontent ">
                   <div class="accordian-timetrial-table q-blue-table table-responsive">
                     <table class="table-draws-schedule table-five">
@@ -335,6 +337,7 @@
 
                   <!--<a href=""> <i class="fa " ng-class="{'fa-chevron-up': s.open, 'fa-chevron-down': !s.open}"></i></a>-->
                 </uib-accordion-heading>
+                <a class="btn-scoreheat text-uppercase" ng-click = "startScoring(semi);">Score</a>
                 <div class="time-trial-accordioncontent heat-trial-accordiancontent ">
                   <div class="accordian-timetrial-table q-blue-table table-responsive">
                     <table class="table-draws-schedule table-five">

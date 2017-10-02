@@ -4,13 +4,15 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
     $scope.navigation = NavigationService.getNavigation();
 
     // VARIABLE INITITALISE
+    $scope.weekDays = ["","Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     // VARIABLE INITITALISE END
 
     // FUNCTIONS
     // INITIALSE EVENT COLOR CLASS
     $scope.initialiseColor = function(){
       _.each($scope.events, function(n){
-        _.each(n.dates, function(m){
+        _.each(n.info, function(m){
+          m.eventDate.weekDay = $scope.weekDays[m.eventDate.dayOfWeek];
           m.colorClass = "";
           color = m.color.toLowerCase();
           switch (color) {
@@ -27,20 +29,29 @@ myApp.controller('SpecialEventCtrl', function ($scope, TemplateService, $state, 
         });
       });
     }
-    $scope.initialiseColor();
     // INITIALSE EVENT COLOR CLASS END
-    // $scope.$on('$viewContentLoaded', function (event){
-    //   $timeout(function () {
-    //     $('.grid').masonry({
-    //       // options
-    //       itemSelector: '.grid-item',
-    //     });
-    //   }, 300);
-    // });
     // FUNCTIONS END
+    // API CALLS
+    // GET ALL EVENT
+    $scope.getEventCalender = function(){
+      console.log('getAllEventsByMonth');
+      NavigationService.getAllEventsByMonth( function(data){
+        console.log(data, 'data');
+        if (data.data.value == true) {
+          $scope.events = data.data.data;
+          $scope.initialiseColor();
+        } else {
+          toastr.error('Try Again');
+        }
+        console.log($scope.events, 'Event List');
+      })
+    }
+    $scope.getEventCalender();
+    // GET ALL EVENT END
+    // API CALLS END
 
     // JSONS
-    $scope.events = [{
+    $scope.events12 = [{
       name: 'December 2017',
       dates: [{
         eventDate: ' 6',

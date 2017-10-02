@@ -1146,3 +1146,16 @@ header {
   vertical-align: middle;
 }
 // COMBAT TEAM END
+// SCORING IMAGES
+.scoringimages-section{
+  height: calc(100vh - 140px);
+  position: relative;
+}
+.scoreimage-btns{
+  width: 100%;
+  padding: 15px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+}
+// SCORING IMAGES END

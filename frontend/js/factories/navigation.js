@@ -970,6 +970,12 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             } else {
                 return false;
             }
+        },
+        getAllEventsByMonth: function (callback) {
+            $http({
+                url: adminUrl2 + 'SpecialEvent/getAllEventsByMonth',
+                method: 'POST'
+            }).then(callback);
         }
     };
 });

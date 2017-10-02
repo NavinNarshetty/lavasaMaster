@@ -144,7 +144,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'QfKnockoutCtrl'
         })
         .state('scoringimages', {
-            url: "/scoringimages",
+            url: "/scoringimages/:id/:sportName",
             templateUrl: tempateURL,
             controller: 'ScoringImagestCtrl'
         })

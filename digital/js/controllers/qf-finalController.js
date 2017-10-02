@@ -210,4 +210,19 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
     }
   };
 
+  // START SCORING FUNCTION
+  $scope.startScoring = function (match) {
+    console.log(match, 'startScoring');
+    if (match.status == 'IsCompleted') {
+      toastr.warning("This match has already been scored.", 'Scoring Completed');
+    } else {
+      $state.go("scoringimages", {
+        sportName: $stateParams.name,
+        id: $stateParams.id,
+        id: match.matchId
+      });
+    }
+  }
+  // START SCORING FUNCTION END
+
 });
