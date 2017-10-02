@@ -281,7 +281,7 @@ var model = {
                                 emailData.ddFavour = data.property.ddFavour;
                                 emailData.password = newPassword;
                                 emailData.filename = "forgotPassword.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
+                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear;
                                 console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
@@ -345,7 +345,7 @@ var model = {
                                 emailData.ddFavour = data.property.ddFavour;
                                 emailData.password = newPassword;
                                 emailData.filename = "forgotPassword.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA Mumbai 2017";
+                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear;
                                 console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
