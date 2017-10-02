@@ -347,7 +347,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         //detailmedal
         .state('detailmedal', {
-            url: "/detailmedal",
+            url: "/detailmedal/:id",
             templateUrl: "views/template.html",
             controller: 'DetailMedalCtrl'
         })
@@ -407,7 +407,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         // detail calender
         .state('detail-calender', {
-            url: "/detail-calender",
+            url: "/detail-calender/:id",
             templateUrl: "views/template.html",
             controller: 'DetailCalenderCtrl'
         })

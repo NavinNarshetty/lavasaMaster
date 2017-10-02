@@ -141,6 +141,12 @@ myApp.factory('NavigationService', function ($http) {
         icon: "phone"
     },
     {
+        name: "Calender",
+        classis: "activeColor",
+        sref: "#/calender",
+        icon: "phone"
+    },
+    {
         name: "Faq",
         classis: "activeColor",
         sref: "#/faq",
@@ -506,18 +512,7 @@ myApp.factory('NavigationService', function ($http) {
                 method: 'POST'
             }).then(callback);
         },
-        getAllAthletes: function (constraints, callback) {
-            $http({
-                url: adminurl + 'athelete/search',
-                method: 'POST'
-            }).then(callback);
-        },
-        getAllTeams: function (constraints, callback) {
-            $http({
-                url: adminurl + 'teamsport/search',
-                method: 'POST'
-            }).then(callback);
-        },
+
         getOneSchool: function (constraints, url, callback) {
             console.log("constraints", constraints);
             $http({
@@ -525,6 +520,13 @@ myApp.factory('NavigationService', function ($http) {
                 data: constraints,
                 method: 'POST'
 
+            }).then(callback);
+        },
+        getTeamsAthletesBySport: function (data, callback) {
+            $http({
+                url: adminurl + 'Medal/getTeamsAthletesBySport',
+                data: data,
+                method: 'POST'
             }).then(callback);
         },
         saveMedalData: function (medalData, callback) {

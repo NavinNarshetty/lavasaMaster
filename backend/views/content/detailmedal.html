@@ -20,10 +20,10 @@
                                     <label>Medal Type</label>
                                     <ui-select name="medalType" id="medalType" theme="bootstrap" ng-model="medalInfoForm.medalType" ng-change="searchSportListSubCategory($select.selected._id)">
                                         <ui-select-match placeholder="Select Medal Type" allow-clear="true">
-                                            {{$select.selected}}
+                                            {{$select.selected |firstcapitalize}}
                                         </ui-select-match>
                                         <ui-select-choices refresh.delay="0" repeat="item in medalTypeArr | filter:$select.search">
-                                            <span ng-bind-html="item"></span>
+                                            <span ng-bind-html="item |firstcapitalize"></span>
                                         </ui-select-choices>
                                     </ui-select>
                                     <div class="error-msg" ng-if="detailForm.medalType.$invalid && detailForm.medalType.$touched">Please Enter Medal Type*</div>
@@ -82,10 +82,10 @@
 
                                     <div class="error-msg" ng-if="detailForm.selectfilter.$invalid && detailForm.selectfilter.$touched">Please Enter Filter*</div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" ng-if="showTeams">
                                     <label>Team</label>
                                     <ui-select name="team" ng-model="medalInfoForm.team" theme="bootstrap" multiple="" on-select="getSchoolName($item)" on-remove="removeSchool($item)">
-                                        <ui-select-match placeholder="Select Weight">{{$select.selected[$index].fullName}}</ui-select-match>
+                                        <ui-select-match placeholder="Select teams">{{$select.selected[$index].fullName}}</ui-select-match>
                                         <ui-select-choices repeat="team._id as team in allTeams | filter: $select.search">
                                             <div>
                                                 <p>{{team.fullName}}</p>
@@ -95,13 +95,13 @@
 
                                     <div class="error-msg" ng-if="detailForm.team.$invalid && detailForm.team.$touched">Please Enter Filter*</div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" ng-if="showAthletes">
                                     <label>player</label>
 
 
                                     <ui-select name="player" ng-model="medalInfoForm.player" theme="bootstrap" multiple="" on-select="getSchoolName($item)" on-remove="removeSchool($item)">
-                                        <ui-select-match placeholder="Select Weight">{{$select.selected[$index].fullName}}</ui-select-match>
-                                        <ui-select-choices repeat="player._id as player in allAtheletes | filter: $select.search">
+                                        <ui-select-match placeholder="Select players">{{$select.selected[$index].fullName}}</ui-select-match>
+                                        <ui-select-choices repeat="player.athleteId._id as player in allAtheletes | filter: $select.search">
                                             <div>
                                                 <p>{{player.fullName}}</p>
                                             </div>
