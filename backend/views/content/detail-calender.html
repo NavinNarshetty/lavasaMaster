@@ -14,14 +14,14 @@
       <div class="widget ">
         <div class="table-area ">
           <div class="widget-title">
-            <form class="calenderform" role='form'>
+            <form name="calenderform" role='form'>
               <div class="row">
                 <!-- CARD SELECTOR -->
                 <div class="col-md-6">
                   <!-- FORMAT DROPDOWN-->
                   <div class="form-group">
                     <div class="dropdown">
-                      <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">Format
+                      <button class="btn btn-dark dropdown-toggle" type="button" data-toggle="dropdown">FORMAT
                           <span class="caret"></span></button>
                       <ul class="dropdown-menu cur">
                         <li><input class="pull-left" type="radio" id="format.card2" ng-model="formData.format" value="card2">
@@ -42,8 +42,9 @@
                   <div class="date-holder">
                     <div class="form-group">
                       <label>Event Date</label>
-                      <input name="schDate" ui-date="dateOptions" ng-model="formData.eventDate" class="form-control" ng-required="true" placeholder="Enter Event Date">
-                      <div class="error-msg" ng-if="detailForm.schDate.$invalid && detailForm.schDate.$touched">Please Enter Event Date *</div>
+                      <input name="schDate" ui-date="dateOptions" ng-model="formData.eventDate" class="form-control" ng-required="true" placeholder="Enter Event Date"
+                        required>
+                      <div class="error-msg" ng-if="calenderform.schDate.$invalid && calenderform.schDate.$touched">Please Enter Event Date *</div>
                     </div>
                   </div>
                   <!-- DATE END -->
@@ -52,13 +53,12 @@
                   <div class="color-holder">
                     <div class="form-group">
                       <label> Card Color</label>
-                      <select name="selectcolor" class="form-control" ng-model="form.colour" ng-disabled="flag==='edit'" placeholder="Enter Color"
-                        required>
+                      <select name="selectcolor" class="form-control" ng-model="formData.color" placeholder="Enter Color" required>
                             <option value="yellow">Yellow</option>
                             <option value="blue">Blue</option>
                             <option value="green">Green</option>
                           </select>
-                      <div class="error-msg" ng-if="detailForm.selectcolor.$invalid && detailForm.selectcolor.$touched">Please Enter Color*</div>
+                      <div class="error-msg" ng-if="calenderform.selectcolor.$invalid && calenderform.selectcolor.$touched">Please Enter Color*</div>
                     </div>
                   </div>
                   <!-- COLOR END -->
@@ -148,10 +148,10 @@
                     <label for="">Section:1</label>
                     <div class="form-group">
                       <label for="">Header</label>
-                      <input type="text" ng-model="formData.section1.text.header" placeholder="Title" class="form-control">
+                      <input type="text" ng-model="formData.section1.text.header" placeholder="Title" class="form-control" ng-required="formData.section1.type=='text'">
                     </div>
                     <div class="textholder tinymce form-group">
-                      <text-angular ng-model="formData.section1.text.content" name="eligibletext"></text-angular>
+                      <text-angular ng-model="formData.section1.text.content" name="section1text" ng-required="formData.section1.type=='text'"></text-angular>
                     </div>
                   </div>
                   <!--TEXT ANGULAR END  -->
@@ -199,10 +199,10 @@
                     <label for="">Section:2</label>
                     <div class="form-group">
                       <label for="">Header</label>
-                      <input type="text" ng-model="formData.section2.text.header" placeholder="Title" class="form-control">
+                      <input type="text" ng-model="formData.section2.text.header" placeholder="Title" class="form-control" ng-required="formData.section2.type=='text'">
                     </div>
                     <div class="textholder tinymce form-group">
-                      <text-angular ng-model="formData.section2.text.content" name="eligibletext"></text-angular>
+                      <text-angular ng-model="formData.section2.text.content" name="section2text" ng-required="formData.section2.type=='text'"></text-angular>
                     </div>
                   </div>
                   <!--TEXT ANGULAR END  -->
@@ -250,10 +250,10 @@
                     <label for="">Section:3</label>
                     <div class="form-group">
                       <label for="">Header</label>
-                      <input type="text" ng-model="formData.section3.text.header" placeholder="Title" class="form-control">
+                      <input type="text" ng-model="formData.section3.text.header" placeholder="Title" class="form-control" ng-required="formData.section3.type=='text'">
                     </div>
                     <div class="textholder tinymce form-group">
-                      <text-angular ng-model="formData.section3.text.content" name="eligibletext"></text-angular>
+                      <text-angular ng-model="formData.section3.text.content" name="section3text" ng-required="formData.section3.type=='text'"></text-angular>
                     </div>
                   </div>
                   <!--TEXT ANGULAR END  -->
@@ -274,13 +274,9 @@
 
                 </div>
                 <!-- SECTION 3 CARD END -->
-
-
-
-
               </div>
               <div class="text-center mt20 odd-even-button">
-                <button class="btn btn-default" type="submit" ng-click="" ng-disabled="detailForm.$invalid">Save</button>
+                <button class="btn btn-default" type="submit" ng-click="savecalender(formData)" ng-disabled="calenderform.$invalid">Save</button>
                 <button class="btn btn-default" ui-sref='calender'>Cancel</button>
               </div>
             </form>
