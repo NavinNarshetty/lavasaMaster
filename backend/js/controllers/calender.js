@@ -113,6 +113,9 @@ myApp.controller('DetailCalenderCtrl', function ($scope, TemplateService, Naviga
       if (data.value) {
         toastr.success("Data saved successfully", 'Success');
         $state.go('calender')
+      } else if (data.data.nModified == '1') {
+        toastr.success("Data saved successfully", 'Success');
+        $state.go('calender')
       } else {
         toastr.error("Something went wrong", 'Error');
       }
