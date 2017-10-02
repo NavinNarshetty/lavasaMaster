@@ -355,7 +355,7 @@ var controller = {
                     },
                     function (athleteData, callback) {
                         var finalData = {};
-                        finalData.transactionid = data.mihpayid;
+                        finalData.transactionId = data.mihpayid;
                         finalData.paymentStatus = 'Paid';
                         finalData.feeType = 'online PAYU';
                         finalData.email = data.email;
@@ -375,63 +375,43 @@ var controller = {
                     },
                     function (finalData, callback) {
                         console.log(finalData);
-                        if (finalData) {
-                            async.parallel([
-                                    function (callback) {
-                                        AdditionalPayment.paymentMail(finalData, function (err, vData) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else if (vData) {
-                                                callback(null, vData);
-                                            }
-                                        });
-                                        // if (property[0].institutionType == "school") {
-                                        //     Athelete.atheletePaymentMail(found, function (err, vData) {
-                                        //         if (err) {
-                                        //             callback(err, null);
-                                        //         } else if (vData) {
-                                        //             callback(null, vData);
-                                        //         }
-                                        //     });
-                                        // } else {
-                                        //     Athelete.atheletePaymentMailCollege(found, function (err, vData) {
-                                        //         if (err) {
-                                        //             callback(err, null);
-                                        //         } else if (vData) {
-                                        //             callback(null, vData);
-                                        //         }
-                                        //     });
-                                        // }
-
-                                    },
-                                    function (callback) {
-                                        AdditionalPayment.receiptMail(finalData, function (err, mailsms) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else {
-                                                if (_.isEmpty(mailsms)) {
-                                                    callback(null, "Data not found");
-                                                } else {
-                                                    callback(null, mailsms);
-                                                }
-                                            }
-
-                                        });
-                                    }
-                                ],
-                                function (err, data2) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(null, []);
-                                    } else if (data2) {
-                                        if (_.isEmpty(data2)) {
-                                            callback(null, []);
-                                        } else {
-                                            callback(null, data2);
+                        async.parallel([
+                                function (callback) {
+                                    AdditionalPayment.paymentMail(finalData, function (err, vData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (vData) {
+                                            callback(null, vData);
                                         }
+                                    });
+                                },
+                                function (callback) {
+                                    AdditionalPayment.receiptMail(finalData, function (err, mailsms) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(mailsms)) {
+                                                callback(null, "Data not found");
+                                            } else {
+                                                callback(null, mailsms);
+                                            }
+                                        }
+
+                                    });
+                                }
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    console.log(err);
+                                    callback(null, []);
+                                } else if (data2) {
+                                    if (_.isEmpty(data2)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, data2);
                                     }
-                                });
-                        }
+                                }
+                            });
                     }
                 ], function (err, found) {
                     if (err) {

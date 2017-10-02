@@ -54,16 +54,7 @@ var model = {
                 data.firstName = athleteInfo.firstName;
                 data.mobile = athleteInfo.mobile;
                 if (athleteInfo.atheleteSchoolName) {
-                    if (data.feeType == "cash") {
-                        console.log("cash or cheque payment mail");
-                        AdditionalPayment.unregistedCashPaymentMailSms(data, function (err, vData) {
-                            if (err) {
-                                callback(err, null);
-                            } else if (vData) {
-                                callback(null, vData);
-                            }
-                        });
-                    } else if (data.feeType == "online PAYU") {
+                    if (data.feeType == "online PAYU") {
                         console.log("online payment mail");
                         AdditionalPayment.unregistedOnlinePaymentMailSms(data, function (err, vData) {
                             if (err) {
@@ -90,16 +81,7 @@ var model = {
                                 if (err) {
                                     callback(err, null);
                                 } else if (_.isEmpty(school)) {
-                                    if (data.feeType == "cash") {
-                                        console.log("cash or cheque payment mail");
-                                        AdditionalPayment.unregistedCashPaymentMailSms(data, function (err, vData) {
-                                            if (err) {
-                                                callback(err, null);
-                                            } else if (vData) {
-                                                callback(null, vData);
-                                            }
-                                        });
-                                    } else if (data.feeType == "online PAYU") {
+                                    if (data.feeType == "online PAYU") {
                                         console.log("online payment mail");
                                         AdditionalPayment.unregistedOnlinePaymentMailSms(data, function (err, vData) {
                                             if (err) {
@@ -116,16 +98,7 @@ var model = {
                                     console.log("year", year);
                                     if (school.status == "Verified" && year == '17') {
                                         console.log("inside verified");
-                                        if (data.feeType == "cash") {
-                                            console.log("cash or cheque payment mail");
-                                            AdditionalPayment.registeredCashPaymentMailSms(data, function (err, vData) {
-                                                if (err) {
-                                                    callback(err, null);
-                                                } else if (vData) {
-                                                    callback(null, vData);
-                                                }
-                                            });
-                                        } else if (data.feeType == "online PAYU") {
+                                        if (data.feeType == "online PAYU") {
                                             console.log("online payment mail");
                                             AdditionalPayment.registeredOnlinePaymentMailSms(data, function (err, vData) {
                                                 if (err) {
@@ -136,16 +109,7 @@ var model = {
                                             });
                                         }
                                     } else {
-                                        if (data.feeType == "cash") {
-                                            console.log("cash or cheque payment mail");
-                                            AdditionalPayment.unregistedCashPaymentMailSms(data, function (err, vData) {
-                                                if (err) {
-                                                    callback(err, null);
-                                                } else if (vData) {
-                                                    callback(null, vData);
-                                                }
-                                            });
-                                        } else if (data.feeType == "online PAYU") {
+                                        if (data.feeType == "online PAYU") {
                                             console.log("online payment mail");
                                             AdditionalPayment.unregistedOnlinePaymentMailSms(data, function (err, vData) {
                                                 if (err) {
@@ -200,7 +164,7 @@ var model = {
                             }
                             emailData.firstName = found.firstName;
                             emailData.surname = found.surname;
-                            emailData.transactionID = data.transactionID;
+                            emailData.transactionID = data.transactionId;
                             emailData.Date = moment().format("DD-MM-YYYY");
                             emailData.receiptNo = "SFA" + data.receiptNo;
                             emailData.city = property[0].sfaCity;
@@ -345,92 +309,6 @@ var model = {
 
     },
 
-    registeredCashPaymentMailSms: function (data, callback) {
-        async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
-                        }
-                    });
-                },
-                function (property, callback) {
-                    async.parallel([
-                            function (callback) {
-                                var emailData = {};
-                                // emailData.from = "info@sfanow.in";
-                                emailData.from = property[0].infoId;
-                                emailData.email = data.email;
-                                emailData.name = data.firstName;
-                                emailData.city = property[0].sfaCity;
-                                emailData.year = property[0].year;
-                                emailData.eventYear = property[0].eventYear;
-                                emailData.infoId = property[0].infoId;
-                                emailData.infoNo = property[0].infoNo;
-                                emailData.cityAddress = property[0].cityAddress;
-                                emailData.ddFavour = property[0].ddFavour;
-                                emailData.athleteAmount = property[0].totalAmountAthlete;
-                                emailData.filename = "atheleteCashPayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear;
-                                console.log("emaildata", emailData);
-
-                                Config.email(emailData, function (err, emailRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(null, err);
-                                    } else if (emailRespo) {
-                                        callback(null, emailRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            },
-                            function (callback) {
-                                var smsData = {};
-                                smsData.mobile = data.mobile;
-                                smsData.content = "Thank you for registering for SFA " + property[0].sfaCity + " " + property[0].eventYear + ". For further details please check your registered email ID.";
-                                console.log("smsdata", smsData);
-                                Config.sendSms(smsData, function (err, smsRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (smsRespo) {
-                                        console.log(smsRespo, "sms sent");
-                                        callback(null, smsRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            }
-                        ],
-                        function (err, final) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, final);
-                            }
-
-                        });
-                }
-            ],
-            function (err, data2) {
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else {
-                    callback(null, data2);
-                }
-
-            });
-
-    },
-
     unregistedOnlinePaymentMailSms: function (data, callback) {
         async.waterfall([
                 function (callback) {
@@ -523,96 +401,5 @@ var model = {
             });
 
     },
-
-    unregistedCashPaymentMailSms: function (data, callback) {
-        async.waterfall([
-                function (callback) {
-                    ConfigProperty.find().lean().exec(function (err, property) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(property)) {
-                                callback(null, []);
-                            } else {
-                                callback(null, property);
-                            }
-                        }
-                    });
-                },
-                function (property, callback) {
-                    async.parallel([
-                            function (callback) {
-                                var emailData = {};
-                                // emailData.from = "info@sfanow.in";
-                                emailData.from = property[0].infoId;
-                                emailData.infoId = property[0].infoId;
-                                emailData.infoNo = property[0].infoNo;
-                                emailData.cityAddress = property[0].cityAddress;
-                                emailData.ddFavour = property[0].ddFavour;
-                                emailData.email = data.email;
-                                emailData.name = data.firstName;
-                                emailData.city = property[0].sfaCity;
-                                emailData.year = property[0].year;
-                                emailData.type = property[0].institutionType;
-                                emailData.eventYear = property[0].eventYear;
-                                emailData.athleteAmount = property[0].totalAmountAthlete;
-                                emailData.filename = "unregistercashpayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear + ".";
-                                console.log("emaildata", emailData);
-                                Config.email(emailData, function (err, emailRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(null, err);
-                                    } else if (emailRespo) {
-                                        callback(null, emailRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            },
-                            function (callback) {
-
-                                var smsData = {};
-                                smsData.mobile = data.mobile;
-                                var city = property[0].sfaCity;
-                                var year = property[0].year;
-                                var eventYear = property[0].eventYear;
-                                smsData.content = "Thank you for registering for SFA " + city + " " + eventYear + ". For further details please check your registered email ID.";
-                                console.log("smsdata", smsData);
-                                Config.sendSms(smsData, function (err, smsRespo) {
-                                    if (err) {
-                                        console.log(err);
-                                        callback(err, null);
-                                    } else if (smsRespo) {
-                                        console.log(smsRespo, "sms sent");
-                                        callback(null, smsRespo);
-                                    } else {
-                                        callback(null, "Invalid data");
-                                    }
-                                });
-                            }
-                        ],
-                        function (err, final) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, final);
-                            }
-
-                        });
-
-                }
-            ],
-            function (err, data2) {
-                if (err) {
-                    console.log(err);
-                    callback(err, null);
-                } else {
-                    callback(null, data2);
-                }
-
-            });
-
-    }
 };
 module.exports = _.assign(module.exports, exports, model);

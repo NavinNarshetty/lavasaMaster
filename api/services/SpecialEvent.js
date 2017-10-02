@@ -50,6 +50,7 @@ var model = {
                     info: {
                         $push: {
                             "format": "$format",
+                            "eventDate": "$eventDate",
                             "color": "$color",
                             "section1": "$section1",
                             "section2": "$section2",
@@ -91,7 +92,6 @@ var model = {
                     callback(null, n);
                 }, function (err, complete) {
                     if (err) {
-                        // console.log(err);
                         callback(err, null);
                     } else {
                         callback(null, complete);
@@ -100,7 +100,6 @@ var model = {
             }
         ], function (err, data2) {
             if (err) {
-                // console.log(err);
                 callback(err, null);
             } else if (data2) {
                 if (_.isEmpty(data2)) {
