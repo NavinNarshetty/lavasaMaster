@@ -5,6 +5,8 @@ var controller = {
         Match.getAll(req.body, res.callback);
     },
 
+    
+
     getOne: function (req, res) {
         if (req.body && req.body.matchId) {
             Match.getOne(req.body, res.callback);
