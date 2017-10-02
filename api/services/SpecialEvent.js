@@ -33,46 +33,81 @@ module.exports = mongoose.model('SpecialEvent', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
+
+    getAggregatePipeLine: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $group: {
+                    _id: {
+                        year: {
+                            $year: "$eventDate"
+                        },
+                        month: {
+                            $month: "$eventDate"
+                        }
+                    },
+                    info: {
+                        $push: {
+                            "format": "$format",
+                            "color": "$color",
+                            "section1": "$section1",
+                            "section2": "$section2",
+                            "section3": "$section3"
+                        }
+                    }
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
     getAllEventsByMonth: function (data, callback) {
         async.waterfall([
-            //find all events
             function (callback) {
-                SpecialEvent.find().lean().exec(function (err, found) {
+                var pipeLine = SpecialEvent.getAggregatePipeLine(data);
+                SpecialEvent.aggregate(pipeLine, function (err, totals) {
                     if (err) {
-                        callback(err, null);
+                        callback(err, "error in mongoose");
                     } else {
-                        if (_.isEmpty(found)) {
+                        if (_.isEmpty(totals)) {
                             callback(null, []);
                         } else {
-                            console.log("found0", found);
-                            callback(null, found);
+                            console.log("data", totals);
+                            callback(null, totals);
                         }
                     }
                 });
             },
-            //Group by month
-            function (found, callback) {
-                var sendObj = [];
-                sendObj = found;
-                _.each(sendObj, function (n) {
-                    var dateVal = moment(n.eventDate, 'YYYY/MM/DD');
-                    var year = dateVal.format('YYYY');
-                    var month = dateVal.format('MMMM');
-                    n.name = month + ' ' + year;
+            function (totals, callback) {
+                var monthNames = ["", "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
+                async.concatSeries(totals, function (n, callback) {
+                    console.log("n", n);
+                    var d = new Date(n._id.event);
+                    n._id.month = monthNames[n._id.month];
+                    callback(null, n);
+                }, function (err, complete) {
+                    if (err) {
+                        // console.log(err);
+                        callback(err, null);
+                    } else {
+                        callback(null, complete);
+                    }
                 });
-                console.log('SEND OBJ', sendObj);
-                var tempData = _.groupBy(sendObj, "name");
-                console.log('after', tempData);
-                var value = _.partition(tempData, "name");
-                console.log('value', tempData);
-                // callback(null, "hehehe");
             }
-        ], function (err, result) {
-            console.log("result", result);
+        ], function (err, data2) {
             if (err) {
+                // console.log(err);
                 callback(err, null);
-            } else {
-                callback(null, result);
+            } else if (data2) {
+                if (_.isEmpty(data2)) {
+                    callback("Data is empty", null);
+                } else {
+                    callback(null, data2);
+                }
             }
         });
     }
