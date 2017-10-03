@@ -1959,51 +1959,84 @@ var model = {
                 }
             },
             function (drawFormat, callback) {
-                var sportslist = {};
                 if (data[0].firstcategory) {
-                    if (data[0].firstcategory.name == "Singles" || data[0].firstcategory.name == "Doubles") {
-                        if (data[0].sportslist.name == "Squash") {
-                            sportslist.name = data[0].sportslist.name;
-                            sportslist.oldId = data[0].sportslist._id;
+                    SportsList.find({
+                        name: data[0].firstcategory.name
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
                         } else {
-                            sportslist.name = data[0].sportslist.name + " " + data[0].firstcategory.name;
+                            var final = {};
+                            final.found = found;
+                            final.drawFormat = drawFormat;
+                            console.log("found", found);
+                            callback(null, final);
+                        }
+                    });
+                } else {
+                    SportsList.find({
+                        name: data[0].sportslist.name
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            var final = {};
+                            final.found = found;
+                            final.drawFormat = drawFormat;
+                            console.log("found", found);
+                            callback(null, final);
+                        }
+                    });
+                }
+            },
+            function (final, callback) {
+                if (final.found.length == 0) {
+                    console.log("length", final.found.length);
+                    var sportslist = {};
+                    if (data[0].firstcategory) {
+                        if (data[0].firstcategory.name == "Singles" || data[0].firstcategory.name == "Doubles") {
+                            if (data[0].sportslist.name == "Squash") {
+                                sportslist.name = data[0].sportslist.name;
+                                sportslist.oldId = data[0].sportslist._id;
+                            } else {
+                                sportslist.name = data[0].sportslist.name + " " + data[0].firstcategory.name;
+                                if (data[0].firstcategory._id) {
+                                    sportslist.oldId = data[0].firstcategory._id;
+                                } else {
+                                    sportslist.oldId = data[0].sportslist._id;
+                                }
+                            }
+                        } else if (data[0].sportslist.name == "Athletics") {
+                            sportslist.name = data[0].firstcategory.name;
                             if (data[0].firstcategory._id) {
                                 sportslist.oldId = data[0].firstcategory._id;
-                            } else {
-                                sportslist.oldId = data[0].sportslist._id;
                             }
-                        }
-                    } else if (data[0].sportslist.name == "Athletics") {
-                        sportslist.name = data[0].firstcategory.name;
-                        if (data[0].firstcategory._id) {
-                            sportslist.oldId = data[0].firstcategory._id;
-                        }
 
+                        } else {
+                            sportslist.name = data[0].sportslist.name;
+                            sportslist.oldId = data[0].sportslist._id;
+                        }
                     } else {
                         sportslist.name = data[0].sportslist.name;
                         sportslist.oldId = data[0].sportslist._id;
                     }
-                } else {
-                    sportslist.name = data[0].sportslist.name;
-                    sportslist.oldId = data[0].sportslist._id;
-                }
-                // if (data[0].sportslist._id) {
-                //     sportslist.oldId = data[0].sportslist._id;
-                // }
-                sportslist.sportsListSubCategory = subCategory._id;
-                sportslist.drawFormat = drawFormat._id;
-                SportsList.saveData(sportslist, function (err, sportslist) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(sportslist)) {
-                            callback(null, []);
+                    sportslist.sportsListSubCategory = subCategory._id;
+                    sportslist.drawFormat = final.drawFormat._id;
+                    SportsList.saveData(sportslist, function (err, sportslist) {
+                        if (err) {
+                            callback(err, null);
                         } else {
-                            sportlist = sportslist._id;
-                            callback(null, sportslist);
+                            if (_.isEmpty(sportslist)) {
+                                callback(null, []);
+                            } else {
+                                sportlist = sportslist._id;
+                                callback(null, sportslist);
+                            }
                         }
-                    }
-                });
+                    });
+                } else {
+                    callback(null, final.found[0]);
+                }
             },
         ], function (err, found) {
             if (err) {

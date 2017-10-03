@@ -61,5 +61,9 @@ schema.plugin(timestamps);
 module.exports = mongoose.model('OldHeat', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
-var model = {};
+var model = {
+
+
+
+};
 module.exports = _.assign(module.exports, exports, model);
