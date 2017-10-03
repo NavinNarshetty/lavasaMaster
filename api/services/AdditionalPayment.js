@@ -28,7 +28,13 @@ var schema = new Schema({
     }
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    populate: {
+        "athleteId.school": {
+            select: ''
+        },
+    }
+});
 schema.plugin(autoIncrement.plugin, {
     model: 'AdditionalPayment',
     field: 'receiptNo',
@@ -399,6 +405,63 @@ var model = {
                 }
 
             });
+
+    },
+
+    search: function (data, callback) {
+        var maxRow = Config.maxRow;
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['athleteId', 'feeType'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                asc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var deepSearch = "athleteId.school";
+
+        AdditionalPayment.find(data.keyword)
+            .sort({
+                createdAt: -1
+            })
+            .order(options)
+            .keyword(options)
+            .deepPopulate(deepSearch)
+            .page(options, function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback(null, "Data is empty");
+                } else {
+                    callback(null, found);
+                }
+            });
+    },
+
+    getOne: function (data, callback) {
+        var deepSearch = "athleteId.school";
+        AdditionalPayment.findOne({
+            _id: data._id
+        }).deepPopulate(deepSearch).lean().exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, []);
+            } else {
+                callback(null, found);
+            }
+        });
 
     },
 };
