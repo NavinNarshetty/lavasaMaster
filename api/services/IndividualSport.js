@@ -1254,7 +1254,7 @@ var model = {
                                     data.email = found.email;
                                     data.mobile = found.mobile;
                                     console.log('schoolDetail', data);
-                                    callback(null, data)
+                                    callback(null, data);
                                 }
                             }
                         });
@@ -1378,7 +1378,9 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(registerSchool)) {
-                        callback("Incorrect Login Details", null);
+                        finalData.school = schoolData.name;
+                        finalData.sfaid = schoolData.sfaid;
+                        callback(null, finalData);
                     } else {
                         finalData.school = registerSchool.schoolName;
                         finalData.sfaid = registerSchool.sfaID;
