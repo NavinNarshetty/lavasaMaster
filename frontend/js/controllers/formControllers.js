@@ -1890,7 +1890,7 @@ myApp.controller('PaymentSuccessCtrl', function ($scope, TemplateService, Naviga
     $scope.navigation = NavigationService.getNavigation();
 
     fbq('track', 'CompleteRegistration');
-    GoogleAdWordsService.sendRegisterCustomerConversion();
+    // GoogleAdWordsService.sendRegisterCustomerConversion();
     // $scope.redirectTo = function () {
     //     $scope.isDisabled1 = true;
     //     $state.go('register');
