@@ -60,6 +60,17 @@ var controller = {
         }
     },
 
+    getOneBySfaId: function (req, res) {
+        if (req.body) {
+            Athelete.getOneBySfaId(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     generateExcelOld: function (req, res) {
         Athelete.generateExcelOld(res);
     },

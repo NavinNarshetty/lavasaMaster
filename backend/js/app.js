@@ -411,7 +411,18 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailCalenderCtrl'
         })
-
+        //additional payment
+        .state('additional-payment', {
+            url: "/additional-payment",
+            templateUrl: "views/template.html",
+            controller: 'AdditionalPaymentCtrl'
+        })
+        //detail additional payment
+        .state('detailadditionalpayment', {
+            url: "/detailadditionalpayment/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailAdditionalPaymentCtrl'
+        })
         .state('jagz', {
             url: "/jagz",
             templateUrl: "views/jagz.html",

@@ -15,7 +15,7 @@
                         reports.
                         <br> The annual Athlete registration fee for SFA {{sfaCity}} {{eventYear}} is Rs. <span ng-if="isCollege == false">200</span>
                         <span ng-if="isCollege == true">100</span><br>In the event that your {{type}} does not register for
-                        SFA {{sfaCity}} {{eventYear}} by the<span ng-if="isCollege == false"> 30th of September</span>
+                        SFA {{sfaCity}} {{eventYear}} by the<span ng-if="isCollege == false"> 15th of October</span>
                         <span ng-if="isCollege == true"> 15th of October</span> an additional fee of Rs. <span ng-if="sfaCity == 'Hyderabad'">200</span>                        <span ng-if="sfaCity == 'Mumbai' && isCollege == false">400</span> <span ng-if="sfaCity == 'Mumbai' && isCollege == true">200</span>/-
                         (Inclusive of all applicable taxes) will be levied. This discounted fee for registered {{type}} athletes
                         is a step to encourage {{type}}s to support their athletes and sports.</span>
@@ -407,8 +407,8 @@
                             <select class="sfa-drop2 sf-list sfa-mob2 label-two " name="ageProof " ng-model="formData.ageProof " required>
                                 <option style="display:none "></option>
                                 <!-- <option>Adhaar Card </option> -->
-                                <option value="hello">Aadhar with only Year + Age proof with DD/MM/YY format</option>
                                 <option>Aadhar with DD/MM/YY format</option>
+                                <option value="hello">Aadhar with only Year + Age proof with DD/MM/YY format</option>
                                 <option value="hello">Birth Certificate + Photo ID</option>
                                 <option>PAN Card</option>
                                 <option>Passport</option>

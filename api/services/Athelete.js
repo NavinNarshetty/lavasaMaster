@@ -166,6 +166,20 @@ var model = {
 
     },
 
+    getOneBySfaId: function (data, callback) {
+        Athelete.findOne({ //finds one with refrence to id
+            sfaId: data.sfaId
+        }).exec(function (err, athleteInfo) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(athleteInfo)) {
+                callback(null, "Data is empty");
+            } else {
+                callback(null, athleteInfo);
+            }
+        });
+    },
+
     filterAthlete: function (data, callback) {
         console.log("date", data.startDate);
         var maxRow = Config.maxRow;

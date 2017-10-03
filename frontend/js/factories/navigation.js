@@ -855,6 +855,7 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                     console.log(sportType, sportName);
                     var resultVar = ResultSportInitialization.getResultVariable(sportName, sportType);
                     console.log(resultVar);
+
                     function sortOpponents(arrToSort, match1, match2, key) {
                         console.log("arrToSort", arrToSort);
                         console.log("match1", match1);
@@ -975,6 +976,20 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             $http({
                 url: adminUrl2 + 'SpecialEvent/getAllEventsByMonth',
                 method: 'POST'
+            }).then(callback);
+        },
+        savePaymentAdditional: function (formData, callback) {
+            $http({
+                url: adminUrl2 + 'AdditionalPayment/save',
+                method: 'POST',
+                data: formData
+            }).then(callback);
+        },
+        getOneBySfaId: function (formData, callback) {
+            $http({
+                url: adminUrl2 + 'Athelete/getOneBySfaId',
+                method: 'POST',
+                data: formData
             }).then(callback);
         }
     };

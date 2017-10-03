@@ -1829,7 +1829,6 @@ myApp.controller('AdditionalPaymentFormCtrl', function ($scope, TemplateService,
                 return;
             }
             console.log(formData);
-            $scope.openModal(formData.type, formData.sfaCity, formData.isCollege, formData.eventYear);
             if (formData.feeType == "online PAYU") {
                 var id = formData.sfaId;
                 console.log("true and in payment");
@@ -1837,13 +1836,20 @@ myApp.controller('AdditionalPaymentFormCtrl', function ($scope, TemplateService,
                 window.location.href = adminUrl2 + url;
             } else {
                 console.log("opening modal");
-                $scope.openModal(data.data.type, data.data.sfaCity, data.data.isCollege, data.data.eventYear);
+                var constraints = {};
+                constraints.sfaId = formData.sfaId;
+                NavigationService.getOneBySfaId(constraints, function (data) {
+                    console.log(data);
+                    if (data.data.value) {
+                        formData.athleteId = data.data.data._id;
+                        NavigationService.savePaymentAdditional(formData, function (data) {
+                            if (data.data.value === true) {
+                                $scope.openModal(formData.type, formData.sfaCity, formData.isCollege, formData.eventYear);
+                            }
+                        });
+                    }
+                });
             }
-            // NavigationService.savePaymentAdditional(formData, function (data) {
-            //     if (data.value === true) {
-
-            //     }
-            // });
         }
     }
 

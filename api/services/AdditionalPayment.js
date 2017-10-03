@@ -176,15 +176,15 @@ var model = {
                             emailData.city = property[0].sfaCity;
                             emailData.year = property[0].year;
                             emailData.eventYear = property[0].eventYear;
-                            emailData.athleteAmount = property[0].totalAmountAthlete;
-                            emailData.amountInWords = property[0].totalAmountInWordsAthlete;
-                            emailData.amountWithoutTax = property[0].amoutWithoutTaxAthlete;
-                            emailData.cgstAmout = property[0].cgstAmoutAthlete;
-                            emailData.cgstPercent = property[0].cgstPercentAthlete;
-                            emailData.sgstAmout = property[0].sgstAmoutAthlete;
-                            emailData.sgstPercent = property[0].sgstPercentAthlete;
-                            emailData.igstAmout = property[0].igstAmoutAthlete;
-                            emailData.igstPercent = property[0].igstPercentAthlete;
+                            emailData.athleteAmount = property[0].additionalFee;
+                            emailData.amountInWords = property[0].additionalFeeInWords;
+                            emailData.amountWithoutTax = property[0].amoutWithoutTaxAdditional;
+                            emailData.cgstAmout = property[0].cgstAmoutAdditional;
+                            emailData.cgstPercent = property[0].cgstPercentAdditional;
+                            emailData.sgstAmout = property[0].sgstAmoutAdditional;
+                            emailData.sgstPercent = property[0].sgstPercentAdditional;
+                            emailData.igstAmout = property[0].igstAmoutAdditional;
+                            emailData.igstPercent = property[0].igstPercentAdditional;
 
                             // emailData.from = "info@sfanow.in";
                             emailData.from = property[0].infoId;
@@ -346,7 +346,7 @@ var model = {
                                 emailData.year = property[0].year;
                                 emailData.type = property[0].institutionType;
                                 emailData.eventYear = property[0].eventYear;
-                                emailData.athleteAmount = property[0].totalAmountAthlete;
+                                emailData.athleteAmount = property[0].additionalFee;
                                 // emailData.sfaID = data.sfaID;
                                 // emailData.password = data.password;
                                 emailData.filename = "unregisteredOnlinePayment.ejs";
@@ -463,6 +463,6 @@ var model = {
             }
         });
 
-    },
+    }
 };
 module.exports = _.assign(module.exports, exports, model);
