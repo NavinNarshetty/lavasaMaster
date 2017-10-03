@@ -339,8 +339,8 @@ var controller = {
                 async.waterfall([
                     function (callback) {
                         Athelete.findOne({
-                            firstName: data.firstName,
-                            surname: data.surname,
+                            firstName: data.firstname,
+                            surname: data.lastname,
                             email: data.email,
                         }).lean().exec(function (err, athleteData) {
                             if (err) {
