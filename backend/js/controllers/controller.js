@@ -2298,7 +2298,7 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
 
     $scope.generateExcel = function (formData) {
         console.log("formdata", formData);
-        NavigationService.generateSchoolExcelWithData(formData, function (data) {});
+        NavigationService.generateSchoolExcelWithData(formData, function (data) { });
     }
 
     $scope.transferToWebsite = function (id) {
@@ -2478,10 +2478,10 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
     $scope.generateExcel = function (formdata) {
         if (_.isEmpty(formdata.type)) {
             console.log("else");
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) { });
         } else {
             console.log(formdata);
-            NavigationService.generateAthleteExcelWithData(formdata, function (data) {});
+            NavigationService.generateAthleteExcelWithData(formdata, function (data) { });
         }
     }
     $scope.transferToWebsite = function (id) {
@@ -2567,9 +2567,9 @@ myApp.controller('OldSchoolCtrl', function ($scope, TemplateService, NavigationS
         //     $scope.currentPage = 1;
         // }
         NavigationService.search('School/search', {
-                page: $scope.formData.page,
-                keyword: $scope.formData.keyword
-            }, ++i,
+            page: $scope.formData.page,
+            keyword: $scope.formData.keyword
+        }, ++i,
             function (data, ini) {
                 if (ini == i) {
                     $scope.items = data.data.results;
@@ -2634,22 +2634,22 @@ myApp.controller('ViewSchoolCtrl', function ($scope, TemplateService, Navigation
 });
 
 myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams) {
-        //old school filter view
-        //Used to name the .html file
-        $scope.template = TemplateService.changecontent("viewoldschool");
-        $scope.menutitle = NavigationService.makeactive("View Old School");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-        $scope.getOneOldSchoolById = function () {
-            $scope.url = 'School/getOne';
-            $scope.constraints = {};
-            $scope.constraints._id = $stateParams.id;
-            NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
-                $scope.oldschool = data.data;
-            });
-        };
-        $scope.getOneOldSchoolById();
-    })
+    //old school filter view
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("viewoldschool");
+    $scope.menutitle = NavigationService.makeactive("View Old School");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+    $scope.getOneOldSchoolById = function () {
+        $scope.url = 'School/getOne';
+        $scope.constraints = {};
+        $scope.constraints._id = $stateParams.id;
+        NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
+            $scope.oldschool = data.data;
+        });
+    };
+    $scope.getOneOldSchoolById();
+})
 
 
 
@@ -2879,7 +2879,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.navigation = NavigationService.getnav();
 
 
-        JsonService.getJson($stateParams.id, function () {});
+        JsonService.getJson($stateParams.id, function () { });
 
         globalfunction.confDel = function (callback) {
             var modalInstance = $uibModal.open({
@@ -2997,9 +2997,9 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             //     $scope.currentPage = 1;
             // }
             NavigationService.search('School/search', {
-                    page: $scope.formData.page,
-                    keyword: $scope.formData.keyword
-                }, ++i,
+                page: $scope.formData.page,
+                keyword: $scope.formData.keyword
+            }, ++i,
                 function (data, ini) {
                     if (ini == i) {
                         $scope.items = data.data.results;
@@ -3056,9 +3056,9 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 $scope.currentPage = 1;
             }
             NavigationService.search($scope.json.json.apiCall.url, {
-                    page: $scope.currentPage,
-                    keyword: $scope.search.keyword
-                }, ++i,
+                page: $scope.currentPage,
+                keyword: $scope.search.keyword
+            }, ++i,
                 function (data, ini) {
                     if (ini == i) {
                         $scope.items = data.data.results;
@@ -4307,7 +4307,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
 
 
-    .controller('MedalsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
+    .controller('MedalsCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $uibModal, $state, toastr) {
         //Used to name the .html file
         $scope.template = TemplateService.changecontent("tablemedal");
         $scope.menutitle = NavigationService.makeactive("Medal List");
@@ -4329,12 +4329,42 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             }
         }
         $scope.viewTable = function () {
+            // $scope.url = "Medal/getAllMedals";
             $scope.url = "Medal/search";
             $scope.formData.page = $scope.formData.page++;
             NavigationService.apiCall($scope.url, $scope.formData, function (data) {
                 console.log("data.value", data);
-                $scope.items = data.data.results;
-                console.log("im innnnn", $scope.items);
+                if (data.value) {
+                    $scope.items = data.data.results;
+                    console.log(" $scope.items", $scope.items);
+                    _.each($scope.items, function (key) {
+                        console.log("key", key);
+
+                        key.ageGroup = key.sport.ageGroup.name;
+                        key.gender = key.sport.gender;
+                        key.sportslist = key.sport.sportslist.name;
+                        key.sportListSubCat = key.sport.sportslist.sportsListSubCategory.name;
+                        if (key.weight) {
+                            key.weight = key.sport.weight.name;
+                        }
+                        if (key.sportListSubCat !== key.sportslist && key.ageGroup && key.gender) {
+                            key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender + ' - ' + key.sportslist;
+                        }
+                        if (key.sportListSubCat !== key.sportslist && key.weight && key.ageGroup && key.gender) {
+                            key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender + ' - ' + key.weight + ' - ' + key.sportslist;
+
+                        }
+                        if (key.sportListSubCat === key.sportslist && key.ageGroup && key.gender) {
+                            key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender;
+                        }
+                        if (key.sportListSubCat === key.sportslist && key.weight) {
+                            key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender + ' - ' + key.weight;
+                        }
+
+
+                    })
+                }
+
                 $scope.totalItems = data.data.total;
                 $scope.maxRow = data.data.options.count;
             });
@@ -4358,7 +4388,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         }
         $scope.delete = function (data) {
             console.log(data);
-            $scope.url = "Rules/delete";
+            $scope.url = "Medal/delete";
             $scope.constraints = {};
             $scope.constraints._id = data;
             NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
@@ -4381,41 +4411,97 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.menutitle = NavigationService.makeactive("Medal Detail");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        $scope.filterObj = {};
         $scope.medalInfoForm = {};
         $scope.medalInfoForm.school = [];
         $scope.medalTypeArr = ['gold', 'silver', 'bronze'];
         $scope.genderList = ['male', 'female', 'mixed'];
 
-        $scope.sportList = [{
-            name: 'Football'
-        }, {
-            name: 'Hockey'
-        }, {
-            name: 'Kho-Kho'
-        }]
+        $scope.onCancel = function (sendTo) {
+            $state.go(sendTo);
+        }
 
         if ($stateParams.id != '') {
             $scope.title = "Edit";
             $scope.getOneOldSchoolById = function () {
-                $scope.url = "Medal/getOne";
+                $scope.url = "Medal/getOneMedal";
                 $scope.constraints = {};
                 $scope.constraints._id = $stateParams.id;
                 NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
                     $scope.medalInfoForm = data.data;
-                    console.log(" $scope.medalForm", $scope.medalInfoForm);
+
+                    if ($scope.medalInfoForm.team.length > 0) {
+                        _.each($scope.medalInfoForm.team, function (team, index) {
+                            $scope.medalInfoForm.school[index].uniqueId = team._id;
+                            team.fullName = team.teamId + ' - ' + team.schoolName
+                        })
+                        $scope.showTeams = true;
+                        $scope.showAthletes = false;
+                        console.log(" $scope.medalForm", $scope.medalInfoForm);
+                    } else {
+                        $scope.showTeams = false;
+                        $scope.showAthletes = true;
+                        _.each($scope.medalInfoForm.player, function (athelete, index) {
+                            $scope.medalInfoForm.school[index].uniqueId = athelete._id;
+                            if (athelete.athleteId !== null) {
+                                if (athelete.middleName != null || athelete.middleName != undefined) {
+                                    athelete.fullName = athelete.sfaId + ' - ' + athelete.firstName + ' ' + athelete.middleName + ' ' + athelete.surname;
+                                } else {
+                                    if (!athelete.middleName) {
+                                        athelete.fullName = athelete.sfaId + ' - ' + athelete.firstName + ' ' + athelete.surname;
+                                    }
+
+                                }
+                            }
+
+                        })
+
+                    }
+                    NavigationService.getTeamsAthletesBySport($scope.medalInfoForm, function (data) {
+                        console.log(data, "data");
+                        if (data.data.value) {
+                            if (data.data.data.teams && data.data.data.teams.length > 0) {
+                                $scope.showTeams = true;
+                                $scope.showAthletes = false;
+                                $scope.allTeams = data.data.data.teams;
+                                _.each($scope.allTeams, function (team) {
+                                    team.fullName = team.teamId + ' - ' + team.schoolName
+                                })
+                                console.log("  $scope.allTeams  ", $scope.allTeams);
+                            } else if (data.data.data.athletes && data.data.data.athletes.length > 0) {
+                                $scope.showAthletes = true;
+                                $scope.showTeams = false;
+                                $scope.allAtheletes = data.data.data.athletes;
+                                _.each($scope.allAtheletes, function (athelete) {
+                                    if (athelete.athleteId !== null) {
+                                        if (athelete.athleteId.middleName != null || athelete.athleteId.middleName != undefined) {
+                                            athelete.fullName = athelete.athleteId.sfaId + ' - ' + athelete.athleteId.firstName + ' ' + athelete.athleteId.middleName + ' ' + athelete.athleteId.surname;
+                                        } else {
+                                            if (!athelete.athleteId.middleName) {
+                                                athelete.fullName = athelete.athleteId.sfaId + ' - ' + athelete.athleteId.firstName + ' ' + athelete.athleteId.surname;
+                                            }
+
+                                        }
+                                    }
+
+                                })
+                                console.log("  $scope.$scope.allAtheletes ", $scope.allAtheletes);
+                            }
+                        }
+                    })
+
 
                 });
             };
             $scope.getOneOldSchoolById();
             $scope.saveData = function (data) {
                 if (data) {
-                    $scope.url = "SportsList/save";
+                    $scope.url = "Medal/saveMedal";
                     NavigationService.apiCall($scope.url, data, function (data) {
                         console.log("data.value", data);
                         if (data.data.nModified == '1') {
                             toastr.success(" Updated Successfully", "SportList Message");
-                            $state.go('sportslist');
-
+                            $state.go('medals');
                         }
 
                     });
@@ -4423,37 +4509,49 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                     toastr.error("Invalid Data", "SportList Message");
                 }
             };
+            $scope.removeSchool = function (item) {
+                console.log(item, "item");
+                if (item) {
+                    if (item.atheleteID) {
+                        var findIndex = _.findIndex($scope.medalInfoForm.school, { 'uniqueId': item._id });
+                        console.log(findIndex, "findIndex");
+                        $scope.medalInfoForm.school.splice(findIndex, 1);
+                    } else if (!item.atheleteID) {
+                        var findIndex = _.findIndex($scope.medalInfoForm.school, { 'uniqueId': item._id });
+                        console.log(findIndex, "findIndex");
+                        $scope.medalInfoForm.school.splice(findIndex, 1);
+                    }
+                }
+            }
 
         } else {
-
             $scope.title = 'Create';
-            $scope.saveData = function (data, formvalid) {
+            $scope.saveData = function (data) {
                 if (data) {
-                    if (formvalid.$valid) {
-                        // data.sportsListSubCategory = $scope.sportlistsubcategory;
-                        $scope.url = "SportsList/save";
+                    if (!_.isEmpty(data)) {
+                        $scope.url = "Medal/saveMedal";
                         console.log(data);
                         NavigationService.apiCall($scope.url, data, function (data) {
                             console.log("data.value", data);
                             if (data.value === true) {
-                                toastr.success(" Saved Successfully", "SportList Message");
-                                $state.go('sportslist');
+                                toastr.success(" Saved Successfully", "MedalList Message");
+                                $state.go('medals');
 
                             } else {
-                                toastr.error("Please enter all fields", 'SportList Message')
+                                toastr.error("Please enter all fields", 'MedalList Message')
                             }
-
                         });
                     } else {
-                        toastr.error("Please enter all fields", 'SportList Message')
+                        toastr.error("Please enter all fields", 'MedalList Message')
                     }
                 } else {
-                    toastr.error("Invalid Data", "SportList Message");
+                    toastr.error("Invalid Data", "MedalList Message");
                 }
             };
 
-        }
 
+
+        }
 
 
         //for getting AllSpotsList
@@ -4480,7 +4578,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             }
         });
 
-        $scope.schoolList = [];
+        //fn to be call for getting schoolName
         $scope.getSchoolNameFun = function (constraintsObj, url, uniqueId) {
             NavigationService.getOneSchool(constraintsObj, url, function (data) {
                 if (data.data.value) {
@@ -4498,6 +4596,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 }
             })
         }
+
         $scope.getSchoolName = function (schoolId) {
             console.log(schoolId, "schoolId");
             $scope.constraintsObj = {};
@@ -4529,38 +4628,9 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
         }
 
-        $scope.removeSchool = function (item) {
-            console.log(item, "item");
-            if (item) {
-                if (item.athleteId) {
-                    var findIndex = _.findIndex($scope.medalInfoForm.school, {
-                        'uniqueId': item.athleteId._id
-                    });
-                    console.log(findIndex, "findIndex");
-                    $scope.medalInfoForm.school.splice(findIndex, 1);
-                } else if (!item.athleteId) {
-                    var findIndex = _.findIndex($scope.medalInfoForm.school, {
-                        'uniqueId': item._id
-                    });
-                    console.log(findIndex, "findIndex");
-                    $scope.medalInfoForm.school.splice(findIndex, 1);
-                }
 
-            }
 
-        }
-
-        $scope.saveMedalData = function (formData) {
-            if (!_.isEmpty(formData)) {
-                NavigationService.saveMedalData(formData, function (response) {
-                    if (response.data.value) {
-                        console.log(response, "response");
-                        toastr.success("Success");
-                    }
-                })
-            }
-        }
-        $scope.filterObj = {};
+        //for getting allAtheletes or allTeams
         $scope.selectSport = function (type, id) {
             if (type === 'sportName') {
                 $scope.filterObj.sportslist = id;
@@ -4609,7 +4679,21 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         }
 
 
+        $scope.removeSchool = function (item) {
+            if (item) {
+                if (item.athleteId) {
+                    var findIndex = _.findIndex($scope.medalInfoForm.school, { 'uniqueId': item.athleteId._id });
+                    console.log(findIndex, "findIndex");
+                    $scope.medalInfoForm.school.splice(findIndex, 1);
+                } else if (!item.athleteId) {
+                    var findIndex = _.findIndex($scope.medalInfoForm.school, { 'uniqueId': item._id });
+                    console.log(findIndex, "findIndex");
+                    $scope.medalInfoForm.school.splice(findIndex, 1);
+                }
 
+            }
+
+        }
     })
 
     .controller('GalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {
@@ -5044,12 +5128,12 @@ myApp.controller('DetailAdditionalPaymentCtrl', function ($scope, TemplateServic
 });
 
 myApp.controller('DashboardCtrl', function ($scope, TemplateService, NavigationService, $timeout, $state) {
-        //Used to name the .html file
-        $scope.template = TemplateService.changecontent("dashboard");
-        $scope.menutitle = NavigationService.makeactive("Dashboard");
-        TemplateService.title = $scope.menutitle;
-        $scope.navigation = NavigationService.getnav();
-    })
+    //Used to name the .html file
+    $scope.template = TemplateService.changecontent("dashboard");
+    $scope.menutitle = NavigationService.makeactive("Dashboard");
+    TemplateService.title = $scope.menutitle;
+    $scope.navigation = NavigationService.getnav();
+})
 
     .controller('headerctrl', function ($scope, TemplateService, $uibModal) {
         $scope.template = TemplateService;

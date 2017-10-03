@@ -31,16 +31,16 @@
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>
+                                    <!-- <th>#</th> -->
+                                    <!-- <th>
                                         Name
-                                    </th>
+                                    </th> -->
                                     <th>
                                         Medal Type
                                     </th>
-                                    <th>
+                                    <!-- <th>
                                         School
-                                    </th>
+                                    </th> -->
                                     <th>
                                         Sport
                                     </th>
@@ -51,17 +51,17 @@
                                 <!--<tr ng-repeat="item in items">-->
                                 <tr ng-repeat="item in items">
                                     <!--<tr>-->
-                                    <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
+                                    <!-- <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td> -->
                                     <!--<td>{{($index + 1)}}</td>-->
-                                    <td>{{item.name}}</td>
+                                    <!-- <td>{{item.name}}</td> -->
                                     <td>
                                         {{item.medalType|firstcapitalize}}
                                     </td>
-                                    <td>
+                                    <!-- <td>
                                         {{item.school.schoolName}}
-                                    </td>
+                                    </td> -->
                                     <td>
-                                        {{item.sport}}
+                                        {{item.name}}
                                     </td>
                                     <td>
                                         <a class="btn btn-primary" target="_blank" ui-sref="detailmedal({id:item._id})">
