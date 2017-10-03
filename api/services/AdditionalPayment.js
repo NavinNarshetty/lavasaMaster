@@ -176,6 +176,7 @@ var model = {
                             emailData.city = property[0].sfaCity;
                             emailData.year = property[0].year;
                             emailData.eventYear = property[0].eventYear;
+                            emailData.type = property[0].institutionType;
                             emailData.athleteAmount = property[0].additionalFee;
                             emailData.amountInWords = property[0].additionalFeeInWords;
                             emailData.amountWithoutTax = property[0].amoutWithoutTaxAdditional;
@@ -201,7 +202,7 @@ var model = {
                                 email: "admin@sfanow.in"
                             }];
                             emailData.filename = "receiptAthelete.ejs";
-                            emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.eventYear + ".";
+                            emailData.subject = "SFA: Your Payment Receipt as an Athlete for SFA " + emailData.city + " " + emailData.type + " " + emailData.eventYear + ".";
                             console.log("emaildata", emailData);
                             Config.emailTo(emailData, function (err, emailRespo) {
                                 if (err) {

@@ -1835,18 +1835,21 @@ myApp.controller('AdditionalPaymentFormCtrl', function ($scope, TemplateService,
                 var url = "payU/additionalPayment?id=" + id;
                 window.location.href = adminUrl2 + url;
             } else {
-                console.log("opening modal");
                 var constraints = {};
                 constraints.sfaId = formData.sfaId;
                 NavigationService.getOneBySfaId(constraints, function (data) {
                     console.log(data);
-                    if (data.data.value) {
+                    if (data.data.value == true) {
                         formData.athleteId = data.data.data._id;
                         NavigationService.savePaymentAdditional(formData, function (data) {
                             if (data.data.value === true) {
                                 $scope.openModal(formData.type, formData.sfaCity, formData.isCollege, formData.eventYear);
+                            } else {
+                                toastr.error('Check Whether You Have Already Paid Additional Payment.', 'Error Message');
                             }
                         });
+                    } else {
+                        toastr.error('Enter Valid SFA ID', 'Error Message');
                     }
                 });
             }

@@ -342,10 +342,11 @@ var controller = {
                             firstName: data.firstName,
                             surname: data.surname,
                             email: data.email,
-                        }).exec(function (err, athleteData) {
+                        }).lean().exec(function (err, athleteData) {
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(athleteData)) {
+                                console.log("found empty");
                                 callback(null, "Data is empty");
                             } else {
                                 console.log("found", athleteData);
@@ -354,6 +355,7 @@ var controller = {
                         });
                     },
                     function (athleteData, callback) {
+                        console.log('personnal', athleteData);
                         var finalData = {};
                         finalData.transactionId = data.mihpayid;
                         finalData.paymentStatus = 'Paid';
