@@ -38,6 +38,13 @@ var model = {
         var pipeline = [
             // Stage 1
             {
+                $sort: {
+                    eventDate: 1
+                }
+            },
+
+            // Stage 2
+            {
                 $group: {
                     _id: {
                         year: {
@@ -45,7 +52,7 @@ var model = {
                         },
                         month: {
                             $month: "$eventDate"
-                        }
+                        },
                     },
                     info: {
                         $push: {
@@ -58,7 +65,6 @@ var model = {
                                     $dayOfMonth: "$eventDate"
                                 },
                             },
-                            "dateOfEvent": "$eventDate",
                             "color": "$color",
                             "section1": "$section1",
                             "section2": "$section2",
@@ -67,13 +73,14 @@ var model = {
                     }
                 }
             },
+
+            // Stage 3
             {
                 $sort: {
                     "_id.year": 1,
                     "_id.month": 1,
-                    "info.dateOfEvent": 1
                 }
-            }
+            },
 
         ];
         return pipeline;
