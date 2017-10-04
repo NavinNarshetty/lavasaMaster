@@ -256,13 +256,14 @@ var model = {
                                 emailData.email = data.email;
                                 emailData.city = property[0].sfaCity;
                                 emailData.year = property[0].year;
+                                emailData.type = property[0].institutionType;
                                 emailData.eventYear = property[0].eventYear;
                                 emailData.infoId = property[0].infoId;
                                 emailData.infoNo = property[0].infoNo;
                                 emailData.cityAddress = property[0].cityAddress;
                                 emailData.ddFavour = property[0].ddFavour;
-                                emailData.filename = "atheleteOnlinePayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.year;
+                                emailData.filename = "atheleteOnlinePaymentAdditional.ejs";
+                                emailData.subject = "SFA: Thank you for payment for SFA " + emailData.city + " " + emailData.type + " " + emailData.eventYear + ".";
                                 console.log("emaildata", emailData);
                                 Config.email(emailData, function (err, emailRespo) {
                                     if (err) {
@@ -350,8 +351,8 @@ var model = {
                                 emailData.athleteAmount = property[0].additionalFee;
                                 // emailData.sfaID = data.sfaID;
                                 // emailData.password = data.password;
-                                emailData.filename = "unregisteredOnlinePayment.ejs";
-                                emailData.subject = "SFA: Thank you for registering for SFA " + emailData.city + " " + emailData.eventYear + ".";
+                                emailData.filename = "unregisteredOnlinePaymentAdditional.ejs";
+                                emailData.subject = "SFA: Thank you for payment for SFA " + emailData.city + " " + emailData.type + " " + emailData.eventYear + ".";
                                 console.log("emaildata", emailData);
 
                                 Config.email(emailData, function (err, emailRespo) {
