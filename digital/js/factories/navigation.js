@@ -47,6 +47,15 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 callback(data)
             });
         },
+        updateResultImages: function (formData, callback) {
+            $http({
+                url: adminurl + "match/updateResultImages",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
         saveMatchPp: function (match, resultVar, callback) {
             // console.log(formData, 'saveMatch');
             // console.log(match);

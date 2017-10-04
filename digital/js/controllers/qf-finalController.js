@@ -218,8 +218,9 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
     } else {
       $state.go("scoringimages", {
         sportName: $stateParams.name,
-        id: $stateParams.id,
-        id: match.matchId
+        sport: $stateParams.id,
+        id: match.matchId,
+        drawFormat: $stateParams.drawFormat
       });
     }
   }

@@ -271,23 +271,27 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                                 console.log("im in else");
                                                 $state.go('heats', {
                                                     id: $scope.drawDetails.sport,
-                                                    sportName: $scope.nameOfSport
+                                                    sportName: $scope.nameOfSport,
+                                                    drawFormat: $scope.drawDetails.drawFormat
                                                 });
                                                 break;
                                             case 'Qualifying Round':
                                                 $state.go('qf-final', {
                                                     id: $scope.drawDetails.sport,
-                                                    name: $scope.nameOfSport
+                                                    name: $scope.nameOfSport,
+                                                    drawFormat: $scope.drawDetails.drawFormat
                                                 });
                                                 break;
                                             case 'Knockout':
                                                 $state.go('knockout', {
-                                                    id: $scope.drawDetails.sport
+                                                    id: $scope.drawDetails.sport,
+                                                    drawFormat: $scope.drawDetails.drawFormat
                                                 });
                                                 break;
                                             case 'Swiss League':
                                                 $state.go('swiss-league', {
-                                                    id: $scope.drawDetails.sport
+                                                    id: $scope.drawDetails.sport,
+                                                    drawFormat: $scope.drawDetails.drawFormat,
                                                 });
                                                 break;
                                             default:
@@ -300,12 +304,14 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                             case 'Qualifying Knockout':
                                                 $state.go('qf-knockout', {
                                                     id: $scope.drawDetails.sport,
+                                                    drawFormat: $scope.drawDetails.drawFormat,
                                                 });
                                                 break;
                                             case 'Qualifying Round':
                                                 $state.go('qf-final', {
                                                     id: $scope.drawDetails.sport,
-                                                    name: $scope.nameOfSport
+                                                    name: $scope.nameOfSport,
+                                                    drawFormat: $scope.drawDetails.drawFormat,
                                                 });
                                                 break;
 
@@ -331,7 +337,8 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                             default:
                                                 $state.go('time-trial', {
                                                     id: $scope.drawDetails.sport,
-                                                    name: $scope.nameOfSport
+                                                    name: $scope.nameOfSport,
+                                                    drawFormat: $scope.drawDetails.drawFormat
                                                 });
                                                 break;
                                         }

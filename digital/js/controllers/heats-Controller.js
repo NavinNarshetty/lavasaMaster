@@ -238,8 +238,9 @@ myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, Navigat
     } else {
       $state.go("scoringimages", {
         sportName: $stateParams.sportName,
-        id: $stateParams.id,
-        id: match.matchId
+        sport: $stateParams.id,
+        id: match.matchId,
+        drawFormat: $stateParams.drawFormat 
       });
     }
   }

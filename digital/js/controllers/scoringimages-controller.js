@@ -44,11 +44,14 @@ myApp.controller('ScoringImagestCtrl', function($scope, TemplateService, Navigat
                 toastr.error('Invalid MatchID. Please check the MatchID entered.', 'Error');
               }
                 $scope.match = data.data;
+                console.log($scope.match, 'getMatch');
                 $scope.match.matchId = $scope.matchData.matchId;
-                $scope.match.resultImages = {
-                  "matchPhoto": [],
-                  "scoreSheet": [],
-                  "status": "IsLive"
+              if ($scope.match.resultImages == {} || !$scope.match.resultImages) {
+                  $scope.match.resultImages = {
+                    "matchPhoto": [],
+                    "scoreSheet": [],
+                    "status": "IsLive"
+                  }
                 }
                 console.log($scope.match, 'Match');
             } else {
@@ -83,19 +86,174 @@ myApp.controller('ScoringImagestCtrl', function($scope, TemplateService, Navigat
             resultImages : $scope.match.resultImages,
             matchId: $scope.matchData.matchId
           }
-          // NavigationService.saveMatch($scope.matchResult, function(data){
-          //   if(data.value == true){
-          //     console.log('save success');
-          //   } else{
-          //     // alert('fail save');
-          //     toastr.error('Data save failed. Please try again.', 'Save Error');
-          //   }
-          // });
+          NavigationService.updateResultImages($scope.matchResult, function(data){
+            if(data.value == true){
+              switch ($scope.match.sportType) {
+                case "Individual Sports":
+                    switch ($stateParams.drawFormat) {
+                      case 'Heats':
+                          console.log("im in else");
+                          $state.go('heats', {
+                              id: $stateParams.sport,
+                              sportName: $stateParams.sportName,
+                              drawFormat: $stateParams.drawFormat
+                          });
+                          break;
+                      case 'Qualifying Round':
+                          $state.go('qf-final', {
+                              id: $stateParams.sport,
+                              name: $stateParams.sportName,
+                              drawFormat: $stateParams.drawFormat
+                          });
+                          break;
+                      case 'Knockout':
+                          $state.go('knockout', {
+                              id: $stateParams.sport,
+                              drawFormat: $stateParams.drawFormat
+                          });
+                          break;
+                      case 'Swiss League':
+                          $state.go('swiss-league', {
+                              id: $stateParams.sport,
+                              drawFormat: $stateParams.drawFormat,
+                          });
+                          break;
+                    }
+                break;
+                case 'Target Sports':
+                    switch ($stateParams.drawFormat) {
+                        case 'Qualifying Knockout':
+                            $state.go('qf-knockout', {
+                                id: $stateParams.sport,
+                                drawFormat: $stateParams.drawFormat,
+                            });
+                            break;
+                        case 'Qualifying Round':
+                            $state.go('qf-final', {
+                                id: $stateParams.sport,
+                                name: $stateParams.sportName,
+                                drawFormat: $stateParams.drawFormat,
+                            });
+                            break;
+                        default:
+                            toastr.error("Case :Target Sports ,New Draw Format Found ");
+                            break;
+                    }
+                    break;
+                    case 'Aquatics Sports':
+                        switch ($stateParams.drawFormat) {
+                            case 'Knockout':
+                                if ($scope.drawDetails.isTeam === true) {
+                                    $state.go('knockout-team', {
+                                        id: $stateParams.sport
+                                    });
+                                } else {
+                                    $state.go('knockout', {
+                                        id: $stateParams.sport
+                                    });
+                                }
+                                break;
+
+                            default:
+                                $state.go('time-trial', {
+                                    id: $stateParams.sport,
+                                    name: $stateParams.sportName,
+                                    drawFormat: $stateParams.drawFormat
+                                });
+                                break;
+                        }
+                        break;
+              }
+            } else{
+              toastr.error('Data save failed. Please try again.', 'Save Error');
+            }
+          });
           console.log($scope.matchResult, 'result#');
       } else {
         toastr.error('No data to save. Please check for valid MatchID.', 'Save Error');
       }
     }
     // MATCH COMPLETE END
+    // BACK FUNCTION
+    $scope.backFunc = function(){
+
+        switch ($scope.match.sportType) {
+          case "Individual Sports":
+              switch ($stateParams.drawFormat) {
+                case 'Heats':
+                    console.log("im in else");
+                    $state.go('heats', {
+                        id: $stateParams.sport,
+                        sportName: $stateParams.sportName,
+                        drawFormat: $stateParams.drawFormat
+                    });
+                    break;
+                case 'Qualifying Round':
+                    $state.go('qf-final', {
+                        id: $stateParams.sport,
+                        name: $stateParams.sportName,
+                        drawFormat: $stateParams.drawFormat
+                    });
+                    break;
+                case 'Knockout':
+                    $state.go('knockout', {
+                        id: $stateParams.sport,
+                        drawFormat: $stateParams.drawFormat
+                    });
+                    break;
+                case 'Swiss League':
+                    $state.go('swiss-league', {
+                        id: $stateParams.sport,
+                        drawFormat: $stateParams.drawFormat,
+                    });
+                    break;
+              }
+          break;
+          case 'Target Sports':
+              switch ($stateParams.drawFormat) {
+                  case 'Qualifying Knockout':
+                      $state.go('qf-knockout', {
+                          id: $stateParams.sport,
+                          drawFormat: $stateParams.drawFormat,
+                      });
+                      break;
+                  case 'Qualifying Round':
+                      $state.go('qf-final', {
+                          id: $stateParams.sport,
+                          name: $stateParams.sportName,
+                          drawFormat: $stateParams.drawFormat,
+                      });
+                      break;
+                  default:
+                      toastr.error("Case :Target Sports ,New Draw Format Found ");
+                      break;
+              }
+              break;
+              case 'Aquatics Sports':
+                  switch ($stateParams.drawFormat) {
+                      case 'Knockout':
+                          if ($scope.drawDetails.isTeam === true) {
+                              $state.go('knockout-team', {
+                                  id: $stateParams.sport
+                              });
+                          } else {
+                              $state.go('knockout', {
+                                  id: $stateParams.sport
+                              });
+                          }
+                          break;
+
+                      default:
+                          $state.go('time-trial', {
+                              id: $stateParams.sport,
+                              name: $stateParams.sportName,
+                              drawFormat: $stateParams.drawFormat
+                          });
+                          break;
+                  }
+                  break;
+        }
+    }
+    // BACK FUNCTION END
     // API CALLN INTEGRATION END
 })

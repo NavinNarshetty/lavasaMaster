@@ -119,32 +119,32 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'LeagueKnockoutCtrl'
         })
         .state('heats', {
-            url: "/heats/:id/:sportName",
+            url: "/heats/:drawFormat/:id/:sportName",
             templateUrl: tempateURL,
             controller: 'HeatsCtrl'
         })
         .state('time-trial', {
-            url: "/time-trial/:id/:name",
+            url: "/time-trial/:drawFormat/:id/:name",
             templateUrl: tempateURL,
             controller: 'TimeTrialCtrl'
         })
         .state('qf-final', {
-            url: "/qf-final/:id/:name",
+            url: "/qf-final/:drawFormat/:id/:name",
             templateUrl: tempateURL,
             controller: 'qfFinalCtrl'
         })
         .state('swiss-league', {
-            url: "/swiss-league/:id",
+            url: "/swiss-league/:drawFormat/:id",
             templateUrl: tempateURL,
             controller: 'swissLeagueCtrl'
         })
         .state('qf-knockout', {
-            url: "/qf-knockout/:id",
+            url: "/qf-knockout/:drawFormat/:id",
             templateUrl: tempateURL,
             controller: 'QfKnockoutCtrl'
         })
         .state('scoringimages', {
-            url: "/scoringimages/:id/:sportName",
+            url: "/scoringimages/:drawFormat/:id/:sport/:sportName",
             templateUrl: tempateURL,
             controller: 'ScoringImagestCtrl'
         })
