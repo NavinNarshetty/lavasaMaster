@@ -67,7 +67,9 @@ var model = {
                 }
             },
             {
-                $sort: 1
+                $sort: {
+                    $eventDate: 1
+                }
             }
 
         ];
