@@ -68,7 +68,9 @@ var model = {
             },
             {
                 $sort: {
-                    eventDate: 1
+                    "_id.year": 1,
+                    "_id.month": 1,
+                    "info.eventDate.day": 1
                 }
             }
 
