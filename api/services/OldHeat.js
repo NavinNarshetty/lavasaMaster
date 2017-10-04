@@ -134,6 +134,10 @@ var model = {
         async.concatSeries(complete, function (mainData, callback) {
             var i = 0;
             async.eachSeries(mainData._id, function (singleData, callback) {
+                if (i == mainData.sport.length) {
+                    i = 0;
+                }
+                // console.log("singleData", singleData, "mainData", mainData.sport);
                 individualSport.sport = [];
                 async.waterfall([
                     function (callback) {
@@ -150,6 +154,7 @@ var model = {
                                     }
                                     callback(null, err);
                                 } else {
+                                    console.log("singleData", athelete._id);
                                     callback(null, athelete);
                                 }
                             }
@@ -160,20 +165,27 @@ var model = {
                             callback(null, athelete);
                         } else {
                             var param = {};
-                            console.log("singleData", mainData.sport.length);
+                            console.log("size", mainData.sport.length);
+                            console.log("i", i);
                             param.sport = mainData.sport[i];
+                            console.log("param", param);
                             OldKnockout.getSportId(param, function (err, sport) {
                                 if (sport.error) {
+                                    if (i < mainData.sport.length) {
+                                        i++;
+                                    }
                                     callback(null, sport);
                                 } else {
+                                    if (i < mainData.sport.length) {
+                                        i++;
+                                    }
+                                    console.log("mainData", sport._id);
                                     individualSport.sport.push(sport._id);
                                     individualSport.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
                                     callback(null, athelete);
                                 }
                             });
-                            if (i < mainData.sport[i].length) {
-                                i++;
-                            }
+
                         }
                     },
                     function (athelete, callback) {
