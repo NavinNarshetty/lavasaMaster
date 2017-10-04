@@ -423,6 +423,11 @@ var model = {
                         } else {
                             finalData.resultWaterPolo = found.resultWaterPolo;
                         }
+                        if (_.isEmpty(found.resultImages)) {
+                            finalData.resultImages = "";
+                        } else {
+                            finalData.resultImages = found.resultImages;
+                        }
                         callback(null, finalData);
                     }
 
