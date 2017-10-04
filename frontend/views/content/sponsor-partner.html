@@ -38,15 +38,16 @@
       <div class="col-md-12 col-sm-12 col-xs-12">
         <!-- SPONSER HEAD -->
         <div class="sponser-head">
-          <h4>Sponser</h4>
+          <h3 class="text-uppercase">{{header1}}</h3>
         </div>
         <!-- SPONSER HEAD END -->
       </div>
       <!-- SPONSER IMAGE HODER -->
       <div class="sponser-card-holder">
-        <div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="image in data track by $index">
+        <h4 class="text-center text-uppercase">{{update}}</h4>
+        <div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="image in sponser track by $index">
           <div class="sponser-image-holder">
-            <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
+            <img src="{{image.img}}" alt="" class="img-responsive">
           </div>
         </div>
       </div>
@@ -58,15 +59,16 @@
     <div class="row">
       <!-- PARTNER HEAD -->
       <div class="col-md-12 col-sm-12 col-xs-12">
-        <h4>Partner</h4>
+        <h3 class="text-uppercase">{{header2}}</h3>
       </div>
       <!-- PARTNER HEAD -->
 
       <!-- PARTNER_IMAGE HODER -->
       <div class="partner-card-holder">
-        <div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="image in data track by $index">
+        <h4 class="text-center text-uppercase">{{update}}</h4>
+        <div class="col-md-2 col-sm-4 col-xs-6" ng-repeat="image in partner track by $index">
           <div class="partner-image-holder">
-            <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
+            <img src="{{image.img}}" alt="" class="img-responsive">
           </div>
         </div>
       </div>
