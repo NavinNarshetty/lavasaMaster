@@ -66,6 +66,9 @@ var model = {
                     }
                 }
             },
+            {
+                $sort: 1
+            }
 
         ];
         return pipeline;
