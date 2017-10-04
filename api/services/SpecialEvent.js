@@ -58,6 +58,7 @@ var model = {
                                     $dayOfMonth: "$eventDate"
                                 },
                             },
+                            "dateOfEvent": "$eventDate",
                             "color": "$color",
                             "section1": "$section1",
                             "section2": "$section2",
@@ -70,7 +71,7 @@ var model = {
                 $sort: {
                     "_id.year": 1,
                     "_id.month": 1,
-                    "info.eventDate.day": 1
+                    "info.dateOfEvent": 1
                 }
             }
 
