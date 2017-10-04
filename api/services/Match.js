@@ -355,6 +355,7 @@ var model = {
                         finalData.isTeam = found.sport.sportslist.sportsListSubCategory.isTeam;
                         finalData.sportsName = found.sport.sportslist.name;
                         finalData.age = found.sport.ageGroup.name;
+                        finalData.drawFormat = found.sport.sportslist.drawFormat;
                         finalData.gender = found.sport.gender;
                         if (found.excelType) {
                             finalData.stage = found.excelType;
