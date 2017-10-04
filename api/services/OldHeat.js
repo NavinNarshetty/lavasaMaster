@@ -257,8 +257,21 @@ var model = {
                 var complete = _.groupBy(found, "sport");
                 async.concatSeries(complete, function (mainData, callback) {
                     async.concatSeries(mainData, function (singleData, callback) {
-                        console.log("singleData", singleData);
-                        callback(null, singleData);
+                        OldHeat.getMatchDetails(singleData, function (err, matchData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(matchData)) {
+                                    var err = {
+                                        error: "no matchData",
+                                        data: matchData
+                                    }
+                                    callback(null, err);
+                                } else {
+                                    callback(null, matchData);
+                                }
+                            }
+                        });
                     }, function (err, finalData) {
                         if (err) {
                             callback(err, null);
@@ -273,7 +286,6 @@ var model = {
                         callback(null, finalData);
                     }
                 });
-                // callback(null, complete);
             },
         ], function (err, data3) {
             if (err) {
@@ -301,11 +313,19 @@ var model = {
                         match.sport = found._id;
                         match.scheduleDate = data.date;
                         var round = data.round.toLowerCase();
-                        if (round == "heats" || round == "heat") {
-                            match.round = data.name;
-                        } else if (round == "sem final" || round == "sem final") {
+                        match.round = data.round;
+                        match.heatNo = data.name.lastIndexOf(" " + 1);
+                        match.incrementalId = data.matchid;
+                        match.matchId = "heat";
 
-                        }
+
+                        // if (round == "heats" || round == "heat") {
+                        //     match.round = data.name;
+                        // } else if (round == "sem final" || round == "semi final") {
+                        //     match.round = data.name;
+                        // } else if (round == "time trial") {
+                        //     match.round = data.name;
+                        // }
                         callback(null, found);
                     }
                 });
@@ -333,6 +353,23 @@ var model = {
                     }
                 });
             },
+            function (found, callback) {
+                OldHeat.saveMatch(match, function (err, matchData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(matchData)) {
+                            var err = {
+                                error: "no matchData",
+                                data: matchData
+                            }
+                            callback(null, err);
+                        } else {
+                            callback(null, matchData);
+                        }
+                    }
+                });
+            },
         ], function (err, data3) {
             if (err) {
                 callback(err, null);
@@ -340,6 +377,59 @@ var model = {
                 callback(null, data3);
             }
         });
-    }
+    },
+    saveMatch: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Match.findOne().sort({
+                        createdAt: -1
+                    }).lean().exec(function (err, match) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(match)) {
+                            data.matchId = data.matchId + data.incrementalId;
+                            callback(null, data);
+                        } else {
+                            data.matchId = data.matchId + data.incrementalId;
+                            callback(null, data);
+                        }
+                    });
+                },
+                function (data, callback) {
+                    if (_.isEmpty(data.opponentsSingle)) {
+                        data.opponentsSingle = undefined;
+                    }
+                    if (_.isEmpty(data.opponentsTeam)) {
+                        data.opponentsTeam = undefined;
+                    }
+                    if (_.isEmpty(data.prevMatch)) {
+                        data.prevMatch = undefined;
+                    }
+                    if (_.isEmpty(data.nextMatch)) {
+                        data.nextMatch = undefined;
+                    }
+                    callback(null, data);
+                },
+                function (data, callback) {
+                    Match.saveData(data, function (err, complete) {
+                        if (err || _.isEmpty(complete)) {
+                            callback(err, null);
+                        } else {
+                            callback(null, {
+                                error: err,
+                                success: complete
+                            });
+                        }
+                    });
+                }
+            ],
+            function (err, results) {
+                if (err || _.isEmpty(results)) {
+                    callback(err, null);
+                } else {
+                    callback(null, results);
+                }
+            });
+    },
 };
 module.exports = _.assign(module.exports, exports, model);
