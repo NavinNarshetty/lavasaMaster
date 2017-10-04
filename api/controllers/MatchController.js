@@ -5,7 +5,7 @@ var controller = {
         Match.getAll(req.body, res.callback);
     },
 
-    
+
 
     getOne: function (req, res) {
         if (req.body && req.body.matchId) {
@@ -43,6 +43,17 @@ var controller = {
     search: function (req, res) {
         if (req.body) {
             Match.search(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
+    updateResultImages: function (req, res) {
+        if (req.body) {
+            Match.updateResultImages(req.body, res.callback);
         } else {
             res.json({
                 "data": "Body not Found",

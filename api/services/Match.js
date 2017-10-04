@@ -49,6 +49,7 @@ var schema = new Schema({
     resultKnockout: Schema.Types.Mixed,
     resultShooting: Schema.Types.Mixed,
     resultSwiss: Schema.Types.Mixed,
+    resultImages: Schema.Types.Mixed,
     scheduleDate: Date,
     scheduleTime: String,
     video: String,
@@ -7315,6 +7316,28 @@ var model = {
                 }
             });
 
+    },
+
+    updateResultImages: function (data, callback) {
+        var matchObj = {
+            $set: {
+                resultImages: data.resultImages
+            }
+        };
+        Match.update({
+            matchId: data.matchId
+        }, matchObj).exec(
+            function (err, match) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(match)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, match);
+                    }
+                }
+            });
     },
 };
 module.exports = _.assign(module.exports, exports, model);
