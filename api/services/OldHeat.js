@@ -234,6 +234,110 @@ var model = {
                 callback(null, finalData);
             }
         });
+    },
+    //---------------------------------Match--------------------------------
+
+    saveHeatMatch: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                OldHeat.find({
+                    participantType: "player",
+                    year: data.year
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                var complete = _.groupBy(found, "sport");
+                async.concatSeries(complete, function (mainData, callback) {
+                    async.concatSeries(mainData, function (singleData, callback) {
+                        console.log("singleData", singleData);
+                        callback(null, singleData);
+                    }, function (err, finalData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, finalData);
+                        }
+                    });
+                }, function (err, finalData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, finalData);
+                    }
+                });
+                // callback(null, complete);
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
+    getMatchDetails: function (data, callback) {
+        var match = {};
+        match.opponentsSingle = [];
+        match.opponentsTeam = [];
+        async.waterfall([
+            function (callback) {
+                Sport.find({
+                    oldId: data.sport
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, []);
+                    } else {
+                        match.sport = found._id;
+                        match.scheduleDate = data.date;
+                        var round = data.round.toLowerCase();
+                        if (round == "heats" || round == "heat") {
+                            match.round = data.name;
+                        }
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                async.eachSeries(data.heats, function (n, callback) {
+                    IndividualSport.find({
+                        oldId: n.player
+                    }).lean().exec(function (err, individualData) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(individualData)) {
+                            callback(null, []);
+                        } else {
+                            match.opponentsSingle.push(individualData._id);
+                            callback(null, individualData);
+                        }
+                    });
+
+                }, function (err) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, found);
+                    }
+                });
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
     }
 };
 module.exports = _.assign(module.exports, exports, model);
