@@ -119,7 +119,6 @@ var model = {
                         }
                     }
                 });
-                // callback(null, complete);
             },
         ], function (err, data3) {
             if (err) {
@@ -143,6 +142,7 @@ var model = {
                     function (callback) {
                         var athelete = {};
                         athelete._id = singleData;
+                        // individualSport.oldId = singleData;
                         OldKnockout.getAthleteId(athelete, function (err, athelete) {
                             if (err) {
                                 callback(err, null);
@@ -181,6 +181,7 @@ var model = {
                                     }
                                     console.log("mainData", sport._id);
                                     individualSport.sport.push(sport._id);
+
                                     individualSport.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
                                     callback(null, athelete);
                                 }
@@ -194,7 +195,7 @@ var model = {
                         } else {
                             individualSport.athleteId = athelete._id;
                             individualSport.createdBy = "School";
-                            individualSport.oldId = singleData._id;
+                            individualSport.oldId = singleData;
                             IndividualSport.saveData(individualSport, function (err, saveData) {
                                 if (err) {
                                     callback(err, null);
@@ -235,6 +236,7 @@ var model = {
             }
         });
     },
+
     //---------------------------------Match--------------------------------
 
     saveHeatMatch: function (data, callback) {
@@ -310,41 +312,38 @@ var model = {
                     } else if (_.isEmpty(found)) {
                         callback(null, []);
                     } else {
-                        match.sport = found._id;
+                        console.log("sport", found);
+                        match.sport = found[0]._id;
                         match.scheduleDate = data.date;
                         var round = data.round.toLowerCase();
-                        match.round = data.round;
+                        match.round = data.name;
                         match.heatNo = data.name.lastIndexOf(" " + 1);
                         match.incrementalId = data.matchid;
                         match.matchId = "heat";
-
-
-                        // if (round == "heats" || round == "heat") {
-                        //     match.round = data.name;
-                        // } else if (round == "sem final" || round == "semi final") {
-                        //     match.round = data.name;
-                        // } else if (round == "time trial") {
-                        //     match.round = data.name;
-                        // }
                         callback(null, found);
                     }
                 });
             },
             function (found, callback) {
                 async.eachSeries(data.heats, function (n, callback) {
-                    IndividualSport.find({
-                        oldId: n.player
-                    }).lean().exec(function (err, individualData) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(individualData)) {
-                            callback(null, []);
-                        } else {
-                            match.opponentsSingle.push(individualData._id);
-                            callback(null, individualData);
-                        }
-                    });
-
+                    if (found[0]) {
+                        IndividualSport.find({
+                            oldId: n.player,
+                            sport: found[0]._id
+                        }).lean().exec(function (err, individualData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(individualData)) {
+                                callback(null, []);
+                            } else {
+                                console.log("inside push", individualData);
+                                match.opponentsSingle.push(individualData[0]._id);
+                                callback(null, individualData);
+                            }
+                        });
+                    } else {
+                        callback(null, found);
+                    }
                 }, function (err) {
                     if (err) {
                         callback(err, null);
@@ -378,6 +377,7 @@ var model = {
             }
         });
     },
+
     saveMatch: function (data, callback) {
         async.waterfall([
                 function (callback) {

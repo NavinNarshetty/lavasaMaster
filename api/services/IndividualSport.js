@@ -21,7 +21,11 @@ var schema = new Schema({
     nominatedContactDetails: String,
     nominatedEmailId: String,
     isVideoAnalysis: Boolean,
-    oldId: String,
+    oldId: {
+        type: Schema.Types.ObjectId,
+        ref: 'OldAthlete',
+        index: true
+    },
 });
 
 schema.plugin(deepPopulate, {
@@ -34,6 +38,7 @@ schema.plugin(deepPopulate, {
         }
     }
 });
+
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('IndividualSport', schema);
