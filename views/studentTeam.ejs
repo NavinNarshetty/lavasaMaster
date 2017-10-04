@@ -271,17 +271,22 @@
                             <%if(infoId == 'info@sfanow.in'){%>
                                 <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info@sfanow.in ">
                                     <%=infoId%>
-                                </a>
-                                <%} else if(infoId == 'info.hyd@sfanow.in'){%>
-                                    <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info.hyd@sfanow.in ">
-                                        <%=infoId%>
-                                    </a>
-                                    <%}%>. No changes can be made after 30th November
-                                        <%=year%>
-                                            <%if(type == 'school'){%>
-                                                (Changes to a Football Team can be made only up to 30th October
-                                                <%=year%>)
-                                                    <%}%>
+                                </a>. No changes can be made after 15th October
+                                <%=year%>
+                                    <%if(type == 'school'){%>
+                                        (Changes to a Football Team can be made only up to 30th October
+                                        <%=year%>)
+                                            <%}%>
+                                                <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                                    <a style="font-family:TitilliumWeb-Bold; color: black; " href="mailto:info.hyd@sfanow.in ">
+                                                        <%=infoId%>
+                                                    </a>. No changes can be made after 20th October
+                                                    <%=year%>
+                                                        <%if(type == 'school'){%>
+                                                            (Changes to a Football Team can be made only up to 30th October
+                                                            <%=year%>)
+                                                                <%}%>
+                                                                    <%}%>
                         </p>
                     </div>
                 </td>
@@ -291,7 +296,7 @@
                     <div style="padding: 0px 54px; ">
                         <p style="margin-bottom: 0px; "> 2) Draws and Schedules will be published on our website by
                             <%if(city == 'Mumbai'){%>
-                                20th November
+                                25th November
                                 <%=year%>
                                     <%} else if(city == 'Hyderabad') {%>
                                         30th October
@@ -299,8 +304,12 @@
                                             <%} else if(city == 'Ahmedabad') {%>
                                                 30th October
                                                 <%=year%>
-                                                    <%}%> (Draws and Schedules for Football will be published by 15th October
-                                                        <%=year%>)</p>
+                                                    <%}%>
+                                                        <%if(type == 'school'){%>
+                                                            (Draws and Schedules for Football will be published by 30th October
+                                                            <%=year%>)
+                                                                <%}%>
+                        </p>
                     </div>
                 </td>
             </tr>
