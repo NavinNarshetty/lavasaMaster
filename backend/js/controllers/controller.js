@@ -4339,26 +4339,25 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                     console.log(" $scope.items", $scope.items);
                     _.each($scope.items, function (key) {
                         console.log("key", key);
-
                         key.ageGroup = key.sport.ageGroup.name;
                         key.gender = key.sport.gender;
                         key.sportslist = key.sport.sportslist.name;
                         key.sportListSubCat = key.sport.sportslist.sportsListSubCategory.name;
-                        if (key.weight) {
+                        if (key.sport.weight) {
                             key.weight = key.sport.weight.name;
                         }
                         if (key.sportListSubCat !== key.sportslist && key.ageGroup && key.gender) {
                             key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender + ' - ' + key.sportslist;
                         }
                         if (key.sportListSubCat !== key.sportslist && key.weight && key.ageGroup && key.gender) {
-                            key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender + ' - ' + key.weight + ' - ' + key.sportslist;
+                            key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender + ' - ' + '(' + key.weight + ')' + ' - ' + key.sportslist;
 
                         }
                         if (key.sportListSubCat === key.sportslist && key.ageGroup && key.gender) {
                             key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender;
                         }
                         if (key.sportListSubCat === key.sportslist && key.weight) {
-                            key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender + ' - ' + key.weight;
+                            key.name = key.sportListSubCat + ' - ' + key.ageGroup + ' - ' + key.gender + ' - ' + '(' + key.weight + ')';
                         }
 
 
@@ -4423,6 +4422,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
         if ($stateParams.id != '') {
             $scope.title = "Edit";
+            $scope.setDisabled = true;
             $scope.getOneOldSchoolById = function () {
                 $scope.url = "Medal/getOneMedal";
                 $scope.constraints = {};
@@ -4457,9 +4457,28 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                         })
 
                     }
-                    NavigationService.getTeamsAthletesBySport($scope.medalInfoForm, function (data) {
-                        console.log(data, "data");
+                    console.log("$scope.medalInfoForm", $scope.medalInfoForm);
+                    $scope.editMedalInfoObj = {};
+                    $scope.editMedalInfoObj.medalId = $stateParams.id;
+                    if ($scope.medalInfoForm.weight) {
+                        $scope.editMedalInfoObj.weight = $scope.medalInfoForm.weight._id;
+                    }
+
+                    $scope.editMedalInfoObj.ageGroup = $scope.medalInfoForm.ageGroup._id;
+                    $scope.editMedalInfoObj.gender = $scope.medalInfoForm.gender;
+                    $scope.editMedalInfoObj.sportslist = $scope.medalInfoForm.sportslist._id;
+                    $scope.editMedalInfoObj.medalType = $scope.medalInfoForm.medalType;
+
+                    NavigationService.getTeamsAthletesBySport($scope.editMedalInfoObj, function (data) {
+                        console.log(" $scope.editMedalInfoObj", $scope.editMedalInfoObj);
+                        console.log(data, "In Edit Function");
                         if (data.data.value) {
+                            if (data.data.data.allow === false) {
+                                $scope.sportAdded = true;
+                                toastr.error('This sport has already been added', 'Error Message');
+                            } else {
+                                $scope.sportAdded = false;
+                            }
                             if (data.data.data.teams && data.data.data.teams.length > 0) {
                                 $scope.showTeams = true;
                                 $scope.showAthletes = false;
@@ -4526,6 +4545,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
         } else {
             $scope.title = 'Create';
+            $scope.setDisabled = false;
             $scope.saveData = function (data) {
                 if (data) {
                     if (!_.isEmpty(data)) {
@@ -4539,6 +4559,9 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
                             } else {
                                 toastr.error("Please enter all fields", 'MedalList Message')
+                                if (data.error === "No Data Found") {
+                                    toastr.error("No data found", 'Error Message');
+                                }
                             }
                         });
                     } else {
@@ -4631,21 +4654,43 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
 
 
         //for getting allAtheletes or allTeams
+
         $scope.selectSport = function (type, id) {
+            $scope.allTeams = [];
+            $scope.allAtheletes = [];
             if (type === 'sportName') {
                 $scope.filterObj.sportslist = id;
             } else if (type === 'gender') {
                 $scope.filterObj.gender = id;
             } else if (type === 'weight') {
                 $scope.filterObj.weight = id;
-            } else if (type === 'ageGroup')
+            } else if (type === 'ageGroup') {
                 $scope.filterObj.ageGroup = id;
+            } else if (type === 'medalType') {
+                $scope.filterObj.medalType = id;
+            }
+
 
             if ($scope.filterObj.sportslist && $scope.filterObj.gender && $scope.filterObj.ageGroup || $scope.filterObj.weight) {
                 console.log($scope.filterObj, " $scope.filterObj");
                 NavigationService.getTeamsAthletesBySport($scope.filterObj, function (data) {
                     console.log(data, "data");
                     if (data.data.value) {
+                        console.log("dataaaaaaa", data.data);
+                        if (data.data.data === 'No Data Found') {
+                            $scope.disableSave = true;
+                            console.log(" $scope.sportAdded");
+                        } else {
+                            $scope.disableSave = false;
+                        }
+
+                        if (data.data.data.allow === false) {
+                            $scope.sportAdded = true;
+                            toastr.error('This sport has already been added', 'Error Message');
+                        } else {
+                            $scope.sportAdded = false;
+                        }
+
                         if (data.data.data.teams && data.data.data.teams.length > 0) {
                             $scope.showTeams = true;
                             $scope.showAthletes = false;
@@ -4658,6 +4703,11 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                             $scope.showAthletes = true;
                             $scope.showTeams = false;
                             $scope.allAtheletes = data.data.data.athletes;
+                            if (!_.isEmpty($scope.filterObj.weight) && data.data.data.athletes === 0) {
+                                $scope.disableSave = true;
+                            } else {
+                                $scope.disableSave = false;
+                            }
                             _.each($scope.allAtheletes, function (athelete) {
                                 if (athelete.athleteId !== null) {
                                     if (athelete.athleteId.middleName != null || athelete.athleteId.middleName != undefined) {
