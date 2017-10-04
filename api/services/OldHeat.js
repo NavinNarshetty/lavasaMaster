@@ -303,6 +303,8 @@ var model = {
                         var round = data.round.toLowerCase();
                         if (round == "heats" || round == "heat") {
                             match.round = data.name;
+                        } else if (round == "sem final" || round == "sem final") {
+
                         }
                         callback(null, found);
                     }
