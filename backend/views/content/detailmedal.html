@@ -18,7 +18,8 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Medal Type</label>
-                                    <ui-select name="medalType" id="medalType" theme="bootstrap" ng-model="medalInfoForm.medalType" ng-change="searchSportListSubCategory($select.selected._id)">
+                                    <ui-select name="medalType" id="medalType" theme="bootstrap" ng-model="medalInfoForm.medalType" ng-change="searchSportListSubCategory($select.selected._id)"
+                                        on-select="selectSport('medalType',$item);">
                                         <ui-select-match placeholder="Select Medal Type" allow-clear="true">
                                             {{$select.selected |firstcapitalize}}
                                         </ui-select-match>
@@ -32,7 +33,8 @@
 
                                 <div class="form-group">
                                     <label>Sport Name</label>
-                                    <ui-select name="sport" id="selectsport" theme="bootstrap" ng-model="medalInfoForm.sportslist" on-select="selectSport('sportName',$item._id);">
+                                    <ui-select name="sport" id="selectsport" theme="bootstrap" ng-model="medalInfoForm.sportslist" on-select="selectSport('sportName',$item._id);"
+                                        ng-disabled="setDisabled">
                                         <ui-select-match placeholder="Select sport name">
                                             {{$select.selected.name}}
                                         </ui-select-match>
@@ -45,7 +47,8 @@
                                 <div class="form-group">
                                     <label>Age Group</label>
 
-                                    <ui-select name="selectfilter" id="selectfilter" theme="bootstrap" ng-model="medalInfoForm.ageGroup" on-select="selectSport('ageGroup',$item._id)">
+                                    <ui-select name="selectfilter" id="selectfilter" theme="bootstrap" ng-model="medalInfoForm.ageGroup" on-select="selectSport('ageGroup',$item._id)"
+                                        ng-disabled="setDisabled">
                                         <ui-select-match placeholder="Select age group">
                                             {{$select.selected.name}}
                                         </ui-select-match>
@@ -57,7 +60,8 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Gender</label>
-                                    <ui-select name="selectgender" theme="bootstrap" ng-model="medalInfoForm.gender" on-select="selectSport('gender',$item)">
+                                    <ui-select name="selectgender" theme="bootstrap" ng-model="medalInfoForm.gender" on-select="selectSport('gender',$item)"
+                                        ng-disabled="setDisabled">
                                         <ui-select-match placeholder="Select Gender">{{$select.selected|firstcapitalize}}</ui-select-match>
                                         <ui-select-choices repeat="item in genderList | filter: $select.search">
                                             <div>
@@ -71,7 +75,7 @@
                                 <div class="form-group">
                                     <label>Weight</label>
 
-                                    <ui-select name="weight" ng-model="formData.weight" theme="bootstrap" on-select="selectSport('weight',$item._id)">
+                                    <ui-select name="weight" ng-model="medalInfoForm.weight" theme="bootstrap" on-select="selectSport('weight',$item._id)" ng-disabled="setDisabled">
                                         <ui-select-match placeholder="Select Weight">{{$select.selected.name}}</ui-select-match>
                                         <ui-select-choices repeat="weight._id as weight in allWeights | filter: $select.search">
                                             <div>
@@ -82,7 +86,8 @@
 
                                     <div class="error-msg" ng-if="detailForm.selectfilter.$invalid && detailForm.selectfilter.$touched">Please Enter Filter*</div>
                                 </div>
-                                <div class="form-group" ng-if="showTeams">
+
+                                <div class="form-group" ng-if="showTeams && allTeams.length>0">
                                     <label>Team</label>
                                     <ui-select name="team" ng-model="medalInfoForm.team" theme="bootstrap" multiple="" on-select="getSchoolName($item)" on-remove="removeSchool($item)">
                                         <ui-select-match placeholder="Select teams">{{$select.selected[$index].fullName}}</ui-select-match>
@@ -95,7 +100,7 @@
 
                                     <div class="error-msg" ng-if="detailForm.team.$invalid && detailForm.team.$touched">Please Enter Filter*</div>
                                 </div>
-                                <div class="form-group" ng-if="showAthletes">
+                                <div class="form-group" ng-if="showAthletes && allAtheletes.length>0">
                                     <label>player</label>
 
 
@@ -111,7 +116,7 @@
 
                                     <div class="error-msg" ng-if="detailForm.player.$invalid && detailForm.player.$touched">Please Enter Filter*</div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" ng-if="medalInfoForm.player.length>0|| medalInfoForm.team.length>0">
                                     <div class="viewStudent">
                                         <label>School</label>
                                         <ui-select disabled multiple theme="bootstrap" ng-model="medalInfoForm.school">
@@ -127,7 +132,7 @@
                                 </div>
 
                                 <div class="text-center mt20 odd-even-button">
-                                    <button class="btn btn-default" type="submit" ng-click="saveData(medalInfoForm)">Save</button>
+                                    <button class="btn btn-default" type="submit" ng-click="saveData(medalInfoForm)" ng-disabled="sportAdded || disableSave">Save</button>
                                     <button class="btn btn-default" ng-click="onCancel('medals')">Cancel</button>
                                 </div>
                             </div>
