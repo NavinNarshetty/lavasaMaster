@@ -937,19 +937,22 @@ var model = {
                     if (index != -1) {
                         sendObj.roundsList = _.slice(matchData2, index, index + 3);
                         finalData.knockout = sendObj;
+                        console.log("Final Data", finalData);
                         callback(null, finalData);
                     } else {
                         finalData.knockout = sendObj;
+                        console.log("Final Data else 0", finalData);
                         callback(null, finalData);
                     }
 
                 } else {
                     finalData.knockout = sendObj;
+                    console.log("Final Data else", finalData);
                     callback(null, finalData);
                 }
             }
         ], function (err, result) {
-            console.log("Final Callback");
+            console.log("Final Callback", result);
             if (err) {
                 callback(err, null);
             } else {
