@@ -11,6 +11,17 @@ var controller = {
         }
     },
 
+    getAllTeam: function (req, res) {
+        if (req.body) {
+            OldHeat.getAllTeam(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
     saveHeatMatch: function (req, res) {
         if (req.body) {
             async.waterfall([

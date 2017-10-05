@@ -335,6 +335,158 @@ var model = {
                 callback(null, finalData);
             }
         });
-    }
+    },
+    //-----------------------------------For Team Sport-------------------------------------
+    getKnockoutTeam1AggregatePipeLine: function (data) {
+
+        var pipeline = [{
+                $match: {
+                    "participantType": "team",
+                    "year": data.year
+                }
+            },
+            // Stage 2
+            {
+                $group: {
+                    _id: "$team1",
+                    sport: {
+                        $addToSet: "$sport"
+                    }
+                }
+            },
+
+
+        ];
+        return pipeline;
+    },
+
+    getAllTeam1: function (data, callback) {
+        var individualSport = {};
+        async.waterfall([
+            function (callback) {
+                var pipeLine = OldKnockout.getKnockoutTeam1AggregatePipeLine(data);
+                OldKnockout.aggregate(pipeLine, function (err, complete) {
+                    if (err) {
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, complete);
+                        } else {
+                            callback(null, complete);
+                        }
+                    }
+                });
+            },
+            function (complete, callback) {
+                console.log("complete 1", complete);
+                OldKnockout.saveInTeam(complete, function (err, saveData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(saveData)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, saveData);
+                        }
+                    }
+                });
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
+    getKnockoutTeam2AggregatePipeLine: function (data) {
+
+        var pipeline = [{
+                $match: {
+                    "participantType": "team",
+                    "year": data.year
+                }
+            },
+            // Stage 2
+            {
+                $group: {
+                    _id: "$team2",
+                    sport: {
+                        $addToSet: "$sport"
+                    }
+                }
+            },
+
+
+        ];
+        return pipeline;
+    },
+
+    getAllTeam2: function (data, callback) {
+        var individualSport = {};
+        async.waterfall([
+            function (callback) {
+                var pipeLine = OldKnockout.getKnockoutTeam2AggregatePipeLine(data);
+                OldKnockout.aggregate(pipeLine, function (err, complete) {
+                    if (err) {
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, complete);
+                        } else {
+                            callback(null, complete);
+                        }
+                    }
+                });
+            },
+            function (complete, callback) {
+                OldKnockout.saveInTeam(complete, function (err, saveData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(saveData)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, saveData);
+                        }
+                    }
+                });
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
+    saveInTeam: function (complete, callback) {
+        async.concatSeries(complete, function (mainData, callback) {
+            var i = 0;
+            var team = {};
+            team.team = mainData._id;
+            team.sport = mainData.sport[0];
+            OldTeam.getAllTeam(team, function (err, teamData) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(teamData)) {
+                    callback(null, []);
+                } else {
+                    callback(null, teamData);
+                }
+            });
+
+        }, function (err, finalData) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, finalData);
+            }
+        });
+    },
+
+
 };
 module.exports = _.assign(module.exports, exports, model);

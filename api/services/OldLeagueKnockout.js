@@ -168,5 +168,84 @@ var model = {
         });
     },
 
+    getAllTeam1: function (data, callback) {
+        var individualSport = {};
+        async.waterfall([
+            function (callback) {
+                var pipeLine = OldKnockout.getKnockoutTeam1AggregatePipeLine(data);
+                OldKnockout.aggregate(pipeLine, function (err, complete) {
+                    if (err) {
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, complete);
+                        } else {
+                            callback(null, complete);
+                        }
+                    }
+                });
+            },
+            function (complete, callback) {
+                console.log("complete 1", complete);
+                OldKnockout.saveInTeam(complete, function (err, saveData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(saveData)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, saveData);
+                        }
+                    }
+                });
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
+    getAllTeam2: function (data, callback) {
+        var individualSport = {};
+        async.waterfall([
+            function (callback) {
+                var pipeLine = OldKnockout.getKnockoutTeam2AggregatePipeLine(data);
+                OldKnockout.aggregate(pipeLine, function (err, complete) {
+                    if (err) {
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, complete);
+                        } else {
+                            callback(null, complete);
+                        }
+                    }
+                });
+            },
+            function (complete, callback) {
+                OldKnockout.saveInTeam(complete, function (err, saveData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(saveData)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, saveData);
+                        }
+                    }
+                });
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
 };
 module.exports = _.assign(module.exports, exports, model);

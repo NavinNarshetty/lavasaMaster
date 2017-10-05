@@ -237,6 +237,101 @@ var model = {
         });
     },
 
+    getHeatTeamAggregatePipeLine: function (data) {
+
+        var pipeline = [{
+                $match: {
+                    "participantType": "team",
+                    "year": data.year
+                }
+            },
+            // Stage 2
+            {
+                $group: {
+                    _id: "$heats.team",
+                    sport: {
+                        $addToSet: "$sport"
+                    }
+                }
+            },
+
+
+        ];
+        return pipeline;
+    },
+
+    getAllTeam: function (data, callback) {
+        var individualSport = {};
+        async.waterfall([
+            function (callback) {
+                var pipeLine = OldHeat.getHeatTeamAggregatePipeLine(data);
+                OldHeat.aggregate(pipeLine, function (err, complete) {
+                    if (err) {
+                        callback(err, "error in mongoose");
+                    } else {
+                        if (_.isEmpty(complete)) {
+                            callback(null, complete);
+                        } else {
+                            callback(null, complete);
+                        }
+                    }
+                });
+            },
+            function (complete, callback) {
+                OldHeat.saveInTeam(complete, function (err, saveData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(saveData)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, saveData);
+                        }
+                    }
+                });
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
+    saveInTeam: function (complete, callback) {
+        async.concatSeries(complete, function (mainData, callback) {
+            var i = 0;
+            async.concatSeries(mainData._id, function (singleData, callback) {
+                var team = {};
+                team.team = singleData;
+                team.sport = mainData.sport[0];
+                OldTeam.getAllTeam(team, function (err, teamData) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(teamData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, teamData);
+                    }
+                });
+
+            }, function (err, finalData) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, finalData);
+                }
+            });
+        }, function (err, finalData) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, finalData);
+            }
+        });
+    },
+
     //---------------------------------Match--------------------------------
 
     saveHeatMatchIndividual: function (data, callback) {

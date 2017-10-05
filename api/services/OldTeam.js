@@ -18,11 +18,7 @@ var model = {
         async.waterfall([
                 function (callback) {
                     OldTeam.find({
-                        year: data.year,
-                        players: {
-                            $exists: true
-                        },
-                        $where: 'this.players.length>=1'
+                        _id: data.team
                     }).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);
@@ -33,113 +29,63 @@ var model = {
                 },
                 function (found, callback) {
                     console.log("count", found.length);
-                    async.eachLimit(found, 20, function (sportData, callback) {
+                    async.concatSeries(found, function (sportData, callback) {
                             var team = {};
+                            team.sport = data.sport;
                             team.athleteTeam = [];
                             async.waterfall([
                                     function (callback) {
-                                        var sportParam = {};
-                                        sportParam.sportslist = sportData.sport;
-                                        sportParam.age = sportData.agegroup;
-                                        if (sportData.gender == "Boys") {
-                                            sportParam.gender = "male";
-                                        } else {
-                                            sportParam.gender = "female";
-                                        }
-                                        sportParam.weight = undefined;
-                                        OldTeam.getSportId(sportParam, function (err, sport) {
+                                        async.eachSeries(sportData.players, function (player, callback) {
+                                                var playerData = {};
+                                                playerData.athlete = player;
+                                                OldTeam.getAthleteId(playerData, sportData, function (err, sport) {
+                                                    if (err) {
+                                                        callback(err, null);
+                                                    } else {
+                                                        if (_.isEmpty(sport)) {
+                                                            callback(null, []);
+                                                        } else {
+                                                            team.id = sportData._id;
+                                                            var studentTeam = {};
+                                                            studentTeam.studentId = sport._id;
+                                                            if (sport._id.equals(sportData.captain)) {
+                                                                studentTeam.isCaptain = true;
+                                                            } else {
+                                                                studentTeam.isCaptain = false;
+                                                            }
+                                                            studentTeam.isGoalKeeper = false;
+                                                            team.athleteTeam.push(studentTeam);
+                                                            team.school = sport.school;
+                                                            team.schoolName = sport.schoolName;
+                                                            team.createdBy = "School";
+                                                            team.name = sportData.name;
+                                                            team.sfaid = sportData.sfaid;
+                                                            team.oldId = sportData._id;
+                                                            callback(null, team);
+                                                        }
+                                                    }
+                                                });
+                                            },
+                                            function (err) {
+                                                callback(null, team);
+                                                if (!final.includes(team)) {
+                                                    final.push(team);
+                                                }
+                                            });
+
+                                    },
+                                    function (team, callback) {
+                                        OldTeam.teamConfirm(team, function (err, sport) {
                                             if (err) {
                                                 callback(err, null);
                                             } else {
                                                 if (_.isEmpty(sport)) {
-                                                    var err = {
-                                                        error: "no sport",
-                                                        data: sport
-                                                    }
-                                                    callback(null, err);
+                                                    callback(null, []);
                                                 } else {
-                                                    team.sport = sport.sportId;
                                                     callback(null, sportData);
                                                 }
                                             }
                                         });
-                                    },
-                                    function (sportData, callback) {
-                                        if (sportData.error) {
-                                            callback(null, sportData);
-                                        } else {
-                                            if (!_.isEmpty(sportData)) {
-                                                async.eachSeries(sportData.players, function (player, callback) {
-                                                        var playerData = {};
-                                                        playerData.athlete = player;
-                                                        OldTeam.getAthleteId(playerData, sportData, function (err, sport) {
-                                                            if (err) {
-                                                                callback(err, null);
-                                                            } else {
-                                                                if (_.isEmpty(sport)) {
-                                                                    callback(null, []);
-                                                                } else {
-                                                                    team.id = sportData._id;
-                                                                    var studentTeam = {};
-                                                                    studentTeam.studentId = sport._id;
-                                                                    if (sport._id.equals(sportData.captain)) {
-                                                                        studentTeam.isCaptain = true;
-                                                                    } else {
-                                                                        studentTeam.isCaptain = false;
-                                                                    }
-                                                                    studentTeam.isGoalKeeper = false;
-                                                                    team.athleteTeam.push(studentTeam);
-                                                                    team.school = sport.school;
-                                                                    team.schoolName = sport.schoolName;
-                                                                    team.createdBy = "School";
-                                                                    team.name = sportData.name;
-                                                                    team.sfaid = sportData.sfaid;
-                                                                    team.oldId = sportData._id;
-                                                                    callback(null, team);
-                                                                }
-                                                            }
-                                                        });
-                                                    },
-                                                    function (err) {
-                                                        callback(null, team);
-                                                        if (!final.includes(team)) {
-                                                            final.push(team);
-                                                        }
-                                                    });
-                                                // } else {
-                                                //     console.log("count", sportData.players.length);
-                                                //     var err = {
-                                                //         error: "not team",
-                                                //         data: team
-                                                //     };
-                                                //     callback(null, err);
-                                                // }
-                                            } else {
-                                                var err = {
-                                                    error: "empty",
-                                                    data: team
-                                                };
-                                                callback(null, err);
-                                            }
-                                        }
-                                    },
-                                    function (team, callback) {
-                                        if (team.error) {
-                                            // console.log("inside error", team);
-                                            callback(null, team);
-                                        } else {
-                                            OldTeam.teamConfirm(team, function (err, sport) {
-                                                if (err) {
-                                                    callback(err, null);
-                                                } else {
-                                                    if (_.isEmpty(sport)) {
-                                                        callback(null, []);
-                                                    } else {
-                                                        callback(null, sportData);
-                                                    }
-                                                }
-                                            });
-                                        }
                                     }
                                 ],
                                 function (err, found) {
@@ -310,7 +256,7 @@ var model = {
     },
 
     teamConfirm: function (data, callback) {
-        // console.log("data", data);
+        console.log("data", data);
         async.waterfall([
                 function (callback) {
                     var team = {};
@@ -336,7 +282,7 @@ var model = {
                         team.isVideoAnalysis = data.isVideoAnalysis;
                     }
                     team.oldId = data.oldId;
-                    // data.property = property[0];
+
                     callback(null, team);
                 },
                 function (team, callback) {
