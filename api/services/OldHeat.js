@@ -320,6 +320,8 @@ var model = {
                         match.heatNo = data.name.lastIndexOf(" " + 1);
                         match.incrementalId = data.matchid;
                         match.matchId = "heat";
+
+
                         callback(null, found);
                     }
                 });
@@ -337,6 +339,12 @@ var model = {
                                 callback(null, []);
                             } else {
                                 console.log("inside push", individualData);
+                                var players = [];
+                                var player = {};
+                                player.id = individualData[0]._id;
+                                players.push(player);
+                                match.resultHeat = {};
+                                match.resultHeat.players = players;
                                 match.opponentsSingle.push(individualData[0]._id);
                                 callback(null, individualData);
                             }

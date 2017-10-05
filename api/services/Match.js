@@ -5375,6 +5375,7 @@ var model = {
                                                     result.players.push(player);
                                                 }
                                                 paramData.sport = n.success.SPORT;
+                                                paramData.heatNo = n.success["HEAT NUMBER"];
                                                 paramData.scheduleDate = moment(n.success.DATE).format();
                                                 paramData.scheduleTime = n.success.TIME;
                                                 if (!_.isEmpty(result)) {
