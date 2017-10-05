@@ -4474,10 +4474,10 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                         console.log(data, "In Edit Function");
                         if (data.data.value) {
                             if (data.data.data.allow === false) {
-                                $scope.sportAdded = true;
+                                $scope.disableSave = true;
                                 toastr.error('This sport has already been added', 'Error Message');
                             } else {
-                                $scope.sportAdded = false;
+                                $scope.disableSave = false;
                             }
                             if (data.data.data.teams && data.data.data.teams.length > 0) {
                                 $scope.showTeams = true;
@@ -4679,16 +4679,11 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                         console.log("dataaaaaaa", data.data);
                         if (data.data.data === 'No Data Found') {
                             $scope.disableSave = true;
-                            console.log(" $scope.sportAdded");
-                        } else {
-                            $scope.disableSave = false;
                         }
 
                         if (data.data.data.allow === false) {
-                            $scope.sportAdded = true;
+                            $scope.disableSave = true;
                             toastr.error('This sport has already been added', 'Error Message');
-                        } else {
-                            $scope.sportAdded = false;
                         }
 
                         if (data.data.data.teams && data.data.data.teams.length > 0) {
