@@ -73,6 +73,7 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
               if (allData.data.qualifying != undefined && allData.data.qualifying.roundsList.length > 0) {
                 $scope.qualifying = allData.data.qualifying.roundsList;
               }
+              console.log("$scope.qualifying", $scope.qualifying);
               if (allData.data.knockout.roundsList.length > 0) {
                 $scope.knockout = allData.data.knockout.roundsList;
                 $scope.knockout = $scope.knockout.reverse();
@@ -88,6 +89,11 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
                   $scope.knockoutArr.push(data.match);
                 });
                 $scope.knockout = _.flattenDeep($scope.knockoutArr);
+
+
+              }
+
+              if ($scope.qualifying[0].match.length > 0) {
                 _.each($scope.qualifying, function (data, index) {
                   _.each(data.match, function (key) {
                     _.each(key.opponentsSingle, function (obj) {
@@ -96,6 +102,9 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
                   });
                 });
               }
+
+
+
             }
           } else {
             toastr.error(allData.message, 'Error Message');
@@ -105,6 +114,7 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
     }
   };
   $scope.getSportSpecificRounds();
+  console.log("immmmmmmmmmmmmmmmmmmmmmmmmmm");
 
   //show more data
   $scope.limitKnockout = 8;
