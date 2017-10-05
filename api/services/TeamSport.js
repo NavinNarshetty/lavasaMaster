@@ -41,7 +41,11 @@ var schema = new Schema({
     nominatedContactDetails: String,
     nominatedEmailId: String,
     isVideoAnalysis: Boolean,
-    oldId: String,
+    oldId: {
+        type: Schema.Types.ObjectId,
+        ref: 'OldTeam',
+        index: true
+    },
 });
 
 schema.plugin(deepPopulate, {});
@@ -277,10 +281,10 @@ var model = {
                                 var teamid = "M" + "T" + year + 1;
                                 callback(null, teamid);
                             } else {
-                                console.log("autoID", team.autoID);
+                                // console.log("autoID", team.autoID);
                                 var year = new Date().getFullYear().toString().substr(2, 2);
                                 var teamid = "M" + "T" + year + ++team.autoID;
-                                console.log("teamid", teamid);
+                                // console.log("teamid", teamid);
                                 callback(null, teamid);
                             }
                         });
@@ -291,7 +295,7 @@ var model = {
                     if (data.sfaid) {
                         TeamSport.saveData(data, function (err, teamData) {
                             if (err) {
-                                console.log("err", err);
+                                // console.log("err", err);
                                 callback("There was an error ", null);
                             } else {
                                 if (_.isEmpty(teamData)) {
@@ -358,7 +362,7 @@ var model = {
                             } else if (_.isEmpty(found)) {
                                 callback(null, "Data is empty");
                             } else {
-                                console.log(" found athlete");
+                                // console.log(" found athlete");
                                 var athleteInfo = {};
                                 athleteInfo.srno = ++i;
                                 if (found.middleName) {
@@ -379,7 +383,7 @@ var model = {
                 ],
                 function (err, atheleteName) {
                     if (err) {
-                        console.log(err);
+                        // console.log(err);
                         callback(null, []);
                     } else if (atheleteName) {
                         if (_.isEmpty(atheleteName)) {
@@ -391,10 +395,10 @@ var model = {
                 });
         }, function (err) {
             if (err) {
-                console.log(err);
+                // console.log(err);
                 callback(err, null);
             } else {
-                console.log("array", atheleteName);
+                // console.log("array", atheleteName);
                 callback(null, atheleteName);
             }
         });

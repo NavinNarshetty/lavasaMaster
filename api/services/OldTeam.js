@@ -14,6 +14,7 @@ var model = {
 
     getAllTeam: function (data, callback) {
         var final = [];
+        // callback(null, data);
         async.waterfall([
                 function (callback) {
                     OldTeam.find({
@@ -21,7 +22,7 @@ var model = {
                         players: {
                             $exists: true
                         },
-                        $where: 'this.players.length>1'
+                        $where: 'this.players.length>=1'
                     }).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);
@@ -31,7 +32,8 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    async.eachLimit(found, 10, function (sportData, callback) {
+                    console.log("count", found.length);
+                    async.eachLimit(found, 20, function (sportData, callback) {
                             var team = {};
                             team.athleteTeam = [];
                             async.waterfall([
@@ -123,7 +125,7 @@ var model = {
                                     },
                                     function (team, callback) {
                                         if (team.error) {
-                                            console.log("inside error", team);
+                                            // console.log("inside error", team);
                                             callback(null, team);
                                         } else {
                                             OldTeam.teamConfirm(team, function (err, sport) {
@@ -151,7 +153,7 @@ var model = {
                                     }
                                 });
                         },
-                        function (err) {
+                        function (err, final) {
                             callback(null, final);
                         });
                 },
@@ -308,7 +310,7 @@ var model = {
     },
 
     teamConfirm: function (data, callback) {
-        console.log("data", data);
+        // console.log("data", data);
         async.waterfall([
                 function (callback) {
                     var team = {};
@@ -374,7 +376,7 @@ var model = {
             ],
             function (err, data2) {
                 if (err) {
-                    console.log(err);
+                    // console.log(err);
                     callback(null, []);
                 } else if (data2) {
                     if (_.isEmpty(data2)) {
@@ -400,7 +402,7 @@ var model = {
                         if (err) {
                             callback(err, null);
                         } else {
-                            console.log("found", found);
+                            // console.log("found", found);
                             callback(null, found);
                         }
                     });

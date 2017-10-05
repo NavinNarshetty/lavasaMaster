@@ -239,7 +239,7 @@ var model = {
 
     //---------------------------------Match--------------------------------
 
-    saveHeatMatch: function (data, callback) {
+    saveHeatMatchIndividual: function (data, callback) {
         async.waterfall([
             function (callback) {
                 OldHeat.find({
@@ -320,8 +320,6 @@ var model = {
                         match.heatNo = data.name.lastIndexOf(" " + 1);
                         match.incrementalId = data.matchid;
                         match.matchId = "heat";
-
-
                         callback(null, found);
                     }
                 });
@@ -438,6 +436,152 @@ var model = {
                     callback(null, results);
                 }
             });
+    },
+
+    saveHeatMatchTeam: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                OldHeat.find({
+                    participantType: "team",
+                    year: data.year
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                var complete = _.groupBy(found, "sport");
+                async.concatSeries(complete, function (mainData, callback) {
+                    async.concatSeries(mainData, function (singleData, callback) {
+                        OldHeat.getMatchDetailsTeam(singleData, function (err, matchData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(matchData)) {
+                                    var err = {
+                                        error: "no matchData",
+                                        data: matchData
+                                    }
+                                    callback(null, err);
+                                } else {
+                                    callback(null, matchData);
+                                }
+                            }
+                        });
+                    }, function (err, finalData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, finalData);
+                        }
+                    });
+                }, function (err, finalData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, finalData);
+                    }
+                });
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
+    getMatchDetailsTeam: function (data, callback) {
+        var match = {};
+        match.opponentsSingle = [];
+        match.opponentsTeam = [];
+        async.waterfall([
+            function (callback) {
+                Sport.find({
+                    oldId: data.sport
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, []);
+                    } else {
+                        console.log("sport", found);
+                        match.sport = found[0]._id;
+                        match.scheduleDate = data.date;
+                        var round = data.round.toLowerCase();
+                        match.round = data.name;
+                        match.heatNo = data.name.lastIndexOf(" " + 1);
+                        match.incrementalId = data.matchid;
+                        match.matchId = "heat";
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                console.log("heats", data.heats);
+                async.eachSeries(data.heats, function (n, callback) {
+                    if (found[0]) {
+                        TeamSport.find({
+                            oldId: n.team
+                        }).lean().exec(function (err, individualData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(individualData)) {
+                                console.log("empty");
+                                callback(null, []);
+                            } else {
+                                console.log("inside push", individualData);
+                                var players = [];
+                                var player = {};
+                                player.id = individualData[0]._id;
+                                players.push(player);
+                                match.resultHeat = {};
+                                match.resultHeat.players = players;
+                                match.opponentsTeam.push(individualData[0]._id);
+                                callback(null, individualData);
+                            }
+                        });
+                    } else {
+                        callback(null, found);
+                    }
+                }, function (err) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                OldHeat.saveMatch(match, function (err, matchData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(matchData)) {
+                            var err = {
+                                error: "no matchData",
+                                data: matchData
+                            }
+                            callback(null, err);
+                        } else {
+                            callback(null, matchData);
+                        }
+                    }
+                });
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
     },
 };
 module.exports = _.assign(module.exports, exports, model);
