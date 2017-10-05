@@ -825,7 +825,7 @@ var model = {
         var finalData = {};
         var matchData1 = [];
         var matchData2 = [];
-        console.log('request sent',data);
+        console.log('request sent', data);
         async.waterfall([
             function (callback) {
                 var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
@@ -903,6 +903,7 @@ var model = {
                             callback(null, []);
                         } else {
                             finalData.qualifying = sendObj;
+                            console.log("finalData qualifying", finalData);
                             var matches = _.groupBy(found, 'round');
                             callback(null, matches);
                         }
