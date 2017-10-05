@@ -825,6 +825,7 @@ var model = {
         var finalData = {};
         var matchData1 = [];
         var matchData2 = [];
+        console.log('request sent', data);
         async.waterfall([
             function (callback) {
                 var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
@@ -834,19 +835,24 @@ var model = {
                 }).lean().deepPopulate(deepSearch).sort({
                     createdAt: 1
                 }).exec(function (err, found) {
+                    console.log('enter find ====', found);
                     if (err) {
                         callback(err, null);
                     } else {
                         if (_.isEmpty(found)) {
+                            console.log('enter empty');
                             callback(null, []);
                         } else {
+                            console.log('enter found =====', found);
                             var matches = _.groupBy(found, 'round');
+                            console.log('grouped matches =====', matches);
                             callback(null, matches);
                         }
                     }
                 });
             },
             function (matches, callback) {
+                console.log('sent matches =====', matches);
                 var i = 0;
                 var dummy = [];
                 var arr = _.keys(matches);
@@ -862,6 +868,7 @@ var model = {
                     i++;
                 }
                 var sendObj = {};
+                console.log("matchData1", matchData1);
                 sendObj.roundsListName = _.keys(matches);
                 sendObj.roundsList = matchData1;
                 console.log("sendObj", sendObj);
@@ -893,9 +900,11 @@ var model = {
                         callback(err, null);
                     } else {
                         if (_.isEmpty(found)) {
+                            finalData.qualifying = sendObj;
                             callback(null, []);
                         } else {
                             finalData.qualifying = sendObj;
+                            console.log("finalData qualifying", finalData);
                             var matches = _.groupBy(found, 'round');
                             callback(null, matches);
                         }
@@ -929,19 +938,22 @@ var model = {
                     if (index != -1) {
                         sendObj.roundsList = _.slice(matchData2, index, index + 3);
                         finalData.knockout = sendObj;
+                        console.log("Final Data", finalData);
                         callback(null, finalData);
                     } else {
                         finalData.knockout = sendObj;
+                        console.log("Final Data else 0", finalData);
                         callback(null, finalData);
                     }
 
                 } else {
                     finalData.knockout = sendObj;
+                    console.log("Final Data else", finalData);
                     callback(null, finalData);
                 }
             }
         ], function (err, result) {
-            console.log("Final Callback");
+            console.log("Final Callback", result);
             if (err) {
                 callback(err, null);
             } else {
