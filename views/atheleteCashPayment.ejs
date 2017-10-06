@@ -109,47 +109,90 @@
                     <div style="padding: 0px 50px; font-family: TitilliumWeb-Regular;font-size: 17px;">
                         <p> Dear
                             <%=name%>,</p>
+
+                        <p style="font-family:TitilliumWeb-Bold;">Thank you for submitting your application for SFA
+                            <%=city%>
+                                <%=eventYear%>.</p>
+                        <p>You have selected the 'Cash/Cheque /Demand Draft' Option. Kindly courier/hand deliver the Cash/Cheque/Demand
+                            Draft of Rs.
+                            <%=athleteAmount%>/- within 3 working days.</p>
+
+
+                        <p>Kindly Note: <span style="font-family:TitilliumWeb-Bold;">PARTICIPATION WILL BE CONFIRMED ONLY WHEN THE PAYMENT HAS BEEN RECEIVED BY SFA.</span></p>
+
+                        <p>Payment Address:</p>
+                        <%if(infoId == 'info@sfanow.in'){%>
+                            <p>1306, Panchratna Building, <br> Opera House,<br> Mumbai 400004
+                                <br>(Next to Roxy Cinema)
+                            </p>
+                            <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                <p>C/O Wizcraft International Entertainment Pvt. Ltd.,<br> 1st Floor,Advant Delta,<br> Plot
+                                    No. 4,Kavuri Hills,Phase 1,<br> Jubilee Hills Road,Hyderabad - 500081.
+
+                                </p>
+                                <p>(Head Office: SFA Events Pvt. Ltd., <br>Panchratna Building,Opera House,Mumbai - 400004)</p>
+                                <%}%>
+
+                                    <p>In favour of:
+                                        <%=ddFavour%>,</p>
+
+                                    <p>You will receive your SFA ID and Password within 2 working days on your registered email
+                                        address, after successful verification of documents. Using your SFA ID and Password,
+                                        you can register for the sport(s) of your choice.</p>
+                                    <p>Stay updated with the draws & schedules, workshops, exhibition matches, special days
+                                        and all other announcements with regards to SFA
+                                        <%=city%>
+                                            <%=eventYear%>, by following us on Facebook: <a href="https://www.facebook.com/sportsforallnow/"
+                                                    target="_new" style="color:#000;text-decoration: none;">@sportsforallnow</a>                                                | Twitter: <a href="https://twitter.com/sfanow" target="_new" style="color:#000;text-decoration: none;">@sfanow</a>                                                | Instagram: <a href="https://www.instagram.com/sfanow/" target="_new" style="color:#000;text-decoration: none;">@sfanow</a></p>
+                                    <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>
+                    </div>
+                </td>
+                <!-- <td>
+                    <div style="padding: 0px 50px; font-family: TitilliumWeb-Regular;font-size: 17px;">
+                        <p> Dear
+                            <%=name%>,</p>
                         <p style="font-family:TitilliumWeb-Bold;">Thank you for submitting your application for SFA
                             <%=city%>
                                 <%=eventYear%>.</p>
                         <p>You have selected the 'Cash/Cheque/Demand Draft Option.<br> To complete the registration process
                             kindly courier/hand deliver<br>Cash/Cheque/Demand Draft of <i class="fa fa-inr" aria-hidden="true"></i>
                             <%=athleteAmount%>/- (Inclusive of all applicable taxes) in favour of <span style="font-family:TitilliumWeb-Bold;">'SFA Events Private Limited'</span>within
-                                10 working days with Athlete Name and Contact No to:
-                        </p><br>
-                        <%if(infoId == 'info@sfanow.in'){%>
-                            <p><span style="font-family:TitilliumWeb-Bold;"> SFA Events Private Limited,</span>
-                                <br>1306, Panchratna Building, <br> Opera House,<br> Mumbai 400004
-                                <br>(Next to Roxy Cinema)
-                            </p>
-                            <%} else if(infoId == 'info.hyd@sfanow.in'){%>
-                                <p><span style="font-family:TitilliumWeb-Bold;"> SFA Events Private Limited,</span><br> C/O
-                                    Wizcraft International Entertainment Pvt. Ltd.,<br> 1st Floor,Advant Delta,<br> Plot
-                                    No. 4,Kavuri Hills,Phase 1,<br> Jubilee Hills Road,Hyderabad - 500081.
-
-                                </p>
-                                <br>
-                                <p>(Head Office: SFA Events Pvt. Ltd., <br>Panchratna Building,Opera House,Mumbai - 400004)</p>
-                                <%}%>
-                                    <br>
-                                    <p>You will receive an email confirming the status <br>of your registration within 2 working
-                                        days on receipt of payment.</p>
-                                    <br>
-                                    <p> If you do not receive an email from us within the stipulated time
-                                        <br> please call us on <span style="font-family:TitilliumWeb-Bold;"><%=infoNo%></span>                                        or
-                                        <br> email us at <span style="font-family:TitilliumWeb-Bold;"><%=infoId%></span>
+                                    10 working days with Athlete Name and Contact No to:
+                                </p><br>
+                                <%if(infoId == 'info@sfanow.in'){%>
+                                    <p><span style="font-family:TitilliumWeb-Bold;"> SFA Events Private Limited,</span>
+                                        <br>1306, Panchratna Building, <br> Opera House,<br> Mumbai 400004
+                                        <br>(Next to Roxy Cinema)
                                     </p>
-                                    <br>
-                                    <p>Stay updated with the draws & schedules, workshops, exhibition matches, special days
-                                        and all other announcements with regards to SFA
-                                        <%=city%>
-                                            <%=eventYear%>, by following us on Facebook: <a href="https://www.facebook.com/sportsforallnow/"
-                                                    target="_new" style="color:#000;text-decoration: none;">@sportsforallnow</a>                                                | Twitter: <a href="https://twitter.com/sfanow" target="_new" style="color:#000;text-decoration: none;">@sfanow</a>                                                | Instagram: <a href="https://www.instagram.com/sfanow/" target="_new" style="color:#000;text-decoration: none;">@sfanow</a></p>
-                                    <br>
-                                    <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>
+                                    <%} else if(infoId == 'info.hyd@sfanow.in'){%>
+                                        <p><span style="font-family:TitilliumWeb-Bold;"> SFA Events Private Limited,</span><br>                                            C/O Wizcraft International Entertainment Pvt. Ltd.,<br> 1st Floor,Advant Delta,<br>                                            Plot No. 4,Kavuri Hills,Phase 1,<br> Jubilee Hills Road,Hyderabad - 500081.
+
+                                        </p>
+                                        <br>
+                                        <p>(Head Office: SFA Events Pvt. Ltd., <br>Panchratna Building,Opera House,Mumbai -
+                                            400004)
+                                        </p>
+                                        <%}%>
+                                            <br>
+                                            <p>You will receive an email confirming the status <br>of your registration within
+                                                2 working days on receipt of payment.</p>
+                                            <br>
+                                            <p> If you do not receive an email from us within the stipulated time
+                                                <br> please call us on <span style="font-family:TitilliumWeb-Bold;"><%=infoNo%></span>                                                or
+                                                <br> email us at <span style="font-family:TitilliumWeb-Bold;"><%=infoId%></span>
+                                            </p>
+                                            <br>
+                                            <p>Stay updated with the draws & schedules, workshops, exhibition matches, special
+                                                days and all other announcements with regards to SFA
+                                                <%=city%>
+                                                    <%=eventYear%>, by following us on Facebook: <a href="https://www.facebook.com/sportsforallnow/"
+                                                            target="_new" style="color:#000;text-decoration: none;">@sportsforallnow</a>                                                        | Twitter: <a href="https://twitter.com/sfanow" target="_new" style="color:#000;text-decoration: none;">@sfanow</a>                                                        | Instagram: <a href="https://www.instagram.com/sfanow/" target="_new"
+                                                            style="color:#000;text-decoration: none;">@sfanow</a></p>
+                                            <br>
+                                            <p style="font-family:TitilliumWeb-Bold;">Regards,<br>Team SFA</p>
 
                     </div>
-                </td>
+                </td> -->
             </tr>
         </tbody>
         <tfoot>
