@@ -310,23 +310,39 @@ var model = {
 
             //find medals for all sport and generate pdf for each
             function (athleteDetails, callback) {
+
                 async.waterfall([
                     function (callback) {
                         ConfigProperty.find().lean().exec(function (err, property) {
                             if (err) {
                                 callback(err, null);
                             } else if (!_.isEmpty(property)) {
-
+                                pdfObj.sfaCity = property[0].sfaCity;
+                                pdfObj.institutionType = property[0].institutionType;
+                                pdfObj.year = property[0].year;
+                                callback(null, property);
                             } else {
                                 callback(null, property);
                             }
-
                         });
                     },
-                    function(){
 
+                    //get banner image for pdf
+                    function (property, callback) {
+                        CertificateBanner.find().lean().exec(function (err, banners) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (!_.isEmpty(banners)) {
+                                var banner = _.filter(banners, ['city', property[0].sfaCity]);
+                                pdfObj.bannerImage = "http://localhost:1337/api/upload/readFile?file=" + banner[0].banner;
+                                callback(null, property);
+                            } else {
+                                callback("Banner Not Found", null);
+                            }
+                        });
                     },
-                    function () {
+
+                    function (property, callback) {
                         async.concatLimit(athleteDetails.regSports, 10, function (regSport, seriesCallback) {
 
                             async.waterfall([
@@ -336,7 +352,7 @@ var model = {
                                     var matchObj = {
                                         "_id": regSport.sport
                                     };
-                                    Sport.findOne(matchObj).deepPopulate("sportslist ageGroup weight").lean().exec(function (err, sport) {
+                                    Sport.findOne(matchObj).deepPopulate("sportslist sportslist.sportsListSubCategory ageGroup weight").lean().exec(function (err, sport) {
                                         if (err) {
                                             seriesCallback(err, null);
                                         } else if (!_.isEmpty(sport)) {
@@ -347,6 +363,32 @@ var model = {
                                             });
                                         }
                                     });
+                                },
+
+                                //get footer image
+                                function (sport, callback) {
+                                    console.log(sport);
+                                    if (!sport.notFound) {
+                                        var certificateDetailsObj = {
+                                            "city": property[0].sfaCity,
+                                            "institutionType": property[0].institutionType,
+                                            "sportsListSubCategory": sport.sportslist.sportsListSubCategory._id
+                                        }
+                                        CertificateDetails.find(certificateDetailsObj).lean().exec(function (err, detail) {
+                                            console.log("--------------",certificateDetailsObj,detail);
+                                            if(err){
+                                                callback(err,null);
+                                            }else if(!_.isEmpty(detail)){
+                                                sport.footerImage="http://localhost:1337/api/upload/readFile?file=" + detail[0].banner;
+                                                callback(null,sport);
+                                            }else{
+                                                callback(null,sport);
+                                            }
+                                        });
+                                    } else {
+                                        callback(null, sport);
+                                    }
+
                                 },
 
                                 // find medals
@@ -375,20 +417,29 @@ var model = {
 
                                 //make pdfObj which will get used in certificate.ejs
                                 function (sport, callback) {
+                                    console.log("sport",sport);
                                     pdfObj.sportObj = sport;
+                                    var basePath="https://storage.googleapis.com/sfacertificate/"
+                                    if (pdfObj.sportObj.medalType == 'gold') {
+                                        pdfObj.sportObj.heading = basePath + "Gold.png";
+                                    } else if (pdfObj.sportObj.medalType == 'silver') {
+                                        pdfObj.sportObj.heading = basePath + "Silver.png";
+                                    } else if (pdfObj.sportObj.medalType == 'bronze') {
+                                        pdfObj.sportObj.heading = basePath + "Bronze.png";
+                                    } else {
+                                        pdfObj.sportObj.heading = basePath + "Participation.png";
+                                    }
+                                    // finalCallback(null, pdfObj);
                                     callback(null, pdfObj, sport);
                                 },
 
                                 //generatePdf
                                 function (pdfObj, sport, callback) {
-                                    console.log("pdfObj", pdfObj);
                                     if (!pdfObj.sportObj.notFound) {
                                         Config.generatePdf(pdfObj, function (err, pdfRespo) {
                                             if (err) {
-                                                console.log(err);
                                                 callback(null, err);
                                             } else if (pdfRespo) {
-                                                console.log("resonse:", pdfRespo);
                                                 sport.pdfname = pdfRespo;
                                                 callback(null, sport);
                                             } else {
@@ -401,8 +452,6 @@ var model = {
                                 },
 
                                 function (sportObj, callback) {
-                                    console.log('sportObj', sportObj);
-
                                     seriesCallback(null, sportObj);
                                     // callback(null, sportObj);
                                 }
@@ -416,7 +465,7 @@ var model = {
                         });
                     }
                 ], function (err, result) {
-
+                    callback(null, result);
                 });
 
             }

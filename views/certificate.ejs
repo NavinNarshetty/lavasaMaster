@@ -331,7 +331,7 @@
                 <tr>
                     <th>
                         <div class="header-img">
-                            <img src="assets/1.png" alt="" class="w36">
+                            <img src="<%=data.bannerImage%>" alt="" class="w36">
                         </div>
                     </th>
                 </tr>
@@ -343,7 +343,7 @@
                             <div class="fr-sec">
                                 <div class="">
                                     <div class="header-img">
-                                        <img src="assets/Gold.png" alt="" class="w70">
+                                        <img src="<%=data.sportObj.heading%>" alt="" class="w70">
                                     </div>
                                 </div>
                             </div>
@@ -404,8 +404,7 @@
                                 <span class="form-control text-center font-os f-20" style="color:#232d69"><%=data.sportObj.medalType%></span>
                                
                                 <label class="color-blue f-20 font-os" style="color:#232d69">in</label> <label class="font-os f-20"
-                                    style="color:#232d69"><%=data.sportObj.sportslist.name%></label>
-                              
+                                    style="color:#232d69"><%=data.sportObj.sportslist.sportsListSubCategory.name%></label>
                             </div>
 
                         </div>
@@ -423,7 +422,7 @@
                         <div class="footer-img">
                             <div class="footer-c" style="width: 560px; height: 168px;">
 
-                                <img src="assets/21.png" alt="" class="width100">
+                                <img src="<%=data.sportObj.footerImage%>" alt="" class="width100">
                                 
                             </div>
                         </div>
