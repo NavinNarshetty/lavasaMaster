@@ -397,6 +397,7 @@ var model = {
         var match = {};
         match.opponentsSingle = [];
         match.opponentsTeam = [];
+        var players = [];
         async.waterfall([
             function (callback) {
                 Sport.find({
@@ -412,7 +413,7 @@ var model = {
                         match.scheduleDate = data.date;
                         var round = data.round.toLowerCase();
                         match.round = data.name;
-                        match.heatNo = data.name.lastIndexOf(" " + 1);
+                        // match.heatNo = data.name.lastIndexOf(" " + 1);
                         match.incrementalId = data.matchid;
                         match.matchId = "heat";
                         callback(null, found);
@@ -429,15 +430,18 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(individualData)) {
+                                var player = {};
+                                players.push(player);
+                                match.resultHeat = {};
                                 callback(null, []);
                             } else {
                                 console.log("inside push", individualData);
-                                var players = [];
+                                // var players = [];
                                 var player = {};
                                 player.id = individualData[0]._id;
                                 players.push(player);
                                 match.resultHeat = {};
-                                match.resultHeat.players = players;
+
                                 match.opponentsSingle.push(individualData[0]._id);
                                 callback(null, individualData);
                             }
@@ -449,6 +453,10 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else {
+                        if (!_.isEmpty(players)) {
+                            match.resultHeat.players = players;
+                            players = [];
+                        }
                         callback(null, found);
                     }
                 });
@@ -611,7 +619,6 @@ var model = {
                         match.scheduleDate = data.date;
                         var round = data.round.toLowerCase();
                         match.round = data.name;
-                        match.heatNo = data.name.lastIndexOf(" " + 1);
                         match.incrementalId = data.matchid;
                         match.matchId = "heat";
                         callback(null, found);
@@ -620,10 +627,11 @@ var model = {
             },
             function (found, callback) {
                 console.log("heats", data.heats);
+                var players = [];
                 async.eachSeries(data.heats, function (n, callback) {
                     if (found[0]) {
                         TeamSport.find({
-                            oldId: n.team
+                            oldId: n.team,
                         }).lean().exec(function (err, individualData) {
                             if (err) {
                                 callback(err, null);
@@ -632,12 +640,12 @@ var model = {
                                 callback(null, []);
                             } else {
                                 console.log("inside push", individualData);
-                                var players = [];
+
                                 var player = {};
                                 player.id = individualData[0]._id;
                                 players.push(player);
                                 match.resultHeat = {};
-                                match.resultHeat.players = players;
+
                                 match.opponentsTeam.push(individualData[0]._id);
                                 callback(null, individualData);
                             }
@@ -649,6 +657,8 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else {
+                        match.resultHeat.players = players;
+                        players = [];
                         callback(null, found);
                     }
                 });

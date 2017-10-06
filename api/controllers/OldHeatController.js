@@ -1,5 +1,6 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
+
     getAllIndividual: function (req, res) {
         if (req.body) {
             OldHeat.getAllPlayer(req.body, res.callback);
