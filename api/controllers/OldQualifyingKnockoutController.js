@@ -11,5 +11,15 @@ var controller = {
         }
     },
 
+    saveKnockoutMatch: function (req, res) {
+        if (req.body) {
+            OldQualifyingKnockout.saveMatchIndividual(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
 };
 module.exports = _.assign(module.exports, controller);

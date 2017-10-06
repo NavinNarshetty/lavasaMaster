@@ -168,12 +168,13 @@ var model = {
         });
     },
 
+
     getAllTeam1: function (data, callback) {
         var individualSport = {};
         async.waterfall([
             function (callback) {
                 var pipeLine = OldKnockout.getKnockoutTeam1AggregatePipeLine(data);
-                OldKnockout.aggregate(pipeLine, function (err, complete) {
+                OldLeagueKnockout.aggregate(pipeLine, function (err, complete) {
                     if (err) {
                         callback(err, "error in mongoose");
                     } else {
@@ -198,6 +199,7 @@ var model = {
                         }
                     }
                 });
+                // callback(null, complete);
             },
         ], function (err, data3) {
             if (err) {
@@ -213,7 +215,7 @@ var model = {
         async.waterfall([
             function (callback) {
                 var pipeLine = OldKnockout.getKnockoutTeam2AggregatePipeLine(data);
-                OldKnockout.aggregate(pipeLine, function (err, complete) {
+                OldLeagueKnockout.aggregate(pipeLine, function (err, complete) {
                     if (err) {
                         callback(err, "error in mongoose");
                     } else {
@@ -234,6 +236,499 @@ var model = {
                             callback(null, []);
                         } else {
                             callback(null, saveData);
+                        }
+                    }
+                });
+                // callback(null, complete);
+            },
+        ], function (err, data3) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, data3);
+            }
+        });
+    },
+
+    //--------------------------------Match Created----------------------------------------
+
+    saveLeagueMatchIndividual: function (data, callback) {
+        var thirdPlace = {};
+        async.waterfall([
+                function (callback) {
+                    OldLeagueKnockout.find({
+                        participantType: "player",
+                        year: data.year,
+                        $and: [{
+                            leagueknockoutround: {
+                                $exists: true
+                            }
+                        }, {
+                            round: {
+                                $exists: false
+                            }
+                        }]
+                    }).sort({
+                        leagueknockoutround: 1
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    var complete = _.groupBy(found, "sport");
+                    async.concatSeries(complete, function (mainData, callback) {
+                            async.concatSeries(mainData, function (singleData, callback) {
+                                    singleData.excelType = "league";
+                                    singleData.roundName = singleData.leagueknockoutround;
+                                    OldLeagueKnockout.getMatchDetails(singleData, function (err, matchData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(matchData)) {
+                                                var err = {
+                                                    error: "no matchData",
+                                                    data: matchData
+                                                }
+                                                callback(null, err);
+                                            } else {
+                                                callback(null, matchData);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (err, finalData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, finalData);
+                                    }
+                                });
+                        },
+                        function (err, finalData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, finalData);
+                            }
+                        });
+
+                    // callback(null, complete);
+                },
+            ],
+            function (err, data3) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, data3);
+                }
+            });
+    },
+
+    saveknockoutMatchIndividual: function (data, callback) {
+        var thirdPlace = {};
+        async.waterfall([
+                function (callback) {
+                    OldLeagueKnockout.find({
+                        participantType: "player",
+                        year: data.year,
+                        $and: [{
+                            leagueknockoutround: {
+                                $exists: true
+                            }
+                        }, {
+                            round: {
+                                $exists: true
+                            }
+                        }]
+                    }).sort({
+                        leagueknockoutround: 1
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    var complete = _.groupBy(found, "sport");
+                    async.concatSeries(complete, function (mainData, callback) {
+                            async.concatSeries(mainData, function (singleData, callback) {
+                                    singleData.excelType = "knockout";
+                                    singleData.roundName = singleData.round;
+                                    OldLeagueKnockout.getMatchDetails(singleData, function (err, matchData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(matchData)) {
+                                                var err = {
+                                                    error: "no matchData",
+                                                    data: matchData
+                                                }
+                                                callback(null, err);
+                                            } else {
+                                                callback(null, matchData);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (err, finalData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, finalData);
+                                    }
+                                });
+                        },
+                        function (err, finalData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, finalData);
+                            }
+                        });
+                },
+            ],
+            function (err, data3) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, data3);
+                }
+            });
+    },
+
+    getMatchDetails: function (data, callback) {
+        var match = {};
+        match.opponentsSingle = [];
+        match.opponentsTeam = [];
+        async.waterfall([
+                function (callback) {
+                    Sport.findOne({
+                        oldId: data.sport
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            console.log("sport", found);
+                            match.sport = found._id;
+                            match.scheduleDate = data.date;
+                            match.round = data.roundName;
+                            match.incrementalId = data.matchid;
+                            match.excelType = data.excelType;
+                            match.matchId = "League";
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (data.player1) {
+                        IndividualSport.findOne({
+                            oldId: data.player1,
+                            sport: found._id
+                        }).lean().exec(function (err, individualData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(individualData)) {
+                                callback(null, []);
+                            } else {
+                                console.log("inside push", individualData);
+                                match.opponentsSingle.push(individualData._id);
+                                callback(null, found);
+                            }
+                        });
+                    } else {
+                        callback(null, {
+                            error: "no player",
+                            data: data
+                        });
+                    }
+                },
+                function (found, callback) {
+                    if (data.player2) {
+                        IndividualSport.findOne({
+                            oldId: data.player2,
+                            sport: found._id
+                        }).lean().exec(function (err, individualData) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(individualData)) {
+                                callback(null, []);
+                            } else {
+                                console.log("inside push1", individualData);
+                                match.opponentsSingle.push(individualData._id);
+                                callback(null, individualData);
+                            }
+                        });
+                    } else {
+                        callback(null, {
+                            error: "no player",
+                            data: data
+                        });
+                    }
+                },
+                function (found, callback) {
+                    OldHeat.saveMatch(match, function (err, matchData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(matchData)) {
+                                var err = {
+                                    error: "no matchData",
+                                    data: matchData
+                                }
+                                callback(null, err);
+                            } else {
+                                callback(null, matchData);
+                            }
+                        }
+                    });
+                },
+            ],
+            function (err, data3) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, data3);
+                }
+            });
+    },
+
+    saveLeagueMatchTeam: function (data, callback) {
+        var thirdPlace = {};
+        async.waterfall([
+                function (callback) {
+                    OldLeagueKnockout.find({
+                        participantType: "team",
+                        year: data.year,
+                        $and: [{
+                            leagueknockoutround: {
+                                $exists: true
+                            }
+                        }, {
+                            round: {
+                                $exists: false
+                            }
+                        }]
+                    }).sort({
+                        leagueknockoutround: 1
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    var complete = _.groupBy(found, "sport");
+                    async.concatSeries(complete, function (mainData, callback) {
+                            async.concatSeries(mainData, function (singleData, callback) {
+                                    singleData.excelType = "league";
+                                    singleData.roundName = singleData.leagueknockoutround;
+                                    OldLeagueKnockout.getMatchDetailsTeam(singleData, function (err, matchData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(matchData)) {
+                                                var err = {
+                                                    error: "no matchData",
+                                                    data: matchData
+                                                }
+                                                callback(null, err);
+                                            } else {
+                                                callback(null, matchData);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (err, finalData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, finalData);
+                                    }
+                                });
+                        },
+                        function (err, finalData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, finalData);
+                            }
+                        });
+
+                    // callback(null, complete);
+                },
+            ],
+            function (err, data3) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, data3);
+                }
+            });
+    },
+
+    saveknockoutMatchTeam: function (data, callback) {
+        var thirdPlace = {};
+        async.waterfall([
+                function (callback) {
+                    OldLeagueKnockout.find({
+                        participantType: "team",
+                        year: data.year,
+                        $and: [{
+                            leagueknockoutround: {
+                                $exists: true
+                            }
+                        }, {
+                            round: {
+                                $exists: true
+                            }
+                        }]
+                    }).sort({
+                        leagueknockoutround: 1
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    var complete = _.groupBy(found, "sport");
+                    async.concatSeries(complete, function (mainData, callback) {
+                            async.concatSeries(mainData, function (singleData, callback) {
+                                    singleData.excelType = "knockout";
+                                    singleData.roundName = singleData.round;
+                                    OldLeagueKnockout.getMatchDetailsTeam(singleData, function (err, matchData) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            if (_.isEmpty(matchData)) {
+                                                var err = {
+                                                    error: "no matchData",
+                                                    data: matchData
+                                                }
+                                                callback(null, err);
+                                            } else {
+                                                callback(null, matchData);
+                                            }
+                                        }
+                                    });
+                                },
+                                function (err, finalData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, finalData);
+                                    }
+                                });
+                        },
+                        function (err, finalData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, finalData);
+                            }
+                        });
+                },
+            ],
+            function (err, data3) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, data3);
+                }
+            });
+    },
+
+    getMatchDetailsTeam: function (data, callback) {
+        var match = {};
+        match.opponentsSingle = [];
+        match.opponentsTeam = [];
+        async.waterfall([
+            function (callback) {
+                Sport.findOne({
+                    oldId: data.sport
+                }).lean().exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, []);
+                    } else {
+                        console.log("sport", found);
+                        match.sport = found._id;
+                        match.scheduleDate = data.date;
+                        // var round = data.round.toLowerCase();
+                        match.round = data.roundName;
+                        match.incrementalId = data.matchid;
+                        match.excelType = data.excelType;
+                        match.matchId = "League";
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                TeamSport.find({
+                    oldId: data.team1
+                }).lean().exec(function (err, individualData) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(individualData)) {
+                        console.log("empty");
+                        callback(null, []);
+                    } else {
+                        console.log("inside push", individualData);
+                        match.opponentsTeam.push(individualData[0]._id);
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                TeamSport.find({
+                    oldId: data.team2
+                }).lean().exec(function (err, individualData) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(individualData)) {
+                        console.log("empty");
+                        callback(null, []);
+                    } else {
+                        console.log("inside push", individualData);
+                        match.opponentsTeam.push(individualData[0]._id);
+                        callback(null, individualData);
+                    }
+                });
+            },
+            function (found, callback) {
+                OldHeat.saveMatch(match, function (err, matchData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(matchData)) {
+                            var err = {
+                                error: "no matchData",
+                                data: matchData
+                            }
+                            callback(null, err);
+                        } else {
+                            callback(null, matchData);
                         }
                     }
                 });

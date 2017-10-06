@@ -50,5 +50,16 @@ var controller = {
         }
     },
 
+    saveKnockoutMatch: function (req, res) {
+        if (req.body) {
+            OldSwissLeague.saveMatchIndividual(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
 };
 module.exports = _.assign(module.exports, controller);
