@@ -1331,3 +1331,122 @@ $sport-table-grey:#efeeee !default;
 }
 
 // SPONSER PAGE END
+// INDIVIDUAL SPONSER
+.individualsponser-page {
+  .specific-sponserimage-holder {
+    margin: 0 auto;
+    display: inline-block;
+  }
+  .individual-sponsercontent {
+    text-align: justify;
+  }
+  .individual-banner-image {
+    padding: 40px 0px;
+    cursor: pointer;
+  }
+}
+
+// SPONSER_PLAY_BUTTON
+.sponser-videoplay-holder {
+  padding: 15px 20px;
+  border: 1px solid #da495b;
+  background-color: #da495b;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  .sponer-playe-button {
+    font-size: 21px;
+    color: #fff;
+  }
+}
+
+// SPONSER_PLAY_BUTTON_END
+// SWIPER CARD
+.sponser-swipercard {
+  // border: 1px solid;
+  position: relative;
+  padding: 0px 30px;
+  padding-right: 70px;
+  .inverted-commos-bottom {
+    width: 60px;
+    position: absolute;
+    bottom: 20px;
+    right: 0px;
+  }
+  .inverted-commos-top {
+    width: 60px;
+    position: absolute;
+    left: 20px;
+    top: 5px;
+  }
+}
+
+.sponser-swipercard-image {
+  padding: 10px;
+  vertical-align: middle;
+}
+
+.sponser-swipercard-imageholder {
+  width: 105px;
+  height: 105px;
+  border-radius: 100%;
+  overflow: hidden;
+}
+
+.sponser-swipercard-contentholder {
+  width: calc(100% - 135px);
+  vertical-align: middle;
+}
+
+.individual-swiper-holder {
+  .swiper-button-next,
+  .swiper-container-rtl .swiper-button-prev {
+    background-image: none;
+    right: -50px;
+  }
+  .swiper-button-prev,
+  .swiper-container-rtl .swiper-button-next {
+    background-image: none;
+    left: -50px;
+  }
+}
+
+.sponser-swipercard-header {
+  text-align: left;
+  @extend .d-fjalla-one;
+}
+
+.sponser-swipercard-content {
+  text-align: justify;
+  font-size: 16px;
+}
+
+.sponser-ceo {
+  text-align: right;
+  @extend .d-fjalla-one;
+}
+
+// SWIPER CARD END
+// SPONSER_GALLERY
+.individual-sponsergalleryholder {
+  padding: 40px 0px;
+  .sponser-videoplay-gallery {
+    padding: 4px 12px;
+    border: 1px solid #da495b;
+    background-color: #da495b;
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    .sponser-gallery-play {
+      font-size: 14px;
+      color: #ffffff;
+    }
+  }
+}
+
+.individual-sponsergallerycard {
+  margin: 15px 0px;
+}
+
+// SPONSER_GALLERY END
+// INDIVIDUAL SPONSER END

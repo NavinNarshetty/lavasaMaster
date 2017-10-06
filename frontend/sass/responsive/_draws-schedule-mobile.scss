@@ -79,6 +79,13 @@
   .sponser-partner-title {
     margin-top: 90px;
   } // SPONSPER PAGE END
+  // INDIVIDUAL SPONSER
+  .sponser-videoplay-holder {
+    padding: 5px 10px;
+  }
+  .sponser-videoplay-holder .sponer-playe-button {
+    font-size: 12px;
+  } // INDIVIDUAL SPONSER END
 }
 
 @media screen and (max-width: 767px) {
@@ -222,5 +229,39 @@
   }
   .sponser-partner-title h2 {
     font-size: 24px;
+  } // INDIVIDUAL SPONSER
+  .sponser-swipercard-imageholder {
+    width: 80px;
+    height: 80px;
   }
+  .sponser-swipercard-contentholder {
+    width: auto;
+  }
+  .sponser-swipercard-content {
+    font-size: 14px;
+  }
+  .individual-swiper-holder .swiper-button-prev,
+  .individual-swiper-holder .swiper-container-rtl .swiper-button-next {
+    left: 15px;
+  }
+  .individual-swiper-holder .swiper-button-next,
+  .individual-swiper-holder .swiper-container-rtl .swiper-button-prev {
+    right: 0px;
+  }
+  .sponser-swipercard .inverted-commos-top {
+    width: 25px;
+  }
+  .sponser-swipercard .inverted-commos-bottom {
+    width: 25px;
+  }
+  .sponser-swipercard {
+    padding: 0px 15px;
+    padding-right: 30px;
+  }
+  .sponser-videoplay-holder .sponer-playe-button {
+    font-size: 10px;
+  }
+  .sponser-videoplay-holder {
+    padding: 0px 10px;
+  } // INDIVIDUAL SPONSER END
 }

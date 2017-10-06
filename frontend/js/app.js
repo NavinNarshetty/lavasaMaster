@@ -338,10 +338,15 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'ResultsCtrl'
         })
-        .state('sponsors-partner', {
-            url: "/sponsors-partner",
+        .state('sponsers-partner', {
+            url: "/sponsers-partner",
             templateUrl: tempateURL,
             controller: 'SponserPartnerCtrl'
+        })
+        .state('individual-sponser', {
+            url: "/individual-sponser",
+            templateUrl: tempateURL,
+            controller: 'IndividualSponserCtrl'
         })
         .state('additional-paymentForm', {
             url: "/additional-paymentForm",

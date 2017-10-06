@@ -1,6 +1,6 @@
 myApp.controller('SponserPartnerCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout, configService) {
   $scope.template = TemplateService.getHTML("content/sponsor-partner.html");
-  TemplateService.title = "Direct Final"; //This is the Title of the Website
+  TemplateService.title = "Sponser Partner"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
 
   configService.getDetail(function (data) {
@@ -47,5 +47,79 @@ myApp.controller('SponserPartnerCtrl', function ($scope, TemplateService, $state
 
   $scope.data = [1, 2, 3, 4, 5, 6, 7];
 
+
+});
+
+// ADDITIONAL SPONSER
+
+myApp.controller('IndividualSponserCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout, configService) {
+  $scope.template = TemplateService.getHTML("content/individualsponser.html");
+  TemplateService.title = "Sponser"; //This is the Title of the Website
+  $scope.navigation = NavigationService.getNavigation();
+
+  $scope.data = [1, 2, 3, 4]
+  // SWIPER
+  $scope.$on('$viewContentLoaded', function (event) {
+
+    $timeout(function () {
+      mySwiper1 = new Swiper('.swiper-container', {
+        paginationClickable: true,
+        nextButton: '.swiper-button-next ',
+        prevButton: '.swiper-button-prev ',
+        slidesPerView: 1,
+        grabCursor: true,
+        breakpoints: {
+          992: {
+            slidesPerView: 1
+          },
+          768: {
+            slidesPerView: 1
+
+          },
+          481: {
+            slidesPerView: 1
+          },
+          320: {
+            slidesPerView: 1
+          }
+        }
+      });
+    }, 300);
+  });
+  // END SWIPER
+  $scope.individual = {
+    headerimg: "img/sponser/enerzal.png",
+    bannerimg: "img/Register_Web_College.jpg"
+
+  }
+
+  $scope.gallery = [{
+    img: 'img/dishapatani1.jpg',
+    type: 'image'
+  }, {
+    img: 'img/sa1.jpg',
+    type: 'video'
+  }, {
+    img: 'img/sa2.jpg',
+    type: 'image'
+  }, {
+    img: 'img/sl1.jpg',
+    type: 'image'
+  }, {
+    img: 'img/sa4.jpg',
+    type: 'video'
+  }, {
+    img: 'img/sa5.jpg',
+    type: 'image'
+  }, {
+    img: 'img/sa6.jpg',
+    type: 'image'
+  }, {
+    img: 'img/sa7.jpg',
+    type: 'image'
+  }, {
+    img: 'img/sa8.jpg',
+    type: 'video'
+  }]
 
 });
