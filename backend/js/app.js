@@ -411,6 +411,30 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailCalenderCtrl'
         })
+        // table sponsor
+        .state('sponsor', {
+            url: "/sponsor",
+            templateUrl: "views/template.html",
+            controller: 'SponsorCtrl'
+        })
+        // detail sponsor
+        .state('detail-sponsor', {
+            url: "/detail-sponsor",
+            templateUrl: "views/template.html",
+            controller: 'DetailSponsorCtrl'
+        })
+        // sponsor card
+        .state('sponsorcard', {
+            url: "/sponsorcard",
+            templateUrl: "views/template.html",
+            controller: 'SponsorCardCtrl'
+        })
+        // detail sponsor card
+        .state('detail-sponsorcard', {
+            url: "/detail-sponsorcard",
+            templateUrl: "views/template.html",
+            controller: 'DetailSponsorCardCtrl'
+        })
         //additional payment
         .state('additional-payment', {
             url: "/additional-payment",
