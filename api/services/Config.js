@@ -11,7 +11,7 @@ module.exports = mongoose.model('Config', schema);
 // var requrl = "http://wohlig.io:1337/api/";
 // var requrl = "http://sfa2.wohlig.co.in/api/";
 // var requrl = "https://sfa.wohlig.co.in/api/";
-// var requrl = "http://mumbaischool.sfanow.in/api/";
+var requrl = "http://mumbaischool.sfanow.in/api/";
 // var requrl = "http://mumbaicollege.sfanow.in/api/";
 // var requrl = "http://hyderabadschool.sfanow.in/api/";
 // var requrl = "http://hyderabadcollege.sfanow.in/api/";
@@ -19,7 +19,7 @@ module.exports = mongoose.model('Config', schema);
 // var requrl = "http://ahmedabadcollege.sfanow.in/api/";
 // var requrl = "http://testmumbaischool.sfanow.in/api/";
 // var requrl = "http://testmumbaicollege.sfanow.in/api/";
-var requrl = "http://testhyderabadschool.sfanow.in/api/";
+// var requrl = "http://testhyderabadschool.sfanow.in/api/";
 // var requrl = "http://testhyderabadcollege.sfanow.in/api/";
 // var requrl = "http://testahmedabadschool.sfanow.in/api/";
 // var requrl = "http://testahmedabadcollege.sfanow.in/api/";
@@ -188,7 +188,6 @@ var model = {
             if (proceedI === 2) {
                 Jimp.read(buf, function (err, image) {
                     if (err) {
-                        ule.exports = _.assign(module.exports, exports, model);
                         callback(err, null);
                     } else {
                         if (style === "contain" && width && height) {
@@ -226,7 +225,6 @@ var model = {
                     value: false,
                     error: err
                 });
-                ule.exports = _.assign(module.exports, exports, model);
             });
             readstream2.pipe(res);
         }
@@ -555,84 +553,6 @@ var model = {
         }).on('error', function (err) {
             fs.unlink(dest);
             callback(err);
-        });
-    },
-
-    generatePdf: function (pdfObj, callback) {
-        var pdf = require('html-pdf');
-
-        // obj = _.assign(obj, page);
-        var obj = {};
-        var env = {};
-
-
-        var file = pdfObj.filename;
-
-        var i = 0;
-        console.log(file);
-        sails.hooks.views.render(file, {
-            data: pdfObj
-        }, function (err, html) {
-            console.log("inside sails", html, err);
-            if (err) {
-                callback(err, null);
-            } else {
-                console.log("inside else");
-                //var path = "http://104.155.129.33:1337/upload/readFile/";
-                var path = "pdf/";
-                var newFilename = pdfObj.sportObj.sportslist.name + pdfObj.sportObj.ageGroup.name + pdfObj.sportObj.filename + ".pdf";
-                var writestream = fs.createWriteStream(path + newFilename);
-
-                writestream.on('finish', function (err, res) {
-                    if (err) {
-                        console.log("Something Fishy", err);
-                    } else {
-                        console.log("Finish Is Called");
-                        callback(null, {
-                            name: newFilename,
-                            url: newFilename
-                        });
-                    }
-                });
-
-                var options = {
-                    "phantomPath": "node_modules/phantomjs-prebuilt/bin/phantomjs",
-                    // Export options 
-                    "directory": "/tmp",
-                    "height": "10.5in", // allowed units: mm, cm, in, px
-                    "width": "10in",
-                    // "format": "Letter", // allowed units: A3, A4, A5, Legal, Letter, Tabloid 
-                    // "orientation": "portrait", // portrait or landscape 
-                    // "zoomFactor": "1", // default is 1 
-                    // Page options 
-                    "border": {
-                        "top": "2cm", // default is 0, units: mm, cm, in, px 
-                        "right": "1cm",
-                        "bottom": "1cm",
-                        "left": "1cm"
-                    },
-                    // File options 
-                    "type": "pdf", // allowed file types: png, jpeg, pdf 
-                    "timeout": 30000, // Timeout that will cancel phantomjs, in milliseconds 
-                    "footer": {
-                        "height": "2cm",
-                    },
-                    // "filename": page.filename + ".pdf"
-                };
-
-                console.log("qwerty");
-                pdf.create(html, options).toStream(function (err, stream) {
-                    console.log("qwerty", err, stream);
-                    if (err) {
-                        callback(err);
-                    } else {
-                        console.log("In Config To generate PDF");
-                        i++;
-                        stream.pipe(writestream);
-                    }
-                });
-            }
-
         });
     }
 };
