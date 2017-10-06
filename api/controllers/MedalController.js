@@ -1,21 +1,35 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
 
+    getAllMedals: function (req, res) {
+        Medal.getAllMedals(req.body, res.callback);
+    },
+
+    getOneMedal: function (req, res) {
+        if (req.body) {
+            if (req.body && req.body._id) {
+                var matchObj = {
+                    "_id": req.body._id
+                }
+                Medal.getOneMedal(matchObj, res.callback);
+            } else {
+                res.json({
+                    data: "Some Fields are Missing",
+                    value: false
+                });
+            }
+        } else {
+            res.json({
+                data: "Body Not Found",
+                value: false
+            });
+        }
+    },
+
     saveMedal: function (req, res) {
         if (req.body) {
             if (req.body && req.body.sportslist && req.body.gender && req.body.ageGroup) {
-                var matchObj = {
-                    sportslist: req.body.sportslist,
-                    gender: req.body.gender,
-                    ageGroup: req.body.ageGroup,
-                    team: req.body.team,
-                    player: req.body.player,
-                    school: req.body.school
-                }
-                if (req.body.weight && !_.isEmpty(req.body.weight)) {
-                    matchObj.weight = req.body.weight;
-                }
-                Medal.saveMedal(matchObj, res.callback);
+                Medal.saveMedal(req.body, res.callback);
             } else {
                 res.json({
                     data: "Some Fields are Missing",
@@ -31,8 +45,8 @@ var controller = {
     },
 
     getTeamsAthletesBySport: function (req, res) {
-
-        if (req.body && req.body.sportslist && req.body.gender && req.body.ageGroup) {
+        if (req.body && req.body.sportslist && req.body.gender && req.body.ageGroup && req.body.medalType) {
+            var medalId = null;
             var matchSportObj = {
                 "sportslist": req.body.sportslist,
                 "gender": req.body.gender,
@@ -41,7 +55,10 @@ var controller = {
             if (req.body.weight) {
                 matchSportObj.weight = req.body.weight
             }
-            Medal.getTeamsAthletesBySport(matchSportObj, res.callback);
+            if (req.body.medalId) {
+                medalId = req.body.medalId;
+            }
+            Medal.getTeamsAthletesBySport(matchSportObj, medalId, req.body.medalType, res.callback);
         } else {
             res.json({
                 data: "Some Fileds Are Missing",
@@ -52,18 +69,19 @@ var controller = {
     },
 
     getCertificate: function (req, res) {
+        console.log("---------------------");
         if (req.body && req.body._id) {
             var obj = {
                 "_id": req.body._id
             }
+            Medal.getCertificate(obj, res.callback);
         } else {
             res.json({
                 data: "Some Fileds Are Missing",
                 value: false
             });
         }
-    },
-
+    }
 
 };
 module.exports = _.assign(module.exports, controller);

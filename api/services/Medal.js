@@ -1,7 +1,7 @@
 var schema = new Schema({
     medalType: {
         type: String,
-        enum: ["gold", "silver", "bronze"]
+        enum: ['gold', 'silver', 'bronze']
     },
     sport: {
         type: Schema.Types.ObjectId,
@@ -29,16 +29,16 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         "sport": {
-            select: '_id name '
+            select: '_id name gender ageGroup sportslist weight'
         },
         "school": {
             select: '_id name '
         },
         "team": {
-            select: '_id name '
+            select: ''
         },
         "player": {
-            select: '_id name '
+            select: ''
         },
     }
 });
@@ -49,6 +49,79 @@ module.exports = mongoose.model('Medal', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
+    search: function (data, callback) {
+        var maxRow = Config.maxRow;
+        var page = 1;
+        if (data && data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['medalType'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                asc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var deepSearch = "player sport sport.sportslist sport.ageGroup sport.weight sport.sportslist.sportsListSubCategory";
+
+        Medal.find(data.keyword)
+            .sort({
+                createdAt: -1
+            })
+            .order(options)
+            .keyword(options)
+            .deepPopulate(deepSearch)
+            .page(options, function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback(null, "Data is empty");
+                } else {
+                    callback(null, found);
+                }
+            });
+    },
+
+    getOneMedal: function (matchObj, callback) {
+        var obj = {};
+        Medal.findOne(matchObj).deepPopulate("sport sport.sportslist sport.ageGroup sport.weight player team").lean().exec(function (err, data) {
+            if (err) {
+                callback(err, null);
+            } else if (!_.isEmpty(data)) {
+                data.gender = data.sport.gender;
+                data.ageGroup = {
+                    _id: data.sport.ageGroup._id,
+                    name: data.sport.ageGroup.name
+                };
+                data.sportslist = {
+                    _id: data.sport.sportslist._id,
+                    name: data.sport.sportslist.name
+                };
+                if (data.sport.weight) {
+                    data.weight = {
+                        _id: data.sport.weight._id,
+                        name: data.sport.weight.name
+                    }
+                }
+                console.log("data", data);
+                callback(null, data);
+            } else {
+                callback(null, "No Data Found");
+            }
+
+
+        });
+
+    },
+
     saveMedal: function (data, callback) {
         console.log("1st Func");
         var matchObj = {
@@ -57,6 +130,9 @@ var model = {
             "ageGroup": data.ageGroup
         };
         console.log(matchObj);
+        if (data.weight && !_.isEmpty(data.weight)) {
+            matchObj.weight = data.weight;
+        }
         Sport.findOne(matchObj).exec(function (err, sport) {
             if (err) {
                 console.log("1st if");
@@ -83,20 +159,45 @@ var model = {
         });
     },
 
-    getTeamsAthletesBySport: function (matchSportObj, callback) {
+    getTeamsAthletesBySport: function (matchSportObj, medalId, medalType, finalCallback) {
         var sendObj = {};
         async.waterfall([
             //find sportId
             function (callback) {
                 Sport.findOne(matchSportObj, function (err, sport) {
+                    console.log("sport", sport);
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(sport)) {
-                        var sportObj = {
-                            "sport": sport._id
+                        var sportObj = {};
+                        var medalObj = {};
+                        if (medalType) {
+                            medalObj.medalType = medalType;
                         }
-                        sendObj.sport = sportObj.sport = sport._id;
-                        callback(null, sportObj);
+                        medalObj.sport = sendObj.sport = sportObj.sport = sport._id;
+                        Medal.findOne(medalObj).lean().exec(function (err, medal) {
+                            console.log("medal", medal);
+                            if (err) {
+                                callback(err, null);
+                            } else if (!_.isEmpty(medal)) {
+                                if (medalId) {
+                                    if (medal._id == medalId) {
+                                        sendObj.allow = true;
+                                        callback(null, sportObj);
+                                    } else {
+                                        sendObj.allow = false;
+                                        callback(sendObj, null);
+                                    }
+                                } else {
+                                    sendObj.allow = false;
+                                    callback(sendObj, null);
+                                }
+                            } else {
+                                console.log("Medal Not Found", sportObj);
+                                sendObj.allow = true;
+                                callback(null, sportObj);
+                            }
+                        });
                     } else {
                         callback("No Data Found", null)
                     }
@@ -105,6 +206,7 @@ var model = {
             },
             //find teams registered with that sportId
             function (sport, callback) {
+                console.log("sport", sport);
                 TeamSport.find(sport, function (err, teams) {
                     if (err) {
                         callback(err, null);
@@ -116,9 +218,7 @@ var model = {
                         sendObj.teams = [];
                         callback(null, sport);
                     }
-
                 });
-
             },
             //find teams athletes with that sportId
             function (sport, callback) {
@@ -126,7 +226,7 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(sport)) {
-                        console.log("teams", athletes);
+                        console.log("players", athletes);
                         sendObj.athletes = athletes;
                         callback(null, sendObj);
                     } else {
@@ -138,19 +238,198 @@ var model = {
             }
         ], function (err, result) {
             console.log("result", result);
-            callback(null, result)
+            if (err) {
+                finalCallback(null, err);
+            } else {
+                finalCallback(null, result);
+            }
         });
 
     },
 
-    getCertificate: function (data, callback) {
+    getCertificate: function (athlete, finalCallback) {
+        var regSports = [];
+        var pdfObj = {};
+        pdfObj.filename = "certificate";
         async.waterfall([
-            
+
+            //getAthlete Details
+            function (callback) {
+                Athelete.findOne(athlete).deepPopulate("school").lean().exec(function (err, data) {
+                    var athleteDetails = {};
+                    if (err) {
+                        finalCallback(err, null);
+                    } else if (!_.isEmpty(data)) {
+                        console.log("data", data);
+                        athleteDetails = data;
+                        pdfObj.athlete = _.cloneDeep(data);
+                        callback(null, athleteDetails);
+                    } else {
+                        finalCallback("Athlete Not Found", null)
+                    }
+                });
+            },
+
+            //find team sports,player participated in and whether he won any of the 3 medals
+            function (athleteDetails, callback) {
+                var matchObj = {
+                    "studentId": athlete._id
+                };
+                StudentTeam.find(matchObj).exec(function (err, regTeamSport) {
+                    regTeamSport = _.uniq(_.map(regTeamSport, function (n) {
+                        return {
+                            "sport": n.sport,
+                            "teamId": n.teamId
+                        }
+                    }));
+                    callback(null, regTeamSport, athleteDetails);
+                    // finalCallback(null, regTeamSport);
+
+                });
+            },
+
+            // //find individual sports,player participated in and whether he won any of the 3 medals
+            function (regTeamSport, athleteDetails, callback) {
+                var matchObj = {
+                    "athleteId": athlete._id
+                };
+                IndividualSport.find(matchObj).exec(function (err, regIndiSport) {
+                    regIndiSport = _.uniq(_.flatten(_.map(regIndiSport, function (n1) {
+                        return _.map(n1.sport, function (n2) {
+                            return {
+                                "sport": n2
+                            }
+                        })
+                    })));
+                    regSports = _.union(regTeamSport, regIndiSport);
+                    athleteDetails.regSports = regSports;
+                    callback(null, athleteDetails);
+                    // finalCallback(null, regSport);
+                });
+            },
+
+            //find medals for all sport and generate pdf for each
+            function (athleteDetails, callback) {
+                async.waterfall([
+                    function (callback) {
+                        ConfigProperty.find().lean().exec(function (err, property) {
+                            if (err) {
+                                callback(err, null);
+                            } else if (!_.isEmpty(property)) {
+
+                            } else {
+                                callback(null, property);
+                            }
+
+                        });
+                    },
+                    function(){
+
+                    },
+                    function () {
+                        async.concatLimit(athleteDetails.regSports, 10, function (regSport, seriesCallback) {
+
+                            async.waterfall([
+
+                                //getSport Details for every regSport
+                                function (callback) {
+                                    var matchObj = {
+                                        "_id": regSport.sport
+                                    };
+                                    Sport.findOne(matchObj).deepPopulate("sportslist ageGroup weight").lean().exec(function (err, sport) {
+                                        if (err) {
+                                            seriesCallback(err, null);
+                                        } else if (!_.isEmpty(sport)) {
+                                            callback(null, sport);
+                                        } else {
+                                            callback(null, {
+                                                'notFound': regSport.sport
+                                            });
+                                        }
+                                    });
+                                },
+
+                                // find medals
+                                function (sport, callback) {
+                                    var medalObj = {
+                                        "sport": sport._id
+                                    };
+                                    if (regSport.teamId) {
+                                        medalObj.team = sport.teamId = regSport.teamId;
+                                    } else {
+                                        medalObj.player = athleteDetails._id;
+                                    }
+                                    //find medal for this sport
+                                    Medal.findOne(medalObj).lean().exec(function (err, medal) {
+                                        // console.log("medal", medal);
+                                        if (err) {
+                                            seriesCallback(err, null);
+                                        } else if (!_.isEmpty(medal)) {
+                                            sport.medalType = medal.medalType;
+                                        } else {
+                                            sport.medalType = "participant";
+                                        }
+                                        callback(null, sport);
+                                    });
+                                },
+
+                                //make pdfObj which will get used in certificate.ejs
+                                function (sport, callback) {
+                                    pdfObj.sportObj = sport;
+                                    callback(null, pdfObj, sport);
+                                },
+
+                                //generatePdf
+                                function (pdfObj, sport, callback) {
+                                    console.log("pdfObj", pdfObj);
+                                    if (!pdfObj.sportObj.notFound) {
+                                        Config.generatePdf(pdfObj, function (err, pdfRespo) {
+                                            if (err) {
+                                                console.log(err);
+                                                callback(null, err);
+                                            } else if (pdfRespo) {
+                                                console.log("resonse:", pdfRespo);
+                                                sport.pdfname = pdfRespo;
+                                                callback(null, sport);
+                                            } else {
+                                                callback(null, "Invalid data");
+                                            }
+                                        });
+                                    } else {
+                                        callback(null, sport);
+                                    }
+                                },
+
+                                function (sportObj, callback) {
+                                    console.log('sportObj', sportObj);
+
+                                    seriesCallback(null, sportObj);
+                                    // callback(null, sportObj);
+                                }
+                            ], function (err, result) {
+                                callback(null, result);
+                            });
+
+                        }, function (err, result) {
+                            athleteDetails.regSports = result;
+                            callback(null, athleteDetails);
+                        });
+                    }
+                ], function (err, result) {
+
+                });
+
+            }
+
         ], function (err, result) {
-            console.log("result", result);
-            callback(null, result)
+            finalCallback(null, result)
         })
     },
+
+
+
+
+
 
 
 };

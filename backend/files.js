@@ -38,7 +38,7 @@ module.exports = [
     'bower_components/angular-ui-date/dist/date.js',
     'bower_components/js-xlsx/xlsx.js',
     'bower_components/FileSaver.js/FileSaver.min.js',
-    'bower_components/async/dist/async.js',
+   
     //App.js
     'backend/js/app.js',
 
@@ -66,4 +66,5 @@ module.exports = [
     'backend/js/controllers/teamsports.js',
     'backend/js/controllers/individualsports.js',
     'backend/js/controllers/calender.js',
+     'bower_components/async/dist/async.js',
 ];

@@ -28,7 +28,7 @@ module.exports.globals = {
      *                                                                           *
      ****************************************************************************/
 
-    // async: true,
+    async: false,
 
     /****************************************************************************
      *                                                                           *
@@ -75,6 +75,8 @@ global["Grid"] = require('gridfs-stream');
 global["gfs"] = Grid(mongoose.connections[0].db, mongoose);
 global["http"] = require('http');
 gfs.mongo = mongoose.mongo;
+
+global["async"] = require('async');
 
 //Image Library
 global["stream"] = require('stream');
