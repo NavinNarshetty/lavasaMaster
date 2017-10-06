@@ -465,6 +465,50 @@ var model = {
             }
         });
 
-    }
+    },
+
+    generateExcel: function (data, res) {
+        async.waterfall([
+                function (callback) {
+                    var deepSearch = "athleteId.school";
+                    AdditionalPayment.find().deepPopulate(deepSearch).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    async.concatSeries(found, function (mainData, callback) {
+                            var obj = {};
+                            obj["Name"] = mainData.firstName + mainData.lastname;
+
+                            callback(null, obj);
+                        },
+                        function (err, singleData) {
+                            Config.generateExcel("KnockoutIndividual", singleData, res);
+                        });
+                    // callback(null, found);
+
+                },
+            ],
+            function (err, excelData) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (excelData) {
+                    if (_.isEmpty(excelData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, excelData);
+                    }
+                }
+            });
+    },
+
+
 };
 module.exports = _.assign(module.exports, exports, model);
