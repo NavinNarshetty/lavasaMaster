@@ -1250,7 +1250,11 @@ var model = {
                                     callback(null, []);
                                 } else {
                                     data.school = schoolsfa.school;
-                                    data.sfaid = schoolsfa.sfaid;
+                                    if (schoolsfa.sfaid == undefined) {
+                                        data.sfaid = '-';
+                                    } else {
+                                        data.sfaid = schoolsfa.sfaid;
+                                    }
                                     data.email = found.email;
                                     data.mobile = found.mobile;
                                     console.log('schoolDetail', data);
