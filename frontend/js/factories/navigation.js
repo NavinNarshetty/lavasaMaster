@@ -991,6 +991,26 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 method: 'POST',
                 data: formData
             }).then(callback);
+        },
+        getOneSponsor: function (formData, callback) {
+            $http({
+                url: adminUrl2 + 'SponsorPage/getOne',
+                method: 'POST',
+                data: formData
+            }).then(callback);
+        },
+        getSponsorCard: function (formData, callback) {
+            $http({
+                url: adminUrl2 + 'SponsorCard/getAllBySponsorPageId',
+                method: 'POST',
+                data: formData
+            }).then(callback);
+        },
+        getSponsor: function (callback) {
+            $http({
+                url: adminUrl2 + 'SponsorPage/getAllBySponsorType',
+                method: 'POST'
+            }).then(callback);
         }
     };
 });

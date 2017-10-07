@@ -6,7 +6,7 @@
       </div>
     </div>
   </div>
-</div>
+</div>{{formData.sport.sportslist.sportsListSubCategory.sportsListCategory.name}}
 
 <div class="panel-content">
   <div class="row">
@@ -81,48 +81,53 @@
                   </div>
                 </div>
                 <!-- DATE TIME END -->
-                <!-- COMBAT STATUS -->
-                <div class="form-group" ng-if="formData.sportType=='Combat Sports' && formData.isTeam==false">
-                  <label>Status</label>{{formData.resultsCombat.status}}
-                  <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultsCombat.status">
-                    <ui-select-match placeholder="Please Enter Status">
-                      {{$select.selected}}
-                      <!-- {{formData.resultsCombat.status.status}} -->
-                    </ui-select-match>
-                    <ui-select-choices repeat="status in statusList | filter:{status:$select.search}">
-                      <span ng-bind-html="status"></span>
-                    </ui-select-choices>
-                  </ui-select>
 
-                  <div class="error-msg" ng-if="detailForm.status.$invalid && detailForm.status.$touched">Please Enter Status*</div>
+                <!-- STATUS AND WINNER FOR RACQUET AND COMBAT -->
+                <div class="row" ng-if="formData.sport.sportslist.name !=='Chess'">
+                  <div class="col-md-6">
+                    <!-- COMBAT /RACQUET STATUS -->
+                    <div class="form-group">
+                      <label>Status</label>
+                      <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.result.status">
+                        <ui-select-match placeholder="Please Enter Status">
+                          {{$select.selected}}
+                          <!-- {{formData.resultsCombat.status.status}} -->
+                        </ui-select-match>
+                        <ui-select-choices repeat="status in statusList | filter:{status:$select.search}">
+                          <span ng-bind-html="status"></span>
+                        </ui-select-choices>
+                      </ui-select>
+
+                      <div class="error-msg" ng-if="detailForm.status.$invalid && detailForm.status.$touched">Please Enter Status*</div>
+                    </div>
+                    <!-- COMBAT /RACQUET STATUS END -->
+                  </div>
+                  <div class="col-md-6">
+                    <!-- WINNER -->
+                    <div class="form-group">
+                      <label>winner Type</label>
+                      <select name="sponsortype" class="form-control" ng-model="formData.result.winner.player" placeholder="Enter Video Type" required>
+                               <option value="{{player.athleteId._id}}" ng-repeat="player in formData.opponentsSingle">{{player.athleteId.fullName}}</option>
+                        </select>
+                      <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
+                    </div>
+                    <!-- WINNER END -->
+                  </div>
                 </div>
-                <!-- COMBAT STATUS END -->
+                <!-- STATUS AND WINNER FOR RACQUET AND COMBAT -->
 
-                <!-- RACQUET STATUS -->
-                <div class="form-group" ng-if="formData.sport.sportslist.name  !=='Chess'">
-                  <label>Status</label>{{formData.resultsRacquet.status}}
-                  <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultsRacquet.status" required>
-                    <ui-select-match placeholder="Please Enter Status">
-                      {{$select.selected}}
-                      <!-- {{formData.resultsCombat.status.status}} -->
-                    </ui-select-match>
-                    <ui-select-choices repeat="status in statusList | filter: $select.search track by $index">
-                      <span ng-bind-html="status"></span>
-                    </ui-select-choices>
-                  </ui-select>
 
-                  <div class="error-msg" ng-if="detailForm.status.$invalid && detailForm.status.$touched">Please Enter Status*</div>
-                </div>
-                <!-- RACQUET STATUS END -->
+
+
 
                 <!-- CHECKBOX -->
                 <div class="checkbox from-group" ng-if="formData.sport.sportslist.name !=='Chess'">
                   <div class="row">
                     <div class="col-md-6">{{formData.resultsCombat.isDraw}}
-                      <label><input type="checkbox" ng-model="formData.resultsCombat.isDraw" value="formData.resultsCombat.isdraw"> isdraw</label>
+                      <label><input type="checkbox" ng-model="formData.result.isDraw" value="formData.resultsCombat.isdraw"> isdraw</label>
                     </div>
                     <div class="col-md-6">{{formData.resultsCombat.isNoMatch}}
-                      <label><input type="checkbox" ng-model="formData.resultsCombat.isNoMatch" value="formData.resultsCombat.isNoMatch"> isNoMatch</label>
+                      <label><input type="checkbox" ng-model="formData.result.isNoMatch" value="formData.resultsCombat.isNoMatch"> isNoMatch</label>
                     </div>
                   </div>
                 </div>
@@ -131,14 +136,14 @@
                 <!-- SCORE CARD -->
                 <div class="form-group" ng-if="formData.sport.sportslist.name  !=='Chess'">
                   <label>Score Card <span ng-show="type.required">*</span></label>
-                  <upload-image ng-model="formData.resultsCombat.scoreSheet" multiple inobj></upload-image>
+                  <upload-image ng-model="formData.result.scoreSheet" multiple inobj></upload-image>
                 </div>
                 <!-- END SCORE CARD -->
 
                 <!-- MATCH PHOTO -->
                 <div class="form-group" ng-if="formData.sport.sportslist.name  !=='Chess'">
                   <label>Match<span ng-show="type.required">*</span></label>
-                  <upload-image ng-model="formData.resultsCombat.matchPhoto" multiple inobj></upload-image>
+                  <upload-image ng-model="formData.result.matchPhoto" multiple inobj></upload-image>
                 </div>
                 <!-- END MATCH PHOTO -->
 
@@ -152,7 +157,7 @@
                 <!-- END PLAYER HEAD -->
 
                 <!-- PLAYER SWISS -->
-                <pre>{{formData.sportType}} {{formData.isTeam}}</pre>
+                <!-- <pre>{{formData.sportType}} {{formData.isTeam}}</pre> -->
                 <div class="test" ng-if="formData.sport.sportslist.name =='Chess'" ng-repeat="player in formData.resultSwiss.players track by $index">
                   <div class="form-group">
                     <h6 class="text-center">Player {{$index+1}}.</h6>
@@ -324,6 +329,7 @@
                   <!-- SETS END -->
                 </div>
                 <!-- PLAYER RAQUET -->
+
 
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-default" type="submit" ng-click="saveDataMatch(formData)">Save</button>

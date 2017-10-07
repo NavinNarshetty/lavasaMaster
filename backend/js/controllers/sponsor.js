@@ -263,6 +263,7 @@ myApp.controller('DetailSponsorCardCtrl', function ($scope, TemplateService, Nav
     console.log("i am in ");
     console.log(data, "save")
     $scope.url = "SponsorCard/save";
+    // data.sponsorName = data.sponsorName._id;
     NavigationService.apiCall($scope.url, data, function (data) {
       console.log("schema is easy")
       if (data.value) {

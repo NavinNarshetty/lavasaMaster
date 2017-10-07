@@ -598,6 +598,22 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
         $scope.matchDetails = data.data;
         $scope.matchDetails.matchId = $scope.matchData.matchId;
         $scope.formData = data.data;
+
+        $scope.sportName = $scope.formData.sport.sportslist.sportsListSubCategory.sportsListCategory.name;
+        switch ($scope.sportName) {
+          case "Combat Sports":
+            console.log("in switch")
+            $scope.formData.result = $scope.formData.resultsCombat;
+            break;
+          case "Racquet Sports":
+            console.log("in racquet")
+            $scope.formData.result = $scope.formData.resultsRacquet;
+            break;
+          case "Individual Sports":
+            console.log("in chess")
+            $scope.formData.result = $scope.formData.resultSwiss;
+        }
+
         _.each($scope.formData.opponentsSingle, function (key, index) {
           console.log($scope.formData.opponentsSingle, 'plr');
           if (key.athleteId.middleName == undefined) {
@@ -617,8 +633,11 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
               })
             })
           } else if ($scope.formData.resultSwiss) {
+
             $scope.formData.resultSwiss.players[index].fullName = key.athleteId.fullName;
-            $scope.formData.resultSwiss.players[index].schoolName = key.athleteId.school.name;
+            if (key.athleteId.school) {
+              $scope.formData.resultSwiss.players[index].schoolName = key.athleteId.school.name;
+            }
 
           }
 

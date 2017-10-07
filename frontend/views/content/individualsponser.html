@@ -5,7 +5,7 @@
     <div class="sponser-header-image text-center">
       <!-- SPONSER IMAGE HOLDER -->
       <div class="specific-sponserimage-holder">
-        <img src="{{individual.headerimg}}" alt="" class="img-responsive">
+        <img src="{{sponsorData.headerImage | serverimage2}}" alt="" class="img-responsive">
       </div>
       <!-- SPONSER IMAGE HOLDER END -->
     </div>
@@ -17,28 +17,14 @@
     <!-- LOGO CAPTION END -->
     <!-- SPONSER CONTENT -->
     <div class="individual-sponsercontent">
-      <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. At cum molestias adipisci velit modi nihil totam obcaecati
-        minima ab placeat culpa consequatur, ratione tempora omnis fugiat quaerat molestiae soluta expedita quos natus illum
-        dolor. Facilis ab quo itaque ipsa soluta iure ipsum consequatur possimus cumque voluptatum iste quia obcaecati doloribus
-        consequuntur illum sit quaerat tempore, cupiditate reprehenderit, magnam deserunt eveniet non. Iste dicta vero assumenda
-        facilis accusamus numquam minima eos inventore fuga, doloremque, ullam reprehenderit voluptas fugiat distinctio?
-        Id sint dignissimos iure fugit numquam, officiis accusantium. Perspiciatis iure ipsam cupiditate quae iste harum
-        optio commodi, tenetur quas eaque repellendus hic.</div>
-
-      <div style="padding-top:20px;">Lorem ipsum dolor, sit amet consectetur adipisicing elit. At cum molestias adipisci velit modi nihil totam obcaecati
-        minima ab placeat culpa consequatur, ratione tempora omnis fugiat quaerat molestiae soluta expedita quos natus illum
-        dolor. Facilis ab quo itaque ipsa soluta iure ipsum consequatur possimus cumque voluptatum iste quia obcaecati doloribus
-        consequuntur illum sit quaerat tempore, cupiditate reprehenderit, magnam deserunt eveniet non. Iste dicta vero assumenda
-        facilis accusamus numquam minima eos inventore fuga, doloremque, ullam reprehenderit voluptas fugiat distinctio?
-        Id sint dignissimos iure fugit numquam, officiis accusantium. Perspiciatis iure ipsam cupiditate quae iste harum
-        optio commodi, tenetur quas eaque repellendus hic.</div>
+      <div ng-bind-html="sponsorData.content"></div>
     </div>
     <!-- SPONSER CONTENT END -->
 
     <!-- BANNER IMAGE -->
     <div class="individual-banner-image">
       <div class="individual-banner-holder relate">
-        <img src="{{individual.bannerimg}}" alt="Banner" class="img-responsive">
+        <img src="{{sponsorData.video.videoimage | serverimage2 }}" alt="Banner" class="img-responsive">
         <div class="sponser-videoplay-holder">
           <i class="fa fa-play sponer-playe-button"></i>
         </div>
@@ -52,7 +38,7 @@
         <div class="individual-swiper-holder">
           <div class="swiper-container">
             <div class="swiper-wrapper">
-              <div class="swiper-slide" ng-repeat="card in data  track by $index">
+              <div class="swiper-slide" ng-repeat="card in sponsorCard  track by $index">
                 <!-- SWIPER CARD -->
                 <div class="sponser-swipercard">
                   <div class="inverted-commos-bottom">
@@ -64,7 +50,7 @@
                   <!-- SWIPER CARD IMAGE -->
                   <div class="sponser-swipercard-image display-inline">
                     <div class="sponser-swipercard-imageholder">
-                      <img src="img/dishapatani1.jpg" alt="user" class="img-responsive">
+                      <img src="{{card.cardImage | serverimage2 }}" alt="user" class="img-responsive">
                     </div>
                   </div>
                   <!-- SWIPER CARD IMAGE END -->
@@ -72,13 +58,13 @@
                   <div class="sponser-swipercard-contentholder display-inline">
                     <!-- SWIPER CONTENT HEADER -->
                     <div class="sponser-swipercard-header">
-                      <h3 class="sport-color-primary">SMURUTI GOKHALE</h3>
+                      <h3 class="sport-color-primary">{{card.header}}</h3>
                     </div>
                     <div class="sponser-swipercard-content">
-                      <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui debitis illo doloremque earum sapiente
-                        est, tenetur aliquam accusamus repudiandae facere voluptatibus unde possimus error illum numquam
-                        odit tempora aliquid quas.</p>
-                      <p class="sponser-ceo">-CEO,Enerzal India</p>
+                      <div ng-bind-html="card.content">
+
+                      </div>
+                      <p class="sponser-ceo">-{{card.designation}}</p>
                     </div>
                     <!-- SWIPER CONTENT HEADER END -->
                   </div>
@@ -98,7 +84,7 @@
     <!-- MASONARY -->
     <div class="individual-sponsergalleryholder">
       <div class="row" masonry>
-        <div class="col-md-4 col-sm-6 col-xs-6 masonry-brick" ng-repeat="image in gallery track by $index">
+        <div class="col-md-4 col-sm-6 col-xs-6 masonry-brick" ng-repeat="image in sponserData.videoGallery track by $index">
           <!-- <a fancybox href="{{image.img}}"> -->
             <div class="individual-sponsergallerycard relate">
               <div class="individual-sponsergallerycard-image" ng-if="image.type=='image'">
@@ -106,12 +92,12 @@
                   <img src="{{image.img}}" alt="image" class="img-responsive">
                 </a>
               </div>
-              <div class="individual-sponsergallerycard-video" ng-if="image.type=='video'">
-                <a class="fancybox.iframe" fancybox href="https://www.youtube.com/embed/tMqQ8U4-QNI?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
-                  <img src="{{image.img}}" alt="video" class="img-responsive">
+              <div class="individual-sponsergallerycard-video" ng-if="image.videoType=='video'">
+                <a class="fancybox.iframe" fancybox href="https://www.{{image.vtype}}.com/embed/tMqQ8U4-QNI?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                  <img src="{{image.vimage | serverimage2 }}" alt="video" class="img-responsive">
                 </a>
               </div>
-              <div class="sponser-videoplay-gallery" ng-if="image.type=='video'">
+              <div class="sponser-videoplay-gallery" ng-if="image.videoType=='video'">
                   <i class="fa fa-play sponser-gallery-play"></i>
               </div>
             </div>
