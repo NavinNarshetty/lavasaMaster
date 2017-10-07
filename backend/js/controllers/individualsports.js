@@ -561,6 +561,11 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
         $state.go('detailplayer', {
           id: data.matchId
         });
+      } else if (data.sport.sportslist.drawFormat.name == "League cum Knockout") {
+        console.log("in league cum knockout")
+        $state.go('detailplayer', {
+          id: data.matchId
+        });
       }
     }
 

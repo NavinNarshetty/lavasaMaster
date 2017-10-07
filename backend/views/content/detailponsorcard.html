@@ -20,10 +20,27 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label>CARD IMAGE </label>
-                  <upload-image ng-model="formData.card.image" inobj></upload-image>
+                  <upload-image ng-model="formData.cardImage"></upload-image>
                 </div>
               </div>
               <!-- CARD IMAGE END -->
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Sponsor Name</label>
+                  <ui-select name="selectsponsor" id="selectsponsor" theme="bootstrap" ng-model="formData.sponsorName" ng-change="searchSponsor($select.selected._id)"
+                    ng-disabled="setDisabled">
+                    <ui-select-match placeholder="Enter Sponsor Name" allow-clear="true">
+                      {{$select.selected.name}}
+                    </ui-select-match>
+                    <ui-select-choices refresh.delay="0" repeat="item in items | filter:$select.search" refresh="getAllSponsor($select.search)">
+                      <span ng-bind-html="item.name"></span>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-msg" ng-if="sponsorForm.selectsponsor.$invalid && sponsorForm.selectsponsor.$touched">Please Enter Weight *</div>
+                </div>
+              </div>
             </div>
             <div class="row">
               <!-- CARD CONTENT -->
@@ -33,14 +50,17 @@
                   <label for="">Card Content</label>
                   <div class="form-group">
                     <label for="">Header</label>
-                    <input type="text" ng-model="formData.card.header" placeholder="Title" class="form-control">
+                    <input type="text" name="header" ng-model="formData.header" placeholder="Title" class="form-control" required>
+                    <div class="error-msg" ng-if="sponsorForm.header.$invalid && sponsorForm.header.$touched">Please Enter Header *</div>
                   </div>
                   <div class="form-group">
                     <label for="">Designation</label>
-                    <input type="text" ng-model="formData.card.designation" placeholder="Designation" class="form-control">
+                    <input type="text" ng-model="formData.designation" name="designation" placeholder="Designation" class="form-control" required>
+                    <div class="error-msg" ng-if="sponsorForm.designation.$invalid && sponsorForm.designation.$touched">Please Enter Designation *</div>
                   </div>
                   <div class="textholder tinymce form-group">
-                    <text-angular ng-model="formData.card.content" name="section1text"></text-angular>
+                    <text-angular ng-model="formData.content" name="cardcontent" ng-required='true'></text-angular>
+                    <div class="error-msg" ng-if="sponsorForm.cardcontent.$invalid && sponsorForm.cardcontent.$touched">Please Enter Valid Content *</div>
                   </div>
                 </div>
                 <!--TEXT ANGULAR END  -->
@@ -48,6 +68,16 @@
               <!-- CARD CONTENT END -->
             </div>
             <!-- SWIPER CARD END -->
+            <!-- BUTTON -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-default" type="submit" ng-click="savesponsorcard(formData)" ng-disabled="sponsorForm.$invalid">Save</button>
+                  <button class="btn btn-default" ui-sref='sponsorcard'>Cancel</button>
+                </div>
+              </div>
+            </div>
+            <!-- BUTTON END -->
           </form>
         </div>
       </div>

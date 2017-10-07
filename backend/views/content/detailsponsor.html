@@ -16,7 +16,7 @@
           <form name="sponsorForm" role="form" class="sec">
             <div class="row">
               <!-- SPONSOR NAME -->
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>Sponsor Name</label>
                   <input type="text" name="sponsor" ng-model="formData.name" class="form-control" placeholder="Enter Name" required>
@@ -26,7 +26,7 @@
               <!-- SPONSOR NAME END -->
 
               <!-- CITY -->
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div class="form-group">
                   <label>City</label>
                   <input type="text" name="city" ng-model="formData.city" class="form-control text-capitalize" placeholder="Enter City" required>
@@ -34,13 +34,28 @@
                 </div>
               </div>
               <!-- CITY END -->
+              <!-- SPONSOR TYPE -->
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Sponsor Type</label>
+                  <select name="sponsortype" class="form-control" ng-model="formData.sponsorType" placeholder="Enter Video Type" required>
+                           <option value="supportedby">Supported By</option>
+                           <option value="Sponsor">Sponsor</option>
+                           <option value="partner">Partner</option>
+                           <option value="sponsorandpartner">Sponsor & Partner</option>
+                    </select>
+                  <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
+                </div>
+              </div>
+
+              <!-- SPONSOR TYPE END -->
             </div>
             <!-- HEADER IMAGE -->
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Sponsor Image <span style="color:#ea5249;">(Note:image size should be 300x300 only *)</span> <span ng-show="type.required">*</span></label>
-                  <upload-image ng-model="formData.headerimage" inobj></upload-image>
+                  <upload-image ng-model="formData.headerImage" inobj></upload-image>
                 </div>
               </div>
             </div>
@@ -82,7 +97,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Video Type</label>
-                    <select name="videotype" class="form-control" ng-model="formData.video.type" placeholder="Enter Video Type" required>
+                    <select name="videotype" class="form-control" ng-model="formData.video.videotype" placeholder="Enter Video Type" required>
                            <option value="vimeo">vimeo</option>
                            <option value="youtube">youtube</option>
                     </select>
@@ -96,8 +111,8 @@
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label>Sponsor Image <span style="color:#ea5249;">(Note:image size should be 1920x600 only *)</span> <span ng-show="type.required">*</span></label>
-                    <upload-image ng-model="formData.video.image" inobj></upload-image>
+                    <label>Video Banner Image <span style="color:#ea5249;">(Note:image size should be 1920x600 only *)</span> <span ng-show="type.required">*</span></label>
+                    <upload-image ng-model="formData.video.videoimage" inobj></upload-image>
                   </div>
                 </div>
               </div>
@@ -133,20 +148,20 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr ng-repeat="content in formData.videoTable">
+                        <tr ng-repeat="content in formData.videoGallery">
                           <td>
                             <div class="form-group">
-                              <upload-image ng-model="content.image" inobj no-view></upload-image>
+                              <upload-image ng-model="content.vimage" inobj no-view></upload-image>
                             </div>
                           </td>
                           <td>
                             <div class="form-group">
-                              <input type="text" placeholder="Video Link" class="form-control" ng-model="content.link">
+                              <input type="text" placeholder="Video Link" class="form-control" ng-model="content.vlink">
                             </div>
                           </td>
                           <td>
                             <div class="form-group">
-                              <input type="number" placeholder="Video Type" class="form-control" ng-model="content.type">
+                              <input type="text" placeholder="Video Type" class="form-control" ng-model="content.vtype">
                             </div>
                           </td>
                           <td ng-click="deleteRow(formData,$index);">
@@ -161,7 +176,16 @@
             </div>
             <!-- VIDEO GALLERY TABLE -->
 
-
+            <!-- BUTTON -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="text-center mt20 odd-even-button">
+                  <button class="btn btn-default" type="submit" ng-click="savesponsor(formData)" ng-disabled="sponsorForm.$invalid">Save</button>
+                  <button class="btn btn-default" ui-sref='sponsor'>Cancel</button>
+                </div>
+              </div>
+            </div>
+            <!-- BUTTON END -->
 
           </form>
         </div>

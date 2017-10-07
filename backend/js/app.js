@@ -419,7 +419,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         // detail sponsor
         .state('detail-sponsor', {
-            url: "/detail-sponsor",
+            url: "/detail-sponsor/:id",
             templateUrl: "views/template.html",
             controller: 'DetailSponsorCtrl'
         })
@@ -431,7 +431,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         // detail sponsor card
         .state('detail-sponsorcard', {
-            url: "/detail-sponsorcard",
+            url: "/detail-sponsorcard/:id",
             templateUrl: "views/template.html",
             controller: 'DetailSponsorCardCtrl'
         })
