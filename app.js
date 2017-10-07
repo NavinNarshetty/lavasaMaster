@@ -25,8 +25,8 @@ var mongoose;
 mongoose = require('mongoose');
 
 // global["database"] = "sfanew";
-// global["database"] = "sfa1";
-global["database"] = "live-sfa";
+global["database"] = "sfa1";
+// global["database"] = "live-sfa";
 // global["database"] = "test-sfa";
 // global["database"] = "sfa";
 mongoose.Promise = global.Promise;

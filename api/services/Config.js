@@ -8,12 +8,12 @@ schema.plugin(deepPopulate, {});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Config', schema);
-// var requrl = "http://wohlig.io:1337/api/";
+var requrl = "http://wohlig.io:1337/api/";
 // var requrl = "http://sfa2.wohlig.co.in/api/";
 // var requrl = "https://sfa.wohlig.co.in/api/";
 // var requrl = "http://mumbaischool.sfanow.in/api/";
 // var requrl = "http://mumbaicollege.sfanow.in/api/";
-var requrl = "http://hyderabadschool.sfanow.in/api/";
+// var requrl = "http://hyderabadschool.sfanow.in/api/";
 // var requrl = "http://hyderabadcollege.sfanow.in/api/";
 // var requrl = "http://ahmedabadschool.sfanow.in/api/";
 // var requrl = "http://ahmedabadcollege.sfanow.in/api/";
@@ -556,29 +556,31 @@ var model = {
         });
     },
 
-     generatePdf: function (pdfObj, callback) {
+    generatePdf: function (pdfObj, callback) {
         var pdf = require('html-pdf');
-        
+
         // obj = _.assign(obj, page);
         var obj = {};
         var env = {};
 
 
         var file = pdfObj.filename;
-        
+
         var i = 0;
         console.log(file);
-        sails.hooks.views.render(file,{data:pdfObj}, function (err, html) {
-            console.log("inside sails", html,err);
+        sails.hooks.views.render(file, {
+            data: pdfObj
+        }, function (err, html) {
+            console.log("inside sails", html, err);
             if (err) {
-                callback(err,null);
+                callback(err, null);
             } else {
                 console.log("inside else");
                 //var path = "http://104.155.129.33:1337/upload/readFile/";
                 var path = "pdf/";
-                var newFilename  = pdfObj.sportObj.sportslist.sportsListSubCategory.name +"-"+ pdfObj.sportObj.ageGroup.name +"-"+pdfObj.sportObj.gender +"-"+pdfObj.sportObj.sportslist.name+"-"+ pdfObj.filename + ".pdf";
+                var newFilename = pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.sportObj.ageGroup.name + "-" + pdfObj.sportObj.gender + "-" + pdfObj.sportObj.sportslist.name + "-" + pdfObj.filename + ".pdf";
                 var writestream = fs.createWriteStream(path + newFilename);
-               
+
                 writestream.on('finish', function (err, res) {
                     if (err) {
                         console.log("Something Fishy", err);
@@ -615,10 +617,10 @@ var model = {
                     },
                     // "filename": page.filename + ".pdf"
                 };
-                
-                console.log("qwerty");                
+
+                console.log("qwerty");
                 pdf.create(html, options).toStream(function (err, stream) {
-                    console.log("qwerty",err,stream);
+                    console.log("qwerty", err, stream);
                     if (err) {
                         callback(err);
                     } else {
