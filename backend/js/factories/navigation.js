@@ -305,6 +305,11 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data);
             });
         },
+        generateAdditionalPaymentExcel: function (callback) {
+            $http.post(adminurl + 'AdditionalPayment/generateExcel').then(function (data) {
+                callback(data);
+            });
+        },
         // generateAthleteExcelWithData: function (data, callback) {
         //     console.log('from Controller', data);
         //     $http.get(adminurl + 'Athelete/generateExcel', data).then(function (data) {

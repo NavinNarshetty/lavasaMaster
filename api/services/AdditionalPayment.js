@@ -464,10 +464,9 @@ var model = {
                 callback(null, found);
             }
         });
-
     },
 
-    generateExcel: function (data, res) {
+    generateExcel: function (res) {
         async.waterfall([
                 function (callback) {
                     var deepSearch = "athleteId.school";
@@ -484,15 +483,35 @@ var model = {
                 function (found, callback) {
                     async.concatSeries(found, function (mainData, callback) {
                             var obj = {};
-                            obj["Name"] = mainData.firstName + mainData.lastname;
-
+                            obj["Date"] = moment.utc(mainData.createdAt).utcOffset("+05:30").format('DD-MM-YYYY');;
+                            obj["Receipt No"] = mainData.receiptNo;
+                            obj["SFA-Id"] = mainData.athleteId.sfaId;
+                            obj["First Name"] = mainData.athleteId.firstName;
+                            if (mainData.athleteId.middleName) {
+                                obj["Middle Name"] = mainData.athleteId.middleName;
+                            } else {
+                                obj["Middle Name"] = " ";
+                            }
+                            obj["Last Name"] = mainData.athleteId.surname
+                            if (mainData.athleteId.atheleteSchoolName) {
+                                obj["School Name"] = mainData.athleteId.atheleteSchoolName;
+                            } else {
+                                obj["School Name"] = mainData.athleteId.school.name;
+                            }
+                            obj["Email"] = mainData.athleteId.email;
+                            obj["Payment Mode"] = mainData.feeType;
+                            obj["Payment Status"] = mainData.paymentStatus;
+                            if (mainData.athleteId.middleName) {
+                                obj["Transaction Id"] = mainData.transactionId;
+                            } else {
+                                obj["Transaction Id"] = " ";
+                            }
+                            console.log('obj', obj);
                             callback(null, obj);
                         },
                         function (err, singleData) {
-                            Config.generateExcel("KnockoutIndividual", singleData, res);
+                            Config.generateExcel("Additional-Payment", singleData, res);
                         });
-                    // callback(null, found);
-
                 },
             ],
             function (err, excelData) {

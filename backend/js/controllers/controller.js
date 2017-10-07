@@ -5137,12 +5137,18 @@ myApp.controller('AdditionalPaymentCtrl', function ($scope, TemplateService, Nav
         $scope.constraints._id = data;
         NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
             if (data.value) {
-                toastr.success('Successfully Deleted', 'Age Group Message');
+                toastr.success('Successfully Deleted', 'Additional Payment Message');
                 $scope.modalInstance.close();
                 $scope.viewTable();
             } else {
-                toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
+                toastr.error('Something Went Wrong while Deleting', 'Additional Payment Message');
             }
+        });
+    }
+
+    $scope.generateExcel = function () {
+        NavigationService.generateAdditionalPaymentExcel(function (data) {
+            window.location.href = adminurl + 'AdditionalPayment/generateExcel';
         });
     }
 

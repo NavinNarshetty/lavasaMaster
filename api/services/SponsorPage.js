@@ -62,7 +62,7 @@ var model = {
             // Stage 3
             {
                 $sort: {
-                    _id: 1,
+                    _id: -1,
                 }
             },
 
@@ -70,8 +70,6 @@ var model = {
         return pipeline;
     },
     getAllBySponsorType: function (data, callback) {
-        // async.waterfall([
-        // function (callback) {
         var pipeLine = SponsorPage.getAggregatePipeLine(data);
         SponsorPage.aggregate(pipeLine, function (err, totals) {
             if (err) {
@@ -85,18 +83,6 @@ var model = {
                 }
             }
         });
-        // },
-        // ], function (err, data2) {
-        //     if (err) {
-        //         callback(err, null);
-        //     } else if (data2) {
-        //         if (_.isEmpty(data2)) {
-        //             callback("Data is empty", null);
-        //         } else {
-        //             callback(null, data2);
-        //         }
-        //     }
-        // });
     }
 };
 module.exports = _.assign(module.exports, exports, model);
