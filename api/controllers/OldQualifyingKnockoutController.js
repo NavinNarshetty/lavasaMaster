@@ -13,7 +13,7 @@ var controller = {
 
     saveKnockoutMatch: function (req, res) {
         if (req.body) {
-            OldQualifyingKnockout.saveMatchIndividual(req.body, res.callback);
+            OldQualifyingKnockout.saveQualifyingMatchIndividual(req.body, res.callback);
         } else {
             res.json({
                 "data": "Body not Found",
