@@ -240,20 +240,10 @@ var model = {
         var thirdPlace = {};
         async.waterfall([
                 function (callback) {
-                    OldLeagueKnockout.find({
+                    OldQualifyingKnockout.find({
                         participantType: "player",
                         year: data.year,
-                        $and: [{
-                            leagueknockoutround: {
-                                $exists: true
-                            }
-                        }, {
-                            round: {
-                                $exists: true
-                            }
-                        }]
-                    }).sort({
-                        leagueknockoutround: 1
+                        round: "Final"
                     }).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);
@@ -269,7 +259,7 @@ var model = {
                     async.concatSeries(complete, function (mainData, callback) {
                             async.concatSeries(mainData, function (singleData, callback) {
                                     singleData.excelType = "knockout";
-                                    singleData.roundName = singleData.round;
+                                    singleData.roundName = singleData.name;
                                     OldLeagueKnockout.getMatchDetails(singleData, function (err, matchData) {
                                         if (err) {
                                             callback(err, null);
@@ -314,10 +304,11 @@ var model = {
 
     getMatchDetails: function (data, callback) {
         console.log("data", data);
-        var match = {};
-        match.opponentsSingle = [];
-        match.opponentsTeam = [];
-        async.eachSeries(data.heats, function (n, callback) {
+        // var match = {};
+        async.concatSeries(data.heats, function (n, callback) {
+            var match = {};
+            match.opponentsSingle = [];
+            match.opponentsTeam = [];
             async.waterfall([
                     function (callback) {
                         Sport.findOne({
@@ -334,7 +325,7 @@ var model = {
                                 match.round = data.roundName;
                                 match.incrementalId = data.matchid;
                                 match.excelType = data.excelType;
-                                match.matchId = "League";
+                                match.matchId = "Q.k.";
                                 callback(null, found);
                             }
                         });
@@ -342,11 +333,12 @@ var model = {
                     function (found, callback) {
                         IndividualSport.findOne({
                             oldId: n.player,
-                            sport: found._id
+                            // sport: found._id
                         }).lean().exec(function (err, individualData) {
                             if (err) {
                                 callback(err, null);
                             } else if (_.isEmpty(individualData)) {
+                                console.log("empty");
                                 callback(null, []);
                             } else {
                                 match.opponentsSingle.push(individualData._id);
@@ -379,252 +371,13 @@ var model = {
                         callback(null, data3);
                     }
                 });
-        }, function (err) {
+        }, function (err, found) {
             if (err) {
                 callback(err, null);
             } else {
-                callback(null, data);
+                callback(null, found);
             }
         });
     },
-
-    saveLeagueMatchTeam: function (data, callback) {
-        var thirdPlace = {};
-        async.waterfall([
-                function (callback) {
-                    OldLeagueKnockout.find({
-                        participantType: "team",
-                        year: data.year,
-                        $and: [{
-                            leagueknockoutround: {
-                                $exists: true
-                            }
-                        }, {
-                            round: {
-                                $exists: false
-                            }
-                        }]
-                    }).sort({
-                        leagueknockoutround: 1
-                    }).lean().exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            callback(null, []);
-                        } else {
-                            callback(null, found);
-                        }
-                    });
-                },
-                function (found, callback) {
-                    var complete = _.groupBy(found, "sport");
-                    async.concatSeries(complete, function (mainData, callback) {
-                            async.concatSeries(mainData, function (singleData, callback) {
-                                    singleData.excelType = "league";
-                                    singleData.roundName = singleData.leagueknockoutround;
-                                    OldLeagueKnockout.getMatchDetailsTeam(singleData, function (err, matchData) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else {
-                                            if (_.isEmpty(matchData)) {
-                                                var err = {
-                                                    error: "no matchData",
-                                                    data: matchData
-                                                }
-                                                callback(null, err);
-                                            } else {
-                                                callback(null, matchData);
-                                            }
-                                        }
-                                    });
-                                },
-                                function (err, finalData) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, finalData);
-                                    }
-                                });
-                        },
-                        function (err, finalData) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, finalData);
-                            }
-                        });
-
-                    // callback(null, complete);
-                },
-            ],
-            function (err, data3) {
-                if (err) {
-                    callback(err, null);
-                } else {
-                    callback(null, data3);
-                }
-            });
-    },
-
-    saveknockoutMatchTeam: function (data, callback) {
-        var thirdPlace = {};
-        async.waterfall([
-                function (callback) {
-                    OldLeagueKnockout.find({
-                        participantType: "team",
-                        year: data.year,
-                        $and: [{
-                            leagueknockoutround: {
-                                $exists: true
-                            }
-                        }, {
-                            round: {
-                                $exists: true
-                            }
-                        }]
-                    }).sort({
-                        leagueknockoutround: 1
-                    }).lean().exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(found)) {
-                            callback(null, []);
-                        } else {
-                            callback(null, found);
-                        }
-                    });
-                },
-                function (found, callback) {
-                    var complete = _.groupBy(found, "sport");
-                    async.concatSeries(complete, function (mainData, callback) {
-                            async.concatSeries(mainData, function (singleData, callback) {
-                                    singleData.excelType = "knockout";
-                                    singleData.roundName = singleData.round;
-                                    OldLeagueKnockout.getMatchDetailsTeam(singleData, function (err, matchData) {
-                                        if (err) {
-                                            callback(err, null);
-                                        } else {
-                                            if (_.isEmpty(matchData)) {
-                                                var err = {
-                                                    error: "no matchData",
-                                                    data: matchData
-                                                }
-                                                callback(null, err);
-                                            } else {
-                                                callback(null, matchData);
-                                            }
-                                        }
-                                    });
-                                },
-                                function (err, finalData) {
-                                    if (err) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, finalData);
-                                    }
-                                });
-                        },
-                        function (err, finalData) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                callback(null, finalData);
-                            }
-                        });
-                },
-            ],
-            function (err, data3) {
-                if (err) {
-                    callback(err, null);
-                } else {
-                    callback(null, data3);
-                }
-            });
-    },
-
-    getMatchDetailsTeam: function (data, callback) {
-        var match = {};
-        match.opponentsSingle = [];
-        match.opponentsTeam = [];
-        async.waterfall([
-            function (callback) {
-                Sport.findOne({
-                    oldId: data.sport
-                }).lean().exec(function (err, found) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(found)) {
-                        callback(null, []);
-                    } else {
-                        console.log("sport", found);
-                        match.sport = found._id;
-                        match.scheduleDate = data.date;
-                        // var round = data.round.toLowerCase();
-                        match.round = data.roundName;
-                        match.incrementalId = data.matchid;
-                        match.excelType = data.excelType;
-                        match.matchId = "League";
-                        callback(null, found);
-                    }
-                });
-            },
-            function (found, callback) {
-                TeamSport.find({
-                    oldId: data.team1
-                }).lean().exec(function (err, individualData) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(individualData)) {
-                        console.log("empty");
-                        callback(null, []);
-                    } else {
-                        console.log("inside push", individualData);
-                        match.opponentsTeam.push(individualData[0]._id);
-                        callback(null, found);
-                    }
-                });
-            },
-            function (found, callback) {
-                TeamSport.find({
-                    oldId: data.team2
-                }).lean().exec(function (err, individualData) {
-                    if (err) {
-                        callback(err, null);
-                    } else if (_.isEmpty(individualData)) {
-                        console.log("empty");
-                        callback(null, []);
-                    } else {
-                        console.log("inside push", individualData);
-                        match.opponentsTeam.push(individualData[0]._id);
-                        callback(null, individualData);
-                    }
-                });
-            },
-            function (found, callback) {
-                OldHeat.saveMatch(match, function (err, matchData) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(matchData)) {
-                            var err = {
-                                error: "no matchData",
-                                data: matchData
-                            }
-                            callback(null, err);
-                        } else {
-                            callback(null, matchData);
-                        }
-                    }
-                });
-            },
-        ], function (err, data3) {
-            if (err) {
-                callback(err, null);
-            } else {
-                callback(null, data3);
-            }
-        });
-    },
-
 };
 module.exports = _.assign(module.exports, exports, model);

@@ -132,11 +132,10 @@ var model = {
     saveIn: function (complete, individualSport, callback) {
         async.concatSeries(complete, function (mainData, callback) {
             var i = 0;
-            async.eachSeries(mainData._id, function (singleData, callback) {
+            async.concatSeries(mainData._id, function (singleData, callback) {
                 if (i == mainData.sport.length) {
                     i = 0;
                 }
-                // console.log("singleData", singleData, "mainData", mainData.sport);
                 individualSport.sport = [];
                 async.waterfall([
                     function (callback) {
@@ -181,7 +180,6 @@ var model = {
                                     }
                                     console.log("mainData", sport._id);
                                     individualSport.sport.push(sport._id);
-
                                     individualSport.sportsListSubCategory = sport.sportslist.sportsListSubCategory._id;
                                     callback(null, athelete);
                                 }
