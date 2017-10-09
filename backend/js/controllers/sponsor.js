@@ -79,6 +79,7 @@ myApp.controller('DetailSponsorCtrl', function ($scope, TemplateService, Navigat
   $scope.navigation = NavigationService.getnav();
   $scope.formData = {};
   $scope.formData.videoGallery = [];
+  $scope.formData.gallery = [];
 
   if ($stateParams.id) {
     $scope.getOneOldSchoolById = function () {

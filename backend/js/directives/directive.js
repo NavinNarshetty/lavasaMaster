@@ -37,7 +37,7 @@ myApp.directive('uploadImage', function ($http, $filter, $timeout) {
             callback: "&ngCallback"
         },
         link: function ($scope, element, attrs) {
-            console.log($scope.model);
+            console.log($scope.model, attrs);
             $scope.showImage = function () {};
             $scope.check = true;
             if (!$scope.type) {
@@ -129,7 +129,7 @@ myApp.directive('uploadImage', function ($http, $filter, $timeout) {
                     $scope.uploadStatus = "uploaded";
                     if ($scope.isMultiple) {
                         if ($scope.inObject) {
-                            console.log('data', data);
+                            console.log('data', data, $scope.model);
                             $scope.model.push({
                                 "image": data.data[0]
                             });
