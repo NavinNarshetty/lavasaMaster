@@ -58,6 +58,8 @@ var resultHockey = {
 var resultBasketball = {
     team[{
         teamId: _id,
+        noShow: true,
+        walkover: true,
         teamResults:{
             quarterPoints:[{
                 basket:20,
@@ -66,8 +68,6 @@ var resultBasketball = {
         }
         players: [{
             player: id,
-            noShow: true,
-            walkover: true,
             color: "Blue/Red",
             playerPoints: {
                 freeThrow:[{
@@ -102,6 +102,8 @@ var resultBasketball = {
 var resultVolleyball = {
     team[{
         teamId: _id,
+        noShow: true,
+        walkover: true,
         teamResults:{
             set:[{
                 points:20,
@@ -136,6 +138,8 @@ var resultVolleyball = {
 var resultHandball = {
     team[{
         teamId: _id,
+        noShow: true,
+        walkover: true,
         teamResults:{
             halfPoints:10,
             finalPoints:22,
@@ -145,8 +149,6 @@ var resultHandball = {
         }
         players: [{
             player: id,
-            noShow: true,
-            walkover: true,
             color: "Blue/Red",
             playerPoints: {
                 goal:[{
@@ -181,6 +183,8 @@ var resultHandball = {
 var resultWaterPolo = {
     team[{
         teamId: _id,
+        noShow: true,
+        walkover: true,
         teamResults:{
             quarterPoints:[{
                 points:20,
@@ -194,8 +198,7 @@ var resultWaterPolo = {
         },
         players: [{
             player: id,
-            noShow: true,
-            walkover: true,
+            
             color: "Blue/Red",
             playerPoints: {
                 goal:[{
@@ -225,6 +228,8 @@ var resultWaterPolo = {
 var resultKabaddi = {
     team[{
         teamId: _id,
+        noShow: true,
+        walkover: true,
         teamResults:{
             halfPoints:10,
             finalPoints:22,
@@ -234,8 +239,6 @@ var resultKabaddi = {
         }
         players: [{
         player: id,
-        noShow: true,
-        walkover: true,
         color: "Blue/Red",
         playerPoints: {
             raids:[{
@@ -289,6 +292,8 @@ var resultKabaddi = {
 var resultFootball = {
    team[{
         teamId: _id,
+        noShow: true,
+            walkover: true,
         teamResults:{
             halfPoints:10,
             finalPoints:22,
