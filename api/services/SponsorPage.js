@@ -4,13 +4,16 @@ var schema = new Schema({
     headerImage: String,
     content: String,
     sponsorType: String,
+    logoCaption: String,
+    logoLink: String,
+    logoName: String,
     video: {
         link: String,
         videotype: String,
         videoimage: String,
     },
     gallery: [{
-        galleryimage: String,
+        image: String,
         galleryType: {
             type: String,
             default: 'image'

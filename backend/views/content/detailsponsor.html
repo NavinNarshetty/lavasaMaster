@@ -50,6 +50,37 @@
 
               <!-- SPONSOR TYPE END -->
             </div>
+            <div class="row">
+              <!-- LOGO NAME -->
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Logo Caption</label>
+                  <input type="text" name="caption" ng-model="formData.logoCaption" class="form-control" placeholder="Enter Name" required>
+                  <div class="error-msg" ng-if="sponsorForm.caption.$invalid && sponsorForm.caption.$touched">Please Enter Valid Name *</div>
+                </div>
+              </div>
+              <!-- LOGO NAME END -->
+              <!-- LOGO LINK -->
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Logo Link</label>
+                  <input type="text" name="link" ng-model="formData.logoLink" class="form-control" placeholder="Enter Name" required>
+                  <div class="error-msg" ng-if="sponsorForm.link.$invalid && sponsorForm.link.$touched">Please Enter Valid Link *</div>
+                </div>
+              </div>
+              <!-- LOGO LINK END -->
+              <!-- LOGO LINK NAME -->
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label>Logo Link Name</label>
+                  <input type="text" name="linkName" ng-model="formData.logoName" class="form-control" placeholder="Enter Name" required>
+                  <div class="error-msg" ng-if="sponsorForm.linkName.$invalid && sponsorForm.linkName.$touched">Please Enter Valid Link Name *</div>
+                </div>
+              </div>
+
+              <!-- LOGO LINK NAME END -->
+            </div>
+
             <!-- HEADER IMAGE -->
             <div class="row">
               <div class="col-md-12">
@@ -125,7 +156,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Gallery Images</label>
-                  <upload-image ng-model="formData.gallery" inobj></upload-image>
+                  <upload-image ng-model="formData.gallery" multiple inobj></upload-image>
                 </div>
               </div>
             </div>

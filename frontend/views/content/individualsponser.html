@@ -11,20 +11,25 @@
     </div>
     <!-- SPONSER HEADER IMAGE END -->
     <!-- LOGO CAPTION -->
-    <!-- <div class="logo-caption text-center">
-      <p class="text-capitalize ">Energy Drink Partner</p>
-    </div> -->
+    <div class="logo-caption text-center">
+      <p class="text-capitalize ">{{sponsorData.logoCaption}}</p>
+    </div>
     <!-- LOGO CAPTION END -->
     <!-- SPONSER CONTENT -->
     <div class="individual-sponsercontent">
       <div ng-bind-html="sponsorData.content"></div>
+    </div>
+    <div class="logo-link-holder text-center ">
+      <a href="{{sponsorData.logoLink}}" class="sport-color-primary logo-link-holder-link" target="_new">{{sponsorData.logoName}}</a>
     </div>
     <!-- SPONSER CONTENT END -->
 
     <!-- BANNER IMAGE -->
     <div class="individual-banner-image">
       <div class="individual-banner-holder relate">
+        <a class="fancybox.iframe" fancybox href="{{sponsorData.video.link | linkvideo:sponsorData.video.videotype}}">
         <img src="{{sponsorData.video.videoimage | serverimage2 }}" alt="Banner" class="img-responsive">
+          </a>
         <div class="sponser-videoplay-holder">
           <i class="fa fa-play sponer-playe-button"></i>
         </div>
@@ -82,22 +87,22 @@
     <!-- SWIPER END -->
 
     <!-- MASONARY -->
-    <div class="individual-sponsergalleryholder">
-      <div class="row" masonry>
-        <div class="col-md-4 col-sm-6 col-xs-6 masonry-brick" ng-repeat="image in sponserData.videoGallery track by $index">
+    <div class="individual-sponsergalleryholder">{{gallery | json}}
+      <div class="row" masonry preserve-order>
+        <div class="col-md-4 col-sm-6 col-xs-6 masonry-brick" ng-repeat="gallery in sponsorGallery track by $index">
           <!-- <a fancybox href="{{image.img}}"> -->
             <div class="individual-sponsergallerycard relate">
-              <div class="individual-sponsergallerycard-image" ng-if="image.type=='image'">
-                <a fancybox href="{{image.img}}">
-                  <img src="{{image.img}}" alt="image" class="img-responsive">
+              <div class="individual-sponsergallerycard-image" ng-if="gallery.galleryType=='image'">
+                <a fancybox href="{{gallery.image | serverimage2 }}">
+                  <img src="{{gallery.image | serverimage2 }}" alt="image" class="img-responsive">
                 </a>
               </div>
-              <div class="individual-sponsergallerycard-video" ng-if="image.videoType=='video'">
-                <a class="fancybox.iframe" fancybox href="https://www.{{image.vtype}}.com/embed/tMqQ8U4-QNI?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
-                  <img src="{{image.vimage | serverimage2 }}" alt="video" class="img-responsive">
+              <div class="individual-sponsergallerycard-video" ng-if="gallery.videoType=='video'">
+                <a class="fancybox.iframe" fancybox href="{{gallery.vlink | linkvideo:gallery.vtype}}">
+                  <img src="{{gallery.vimage | serverimage2 }}" alt="video" class="img-responsive">
                 </a>
               </div>
-              <div class="sponser-videoplay-gallery" ng-if="image.videoType=='video'">
+              <div class="sponser-videoplay-gallery" ng-if="gallery.videoType=='video'">
                   <i class="fa fa-play sponser-gallery-play"></i>
               </div>
             </div>

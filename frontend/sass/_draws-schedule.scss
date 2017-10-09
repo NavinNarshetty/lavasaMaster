@@ -1328,6 +1328,10 @@ $sport-table-grey:#efeeee !default;
   margin: 10px 0px;
   border: 1px solid #e1e1e1;
   padding: 10px;
+  cursor: pointer;
+  &:hover {
+    border: 2px solid $sport-primary;
+  }
 }
 
 // SPONSER PAGE END
@@ -1343,6 +1347,18 @@ $sport-table-grey:#efeeee !default;
   .individual-banner-image {
     padding: 40px 0px;
     cursor: pointer;
+  }
+}
+
+.logo-caption {
+  padding-bottom: 35px;
+}
+
+.logo-link-holder-link {
+  cursor: pointer;
+  &:hover {
+    color: $sport-primary;
+    text-decoration: underline;
   }
 }
 

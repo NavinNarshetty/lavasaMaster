@@ -73,6 +73,9 @@ myApp.controller('IndividualSponsorCtrl', function ($scope, TemplateService, $st
     $scope.constraints._id = $stateParams.id;
     NavigationService.getOneSponsor($scope.constraints, function (data) {
       $scope.sponsorData = data.data.data;
+      $scope.sponsorGallery = $scope.sponsorData.videoGallery.concat($scope.sponsorData.gallery);
+      $scope.sponsorGallery = _.shuffle($scope.sponsorGallery)
+      console.log($scope.sponsorGallery, "gallery")
       console.log($scope.sponsorData, "console")
     });
   }
@@ -125,33 +128,6 @@ myApp.controller('IndividualSponsorCtrl', function ($scope, TemplateService, $st
 
   }
 
-  $scope.gallery = [{
-    img: 'img/dishapatani1.jpg',
-    type: 'image'
-  }, {
-    img: 'img/sa1.jpg',
-    type: 'video'
-  }, {
-    img: 'img/sa2.jpg',
-    type: 'image'
-  }, {
-    img: 'img/sl1.jpg',
-    type: 'image'
-  }, {
-    img: 'img/sa4.jpg',
-    type: 'video'
-  }, {
-    img: 'img/sa5.jpg',
-    type: 'image'
-  }, {
-    img: 'img/sa6.jpg',
-    type: 'image'
-  }, {
-    img: 'img/sa7.jpg',
-    type: 'image'
-  }, {
-    img: 'img/sa8.jpg',
-    type: 'video'
-  }]
+
 
 });
