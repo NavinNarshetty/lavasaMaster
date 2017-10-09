@@ -19,7 +19,7 @@
                                 <div class="form-group">
                                     <label>Medal Type</label>
                                     <ui-select name="medalType" id="medalType" theme="bootstrap" ng-model="medalInfoForm.medalType" ng-change="searchSportListSubCategory($select.selected._id)"
-                                        on-select="selectSport('medalType',$item);">
+                                        on-select="selectSport('medalType',$item);" ng-disabled="setDisabled">
                                         <ui-select-match placeholder="Select Medal Type" allow-clear="true">
                                             {{$select.selected |firstcapitalize}}
                                         </ui-select-match>
