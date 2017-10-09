@@ -111,8 +111,29 @@ var model = {
                         name: data.sport.weight.name
                     }
                 }
-                console.log("data", data);
-                callback(null, data);
+
+                async.concatSeries(data.player, function (n, callback) {
+                    n.athleteId = {
+                        "_id": n._id,
+                        "atheleteSchoolName": n.atheleteSchoolName,
+                        "surname": n.surname,
+                        "firstName": n.firstName,
+                        "gender": n.gender,
+                        "dob": n.dob,
+                        "city": n.city,
+                        "sfaId": n.sfaId,
+                        "age": n.age,
+                        "school": n.school,
+                        "middleName":n.middleName
+                    }
+                    callback(null, n);
+                }, function (err, result) {
+                    data.players = result;
+                    console.log("result", data);
+                    callback(null, result);
+                });
+
+
             } else {
                 callback(null, "No Data Found");
             }
@@ -220,7 +241,7 @@ var model = {
                     }
                 });
             },
-            //find teams athletes with that sportId
+            //find athletes with that sportId
             function (sport, callback) {
                 IndividualSport.find(sport).deepPopulate("athleteId").exec(function (err, athletes) {
                     if (err) {
@@ -375,14 +396,14 @@ var model = {
                                             "sportsListSubCategory": sport.sportslist.sportsListSubCategory._id
                                         }
                                         CertificateDetails.find(certificateDetailsObj).lean().exec(function (err, detail) {
-                                            console.log("--------------",certificateDetailsObj,detail);
-                                            if(err){
-                                                callback(err,null);
-                                            }else if(!_.isEmpty(detail)){
-                                                sport.footerImage="http://localhost:1337/api/upload/readFile?file=" + detail[0].banner;
-                                                callback(null,sport);
-                                            }else{
-                                                callback(null,sport);
+                                            console.log("--------------", certificateDetailsObj, detail);
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (!_.isEmpty(detail)) {
+                                                sport.footerImage = "http://localhost:1337/api/upload/readFile?file=" + detail[0].banner;
+                                                callback(null, sport);
+                                            } else {
+                                                callback(null, sport);
                                             }
                                         });
                                     } else {
@@ -417,9 +438,9 @@ var model = {
 
                                 //make pdfObj which will get used in certificate.ejs
                                 function (sport, callback) {
-                                    console.log("sport",sport);
+                                    console.log("sport", sport);
                                     pdfObj.sportObj = sport;
-                                    var basePath="https://storage.googleapis.com/sfacertificate/"
+                                    var basePath = "https://storage.googleapis.com/sfacertificate/"
                                     if (pdfObj.sportObj.medalType == 'gold') {
                                         pdfObj.sportObj.heading = basePath + "Gold.png";
                                     } else if (pdfObj.sportObj.medalType == 'silver') {
