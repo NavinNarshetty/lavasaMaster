@@ -128,7 +128,7 @@ var model = {
                     }
                     callback(null, n);
                 }, function (err, result) {
-                    data.players = result;
+                    data.player = result;
                     callback(null, data);
                 });
 
