@@ -8,8 +8,8 @@
         <span>{{roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name}}</span> |
         <span>{{roundsList[0].match[0].sport.gender}}</span> |
         <span>{{roundsList[0].match[0].sport.ageGroup.name}}</span></h3>
-      <div class="draws-downloadpdf draws-a">
-        <a href="#">Download the schedule in pdf format</a>
+      <div class="draws-downloadpdf draws-a" ng-if="showPdf">
+        <a href="{{trustedURL}}" target="_new">Download the schedule in pdf format</a>
       </div>
     </div>
     <!--END SPORT NAME-->

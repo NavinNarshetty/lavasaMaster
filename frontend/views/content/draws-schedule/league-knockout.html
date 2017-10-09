@@ -7,10 +7,9 @@
         <span ng-bind-html="oneSportDetail.gender"></span> |
         <span ng-bind-html="oneSportDetail.ageGroup.name"> </span>
       </h3>
-      <div class="draws-downloadpdf draws-a">
-        <a href="#">Download the schedule in pdf format</a>
+      <div class="draws-downloadpdf draws-a" ng-if="showPdf">
+        <a href="{{trustedURL}}" target="_new">Download the schedule in pdf format</a>
       </div>
-
     </div>
     <!--END SPORT NAME-->
 

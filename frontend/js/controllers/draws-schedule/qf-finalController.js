@@ -1,4 +1,4 @@
-myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
+myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, NavigationService, $filter, $sce, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
   $scope.template = TemplateService.getHTML("content/draws-schedule/qf-final.html");
   TemplateService.title = "Qualifying Rounds"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -151,6 +151,14 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
                 key.limitValue = 8;
                 key.showMore = true;
                 _.each(key.match, function (value) {
+                  if (value.sport.eventPdf) {
+                    $scope.showPdf = true;
+                    $scope.pdfdata = value.sport.eventPdf;
+                    $scope.pdfURL = $filter('uploadpathTwo')($scope.pdfdata);
+                    $scope.trustedURL = $sce.trustAsResourceUrl($scope.pdfURL);
+
+                  }
+
                   if (value.opponentsSingle.length > 0) {
                     _.each(value.opponentsSingle, function (obj, index1) {
 

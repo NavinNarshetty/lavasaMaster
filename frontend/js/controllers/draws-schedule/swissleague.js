@@ -1,4 +1,4 @@
-myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
+myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, NavigationService, $sce, $filter, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
   $scope.template = TemplateService.getHTML("content/draws-schedule/swiss-league.html");
   TemplateService.title = "Qualifying Rounds"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -62,7 +62,7 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
   }];
 
   $scope.constraints = {};
-
+  $scope.pdfdata = {};
 
   $scope.getSportSpecificRounds = function () {
     if ($stateParams.id) {
@@ -79,6 +79,15 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
                 data.showMore = true;
                 data.limitVale = 8;
                 _.each(data.match, function (value) {
+
+                  if (value.sport.eventPdf) {
+                    $scope.showPdf = true;
+                    $scope.pdfdata = value.sport.eventPdf;
+                    $scope.pdfURL = $filter('uploadpathTwo')($scope.pdfdata);
+                    $scope.trustedURL = $sce.trustAsResourceUrl($scope.pdfURL);
+
+                  }
+
                   if (value.opponentsSingle.length > 0) {
                     console.log(value.resultSwiss);
                     if (value.resultSwiss != undefined && value.resultSwiss.players) {
@@ -126,6 +135,7 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
   };
   $scope.getSportSpecificRounds();
 
+
   $scope.showMoreData = function (bool, index) {
     if (bool) {
       $scope.roundsList[index].limitVale = 50000;
@@ -136,6 +146,18 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
     }
 
   };
+  //open pdf
+
+  // if ($.jStorage.get("eventPdf") !== null) {
+  //   $scope.eventPdf = $.jStorage.get("eventPdf");
+  //   $scope.pdfURL = $filter('uploadpathTwo')($scope.eventPdf);
+  //   console.log($scope.pdfURL, "$scope.pdfURL");
+  //   $scope.finalURL = $scope.pdfURL;
+  //   $scope.trustedURL = $sce.trustAsResourceUrl($scope.finalURL);
+  //   console.log("$scope.trustedURL", $scope.trustedURL);
+  // }
+
+
 
 
 });
