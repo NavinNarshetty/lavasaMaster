@@ -38,7 +38,7 @@ myApp.directive('uploadImage', function ($http, $filter, $timeout) {
         },
         link: function ($scope, element, attrs) {
             console.log($scope.model);
-            $scope.showImage = function () { };
+            $scope.showImage = function () {};
             $scope.check = true;
             if (!$scope.type) {
                 $scope.type = "image";
@@ -129,14 +129,15 @@ myApp.directive('uploadImage', function ($http, $filter, $timeout) {
                     $scope.uploadStatus = "uploaded";
                     if ($scope.isMultiple) {
                         if ($scope.inObject) {
+                            console.log('data', data);
                             $scope.model.push({
-                                "image": data[0]
+                                "image": data.data[0]
                             });
                         } else {
                             if (!$scope.model) {
                                 $scope.clearOld();
                             }
-                            $scope.model.push(data[0]);
+                            $scope.model.push(data.data[0]);
                         }
                     } else {
                         if (_.endsWith(data.data[0], ".pdf")) {
