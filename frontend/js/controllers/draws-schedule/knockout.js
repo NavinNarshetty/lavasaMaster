@@ -1,4 +1,4 @@
-myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, $uibModal, knockoutService) {
+myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $filter, $sce, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, $uibModal, knockoutService) {
     $scope.template = TemplateService.getHTML("content/draws-schedule/knockout.html");
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -11,36 +11,36 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     };
     // MODAL END
     // SWIPER
-    $scope.initSwiper = function(){
-    $scope.$on('$viewContentLoaded', function (event) {
-        $timeout(function () {
-            mySwiper = new Swiper('.swiper-container', {
-                paginationClickable: true,
-                nextButton: '.swiper-button-next',
-                prevButton: '.swiper-button-prev',
-                slidesPerView: 3,
-                spaceBetween: 5,
-                grabCursor: true,
-                breakpoints: {
-                    992: {
-                        slidesPerView: 3
-                    },
-                    768: {
-                        slidesPerView: 2
+    $scope.initSwiper = function () {
+        $scope.$on('$viewContentLoaded', function (event) {
+            $timeout(function () {
+                mySwiper = new Swiper('.swiper-container', {
+                    paginationClickable: true,
+                    nextButton: '.swiper-button-next',
+                    prevButton: '.swiper-button-prev',
+                    slidesPerView: 3,
+                    spaceBetween: 5,
+                    grabCursor: true,
+                    breakpoints: {
+                        992: {
+                            slidesPerView: 3
+                        },
+                        768: {
+                            slidesPerView: 2
 
-                    },
-                    481: {
-                        slidesPerView: 1
-                    },
-                    320: {
-                        slidesPerView: 1
+                        },
+                        481: {
+                            slidesPerView: 1
+                        },
+                        320: {
+                            slidesPerView: 1
+                        }
                     }
-                }
-            });
-        }, 300);
-    });
-  };
-  $scope.initSwiper();
+                });
+            }, 300);
+        });
+    };
+    $scope.initSwiper();
     // END SWIPER
 
 
@@ -87,6 +87,13 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                             if ($scope.roundsList) {
                                 _.each($scope.roundsList, function (key) {
                                     _.each(key.match, function (value) {
+                                        if (value.sport.eventPdf) {
+                                            $scope.showPdf = true;
+                                            $scope.pdfdata = value.sport.eventPdf;
+                                            $scope.pdfURL = $filter('uploadpathTwo')($scope.pdfdata);
+                                            $scope.trustedURL = $sce.trustAsResourceUrl($scope.pdfURL);
+
+                                        }
                                         _.each(value.opponentsSingle, function (obj, index) {
                                             if (obj && obj.athleteId) {
                                                 obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
@@ -118,8 +125,8 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
 
     // MATCH CENTER
     $scope.matchCenter = function (card) {
-      $scope.currentMatch = card;
-      $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
+        $scope.currentMatch = card;
+        $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
         modal = $uibModal.open({
             animation: true,
             scope: $scope,
@@ -136,7 +143,7 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
 
 });
 
-myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, $uibModal) {
+myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $state, NavigationService, $filter, $sce, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, $uibModal) {
     $scope.template = TemplateService.getHTML("content/draws-schedule/knockout-doubles.html");
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -329,6 +336,13 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
                             _.each($scope.roundsList, function (key) {
                                 _.each(key.match, function (value) {
                                     console.log(value.opponentsTeam);
+                                    if (value.sport.eventPdf) {
+                                        $scope.showPdf = true;
+                                        $scope.pdfdata = value.sport.eventPdf;
+                                        $scope.pdfURL = $filter('uploadpathTwo')($scope.pdfdata);
+                                        $scope.trustedURL = $sce.trustAsResourceUrl($scope.pdfURL);
+
+                                    }
                                     _.each(value.opponentsTeam, function (obj) {
                                         console.log(obj, "obj");
                                         if (obj) {
@@ -388,8 +402,8 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
 
     // MATCH CENTER
     $scope.matchCenter = function (card) {
-      $scope.currentMatch = card;
-      $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
+        $scope.currentMatch = card;
+        $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
         modal = $uibModal.open({
             animation: true,
             scope: $scope,
@@ -405,7 +419,7 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
 });
 
 //knockout Team ctrl
-myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, knockoutService, $rootScope, $uibModal) {
+myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, knockoutService, $rootScope, $filter, $sce, $uibModal) {
     $scope.template = TemplateService.getHTML("content/draws-schedule/knockout-team.html");
     TemplateService.title = "Time Trial"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -592,6 +606,13 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
                             }
                             _.each($scope.roundsList, function (key) {
                                 _.each(key.match, function (value) {
+                                    if (value.sport.eventPdf) {
+                                        $scope.showPdf = true;
+                                        $scope.pdfdata = value.sport.eventPdf;
+                                        $scope.pdfURL = $filter('uploadpathTwo')($scope.pdfdata);
+                                        $scope.trustedURL = $sce.trustAsResourceUrl($scope.pdfURL);
+
+                                    }
                                     if (value && value.resultVolleyball && value.resultVolleyball.teams) {
                                         value.finalResult = value.resultVolleyball;
                                         knockoutService.sortResult($scope.roundsList);
@@ -633,32 +654,32 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
 
     // MATCH CENTER MODAL
     $scope.matchCenter = function (card) {
-      $scope.currentMatch = card;
-      $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
-      switch ($scope.currentMatch.sportName) {
-        case "Basketball":
-          $scope.currentMatch.result = $scope.currentMatch.resultBasketball;
-        break;
-        case "Handball":
-          $scope.currentMatch.result = $scope.currentMatch.resultHandball;
-        break;
-        case "Hockey":
-          $scope.currentMatch.result = $scope.currentMatch.resultHockey;
-        break;
-        case "Kabaddi":
-          $scope.currentMatch.result = $scope.currentMatch.resultKabaddi;
-        break;
-        case "Water Polo":
-          $scope.currentMatch.result = $scope.currentMatch.resultWaterPolo;
-        break;
-        case "Volleyball":
-          $scope.currentMatch.result = $scope.currentMatch.resultVolleyball;
-        break;
-        case "Kho Kho":
-        case "Throwball":
-          $scope.currentMatch.result = $scope.currentMatch.resultsCombat;
-        break;
-      }
+        $scope.currentMatch = card;
+        $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
+        switch ($scope.currentMatch.sportName) {
+            case "Basketball":
+                $scope.currentMatch.result = $scope.currentMatch.resultBasketball;
+                break;
+            case "Handball":
+                $scope.currentMatch.result = $scope.currentMatch.resultHandball;
+                break;
+            case "Hockey":
+                $scope.currentMatch.result = $scope.currentMatch.resultHockey;
+                break;
+            case "Kabaddi":
+                $scope.currentMatch.result = $scope.currentMatch.resultKabaddi;
+                break;
+            case "Water Polo":
+                $scope.currentMatch.result = $scope.currentMatch.resultWaterPolo;
+                break;
+            case "Volleyball":
+                $scope.currentMatch.result = $scope.currentMatch.resultVolleyball;
+                break;
+            case "Kho Kho":
+            case "Throwball":
+                $scope.currentMatch.result = $scope.currentMatch.resultsCombat;
+                break;
+        }
         modal = $uibModal.open({
             animation: true,
             scope: $scope,
@@ -672,14 +693,14 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
     // MATCH CENTER MODAL END
     // CLEAVE FUNCTION OPTIONS
     $scope.options = {
-      formation: {
+        formation: {
             blocks: [1, 1, 1, 1],
             uppercase: true,
             delimiters: ['-']
         },
         score: {
-          blocks: [2],
-          numeral: true
+            blocks: [2],
+            numeral: true
         }
     }
     // CLEAVE FUNCTION OPTIONS END

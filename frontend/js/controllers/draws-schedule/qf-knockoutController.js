@@ -1,4 +1,4 @@
-myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
+myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $filter, $sce, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
   $scope.template = TemplateService.getHTML("content/draws-schedule/qf-knockout.html");
   TemplateService.title = "QuaterFinal Knockout"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -79,6 +79,13 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
                 $scope.knockout = $scope.knockout.reverse();
                 _.each($scope.knockout, function (data, index) {
                   _.each(data.match, function (key) {
+                    if (key.sport.eventPdf) {
+                      $scope.showPdf = true;
+                      $scope.pdfdata = key.sport.eventPdf;
+                      $scope.pdfURL = $filter('uploadpathTwo')($scope.pdfdata);
+                      $scope.trustedURL = $sce.trustAsResourceUrl($scope.pdfURL);
+
+                    }
                     _.each(key.opponentsSingle, function (obj) {
                       obj.athleteId.fullName = obj.athleteId.firstName + ' ' + obj.athleteId.surname;
                     });
@@ -96,6 +103,13 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
               if ($scope.qualifying[0].match.length > 0) {
                 _.each($scope.qualifying, function (data, index) {
                   _.each(data.match, function (key) {
+                    if (key.sport.eventPdf) {
+                      $scope.showPdf = true;
+                      $scope.pdfdata = key.sport.eventPdf;
+                      $scope.pdfURL = $filter('uploadpathTwo')($scope.pdfdata);
+                      $scope.trustedURL = $sce.trustAsResourceUrl($scope.pdfURL);
+
+                    }
                     _.each(key.opponentsSingle, function (obj) {
                       obj.athleteId.fullName = obj.athleteId.firstName + ' ' + obj.athleteId.surname;
                     });

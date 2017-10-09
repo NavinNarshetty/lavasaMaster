@@ -61,7 +61,7 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         "sport": {
-            select: '_id sportslist gender ageGroup maxTeamPlayers minTeamPlayers weight'
+            select: '_id sportslist gender ageGroup maxTeamPlayers minTeamPlayers weight eventPdf'
         },
         "opponentsSingle": {
             select: '_id athleteId sportsListSubCategory createdBy'

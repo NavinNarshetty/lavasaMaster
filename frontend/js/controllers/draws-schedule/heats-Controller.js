@@ -1,4 +1,4 @@
-myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
+myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, $filter, $sce, selectService, $rootScope) {
   $scope.template = TemplateService.getHTML("content/draws-schedule/heats.html");
   TemplateService.title = "Heats"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -136,6 +136,14 @@ myApp.controller('HeatsCtrl', function ($scope, TemplateService, $state, Navigat
               $scope.roundsList = $scope.roundsList.reverse();
               _.each($scope.roundsList, function (key) {
                 _.each(key.match, function (value) {
+
+                  if (value.sport.eventPdf) {
+                    $scope.showPdf = true;
+                    $scope.pdfdata = value.sport.eventPdf;
+                    $scope.pdfURL = $filter('uploadpathTwo')($scope.pdfdata);
+                    $scope.trustedURL = $sce.trustAsResourceUrl($scope.pdfURL);
+
+                  }
                   if (value.sport.sportslist.sportsListSubCategory.isTeam) {
                     value.opponentsSingle = [];
                   } else {
