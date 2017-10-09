@@ -4413,7 +4413,6 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.filterObj = {};
         $scope.medalInfoForm = {};
         $scope.medalInfoForm.school = [];
-        $scope.medalInfoForm.player = [];
         $scope.medalTypeArr = ['gold', 'silver', 'bronze'];
         $scope.genderList = ['male', 'female', 'mixed'];
 
