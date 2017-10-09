@@ -129,8 +129,7 @@ var model = {
                     callback(null, n);
                 }, function (err, result) {
                     data.players = result;
-                    console.log("result", data);
-                    callback(null, result);
+                    callback(null, data);
                 });
 
 
