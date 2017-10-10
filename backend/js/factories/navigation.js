@@ -168,6 +168,23 @@ myApp.factory('NavigationService', function ($http) {
             }]
         },
         {
+            name: "Special Awards",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Award Banner",
+                classis: "",
+                sref: "#/specialaward-banner",
+                icon: "phone"
+            }, {
+                name: "List of Award",
+                classis: "",
+                sref: "#/specialaward",
+                icon: "phone"
+            }]
+        },
+        {
             name: "Faq",
             classis: "activeColor",
             sref: "#/faq",

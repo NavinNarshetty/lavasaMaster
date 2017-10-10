@@ -68,4 +68,5 @@ module.exports = [
     'backend/js/controllers/calender.js',
     'bower_components/async/dist/async.js',
     'backend/js/controllers/sponsor.js',
+    'backend/js/controllers/specialawards.js',
 ];

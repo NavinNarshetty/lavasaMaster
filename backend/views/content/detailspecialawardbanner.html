@@ -1,0 +1,50 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>{{title}} Special Banner Details</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL SPECIAL AWARD BANNER -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailForm" role="form" class="sec">
+            <!--CITY -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>City*</label>
+                  <input type="text" name="city" ng-model="formData.city" class="form-control text-capitalize" placeholder="Enter City ie. Mumbai or Hyderabad">
+                </div>
+              </div>
+            </div>
+            <!--CITY END -->
+            <!-- BANNER -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Banner* (682 × 538 in PNG)</label>
+                  <upload-image ng-model="formData.banner"></upload-image>
+                </div>
+              </div>
+            </div>
+            <!-- BANNER END -->
+
+            <div class="text-center mt20 odd-even-button">
+              <button class="btn btn-default" type="submit" ng-click="saveAwardBanner(formData)">Save</button>
+              <button class="btn btn-default" ng-click="onCancel('specialaward-banner')">Cancel</button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- DETAIL SPECIAL AWARD BANNER END -->

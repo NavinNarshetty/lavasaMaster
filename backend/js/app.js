@@ -435,6 +435,24 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailSponsorCardCtrl'
         })
+        // special award banner
+        .state('specialaward-banner', {
+            url: "/specialaward-banner",
+            templateUrl: "views/template.html",
+            controller: 'SpecialAwardBannerCtrl'
+        })
+        // detail special award banner
+        .state('detailspecialaward-banner', {
+            url: "/detailspecialaward-banner",
+            templateUrl: "views/template.html",
+            controller: 'DetailSpecialAwardBannerCtrl'
+        })
+        // special award
+        .state('specialaward', {
+            url: "/specialaward",
+            templateUrl: "views/template.html",
+            controller: 'SpecialAwardCtrl'
+        })
         //additional payment
         .state('additional-payment', {
             url: "/additional-payment",
