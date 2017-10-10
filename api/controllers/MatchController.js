@@ -395,18 +395,16 @@ var controller = {
                                     callback(null, complete);
                                 }
                             });
-                        } else if (req.body.resultType == "league-cum-knockout") {
-                            var knockout = _.groupBy(importData, 'STAGE');
-                            var i = 0;
-                            var excelData;
-                            _.each(knockout, function (n) {
-                                if (i == 0) {
-                                    i++;
+                        } else if (req.body.resultType == "league-cum-knockout" && req.body.resulyFormat == "football") {
+                            Match.updateKnockoutFootball(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
                                 } else {
-                                    excelData = n;
+                                    callback(null, complete);
                                 }
                             });
-                            Match.updateKnockoutFootball(excelData, req.body, function (err, complete) {
+                        } else if (req.body.resultType == "league-cum-knockout" && req.body.resulyFormat == "fencing") {
+                            Match.updateKnockoutFencing(importData, req.body, function (err, complete) {
                                 if (err || _.isEmpty(complete)) {
                                     callback(err, null);
                                 } else {
