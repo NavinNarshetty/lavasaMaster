@@ -54,6 +54,17 @@ myApp.controller('SponsorPartnerCtrl', function ($scope, TemplateService, $state
 
   }
   $scope.getSponsor();
+  $scope.goSponsor = function (data) {
+    console.log(data)
+    if (data.insidePage === "true") {
+      $state.go('individual-sponsor', {
+        id: data._id
+      })
+    } else {
+      console.log("nothing")
+    }
+
+  }
   $scope.data = [1, 2, 3, 4, 5, 6, 7];
 
 

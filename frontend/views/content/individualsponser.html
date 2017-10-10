@@ -5,7 +5,7 @@
     <div class="sponser-header-image text-center">
       <!-- SPONSER IMAGE HOLDER -->
       <div class="specific-sponserimage-holder">
-        <img src="{{sponsorData.headerImage | serverimage2}}" alt="" class="img-responsive">
+        <img ng-src="{{sponsorData.headerImage | serverimage2}}" alt="" class="img-responsive">
       </div>
       <!-- SPONSER IMAGE HOLDER END -->
     </div>
@@ -28,7 +28,7 @@
     <div class="individual-banner-image">
       <div class="individual-banner-holder relate">
         <a class="fancybox.iframe" fancybox href="{{sponsorData.video.link | linkvideo:sponsorData.video.videotype}}">
-        <img src="{{sponsorData.video.videoimage | serverimage2 }}" alt="Banner" class="img-responsive">
+        <img ng-src="{{sponsorData.video.videoimage | serverimage2 }}" alt="Banner" class="img-responsive">
           </a>
         <div class="sponser-videoplay-holder">
           <i class="fa fa-play sponer-playe-button"></i>
@@ -55,7 +55,7 @@
                   <!-- SWIPER CARD IMAGE -->
                   <div class="sponser-swipercard-image display-inline">
                     <div class="sponser-swipercard-imageholder">
-                      <img src="{{card.cardImage | serverimage2 }}" alt="user" class="img-responsive">
+                      <img ng-src="{{card.cardImage | serverimage2 }}" alt="user" class="img-responsive">
                     </div>
                   </div>
                   <!-- SWIPER CARD IMAGE END -->
@@ -94,12 +94,12 @@
             <div class="individual-sponsergallerycard relate">
               <div class="individual-sponsergallerycard-image" ng-if="gallery.galleryType=='image'">
                 <a fancybox href="{{gallery.image | serverimage2 }}">
-                  <img src="{{gallery.image | serverimage2 }}" alt="image" class="img-responsive">
+                  <img ng-src="{{gallery.image | serverimage2 }}" alt="image" class="img-responsive">
                 </a>
               </div>
               <div class="individual-sponsergallerycard-video" ng-if="gallery.videoType=='video'">
                 <a class="fancybox.iframe" fancybox href="{{gallery.vlink | linkvideo:gallery.vtype}}">
-                  <img src="{{gallery.vimage | serverimage2 }}" alt="video" class="img-responsive">
+                  <img ng-src="{{gallery.vimage | serverimage2 }}" alt="video" class="img-responsive">
                 </a>
               </div>
               <div class="sponser-videoplay-gallery" ng-if="gallery.videoType=='video'">

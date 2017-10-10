@@ -13,8 +13,8 @@
       </a>
   </div>
   <div class="clearfix" ng-if="model && isMultiple" ng-hide="noShow">
-    <pre>{{model}}</pre>
-    <pre>{{sImage}}</pre>
+    <!-- <pre>{{model}}</pre>
+    <pre>{{sImage}}</pre> -->
     <div class="img-box" style="float:left;" ng-repeat="sImage in model track by $index">
       <a href="{{sImage.image|uploadpath}}" fancybox-box>
         <img alt="" ng-src="{{sImage.image|uploadpath}}" class="img-responsive uploadingImage img-thumbnail" />

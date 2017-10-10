@@ -16,7 +16,7 @@
           <form name="sponsorForm" role="form" class="sec">
             <div class="row">
               <!-- SPONSOR NAME -->
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label>Sponsor Name</label>
                   <input type="text" name="sponsor" ng-model="formData.name" class="form-control" placeholder="Enter Name" required>
@@ -26,7 +26,7 @@
               <!-- SPONSOR NAME END -->
 
               <!-- CITY -->
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label>City</label>
                   <input type="text" name="city" ng-model="formData.city" class="form-control text-capitalize" placeholder="Enter City" required>
@@ -35,7 +35,7 @@
               </div>
               <!-- CITY END -->
               <!-- SPONSOR TYPE -->
-              <div class="col-md-4">
+              <div class="col-md-3">
                 <div class="form-group">
                   <label>Sponsor Type</label>
                   <select name="sponsortype" class="form-control" ng-model="formData.sponsorType" placeholder="Enter Video Type" required>
@@ -47,15 +47,26 @@
                   <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
                 </div>
               </div>
-
               <!-- SPONSOR TYPE END -->
+              <!-- SPONSOR INSIDE PAGE -->
+              <div class="col-md-3">
+                <div class="form-group">
+                  <label>Sponsor Inside Type</label>
+                  <select name="sponsortypes" class="form-control" ng-model="formData.insidePage" placeholder="Enter Type" required>
+                             <option value=true>Yes</option>
+                             <option value=false>No</option>
+                      </select>
+                  <div class="error-msg" ng-if="sponsorForm.sponsortypes.$invalid && sponsorForm.sponsortypes.$touched">Please Enter Valid Type *</div>
+                </div>
+              </div>
+              <!-- SPONSOR INSIDE PAGE END -->
             </div>
             <div class="row">
               <!-- LOGO NAME -->
               <div class="col-md-4">
                 <div class="form-group">
                   <label>Logo Caption</label>
-                  <input type="text" name="caption" ng-model="formData.logoCaption" class="form-control" placeholder="Enter Name" required>
+                  <input type="text" name="caption" ng-model="formData.logoCaption" class="form-control" placeholder="Enter Name">
                   <div class="error-msg" ng-if="sponsorForm.caption.$invalid && sponsorForm.caption.$touched">Please Enter Valid Name *</div>
                 </div>
               </div>
@@ -64,7 +75,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label>Logo Link</label>
-                  <input type="text" name="link" ng-model="formData.logoLink" class="form-control" placeholder="Enter Name" required>
+                  <input type="text" name="link" ng-model="formData.logoLink" class="form-control" placeholder="Enter Name">
                   <div class="error-msg" ng-if="sponsorForm.link.$invalid && sponsorForm.link.$touched">Please Enter Valid Link *</div>
                 </div>
               </div>
@@ -73,7 +84,7 @@
               <div class="col-md-4">
                 <div class="form-group">
                   <label>Logo Link Name</label>
-                  <input type="text" name="linkName" ng-model="formData.logoName" class="form-control" placeholder="Enter Name" required>
+                  <input type="text" name="linkName" ng-model="formData.logoName" class="form-control" placeholder="Enter Name">
                   <div class="error-msg" ng-if="sponsorForm.linkName.$invalid && sponsorForm.linkName.$touched">Please Enter Valid Link Name *</div>
                 </div>
               </div>
@@ -102,7 +113,7 @@
                         <input type="text" ng-model="formData.section1.text.header" placeholder="Title" class="form-control" ng-required="formData.section1.type=='text'">
                       </div> -->
                   <div class="textholder tinymce form-group">
-                    <text-angular ng-model="formData.content" name="sponsorcontent" ng-required='true'></text-angular>
+                    <text-angular ng-model="formData.content" name="sponsorcontent"></text-angular>
                     <div class="error-msg" ng-if="sponsorForm.sponsorcontent.$invalid && sponsorForm.sponsorcontent.$touched">Please Enter Valid Content *</div>
                   </div>
                 </div>
@@ -112,13 +123,16 @@
 
             <!-- BANNER VIDEO CONTENT -->
             <div class="banner-video-holder">
+              <div class="text-center">
+                <label for="">BANNER VIDEO</label>
+              </div>
               <!-- VIDEO -->
               <div class="row">
                 <!-- VIDEO LINK -->
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Video Link</label>
-                    <input type="text" name="video" ng-model="formData.video.link" class="form-control" placeholder="Enter Link" required>
+                    <input type="text" name="video" ng-model="formData.video.link" class="form-control" placeholder="Enter Link">
                     <div class="error-msg" ng-if="sponsorForm.video.$invalid && sponsorForm.video.$touched">Please Enter Valid Link *</div>
                   </div>
                 </div>
@@ -128,7 +142,7 @@
                 <div class="col-md-6">
                   <div class="form-group">
                     <label>Video Type</label>
-                    <select name="videotype" class="form-control" ng-model="formData.video.videotype" placeholder="Enter Video Type" required>
+                    <select name="videotype" class="form-control" ng-model="formData.video.videotype" placeholder="Enter Video Type">
                            <option value="vimeo">vimeo</option>
                            <option value="youtube">youtube</option>
                     </select>
@@ -151,11 +165,14 @@
             </div>
             <!-- BANNER VIDEO CONTENT -->
 
+            <div class="text-center">
+              <label for="">GALLERY IMAGES & VIDEOS</label>
+            </div>
             <!-- GALLERY -->
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
-                  <label>Gallery Images</label>
+                  <label>Gallery Images</label> -<span style="color:#ea5249;">Image size(400 X 300)</span>
                   <upload-image ng-model="formData.gallery" multiple inobj></upload-image>
                 </div>
               </div>
@@ -172,7 +189,7 @@
                     <table class="table">
                       <thead>
                         <tr>
-                          <th>Image</th>
+                          <th>Image <span style="color:#ea5249;">Image size(400 X 300)</span> </th>
                           <th>Video Link</th>
                           <th>Type</th>
                           <th>Action</th>
@@ -192,7 +209,11 @@
                           </td>
                           <td>
                             <div class="form-group">
-                              <input type="text" placeholder="Video Type" class="form-control" ng-model="content.vtype">
+                              <!-- <input type="text" placeholder="Video Type" class="form-control" ng-model="content.vtype"> -->
+                              <select name="videotype" class="form-control" ng-model="content.vtype" placeholder="Enter Video Type">
+                                  <option value="vimeo">vimeo</option>
+                                  <option value="youtube">youtube</option>
+                              </select>
                             </div>
                           </td>
                           <td ng-click="deleteRow(formData,$index);">
