@@ -16,10 +16,10 @@
         <div class="table-area ">
           <div class="widget-title ">
             <div class="pull-right">
-              <form class="search-form mr-form ">
+              <!-- <form class="search-form mr-form ">
                 <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
                                    " ng-model="search" />
-              </form>
+              </form> -->
               <a class="btn btn-success" ui-sref="detailspecialaward-banner">
                        Create
               </a>
@@ -48,12 +48,12 @@
                   <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                   <td>{{item.city}}</td>
                   <td>
-                    <div class="" style="width:400px;height:auto">
-                      <img src="{{item.banner | uploadpath}}" alt="" class="img-responsive">
+                    <div class="" style="width:300px;height:300px">
+                      <img ng-src="{{item.banner | uploadpath}}" alt="" class="img-responsive">
                     </div>
                   </td>
                   <td>
-                    <a class="btn btn-primary" target="_blank" ui-sref="detailcertificatebanner({id:item._id})">
+                    <a class="btn btn-primary" target="_blank" ui-sref="detailspecialaward-banner({id:item._id})">
                             <i class="fa fa-pencil"></i> Edit
                           </a>
                     <a class="btn btn-danger" ng-click="confDel(item._id)">

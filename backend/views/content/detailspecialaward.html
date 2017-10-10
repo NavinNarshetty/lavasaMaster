@@ -1,0 +1,60 @@
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>{{title}} Special Award Details</h2>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL SPECIAL AWARD -->
+<div class="panel-content">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="widget">
+        <div class="form-elements-sec">
+          <form name="detailForm" role="form" class="sec">
+            <!-- AWARDS NAME -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label>Name*</label>
+                  <input type="text" name="awardName" ng-model="formData.name" class="form-control text-capitalize" placeholder="Enter Award Name"
+                    required>
+                  <div class="error-msg" ng-if="detailForm.awardName.$invalid && detailForm.awardName.$touched">Please Enter Valid Name *</div>
+                </div>
+              </div>
+            </div>
+            <!-- AWARDS NAME END -->
+            <!-- TYPE -->
+            <div class="row">
+              <div class="col-md-12">
+                <div class="form-group">
+                  <label for="">Type</label>
+                  <ui-select name="specialTypes" ng-model="formData.type" theme="bootstrap" multiple required>
+                    <ui-select-match placeholder="Select Type" allow-clear="true">{{$item.name}}</ui-select-match>
+                    <ui-select-choices repeat="sponsortype in instituteTypes | filter: $select.search">
+                      <div>
+                        <span ng-bind-html="sponsortype.name"></span>
+                      </div>
+                    </ui-select-choices>
+                  </ui-select>
+                  <div class="error-msg" ng-if="detailForm.specialTypes.$invalid && detailForm.specialTypes.$touched">Please Enter Valid Type *</div>
+                </div>
+
+              </div>
+            </div>
+            <!-- TYPE END -->
+
+            <div class="text-center mt20 odd-even-button">
+              <button class="btn btn-default" type="submit" ng-click="saveAward(formData)" ng-disabled="detailForm.$invalid">Save</button>
+              <button class="btn btn-default" ui-sref='specialaward'>Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- DETAIL SPECIAL AWARD END -->

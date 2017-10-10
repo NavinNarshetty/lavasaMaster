@@ -20,7 +20,8 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label>City*</label>
-                  <input type="text" name="city" ng-model="formData.city" class="form-control text-capitalize" placeholder="Enter City ie. Mumbai or Hyderabad">
+                  <input type="text" name="city" ng-model="formData.city" class="form-control text-capitalize" placeholder="Enter City" required>
+                  <div class="error-msg" ng-if="detailForm.city.$invalid && detailForm.city.$touched">Please Enter Valid City *</div>
                 </div>
               </div>
             </div>
@@ -30,15 +31,15 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Banner* (682 × 538 in PNG)</label>
-                  <upload-image ng-model="formData.banner"></upload-image>
+                  <upload-image name="image" ng-model="formData.banner" required></upload-image>
                 </div>
               </div>
             </div>
             <!-- BANNER END -->
 
             <div class="text-center mt20 odd-even-button">
-              <button class="btn btn-default" type="submit" ng-click="saveAwardBanner(formData)">Save</button>
-              <button class="btn btn-default" ng-click="onCancel('specialaward-banner')">Cancel</button>
+              <button class="btn btn-default" type="submit" ng-click="saveAwardBanner(formData)" ng-disabled="detailForm.$invalid">Save</button>
+              <button class="btn btn-default" ui-sref='specialaward-banner'>Cancel</button>
             </div>
 
           </form>

@@ -572,6 +572,12 @@ myApp.factory('NavigationService', function ($http) {
                 method: 'POST'
             }).then(callback);
         },
+        getConfigDetail: function (callback) {
+            $http({
+                url: adminurl + 'ConfigProperty/getDetail',
+                method: 'POST'
+            }).then(callback);
+        },
 
 
         setDetail: function (data, callback) {

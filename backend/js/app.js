@@ -443,7 +443,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         // detail special award banner
         .state('detailspecialaward-banner', {
-            url: "/detailspecialaward-banner",
+            url: "/detailspecialaward-banner/:id",
             templateUrl: "views/template.html",
             controller: 'DetailSpecialAwardBannerCtrl'
         })
@@ -452,6 +452,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/specialaward",
             templateUrl: "views/template.html",
             controller: 'SpecialAwardCtrl'
+        })
+        // detail special award
+        .state('detailspecialaward', {
+            url: "/detailspecialaward/:id",
+            templateUrl: "views/template.html",
+            controller: 'DetailSpecialAwardCtrl'
         })
         //additional payment
         .state('additional-payment', {
