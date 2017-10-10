@@ -1501,6 +1501,52 @@ var model = {
             });
     },
 
+    saveWeightChange: function (data, param, callback) {
+        async.waterfall([
+                function (callback) {
+                    var paramData = {};
+                    paramData.name = singleData["EVENT"];
+                    paramData.age = singleData["AGE GROUP"];
+                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                        paramData.gender = "male";
+                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                        paramData.gender = "female";
+                    }
+                    var weight = singleData[" NEW WEIGHT"];
+                    paramData.weight = _.trimStart(weight, " ");
+                    Match.getSportId(paramData, function (err, sportData) {
+                        if (err || _.isEmpty(sportData)) {
+                            singleData.SPORT = null;
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: singleData
+                            });
+                        } else {
+                            singleData.SPORT = sportData.sportId;
+                            callback(null, singleData);
+                        }
+                    });
+                },
+                function (singleData, callback) {
+                    if (singleData.error) {
+                        countError++;
+                        callback(null, singleData);
+                    } else {
+
+                    }
+                }
+            ],
+            function (err, results) {
+                if (err || _.isEmpty(results)) {
+                    callback(err, null);
+                } else {
+                    callback(null, results);
+                }
+            });
+
+    },
+
     saveHeatIndividual: function (importData, data, callback) {
         var countError = 0;
         var arrMathes = [];
@@ -3099,6 +3145,7 @@ var model = {
             obj["AGE GROUP"] = "";
             obj["EVENT"] = "";
             obj["WEIGHT CATEGORIES"] = "";
+            obj["NEW WEIGHT"] = "";
             obj.DATE = "";
             obj.TIME = "";
             obj["SFAID 1"] = "";
@@ -4764,8 +4811,10 @@ var model = {
                             }
                         };
                         callback(null, matchObj);
+                    } else {
+                        var matchObj = {};
+                        callback(null, matchObj);
                     }
-
                 },
                 function (matchObj, callback) {
                     Match.update({
@@ -5523,7 +5572,6 @@ var model = {
                         }
                     }
                 }
-
             ],
             function (err, results) {
                 if (err || _.isEmpty(results)) {
