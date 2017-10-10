@@ -233,6 +233,15 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 data: request
             }).then(callback);
         },
+        getQualifyingRound: function (formData, callback) {
+            $http({
+                url: adminurl + "match/getAllQualifyingPerRounds",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
         Boolean: function (str) {
             if (str == 'true' || str || str === true) {
                 return true;

@@ -1,0 +1,131 @@
+<div class="combatscore-page">
+  <div class="matchstart-header clearfix">
+    <div class="container">
+      <p class="m-clear"><span>{{matchDetails.sportName}}</span> - <span>{{matchDetails.matchRound}} </span></span> </p>
+      <!-- <p style="color:red">{{match.resultsCombat.status}}</p> -->
+    </div>
+  </div>
+  <div class="qualifyingscoring-section">
+    <div class="container">
+      <div class="qualifying-tableholder table-responsive">
+        <table class="table digitalscore-table">
+          <thead>
+            <tr>
+              <th>
+                <div>
+                  <p class="m-clear">name</p>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <p class="m-clear">
+                    school
+                  </p>
+                </div>
+              </th>
+              <!-- IMAGE -->
+              <th>
+                <div class="">
+                  <p class="m-clear">Present</p>
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  <p class="m-clear">Match Photo</p>
+                </div>
+              </th>
+              <!-- IMAGE END -->
+              <!-- SCORING -->
+              <th hidden>
+                <div class="">
+                  <p class="m-clear">Attempt 1</p>
+                </div>
+              </th>
+              <th hidden>
+                <div class="">
+                  <p class="m-clear">Attempt 2</p>
+                </div>
+              </th>
+              <th hidden>
+                <div class="">
+                  <p class="m-clear">Attempt 3</p>
+                </div>
+              </th>
+              <th hidden>
+                <div class="">
+                  <p class="m-clear">Final Attempt</p>
+                </div>
+              </th>
+              <th hidden>
+                <div class="">
+                  <p class="m-clear">Result</p>
+                </div>
+              </th>
+              <!-- SCORING END -->
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <!-- ng-repeat="final in data.match track by $index"  -->
+              <td>
+                <div class="text-capitalize text-left">{{final.opponentsSingle[0].athleteId.fullName}} </div>
+              </td>
+              <td>
+                <div class="text-capitalize text-left">
+                  {{final.opponentsSingle[0].athleteId.school.name}}
+                </div>
+              </td>
+              <!-- IMAGE  -->
+              <td>
+                <div class="form-group">
+                  <label ><input type="checkbox" ></label>
+                </div>
+              </td>
+              <td>
+                <div class="form-group">
+                  <div class="matchstart-uploadholder text-uppercase ">
+                    <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Picture</button>
+                    <upload-image ng-model="match.resultsCombat.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+                  </div>
+                </div>
+              </td>
+              <!-- IMAGE END -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- SCORING IMAGES -->
+      <div class="combatscore-uploads text-center">
+        <div class="combatscore-pics">
+          <div class="row">
+          <div class="col-md-offset-1 col-md-5 col-sm-6">
+            <div class="matchstart-uploadholder text-uppercase ">
+              <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Scorecard</button>
+              <upload-image ng-model="match.resultsCombat.scoreSheet" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+            </div>
+            <div class="digital-swiper">
+            <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultsCombat.scoreSheet">
+              <span class="remove-pic" ng-click="removeMatchScore(pic,'scoreSheet')"><i class="fa fa-times"></i></span>
+              <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
+            </div>
+          </div>
+          </div>
+        </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 col-sm-4">
+              <button class="btn btn-green-outline btn-scoring" ui-sref="matchstart({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
+          </div>
+          <div class="col-md-4 col-sm-4">
+              <button class="btn btn-green-outline btn-scoring" promise-btn = "yourPromise" ng-click="saveResult(match)">Save</button>
+          </div>
+          <div class="col-md-4 col-sm-4">
+              <button class="btn btn-green-outline btn-scoring" ng-click="completePopup();">complete</button>
+          </div>
+        </div>
+      </div>
+      <!-- SCORING IMAGES END -->
+    </div>
+  </div>
+</div>

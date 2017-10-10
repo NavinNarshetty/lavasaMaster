@@ -77,4 +77,5 @@ module.exports = [
   'digital/js/controllers/qf-knockoutController.js',
   'digital/js/controllers/heats-Controller.js',
   'digital/js/controllers/scoringimages-controller.js',
+  'digital/js/controllers/scorequalifying-controller.js',
 ];

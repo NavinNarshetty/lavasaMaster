@@ -1159,3 +1159,17 @@ header {
   bottom: 0;
 }
 // SCORING IMAGES END
+// QUALIFYING SCORING
+.qualifying-tableholder{
+  margin: 30px 0;
+}
+.digitalscore-table{
+  thead{
+    tr{
+      th{
+        text-transform: capitalize;
+      }
+    }
+  }
+}
+// QUALIFYING SCORING END

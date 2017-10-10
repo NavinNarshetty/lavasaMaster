@@ -100,6 +100,7 @@
               <!-- UI SELECT END -->
             </div>
           </div>
+          <!-- BOXING REASON -->
           <div class="col-md-4 col-sm-6" ng-if="match.sportsName=='Boxing'">
             <div class="match-winreason text-left">
               <label for="matchWinnerReason" class="text-uppercase">won by</label>
@@ -108,16 +109,21 @@
                 <option ng-repeat="reason in reasons track by $index" value="{{reason}}">{{reason}}</option>
               </select>
               <!-- SELECT  END-->
-              <!-- UI SELECT -->
-              <!-- <ui-select id="matchWinnerReason" ng-model="match.winner.reason" theme="bootstrap">
-                  <ui-select-match placeholder="Won By"> {{$select.selected}}</ui-select-match>
-                  <ui-select-choices repeat="reason as reason in reasons | filter: $select.search">
-                        <p>{{reason}}</p>
-                  </ui-select-choices>
-              </ui-select> -->
-              <!-- UI SELECT END -->
             </div>
           </div>
+          <!-- BOXING REASON END -->
+          <!-- JUDO REASON -->
+          <div class="col-md-4 col-sm-6" ng-if="match.sportsName=='Judo'">
+            <div class="match-winreason text-left">
+              <label for="matchWinnerReason" class="text-uppercase">won by</label>
+              <!-- SELECT -->
+              <select class="form-control" ng-init="match.winner.reason=''" ng-model="match.resultsCombat.winner.reason">
+                <option value="Wazari"> Wazari</option>
+              </select>
+              <!-- SELECT  END-->
+            </div>
+          </div>
+          <!-- JUDO REASON END -->
         </div>
         </div>
 

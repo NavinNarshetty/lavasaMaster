@@ -3,10 +3,6 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
   TemplateService.title = "Qualifying Rounds"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
 
-
-
-
-
   // JSON FOR QF_FINAL
   $scope.Qffinal = [{
     name: "manav mehta",
@@ -211,18 +207,15 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
   };
 
   // START SCORING FUNCTION
-  $scope.startScoring = function (match) {
-    console.log(match, 'startScoring');
-    if (match.status == 'IsCompleted') {
-      toastr.warning("This match has already been scored.", 'Scoring Completed');
-    } else {
-      $state.go("scoringimages", {
+  $scope.startScoring = function (data) {
+    console.log(data, 'startScoring');
+      $state.go("scorequalifying", {
         sportName: $stateParams.name,
         sport: $stateParams.id,
-        id: match.matchId,
-        drawFormat: $stateParams.drawFormat
+        drawFormat: $stateParams.drawFormat,
+        roundName: data.name,
+        sportId: data.match[0].sport._id
       });
-    }
   }
   // START SCORING FUNCTION END
 
