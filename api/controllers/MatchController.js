@@ -327,6 +327,17 @@ var controller = {
         }
     },
 
+    updateQualifyingDigital: function (req, res) {
+        if (req.body) {
+            Match.updateQualifyingDigital(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
     updateExcelMatch: function (req, res) {
         if (req.body) {
             console.log("req", req.body);

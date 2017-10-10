@@ -2815,7 +2815,6 @@ var model = {
             });
     },
 
-
     //-----------------------------Generate Excel-----------------------------------------
 
     generateExcelKnockout: function (data, res) {
@@ -4702,7 +4701,6 @@ var model = {
     },
 
     //  ----------------------------  UPDATE SCORE RESULT  --------------------------------------
-
     //update from digital score
     updateResult: function (data, callback) {
         var updateObj = {};
@@ -5809,19 +5807,14 @@ var model = {
                                         paramData.sport = singleData.SPORT;
                                         paramData.scheduleDate = singleData.DATE;
                                         paramData.scheduleTime = singleData.TIME;
-                                        Match.update({
-                                            matchId: paramData.matchId
-                                        }, paramData).exec(
-                                            function (err, complete) {
-                                                if (err || _.isEmpty(complete)) {
-                                                    callback(null, {
-                                                        error: err,
-                                                        success: paramData
-                                                    });
-                                                } else {
-                                                    callback(null, complete);
-                                                }
-                                            });
+                                        Match.updateQualifyingRound(paramData, function (err, complete) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else {
+                                                callback(null, complete);
+                                            }
+                                        });
+
                                     }
                                 }
                             ],
@@ -5863,6 +5856,88 @@ var model = {
                 }
             });
 
+    },
+
+    updateQualifyingRound: function (data, callback) {
+        var update = {};
+        async.waterfall([
+                function (callback) {
+                    Match.findOne({
+                        matchId: data.matchId
+                    }).lean().exec(
+                        function (err, found) {
+                            if (_.isEmpty(found.resultQualifyingRound)) {
+                                update.isReady = true;
+                            } else if (found.resultQualifyingRound.status == "isCompleted") {
+                                update.isReady = false;
+                            } else {
+                                update.isReady = true;
+                            }
+                            callback(null, update);
+                        });
+                },
+                function (update, callback) {
+                    if (update.isReady == true) {
+                        Match.update({
+                            matchId: data.matchId
+                        }, data).exec(
+                            function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(null, {
+                                        error: err,
+                                        success: paramData
+                                    });
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                    } else {
+                        callback(null, data);
+                    }
+                }
+            ],
+            function (err, results) {
+                if (err || _.isEmpty(results)) {
+                    callback(err, null);
+                } else {
+                    callback(null, results);
+                }
+            });
+    },
+
+    updateQualifyingDigital: function (data, callback) {
+        async.concatLimit(data, 10, function (singleData, callback) {
+            if (data.resultImage) {
+                var updateObj = {
+                    $set: {
+                        "resultQualifyingRound.resultImage": data.resultImage
+                    }
+                }
+            } else if (data.result) {
+                var updateObj = {
+                    $set: {
+                        "resultQualifyingRound.player": data.result
+                    }
+                }
+
+            }
+            Match.update({
+                matchId: singleData.matchId
+            }, updateObj).exec(
+                function (err, complete) {
+                    if (err || _.isEmpty(complete)) {
+                        callback(null, {
+                            error: err,
+                            success: paramData
+                        });
+                    } else {
+                        callback(null, complete);
+                    }
+                });
+
+        }, function (err, singleData) {
+            callback(null, singleData)
+        });
     },
 
     UpdateHeatTeam: function (importData, callback) {
