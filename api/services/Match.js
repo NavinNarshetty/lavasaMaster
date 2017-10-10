@@ -1295,7 +1295,7 @@ var model = {
         Match.find({
             sport: data.sport,
             round: data.round
-        }).lean().deepPopulate("").sort({
+        }).lean().deepPopulate(deepSearch).sort({
             createdAt: 1
         }).exec(function (err, found) {
             if (err) {
