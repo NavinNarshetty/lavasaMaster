@@ -1290,6 +1290,24 @@ var model = {
 
     },
 
+    getAllQualifyingPerRound: function (data, callback) {
+        var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school";
+        Match.find({
+            sport: data.sport,
+            round: data.round
+        }).lean().deepPopulate("").sort({
+            createdAt: 1
+        }).exec(function (err, found) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, []);
+            } else {
+                callback(null, found);
+            }
+        });
+    },
+
     //-----------------------------SAVE Excel ---------------------------------------------
 
     saveKnockoutIndividual: function (importData, data, callback) {
@@ -2796,6 +2814,7 @@ var model = {
                 }
             });
     },
+
 
     //-----------------------------Generate Excel-----------------------------------------
 

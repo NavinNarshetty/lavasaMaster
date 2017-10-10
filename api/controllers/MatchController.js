@@ -549,6 +549,17 @@ var controller = {
         }
     },
 
+    getAllQualifyingPerRound: function (req, res) {
+        if (req.body.sport && req.body.round) {
+            Match.getAllQualifyingPerRound(req.body, res.callback);
+        } else {
+            res.json({
+                data: "Sport with round Not Found",
+                value: false
+            });
+        }
+    },
+
     knockoutMatchesByRound: function (req, res) {
         if (req.body) {
             if (req.body && req.body.round) {
