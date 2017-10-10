@@ -70,7 +70,7 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        var deepSearch = "player sport sport.sportslist sport.ageGroup sport.weight sport.sportslist.sportsListSubCategory";
+        var deepSearch = "player team sport sport.sportslist sport.ageGroup sport.weight sport.sportslist.sportsListSubCategory";
 
         Medal.find(data.keyword)
             .sort({
@@ -124,7 +124,7 @@ var model = {
                         "sfaId": n.sfaId,
                         "age": n.age,
                         "school": n.school,
-                        "middleName":n.middleName
+                        "middleName": n.middleName
                     }
                     callback(null, n);
                 }, function (err, result) {

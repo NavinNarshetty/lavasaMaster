@@ -44,6 +44,15 @@
                                     <th>
                                         Sport
                                     </th>
+                                    <th>
+                                        Player
+                                    </th>
+                                    <th>
+                                        Team
+                                    </th>
+                                    <th>
+                                        School
+                                    </th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
@@ -62,6 +71,39 @@
                                     </td> -->
                                     <td>
                                         {{item.name}}
+                                    </td>
+                                    <td ng-if="item.player.length > 0">
+                                        <div ng-if="item.player.length == 1" ng-repeat="player in item.player">
+                                            {{player.sfaId}} - {{player.firstName}} {{player.middleName}} {{player.surname}}
+                                        </div>
+                                        <div ng-if="item.player.length > 1" ng-repeat="player in item.player">
+                                            {{player.sfaId}} - {{player.firstName}} {{player.middleName}} {{player.surname}}<br>
+                                        </div>
+                                    </td>
+                                    <td ng-if="item.player.length <= 0">
+                                        -
+                                    </td>
+                                    <td ng-if="item.team.length > 0">
+                                        <div ng-if="item.team.length == 1" ng-repeat="team in item.team">
+                                            {{team.teamId}} - {{team.schoolName}}
+                                        </div>
+                                        <div ng-if="item.team.length > 1" ng-repeat="team in item.team">
+                                            {{team.teamId}} - {{team.schoolName}}<br>
+                                        </div>
+                                    </td>
+                                    <td ng-if="item.team.length <= 0">
+                                        -
+                                    </td>
+                                    <td ng-if="item.school.length > 0">
+                                        <div ng-if="item.school.length == 1" ng-repeat="school in item.school">
+                                            {{school.schoolName}}
+                                        </div>
+                                        <div ng-if="item.school.length > 1" ng-repeat="school in item.school">
+                                            {{school.schoolName}}<br>
+                                        </div>
+                                    </td>
+                                    <td ng-if="item.school.length <= 0">
+                                        -
                                     </td>
                                     <td>
                                         <a class="btn btn-primary" target="_blank" ui-sref="detailmedal({id:item._id})">
