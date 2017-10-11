@@ -6111,12 +6111,17 @@ var model = {
                         "resultQualifyingRound.resultImage": singleData.resultImage
                     }
                 }
-            } else if (singleData.result) {
-                var players = {};
-                players.player = singleData.result;
+            } else if (singleData.result && singleData.scoreSheet) {
                 var updateObj = {
                     $set: {
-                        "resultQualifyingRound.player": singleData.result
+                        "resultQualifyingRound.player": singleData.result,
+                        "resultQualifyingRound.scoreSheet": singleData.scoreSheet
+                    }
+                }
+            } else if (singleData.result) {
+                var updateObj = {
+                    $set: {
+                        "resultQualifyingRound.player": singleData.result,
                     }
                 }
             }
