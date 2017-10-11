@@ -6125,7 +6125,7 @@ var model = {
                 }
             }
             Match.update({
-                matchId: singleData.matchId
+                matchId: data.matchId
             }, updateObj).exec(
                 function (err, complete) {
                     if (err || _.isEmpty(complete)) {
