@@ -284,5 +284,15 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
   $scope.menutitle = NavigationService.makeactive("Special Award");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
+
+  $scope.getConfig = function () {
+    NavigationService.getConfigDetail(function (data) {
+      $scope.configData = data.data.data
+      console.log($scope.configData);
+      $scope.institute = $scope.configData.type;
+      console.log($scope.institute)
+    })
+  }
+  $scope.getConfig();
 });
 // SPORTS AWARDS DETAIL  END

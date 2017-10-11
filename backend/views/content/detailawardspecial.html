@@ -7,3 +7,51 @@
     </div>
   </div>
 </div>
+
+<div class=" panel-content ">
+  <div class="row ">
+    <div class="col-md-12 ">
+      <div class="widget ">
+        <div class="table-area ">
+          <div class="widget-title">
+            <form name="specialawardform" role='form'>
+              <div class="row">
+                <div class="col-md-6">
+                  <!-- TYPE -->
+                  <div class="special-award-type">
+                    <div class="form-group">
+                      <label> Type</label>
+                      <select name="selecttype" class="form-control" ng-model="formData.type" placeholder="Enter Type" required>
+                                <option value="athlete">Athlete</option>
+                                <option value="school" ng-if="institute==='school'">School</option>
+                                <option value="college" ng-if="institute==='college'">College</option>
+                      </select>
+                      <div class="error-msg" ng-if="specialawardform.selecttype.$invalid && specialawardform.selecttype.$touched">Please Enter Type*</div>
+                    </div>
+                  </div>
+                  <!-- TYPE END -->
+                </div>
+                <div class="col-md-6">
+                  <!-- GENDER -->
+                  <div class="special-award-gender">
+                    <div class="special-award-type">
+                      <div class="form-group">
+                        <label> Gender</label>
+                        <select name="selectgender" class="form-control" ng-model="formData.type" placeholder="Enter Type" required>
+                                      <option value="athlete">Athlete</option>
+                                      
+                            </select>
+                        <div class="error-msg" ng-if="specialawardform.selecttype.$invalid && specialawardform.selecttype.$touched">Please Enter Type*</div>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- GENDER END -->
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
