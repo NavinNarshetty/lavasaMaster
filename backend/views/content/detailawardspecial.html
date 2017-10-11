@@ -15,6 +15,7 @@
         <div class="table-area ">
           <div class="widget-title">
             <form name="specialawardform" role='form'>
+              <!-- TYPE AND GENDER -->
               <div class="row">
                 <div class="col-md-6">
                   <!-- TYPE -->
@@ -37,17 +38,52 @@
                     <div class="special-award-type">
                       <div class="form-group">
                         <label> Gender</label>
-                        <select name="selectgender" class="form-control" ng-model="formData.type" placeholder="Enter Type" required>
-                                      <option value="athlete">Athlete</option>
-                                      
-                            </select>
-                        <div class="error-msg" ng-if="specialawardform.selecttype.$invalid && specialawardform.selecttype.$touched">Please Enter Type*</div>
+                        <select name="selectgender" class="form-control" ng-model="formData.gender" placeholder="Enter Type" required>
+                                      <option value="male">Male</option>
+                                      <option value="female">Female</option>              
+                        </select>
+                        <div class="error-msg" ng-if="specialawardform.selectgender.$invalid && specialawardform.selectgender.$touched">Please Enter Type*</div>
                       </div>
                     </div>
                   </div>
                   <!-- GENDER END -->
                 </div>
               </div>
+              <!-- TYPE AND GENDER -->
+
+              <!-- CERTIFICATE && FOOTER IMAGE -->
+              <div class="certificate-footerimage-holder">
+                <!-- CERTIFICATE NAME -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Certificate Name</label>{{$item.name}}
+                      <ui-select name="certificatename" ng-model="formData.certificateName" theme="bootstrap" required>
+                        <ui-select-match placeholder="Select Certificate Name" allow-clear="true"> {{$select.selected.name}}</ui-select-match>
+                        <ui-select-choices repeat="certificate in certificateType | filter: $select.search">
+                          <div>
+                            <span class="text-capitalize" ng-bind-html="certificate.name"></span>
+                          </div>
+                        </ui-select-choices>
+                      </ui-select>
+                      <div class="error-msg" ng-if="specialawardform.certificatename.$invalid && specialawardform.certificatename.$touched">Please Enter Valid Name *</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- CERTIFICATE NAME END -->
+
+                <!-- FOOTER IMAGE -->
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="form-group">
+                      <label>Footer Image <span style="color:#ea5249;">(Note:image size should be 300x300 only *)</span> <span ng-show="type.required">*</span></label>
+                      <upload-image ng-model="formData.footerImage" inobj></upload-image>
+                    </div>
+                  </div>
+                </div>
+                <!-- FOOTER IMAGE END -->
+              </div>
+              <!-- CERTIFICATE && FOOTER IMAGE -->
             </form>
           </div>
         </div>

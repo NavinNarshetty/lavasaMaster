@@ -150,7 +150,7 @@ myApp.controller('SpecialAwardCtrl', function ($scope, TemplateService, Navigati
   // TABLE VIEW 
   $scope.viewTable = function () {
 
-    $scope.url = "SpecialAwardList/search";
+    $scope.url = "Awards/search";
     // $scope.search = $scope.formData.keyword;
     $scope.formData.page = $scope.formData.page++;
     NavigationService.apiCall($scope.url, $scope.formData, function (data) {
@@ -185,7 +185,7 @@ myApp.controller('SpecialAwardCtrl', function ($scope, TemplateService, Navigati
 
   $scope.delete = function (data) {
     // console.log(data);
-    $scope.url = "SpecialAwardList/delete";
+    $scope.url = "Awards/delete";
     $scope.constraints = {};
     $scope.constraints._id = data;
     NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
@@ -231,7 +231,7 @@ myApp.controller('DetailSpecialAwardCtrl', function ($scope, TemplateService, Na
   if ($stateParams.id) {
     $scope.title = "Edit"
     $scope.getOneOldSchoolById = function () {
-      $scope.url = 'SpecialAwardList/getOne';
+      $scope.url = 'Awards/getOne';
       $scope.constraints = {};
       $scope.constraints._id = $stateParams.id;
       NavigationService.getOneOldSchoolById($scope.url, $scope.constraints, function (data) {
@@ -247,7 +247,7 @@ myApp.controller('DetailSpecialAwardCtrl', function ($scope, TemplateService, Na
   $scope.saveAward = function (data) {
     console.log("i am in ");
     console.log(data, "save")
-    $scope.url = "SpecialAwardList/save";
+    $scope.url = "Awards/save";
     NavigationService.apiCall($scope.url, data, function (data) {
       console.log("save sponsor")
       if (data.value) {
@@ -294,5 +294,15 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
     })
   }
   $scope.getConfig();
+
+  $scope.certificateType = [{
+    name: 'Sport Max Award'
+  }, {
+    name: 'Rising Star'
+  }, {
+    name: 'Coach Award'
+  }, {
+    name: 'Boost Award'
+  }]
 });
 // SPORTS AWARDS DETAIL  END
