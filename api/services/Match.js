@@ -6112,7 +6112,7 @@ var model = {
             if (data.resultImage) {
                 var updateObj = {
                     $set: {
-                        "resultImages": data.resultImage
+                        resultImages: data.resultImage
                     }
                 }
             } else if (data.result) {
@@ -6120,7 +6120,7 @@ var model = {
                 players.player = data.result;
                 var updateObj = {
                     $set: {
-                        "resultQualifyingRound": players
+                        resultQualifyingRound: players
                     }
                 }
             }
