@@ -6112,12 +6112,12 @@ var model = {
             if (singleData.resultImage) {
                 var updateObj = {
                     $set: {
-                        resultImages: data.resultImage
+                        resultImages: singleData.resultImage
                     }
                 }
             } else if (singleData.result) {
                 var players = {};
-                players.player = data.result;
+                players.player = singleData.result;
                 var updateObj = {
                     $set: {
                         resultQualifyingRound: players
