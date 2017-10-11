@@ -40,6 +40,9 @@ schema.plugin(deepPopulate, {
         "player": {
             select: ''
         },
+        "player.school": {
+            select: ''
+        },
     }
 });
 schema.plugin(uniqueValidator);
@@ -70,24 +73,151 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        var deepSearch = "player team sport sport.sportslist sport.ageGroup sport.weight sport.sportslist.sportsListSubCategory";
 
-        Medal.find(data.keyword)
-            .sort({
-                createdAt: -1
-            })
-            .order(options)
-            .keyword(options)
-            .deepPopulate(deepSearch)
-            .page(options, function (err, found) {
-                if (err) {
-                    callback(err, null);
-                } else if (_.isEmpty(found)) {
-                    callback(null, "Data is empty");
-                } else {
-                    callback(null, found);
-                }
-            });
+
+        if (data.type == "Sport") {
+            Medal.aggregate(
+                [{
+                        $lookup: {
+                            "from": "sports",
+                            "localField": "sport",
+                            "foreignField": "_id",
+                            "as": "sport"
+                        }
+                    },
+                    {
+                        $unwind: {
+                            path: "$sport",
+                        }
+                    },
+                    {
+                        $lookup: {
+                            "from": "sportslists",
+                            "localField": "sport.sportslist",
+                            "foreignField": "_id",
+                            "as": "sport.sportslist"
+                        }
+                    },
+                    {
+                        $unwind: {
+                            path: "$sport.sportslist",
+                        }
+                    },
+                    {
+                        $lookup: {
+                            "from": "agegroups",
+                            "localField": "sport.ageGroup",
+                            "foreignField": "_id",
+                            "as": "sport.ageGroup"
+                        }
+                    },
+                    {
+                        $unwind: {
+                            path: "$sport.ageGroup",
+                        }
+                    },
+                    {
+                        $lookup: {
+                            "from": "sportslistsubcategories",
+                            "localField": "sport.sportslist.sportsListSubCategory",
+                            "foreignField": "_id",
+                            "as": "sport.sportslist.sportsListSubCategory"
+                        }
+                    },
+                    {
+                        $unwind: {
+                            path: "$sport.sportslist.sportsListSubCategory",
+                        }
+                    },
+                    {
+                        $lookup: {
+                            "from": "atheletes",
+                            "localField": "player",
+                            "foreignField": "_id",
+                            "as": "player"
+                        }
+                    },
+                    {
+                        $lookup: {
+                            "from": "teamsports",
+                            "localField": "team",
+                            "foreignField": "_id",
+                            "as": "team"
+                        }
+                    },
+                    {
+                        $match: {
+
+                            $or: [{
+                                    "sport.sportslist.name": {
+                                        $regex: data.input,
+                                        $options: 'i'
+                                    }
+                                },
+                                {
+                                    "sport.sportslist.sportsListSubCategory.name": {
+                                        $regex: data.input,
+                                        $options: "i"
+                                    }
+                                }
+                            ]
+
+                        }
+                    },
+                    {
+                        $sort: {
+                            "createdAt": -1
+                        }
+                    }
+                ],
+                function (err, returnReq) {
+                    console.log("returnReq : ", returnReq);
+                    if (err) {
+                        console.log(err);
+                        callback(null, err);
+                    } else {
+                        if (_.isEmpty(returnReq)) {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+                        } else {
+                            var count = returnReq.length;
+                            console.log("count", count);
+
+                            var data = {};
+                            data.options = options;
+                            data.results = returnReq;
+                            data.total = count;
+                            callback(null, data);
+
+                        }
+                    }
+                });
+        } else {
+            var deepSearch = "player team sport sport.sportslist sport.ageGroup sport.weight sport.sportslist.sportsListSubCategory";
+
+            Medal.find(data.keyword)
+                .sort({
+                    createdAt: -1
+                })
+                .order(options)
+                .keyword(options)
+                .deepPopulate(deepSearch)
+                .page(options, function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, "Data is empty");
+                    } else {
+                        callback(null, found);
+                    }
+                });
+        }
     },
 
     getOneMedal: function (matchObj, callback) {
@@ -495,6 +625,100 @@ var model = {
         })
     },
 
+    generateExcel: function (res) {
+        async.waterfall([
+                function (callback) {
+                    var deepSearch = "player player.school team sport sport.sportslist sport.ageGroup sport.weight sport.sportslist.sportsListSubCategory";
+                    Medal.find().deepPopulate(deepSearch).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    var i = 1;
+                    var singleData = [];
+                    async.eachSeries(found, function (mainData, callback1) {
+                            if (mainData.player.length > 0) {
+                                async.concatSeries(mainData.player, function (playerData, callback2) {
+                                    var obj = {};
+                                    obj["Sr No"] = i;
+                                    obj["Medal Type"] = mainData.medalType;
+                                    obj["Sport Name"] = mainData.sport.sportslist.sportsListSubCategory.name;
+                                    obj["Age Group"] = mainData.sport.ageGroup.name;
+                                    obj["Gender"] = mainData.sport.gender;
+                                    if (mainData.sport.weight) {
+                                        obj["Weight"] = mainData.sport.weight.name;
+                                    } else {
+                                        obj["Weight"] = '-';
+                                    }
+                                    obj["Event Name"] = mainData.sport.sportslist.name;
+                                    obj["Type"] = 'Individual';
+                                    obj["ID"] = playerData.sfaId;
+                                    if (playerData.middleName) {
+                                        obj["Winner"] = playerData.firstName + ' ' + playerData.middleName + ' ' + playerData.surname;
+                                    } else {
+                                        obj["Winner"] = playerData.firstName + ' ' + playerData.surname;
+                                    }
+                                    if (playerData.atheleteSchoolName) {
+                                        obj["School"] = playerData.atheleteSchoolName;
+                                    } else {
+                                        obj["School"] = playerData.school.name;
+                                    }
+                                    i++;
+                                    singleData.push(obj);
+                                    callback2(null, obj);
+                                }, function (err, data1) {
+                                    callback1(null, data1);
+                                });
+                            } else if (mainData.team.length > 0) {
+                                async.concatSeries(mainData.team, function (teamData, callback3) {
+                                    var obj = {};
+                                    obj["Sr No"] = i;
+                                    obj["Medal Type"] = mainData.medalType;
+                                    obj["Sport Name"] = mainData.sport.sportslist.sportsListSubCategory.name;
+                                    obj["Age Group"] = mainData.sport.ageGroup.name;
+                                    obj["Gender"] = mainData.sport.gender;
+                                    if (mainData.sport.weight) {
+                                        obj["Weight"] = mainData.sport.weight.name;
+                                    } else {
+                                        obj["Weight"] = '-';
+                                    }
+                                    obj["Event Name"] = mainData.sport.sportslist.name;
+                                    obj["Type"] = 'Team';
+                                    obj["ID"] = teamData.teamId;
+                                    obj["Winner"] = teamData.schoolName;
+                                    obj["School"] = teamData.schoolName;
+                                    i++;
+                                    singleData.push(obj);
+                                    callback3(null, obj);
+                                }, function (err, data2) {
+                                    callback1(null, data2);
+                                });
+                            }
+                        },
+                        function (err) {
+                            Config.generateExcel("Medal", singleData, res);
+                        });
+                },
+            ],
+            function (err, excelData) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (excelData) {
+                    if (_.isEmpty(excelData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, excelData);
+                    }
+                }
+            });
+    },
 
 
 
