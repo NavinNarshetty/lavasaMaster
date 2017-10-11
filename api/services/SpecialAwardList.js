@@ -1,7 +1,8 @@
 var schema = new Schema({
     name: 'String',
     type: [{
-        name: String
+        type: String,
+        enum:['athlete','school','college']
     }]
 });
 
