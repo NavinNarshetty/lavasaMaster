@@ -45,6 +45,13 @@
                         <!--<option  value="league">League</option>-->
                     </select>
     </div>
+    <div class="col-md-12 drop-2" ng-if="form.resultType=='knockout'">
+        <label>Video Upload</label>
+        <select class="form-control" ng-model="form.video">
+                        <option  value="yes">YES</option>
+                        <option  value="no">NO</option>
+                    </select>
+    </div>
 
     <!--<form name="detailForm" role="form" class="sec" ng-if="form.resultType=='knockout'">
       <div class="">

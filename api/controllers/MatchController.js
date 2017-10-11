@@ -402,7 +402,7 @@ var controller = {
                                     callback(null, complete);
                                 }
                             });
-                        } else if (req.body.resultType == "league-cum-knockout") {
+                        } else if (req.body.resultType == "league-cum-knockout" && req.body.video == "no") {
                             var knockout = _.groupBy(importData, 'STAGE');
                             var i = 0;
                             var excelData;
@@ -414,6 +414,22 @@ var controller = {
                                 }
                             });
                             Match.updateKnockoutFootball(excelData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else if (req.body.resultType == "league-cum-knockout" && req.body.video == "yes") {
+                            Match.updateVideo(excelData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else if (req.body.resultType == "knockout" && req.body.video == "yes") {
+                            Match.updateVideo(excelData, req.body, function (err, complete) {
                                 if (err || _.isEmpty(complete)) {
                                     callback(err, null);
                                 } else {

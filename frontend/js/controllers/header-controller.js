@@ -284,71 +284,212 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
     $scope.linkForAll = globalLinkForAll;
     $scope.linkForAllSports = globalLinkForAll + "sport/";
     $scope.eventYear = eventYear;
-    $scope.games = [{
-        "img": "img/footer/n1.jpg",
-        "href": "http://madeofgreat.tatamotors.com/tiago/",
-        "game": "Fantastico Partner"
-    }, {
-        "img": "img/footer/n2.jpg",
-        "href": "",
-        "game": "Smartphone Partner"
-    }, {
-        "img": "img/footer/p4.jpg",
-        "href": "",
-        "game": "Hydration partner"
-    }, {
-        "img": "img/footer/n3.jpg",
-        "href": "",
-        "game": "Support Partner"
-    }, {
-        "img": "img/footer/p7.jpg",
-        "href": "",
-        "game": "Media Partner "
-    }, {
-        "img": "img/footer/n4.jpg",
-        "href": "https://www.facebook.com/sportsillustratedindia/",
-        "game": "Magazine Partner"
-    }];
-    $scope.partner = [{
-            "img": "img/footer/p1.jpg",
-            "href": "",
-            "game": "Venue Partner"
-        }, {
-            "img": "img/footer/p6.jpg",
-            "href": "",
-            "game": "Hospital Partner"
-        },
-        // {
-        //     "img": "img/footer/na1.jpg",
-        //     "href": "",
-        //     "game": "Sports Equipment Partner"
-        // }, {
-        //     "img": "img/footer/na2.jpg",
-        //     "href": "",
-        //     "game": "Apparel Partner"
-        // },
-        {
-            "img": "img/footer/na3.jpg",
-            "href": "",
-            "game": "Sports Surface Partner"
-        }, {
-            "img": "img/footer/na6.jpg",
-            "href": "",
-            "game": "Sports Mentorship Partner"
-        }, {
-            "img": "img/footer/na4.jpg",
-            "href": "",
-            "game": "Shooting Range Partner"
-        }, {
-            "img": "img/footer/p5.jpg",
-            "href": "",
-            "game": "Medical Partner"
-        }, {
-            "img": "img/footer/na5.jpg",
-            "href": "",
-            "game": "Event Partner "
-        }
-    ];
+    // $scope.games = [{
+    //     "img": "img/footer/n1.jpg",
+    //     "href": "http://madeofgreat.tatamotors.com/tiago/",
+    //     "game": "Fantastico Partner"
+    // }, {
+    //     "img": "img/footer/n2.jpg",
+    //     "href": "",
+    //     "game": "Smartphone Partner"
+    // }, {
+    //     "img": "img/footer/p4.jpg",
+    //     "href": "",
+    //     "game": "Hydration partner"
+    // }, {
+    //     "img": "img/footer/n3.jpg",
+    //     "href": "",
+    //     "game": "Support Partner"
+    // }, {
+    //     "img": "img/footer/p7.jpg",
+    //     "href": "",
+    //     "game": "Media Partner "
+    // }, {
+    //     "img": "img/footer/n4.jpg",
+    //     "href": "https://www.facebook.com/sportsillustratedindia/",
+    //     "game": "Magazine Partner"
+    // }];
+    // $scope.partner = [{
+    //         "img": "img/footer/p1.jpg",
+    //         "href": "",
+    //         "game": "Venue Partner"
+    //     }, {
+    //         "img": "img/footer/p6.jpg",
+    //         "href": "",
+    //         "game": "Hospital Partner"
+    //     },
+    //     // {
+    //     //     "img": "img/footer/na1.jpg",
+    //     //     "href": "",
+    //     //     "game": "Sports Equipment Partner"
+    //     // }, {
+    //     //     "img": "img/footer/na2.jpg",
+    //     //     "href": "",
+    //     //     "game": "Apparel Partner"
+    //     // },
+    //     {
+    //         "img": "img/footer/na3.jpg",
+    //         "href": "",
+    //         "game": "Sports Surface Partner"
+    //     }, {
+    //         "img": "img/footer/na6.jpg",
+    //         "href": "",
+    //         "game": "Sports Mentorship Partner"
+    //     }, {
+    //         "img": "img/footer/na4.jpg",
+    //         "href": "",
+    //         "game": "Shooting Range Partner"
+    //     }, {
+    //         "img": "img/footer/p5.jpg",
+    //         "href": "",
+    //         "game": "Medical Partner"
+    //     }, {
+    //         "img": "img/footer/na5.jpg",
+    //         "href": "",
+    //         "game": "Event Partner "
+    //     }
+    // ];
+    // $scope.supportedBy = [{
+    //     "img": "img/footer/hyd/government.png",
+    //     "href": "",
+    //     "game": "Government of Telangana"
+    // }, {
+    //     "img": "img/footer/hyd/authority.png",
+    //     "href": "",
+    //     "game": "Under the aegis of SATS"
+    // }];
+    // $scope.sponsor_partner = [{
+    //     "img": "img/footer/hyd/enerzal.png",
+    //     "href": "",
+    //     "game": "Energy Drink Partner"
+    // }, {
+    //     "img": "img/footer/hyd/fever.png",
+    //     "href": "",
+    //     "game": "Radio Partner"
+    // }, {
+    //     "img": "img/footer/hyd/tv5.png",
+    //     "href": "",
+    //     "game": "News Channel Partner"
+    // }, {
+    //     "img": "img/footer/hyd/ibrand.png",
+    //     "href": "",
+    //     "game": "Marketing & Strategy Partner"
+    // }, {
+    //     "img": "img/footer/hyd/wizcraft.png",
+    //     "href": "",
+    //     "game": "Event Partner"
+    // }];
+    // // TV Support Partner
+    // // Hydration partner
+});
+
+myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr, $state, $uibModal) {
+    $scope.template = TemplateService;
+    $rootScope.year15 = year15;
+    $rootScope.year16 = year16;
+    if (window.location.host == "testmumbaischool.sfanow.in" || window.location.host == "testmumbaicollege.sfanow.in") {
+        $scope.selectedCity = 'mumbai';
+    } else if (window.location.host == "testhyderabadschool.sfanow.in" || window.location.host == "testhyderabadcollege.sfanow.in") {
+        $scope.selectedCity = 'hyderabad';
+    } else if (window.location.host == "testahmedabadschool.sfanow.in" || window.location.host == "testahmedabadcollege.sfanow.in") {
+        $scope.selectedCity = 'ahmedabad';
+    }
+
+    if (window.location.host == "mumbaischool.sfanow.in" || window.location.host == "mumbaicollege.sfanow.in") {
+        $scope.selectedCity = 'mumbai';
+    } else if (window.location.host == "hyderabadschool.sfanow.in" || window.location.host == "hyderabadcollege.sfanow.in") {
+        $scope.selectedCity = 'hyderabad';
+    } else if (window.location.host == "ahmedabadschool.sfanow.in" || window.location.host == "ahmedabadcollege.sfanow.in") {
+        $scope.selectedCity = 'ahmedabad';
+    }
+
+    if (window.location.origin != globalLinkSchoolRegister) {
+        $scope.registerSchool = globalLinkSchoolRegister;
+    } else if (window.location.origin != globalLinkCollegeRegister) {
+        $scope.registerCollege = globalLinkCollegeRegister;
+    }
+    $scope.linkForAll = globalLinkForAll;
+    $scope.linkForAllSports = globalLinkForAll + "sport/";
+    $scope.eventYear = eventYear;
+
+    $scope.games = // JavaScript Document
+        [
+            //     {
+            //     "img": "img/footer/n1.jpg",
+            //     "href": "http://madeofgreat.tatamotors.com/tiago/",
+            //     "game": "Fantastico Partner"
+            // }, 
+            {
+                "img": "img/footer/p4.jpg",
+                "href": "",
+                "game": "Hydration partner"
+            }, {
+                "img": "img/footer/n2.jpg",
+                "href": "",
+                "game": "Smartphone Partner"
+            }, {
+                "img": "img/footer/n9.png",
+                "href": "",
+                "game": "Radio Partner"
+            },
+            {
+                "img": "img/footer/n10.png",
+                "href": "",
+                "game": "Digital Parenting Partner"
+            }
+            //  {
+            //     "img": "img/footer/p7.jpg",
+            //     "href": "",
+            //     "game": "Media Partner "
+            // }, {
+            //     "img": "img/footer/n4.jpg",
+            //     "href": "https://www.facebook.com/sportsillustratedindia/",
+            //     "game": "Magazine Partner"
+            // }
+        ];
+    $scope.partner = // JavaScript Document
+        [{
+                "img": "img/footer/p1.jpg",
+                "href": "",
+                "game": "Venue Partner"
+            }, {
+                "img": "img/footer/p6.jpg",
+                "href": "",
+                "game": "Hospital Partner"
+            }
+            // {
+            //     "img": "img/footer/na3.jpg",
+            //     "href": "",
+            //     "game": "Sports Surface Partner"
+            // }, {
+            //     "img": "img/footer/na6.jpg",
+            //     "href": "",
+            //     "game": "Sports Mentorship Partner"
+            // }, {
+            //     "img": "img/footer/na4.jpg",
+            //     "href": "",
+            //     "game": "Shooting Range Partner"
+            // }, {
+            //     "img": "img/footer/p5.jpg",
+            //     "href": "",
+            //     "game": "Medical Partner"
+            // }, {
+            //     "img": "img/footer/na5.jpg",
+            //     "href": "",
+            //     "game": "Event Partner"
+            // }
+        ];
+
+
+    //  {
+    //             "img": "img/footer/na1.jpg",
+    //             "href": "",
+    //             "game": "Sports Equipment Partner"
+    //         }, {
+    //             "img": "img/footer/na2.jpg",
+    //             "href": "",
+    //             "game": "Apparel Partner"
+    //         },
     $scope.supportedBy = [{
         "img": "img/footer/hyd/government.png",
         "href": "",
@@ -380,5 +521,4 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
         "game": "Event Partner"
     }];
     // TV Support Partner
-    // Hydration partner
 });

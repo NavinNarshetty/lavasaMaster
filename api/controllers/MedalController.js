@@ -81,7 +81,12 @@ var controller = {
                 value: false
             });
         }
-    }
+    },
+
+    generateExcel: function (req, res) {
+        console.log("inside controller");
+        Medal.generateExcel(res);
+    },
 
 };
 module.exports = _.assign(module.exports, controller);
