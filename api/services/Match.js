@@ -1311,7 +1311,6 @@ var model = {
     //-----------------------------SAVE Excel ---------------------------------------------
 
     saveKnockoutIndividual: function (importData, data, callback) {
-        // console.log("import", importData);
         var countError = 0;
         async.waterfall([
                 function (callback) {
@@ -1324,7 +1323,6 @@ var model = {
                                     callback(null, singleData);
                                 },
                                 function (singleData, callback) {
-                                    // console.log("singleData", singleData);
                                     var paramData = {};
                                     paramData.name = singleData.EVENT;
                                     console.log("para,", paramData.name);
@@ -1379,8 +1377,6 @@ var model = {
                                             });
                                         }
                                     }
-
-
                                 },
                                 function (singleData, callback) {
                                     console.log("logssss***", singleData);
@@ -1408,6 +1404,23 @@ var model = {
                                         }
                                     }
 
+                                },
+                                function (singleData, callback) {
+                                    console.log("logssss***", singleData);
+                                    if (singleData.error) {
+                                        countError++;
+                                        callback(null, singleData);
+                                    } else {
+                                        Match.saveWeightChange(singleData, function (err, complete) {
+                                            if (err || _.isEmpty(complete)) {
+                                                err = "New weight not valid";
+                                                callback(err, null);
+                                            } else {
+                                                singleData.SPORT = complete.sportId;
+                                                callback(null, singleData);
+                                            }
+                                        });
+                                    }
                                 },
                                 function (singleData, callback) {
                                     console.log("logssss", singleData);
@@ -1458,9 +1471,7 @@ var model = {
                 },
                 function (singleData, callback) {
                     async.concatSeries(singleData, function (n, callback) {
-                            // console.log("n", n);
                             if (countError != 0 && n.error == null) {
-                                // console.log("inside", n.success._id, "count", countError);
                                 Match.remove({
                                     _id: n.success._id
                                 }).exec(function (err, found) {
@@ -1501,7 +1512,7 @@ var model = {
             });
     },
 
-    saveWeightChange: function (data, param, callback) {
+    saveWeightChange: function (singleData, callback) {
         async.waterfall([
                 function (callback) {
                     var paramData = {};
@@ -1512,28 +1523,85 @@ var model = {
                     } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
                         paramData.gender = "female";
                     }
-                    var weight = singleData[" NEW WEIGHT"];
+                    var weight = singleData["NEW WEIGHT"];
                     paramData.weight = _.trimStart(weight, " ");
                     Match.getSportId(paramData, function (err, sportData) {
                         if (err || _.isEmpty(sportData)) {
-                            singleData.SPORT = null;
-                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            err = "Weight may have wrong values";
                             callback(null, {
                                 error: err,
-                                success: singleData
+                                success: sportData
                             });
                         } else {
-                            singleData.SPORT = sportData.sportId;
-                            callback(null, singleData);
+                            callback(null, sportData);
                         }
                     });
                 },
-                function (singleData, callback) {
-                    if (singleData.error) {
+                function (sportData, callback) {
+                    if (sportData.error) {
                         countError++;
-                        callback(null, singleData);
+                        callback(null, sportData);
                     } else {
+                        if (singleData["PARTICIPANT 1"] && singleData["PARTICIPANT 2"]) {
+                            var participant = {};
+                            participant.id = singleData["PARTICIPANT 1"];
+                            Match.updateIndividualSport(participant, sportData, function (err, updatedData) {
+                                if (err || _.isEmpty(updatedData)) {
+                                    err = "Weight may have wrong values";
+                                    callback(null, {
+                                        error: err,
+                                        success: sportData
+                                    });
+                                } else {
 
+                                    callback(null, sportData);
+                                }
+                            });
+                            var participant1 = {};
+                            participant1.id = singleData["PARTICIPANT 2"];
+                            Match.updateIndividualSport(participant1, sportData, function (err, updatedData) {
+                                if (err || _.isEmpty(updatedData)) {
+                                    err = "Weight may have wrong values";
+                                    callback(null, {
+                                        error: err,
+                                        success: sportData
+                                    });
+                                } else {
+
+                                    callback(null, sportData);
+                                }
+                            });
+                        } else if (singleData["PARTICIPANT 1"]) {
+                            var participant = {};
+                            participant.id = singleData["PARTICIPANT 1"];
+                            Match.updateIndividualSport(participant, sportData, function (err, updatedData) {
+                                if (err || _.isEmpty(updatedData)) {
+                                    err = "Weight may have wrong values";
+                                    callback(null, {
+                                        error: err,
+                                        success: sportData
+                                    });
+                                } else {
+                                    callback(null, sportData);
+                                }
+                            });
+                        } else if (singleData["PARTICIPANT 2"]) {
+                            var participant = {};
+                            participant.id = singleData["PARTICIPANT 2"];
+                            Match.updateIndividualSport(participant, sportData, function (err, updatedData) {
+                                if (err || _.isEmpty(updatedData)) {
+                                    err = "Weight may have wrong values";
+                                    callback(null, {
+                                        error: err,
+                                        success: sportData
+                                    });
+                                } else {
+                                    callback(null, sportData);
+                                }
+                            });
+                        } else {
+                            callback(null, sportData)
+                        }
                     }
                 }
             ],
@@ -1545,6 +1613,59 @@ var model = {
                 }
             });
 
+    },
+
+    updateIndividualSport: function (data, param, callback) {
+        async.waterfall([
+                function (callback) {
+                    IndividualSport.findOne({
+                        _id: data.id
+                    }).lean().exec(function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            callback(null, {
+                                error: "No Age found!",
+                                success: data
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    var sportArry = [];
+                    _.each(found.sport, function (n) {
+                        if (param.sportId == n) {
+                            sportArry.push(param.sportId);
+                        } else {
+                            sportArry.push(n);
+                        }
+                    });
+                    var matchobj = {
+                        $set: {
+                            sport: sportArry
+                        }
+                    };
+                    IndividualSport.update({
+                        _id: data.id
+                    }, matchobj).lean().exec(function (err, updateData) {
+                        if (err || _.isEmpty(updateData)) {
+                            callback(null, {
+                                error: "No Age found!",
+                                success: data
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                }
+            ],
+            function (err, results) {
+                if (err || _.isEmpty(results)) {
+                    callback(err, null);
+                } else {
+                    callback(null, results);
+                }
+            });
     },
 
     saveHeatIndividual: function (importData, data, callback) {
