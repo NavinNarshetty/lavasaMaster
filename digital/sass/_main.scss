@@ -1163,13 +1163,30 @@ header {
 .qualifying-tableholder{
   margin: 30px 0;
 }
+.btn-qualifyingscore{
+  padding: 5px;
+  font-size: 12px;
+}
 .digitalscore-table{
   thead{
     tr{
       th{
         text-transform: capitalize;
+        vertical-align: top;
       }
     }
+  }
+  tbody{
+    tr{
+      td{
+        font-size: 12px;
+      }
+    }
+  }
+}
+.qualifying-swiper{
+  .digital-swiper{
+    max-width: 120px;
   }
 }
 // QUALIFYING SCORING END

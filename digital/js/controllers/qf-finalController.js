@@ -155,7 +155,7 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
                       }
 
 
-                      if (value.resultQualifyingRound !== undefined) {
+                      if (value.resultQualifyingRound !== undefined && value.resultQualifyingRound.player) {
                         obj.result = value.resultQualifyingRound.player.result;
                         obj.noOfJumps = value.resultQualifyingRound.player.attempt.length;
                         obj.score = value.resultQualifyingRound.player.attempt[index1];
@@ -207,9 +207,10 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
   };
 
   // START SCORING FUNCTION
-  $scope.startScoring = function (data) {
+  $scope.startScoring = function (data, editFlag) {
     console.log(data, 'startScoring');
       $state.go("scorequalifying", {
+        flag: editFlag,
         sportName: $stateParams.name,
         sport: $stateParams.id,
         drawFormat: $stateParams.drawFormat,

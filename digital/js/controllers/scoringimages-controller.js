@@ -46,11 +46,10 @@ myApp.controller('ScoringImagestCtrl', function($scope, TemplateService, Navigat
                 $scope.match = data.data;
                 console.log($scope.match, 'getMatch');
                 $scope.match.matchId = $scope.matchData.matchId;
-              if ($scope.match.resultImages == {} || !$scope.match.resultImages) {
+              if (!$scope.match.resultImages) {
                   $scope.match.resultImages = {
                     "matchPhoto": [],
                     "scoreSheet": [],
-                    "status": "IsLive"
                   }
                 }
                 console.log($scope.match, 'Match');
@@ -66,7 +65,7 @@ myApp.controller('ScoringImagestCtrl', function($scope, TemplateService, Navigat
     $scope.completePopup = function(){
       if($scope.match.resultImages.matchPhoto.length == 0){
         toastr.error('Please upload match photo.', 'Data Incomplete');
-      } else if ($scope.match.resultImages.scoreSheet.length == 0) {
+      } else if ($scope.match.resultImages.status == 'IsLive' && $scope.match.resultImages.scoreSheet.length == 0) {
         toastr.error('Please upload scoresheet.', 'Data Incomplete');
       } else {
 
@@ -81,7 +80,11 @@ myApp.controller('ScoringImagestCtrl', function($scope, TemplateService, Navigat
     };
     $scope.matchComplete = function(){
       if ($scope.match.resultImages) {
-        $scope.match.resultImages.status = "IsCompleted";
+        if (!$scope.match.resultImages.status) {
+          $scope.match.resultImages.status = 'IsLive'
+        } else {
+          $scope.match.resultImages.status = "IsCompleted";
+        }
           $scope.matchResult = {
             resultImages : $scope.match.resultImages,
             matchId: $scope.matchData.matchId

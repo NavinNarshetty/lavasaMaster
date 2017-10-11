@@ -7,10 +7,21 @@
   </div>
   <div class="qualifyingscoring-section">
     <div class="container">
+      <!-- <pre>{{qualifyingRound.|json}}</pre> -->
       <div class="qualifying-tableholder table-responsive">
         <table class="table digitalscore-table">
           <thead>
             <tr>
+              <th>
+                <div>
+                  <p class="m-clear">Sr. No</p>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <p class="m-clear">Sfa ID</p>
+                </div>
+              </th>
               <th>
                 <div>
                   <p class="m-clear">name</p>
@@ -24,40 +35,40 @@
                 </div>
               </th>
               <!-- IMAGE -->
-              <th>
+              <th ng-if="editFlag == 'image'">
                 <div class="">
                   <p class="m-clear">Present</p>
                 </div>
               </th>
-              <th>
+              <th ng-if="editFlag == 'image'">
                 <div class="">
                   <p class="m-clear">Match Photo</p>
                 </div>
               </th>
               <!-- IMAGE END -->
               <!-- SCORING -->
-              <th hidden>
-                <div class="">
+              <th ng-if="editFlag == 'score'">
+                <div class="text-center">
                   <p class="m-clear">Attempt 1</p>
                 </div>
               </th>
-              <th hidden>
-                <div class="">
+              <th ng-if="editFlag == 'score'">
+                <div class="text-center">
                   <p class="m-clear">Attempt 2</p>
                 </div>
               </th>
-              <th hidden>
-                <div class="">
+              <th ng-if="editFlag == 'score'">
+                <div class="text-center">
                   <p class="m-clear">Attempt 3</p>
                 </div>
               </th>
-              <th hidden>
-                <div class="">
+              <th ng-if="editFlag == 'score'">
+                <div class="text-center">
                   <p class="m-clear">Final Attempt</p>
                 </div>
               </th>
-              <th hidden>
-                <div class="">
+              <th ng-if="editFlag == 'score'">
+                <div class="text-center">
                   <p class="m-clear">Result</p>
                 </div>
               </th>
@@ -65,31 +76,61 @@
             </tr>
           </thead>
           <tbody>
-            <tr >
-              <!-- ng-repeat="final in data.match track by $index"  -->
+            <tr ng-repeat="match in qualifyingRound track by $index">
               <td>
-                <div class="text-capitalize text-left">{{final.opponentsSingle[0].athleteId.fullName}} </div>
+                <div class="text-capitalize text-left">{{$index + 1}} </div>
+              </td>
+              <td>
+                <div class="text-capitalize text-left">{{match.opponentsSingle[0].athleteId.sfaId}} </div>
+              </td>
+              <td>
+                <div class="text-capitalize text-left">{{match.opponentsSingle[0].athleteId.firstName}} {{match.opponentsSingle[0].athleteId.surname}} </div>
               </td>
               <td>
                 <div class="text-capitalize text-left">
-                  {{final.opponentsSingle[0].athleteId.school.name}}
+                  {{match.opponentsSingle[0].athleteId.school.name}}
                 </div>
               </td>
               <!-- IMAGE  -->
-              <td>
-                <div class="form-group">
-                  <label ><input type="checkbox" ></label>
+              <td ng-if="editFlag == 'image'">
+                <div class="form-group text-center">
+                  <input type="checkbox" ng-model="match.resultImage.attendance" class="form-control">
                 </div>
               </td>
-              <td>
-                <div class="form-group">
+              <td ng-if="editFlag == 'image'">
+                <div class="form-group qualifying-swiper">
                   <div class="matchstart-uploadholder text-uppercase ">
-                    <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Picture</button>
-                    <upload-image ng-model="match.resultsCombat.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+                    <button class="btn btn-green-outline btn-qualifyingscore btn-scoring btn-uploadscoring">Upload Picture</button>
+                    <upload-image ng-model="match.resultImage.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
                   </div>
+                  <div class=" digital-swiper">
+                  <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultImage.matchPhoto track by $index">
+                    <span class="remove-pic" ng-click="removeMatchScore(pic, match,'matchPhoto')"><i class="fa fa-times"></i></span>
+                    <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
+                  </div>
+                </div>
                 </div>
               </td>
               <!-- IMAGE END -->
+              <!-- SCORING -->
+              <!-- ATTEMPT REPEAT -->
+              <td ng-if="editFlag == 'score'" ng-repeat = "attempt in match.resultQualifyingRound.player.attempt track by $index">
+                <div class="form-group">
+                  <input type="text" min="0" placeholder="0.00 m" class="form-control" ng-model="match.resultQualifyingRound.player.attempt[$index]">
+                </div>
+              </td>
+              <!-- ATTEMPT REPEAT END -->
+              <td ng-if="editFlag == 'score'">
+                <div class="form-group">
+                  <input type="text" min="0" placeholder="0.00 m" class="form-control" ng-model="match.resultQualifyingRound.player.bestAttempt">
+                </div>
+              </td>
+              <td ng-if="editFlag == 'score'">
+                <div class="form-group">
+                  <input type="text" placeholder="" class="form-control" ng-model="match.resultQualifyingRound.player.result">
+                </div>
+              </td>
+              <!-- SCORING END -->
             </tr>
           </tbody>
         </table>
@@ -98,14 +139,14 @@
       <div class="combatscore-uploads text-center">
         <div class="combatscore-pics">
           <div class="row">
-          <div class="col-md-offset-1 col-md-5 col-sm-6">
+          <div class="col-md-offset-1 col-md-5 col-sm-6" ng-if="editFlag == 'score'">
             <div class="matchstart-uploadholder text-uppercase ">
               <button class="btn btn-green-outline btn-scoring btn-uploadscoring">Upload Scorecard</button>
-              <upload-image ng-model="match.resultsCombat.scoreSheet" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+              <upload-image ng-model="scoreSheet" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
             </div>
             <div class="digital-swiper">
-            <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultsCombat.scoreSheet">
-              <span class="remove-pic" ng-click="removeMatchScore(pic,'scoreSheet')"><i class="fa fa-times"></i></span>
+            <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in scoreSheet">
+              <span class="remove-pic" ng-click="removeMatchScore(pic,match,'scoreSheet')"><i class="fa fa-times"></i></span>
               <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
             </div>
           </div>
@@ -115,7 +156,7 @@
 
         <div class="row">
           <div class="col-md-4 col-sm-4">
-              <button class="btn btn-green-outline btn-scoring" ui-sref="matchstart({'drawFormat':stateParam.drawFormat, 'sport': stateParam.sport, 'id':matchId})">back</button>
+              <button class="btn btn-green-outline btn-scoring" ng-click="qualifyingBack();">back</button>
           </div>
           <div class="col-md-4 col-sm-4">
               <button class="btn btn-green-outline btn-scoring" promise-btn = "yourPromise" ng-click="saveResult(match)">Save</button>

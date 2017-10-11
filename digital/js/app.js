@@ -99,7 +99,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'ScoringCtrl'
         })
         .state('scorequalifying', {
-            url: "/qualifying/:sportName/:drawFormat/:sport/:roundName/:sportId",
+            url: "/qualifying/:flag/:sportName/:drawFormat/:sport/:roundName/:sportId",
             templateUrl: tempateURL,
             controller: 'QualifyingScoreCtrl'
         })

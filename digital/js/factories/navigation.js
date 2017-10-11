@@ -235,7 +235,16 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
         },
         getQualifyingRound: function (formData, callback) {
             $http({
-                url: adminurl + "match/getAllQualifyingPerRounds",
+                url: adminurl + "match/getAllQualifyingPerRound",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
+        updateQualifyingDigital: function (formData, callback) {
+            $http({
+                url: adminurl + "match/updateQualifyingDigital",
                 method: "POST",
                 data: formData
             }).success(function (data) {
