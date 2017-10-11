@@ -5071,11 +5071,7 @@ var model = {
                                             opponentsSingle: lostPlayer
                                         }
                                     };
-                                } else {
-                                    callback(null, data.found);
                                 }
-
-
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle) && !_.isEmpty(found[1].opponentsSingle)) {
                                 if (found[0].opponentsSingle.length == 1 && found[1].opponentsSingle.length == 1) {
                                     var playerId = found[0].opponentsSingle[0];
@@ -5486,7 +5482,7 @@ var model = {
                                         }
                                     };
                                 } else {
-                                    callback(null, data.found);
+                                    // callback(null, data.found);
                                 }
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle)) {
                                 console.log("updating match", data.found);
@@ -5510,7 +5506,7 @@ var model = {
                                             }
                                         };
                                     } else {
-                                        callback(null, data.found);
+                                        // callback(null, data.found);
                                     }
                                 } else {
                                     updateObj = {};
@@ -5581,7 +5577,7 @@ var model = {
                                         }
                                     };
                                 } else {
-                                    callback(null, data.found);
+                                    // callback(null, data.found);
                                 }
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam)) {
                                 console.log("updating match", data.found);
@@ -5653,7 +5649,7 @@ var model = {
                                             }
                                         };
                                     } else {
-                                        callback(null, data.found);
+                                        // callback(null, data.found);
                                     }
                                 } else {
                                     updateObj = {};
