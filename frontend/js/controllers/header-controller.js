@@ -408,6 +408,12 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
     } else if (window.location.origin != globalLinkCollegeRegister) {
         $scope.registerCollege = globalLinkCollegeRegister;
     }
+
+    if ($state.current.name == 'sponsors-partner' || $state.current.name == 'individual-sponsor') {
+        $scope.hideFooter = false;
+    } else {
+        $scope.hideFooter = true;
+    }
     $scope.linkForAll = globalLinkForAll;
     $scope.linkForAllSports = globalLinkForAll + "sport/";
     $scope.eventYear = eventYear;
@@ -431,11 +437,6 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
                 "img": "img/footer/n9.png",
                 "href": "",
                 "game": "Radio Partner"
-            },
-            {
-                "img": "img/footer/n10.png",
-                "href": "",
-                "game": "Digital Parenting Partner"
             }
             //  {
             //     "img": "img/footer/p7.jpg",
@@ -449,6 +450,10 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
         ];
     $scope.partner = // JavaScript Document
         [{
+                "img": "img/footer/n10.png",
+                "href": "",
+                "game": "Digital Parenting Partner"
+            }, {
                 "img": "img/footer/p1.jpg",
                 "href": "",
                 "game": "Venue Partner"
