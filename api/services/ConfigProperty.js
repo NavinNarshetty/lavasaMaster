@@ -19,6 +19,7 @@ var schema = new Schema({
     district: [{
         type: String,
     }],
+    totalSport:Number,
     totalAmountType: Number,
     totalAmountInWordsType: String,
     taxTotalAmountInWords: String,

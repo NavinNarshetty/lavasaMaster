@@ -126,6 +126,14 @@
         "dropDownType": "multiple",
         "dropDown": ""
     }, {
+        "name": "Total Sport",
+        "type": "number",
+        "tableRef": "totalSport",
+        "placeholder": "Enter Total Sport",
+        "id": "totalsport",
+        "validation": ["", "trim", ""],
+        "url": ""
+    }, {
         "name": "Total Amount for Institution Type",
         "type": "number",
         "tableRef": "totalAmountType",

@@ -3,9 +3,30 @@ var schema = new Schema({
         type: String,
         enum: ['athlete', 'school', 'college']
     },
-    gender:"String",
-    awardName:"String",
-    
+    gender: "String",
+    award: {
+        type: Schema.Types.ObjectId,
+        ref: "Awards"
+    },
+    athlete: {
+        type: Schema.Types.ObjectId,
+        ref: "Athelete"
+    },
+    school: {
+        type: Schema.Types.ObjectId,
+        ref: "Registration"
+    },
+    sports: [{
+        type: Schema.Types.ObjectId,
+        ref: "Sport"
+    }],
+    coachName:"String",
+    boostDetail:{
+        schoolRank:"Number",
+        total:"Number",
+        year:"Number"
+    },
+    risingSport:"String"
 });
 
 schema.plugin(deepPopulate, {});
