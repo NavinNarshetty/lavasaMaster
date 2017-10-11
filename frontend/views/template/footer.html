@@ -35,82 +35,84 @@
             </div>
         </div>
     </div> -->
-    <div class="footer-slider" ng-if="selectedCity != 'hyderabad'">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="color-grey2 text-up font-semi text-c">sponsors</p>
-                    <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
-                        <!-- mycircle -->
-                        <ul class="padding0 text-c w1200" style="">
-                            <li class="text-center" ng-repeat="slid in games track by $index">
-                                <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
-            <img ng-src="{{slid.img}}" alt="">
-            </a>
-                                <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
-                                <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
-                            </li>
-                        </ul>
+    <section ng-if="hideFooter">
+        <div class="footer-slider" ng-if="selectedCity != 'hyderabad'">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="color-grey2 text-up font-semi text-c">sponsors</p>
+                        <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
+                            <!-- mycircle -->
+                            <ul class="padding0 text-c w1200" style="">
+                                <li class="text-center" ng-repeat="slid in games track by $index">
+                                    <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
+                <img ng-src="{{slid.img}}" alt="">
+                </a>
+                                    <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
+                                    <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="color-grey2 text-up font-semi text-c">partners</p>
-                    <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
-                        <!-- mycircle -->
-                        <ul class="padding0 text-c w1200">
-                            <li class="text-center" ng-repeat="slid in partner track by $index">
-                                <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
-            <img ng-src="{{slid.img}}" alt="">
-            </a>
-                                <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
-                                <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="footer-slider" ng-if="selectedCity == 'hyderabad'">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="color-grey2 text-up font-semi text-c">Supported by:</p>
-                    <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
-                        <!-- mycircle -->
-                        <ul class="padding0 text-c w1200" style="">
-                            <li class="text-center" ng-repeat="slid in supportedBy track by $index">
-                                <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
-            <img ng-src="{{slid.img}}" alt="">
-            </a>
-                                <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
-                                <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <p class="color-grey2 text-up font-semi text-c">Sponsors & Partners:</p>
-                    <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
-                        <!-- mycircle -->
-                        <ul class="padding0 text-c w1200">
-                            <li class="text-center" ng-repeat="slid in sponsor_partner track by $index">
-                                <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
-            <img ng-src="{{slid.img}}" alt="">
-            </a>
-                                <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
-                                <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
-                            </li>
-                        </ul>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="color-grey2 text-up font-semi text-c">partners</p>
+                        <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
+                            <!-- mycircle -->
+                            <ul class="padding0 text-c w1200">
+                                <li class="text-center" ng-repeat="slid in partner track by $index">
+                                    <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
+                <img ng-src="{{slid.img}}" alt="">
+                </a>
+                                    <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
+                                    <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="footer-slider" ng-if="selectedCity == 'hyderabad'">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="color-grey2 text-up font-semi text-c">Supported by:</p>
+                        <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
+                            <!-- mycircle -->
+                            <ul class="padding0 text-c w1200" style="">
+                                <li class="text-center" ng-repeat="slid in supportedBy track by $index">
+                                    <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
+                <img ng-src="{{slid.img}}" alt="">
+                </a>
+                                    <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
+                                    <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="color-grey2 text-up font-semi text-c">Sponsors & Partners:</p>
+                        <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
+                            <!-- mycircle -->
+                            <ul class="padding0 text-c w1200">
+                                <li class="text-center" ng-repeat="slid in sponsor_partner track by $index">
+                                    <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
+                <img ng-src="{{slid.img}}" alt="">
+                </a>
+                                    <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
+                                    <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
     <div class="second-slider">
         <div class="container">
             <div class="row">
