@@ -48,7 +48,7 @@
                   <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                   <td>{{item.name}}</td>
                   <td>
-                    <span ng-repeat="tabletype in item.type track by $index">{{tabletype}} <span ng-if="item.type.length !==1 && item.type.length !==0 && $index !==item.type.length-1">,</span>                    </span>
+                    <span class="text-capitalize" ng-repeat="tabletype in item.type track by $index">{{tabletype}} <span ng-if="item.type.length !==1 && item.type.length !==0 && $index !==item.type.length-1">,</span>                    </span>
                   </td>
                   <td>
                     <a class="btn btn-primary" target="_blank" ui-sref="detailspecialaward({id:item._id})">
