@@ -6112,7 +6112,7 @@ var model = {
             if (singleData.resultImage) {
                 var updateObj = {
                     $set: {
-                        resultImages: singleData.resultImage
+                        "resultQualifyingRound.resultImage": singleData.resultImage
                     }
                 }
             } else if (singleData.result) {
@@ -6120,7 +6120,7 @@ var model = {
                 players.player = singleData.result;
                 var updateObj = {
                     $set: {
-                        resultQualifyingRound: players
+                        "resultQualifyingRound.player": singleData.result
                     }
                 }
             }
