@@ -6109,13 +6109,13 @@ var model = {
 
     updateQualifyingDigital: function (data, callback) {
         async.concatLimit(data, 10, function (singleData, callback) {
-            if (data.resultImage) {
+            if (singleData.resultImage) {
                 var updateObj = {
                     $set: {
                         resultImages: data.resultImage
                     }
                 }
-            } else if (data.result) {
+            } else if (singleData.result) {
                 var players = {};
                 players.player = data.result;
                 var updateObj = {
@@ -6125,7 +6125,7 @@ var model = {
                 }
             }
             Match.update({
-                matchId: data.matchId
+                matchId: singleData.matchId
             }, updateObj).exec(
                 function (err, complete) {
                     if (err || _.isEmpty(complete)) {
