@@ -33,10 +33,10 @@
                 <div class="form-group">
                   <label for="">Type</label>
                   <ui-select name="specialTypes" ng-model="formData.type" theme="bootstrap" multiple required>
-                    <ui-select-match placeholder="Select Type" allow-clear="true">{{$item.name}}</ui-select-match>
+                    <ui-select-match placeholder="Select Type" allow-clear="true">{{$item}}</ui-select-match>
                     <ui-select-choices repeat="sponsortype in instituteTypes | filter: $select.search">
                       <div>
-                        <span ng-bind-html="sponsortype.name"></span>
+                        <span class="text-capitalize" ng-bind-html="sponsortype"></span>
                       </div>
                     </ui-select-choices>
                   </ui-select>

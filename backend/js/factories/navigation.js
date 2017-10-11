@@ -182,6 +182,11 @@ myApp.factory('NavigationService', function ($http) {
                 classis: "",
                 sref: "#/specialaward",
                 icon: "phone"
+            }, {
+                name: "Award Detail",
+                classis: "",
+                sref: "#/specialaward-detail",
+                icon: "phone"
             }]
         },
         {

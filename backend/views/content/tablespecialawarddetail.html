@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-md-4 column">
       <div class="heading-profile">
-        <h2>Special Award </h2>
+        <h2>Special Award Detail </h2>
       </div>
     </div>
   </div>
@@ -17,12 +17,12 @@
           <div class="widget-title ">
             <div class="pull-right">
               <!-- <form class="search-form mr-form ">
-                  <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
-                                     " ng-model="search" />
-                </form> -->
-              <a class="btn btn-success" ui-sref="detailspecialaward">
-                         Create
-                </a>
+                    <input type="text " ng-change="searchInTable(search) " placeholder="Search Here...
+                                       " ng-model="search" />
+                  </form> -->
+              <a class="btn btn-success" ui-sref="detailawardspecial">
+                           Create
+                  </a>
             </div>
             <h3>List of Special Award <span class="tableTotal">(Total : {{totalItems}}) </span></h3>
           </div>
@@ -33,10 +33,13 @@
                 <tr>
                   <th>#</th>
                   <th>
-                    Name
+                    Type
                   </th>
                   <th>
-                    Type
+                    Certificate Type
+                  </th>
+                  <th>
+                    Gender
                   </th>
                   <th>Actions</th>
                 </tr>
@@ -48,15 +51,16 @@
                   <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                   <td>{{item.name}}</td>
                   <td>
-                    <span ng-repeat="tabletype in item.type track by $index">{{tabletype}} <span ng-if="item.type.length !==1 && item.type.length !==0 && $index !==item.type.length-1">,</span>                    </span>
+                    <span ng-repeat="tabletype in item.type track by $index">{{tabletype.name}} <span ng-if="item.type.length !==1 && item.type.length !==0 && $index !==item.type.length-1">,</span>                    </span>
                   </td>
+                  <td></td>
                   <td>
                     <a class="btn btn-primary" target="_blank" ui-sref="detailspecialaward({id:item._id})">
-                              <i class="fa fa-pencil"></i> Edit
-                            </a>
+                                <i class="fa fa-pencil"></i> Edit
+                              </a>
                     <a class="btn btn-danger" ng-click="confDel(item._id)">
-                              <i class="fa fa-trash"></i> Delete
-                            </a>
+                                <i class="fa fa-trash"></i> Delete
+                              </a>
                   </td>
                 </tr>
               </tbody>

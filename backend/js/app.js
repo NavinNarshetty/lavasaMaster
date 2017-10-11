@@ -459,6 +459,18 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailSpecialAwardCtrl'
         })
+        // special award detail
+        .state('specialaward-detail', {
+            url: "/specialaward-detail",
+            templateUrl: "views/template.html",
+            controller: 'SpecialAwardDetailCtrl'
+        })
+        // DETAIL special award detil
+        .state('detailawardspecial', {
+            url: "/detailawardspecial",
+            templateUrl: "views/template.html",
+            controller: 'DetailAwardSpecialCtrl'
+        })
         //additional payment
         .state('additional-payment', {
             url: "/additional-payment",

@@ -219,17 +219,9 @@ myApp.controller('DetailSpecialAwardCtrl', function ($scope, TemplateService, Na
       $scope.institute = $scope.configData.type;
       if ($scope.institute === 'school') {
         console.log("in")
-        $scope.instituteTypes = [{
-          name: 'Athlete'
-        }, {
-          name: 'School'
-        }]
+        $scope.instituteTypes = ['athlete', 'school']
       } else {
-        $scope.instituteTypes = [{
-          name: 'Athlete'
-        }, {
-          name: 'College'
-        }]
+        $scope.instituteTypes = ['athlete', 'college']
       }
       console.log($scope.institute)
     })
@@ -274,3 +266,23 @@ myApp.controller('DetailSpecialAwardCtrl', function ($scope, TemplateService, Na
 
 });
 // DETAIL TABLE END
+
+// SPORTS AWARDS DETAIL TABLE
+myApp.controller('SpecialAwardDetailCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
+  //Used to name the .html file
+  $scope.template = TemplateService.changecontent("tablespecialawarddetail");
+  $scope.menutitle = NavigationService.makeactive("Special Award");
+  TemplateService.title = $scope.menutitle;
+  $scope.navigation = NavigationService.getnav();
+});
+// SPORTS AWARDS DETAIL TABLE END
+
+// SPORTS AWARDS DETAIL 
+myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
+  //Used to name the .html file
+  $scope.template = TemplateService.changecontent("detailawardspecial");
+  $scope.menutitle = NavigationService.makeactive("Special Award");
+  TemplateService.title = $scope.menutitle;
+  $scope.navigation = NavigationService.getnav();
+});
+// SPORTS AWARDS DETAIL  END
