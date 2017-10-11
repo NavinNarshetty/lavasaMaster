@@ -6003,8 +6003,8 @@ var model = {
                                         paramData.sport = singleData.SPORT;
                                         paramData.scheduleDate = singleData.DATE;
                                         paramData.scheduleTime = singleData.TIME;
-                                        paramData.video = n.success["VIDEO TYPE"];
-                                        paramData.videoType = n.success["VIDEO"];
+                                        paramData.video = singleData["VIDEO"];
+                                        paramData.video = singleData["VIDEO TYPE"];
                                         Match.updateQualifyingRound(paramData, function (err, complete) {
                                             if (err) {
                                                 callback(err, null);
@@ -6295,8 +6295,8 @@ var model = {
                                                 paramData.sport = n.success.SPORT;
                                                 paramData.scheduleDate = moment(n.success.DATE).format();
                                                 paramData.scheduleTime = n.success.TIME;
-                                                paramData.video = n.success["VIDEO TYPE"];
-                                                paramData.videoType = n.success["VIDEO"];
+                                                paramData.video = singleData["VIDEO"];
+                                                paramData.video = singleData["VIDEO TYPE"];
                                                 if (!_.isEmpty(result)) {
                                                     paramData.resultHeat = result;
                                                 }
@@ -6462,8 +6462,8 @@ var model = {
                                         paramData.sport = singleData.SPORT;
                                         paramData.scheduleDate = singleData.DATE;
                                         paramData.scheduleTime = singleData.TIME;
-                                        paramData.video = n.success["VIDEO TYPE"];
-                                        paramData.videoType = n.success["VIDEO"];
+                                        paramData.video = singleData["VIDEO"];
+                                        paramData.video = singleData["VIDEO TYPE"];
                                         Match.update({
                                             matchId: paramData.matchId
                                         }, paramData).exec(
@@ -6683,8 +6683,8 @@ var model = {
                             paramData.sport = singleData.SPORT;
                             paramData.scheduleDate = singleData.DATE;
                             paramData.scheduleTime = singleData.TIME;
-                            paramData.video = n.success["VIDEO TYPE"];
-                            paramData.videoType = n.success["VIDEO"];
+                            paramData.video = singleData["VIDEO"];
+                            paramData.video = singleData["VIDEO TYPE"];
                             console.log("***result***", result);
                             paramData.resultKnockout = result;
                             Match.update({
@@ -6818,8 +6818,8 @@ var model = {
                                         paramData.sport = singleData.SPORT;
                                         paramData.scheduleDate = singleData.DATE;
                                         paramData.scheduleTime = singleData.TIME;
-                                        paramData.video = n.success["VIDEO TYPE"];
-                                        paramData.videoType = n.success["VIDEO"];
+                                        paramData.video = singleData["VIDEO"];
+                                        paramData.video = singleData["VIDEO TYPE"];
                                         Match.update({
                                             matchId: paramData.matchId
                                         }, paramData).exec(
@@ -6999,6 +6999,8 @@ var model = {
                                                 paramData.scheduleDate = singleData.DATE;
                                                 paramData.scheduleTime = singleData.TIME;
                                                 paramData.excelType = singleData["STAGE"];
+                                                paramData.video = singleData["VIDEO"];
+                                                paramData.video = singleData["VIDEO TYPE"];
                                                 Match.update({
                                                     matchId: paramData.matchId
                                                 }, paramData).exec(
@@ -7586,6 +7588,8 @@ var model = {
                                         paramData.sport = singleData.SPORT;
                                         paramData.scheduleDate = singleData.DATE;
                                         paramData.scheduleTime = singleData.TIME;
+                                        paramData.video = singleData["VIDEO"];
+                                        paramData.video = singleData["VIDEO TYPE"];
                                         Match.update({
                                             matchId: paramData.matchId
                                         }, paramData).exec(
@@ -7670,8 +7674,8 @@ var model = {
                 var paramData = {};
                 paramData.opponentsTeam = [];
                 paramData.matchId = singleData["MATCH ID"];
-                paramData.video = n.success["VIDEO TYPE"];
-                paramData.videoType = n.success["VIDEO"];
+                paramData.video = singleData["VIDEO"];
+                paramData.video = singleData["VIDEO TYPE"];
                 Match.update({
                     matchId: paramData.matchId
                 }, paramData).exec(
