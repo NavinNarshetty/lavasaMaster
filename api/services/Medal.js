@@ -118,6 +118,20 @@ var model = {
                     },
                     {
                         $lookup: {
+                            "from": "weights",
+                            "localField": "sport.weight",
+                            "foreignField": "_id",
+                            "as": "sport.weight"
+                        }
+                    },
+                    {
+                        $unwind: {
+                            path: "$sport.weight",
+                            preserveNullAndEmptyArrays: true // optional
+                        }
+                    },
+                    {
+                        $lookup: {
                             "from": "sportslistsubcategories",
                             "localField": "sport.sportslist.sportsListSubCategory",
                             "foreignField": "_id",
@@ -156,6 +170,24 @@ var model = {
                                 },
                                 {
                                     "sport.sportslist.sportsListSubCategory.name": {
+                                        $regex: data.input,
+                                        $options: "i"
+                                    }
+                                },
+                                {
+                                    "sport.ageGroup.name": {
+                                        $regex: data.input,
+                                        $options: "i"
+                                    }
+                                },
+                                {
+                                    "sport.gender": {
+                                        $regex: data.input,
+                                        $options: "i"
+                                    }
+                                },
+                                {
+                                    "sport.weight.name": {
                                         $regex: data.input,
                                         $options: "i"
                                     }
