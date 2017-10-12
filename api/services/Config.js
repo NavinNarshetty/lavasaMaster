@@ -580,7 +580,7 @@ var model = {
                 console.log("inside else");
                 //var path = "http://104.155.129.33:1337/upload/readFile/";
                 var path = "pdf/";
-                var newFilename = pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.sportObj.ageGroup.name + "-" + pdfObj.sportObj.gender + "-" + pdfObj.sportObj.sportslist.name + "-" + pdfObj.filename + ".pdf";
+                var newFilename = pdfObj.newFilename;
                 var writestream = fs.createWriteStream(path + newFilename);
 
                 writestream.on('finish', function (err, res) {

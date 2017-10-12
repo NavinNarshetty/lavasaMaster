@@ -26,16 +26,27 @@ var controller = {
         }
     },
 
-    getAllAwardDetails:function(req,res){
-        if(req.body){
-            SpecialAwardDetails.getAllAwardDetails(req.body,res.callback);
-        }else{
+    getOneAwardDetails: function (req, res) {
+        if (req.body && req.body._id) {
+            SpecialAwardDetails.getOneAwardDetails(req.body, res.callback);
+        } else {
             res.json({
-                data:"Incorrect Input Fields",
-                value:"false"
+                data: "Incorrect Input Fields",
+                value: false
             });
         }
-        
+    },
+
+    getAllAwardDetails: function (req, res) {
+        if (req.body) {
+            SpecialAwardDetails.getAllAwardDetails(req.body, res.callback);
+        } else {
+            res.json({
+                data: "Incorrect Input Fields",
+                value: "false"
+            });
+        }
+
     }
 
 

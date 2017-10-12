@@ -618,6 +618,7 @@ var model = {
                                 //generatePdf
                                 function (pdfObj, sport, callback) {
                                     if (!pdfObj.sportObj.notFound) {
+                                        pdfObj.newFilename=pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.sportObj.ageGroup.name + "-" + pdfObj.sportObj.gender + "-" + pdfObj.sportObj.sportslist.name + "-" + pdfObj.filename + ".pdf";
                                         Config.generatePdf(pdfObj, function (err, pdfRespo) {
                                             if (err) {
                                                 callback(null, err);

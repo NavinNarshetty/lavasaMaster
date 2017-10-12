@@ -32,7 +32,20 @@ var schema = new Schema({
     risingSport: "String"
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    populate: {
+        "athlete": {
+            select: '_id firstName surname middleName gender dob sfaId school'
+        },
+        "athlete.school": {
+            select: '_id name sfaid'
+        },
+        "school": {
+            select: '_id schoolName sfaID'
+        },
+       
+    }
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('SpecialAwardDetails', schema);
@@ -104,7 +117,7 @@ var model = {
         ];
     },
 
-    getAllAwardDetails: function (data,callback) {
+    getAllAwardDetails: function (data, callback) {
         var pipeline = model.getPipeline();
         if (data.rising) {
             pipeline.push({
@@ -124,6 +137,12 @@ var model = {
 
         SpecialAwardDetails.aggregate(pipeline, function (err, arr) {
             callback(null, arr);
+        });
+    },
+
+    getOneAwardDetails: function (data, callback) {
+        SpecialAwardDetails.find(data).deepPopulate("award athlete athlete.school school").lean().exec(function (err, result) {
+            callback(null,result);
         });
     }
 
