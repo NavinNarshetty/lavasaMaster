@@ -243,6 +243,7 @@ myApp.controller('DetailSpecialAwardCtrl', function ($scope, TemplateService, Na
 
   }
 
+
   // SAVE
   $scope.saveAward = function (data) {
     console.log("i am in ");
@@ -255,10 +256,10 @@ myApp.controller('DetailSpecialAwardCtrl', function ($scope, TemplateService, Na
         toastr.success("Data saved successfully", 'Success');
         $state.go('specialaward')
       } else if (data.data.nModified == '1') {
-        // toastr.success("Data saved successfully", 'Success');
-        // $state.go('sponsor')
+        toastr.success("Data saved successfully", 'Success');
+        $state.go('specialaward')
       } else {
-        // toastr.error("Something went wrong", 'Error');
+        toastr.error("Something went wrong", 'Error');
       }
     })
   }
@@ -284,7 +285,10 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
   $scope.menutitle = NavigationService.makeactive("Special Award");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
+  $scope.formData = {};
+  $scope.formData.boostDetail = [];
 
+  // FOR INSTITUTE TYPE
   $scope.getConfig = function () {
     NavigationService.getConfigDetail(function (data) {
       $scope.configData = data.data.data
@@ -294,6 +298,92 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
     })
   }
   $scope.getConfig();
+  // INSTITUTE TYPE END
+
+
+  // BOOST AWARD
+  $scope.addRow = function (formData) {
+    if (!formData) {
+      $scope.formData.boostDetail.push({
+        "schoolRank": '',
+        "total": '',
+        "year": ''
+      })
+    } else {
+      formData.boostDetail.push({
+        "schoolRank": '',
+        "total": '',
+        "year": ''
+      })
+    }
+
+
+  }
+  $scope.addRow();
+
+  $scope.deleteRow = function (formData, index) {
+    formData.boostDetail.splice(index, 1);
+  }
+  // BOOST AWARD END
+
+  // SPORTS
+  $scope.getAllSportList = function (data) {
+    $scope.url = "SportsList/search";
+    console.log(data);
+    $scope.constraints = {};
+    $scope.constraints.keyword = data;
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      console.log("data.value sportlist", data);
+      $scope.sportitems = data.data.results;
+
+    });
+  }
+  // SPORTS END
+
+  // SCHOOL
+  $scope.getOneSchoolById = function () {
+    $scope.url = 'registration/search';
+    NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+      $scope.school = data.data.results;
+      $scope.schoolData = data.data.results;
+      _.each($scope.school, function (n) {
+        if (n.status == 'Verified') {
+          n.schoolsfaId = n.sfaID + '-' + n.schoolName;
+        } else {
+          n.schoolsfaId = n.schoolName;
+        }
+      });
+      console.log($scope.school, "after each")
+    });
+  };
+  $scope.getOneSchoolById();
+
+  $scope.searchSportList = function (data) {
+    $scope.draws = data;
+  }
+
+  // SCHOOL END
+
+  // SAVE
+  $scope.saveAwardDetail = function (data) {
+    console.log("i am in ");
+    console.log(data, "save")
+    $scope.url = "SpecialAwardDetails/save";
+    NavigationService.apiCall($scope.url, data, function (data) {
+      console.log("save sponsor")
+      if (data.value) {
+        console.log("in")
+        // toastr.success("Data saved successfully", 'Success');
+        // $state.go('specialaward')
+      } else if (data.data.nModified == '1') {
+        // toastr.success("Data saved successfully", 'Success');
+        // $state.go('sponsor')
+      } else {
+        // toastr.error("Something went wrong", 'Error');
+      }
+    })
+  }
+  // SAVE END
 
   $scope.certificateType = [{
     name: 'Sport Max Award'

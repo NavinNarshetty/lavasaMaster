@@ -7,7 +7,7 @@ var schema = new Schema({
         type: String,
         enum: ['athlete', 'school', 'college']
     }],
-    awardType:"Mixed"
+    awardType: Schema.Types.Mixed
 });
 
 schema.plugin(deepPopulate, {});
@@ -18,7 +18,7 @@ module.exports = mongoose.model('Awards', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    
+
 
     getRemainSchoolAwards: function (data, callback) {
 

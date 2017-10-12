@@ -20,14 +20,13 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label>Name*</label>
-                  <input type="text" name="awardName" ng-model="formData.name" class="form-control" placeholder="Enter Award Name"
-                    required>
+                  <input type="text" name="awardName" ng-model="formData.name" class="form-control" placeholder="Enter Award Name" required>
                   <div class="error-msg" ng-if="detailForm.awardName.$invalid && detailForm.awardName.$touched">Please Enter Valid Name *</div>
                 </div>
               </div>
             </div>
             <!-- AWARDS NAME END -->
-            <!-- TYPE -->
+            <!-- INSTITUTE TYPE -->
             <div class="row">
               <div class="col-md-12">
                 <div class="form-group">
@@ -45,7 +44,22 @@
 
               </div>
             </div>
-            <!-- TYPE END -->
+            <!-- INSTITUTE TYPE END -->
+
+            <div class="row">
+              <div class="col-md-12">
+                <label for="">Award Type</label>
+                <select name="awardtype" class="form-control" ng-model="formData.awardType" placeholder="Enter Award Type" required>
+                      <option value="max">Max</option>
+                      <option value="strong">Strong</option>
+                      <option value="boost">Boost</option>
+                      <option value="coach">Coach</option>
+                      <option value="rising">Rising</option>
+                      <option value="champion">Champion</option>
+               </select>
+                <div class="error-msg" ng-if="sponsorForm.awardtype.$invalid && sponsorForm.awardtype.$touched">Please Enter Valid Type *</div>
+              </div>
+            </div>
 
             <div class="text-center mt20 odd-even-button">
               <button class="btn btn-default" type="submit" ng-click="saveAward(formData)" ng-disabled="detailForm.$invalid">Save</button>
