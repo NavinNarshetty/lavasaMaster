@@ -47,7 +47,8 @@
      isRegistered: {
          type: Boolean,
          default: false
-     }
+     },
+     screenName: String,
  });
 
  schema.plugin(deepPopulate, {});
