@@ -64,7 +64,8 @@ var model = {
                 });
             },
             function (oldSchoolData, callback) {
-                async.each(oldSchoolData, function (mainData, callback) {
+                callback(null, oldSchoolData);
+                async.concatSeries(oldSchoolData, function (mainData, callback) {
                         async.waterfall([
                             function (callback) {
                                 Registration.find({
@@ -84,7 +85,6 @@ var model = {
                             function (schoolData, callback) {
                                 var final = {};
                                 final.atheleteID = mainData.sfaid;
-                                // var year = data.year.substr(2, 2);
                                 final.sfaId = "M" + "A" + "16" + mainData.sfaid;
                                 final.status = "Verified";
                                 final.school = mainData.school;
@@ -139,8 +139,8 @@ var model = {
                         });
 
                     },
-                    function (err) {
-                        callback(null, "All data Stored");
+                    function (err, found) {
+                        // callback(null, found);
                     });
             }
         ], function (err, found) {
