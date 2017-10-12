@@ -35,11 +35,14 @@ module.exports = {
   // realHost: "http://ahmedabadschool.sfanow.in",
   // realHost: "http://ahmedabadcollege.sfanow.in",
   // realHost: "http://testmumbaischool.sfanow.in",
+  realHost: "http://testmumbai2015.sfanow.in",
+  // realHost: "http://testmumbai2016.sfanow.in",
   // realHost: "http://testmumbaicollege.sfanow.in",
-  realHost: "http://testhyderabadschool.sfanow.in",
+  // realHost: "http://testhyderabadschool.sfanow.in",
   // realHost: "http://testhyderabadcollege.sfanow.in",
   // realHost: "http://testahmedabadschool.sfanow.in",
   // realHost: "http://testahmedabadcollege.sfanow.in",
+
 
   // realHost: "https://sfa.wohlig.co.in",
   emails: ["chintan@wohlig.com", "raj@wohlig.com", "supriya.bhartiya@wohlig.com", "rahi.shah@sfanow.in", "shiva.singh@sfanow.in", "sunil.rathod@sfanow.in", "venkatesh.rathod@sfanow.in", "neeraj.jaiswal@sfanow.in", "rahul.singh@sfanow.in"]
