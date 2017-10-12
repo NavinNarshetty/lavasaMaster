@@ -5315,11 +5315,12 @@ var model = {
     generateGraphicsDirectFinal: function (match, callback) {
         async.concatSeries(match, function (mainData, callback) {
                 var obj = {};
+
                 var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
                 obj.DATE = dateTime;
                 obj["MATCH ID"] = mainData.matchId;
-                obj["ROUND"] = mainData.round;
                 obj.SPORT = mainData.sport.sportslist.sportsListSubCategory.name;
+                obj.EVENT = mainData.sport.sportslist.name;
                 if (mainData.sport.gender == "male") {
                     obj.GENDER = "Male";
                 } else if (mainData.sport.gender == "female") {
@@ -5328,20 +5329,17 @@ var model = {
                     obj.GENDER = "Male & Female"
                 }
                 obj["AGE GROUP"] = mainData.sport.ageGroup.name;
-                obj.EVENT = mainData.sport.sportslist.name;
-                if (mainData.sport.weight) {
-                    obj["WEIGHT CATEGORIES"] = mainData.sport.weight.name;
-                } else {
-                    obj["WEIGHT CATEGORIES"] = "";
-                }
 
-                obj.TIME = mainData.scheduleTime;
+                obj["ROUND"] = mainData.round;
+
                 if (mainData.opponentsSingle[0]) {
                     obj["SFA ID"] = mainData.opponentsSingle[0].athleteId.sfaId;
+                    var firstName = mainData.opponentsSingle[0].athleteId.firstName.charAt(0);
                     if (mainData.opponentsSingle[0].athleteId.middleName) {
-                        obj["NAME"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.middleName + " " + mainData.opponentsSingle[0].athleteId.surname;
+                        var middleName = mainData.opponentsSingle[0].athleteId.middleName.charAt(0);
+                        obj["SCREEN NAME ATHLETE"] = firstName + "." + middleName + ". " + mainData.opponentsSingle[0].athleteId.surname;
                     } else {
-                        obj["NAME"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
+                        obj["SCREEN NAME ATHLETE"] = firstName + ". " + mainData.opponentsSingle[0].athleteId.surname;
                     }
                     obj["SCHOOL"] = mainData.opponentsSingle[0].athleteId.school.name;
                     if (mainData.resultShooting) {
