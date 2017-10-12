@@ -2162,7 +2162,11 @@ var model = {
                 console.log("length", found.length);
                 if (found.length == 0) {
                     var sportsSubCategory = {};
-                    sportsSubCategory.name = data[0].sportslist.name;
+                    if (data[0].firstcategory && data[0].firstcategory.name == "Doubles") {
+                        sportsSubCategory.name = data[0].sportslist.name + " " + data[0].firstcategory.name;
+                    } else {
+                        sportsSubCategory.name = data[0].sportslist.name;
+                    }
                     sportsSubCategory.sportsListCategory = category._id;
                     if (category.name == "Team Sport") {
                         sportsSubCategory.isTeam = true;
