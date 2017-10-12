@@ -28,7 +28,10 @@ var controller = {
 
     getOneAwardDetails: function (req, res) {
         if (req.body && req.body._id) {
-            SpecialAwardDetails.getOneAwardDetails(req.body, res.callback);
+            var matchObj={
+                "_id":req.body._id
+            }
+            SpecialAwardDetails.getOneAwardDetails(matchObj, res.callback);
         } else {
             res.json({
                 data: "Incorrect Input Fields",
