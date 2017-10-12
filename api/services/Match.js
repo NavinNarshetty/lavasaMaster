@@ -5341,7 +5341,23 @@ var model = {
                     } else {
                         obj["SCREEN NAME ATHLETE"] = firstName + ". " + mainData.opponentsSingle[0].athleteId.surname;
                     }
-                    obj["SCHOOL"] = mainData.opponentsSingle[0].athleteId.school.name;
+                    var ScreenschoolName1;
+                    var schoolNameArray1 = mainData.opponentsSingle[0].athleteId.school.name.split(" ");
+                    if (schoolNameArray1.length > 1) {
+                        for (var i = 0; i < schoolNameArray1.length - 1; i++) {
+                            var charval1 = schoolNameArray1[i].charAt(0);
+                            if (i == 0) {
+                                ScreenschoolName1 = charval1;
+                            } else {
+                                ScreenschoolName1 = ScreenschoolName1 + "." + charval1;
+                            }
+                        }
+                        ScreenschoolName1 = ScreenschoolName1 + " ".schoolNameArray1[i];
+                    } else {
+                        ScreenschoolName1 = schoolNameArray1[0];
+                    }
+                    obj["SCREEN NAME SCHOOL"] = ScreenschoolName1;
+                    // obj["SCHOOL"] = mainData.opponentsSingle[0].athleteId.school.name;
                     if (mainData.resultShooting) {
                         obj["LANE NUMBER"] = mainData.resultShooting.laneNo;
                         if (mainData.resultShooting.detail) {
@@ -5351,9 +5367,9 @@ var model = {
                         }
 
                         if (mainData.resultShooting.finalScore) {
-                            obj["FINAL SCORE"] = mainData.resultShooting.finalScore;
+                            obj["POINTS"] = mainData.resultShooting.finalScore;
                         } else {
-                            obj["FINAL SCORE"] = "";
+                            obj["POINTS"] = "";
                         }
                         if (mainData.resultShooting.result) {
                             obj["RESULT"] = mainData.resultShooting.result;
@@ -5362,7 +5378,7 @@ var model = {
                         }
                     } else {
                         obj["DETAIL NO."] = "";
-                        obj["FINAL SCORE"] = "";
+                        obj["POINTS"] = "";
                         obj["RESULT"] = "";
                     }
                 } else {
@@ -8182,5 +8198,6 @@ var model = {
                 callback(null, singleData);
             });
     },
+
 };
 module.exports = _.assign(module.exports, exports, model);
