@@ -28,7 +28,7 @@ var controller = {
 
     getAllAwardDetails:function(req,res){
         if(req.body){
-            getAllAwardDetails.getAllDetails(req.body,res.callback);
+            SpecialAwardDetails.getAllAwardDetails(req.body,res.callback);
         }else{
             res.json({
                 data:"Incorrect Input Fields",
