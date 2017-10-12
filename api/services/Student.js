@@ -147,7 +147,7 @@ var model = {
                     var id;
                     var _id = val._id;
                     console.log("id", _id);
-                    Student.remove({ //finds one with refrence to id
+                    OldAthlete.remove({ //finds one with refrence to id
                         _id: new ObjectId(_id)
                     }).exec(function (err, found) {
                         if (err) {
