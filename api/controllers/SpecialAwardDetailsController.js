@@ -26,6 +26,17 @@ var controller = {
         }
     },
 
+    getAllAwardDetails:function(req,res){
+        if(req.body){
+            SpecialAwardDetails.getAllDetails(req.body,res.callback);
+        }else{
+            res.json({
+                data:"Incorrect Input Fields",
+                value:"false"
+            });
+        }
+        
+    }
 
 
 };

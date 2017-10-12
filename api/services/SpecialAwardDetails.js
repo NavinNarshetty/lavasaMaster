@@ -79,6 +79,52 @@ var model = {
         ], function (err, result) {
             callback(null, result);
         });
+    },
+
+    getPipeline: function () {
+        return [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "awards",
+                    "localField": "award",
+                    "foreignField": "_id",
+                    "as": "award"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$award",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            }
+        ];
+    },
+
+    getAllAwardDetails: function (data,callback) {
+        var pipeline = model.getPipeline();
+        if (data.rising) {
+            pipeline.push({
+                $match: {
+                    "award.name": "Sfa Rising Star Award"
+                }
+            });
+        } else {
+            pipeline.push({
+                $match: {
+                    "award.name": {
+                        $ne: "Sfa Rising Star Award"
+                    }
+                }
+            });
+        }
+
+        SpecialAwardDetails.aggregate(pipeline, function (err, arr) {
+            callback(null, arr);
+        });
     }
 
 };
