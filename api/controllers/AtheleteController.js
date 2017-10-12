@@ -39,6 +39,7 @@ var controller = {
             });
         }
     },
+
     generateAtheleteSfaID: function (req, res) {
         if (req.body) {
             Athelete.generateAtheleteSfaID(req.body, res.callback);
@@ -49,6 +50,11 @@ var controller = {
             });
         }
     },
+
+    searchByFilter:function(req,res){
+       Athelete.searchByFilter(req.body,res.callback);
+    },
+
     search: function (req, res) {
         if (req.body) {
             Athelete.search(req.body, res.callback);

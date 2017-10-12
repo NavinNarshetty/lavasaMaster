@@ -122,6 +122,8 @@ module.exports = mongoose.model('Athelete', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "school", "school"));
 var model = {
 
+    searchByFilter:exports.search,
+
     search: function (data, callback) {
         var matchObj = {
             $or: [{
