@@ -2145,6 +2145,7 @@ var model = {
     },
 
     saveSportsListSubCategory: function (data, category, callback) {
+        console.log("sports", data);
         async.waterfall([
             function (callback) {
                 SportsListSubCategory.find({
@@ -2184,6 +2185,31 @@ var model = {
                             }
                         }
                     });
+                } else if (found.length == 1) {
+                    var sportsSubCategory = {};
+                    if (data[0].firstcategory && data[0].firstcategory.name == "Doubles") {
+                        sportsSubCategory.name = data[0].sportslist.name + " " + data[0].firstcategory.name;
+                        sportsSubCategory.sportsListCategory = category._id;
+                        if (category.name == "Team Sport") {
+                            sportsSubCategory.isTeam = true;
+                        } else {
+                            sportsSubCategory.isTeam = false;
+                        }
+                        SportsListSubCategory.saveData(sportsSubCategory, function (err, subCategory) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(subCategory)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, subCategory);
+                                }
+                            }
+                        });
+                    } else {
+                        callback(null, found[0]);
+                    }
+
                 } else {
                     callback(null, found[0]);
                 }
