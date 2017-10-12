@@ -300,6 +300,32 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
   $scope.getConfig();
   // INSTITUTE TYPE END
 
+  // SPECIAL AWARD LIST 
+  $scope.getAwardsList = function (constraints) {
+    NavigationService.getAwardsList(constraints, function (data) {
+      $scope.certificateType = data.data.data;
+      console.log($scope.certificateType, "certificate data")
+    });
+
+  }
+  $scope.getList = function (data) {
+    console.log(data)
+    if (data.type === "athlete") {
+      console.log("in")
+      $scope.constraints = {}
+      $scope.constraints.type = data.type;
+      $scope.constraints.gender = data.gender;
+      $scope.getAwardsList($scope.constraints);
+    } else {
+      $scope.constraints = {};
+      $scope.constraints.type = data.type;
+      $scope.getAwardsList($scope.constraints);
+    }
+  }
+
+
+  // SPECIAL AWARD LIST  END
+
 
   // BOOST AWARD
   $scope.addRow = function (formData) {
@@ -385,14 +411,14 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
   }
   // SAVE END
 
-  $scope.certificateType = [{
-    name: 'Sport Max Award'
-  }, {
-    name: 'Rising Star'
-  }, {
-    name: 'Coach Award'
-  }, {
-    name: 'Boost Award'
-  }]
+  // $scope.certificateType = [{
+  //   name: 'Sport Max Award'
+  // }, {
+  //   name: 'Rising Star'
+  // }, {
+  //   name: 'Coach Award'
+  // }, {
+  //   name: 'Boost Award'
+  // }]
 });
 // SPORTS AWARDS DETAIL  END

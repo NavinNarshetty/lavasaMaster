@@ -7,7 +7,7 @@ var controller = {
             if (req.body.type == "athlete" && req.body.gender) {
                 awardListObj.type = awardDetailObj.type = req.body.type;
                 awardDetailObj.gender = req.body.gender;
-                Awards.getAwardsList(awardListObj, awardDetailObj, res.callback);
+                SpecialAwardDetails.getAwardsList(awardListObj, awardDetailObj, res.callback);
             } else if (req.body.type == "school" || req.body.type == "college") {
                 awardListObj.type = awardDetailObj.type = req.body.type;
                 SpecialAwardDetails.getAwardsList(awardListObj, awardDetailObj, res.callback);
@@ -26,7 +26,7 @@ var controller = {
         }
     },
 
-    
+
 
 };
 module.exports = _.assign(module.exports, controller);

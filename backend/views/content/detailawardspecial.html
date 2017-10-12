@@ -22,7 +22,8 @@
                   <div class="special-award-type">
                     <div class="form-group">
                       <label> Type</label>
-                      <select name="selecttype" class="form-control" ng-model="formData.type" placeholder="Enter Type" required>
+                      <select name="selecttype" class="form-control" ng-model="formData.type" placeholder="Enter Type" ng-change="getList(formData)"
+                        required>
                                 <option value="athlete">Athlete</option>
                                 <option value="school" ng-if="institute==='school'">School</option>
                                 <option value="college" ng-if="institute==='college'">College</option>
@@ -34,11 +35,12 @@
                 </div>
                 <div class="col-md-6">
                   <!-- GENDER -->
-                  <div class="special-award-gender">
+                  <div class="special-award-gender" ng-if="formData.type=='athlete'">
                     <div class="special-award-type">
                       <div class="form-group">
                         <label> Gender</label>
-                        <select name="selectgender" class="form-control" ng-model="formData.gender" placeholder="Enter Type" required>
+                        <select name="selectgender" class="form-control" ng-model="formData.gender" placeholder="Enter Type" ng-change="getList(formData)"
+                          required>
                                       <option value="male">Male</option>
                                       <option value="female">Female</option>              
                         </select>
@@ -57,10 +59,10 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label>Certificate Name</label>{{$item.name}}
-                      <ui-select name="certificatename" ng-model="formData.awardName" theme="bootstrap" required>
+                      <label>Certificate Name</label>{{formData.award}}
+                      <ui-select name="certificatename" ng-model="formData.award" theme="bootstrap" required>
                         <ui-select-match placeholder="Select Certificate Name" allow-clear="true"> {{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="certificate in certificateType | filter: $select.search">
+                        <ui-select-choices repeat="certificate._id as certificate in certificateType |  filter: $select.search track by $index">
                           <div>
                             <span class="text-capitalize" ng-bind-html="certificate.name"></span>
                           </div>
