@@ -616,6 +616,15 @@ myApp.factory('NavigationService', function ($http) {
 
             }).then(callback);
         },
+        getAllRegSportsByID: function (constraints, callback) {
+            console.log("constraints ", constraints);
+            $http({
+                url: adminurl + 'SpecialAwardDetails/getAllSportsSubCatByAth',
+                data: constraints,
+                method: 'POST'
+
+            }).then(callback);
+        },
         getTeamsAthletesBySport: function (data, callback) {
             $http({
                 url: adminurl + 'Medal/getTeamsAthletesBySport',

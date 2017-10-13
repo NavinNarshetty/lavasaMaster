@@ -637,7 +637,7 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
   $scope.formData = {}
   $scope.formData.type = 'athlete'
   $scope.formData.award = {}
-  $scope.formData.award.name = 'Rising Star Award'
+  $scope.formData.award = "";
 
   // ATHLETE BY GENDER
   $scope.getGenderAthlete = function (constraints) {
@@ -664,9 +664,35 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
     });
   };
 
+  // Registered Sport
+  $scope.getRegisterSport = function (data) {
+    console.log(data, "in on select")
+    $scope.constraints = {};
+    if (data && data !== null && data._id) {
+      $scope.constraints._id = data._id;
+      NavigationService.getAllRegSportsByID($scope.constraints, function (data) {
+        console.log("data in register sport", data);
+        $scope.sportitems = data.data.data;
+      })
+    } else {
+      console.log("else")
+      $scope.removeRegisterSport();
+    }
+
+  };
+  $scope.removeRegisterSport = function () {
+    console.log("in remove ****")
+    // $scope.playerData = []
+    $scope.sportitems = [];
+    $scope.formData.sports = [];
+  }
+  $scope.searchSportList = function (data) {
+    $scope.draws = data;
+  }
+  // Registered Sport END
 
   $scope.getList = function (data) {
-    $scope.formData.award = ''
+    // $scope.formData.award = ''
     console.log(data, "ng-change")
     if (data.type === "athlete") {
       console.log("in")
@@ -675,7 +701,8 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
       $scope.constraints.type = data.type;
       $scope.constraints.gender = data.gender;
       $scope.constraints.filter.gender = data.gender;
-      $scope.getAwardsList($scope.constraints);
+      $scope.constraints.rising = true;
+      // $scope.getAwardsList($scope.constraints);
       $scope.getGenderAthlete($scope.constraints)
 
     } else {
@@ -685,48 +712,38 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
 
   $scope.getAwardsList = function (constraints) {
     NavigationService.getAwardsList(constraints, function (data) {
-      $scope.certificateType = data.data.data;
-      console.log($scope.certificateType, "certificate data")
+      $scope.awardList = data.data.data;
+      $scope.formData.award = data.data.data[0];
+      // console.log($scope.formData.certificateType, "certificate data")
     });
 
   }
 
-  // SPORTS
-  $scope.getAllSportList = function (data) {
-    $scope.url = "SportsListSubCategory/search";
-    console.log(data);
-    $scope.constraints = {};
-    $scope.constraints.keyword = data;
-    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-      console.log("data.value sportlist", data);
-      $scope.sportitems = data.data.results;
-
-    });
-  }
-  $scope.searchSportList = function (data) {
-    $scope.draws = data;
-  }
-  // SPORTS END
+  $scope.getAwardsList({
+    "rising": true,
+    // "gender": "male",
+    "type": "athlete"
+  });
 
   // SAVE
   $scope.saveAwardDetail = function (data) {
     console.log("i am in ");
     console.log(data, "save")
-    // data.award.name = 'Rising Star Award'
-    // $scope.url = "SpecialAwardDetails/save";
-    // NavigationService.apiCall($scope.url, data, function (data) {
-    //   console.log("save sponsor")
-    // if (data.value) {
-    //   // console.log("in")
-    //   // toastr.success("Data saved successfully", 'Success');
-    //   // $state.go('specialaward-detail')
-    // } else if (data.data.nModified == '1') {
-    //   // toastr.success("Data saved successfully", 'Success');
-    //   // $state.go('sponsor')
-    // } else {
-    //   // toastr.error("Something went wrong", 'Error');
-    // }
-    // })
+    data.award = data.award._id;
+    $scope.url = "SpecialAwardDetails/save";
+    NavigationService.apiCall($scope.url, data, function (data) {
+      console.log("save sponsor")
+      if (data.value) {
+        console.log("in value true")
+        // toastr.success("Data saved successfully", 'Success');
+        // $state.go('specialaward-detail')
+      } else if (data.data.nModified == '1') {
+        // toastr.success("Data saved successfully", 'Success');
+        // $state.go('sponsor')
+      } else {
+        // toastr.error("Something went wrong", 'Error');
+      }
+    })
   }
   // SAVE END
 });
