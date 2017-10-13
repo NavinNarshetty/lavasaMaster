@@ -28,6 +28,7 @@ module.exports = [
   "bower_components/angular-promise-buttons/dist/angular-promise-buttons.js",
   "bower_components/angular-ui-select/dist/select.min.js",
   "bower_components/cleave.js/dist/cleave-angular.min.js",
+  'bower_components/jStorage/jstorage.min.js',
 
   //App.js
   'digital/js/app.js',

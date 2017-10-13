@@ -1190,3 +1190,32 @@ header {
   }
 }
 // QUALIFYING SCORING END
+// LOGIN POPUP MODAL
+.login-formholder{
+  padding: 20px;
+  // border: 1px solid #ccc;
+  box-shadow: 0 0 5px #a0a0a0;
+}
+.formholder-title{
+  margin-bottom: 15px;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+.loginpopup{
+  .modal-header{
+    background-color: $brand-primary;
+    color: #fff;
+  }
+  .modal-body{
+    padding: 30px 15px 50px;
+  }
+}
+.login-error{
+  margin: 15px 0;
+  color: #da495b;
+  font-weight: 600;
+  font-size: 10px;
+  text-align: center;
+  text-transform: uppercase;
+}
+// LOGIN POPUP MODAL END

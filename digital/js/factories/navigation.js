@@ -4,21 +4,11 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
         name: "Home",
         classis: "active",
         anchor: "home",
-        subnav: [{
-            name: "Subnav1",
-            classis: "active",
-            anchor: "home"
-        }]
-    }, {
-        name: "Form",
-        classis: "active",
-        anchor: "form",
         subnav: []
-    },
-    {
-        name: "Grid",
+    }, {
+        name: "Sport Selection",
         classis: "active",
-        anchor: "grid",
+        anchor: "digital-home",
         subnav: []
     }
     ];

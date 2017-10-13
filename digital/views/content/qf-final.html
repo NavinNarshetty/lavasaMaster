@@ -104,8 +104,8 @@
         <div class="qf-final-finaltable table-responsive" ng-repeat="data in roundsList track by $index" ng-if="roundsList.length>0 && data">
           <div class="qf-final-finalround-head">
             <div class="pull-right">
-              <button class="text-uppercase btn-green-outline mtb-10" ng-click="startScoring(data, 'image');">Upload Image</button>
-              <button class="text-uppercase btn-green-outline mtb-10" ng-click="startScoring(data, 'score');">Score</button>
+              <button class="btn text-uppercase btn-green-outline mlr-10" ng-click="startScoring(data, 'image');">Upload Image</button>
+              <button class="btn text-uppercase btn-green-outline mlr-10" ng-click="startScoring(data, 'score');">Score</button>
             </div>
             <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">{{data.name}}</h3>
             <p class="sport-color-primary"><span>{{data.match[0].scheduleDate |englishNumeralDate}}</span>

@@ -1,14 +1,75 @@
-myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal) {
+myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationService, $timeout, $uibModal, toastr, $state ) {
         $scope.template = TemplateService.getHTML("content/home.html");
         TemplateService.title = "Home"; //This is the Title of the Website
         $scope.navigation = NavigationService.getNavigation();
 
-        $scope.mySlides = [
-            'http://flexslider.woothemes.com/images/kitchen_adventurer_cheesecake_brownie.jpg',
-            'http://flexslider.woothemes.com/images/kitchen_adventurer_lemon.jpg',
-            'http://flexslider.woothemes.com/images/kitchen_adventurer_donut.jpg',
-            'http://flexslider.woothemes.com/images/kitchen_adventurer_caramel.jpg'
-        ];
+        // INITIALISE VARIABLES
+        $scope.user = $.jStorage.get("user");
+        console.  log($state);
+        $scope.login = {};
+        $scope.admin = {
+          "email": "digital@sfanow.in",
+          "password": "12345678"
+        }
+        // INITIALISE VARIABLES END
+
+        // FUNCTIONS
+        // LOGIN POPUP CONTROLLER
+        $scope.loginPopup = function(){
+          $uibModal.open({
+            animation: true,
+            scope: $scope,
+            backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'views/modal/login-popup.html',
+            size: 'md',
+            windowClass: 'loginpopup'
+          })
+        }
+        $scope.loginSubmit = function(login){
+          $scope.dataResult = {
+            "data": "",
+            "value": false
+          }
+          if (login) {
+            if (login.email == $scope.admin.email) {
+              if (login.password == $scope.admin.password) {
+                // EMAIL AND PASSWORD SUCCESS
+                $scope.showError = false;
+                $scope.dataResult = {
+                  "data": login,
+                  "value": true
+                }
+                $.jStorage.set("user", $scope.dataResult.data.email);
+                $state.go("digital-home");
+                toastr.success('Login Successfull');
+                // EMAIL AND PASSWORD SUCCESS END
+              } else{
+                // PASSWORD ERROR
+                toastr.error('Please check Password entered', 'Login Failed');
+                console.log($scope.dataResult, "password Fail");
+                // PASSWORD ERROR END
+              }
+            } else{
+              // EMAIL ERROR
+              $scope.dataResult = {
+                "data": "Please check the Email entered.",
+                "value": false
+              }
+              toastr.error('Please check Email entered', 'Login Failed');
+              console.log($scope.dataResult, "email Fail");
+              // EMAIL ERROR END
+            }
+          }
+        }
+        // LOGIN POPUP CONTROLLER END
+        // CHECK FOR LOGGED IN
+        if ($scope.user != null || $scope.user != undefined) {
+          console.log('hello');
+        } else {
+          $scope.loginPopup();
+        }
+        // CHECK FOR LOGGED IN  END
         var abc = _.times(100, function (n) {
             return n;
         });
@@ -18,6 +79,7 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
             i++;
             console.log("This is a button Click");
         };
+        // FUNCTIONS END
 
         // DEMO STUFF
         $scope.tableOption = function(){
@@ -32,8 +94,6 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
           })
         }
         // DEMO STUFF END
-
-
 
     })
 
