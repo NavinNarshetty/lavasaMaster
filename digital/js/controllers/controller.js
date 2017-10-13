@@ -5,7 +5,6 @@ myApp.controller('HomeCtrl', function ($scope, TemplateService, NavigationServic
 
         // INITIALISE VARIABLES
         $scope.user = $.jStorage.get("user");
-        console.  log($state);
         $scope.login = {};
         $scope.admin = {
           "email": "digital@sfanow.in",
