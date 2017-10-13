@@ -29,7 +29,8 @@ var schema = new Schema({
         total: "Number",
         year: "String"
     }],
-    risingSport: "String"
+    risingSport: "String",
+    footerImage:"String"
 });
 
 schema.plugin(deepPopulate, {
