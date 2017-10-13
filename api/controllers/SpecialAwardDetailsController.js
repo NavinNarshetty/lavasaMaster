@@ -50,6 +50,26 @@ var controller = {
             });
         }
 
+    },
+
+    getAllSportsCatByAth:function(req,res){
+        if(req.body && req.body._id){
+            Sport.getAllSportsByAthlete({"_id":req.body._id},function(err,data){
+                if(err){
+                    res.callback(err,data);
+                }else if(!_.isEmpty(data)){
+                    SpecialAwardDetails.getSportsSubCategory(data,res.callback);
+                }else{
+                    res.json(null,"No Sport Found");
+                }
+                
+            });
+        }else{
+            res.json({
+                data:"Incorrect Input Fields",
+                value:false
+            });
+        }
     }
 
 

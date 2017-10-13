@@ -30,7 +30,7 @@ var schema = new Schema({
         year: "String"
     }],
     risingSport: "String",
-    footerImage:"String"
+    footerImage: "String"
 });
 
 schema.plugin(deepPopulate, {
@@ -44,7 +44,7 @@ schema.plugin(deepPopulate, {
         "school": {
             select: '_id schoolName sfaID'
         }
-       
+
     }
 });
 schema.plugin(uniqueValidator);
@@ -143,6 +143,25 @@ var model = {
 
     getOneAwardDetails: function (data, callback) {
         SpecialAwardDetails.find(data).deepPopulate("award athlete athlete.school school sports").lean().exec(function (err, result) {
+            callback(null, result);
+        });
+    },
+
+    getSportsSubCategory: function (data, callback) {
+
+        async.concatSeries(data.regSports, function (sport, callback) {
+            Sport.findOne({"_id":sport.sport}).deepPopulate("sportslist sportslist.sportsListSubCategory").lean().exec(function(err,found){
+                if(err){
+                    callback(err,null);
+                }else if(!_.isEmpty(found)){
+                    callback(null,found.sportslist.sportsListSubCategory);
+                }else{
+                    //null if sportId is incorrect
+                    callback(null);
+                }
+                
+            });
+        }, function (err, result) {
             callback(null,result);
         });
     }
