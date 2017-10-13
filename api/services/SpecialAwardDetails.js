@@ -56,7 +56,7 @@ var model = {
 
     getAwardsList: function (data, awardListObj, awardDetailObj, callback) {
         if (data.rising) {
-            Awards.find({"name":"Sfa Rising Star Award"}).lean().exec(function (err, award) {
+            Awards.find({"type":"rising"}).lean().exec(function (err, award) {
                 callback(null, award);
             });
         } else {
