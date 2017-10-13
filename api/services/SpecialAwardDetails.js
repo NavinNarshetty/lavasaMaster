@@ -54,45 +54,55 @@ module.exports = mongoose.model('SpecialAwardDetails', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    getAwardsList: function (awardListObj, awardDetailObj, callback) {
-        async.waterfall([
+    getAwardsList: function (data, awardListObj, awardDetailObj, callback) {
+        if (data.rising) {
+            Awards.find({"name":"Sfa Rising Star Award"}).lean().exec(function (err, award) {
+                callback(null, award);
+            });
+        } else {
+            async.waterfall([
 
-            //getAll Athlete Awards
-            function (callback) {
-                Awards.find(awardListObj).lean().exec(function (err, awardsList) {
-                    callback(null, awardsList);
-                });
-            },
+                //getAll Athlete Awards
+                function (callback) {
+                    Awards.find(awardListObj).lean().exec(function (err, awardsList) {
+                        _.remove(awardsList, {"name":"Sfa Rising Star Award"});
+                        callback(null, awardsList);
+                    });
+                },
 
-            //filter all awards if its already added
-            function (awardsList, callback) {
-                var sendList = [];
-                async.each(awardsList, function (award, callback) {
-                    console.log(award._id);
-                    awardDetailObj.award = award._id;
-                    SpecialAwardDetails.find(awardDetailObj).lean().exec(function (err, found) {
+                //filter all awards if its already added
+                function (awardsList, callback) {
+                    var sendList = [];
+                    async.each(awardsList, function (award, callback) {
+                        console.log(award._id);
+                        awardDetailObj.award = award._id;
+                        SpecialAwardDetails.find(awardDetailObj).lean().exec(function (err, found) {
+                            if (err) {
+                                callback(err);
+                            } else if (_.isEmpty(found)) {
+                                sendList.push(award);
+                                callback(null);
+                            } else {
+                                callback(null);
+                            }
+                        });
+                    }, function (err) {
+                        console.log("final called");
                         if (err) {
-                            callback(err);
-                        } else if (_.isEmpty(found)) {
-                            sendList.push(award);
-                            callback(null);
+                            console.log(err);
                         } else {
-                            callback(null);
+                            callback(null, sendList);
                         }
                     });
-                }, function (err) {
-                    console.log("final called");
-                    if (err) {
-                        console.log(err);
-                    } else {
-                        callback(null, sendList);
-                    }
-                });
-            }
+                }
 
-        ], function (err, result) {
-            callback(null, result);
-        });
+                
+
+            ], function (err, result) {
+                callback(null, result);
+            });
+        }
+
     },
 
     getPipeline: function () {
@@ -150,19 +160,21 @@ var model = {
     getSportsSubCategory: function (data, callback) {
 
         async.concatSeries(data.regSports, function (sport, callback) {
-            Sport.findOne({"_id":sport.sport}).deepPopulate("sportslist sportslist.sportsListSubCategory").lean().exec(function(err,found){
-                if(err){
-                    callback(err,null);
-                }else if(!_.isEmpty(found)){
-                    callback(null,found.sportslist.sportsListSubCategory);
-                }else{
+            Sport.findOne({
+                "_id": sport.sport
+            }).deepPopulate("sportslist sportslist.sportsListSubCategory").lean().exec(function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (!_.isEmpty(found)) {
+                    callback(null, found.sportslist.sportsListSubCategory);
+                } else {
                     //null if sportId is incorrect
                     callback(null);
                 }
-                
+
             });
         }, function (err, result) {
-            callback(null,result);
+            callback(null, result);
         });
     }
 
