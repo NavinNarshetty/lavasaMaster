@@ -54,7 +54,7 @@ module.exports = mongoose.model('SpecialAwardDetails', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    getAwardsList: function (data, awardListObj, awardDetailObj, callback) {
+    getAwardsList: function (data, awardListObj, awardDetailObj, fcallback) {
         if (data.rising) {
             Awards.find({"awardType":"rising"}).lean().exec(function (err, award) {
                 callback(null, award);
@@ -94,8 +94,19 @@ var model = {
                             callback(null, sendList);
                         }
                     });
-                }
+                },
 
+                //check if champions award is added max of 10 times
+                function(awardsList,callback){
+                    Awards.findOne({'type':"champion"}).lean().exec(function(err,data){
+                        SpecialAwardDetails.count({"award":data._id}).exec(function(err,count){
+                            if(count<=10){
+                                 _.remove(awardsList, {"_id":data._id});
+                            }
+                            callback(null,awardsList);
+                        })
+                    });
+                }
                 
 
             ], function (err, result) {
