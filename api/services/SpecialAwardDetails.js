@@ -24,11 +24,11 @@ var schema = new Schema({
         ref: "Sport"
     }],
     coachName: "String",
-    boostDetail: {
+    boostDetail: [{
         schoolRank: "Number",
         total: "Number",
-        year: "Number"
-    },
+        year: "String"
+    }],
     risingSport: "String"
 });
 
