@@ -52,7 +52,7 @@ var controller = {
 
     },
 
-    getAllSportsCatByAth:function(req,res){
+    getAllSportsSubCatByAth:function(req,res){
         if(req.body && req.body._id){
             Sport.getAllSportsByAthlete({"_id":req.body._id},function(err,data){
                 if(err){
