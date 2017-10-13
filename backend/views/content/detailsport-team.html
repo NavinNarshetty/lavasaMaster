@@ -320,21 +320,18 @@
                     <!-- WINNER HOLDER -->
                     <div class="row">
                       <!-- WINNER TEAM ID -->
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Winner Team Id</label>
-                          <input type="text" name="winnerid" ng-model="formData.resultsCombat.winne" class="form-control" placeholder="Enter Winner Id">
-                          <div class="error-msg" ng-if="detailForm.winnerid.$invalid && detailForm.winnerid.$touched">Please Enter Winner Id*</div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
+                      <div class="col-md-12">
+                        <!-- WINNER -->
                         <div class="form-group">
                           <label>Winner Team</label>
-                          <input type="text" name="winnerteam" ng-model="formData.resultsCombat.winne" class="form-control" placeholder="Enter Winner Team">
-                          <div class="error-msg" ng-if="detailForm.winnerteam.$invalid && detailForm.winnerteam.$touched">Please Enter Winner Team*</div>
+                          <select name="sponsortype" class="form-control" ng-model="formData.resultsCombat.winner.player" placeholder="Enter Video Type"
+                            required>
+                                       <option value="{{team._id}}" ng-repeat="team in formData.opponentsTeam">{{team.schoolName}}</option>
+                                </select>
+                          <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
                         </div>
+                        <!-- WINNER END -->
                       </div>
-                      <!-- WINNER TEAM ID END -->
                     </div>
                     <!-- WINNER HOLDER END -->
                     <!-- VIEDO + MATCHCENTER -->
@@ -540,20 +537,23 @@
                     <!-- WINNER HOLDER -->
                     <div class="row">
                       <!-- WINNER TEAM ID -->
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Winner Team Id</label>
-                          <input type="text" name="winnerid" ng-model="formData.resultHockey.winne" class="form-control" placeholder="Enter Winner Id">
-                          <div class="error-msg" ng-if="detailForm.winnerid.$invalid && detailForm.winnerid.$touched">Please Enter Winner Id*</div>
+                      <!-- WINNER HOLDER -->
+                      <div class="row">
+                        <!-- WINNER TEAM ID -->
+                        <div class="col-md-12">
+                          <!-- WINNER -->
+                          <div class="form-group">
+                            <label>Winner Team</label>
+                            <select name="sponsortype" class="form-control" ng-model="formData.resultHockey.winner.player" placeholder="Enter Video Type"
+                              required>
+                                       <option value="{{team._id}}" ng-repeat="team in formData.opponentsTeam">{{team.schoolName}}</option>
+                                </select>
+                            <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
+                          </div>
+                          <!-- WINNER END -->
                         </div>
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Winner Team</label>
-                          <input type="text" name="winnerteam" ng-model="formData.resultHockey.winne" class="form-control" placeholder="Enter Winner Team">
-                          <div class="error-msg" ng-if="detailForm.winnerteam.$invalid && detailForm.winnerteam.$touched">Please Enter Winner Team*</div>
-                        </div>
-                      </div>
+                      <!-- WINNER HOLDER END -->
                       <!-- WINNER TEAM ID END -->
                     </div>
                     <!-- WINNER HOLDER END -->
@@ -936,21 +936,18 @@
                     <!-- WINNER HOLDER -->
                     <div class="row">
                       <!-- WINNER TEAM ID -->
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Winner Team Id</label>
-                          <input type="text" name="winnerid" ng-model="formData.resultBasketball.winne" class="form-control" placeholder="Enter Winner Id">
-                          <div class="error-msg" ng-if="detailForm.winnerid.$invalid && detailForm.winnerid.$touched">Please Enter Winner Id*</div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
+                      <div class="col-md-12">
+                        <!-- WINNER -->
                         <div class="form-group">
                           <label>Winner Team</label>
-                          <input type="text" name="winnerteam" ng-model="formData.resultBasketball.winne" class="form-control" placeholder="Enter Winner Team">
-                          <div class="error-msg" ng-if="detailForm.winnerteam.$invalid && detailForm.winnerteam.$touched">Please Enter Winner Team*</div>
+                          <select name="sponsortype" class="form-control" ng-model="formData.resultBasketball.winner.player" placeholder="Enter Video Type"
+                            required>
+                                     <option value="{{team._id}}" ng-repeat="team in formData.opponentsTeam">{{team.schoolName}}</option>
+                              </select>
+                          <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
                         </div>
+                        <!-- WINNER END -->
                       </div>
-                      <!-- WINNER TEAM ID END -->
                     </div>
                     <!-- WINNER HOLDER END -->
                     <div class="row">
@@ -1088,6 +1085,16 @@
                             </uib-accordion-heading>
                             <div class="edit-player-fields">
                               <!-- <div class="extra-div"> extradiv justincase -->
+                              <!-- JERSEY NO -->
+                              <div class="edit-team-player-holder-raid form-group">
+                                <label for=""> Jersey No</label>
+                                <div class="row">
+                                  <div class="col-md-2 input-group">
+                                    <input type="number" name="jerseyno" ng-model="player.jerseyNo" class="form-control" placeholder="Enter jersey no">
+                                  </div>
+                                </div>
+                              </div>
+                              <!-- JERSEY NO END -->
                               <!-- FREE THROW BY PLAYER -->
                               <div class="edit-team-player-holder-Goal form-group">
                                 <button class="btn btn-dark pull-right" type="submit " ng-click="addField('freeThrow','resultBasketball',teamIndex,playerIndex)">ADD</button>
@@ -1239,24 +1246,23 @@
                     </div>
                     <!-- END MATCH PHOTO -->
                     <!-- WINNER HOLDER -->
+                    <!-- WINNER HOLDER -->
                     <div class="row">
                       <!-- WINNER TEAM ID -->
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Winner Team Id</label>
-                          <input type="text" name="winnerid" ng-model="formData.resultVolleyball.winne" class="form-control" placeholder="Enter Winner Id">
-                          <div class="error-msg" ng-if="detailForm.winnerid.$invalid && detailForm.winnerid.$touched">Please Enter Winner Id*</div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
+                      <div class="col-md-12">
+                        <!-- WINNER -->
                         <div class="form-group">
                           <label>Winner Team</label>
-                          <input type="text" name="winnerteam" ng-model="formData.resultVolleyball.winne" class="form-control" placeholder="Enter Winner Team">
-                          <div class="error-msg" ng-if="detailForm.winnerteam.$invalid && detailForm.winnerteam.$touched">Please Enter Winner Team*</div>
+                          <select name="sponsortype" class="form-control" ng-model="formData.resultVolleyball.winner.player" placeholder="Enter Video Type"
+                            required>
+                                       <option value="{{team._id}}" ng-repeat="team in formData.opponentsTeam">{{team.schoolName}}</option>
+                                </select>
+                          <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
                         </div>
+                        <!-- WINNER END -->
                       </div>
-                      <!-- WINNER TEAM ID END -->
                     </div>
+                    <!-- WINNER HOLDER END -->
                     <!-- WINNER HOLDER END -->
                     <!-- VIEDO + MATCHCENTER -->
                     <div class="row">
@@ -1366,14 +1372,14 @@
                             <!-- SPIKE -->
                             <div class="col-md-4">
                               <label for="">Spike</label>
-                              <input type="number" name="spike" ng-model="team.teamResults.fouls" class="form-control" placeholder="Enter fouls">
+                              <input type="text" name="spike" ng-model="team.teamResults.spike" class="form-control" placeholder="Enter fouls">
                             </div>
                             <!-- SPIKE END -->
 
                             <!-- BLOCK -->
                             <div class="col-md-4">
                               <label for="">Block</label>
-                              <input type="number" name="block" ng-model="team.teamResults.block" class="form-control" placeholder="Enter block">
+                              <input type="text" name="block" ng-model="team.teamResults.block" class="form-control" placeholder="Enter block">
                             </div>
                             <!-- BLOCK END -->
                           </div>
@@ -1523,21 +1529,18 @@
                     <!-- WINNER HOLDER -->
                     <div class="row">
                       <!-- WINNER TEAM ID -->
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Winner Team Id</label>
-                          <input type="text" name="winnerid" ng-model="formData.resultHandball.winne" class="form-control" placeholder="Enter Winner Id">
-                          <div class="error-msg" ng-if="detailForm.winnerid.$invalid && detailForm.winnerid.$touched">Please Enter Winner Id*</div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
+                      <div class="col-md-12">
+                        <!-- WINNER -->
                         <div class="form-group">
                           <label>Winner Team</label>
-                          <input type="text" name="winnerteam" ng-model="formData.resultHandball.winne" class="form-control" placeholder="Enter Winner Team">
-                          <div class="error-msg" ng-if="detailForm.winnerteam.$invalid && detailForm.winnerteam.$touched">Please Enter Winner Team*</div>
+                          <select name="sponsortype" class="form-control" ng-model="formData.resultHandball.winner.player" placeholder="Enter Video Type"
+                            required>
+                                     <option value="{{team._id}}" ng-repeat="team in formData.opponentsTeam">{{team.schoolName}}</option>
+                              </select>
+                          <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
                         </div>
+                        <!-- WINNER END -->
                       </div>
-                      <!-- WINNER TEAM ID END -->
                     </div>
                     <!-- WINNER HOLDER END -->
                     <!-- VIEDO + MATCHCENTER -->
@@ -1857,23 +1860,21 @@
                     <!-- WINNER HOLDER -->
                     <div class="row">
                       <!-- WINNER TEAM ID -->
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Winner Team Id</label>
-                          <input type="text" name="winnerid" ng-model="formData.resultWaterPolo.winne" class="form-control" placeholder="Enter Winner Id">
-                          <div class="error-msg" ng-if="detailForm.winnerid.$invalid && detailForm.winnerid.$touched">Please Enter Winner Id*</div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
+                      <div class="col-md-12">
+                        <!-- WINNER -->
                         <div class="form-group">
                           <label>Winner Team</label>
-                          <input type="text" name="winnerteam" ng-model="formData.resultWaterPolo.winne" class="form-control" placeholder="Enter Winner Team">
-                          <div class="error-msg" ng-if="detailForm.winnerteam.$invalid && detailForm.winnerteam.$touched">Please Enter Winner Team*</div>
+                          <select name="sponsortype" class="form-control" ng-model="formData.resultWaterPolo.winner.player" placeholder="Enter Video Type"
+                            required>
+                              <option value="{{team._id}}" ng-repeat="team in formData.opponentsTeam">{{team.schoolName}}</option>
+                           </select>
+                          <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
                         </div>
+                        <!-- WINNER END -->
                       </div>
-                      <!-- WINNER TEAM ID END -->
                     </div>
                     <!-- WINNER HOLDER END -->
+
                     <!-- VIEDO + MATCHCENTER -->
                     <div class="row">
                       <div class="col-md-6">
@@ -2035,6 +2036,16 @@
                           </uib-accordion-heading>
                           <div class="edit-player-fields">
                             <!-- <div class="extra-div"> extradiv justincase -->
+                            <!-- JERSEY NO -->
+                            <div class="edit-team-player-holder-raid form-group">
+                              <label for=""> Jersey No</label>
+                              <div class="row">
+                                <div class="col-md-2 input-group">
+                                  <input type="number" name="jerseyno" ng-model="player.jerseyNo" class="form-control" placeholder="Enter jersey no">
+                                </div>
+                              </div>
+                            </div>
+                            <!-- JERSEY NO END -->
                             <!-- GOAL BY PLAYER -->
                             <div class="edit-team-player-holder-Goal form-group">
                               <button class="btn btn-dark pull-right" type="submit " ng-click="addField('goal','resultWaterPolo',teamIndex,playerIndex)">ADD</button>
@@ -2166,21 +2177,18 @@
                     <!-- WINNER HOLDER -->
                     <div class="row">
                       <!-- WINNER TEAM ID -->
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Winner Team Id</label>
-                          <input type="text" name="winnerid" ng-model="formData.resultKabaddi.winne" class="form-control" placeholder="Enter Winner Id">
-                          <div class="error-msg" ng-if="detailForm.winnerid.$invalid && detailForm.winnerid.$touched">Please Enter Winner Id*</div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
+                      <div class="col-md-12">
+                        <!-- WINNER -->
                         <div class="form-group">
                           <label>Winner Team</label>
-                          <input type="text" name="winnerteam" ng-model="formData.resultKabaddi.winne" class="form-control" placeholder="Enter Winner Team">
-                          <div class="error-msg" ng-if="detailForm.winnerteam.$invalid && detailForm.winnerteam.$touched">Please Enter Winner Team*</div>
+                          <select name="sponsortype" class="form-control" ng-model="formData.resultKabaddi.winner.player" placeholder="Enter Video Type"
+                            required>
+                                       <option value="{{team._id}}" ng-repeat="team in formData.opponentsTeam">{{team.schoolName}}</option>
+                                </select>
+                          <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
                         </div>
+                        <!-- WINNER END -->
                       </div>
-                      <!-- WINNER TEAM ID END -->
                     </div>
                     <!-- WINNER HOLDER END -->
                     <!-- VIEDO + MATCHCENTER -->
@@ -2511,21 +2519,18 @@
                     <!-- WINNER HOLDER -->
                     <div class="row">
                       <!-- WINNER TEAM ID -->
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label>Winner Team Id</label>
-                          <input type="text" name="winnerid" ng-model="formData.resultFootball.winne" class="form-control" placeholder="Enter Winner Id">
-                          <div class="error-msg" ng-if="detailForm.winnerid.$invalid && detailForm.winnerid.$touched">Please Enter Winner Id*</div>
-                        </div>
-                      </div>
-                      <div class="col-md-6">
+                      <div class="col-md-12">
+                        <!-- WINNER -->
                         <div class="form-group">
                           <label>Winner Team</label>
-                          <input type="text" name="winnerteam" ng-model="formData.resultFootball.winne" class="form-control" placeholder="Enter Winner Team">
-                          <div class="error-msg" ng-if="detailForm.winnerteam.$invalid && detailForm.winnerteam.$touched">Please Enter Winner Team*</div>
+                          <select name="sponsortype" class="form-control" ng-model="formData.resultFootball.winner.player" placeholder="Enter Video Type"
+                            required>
+                              <option value="{{team._id}}" ng-repeat="team in formData.opponentsTeam">{{team.schoolName}}</option>
+                          </select>
+                          <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
                         </div>
+                        <!-- WINNER END -->
                       </div>
-                      <!-- WINNER TEAM ID END -->
                     </div>
                     <!-- WINNER HOLDER END -->
                     <!-- VIDEO LINK -->

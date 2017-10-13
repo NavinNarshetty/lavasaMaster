@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Certificate</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    @font-face {
+      font-family: 'Angelface';
+      src: url("https://storage.googleapis.com/sfacertificate/Angelface.otf");
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: 'fjallaone';
+      src: url("fonts/FjallaOne-Regular.otf");
+    }
+
+    @font-face {
+      font-family: 'avenirtp';
+      src: url("https://storage.googleapis.com/sfacertificate/AvenirNextLTPro-Cn_2.otf");
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: 'avenirtpI';
+      src: url("https://storage.googleapis.com/sfacertificate/AvenirNextLTPro-UltLtCnIt_2.otf");
+      font-weight: 400;
+    }
+
+    @font-face {
+      font-family: 'avenir';
+      src: url("https://storage.googleapis.com/sfacertificate/AvenirNextLTPro-MediumCn_2.otf");
+      font-weight: 500;
+    }
+
+    @font-face {
+      font-family: 'avenirDemi';
+      src: url("https://storage.googleapis.com/sfacertificate/AvenirNextLTPro-DemiCn_2.otf");
+      font-weight: 500;
+    }
+
+    @font-face {
+      font-family: 'opensanscondlight';
+      src: url("fonts/OpenSans-CondLight.ttf");
+    }
+
+    @font-face {
+      font-family: 'tangerine';
+      src: url("fonts/Tangerine-Regular.ttf");
+    }
+
+    body {
+      font-family: 'avenir';
+    }
+
+    .font-av {
+      font-family: 'avenirtp';
+    }
+
+    .font-fo {
+      font-family: 'fjallaone';
+    }
+
+    .font-os {
+      font-family: 'opensanscondlight';
+    }
+
+    .font-tran {
+      font-family: 'tangerine';
+    }
+
+    .font-avI {
+      font-family: 'avenirtpI';
+    }
+
+    .font-demi {
+      font-family: 'avenirDemi';
+    }
+    /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+
+    .row.content {
+      height: 1500px
+    }
+    /* Set gray background color and 100% height */
+
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+    /* Set black background color, white text and some padding */
+
+    .mnb5 {
+      margin-bottom: -5px;
+    }
+
+    footer {
+      background-color: #555;
+      color: white;
+      padding: 15px;
+    }
+    /* On small screens, set height to 'auto' for sidenav and grid */
+
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {
+        height: auto;
+      }
+    }
+
+    .width100 {
+      width: 100%;
+    }
+
+    .certificate {
+      width: 560px;
+      height: auto;
+      margin: 0 auto;
+      padding: 30px 0px 0px 0px;
+      border: 12px solid #0a1a72;
+    }
+
+    .w70 {
+      width: 70%;
+    }
+
+    .w36 {
+      width: 36%;
+    }
+
+    .pt50 {
+      padding-top: 50px;
+    }
+
+    .border-btm label {
+      font-weight: 500;
+    }
+
+    .f28 {
+      font-size: 25px !important;
+    }
+
+    .border-btm input {
+      border-bottom: 1px solid #dddddd !important;
+      border: none;
+      color: #666666;
+      font-size: 20px;
+      text-transform: capitalize;
+    }
+
+    .border-none input {
+      border: 0 solid #dddddd;
+      color: #666666;
+      font-size: 24px;
+      text-transform: capitalize;
+      text-align: center;
+    }
+
+    .border-none label {
+      font-weight: 500;
+    }
+
+    .lb-f {
+      position: absolute;
+      bottom: 0;
+    }
+
+    .mr-r {
+      margin: 0 0 0 26px;
+      width: 95%;
+    }
+
+    .middle-c .form-group {
+
+      margin-bottom: 22px;
+    }
+
+    .middle-c {
+      padding-top: 25px;
+    }
+
+    .cl-blue {
+      color: #0594ce;
+    }
+
+    .cl-yellow {
+      color: #D6DF22;
+    }
+
+    .cl-purple {
+      color: #7f54a3;
+    }
+
+    .cl-orange {
+      color: #fcae28;
+    }
+
+    .cl-green {
+      color: #55bd80;
+    }
+
+    .cl-pink {
+      color: #da485b;
+    }
+
+    .cl-text {
+      color: #232d69;
+    }
+
+    .font-avenir {
+      font-family: 'avenir';
+    }
+
+    .f-18 {
+      font-size: 18px;
+    }
+
+    .f-26 {
+      font-size: 26px;
+    }
+
+    .f-20 {
+      font-size: 20px;
+    }
+
+    .f-30 {
+      font-size: 30px;
+    }
+
+    .f-32 {
+      font-size: 32px;
+    }
+
+    .m-auto-tran {
+      margin: 12px auto 0px;
+    }
+
+    .m-auto-20 {
+      margin: 12px auto 18px;
+    }
+
+    .mymgbt {
+      margin: 16px auto 10px !important;
+    }
+
+    .footer-c {
+      padding-top: 22px;
+      text-align: center;
+    }
+
+    .f-img {
+      width: auto;
+      height: 171.48px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .ml10 {
+      margin-left: 10px;
+    }
+
+    .sf-relative {
+      position: relative;
+    }
+
+    .sf-absulate {
+      position: absolute;
+    }
+
+    input {
+      color: #666666;
+      font-size: 24px;
+      text-transform: capitalize;
+      font-family: 'avenir';
+    }
+
+    .display-inline {
+      display: inline-block;
+    }
+
+    input:focus {
+      outline: 0;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .mt15 {
+      margin-top: 15px;
+    }
+
+    .m-20 {
+      margin: 25px 0 20px;
+    }
+
+    .mymt {
+      margin-top: 0px!important;
+    }
+
+    .font-angel {
+      font-family: 'Angelface';
+    }
+
+    .w60 {
+      width: 90%;
+    }
+
+    .border-bg {
+      background: url(https://storage.googleapis.com/sfacertificate/bg-line.png)no-repeat;
+      border: none;
+      background-position-y: 36px;
+      height: 35px;
+    }
+    /* .forGold {
+      background: #83512e;
+      background: -moz-linear-gradient(left, #83512e 0%, #cebe84 50%, #83512e 100%);
+      background: -webkit-linear-gradient(left, #83512e 0%, #cebe84 50%, #83512e 100%);
+      background: linear-gradient(to right, #83512e 0%, #cebe84 50%, #83512e 100%);
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#83512e', endColorstr='#83512e', GradientType=1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    } */
+  </style>
+</head>
+
+<body>
+  <div class="certificate">
+    <table style="margin:0 auto;border-spacing:0">
+      <thead>
+        <tr>
+          <!--HEADER LOGO -->
+          <th>
+            <!-- <div class="header-img">
+              <img src="https://storage.googleapis.com/sfacertificate/certificate-head.jpg" alt="" class="w70">
+            </div> -->
+            <div class="header-img">
+              <img src="assets/1.png" alt="" class="w36">
+            </div>
+          </th>
+          <!-- HEADER LOGO END -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <!-- SPORT MAX AWARD IMAGEG -->
+          <td class="text-center">
+            <div class="form-group text-center m-20">
+              <div class="fr-sec">
+                <div class="">
+                  <div class="header-img">
+                    <img src="assets/Gold.png" alt="" class="w70">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <!-- SPORT MAX AWARD IMAGE END  -->
+        </tr>
+        <tr>
+          <!-- PRESENTED -->
+          <td class="text-center">
+            <div class="form-group text-center m-auto-tran" style="margin-top: 6px;">
+              <div class="fr-sec">
+                <div class="display-inline">
+                  <label class="color-blue font-os f-20" style="color:#232d69;">This certificate is awarded to</label>
+                </div>
+              </div>
+            </div>
+          </td>
+          <!-- PRESENTED END -->
+        </tr>
+        <tr>
+          <!-- ATHLETE NAME -->
+          <td class="text-center">
+            <div class="form-group">
+              <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="Sudarshan Vijayendra Anandkumar"
+                style="color:#232d69">
+            </div>
+          </td>
+          <!--ATHLETE NAME END  -->
+        </tr>
+        <tr>
+          <!-- SCHOOL NAME -->
+          <td class="text-center">
+            <div class="form-group border-btm" style="margin-top: 6px;">
+              <div class="sf-relative">
+                <input type="text" class="form-control w60 text-center font-os f-20" value="Jamnabai Narsee School" style="text-transform: none;width: 83%;color:#666666;">
+              </div>
+
+            </div>
+          </td>
+          <!-- SCHOOL NAME END -->
+        </tr>
+        <tr>
+          <!-- SFA ID -->
+          <td class="text-center">
+            <div class="form-group border-btm text-center m-auto-20 mymgbt">
+              <div class="display-inline" style="line-height: 28px; vertical-align: inherit;">
+                <label class="color-blue font-os f-20" style="color:#232d69;">SFA ID</label>
+              </div>
+              <div class="display-inline">
+                <!-- <input type="text" class="form-control  text-center font-os" value="MA1728378" style="color:#666666;"> -->
+                <label class="font-os f-20" style="color:#666666;">MA1728378</label>
+              </div>
+            </div>
+          </td>
+          <!--SFA ID END  -->
+        </tr>
+        <tr>
+          <!-- SPORT HEADER -->
+          <td class="text-center">
+            <div class="form-group text-center" style="margin-top: 0px;">
+              <div class="fr-sec">
+                <!-- FOR SCHOOL -->
+                <div class="display-inline">
+                  <label class="color-blue font-os f-20" style="color:#232d69;">For participating in maximum number of sports </label>
+                </div>
+                <!--SCHOOL END  -->
+
+                <!-- COLLEGE -->
+                <div class="display-inline">
+                  <label hidden class="color-blue font-os f-20" style="color:#232d69;">For participating in maximum number of sports at the championship </label>
+                </div>
+                <!-- COLLEGE END -->
+              </div>
+
+            </div>
+          </td>
+          <!--SPORT HEADER END  -->
+        </tr>
+        <tr>
+          <!-- NO OF SPORTS WON -->
+          <td class="text-center">
+            <div class="form-group border-btm" style="margin-top: 6px; ">
+              <!-- FOR SCHOOL -->
+              <div>
+                <input type="text" class="form-control text-center font-os" value="20 Sports" style="color:#666666;width: 50%;">
+              </div>
+              <!-- SCHOOL END -->
+
+              <!-- COLLEGE -->
+              <div hidden>
+                <input type="text" class="form-control text-center font-os" value="13 / 15 Sports" style="color:#666666;width: 50%;">
+              </div>
+              <!-- COLLEGE END-->
+
+              <!-- <label class="font-os f-20" style="color:#666666;">20 Sports</label> -->
+            </div>
+          </td>
+          <!--NO OF SPORTS WON END  -->
+        </tr>
+        <tr>
+          <!-- FOOTER IMAGE -->
+          <td>
+            <div class="footer-img">
+              <div class="footer-c mnb5" style="width: 560px; height: auto;">
+
+                <img src="assets/21.png" alt="" class="width100">
+                <!-- <img src="https://storage.googleapis.com/sfacertificate/<%=data.image%>" alt="" class="f-img"> -->
+                <!--            <img src="https://storage.googleapis.com/sfacertificate/cfswiminig.jpg" alt="" class="width100" ng-if="">
+                    <img src="https://storage.googleapis.com/sfacertificate/cfswimming.jpg" alt="" class="width100" ng-if="">
+
+                      <img src="img/cfmma.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfkarate.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfboxing.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfteakwando.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfathletics.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cftabletennis.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfcarrom.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfchess.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cffencing.jpg" alt="" class="width100" ng-if="">	
+                      <img src="img/cfjudo.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfsquash.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cftennis.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cftabletennis.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfarchery.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfshooting.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfkabbadi.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cffootball.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfhandball.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfvolleyball.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfhockey.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfkhokho.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfbadminton.jpg" alt="" class="width100" ng-if="">
+                      <img src="img/cfbasketball.jpg" alt="" class="width100" ng-if=""> -->
+              </div>
+            </div>
+          </td>
+          <!-- FOOTER IMAGE END -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>

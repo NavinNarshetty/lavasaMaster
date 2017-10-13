@@ -187,6 +187,11 @@ myApp.factory('NavigationService', function ($http) {
                 classis: "",
                 sref: "#/specialaward-detail",
                 icon: "phone"
+            }, {
+                name: "Rising Star",
+                classis: "",
+                sref: "#/risingstar",
+                icon: "phone"
             }]
         },
         {
@@ -579,6 +584,33 @@ myApp.factory('NavigationService', function ($http) {
             console.log("constraints", constraints);
             $http({
                 url: adminurl + 'SpecialAwardDetails/getAwardsList',
+                data: constraints,
+                method: 'POST'
+
+            }).then(callback);
+        },
+        getGenderAthlete: function (constraints, url, callback) {
+            console.log("constraints gender", constraints);
+            $http({
+                url: adminurl + url,
+                data: constraints,
+                method: 'POST'
+
+            }).then(callback);
+        },
+        getAllAwardDetails: function (constraints, callback) {
+            console.log("constraints gender", constraints);
+            $http({
+                url: adminurl + 'SpecialAwardDetails/getAllAwardDetails',
+                data: constraints,
+                method: 'POST'
+
+            }).then(callback);
+        },
+        getOneAwardDetails: function (constraints, callback) {
+            console.log("constraints ", constraints);
+            $http({
+                url: adminurl + 'SpecialAwardDetails/getOneAwardDetails',
                 data: constraints,
                 method: 'POST'
 

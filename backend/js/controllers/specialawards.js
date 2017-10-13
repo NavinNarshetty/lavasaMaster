@@ -275,6 +275,57 @@ myApp.controller('SpecialAwardDetailCtrl', function ($scope, TemplateService, Na
   $scope.menutitle = NavigationService.makeactive("Special Award");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
+
+  // TABLE VIEW 
+  $scope.viewTable = function () {
+    // $scope.search = $scope.formData.keyword;
+    $scope.constraints = {};
+    $scope.constraints.rising = {}
+    $scope.constraints.rising = false;
+    // $scope.formData.page = $scope.formData.page++;
+    NavigationService.getAllAwardDetails($scope.constraints, function (data) {
+      console.log("data.value", data);
+      $scope.items = data.data.data;
+      console.log($scope.items, "item")
+      // $scope.totalItems = data.data.total;
+      // $scope.maxRow = data.data.options.count;
+    });
+  }
+  $scope.viewTable();
+
+  // DELETE
+  $scope.confDel = function (data) {
+    $scope.id = data;
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'views/modal/delete.html',
+      backdrop: 'static',
+      keyboard: false,
+      size: 'sm',
+      scope: $scope
+    });
+  };
+
+
+  $scope.noDelete = function () {
+    $scope.modalInstance.close();
+  }
+
+  $scope.delete = function (data) {
+    // console.log(data);
+    $scope.url = "SpecialAwardDetails/delete";
+    $scope.constraints = {};
+    $scope.constraints._id = data;
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      if (data.value) {
+        toastr.success('Successfully Deleted', 'Special Detail');
+        $scope.modalInstance.close();
+        $scope.viewTable();
+      } else {
+        toastr.error('Something Went Wrong while Deleting', 'Special Detail');
+      }
+    });
+  }
 });
 // SPORTS AWARDS DETAIL TABLE END
 
@@ -287,6 +338,66 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
   $scope.navigation = NavigationService.getnav();
   $scope.formData = {};
   $scope.formData.boostDetail = [];
+  $scope.flag = false;
+
+  if ($stateParams.id) {
+    $scope.flag = true;
+    console.log("in")
+    $scope.getOneAwardDetails = function () {
+      $scope.constraints = {}
+      $scope.constraints._id = $stateParams.id;
+      NavigationService.getOneAwardDetails($scope.constraints, function (data) {
+        console.log(data, "in edit awards");
+        $scope.formData = data.data.data[0];
+        $scope.typeData = $scope.formData.type
+        console.log($scope.typeData, "type ")
+        // FOR ATHLETE TYPE
+        if ($scope.typeData === 'athlete') {
+          $scope.formData.sports = data.data.data[0].sports;
+          if (data.data.data[0].athlete.middleName) {
+            $scope.formData.athlete.fullName = data.data.data[0].athlete.sfaId + '-' + data.data.data[0].athlete.firstName + ' ' + data.data.data[0].athlete.middleName + ' ' + data.data.data[0].athlete.surname
+          } else {
+            $scope.formData.athlete.fullName = data.data.data[0].athlete.sfaId + '-' + data.data.data[0].athlete.firstName + ' ' + data.data.data[0].athlete.surname
+          }
+        } else {
+          if (data.data.data[0].school.sfaID) {
+            console.log('enter');
+            $scope.formData.school.schoolsfaId = data.data.data[0].school.sfaID + '-' + data.data.data[0].school.schoolName;
+          } else {
+            console.log('enter else');
+            $scope.formData.school.schoolsfaId = data.data.data[0].school.schoolName;
+          }
+        }
+        console.log($scope.formData, "edit data")
+      });
+    }
+    $scope.getOneAwardDetails();
+    // BOOST AWARD
+    $scope.addRow = function (formData) {
+      if (!formData) {
+        $scope.formData.boostDetail.push({
+          "schoolRank": '',
+          "total": '',
+          "year": ''
+        })
+      } else {
+        formData.boostDetail.push({
+          "schoolRank": '',
+          "total": '',
+          "year": ''
+        })
+      }
+
+
+    }
+    $scope.addRow();
+
+    $scope.deleteRow = function (formData, index) {
+      formData.boostDetail.splice(index, 1);
+    }
+    // BOOST AWARD END
+
+  }
 
   // FOR INSTITUTE TYPE
   $scope.getConfig = function () {
@@ -300,6 +411,33 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
   $scope.getConfig();
   // INSTITUTE TYPE END
 
+
+  // ATHLETE BY GENDER
+  $scope.getGenderAthlete = function (constraints) {
+    $scope.url = "Athelete/searchByFilter";
+    NavigationService.getGenderAthlete(constraints, $scope.url, function (data) {
+      console.log('gender wise', data)
+      $scope.playerData = data.data.data.results;
+      _.each($scope.playerData, function (k) {
+        if (k.status == 'Verified') {
+          if (k.middleName == undefined) {
+            k.fullName = k.sfaId + '-' + k.firstName + ' ' + k.surname;
+          } else {
+            k.fullName = k.sfaId + '-' + k.firstName + ' ' + k.middleName + ' ' + k.surname;
+          }
+        } else {
+          if (k.middleName == undefined) {
+            k.fullName = k.firstName + ' ' + k.surname;
+          } else {
+            k.fullName = k.firstName + ' ' + k.middleName + ' ' + k.surname;
+          }
+        }
+
+      });
+    });
+  };
+  // ATHLETE BY GENDER END
+
   // SPECIAL AWARD LIST 
   $scope.getAwardsList = function (constraints) {
     NavigationService.getAwardsList(constraints, function (data) {
@@ -309,13 +447,18 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
 
   }
   $scope.getList = function (data) {
-    console.log(data)
+    $scope.formData.award = ''
+    console.log(data, "ng-change")
     if (data.type === "athlete") {
       console.log("in")
       $scope.constraints = {}
+      $scope.constraints.filter = {}
       $scope.constraints.type = data.type;
       $scope.constraints.gender = data.gender;
+      $scope.constraints.filter.gender = data.gender;
       $scope.getAwardsList($scope.constraints);
+      $scope.getGenderAthlete($scope.constraints)
+
     } else {
       $scope.constraints = {};
       $scope.constraints.type = data.type;
@@ -354,7 +497,7 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
 
   // SPORTS
   $scope.getAllSportList = function (data) {
-    $scope.url = "SportsList/search";
+    $scope.url = "SportsListSubCategory/search";
     console.log(data);
     $scope.constraints = {};
     $scope.constraints.keyword = data;
@@ -379,7 +522,6 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
           n.schoolsfaId = n.schoolName;
         }
       });
-      console.log($scope.school, "after each")
     });
   };
   $scope.getOneSchoolById();
@@ -399,13 +541,13 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
       console.log("save sponsor")
       if (data.value) {
         console.log("in")
-        // toastr.success("Data saved successfully", 'Success');
-        // $state.go('specialaward')
+        toastr.success("Data saved successfully", 'Success');
+        $state.go('specialaward-detail')
       } else if (data.data.nModified == '1') {
-        // toastr.success("Data saved successfully", 'Success');
-        // $state.go('sponsor')
+        toastr.success("Data saved successfully", 'Success');
+        $state.go('specialaward-detail')
       } else {
-        // toastr.error("Something went wrong", 'Error');
+        toastr.error("Something went wrong", 'Error');
       }
     })
   }
@@ -422,3 +564,170 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
   // }]
 });
 // SPORTS AWARDS DETAIL  END
+
+// RISING STAR
+myApp.controller('RisingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
+  //Used to name the .html file
+  $scope.template = TemplateService.changecontent("tablerising");
+  $scope.menutitle = NavigationService.makeactive("Rising Star");
+  TemplateService.title = $scope.menutitle;
+  $scope.navigation = NavigationService.getnav();
+
+
+  // TABLE VIEW 
+  $scope.viewTable = function () {
+    // $scope.search = $scope.formData.keyword;
+    $scope.constraints = {};
+    $scope.constraints.rising = {}
+    $scope.constraints.rising = true;
+    // $scope.formData.page = $scope.formData.page++;
+    NavigationService.getAllAwardDetails($scope.constraints, function (data) {
+      console.log("data.value", data);
+      $scope.items = data.data.data;
+      console.log($scope.items, "item")
+      // $scope.totalItems = data.data.total;
+      // $scope.maxRow = data.data.options.count;
+    });
+  }
+  $scope.viewTable();
+
+  // DELETE
+  $scope.confDel = function (data) {
+    $scope.id = data;
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'views/modal/delete.html',
+      backdrop: 'static',
+      keyboard: false,
+      size: 'sm',
+      scope: $scope
+    });
+  };
+
+
+  $scope.noDelete = function () {
+    $scope.modalInstance.close();
+  }
+
+  $scope.delete = function (data) {
+    // console.log(data);
+    $scope.url = "SpecialAwardDetails/delete";
+    $scope.constraints = {};
+    $scope.constraints._id = data;
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      if (data.value) {
+        toastr.success('Successfully Deleted', 'Special Detail');
+        $scope.modalInstance.close();
+        $scope.viewTable();
+      } else {
+        toastr.error('Something Went Wrong while Deleting', 'Special Detail');
+      }
+    });
+  }
+});
+// RISING STAR END
+
+// DETAIL RISING STAR
+myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr, $uibModal) {
+  //Used to name the .html file
+  $scope.template = TemplateService.changecontent("detailrising");
+  $scope.menutitle = NavigationService.makeactive("Detail Rising Star");
+  TemplateService.title = $scope.menutitle;
+  $scope.navigation = NavigationService.getnav();
+  $scope.formData = {}
+  $scope.formData.type = 'athlete'
+  $scope.formData.award = {}
+  $scope.formData.award.name = 'Rising Star Award'
+
+  // ATHLETE BY GENDER
+  $scope.getGenderAthlete = function (constraints) {
+    $scope.url = "Athelete/searchByFilter";
+    NavigationService.getGenderAthlete(constraints, $scope.url, function (data) {
+      console.log('gender wise', data)
+      $scope.playerData = data.data.data.results;
+      _.each($scope.playerData, function (k) {
+        if (k.status == 'Verified') {
+          if (k.middleName == undefined) {
+            k.fullName = k.sfaId + '-' + k.firstName + ' ' + k.surname;
+          } else {
+            k.fullName = k.sfaId + '-' + k.firstName + ' ' + k.middleName + ' ' + k.surname;
+          }
+        } else {
+          if (k.middleName == undefined) {
+            k.fullName = k.firstName + ' ' + k.surname;
+          } else {
+            k.fullName = k.firstName + ' ' + k.middleName + ' ' + k.surname;
+          }
+        }
+
+      });
+    });
+  };
+
+
+  $scope.getList = function (data) {
+    $scope.formData.award = ''
+    console.log(data, "ng-change")
+    if (data.type === "athlete") {
+      console.log("in")
+      $scope.constraints = {}
+      $scope.constraints.filter = {}
+      $scope.constraints.type = data.type;
+      $scope.constraints.gender = data.gender;
+      $scope.constraints.filter.gender = data.gender;
+      $scope.getAwardsList($scope.constraints);
+      $scope.getGenderAthlete($scope.constraints)
+
+    } else {
+
+    }
+  }
+
+  $scope.getAwardsList = function (constraints) {
+    NavigationService.getAwardsList(constraints, function (data) {
+      $scope.certificateType = data.data.data;
+      console.log($scope.certificateType, "certificate data")
+    });
+
+  }
+
+  // SPORTS
+  $scope.getAllSportList = function (data) {
+    $scope.url = "SportsListSubCategory/search";
+    console.log(data);
+    $scope.constraints = {};
+    $scope.constraints.keyword = data;
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      console.log("data.value sportlist", data);
+      $scope.sportitems = data.data.results;
+
+    });
+  }
+  $scope.searchSportList = function (data) {
+    $scope.draws = data;
+  }
+  // SPORTS END
+
+  // SAVE
+  $scope.saveAwardDetail = function (data) {
+    console.log("i am in ");
+    console.log(data, "save")
+    // data.award.name = 'Rising Star Award'
+    // $scope.url = "SpecialAwardDetails/save";
+    // NavigationService.apiCall($scope.url, data, function (data) {
+    //   console.log("save sponsor")
+    // if (data.value) {
+    //   // console.log("in")
+    //   // toastr.success("Data saved successfully", 'Success');
+    //   // $state.go('specialaward-detail')
+    // } else if (data.data.nModified == '1') {
+    //   // toastr.success("Data saved successfully", 'Success');
+    //   // $state.go('sponsor')
+    // } else {
+    //   // toastr.error("Something went wrong", 'Error');
+    // }
+    // })
+  }
+  // SAVE END
+});
+// DETAIL RISING STAR END
