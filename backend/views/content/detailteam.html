@@ -124,7 +124,7 @@
                 <!-- SCORE CARD -->
                 <div class="form-group" fields>
                   <label>Score Card <span ng-show="type.required">*</span></label>
-                  <div ng-repeat="photo in formData.resultsRacquet.scoreSheet track by $index">
+                  <div>
                     <upload-image ng-model="formData.resultsRacquet.scoreSheet" multiple inObj></upload-image>
                   </div>
                 </div>
@@ -138,6 +138,24 @@
                   </div>
                 </div>
                 <!-- END MATCH PHOTO -->
+
+                <!-- WINNER HOLDER -->
+                <div class="row">
+                  <!-- WINNER TEAM ID -->
+                  <div class="col-md-12">
+                    <!-- WINNER -->
+                    <div class="form-group">
+                      <label>Winner Team</label>
+                      <select name="sponsortype" class="form-control" ng-model="formData.resultsRacquet.winner.player" placeholder="Enter Video Type"
+                        required>
+                                   <option value="{{team._id}}" ng-repeat="team in formData.teams">{{team.schoolName}}</option>
+                            </select>
+                      <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
+                    </div>
+                    <!-- WINNER END -->
+                  </div>
+                </div>
+                <!-- WINNER HOLDER END -->
 
                 <!-- BORDER -->
                 <p class="match-border"></p>

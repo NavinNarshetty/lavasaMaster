@@ -21,8 +21,8 @@
                   <!-- TYPE -->
                   <div class="special-award-type">
                     <div class="form-group">
-                      <label> Type</label>
-                      <select name="selecttype" class="form-control" ng-model="formData.type" placeholder="Enter Type" ng-change="getList(formData)"
+                      <label> Type</label>{{formData.type}}
+                      <select name="selecttype" class="form-control" ng-model="formData.type" placeholder="Enter Type" ng-disabled="flag" ng-change="getList(formData)"
                         required>
                                 <option value="athlete">Athlete</option>
                                 <option value="school" ng-if="institute==='school'">School</option>
@@ -39,7 +39,7 @@
                     <div class="special-award-type">
                       <div class="form-group">
                         <label> Gender</label>
-                        <select name="selectgender" class="form-control" ng-model="formData.gender" placeholder="Enter Type" ng-change="getList(formData)"
+                        <select name="selectgender" class="form-control" ng-model="formData.gender" ng-disabled="flag" placeholder="Enter Type" ng-change="getList(formData)"
                           required>
                                       <option value="male">Male</option>
                                       <option value="female">Female</option>              
@@ -54,15 +54,15 @@
               <!-- TYPE AND GENDER -->
 
               <!-- CERTIFICATE && FOOTER IMAGE -->
-              <div class="certificate-footerimage-holder">
+              <div class="certificate-footerimage-holder" ng-if="formData.type">
                 <!-- CERTIFICATE NAME -->
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label>Certificate Name</label>{{formData.award}}
-                      <ui-select name="certificatename" ng-model="formData.award" theme="bootstrap" required>
+                      <ui-select name="certificatename" ng-model="formData.award" theme="bootstrap" ng-disabled="flag" required>
                         <ui-select-match placeholder="Select Certificate Name" allow-clear="true"> {{$select.selected.name}}</ui-select-match>
-                        <ui-select-choices repeat="certificate._id as certificate in certificateType |  filter: $select.search track by $index">
+                        <ui-select-choices repeat="certificate in certificateType |  filter: $select.search track by $index">
                           <div>
                             <span class="text-capitalize" ng-bind-html="certificate.name"></span>
                           </div>
@@ -75,7 +75,7 @@
                 <!-- CERTIFICATE NAME END -->
 
                 <!-- FOOTER IMAGE -->
-                <div class="row">
+                <div class="row" ng-if="formData.type">
                   <div class="col-md-12">
                     <div class="form-group">
                       <label>Footer Image <span style="color:#ea5249;">(Note:image size should be 300x300 only *)</span> <span ng-show="type.required">*</span></label>
@@ -88,7 +88,7 @@
               <!-- CERTIFICATE && FOOTER IMAGE -->
 
               <!-- ATHLETE HOLDER -->
-              <div class="athlete-holder">
+              <div class="athlete-holder" ng-if="formData.award.awardType==='max'">
                 <div class="text-center">
                   <label for="">Athlete Holder</label>
                 </div>
@@ -97,10 +97,10 @@
                     <div class="form-group">
                       <label> Player</label>
                       <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" required>
-                        <ui-select-match placeholder="Select Certificate Name" allow-clear="true"> {{$select.selected.name}}</ui-select-match>
+                        <ui-select-match placeholder="Select Certificate Name" allow-clear="true"> {{$select.selected.fullName}}</ui-select-match>
                         <ui-select-choices repeat="player in playerData | filter: $select.search">
                           <div>
-                            <span class="text-capitalize" ng-bind-html="certificate.name"></span>
+                            <span class="text-capitalize" ng-bind-html="player.fullName"></span>
                           </div>
                         </ui-select-choices>
                       </ui-select>
@@ -110,7 +110,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">School Name</label>
-                      <input type="text" name="schoolname" ng-model="formData.name" class="form-control" placeholder="" readonly>
+                      <input type="text" name="schoolname" ng-model="formData.athlete.school.name" class="form-control" placeholder="" readonly>
                     </div>
                   </div>
                 </div>
@@ -119,10 +119,10 @@
 
               <!-- SCHOOL HOLDER -->
               <div class="school-award-holder">
-                <div class="text-center">
+                <!-- <div class="text-center">
                   <label for="">School Holder</label>
-                </div>
-                <div class="row">
+                </div> -->
+                <div class="row" ng-if="formData.type==='school'">
                   <!-- SELECT SCHOOL -->
                   <div class="col-md-12">
                     <div class="form-group">
@@ -140,15 +140,15 @@
                   </div>
                 </div>
                 <!-- SELECT SCHOOL END -->
-                <div class="row">
+                <div class="row" hidden>
                   <!-- TOTAL SPORT -->
-                  <div class="col-md-12">
+                  <!-- <div class="col-md-12">
                     <div class="form-group">
                       <label for="">Total Sport</label>
                       <input type="number" name="totals" ng-model="formData.totalSports" class="form-control" placeholder="Enter Total Sport" required>
                       <div class="error-msg" ng-if="specialawardform.totals.$invalid && specialawardform.totals.$touched">Please Enter Valid Number *</div>
                     </div>
-                  </div>
+                  </div> -->
                   <!-- TOTAL SPORT END -->
                 </div>
               </div>
@@ -157,14 +157,14 @@
 
               <!-- SPORT SELECTION -->
               <!-- SPORT LIST -->
-              <div class="row">
+              <div class="row" ng-if="formData.award.awardType==='max'">
                 <div class="col-md-12">
                   <div class="form-group">
-                    <label>Sports List</label>
-                    <ui-select name="selectsportslist" id="selectsportslist" theme="bootstrap" ng-model="formData.sports" ng-change="searchSportList($select.selected._id)"
+                    <label>Sports </label>
+                    <ui-select name="selectsportslist" id="selectsportslist" theme="bootstrap" ng-model="formData.sports" multiple ng-change="searchSportList($select.selected._id)"
                       required>
                       <ui-select-match placeholder="Enter Sports List" allow-clear="true">
-                        {{$select.selected.name}}
+                        {{$item.name}}
                       </ui-select-match>
                       <ui-select-choices refresh.delay="0" repeat="item in sportitems | filter:$select.search" refresh="getAllSportList($select.search)">
                         <span ng-bind-html="item.name"></span>
@@ -178,7 +178,7 @@
               <!-- SPORT SELECTION END -->
 
               <!-- COACH HOLDER -->
-              <div class="coach-holder">
+              <div class="coach-holder" ng-if="formData.award.awardType==='coach'">
                 <!-- <div class="text-center">
                   <label for="">Coach Name</label>
                 </div> -->
@@ -195,7 +195,7 @@
               <!-- COACH HOLDER END -->
 
               <!-- BOOST HOLDER -->
-              <div class="boost-holder">
+              <div class="boost-holder" ng-if="formData.award.awardType==='boost'">
                 <div class="text-center">
                 </div>
                 <div class="row">
@@ -245,7 +245,7 @@
               <!-- BOOST HOLDER END -->
 
               <div class="text-center mt20 odd-even-button">
-                <button class="btn btn-default" type="submit" ng-click="saveAwardDetail(formData)" ng-disabled="detailForm.$invalid">Save</button>
+                <button class="btn btn-default" type="submit" ng-click="saveAwardDetail(formData)">Save</button>
                 <button class="btn btn-default" ui-sref='specialaward-detail'>Cancel</button>
               </div>
 

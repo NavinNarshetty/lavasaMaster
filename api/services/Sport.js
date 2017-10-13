@@ -59,6 +59,71 @@ module.exports = mongoose.model('Sport', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "sportslist", "ageGroup", "weight", "sportslist", "ageGroup", "weight"));
 var model = {
 
+    getAllSportsByAthlete: function (athlete,callback) {
+        async.waterfall([
+
+            //getAthlete Details
+            function (callback) {
+                Athelete.findOne(athlete).deepPopulate("school").lean().exec(function (err, data) {
+                    var athleteDetails = {};
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(data)) {
+                        athleteDetails.athleteId = data._id;
+                        callback(null, athleteDetails);
+                    } else {
+                        callback("Athlete Not Found", null)
+                    }
+                });
+            },
+
+            //find team sports,player participated in and whether he won any of the 3 medals
+            function (athleteDetails, callback) {
+                var matchObj = {
+                    "studentId": athlete._id
+                };
+                StudentTeam.find(matchObj).exec(function (err, regTeamSport) {
+                    regTeamSport = _.uniq(_.map(regTeamSport, function (n) {
+                        return {
+                            "sport": n.sport,
+                            "teamId": n.teamId
+                        }
+                    }));
+                    callback(null, regTeamSport, athleteDetails);
+                    // finalCallback(null, regTeamSport);
+                });
+            },
+
+            // //find individual sports,player participated in and whether he won any of the 3 medals
+            function (regTeamSport, athleteDetails, callback) {
+                var matchObj = {
+                    "athleteId": athlete._id
+                };
+                IndividualSport.find(matchObj).exec(function (err, regIndiSport) {
+                    regIndiSport = _.uniq(_.flatten(_.map(regIndiSport, function (n1) {
+                        return _.map(n1.sport, function (n2) {
+                            return {
+                                "sport": n2
+                            }
+                        })
+                    })));
+                    regSports = _.union(regTeamSport, regIndiSport);
+                    athleteDetails.regSports = regSports;
+                    callback(null, athleteDetails);
+                    // finalCallback(null, regSport);
+                });
+            }
+
+        ], function (err, result) {
+            if(err){
+                callback(err,null);
+            }else{  
+                callback(null,result);
+            }
+        });
+
+    },
+
     getAggregatePipeLine: function (data) {
 
         var pipeline = [
