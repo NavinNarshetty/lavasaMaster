@@ -21,7 +21,7 @@ var schema = new Schema({
     },
     sports: [{
         type: Schema.Types.ObjectId,
-        ref: "Sport"
+        ref: "SportsListSubCategory"
     }],
     coachName: "String",
     boostDetail: [{
@@ -43,7 +43,7 @@ schema.plugin(deepPopulate, {
         },
         "school": {
             select: '_id schoolName sfaID'
-        },
+        }
        
     }
 });
@@ -142,7 +142,7 @@ var model = {
     },
 
     getOneAwardDetails: function (data, callback) {
-        SpecialAwardDetails.find(data).deepPopulate("award athlete athlete.school school").lean().exec(function (err, result) {
+        SpecialAwardDetails.find(data).deepPopulate("award athlete athlete.school school sports").lean().exec(function (err, result) {
             callback(null,result);
         });
     }
