@@ -65,7 +65,7 @@ var model = {
             if(err){
                 callback(err,null);
             }else if(_.isEmpty(data)){
-                exports.save(data,callback);
+                exports.saveData(data,callback);
             }else{
                 callback("Alread added",null);
             }
