@@ -54,6 +54,25 @@ module.exports = mongoose.model('SpecialAwardDetails', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
+    saveRising: function (data, callback) {
+        var matchObj={
+            "type":data.type,
+            "award":data.award,
+            "gender":data.gender,
+            "sports":data.sports
+        }
+        SpecialAwardDetails.find(matchObj).exec(function(err,data){
+            if(err){
+                callback(err,null);
+            }else if(_.isEmpty(data)){
+                model.save(data,callback);
+            }else{
+                callback("Alread added",null);
+            }
+        });
+    },
+    
+
     getAwardsList: function (data, awardListObj, awardDetailObj, callback) {
         if (data.rising) {
             Awards.find({
@@ -190,7 +209,10 @@ var model = {
         }, function (err, result) {
             callback(null, result);
         });
-    }
+    },
+
+   
+    
 
 };
 module.exports = _.assign(module.exports, exports, model);

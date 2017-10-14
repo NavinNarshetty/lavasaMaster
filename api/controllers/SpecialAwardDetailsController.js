@@ -81,7 +81,7 @@ var controller = {
 
     saveRising: function (req, res) {
         if (req.body) {
-
+            SpecialAwardDetails.saveRising(req.body,res.callback);
         } else {
             res.json({
                 data: "Body Not Found",
