@@ -54,7 +54,7 @@ module.exports = mongoose.model('SpecialAwardDetails', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
-    getAwardsList: function (data, awardListObj, awardDetailObj, fcallback) {
+    getAwardsList: function (data, awardListObj, awardDetailObj, callback) {
         if (data.rising) {
             Awards.find({"awardType":"rising"}).lean().exec(function (err, award) {
                 callback(null, award);
