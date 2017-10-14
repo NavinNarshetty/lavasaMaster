@@ -81,7 +81,16 @@ var controller = {
 
     saveRising: function (req, res) {
         if (req.body) {
-
+            SpecialAwardDetails.saveRising(req.body,function(err,data){
+                if(err){
+                    res.callback(null,data);
+                }else if(data){
+                    SpecialAwardDetails.saveData(req.body,res.callback);
+                }else{
+                    res.callback("Already Added",null);
+                }
+                
+            });
         } else {
             res.json({
                 data: "Body Not Found",
