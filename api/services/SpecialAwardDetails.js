@@ -98,7 +98,7 @@ var model = {
 
                 //check if champions award is added max of 10 times
                 function(awardsList,callback){
-                    Awards.findOne({'type':"champion"}).lean().exec(function(err,data){
+                    Awards.findOne({'awardType':"champion"}).lean().exec(function(err,data){
                         SpecialAwardDetails.count({"award":data._id}).exec(function(err,count){
                             if(count<=10){
                                  _.remove(awardsList, {"_id":data._id});

@@ -720,9 +720,7 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
   }
 
   $scope.getAwardsList({
-    "rising": true,
-    // "gender": "male",
-    "type": "athlete"
+    "rising": true
   });
 
   // SAVE
