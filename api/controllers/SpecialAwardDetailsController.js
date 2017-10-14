@@ -81,7 +81,7 @@ var controller = {
 
     saveRising: function (req, res) {
         if (req.body) {
-            SpecialAwardDetails.isAlreadyAdded(req.body,function(err,data){
+            SpecialAwardDetails.saveRising(req.body,function(err,data){
                 if(err){
                     res.callback(null,data);
                 }else if(data){
