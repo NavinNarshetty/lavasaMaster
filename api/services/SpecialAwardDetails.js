@@ -65,9 +65,9 @@ var model = {
             if(err){
                 callback(err,null);
             }else if(_.isEmpty(data)){
-                exports.saveData(data,callback);
+               callback(null,true);
             }else{
-                callback("Alread added",null);
+                callback(null,false);
             }
         });
     },
