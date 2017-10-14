@@ -65,7 +65,8 @@ var model = {
                 //getAll Athlete Awards
                 function (callback) {
                     Awards.find(awardListObj).lean().exec(function (err, awardsList) {
-                        _.remove(awardsList, {"name":"Sfa Rising Star Award"});
+                        _.remove(awardsList, {"awardType":"rising"});
+                        console.log("awardsList----",awardsList);
                         callback(null, awardsList);
                     });
                 },
