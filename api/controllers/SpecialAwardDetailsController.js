@@ -4,18 +4,23 @@ var controller = {
         if (req.body) {
             var awardListObj = {}; // for getting all awards as per awardType i.e athlete,school,college
             var awardDetailObj = {}; // for filtering all awards which have already been asigned
-            if (req.body.type == "athlete" && req.body.gender) {
-                awardListObj.type = awardDetailObj.type = req.body.type;
-                awardDetailObj.gender = req.body.gender;
-                SpecialAwardDetails.getAwardsList(req.body,awardListObj, awardDetailObj, res.callback);
-            } else if (req.body.type == "school" || req.body.type == "college") {
-                awardListObj.type = awardDetailObj.type = req.body.type;
-                SpecialAwardDetails.getAwardsList(req.body,awardListObj, awardDetailObj, res.callback);
+            if (req.body.rising==true) {
+                 SpecialAwardDetails.getAwardsList(req.body, awardListObj, awardDetailObj, res.callback);
             } else {
-                res.json({
-                    data: "Incorrect Input Fields",
-                    val: false
-                });
+                if (req.body.type == "athlete" && req.body.gender) {
+                    awardListObj.type = awardDetailObj.type = req.body.type;
+                    awardDetailObj.gender = req.body.gender;
+                    SpecialAwardDetails.getAwardsList(req.body, awardListObj, awardDetailObj, res.callback);
+                } else if (req.body.type == "school" || req.body.type == "college") {
+                    awardListObj.type = awardDetailObj.type = req.body.type;
+                    SpecialAwardDetails.getAwardsList(req.body, awardListObj, awardDetailObj, res.callback);
+                } else {
+                    res.json({
+                        data: "Incorrect Input Fields",
+                        val: false
+                    });
+                }
+
             }
 
         } else {

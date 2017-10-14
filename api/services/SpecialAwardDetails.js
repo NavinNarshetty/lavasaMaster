@@ -112,14 +112,6 @@ var model = {
                     });
                 },
 
-                // //check if champions award is added max of 10 times
-                // function(awardsList,callback){
-                //     Awards.findOne({'awardType':"champion"}).lean().exec(function(err,data){
-
-                //     });
-                // }
-
-
             ], function (err, result) {
                 callback(null, result);
             });
