@@ -82,6 +82,7 @@ var controller = {
     saveRising: function (req, res) {
         if (req.body) {
             SpecialAwardDetails.saveRising(req.body,function(err,data){
+                console.log("data-----------",data);
                 if(err){
                     res.callback(null,data);
                 }else if(data){
@@ -89,7 +90,6 @@ var controller = {
                 }else{
                     res.callback("Already Added",null);
                 }
-                
             });
         } else {
             res.json({

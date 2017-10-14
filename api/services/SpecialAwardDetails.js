@@ -62,6 +62,7 @@ var model = {
             "sports":data.sports
         }
         SpecialAwardDetails.find(matchObj).exec(function(err,data){
+            console.log("found------------------",data);
             if(err){
                 callback(err,null);
             }else if(_.isEmpty(data)){
