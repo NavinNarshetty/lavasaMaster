@@ -56,7 +56,9 @@ var model = {
 
     getAwardsList: function (data, awardListObj, awardDetailObj, callback) {
         if (data.rising) {
-            Awards.find({"awardType":"rising"}).lean().exec(function (err, award) {
+            Awards.find({
+                "awardType": "rising"
+            }).lean().exec(function (err, award) {
                 callback(null, award);
             });
         } else {
@@ -65,8 +67,10 @@ var model = {
                 //getAll Athlete Awards
                 function (callback) {
                     Awards.find(awardListObj).lean().exec(function (err, awardsList) {
-                        _.remove(awardsList, {"awardType":"rising"});
-                        console.log("awardsList----",awardsList);
+                        _.remove(awardsList, {
+                            "awardType": "rising"
+                        });
+                        console.log("awardsList----", awardsList);
                         callback(null, awardsList);
                     });
                 },
@@ -84,7 +88,18 @@ var model = {
                                 sendList.push(award);
                                 callback(null);
                             } else {
-                                callback(null);
+                                if (award.awardType == "champion") {
+                                    SpecialAwardDetails.count({
+                                        "award": award._id
+                                    }).exec(function (err, count) {
+                                        if (count < 10) {
+                                             sendList.push(award);
+                                        }
+                                        callback(null);
+                                    });
+                                } else {
+                                    callback(null);
+                                }
                             }
                         });
                     }, function (err) {
@@ -97,18 +112,13 @@ var model = {
                     });
                 },
 
-                //check if champions award is added max of 10 times
-                function(awardsList,callback){
-                    Awards.findOne({'awardType':"champion"}).lean().exec(function(err,data){
-                        SpecialAwardDetails.count({"award":data._id}).exec(function(err,count){
-                            if(count<=10){
-                                 _.remove(awardsList, {"_id":data._id});
-                            }
-                            callback(null,awardsList);
-                        })
-                    });
-                }
-                
+                // //check if champions award is added max of 10 times
+                // function(awardsList,callback){
+                //     Awards.findOne({'awardType':"champion"}).lean().exec(function(err,data){
+
+                //     });
+                // }
+
 
             ], function (err, result) {
                 callback(null, result);
