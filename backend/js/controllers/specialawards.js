@@ -728,7 +728,8 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
     console.log("i am in ");
     console.log(data, "save")
     data.award = data.award._id;
-    $scope.url = "SpecialAwardDetails/save";
+    data.sports = [data.sports._id];
+    $scope.url = "SpecialAwardDetails/saveRising";
     NavigationService.apiCall($scope.url, data, function (data) {
       console.log("save sponsor")
       if (data.value) {
