@@ -538,6 +538,71 @@ var controller = {
             });
     },
 
+    generateGraphicsExcel: function (req, res) {
+        async.waterfall([
+                function (callback) {
+                    var paramData = {};
+                    paramData.name = req.body.sportslist.name;
+                    paramData.age = req.body.ageGroup.name;
+                    paramData.gender = req.body.gender;
+                    Match.getSportId(paramData, function (err, sportData) {
+                        if (err || _.isEmpty(sportData)) {
+                            err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: sportData
+                            });
+                        } else {
+                            callback(null, sportData);
+                        }
+                    });
+                },
+                function (sportData, callback) {
+                    if (sportData.error) {
+                        res.json({
+                            "data": sportData.error,
+                            "value": false
+                        })
+                    } else {
+                        // console.log("sports", sportData);
+                        req.body.sport = sportData.sportId;
+                        if (req.body.resultType == "knockout") {
+                            Match.generateExcelKnockout(req.body, res);
+                        } else if (req.body.resultType == "heat") {
+                            Match.generateExcelHeat(req.body, res);
+                        } else if (req.body.resultType == "qualifying-round" || req.body.resultType == "direct-final") {
+                            Match.generateExcelQualifyingRound(req.body, res);
+                        } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "qualifying") {
+                            Match.generateExcelQualifying(req.body, res);
+                        } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "knockout") {
+                            Match.generateExcelQualifyingKnockout(req.body, res);
+                        } else if (req.body.resultType == "league-cum-knockout") {
+                            Match.generateLeagueKnockout(req.body, res);
+                        } else if (req.body.resultType == "swiss-league") {
+                            Match.generateExcelSwiss(req.body, res);
+                        } else {
+                            res.json({
+                                "data": "Body not Found",
+                                "value": false
+                            })
+                        }
+                    }
+                }
+            ],
+            function (err, excelData) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (excelData) {
+                    if (_.isEmpty(excelData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, excelData);
+                    }
+                }
+            });
+    },
+
     getSportSpecificRounds: function (req, res) {
         if (req.body) {
             console.log(req.body);

@@ -137,6 +137,11 @@
                   <!--<div class="error-msg" ng-if="detailForm.selectplayer.$invalid && detailForm.selectplayer.$touched">Please Enter Valid Player Type *</div>-->
                 </div>
                 <!-- SPORT TYPE END -->
+                <div class="form-group">
+                  <label>Graphics Export ?</label>
+                  <input type="radio" ng-model="form.graphics" name="yes" value="yes" /> Yes
+                  <input type="radio" ng-model="form.graphics" name="no" value="no" /> No
+                </div>
 
                 <!-- PLAYER SPECIFIC EXPORT -->
                 <div class="form-group" ng-if="form.playerType=='team'">
@@ -147,6 +152,7 @@
                       </select>
                   <div class="error-msg" ng-if="detailForm.playerSpecific.$invalid && detailForm.playerSpecific.$touched">Please Enter Valid Export *</div>
                 </div>
+
                 <!-- PLAYER SPECIFIC EXPORT END -->
                 {{showMatch}}
                 <!-- BUTTONS -->

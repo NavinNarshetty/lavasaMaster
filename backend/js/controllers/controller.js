@@ -4064,6 +4064,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.form.page = 1;
         $scope.form.type = '';
         $scope.form.keyword = '';
+        $scope.form.graphics = "no";
 
         $scope.searchInTable = function (data) {
             $scope.form.page = 1;
@@ -4173,8 +4174,11 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.generateExcel = function (data) {
             $scope.qwerty = data;
             console.log("data..................", data);
-            $scope.url = "match/generateExcel";
-
+            if (data.graphics == "yes") {
+                $scope.url = "match/generateGraphicsExcel";
+            } else {
+                $scope.url = "match/generateExcel";
+            }
             NavigationService.generateExcelWithData($scope.url, $scope.qwerty, function (data) {
                 // console.log("............data", data);
                 // $window.scrollTop(0);
