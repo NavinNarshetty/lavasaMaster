@@ -65,8 +65,8 @@
             </h3>
           <div class="knockout-cardholder" ng-repeat="card in roundsList[0].match track by $index">
             <div class="knockout-card"  ng-if="card.opponentsTeam.length>0" ng-repeat="player  in card.opponentsTeam track by $index" ng-class="{'knockout-winnercard':player.isWinner===true}">
-              <div class="knockout-cardimage display-inline ver-mid">
-                <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt="" class="img-responsive">
+              <div class="knockout-cardimage display-inline ver-mid" ng-if="player.athleteId.photograph">
+                <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt="{{player.schoolName}}" class="img-responsive">
               </div>
 
               <div class="display-inline knockout-cardplayername ver-mid">
@@ -85,7 +85,7 @@
 
             <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true , 'knockout-live-foot': card.status === 'IsLive'}">
 
-              <p class="m-clear " ng-if="!card.status || card.status===''">
+              <p class="m-clear " ng-if="!card.status || card.status==='' || card.status === 'IsPending'">
 
                <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">{{card.scheduleTime}} </span>
             </p>
@@ -127,8 +127,8 @@
           <div class=" knockout-cardholder">
             <div class="knockout-card " ng-if="card.opponentsTeam.length>0" ng-repeat="player in card.opponentsTeam track by $index "
               ng-class="{'knockout-winnercard':player.isWinner===true}">
-              <div class="knockout-cardimage display-inline ver-mid ">
-                <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt=" " class="img-responsive ">
+              <div class="knockout-cardimage display-inline ver-mid " ng-if="player.athleteId.photograph">
+                <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt="{{player.schoolName}}" class="img-responsive ">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid ">
                 <p class="m-clear knockout-winner-name " title="{{player.teamId}}">{{player.teamId}}</p>
@@ -145,7 +145,7 @@
               </div>
             </div>
             <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true,'knockout-live-foot': card.status === 'IsLive'}">
-              <p class="m-clear " ng-if="!card.status || card.status===''">
+              <p class="m-clear " ng-if="!card.status || card.status==='' || card.status === 'IsPending'">
                 <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
               </p>
               <p class="m-clear" ng-if="card.reason ==='Bye'">
@@ -187,8 +187,8 @@
           <div class=" knockout-cardholder">
             <div class="knockout-card " ng-class="{'knockout-winnercard':player.isWinner===true}" ng-repeat="player in card.opponentsTeam track by $index"
               ng-if="card.opponentsTeam.length>0">
-              <div class="knockout-cardimage display-inline ver-mid ">
-                <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt=" " class="img-responsive ">
+              <div class="knockout-cardimage display-inline ver-mid " ng-if="player.athleteId.photograph">
+                <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt="{{player.schoolName}}" class="img-responsive ">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid ">
                 <p class="m-clear knockout-winner-name " title="{{player.teamId}}">{{player.teamId | truncate:'25'}}</p>
@@ -206,7 +206,7 @@
             </div>
             <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true,'knockout-live-foot': card.status === 'IsLive'}">
 
-              <p class="m-clear " ng-if="!card.status || card.status===''">
+              <p class="m-clear " ng-if="!card.status || card.status==='' || card.status === 'IsPending'">
                 <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
               </p>
               <p class="m-clear" ng-if="card.reason === 'Bye'">

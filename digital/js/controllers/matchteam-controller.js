@@ -506,13 +506,13 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
             case "Football":
                 $scope.matchResult.resultFootball = $scope.formData;
                 if (!$scope.matchResult.resultFootball.status) {
-                    $scope.matchResult.resultFootball.status = "Pending";
+                    $scope.matchResult.resultFootball.status = "IsPending";
                 }
                 break;
             case "Volleyball":
                 $scope.matchResult.resultVolleyball = $scope.formData;
                 if (!$scope.matchResult.resultVolleyball.status) {
-                    $scope.matchResult.resultVolleyball.status = "Pending";
+                    $scope.matchResult.resultVolleyball.status = "IsPending";
                 }
                 break;
             case "Basketball":
@@ -522,6 +522,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
             case 'Water Polo':
                 console.log(resultVar);
                 $scope.matchResult[resultVar.resultVar] = {};
+                $scope.matchResult[resultVar.resultVar].status = "IsPending";
                 break;
         }
         if ($scope.matchDetails.sportsName === 'Football') {

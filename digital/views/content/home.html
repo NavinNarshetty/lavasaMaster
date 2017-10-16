@@ -6,8 +6,46 @@
         <a class="btn btn-default" ng-click="buttonClick()" ui-sref="digital-home">SPORT SELECTION</a>
 
         <div class="row">
-          <!-- <a class="btn btn-default mtb-10" ng-click="tableOption()" >Results Ranking</a> -->
-          <!--<a class="btn btn-default mtb-10" ng-click="loginPopup()" >login</a>-->
+            <!-- <a class="btn btn-default mtb-10" ng-click="tableOption()" >Results Ranking</a> -->
+            <!--<a class="btn btn-default mtb-10" ng-click="loginPopup()" >login</a>-->
         </div>
+        <!-- ROTATE -->
+        <div class="row" hidden>
+          <a ng-href="{{image}}" download>Download before</a>
+          <div class="col-md-6" ng-hide="showResult">
+            <div class="">
+              <upload-image ng-model="lolwa" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view></upload-image>
+            </div>
+            <div class="">
+              <div class="">
+                  <label style="display:block;">Rotate Image: </label>
+                  <button ng-click="rotateImage(90)" id="rotate90" class="btn">90&deg;</button>
+                  <button ng-click="rotateImage(180)" id="rotate180" class="btn">180&deg;</button>
+                  <button ng-click="rotateImage(270)" id="rotate270" class="btn">270&deg;</button>
+                  <button ng-click="rotateImage()" id="resetImage" class="btn">Reset Image</button>
+                  <button class="btn" ng-click="saveImage();" ng-hide="showResult">Save</button>
+                  <a id="download" download>Download</a>
+                  <div class="" style="width: 100%; word-wrap: break-word;">
+                    <!-- {{resultImage}} -->
+                  </div>
+              </div>
+            <div class="relate" style="max-width:200px; max-height:200px">
+                <img src="{{image}}" alt="" id="rotateimg" class="img-responsive" />
+                <canvas id="canvas"></canvas>
+            </div>
+            </div>
+
+          </div>
+          <div class="col-md-6" ng-show="showResult">
+            <div class="" style="padding: 5px; border: 1px solid red;">
+              <img src="{{image}}" alt="" class="img-responsive">
+            </div>
+          </div>
+        </div>
+        <!-- ROTATE END -->
+        <!-- <div ng-include="digital/views/directive/rotateImage.html"></div> -->
     </div>
+
+
+
 </div>
