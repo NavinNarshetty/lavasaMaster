@@ -1007,7 +1007,6 @@ var model = {
                 callback(null, found);
             }
         });
-
     },
 
     getOneAtheleteDetails: function (data, callback) {

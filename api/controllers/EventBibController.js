@@ -8,7 +8,18 @@ var controller = {
             res.json({
                 "data": "Body not Found",
                 "value": false
-            })
+            });
+        }
+    },
+
+    getAllAthleteBySchoolId: function (req, res) {
+        if (req.body) {
+            EventBib.getAllAthleteBySchoolId(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            });
         }
     },
 
@@ -19,7 +30,7 @@ var controller = {
             res.json({
                 "data": "Body not Found",
                 "value": false
-            })
+            });
         }
     },
 

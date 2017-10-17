@@ -144,7 +144,21 @@ var model = {
                 }
             }
         });
-    }
+    },
+
+    getAllAthleteBySchoolId: function (data, callback) {
+        Athelete.find({
+            school: objectid(data.schoolId)
+        }).lean().exec(function (err, found) { //finds all athelete
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(found)) {
+                callback(null, "Data is empty");
+            } else {
+                callback(null, found);
+            }
+        });
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);
