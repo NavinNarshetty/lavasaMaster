@@ -169,6 +169,50 @@ var model = {
 
     },
 
+    searchByNameId: function (data, callback) {
+        var matchObj = {
+            $or: [{
+                registrationFee: {
+                    $ne: "online PAYU"
+                }
+            }, {
+                paymentStatus: {
+                    $ne: "Pending"
+                }
+            }]
+        };
+        var Model = this;
+        var Const = this(data);
+        var maxRow = Config.maxRow;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['firstName', 'sfaId', 'surname', 'middleName'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var Search = Model.find(matchObj)
+
+            .order(options)
+            // .deepPopulate(deepSearch)
+            .keyword(options)
+            .page(options, callback);
+
+    },
+
     getOneBySfaId: function (data, callback) {
         Athelete.findOne({ //finds one with refrence to id
             sfaId: data.sfaId
