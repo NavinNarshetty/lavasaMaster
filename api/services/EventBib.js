@@ -264,7 +264,6 @@ var model = {
                             }
                         });
                     }
-
                 },
                 function (profile, callback) {
                     var athleteProfile = {};
