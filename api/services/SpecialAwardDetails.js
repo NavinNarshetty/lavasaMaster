@@ -162,7 +162,29 @@ var model = {
     },
 
     getAllAwardDetails: function (data, callback) {
+        var maxRow = Config.maxRow;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['firstName', 'sfaId', 'surname'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                asc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
         var pipeline = model.getPipeline();
+        var countPipeline;
         if (data.rising) {
             pipeline.push({
                 $match: {
@@ -179,8 +201,27 @@ var model = {
             });
         }
 
+        countPipeline = _.cloneDeep(pipeline);
+        countPipeline.push({
+            $count: "totalCount"
+        });
+
+        pipeline.push({
+            $skip: options.start
+        }, {
+            $limit: options.count
+        });
+
         SpecialAwardDetails.aggregate(pipeline, function (err, arr) {
-            callback(null, arr);
+            var data = {};
+            data.options = options;
+            data.results = arr;
+            SpecialAwardDetails.aggregate(countPipeline, function (err, count) {
+                console.log("totalCount",count);
+                data.total = count[0].totalCount;
+                callback(null, data);
+            });
+
         });
     },
 
@@ -280,6 +321,8 @@ var model = {
                     pdfObj.sports = award.sports;
                     pdfObj.award = award.award;
                     pdfObj.type = award.type;
+                    pdfObj.school = award.school;
+
                     if (pdfObj.type == 'athlete') {
                         if (pdfObj.athlete.middleName) {
                             pdfObj.athlete.fullName = pdfObj.athlete.firstName + " " + pdfObj.athlete.middleName + " " + pdfObj.athlete.surname;
@@ -304,6 +347,7 @@ var model = {
                         case "coach":
                             pdfObj.filename = "schoolMasterCoachAward";
                             pdfObj.heading = basePath + "coach.png";
+                            pdfObj.coachName = award.coachName;
                             break;
                         case "rising":
                             pdfObj.filename = "risingStar";
