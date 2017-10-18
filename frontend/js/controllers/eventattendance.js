@@ -34,6 +34,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
     console.log(data, "on select of school")
     if (data == undefined) {
       $scope.athlete = false;
+      $scope.formData.athlete = ''
     } else {
       $scope.athlete = true;
     }

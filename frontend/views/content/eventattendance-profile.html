@@ -1,6 +1,7 @@
 <div class="eventattendance-profile-page">
   <!-- CONTAINER -->
   <div class="container">
+
     <!-- EVENT ATHLETE PROFILE HOLDER -->
     <div class="event-athleteprofile-cardholder">
       <!-- ATHLETE IMAGE -->
@@ -43,8 +44,11 @@
                     <option value='false'>NO</option>
           </select>
         </div>
-        <div class="event-athleteprofilebutton" ng-if="playerDetail.isBib != 'true' ">
+        <div class="event-athleteprofilebutton display-inline" ng-if="playerDetail.isBib != 'true' ">
           <button type="submit" class="btn btn-success" ng-click="saveBib(playerDetail)"> OK</button>
+        </div>
+        <div class="display-inline">
+          <button type="submit" class="btn btn-danger" ui-sref='event-attendance'> Cancel</button>
         </div>
       </div>
 
