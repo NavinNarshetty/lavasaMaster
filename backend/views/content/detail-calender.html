@@ -46,11 +46,20 @@
                     <div class="form-group">
                       <label>Event Date</label>
                       <input name="schDate" ui-date="dateOptions" ng-model="formData.eventDate" class="form-control" ng-required="true" placeholder="Enter Event Date"
-                        required>
+                        required ng-change="fetchDay(formData.eventDate)">
                       <div class="error-msg" ng-if="calenderform.schDate.$invalid && calenderform.schDate.$touched">Please Enter Event Date *</div>
                     </div>
                   </div>
                   <!-- DATE END -->
+
+                  <!-- DAY -->
+                  <div class="date-holder">
+                    <div class="form-group">
+                      <label>Day</label>
+                      <input name="schDay" ng-model="formData.day" class="form-control" readonly>
+                    </div>
+                  </div>
+                  <!-- DAY END -->
 
                   <!-- COLOR -->
                   <div class="color-holder">
