@@ -231,6 +231,19 @@ var model = {
                 $match: {
                     "award.awardType": "rising"
                 }
+            }, {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sports",
+                    "foreignField": "_id",
+                    "as": "sports"
+                }
+            },{
+                $unwind: {
+                    path: "$sports",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
+                }
             });
         } else {
             pipeline.push({
@@ -258,11 +271,10 @@ var model = {
             data.options = options;
             data.results = arr;
             SpecialAwardDetails.aggregate(countPipeline, function (err, count) {
-                console.log("totalCount",count);
+                console.log("totalCount", count);
                 data.total = count[0].totalCount;
                 callback(null, data);
             });
-
         });
     },
 
@@ -384,6 +396,7 @@ var model = {
                         case "boost":
                             pdfObj.filename = "schoolBoostAward";
                             pdfObj.heading = basePath + "boost.png";
+                            pdfObj.boostDetail = award.boostDetail;
                             break;
                         case "coach":
                             pdfObj.filename = "schoolMasterCoachAward";
