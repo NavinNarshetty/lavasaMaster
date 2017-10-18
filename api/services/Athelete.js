@@ -102,6 +102,7 @@ var schema = new Schema({
     utm_medium: String,
     utm_source: String,
     utm_campaign: String,
+    isBib: Boolean
 });
 
 schema.plugin(deepPopulate, {
@@ -150,6 +151,50 @@ var model = {
             filters: {
                 keyword: {
                     fields: ['name'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        var Search = Model.find(matchObj)
+
+            .order(options)
+            // .deepPopulate(deepSearch)
+            .keyword(options)
+            .page(options, callback);
+
+    },
+
+    searchByNameId: function (data, callback) {
+        var matchObj = {
+            $or: [{
+                registrationFee: {
+                    $ne: "online PAYU"
+                }
+            }, {
+                paymentStatus: {
+                    $ne: "Pending"
+                }
+            }]
+        };
+        var Model = this;
+        var Const = this(data);
+        var maxRow = Config.maxRow;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['firstName', 'sfaId', 'surname', 'middleName'],
                     term: data.keyword
                 }
             },
@@ -1007,7 +1052,6 @@ var model = {
                 callback(null, found);
             }
         });
-
     },
 
     getOneAtheleteDetails: function (data, callback) {

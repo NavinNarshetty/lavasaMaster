@@ -26,8 +26,17 @@ schema.plugin(deepPopulate, {
             select: '_id name teamId school'
         },
         'studentId': {
-            select: '_id firstName middleName surname'
+            select: '_id firstName middleName sfaId surname school athleteSchoolName'
         },
+        'studentId.school': {
+            select: 'name'
+        },
+        "sport": {
+            select: '_id sportslist gender ageGroup maxTeamPlayers minTeamPlayers weight eventPdf'
+        },
+        "sport.sportslist.sportsListSubCategory": {
+            select: '_id name'
+        }
     }
 });
 schema.plugin(uniqueValidator);
