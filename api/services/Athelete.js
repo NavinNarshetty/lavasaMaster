@@ -2532,8 +2532,6 @@ var model = {
                                         }
                                         countParent++;
 
-                                        // console.log("parentDetails", parentInfo);
-
                                     });
                                     obj.parentDetails = parentInfo;
                                     _.each(n.sportLevel, function (details) {

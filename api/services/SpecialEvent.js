@@ -21,6 +21,7 @@ var schema = new Schema({
         type: String,
         enum: ["card2", "card3", "card4"]
     },
+    day: Number,
     section1: Schema.Types.Mixed,
     section2: Schema.Types.Mixed,
     section3: Schema.Types.Mixed
@@ -61,9 +62,7 @@ var model = {
                                 dayOfWeek: {
                                     $dayOfWeek: "$eventDate"
                                 },
-                                day: {
-                                    $dayOfMonth: "$eventDate"
-                                },
+                                day: "$day"
                             },
                             "color": "$color",
                             "section1": "$section1",
