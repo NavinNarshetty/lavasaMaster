@@ -157,7 +157,48 @@ var model = {
                     includeArrayIndex: "arrayIndex", // optional
                     preserveNullAndEmptyArrays: false // optional
                 }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "athlete",
+                    "foreignField": "_id",
+                    "as": "athlete"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$athlete",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "registrations",
+                    "localField": "school",
+                    "foreignField": "_id",
+                    "as": "school"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$school",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
+                }
             }
+
+
+
         ];
     },
 
