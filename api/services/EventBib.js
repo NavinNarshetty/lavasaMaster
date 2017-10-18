@@ -149,7 +149,7 @@ var model = {
     getAllAthleteBySchoolId: function (data, callback) {
         var matchObj = {
             $or: [{
-                    school: objectid(data.schoolId)
+                    school: data.schoolId
                 }, {
                     firstName: {
                         $regex: data.input,
@@ -215,6 +215,10 @@ var model = {
                     callback(null, found);
                 }
             });
+    },
+
+    getAthleteProfile: function (data, callback) {
+
     },
 
 };

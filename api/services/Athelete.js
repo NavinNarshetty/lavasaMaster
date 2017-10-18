@@ -601,7 +601,6 @@ var model = {
                     }
                 });
         } else {
-
             Athelete.find(matchObj)
                 .sort({
                     createdAt: -1
