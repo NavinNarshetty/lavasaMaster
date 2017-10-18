@@ -99,8 +99,10 @@ myApp.controller('DetailCalenderCtrl', function ($scope, TemplateService, Naviga
         $scope.formData = data.data;
         if ($scope.formData.eventDate) {
           $scope.formData.day = moment(new Date($scope.formData.eventDate)).format('D');
+          $scope.formData.dayOfWeek = moment(new Date($scope.formData.eventDate)).format('dddd');
         } else {
           $scope.formData.day = '';
+          $scope.formData.dayOfWeek = '';
         }
       });
     }
@@ -110,9 +112,12 @@ myApp.controller('DetailCalenderCtrl', function ($scope, TemplateService, Naviga
 
   $scope.fetchDay = function (data) {
     if (data) {
+      console.log(data);
       $scope.formData.day = moment(new Date(data)).format('D');
+      $scope.formData.dayOfWeek = moment(new Date(data)).format('dddd');
     } else {
       $scope.formData.day = '';
+      $scope.formData.dayOfWeek = '';
     }
   };
 
