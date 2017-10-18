@@ -479,7 +479,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         // Detail Rising
         .state('detail-rising', {
-            url: "/detail-rising",
+            url: "/detail-rising/:id",
             templateUrl: "views/template.html",
             controller: 'DetailRisingCtrl'
         })

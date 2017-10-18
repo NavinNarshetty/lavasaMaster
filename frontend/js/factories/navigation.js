@@ -953,6 +953,13 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 method: 'POST'
             }).then(callback);
         },
+        getSportsList: function (callback) {
+            $http({
+                url: adminUrl2 + 'SportsList/getAll',
+                method: 'POST'
+            }).then(callback);
+        },
+
         getAllAgeGroups: function (callback) {
             $http({
                 url: adminUrl2 + 'AgeGroup/getAll',
@@ -966,10 +973,12 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             }).then(callback);
         },
         Boolean: function (str) {
-            if (str == 'true' || str || str === true) {
-                return true;
-            } else {
-                return false;
+            if (str) {
+                if (str == 'true' || str === true) {
+                    return true;
+                } else {
+                    return false;
+                }
             }
         },
         getAllEventsByMonth: function (callback) {
@@ -1006,11 +1015,51 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 data: formData
             }).then(callback);
         },
+        getPerTeamFilter: function (formData, callback) {
+            $http({
+                url: adminUrl2 + 'EventBib/getAllTeamSport',
+                method: 'POST',
+                data: formData
+            }).then(callback);
+        },
+        getPlayerPerTeam: function (formData, callback) {
+            $http({
+                url: adminUrl2 + 'EventBib/getPlayerPerTeam',
+                method: 'POST',
+                data: formData
+            }).then(callback);
+        },
+        getteamAthleteID: function (formData, callback) {
+            $http({
+                url: adminUrl2 + 'Athelete/getOne',
+                method: 'POST',
+                data: formData
+            }).then(callback);
+        },
+        getAthletesfaID: function (callback) {
+            $http({
+                url: adminUrl2 + 'Athelete/searchByNameId',
+                method: 'POST',
+            }).then(callback);
+        },
         getSponsor: function (callback) {
             $http({
                 url: adminUrl2 + 'SponsorPage/getAllBySponsorType',
                 method: 'POST'
             }).then(callback);
-        }
+        },
+
+        getSchool: function (callback) {
+            $http({
+                url: adminUrl2 + 'school/searchByFilter',
+                method: 'POST'
+            }).then(callback);
+        },
+        getSchoolRegistration: function (callback) {
+            $http({
+                url: adminUrl2 + 'registration/search',
+                method: 'POST',
+            }).then(callback);
+        },
     };
 });

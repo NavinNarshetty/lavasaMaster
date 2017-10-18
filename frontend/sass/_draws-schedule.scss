@@ -1473,3 +1473,113 @@ $sport-table-grey:#efeeee !default;
 
 // SPONSER_GALLERY END
 // INDIVIDUAL SPONSER END
+// *********************************END*********************************
+// EVENT ATTENDANCE
+.event-attendance-page {
+  margin-top: 50px;
+  min-height: 100vh;
+  .event-individual-holder {
+    padding: 25px;
+    box-shadow: 0 0 10px $sport-grey-year;
+    min-height: 330px;
+    position: relative;
+  }
+  .event-attendance-label {
+    width: 25%;
+    vertical-align: middle;
+  }
+  .event-individual-view {
+    // margin-top: 70px;
+  }
+  .athleteonselectview {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%)
+  }
+  .event-attendance-dropdown {
+    width: calc(100% - 140px);
+    vertical-align: middle;
+     ::-webkit-scrollbar {
+      width: 10px;
+      height: 10px;
+    }
+     ::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+     ::-webkit-scrollbar-thumb {
+      background-color: #e1e1e1;
+    }
+    .dropdown-menu {
+      margin: 2px 0px 0px;
+      left: 0px;
+    }
+  }
+  .event-teamtable-title {
+    margin-top: 20px;
+  }
+  .event-team-holder {
+    padding: 25px;
+    box-shadow: 0 0 10px $sport-grey-year;
+    min-height: 330px;
+  }
+  .event-teamholder {
+    margin-top: 30px;
+  }
+  .view-profile {
+    .btn {
+      padding: 3px 10px;
+      font-size: 12px;
+    }
+  }
+  .override-glyp {
+    .glyphicon {
+      font: normal normal normal 14px/1 FontAwesome;
+    }
+    .glyphicon-remove:before {
+      content: "\f00d";
+    }
+  }
+}
+
+// EVENT ATTENDANCE END
+// EVENT ATTENDANCE PROFILE
+.eventattendance-profile-page {
+  // min-height: 100vh;
+  margin-top: 50px;
+  .event-athleteprofile-cardholder {
+    width: 70%;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .event-athleteprofile-imageholder {
+    width: 200px;
+    height: 200px; // border: 5px solid $sport-dark-grey;
+    border-radius: 100%;
+    overflow: hidden;
+  }
+  .event-athleteprofile-detailholder {
+    width: calc(100% - 220px);
+    padding: 0px 0px 0px 10px;
+    vertical-align: top;
+  }
+  .event-athleteprofilebutton {
+    margin-top: 30px; // text-align: center;
+  }
+  .bib-check {
+    position: absolute;
+    left: 35px;
+    bottom: 20px;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    color: #fff;
+    background-color: #ffb026;
+    font-size: 18px;
+    line-height: 30px;
+    text-align: center;
+    z-index: 1;
+  }
+}
+
+// EVENT ATTENDANCE PROFILE END
