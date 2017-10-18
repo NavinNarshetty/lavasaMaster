@@ -378,7 +378,7 @@
           <!-- COACH NAME-->
           <td class="text-center">
             <div class="form-group">
-              <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="<%=data.athlete.fullName%>"
+              <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="<%=data.coachName%>"
                 style="color:#232d69">
               <!-- <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="<%= data.name%>  " style="color:#232d69"> -->
             </div>
@@ -390,13 +390,14 @@
           <td class="text-center">
             <div class="form-group border-btm" style="margin-top: 15px;">
               <div class="sf-relative">
-                <input type="text" class="form-control w60 text-center font-os f-20" value="<%=data.athlete.school.name%>" style="text-transform: none;width: 83%;color:#666666;">
+                <input type="text" class="form-control w60 text-center font-os f-20" value="<%=data.school.schoolName%>" style="text-transform: none;width: 83%;color:#666666;">
               </div>
 
             </div>
           </td>
           <!-- SCHOOL NAME END -->
         </tr>
+         <%if(data.school && data.school.sfaID){%>
         <tr>
           <!-- SFA ID -->
           <td class="text-center">
@@ -406,12 +407,13 @@
               </div>
               <div class="display-inline">
                 <!-- <input type="text" class="form-control  text-center font-os" value="MA1728378" style="color:#666666;"> -->
-                <label class="font-os f-20" style="color:#666666;"><%=data.athlete.sfaId%></label>
+                <label class="font-os f-20" style="color:#666666;"><%=data.school.sfaID%></label>
               </div>
             </div>
           </td>
           <!--SFA ID END  -->
         </tr>
+        <%}%>
         <tr>
           <!-- SPORT HEADER -->
           <td class="text-center">
