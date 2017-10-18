@@ -39,6 +39,7 @@
                     Certificate Type
                   </th>
                   <th>Athlete Name</th>
+                  <th>Sport</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -56,6 +57,16 @@
                   <td>
                     <div class="text-capitalize">
                       {{item.award.name}} <span class="text-capitalize" ng-if="item.gender">-{{item.gender}}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="athlete-name">
+                      {{item.fullName}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="athlete-sportname">
+                      {{item.sports.name}}
                     </div>
                   </td>
                   <td>

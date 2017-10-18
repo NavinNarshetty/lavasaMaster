@@ -293,6 +293,17 @@ myApp.controller('SpecialAwardDetailCtrl', function ($scope, TemplateService, Na
       console.log($scope.items, "item")
       $scope.totalItems = data.data.data.total;
       $scope.maxRow = data.data.data.options.count;
+
+      _.each($scope.items, function (n) {
+        if (n.athlete) {
+          if (n.athlete.middleName) {
+            n.fullName = n.athlete.sfaId + ' - ' + n.athlete.firstName + ' ' + n.athlete.middleName + ' ' + n.athlete.surname;
+          } else {
+            n.fullName = n.athlete.sfaId + ' - ' + n.athlete.firstName + ' ' + n.athlete.surname;
+          }
+        }
+
+      })
     });
   }
   $scope.viewTable();
@@ -599,10 +610,13 @@ myApp.controller('RisingCtrl', function ($scope, TemplateService, NavigationServ
       $scope.totalItems = data.data.data.total;
       $scope.maxRow = data.data.data.options.count;
 
-      // _.each($scope.items , function(value){
-      //   if(value.athlete.middleName)
-      //   value.fullName=value.athlete.sfaID + ' ' + ' '
-      // });
+      _.each($scope.items, function (value) {
+        if (value.athlete.middleName) {
+          value.fullName = value.athlete.sfaId + ' - ' + value.athlete.firstName + ' ' + value.athlete.middleName + ' ' + value.athlete.surname;
+        } else {
+          value.fullName = value.athlete.sfaId + ' - ' + value.athlete.firstName + ' ' + value.athlete.surname;
+        }
+      });
     });
   }
   $scope.viewTable();
