@@ -218,7 +218,95 @@ var model = {
     },
 
     getAthleteProfile: function (data, callback) {
+        var profile = {};
+        async.waterfall([
+                function (callback) {
+                    var deepSearch = "school";
+                    Athelete.findOne({
+                        _id: data.athleteId
+                    }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                // console.log("found0", found);
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+                function (found, callback) {
+                    profile.athlete = found;
+                    if (found.atheleteSchoolName) {
+                        profile.isSchoolRegistered = false;
+                        callback(null, profile);
+                    } else {
+                        Registration.findOne({
+                            schoolName: found.school.name
+                        }).lean().exec(function (err, schoolData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(schoolData)) {
+                                    profile.isSchoolRegistered = false;
+                                    callback(null, profile);
+                                } else {
+                                    if (schoolData.status == "Verified") {
+                                        profile.isSchoolRegistered = true;
+                                    } else {
+                                        profile.isSchoolRegistered = false;
+                                    }
+                                    console.log("profile", profile);
+                                    callback(null, profile);
+                                }
+                            }
+                        });
+                    }
 
+                },
+                function (profile, callback) {
+                    var athleteProfile = {};
+                    if (profile.isSchoolRegistered == false) {
+                        console.log("inside if");
+                        AdditionalPayment.find({
+                            athleteId: data.athleteId
+                        }).lean().exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(found)) {
+                                    callback(null, []);
+                                } else {
+                                    athleteProfile = profile.athlete;
+                                    if (found.paymentStatus == "Paid") {
+                                        athleteProfile.additionalPaymentStatus = "Paid";
+                                    } else {
+                                        athleteProfile.additionalPaymentStatus = "Pending";
+                                    }
+                                    callback(null, athleteProfile);
+                                }
+                            }
+                        });
+                    } else {
+                        console.log("inside else");
+                        athleteProfile = profile.athlete;
+                        callback(null, athleteProfile);
+                    }
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
     },
 
 };
