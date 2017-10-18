@@ -4,6 +4,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
   TemplateService.title = "Attendance"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
   $scope.formData = {};
+  $scope.athlete = false;
 
   // GENDER
   $scope.genderList = ['male', 'female', 'mixed'];
@@ -31,7 +32,11 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
 
   $scope.selectSchool = function (data) {
     console.log(data, "on select of school")
-    $scope.athlete = true;
+    if (data == undefined) {
+      $scope.athlete = false;
+    } else {
+      $scope.athlete = true;
+    }
     $scope.constraints = {};
     $scope.constraints.schoolId = data;
     $scope.constraints.input = ''
@@ -49,6 +54,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
     })
 
   }
+
   // INDIVIDUAL
   // GET ALL SPORTS
   $scope.getAllSports = function () {

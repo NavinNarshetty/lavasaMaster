@@ -20,9 +20,9 @@
                   </div>
                   <!-- LABEL END -->
                   <!-- UI SELECT -->
-                  <div class="display-inline event-attendance-dropdown">
+                  <div class="display-inline event-attendance-dropdown override-glyp">
                     <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" required>
-                      <ui-select-match placeholder="search by Sfa ID and NAme" allow-clear="true"> {{$select.selected.fullName}}</ui-select-match>
+                      <ui-select-match placeholder="search by Sfa ID and NAme" allow-clear="true" title="{{$select.selected.fullName}}"> {{$select.selected.fullName}}</ui-select-match>
                       <ui-select-choices repeat="player._id as player in athleteData | filter: $select.search">
                         <div>
                           <span class="text-capitalize" ng-bind-html="player.fullName"></span>
@@ -50,7 +50,7 @@
                   </div>
                   <div class="display-inline event-attendance-dropdown override-glyp">
                     <ui-select name="schoolname" ng-model="formData.schoolName" theme="bootstrap" on-select='selectSchool(formData.schoolName)'>
-                      <ui-select-match placeholder="School Name" allow-clear="true"> {{$select.selected.schoolName}}</ui-select-match>
+                      <ui-select-match placeholder="School Name" allow-clear="true" title="{{$select.selected.schoolName}}"> {{$select.selected.schoolName}}</ui-select-match>
                       <ui-select-choices repeat="school._id as school in schoolData | filter: $select.search">
                         <div>
                           <p>{{school.schoolName}}</p>
@@ -72,9 +72,9 @@
                   </div>
                   <!-- LABEL END -->
                   <!-- UI SELECT -->
-                  <div class="display-inline event-attendance-dropdown">
+                  <div class="display-inline event-attendance-dropdown override-glyp">
                     <ui-select name="playersfaid" ng-model="formData.athlete" theme="bootstrap" required>
-                      <ui-select-match placeholder="Search by SfaID or Name" allow-clear="true"> {{$select.selected.fullName}}</ui-select-match>
+                      <ui-select-match placeholder="Search by SfaID or Name" allow-clear="true" title="{{$select.selected.fullName}}"> {{$select.selected.fullName}}</ui-select-match>
                       <ui-select-choices repeat="player._id as player in selectAthleteData | filter: $select.search">
                         <div>
                           <span class="text-capitalize" ng-bind-html="player.fullName"></span>
@@ -90,7 +90,7 @@
                 <!-- BUTTON -->
                 <div class="text-center athleteonselectview">
                   <a target='_blank' ui-sref="eventattendance-profile({id:formData.athlete})">
-                  <button type="button" class="btn sport-btn-blue-outline event-individual-view">View</button>
+                  <button type="button" class="btn sport-btn-blue-outline event-individual-view" ng-disabled="!formData.athlete">View</button>
                   </a>
                 </div>
                 <!-- BUTTON END -->
@@ -115,9 +115,9 @@
                   </div>
                   <!-- LABEL END -->
                   <!-- UI SELECT SPORT -->
-                  <div class="event-attendance-dropdown display-inline">
+                  <div class="event-attendance-dropdown display-inline override-glyp">
                     <ui-select name="eventBySport" ng-model="formData.sportslist" theme="bootstrap" ng-change="getTeam(formData)" required>
-                      <ui-select-match placeholder="Select Event" allow-clear="true">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-match placeholder="Select Event" allow-clear="true" title="{{$select.selected.name}}">{{$select.selected.name}}</ui-select-match>
                       <ui-select-choices repeat="sport._id as sport in sportList | filter: $select.search">
                         <div>
                           <p>{{sport.name}}</p>
@@ -135,9 +135,9 @@
                   <div class="display-inline event-attendance-label">
                     <label for="">GENDER</label>
                   </div>
-                  <div class="display-inline event-attendance-dropdown">
+                  <div class="display-inline event-attendance-dropdown override-glyp">
                     <ui-select name="gender" ng-model="formData.gender" theme="bootstrap" ng-change="getTeam(formData)" required>
-                      <ui-select-match placeholder="Select Gender">{{$select.selected|firstcapitalize}}</ui-select-match>
+                      <ui-select-match placeholder="Select Gender" allow-clear='true'>{{$select.selected|firstcapitalize}}</ui-select-match>
                       <ui-select-choices repeat="item in genderList | filter: $select.search">
                         <div>
                           <p>{{item |firstcapitalize}}</p>
@@ -158,9 +158,9 @@
                   <!-- LABEL END -->
 
                   <!-- UI SELECT AGE -->
-                  <div class="display-inline event-attendance-dropdown">
+                  <div class="display-inline event-attendance-dropdown override-glyp">
                     <ui-select name="agegroup" ng-model="formData.ageGroup" theme="bootstrap" ng-change="getTeam(formData)" required>
-                      <ui-select-match placeholder="Select Age Group">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-match placeholder="Select Age Group" allow-clear="true">{{$select.selected.name}}</ui-select-match>
                       <ui-select-choices repeat="age._id  as age in ageGroups | filter: $select.search">
                         <div>
                           <p>{{age.name}}</p>
@@ -181,9 +181,9 @@
                   <div class="display-inline event-attendance-label">
                     <label for="">TEAM ID/NAME</label>
                   </div>
-                  <div class="display-inline event-attendance-dropdown">
+                  <div class="display-inline event-attendance-dropdown override-glyp">
                     <ui-select name="teamname" ng-model="formData.team" theme="bootstrap" required>
-                      <ui-select-match placeholder="Select Team " title="{{$select.selected.nameId}}">{{$select.selected.nameId}}</ui-select-match>
+                      <ui-select-match placeholder="Select Team " title="{{$select.selected.nameId}}" allow-clear="true">{{$select.selected.nameId}}</ui-select-match>
                       <ui-select-choices repeat="team._id  as team in teamData | filter: $select.search">
                         <div>
                           <p>{{team.nameId}}</p>
@@ -200,7 +200,7 @@
 
                 <!-- BUTTON -->
                 <div class="text-center">
-                  <button type="button" class="btn sport-btn-blue-outline" ng-click="viewPlayer(formData)">View</button>
+                  <button type="button" class="btn sport-btn-blue-outline" ng-click="viewPlayer(formData)" ng-disabled="!formData.team">View</button>
                 </div>
                 <!-- BUTTON END -->
               </form>
