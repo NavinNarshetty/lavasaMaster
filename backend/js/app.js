@@ -345,6 +345,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'MedalsCtrl'
         })
+        .state('media', {
+            url: "/media",
+            templateUrl: "views/template.html",
+            controller: 'MediaCtrl'
+        })
         //detailmedal
         .state('detailmedal', {
             url: "/detailmedal/:id",
