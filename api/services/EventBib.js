@@ -147,17 +147,74 @@ var model = {
     },
 
     getAllAthleteBySchoolId: function (data, callback) {
-        Athelete.find({
-            school: objectid(data.schoolId)
-        }).lean().exec(function (err, found) { //finds all athelete
-            if (err) {
-                callback(err, null);
-            } else if (_.isEmpty(found)) {
-                callback(null, "Data is empty");
-            } else {
-                callback(null, found);
-            }
-        });
+        var matchObj = {
+            $or: [{
+                    school: objectid(data.schoolId)
+                }, {
+                    firstName: {
+                        $regex: data.input,
+                        $options: "i"
+
+                    }
+                },
+                {
+                    middleName: {
+                        $regex: data.input,
+                        $options: "i"
+
+                    },
+                },
+                {
+                    surname: {
+                        $regex: data.input,
+                        $options: "i"
+
+                    },
+                }, {
+                    sfaId: {
+                        $regex: data.input,
+                        $options: "i"
+
+                    },
+                }
+            ]
+        };
+
+        var maxRow = Config.maxRow;
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['firstName', 'sfaId', 'surname', 'middleName'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        Athelete.find(matchObj)
+            .sort({
+                createdAt: -1
+            })
+            .order(options)
+            .keyword(options)
+            .page(options, function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback(null, "Data is empty");
+                } else {
+                    callback(null, found);
+                }
+            });
     },
 
 };
