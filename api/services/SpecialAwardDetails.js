@@ -55,24 +55,23 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     saveRising: function (data, callback) {
-        var matchObj={
-            "type":data.type,
-            "award":data.award,
-            "gender":data.gender,
-            "sports":data.sports
+        var matchObj = {
+            "type": data.type,
+            "award": data.award,
+            "gender": data.gender,
+            "sports": data.sports
         }
-        SpecialAwardDetails.find(matchObj).exec(function(err,data){
-            console.log("found------------------",data);
-            if(err){
-                callback(err,null);
-            }else if(_.isEmpty(data)){
-               callback(null,true);
-            }else{
-                callback(null,false);
+        SpecialAwardDetails.find(matchObj).exec(function (err, data) {
+            console.log("found------------------", data);
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(data)) {
+                callback(null, true);
+            } else {
+                callback(null, false);
             }
         });
     },
-    
 
     getAwardsList: function (data, awardListObj, awardDetailObj, callback) {
         if (data.rising) {
@@ -113,7 +112,7 @@ var model = {
                                         "award": award._id
                                     }).exec(function (err, count) {
                                         if (count < 10) {
-                                             sendList.push(award);
+                                            sendList.push(award);
                                         }
                                         callback(null);
                                     });
@@ -167,14 +166,14 @@ var model = {
         if (data.rising) {
             pipeline.push({
                 $match: {
-                    "award.name": "Sfa Rising Star Award"
+                    "award.awardType": "rising"
                 }
             });
         } else {
             pipeline.push({
                 $match: {
-                    "award.name": {
-                        $ne: "Sfa Rising Star Award"
+                    "award.awardType": {
+                        $ne: "rising"
                     }
                 }
             });
@@ -200,7 +199,9 @@ var model = {
                 if (err) {
                     callback(err, null);
                 } else if (!_.isEmpty(found)) {
+                    found.sportslist.sportsListSubCategory._id = found.sportslist.sportsListSubCategory._id.toString();
                     callback(null, found.sportslist.sportsListSubCategory);
+
                 } else {
                     //null if sportId is incorrect
                     callback(null);
@@ -208,12 +209,133 @@ var model = {
 
             });
         }, function (err, result) {
-            callback(null, result);
+            console.log("result", result);
+            callback(null, _.uniqBy(result, '_id'));
         });
     },
 
-   
-    
+    getAwardsCertificate: function (data, callback) {
+        var pdfObj = {};
+        async.waterfall([
+
+            //get Awards
+            function (callback) {
+                SpecialAwardDetails.find(data).deepPopulate("athlete athlete.school school sports award").lean().exec(function (err, SpecialAwards) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(SpecialAwards)) {
+                        callback(null, SpecialAwards);
+                    } else {
+                        callback("Sorry No Awards", null);
+                    }
+                })
+            },
+
+            // get city information from config
+            function (SpecialAwards, callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    console.log("property", property);
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(property)) {
+                        pdfObj.sfaCity = property[0].sfaCity;
+                        pdfObj.institutionType = property[0].institutionType;
+                        pdfObj.year = property[0].year;
+                        pdfObj.totalSport = property[0].totalSport;
+                        callback(null, SpecialAwards);
+                    } else {
+                        callback("Config Not Found", null);
+                    }
+                });
+            },
+
+            //get banner Image
+            function (SpecialAwards, callback) {
+                SpecialAwardBanner.findOne({
+                    "city": pdfObj.sfaCity
+                }).lean().exec(function (err, banner) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(banner)) {
+                        pdfObj.bannerImage = env.realHost + "/api/upload/readFile?file=" + banner.banner;
+                        callback(null, SpecialAwards);
+                    } else {
+                        callback("Banner Image Not Found", null);
+                    }
+                });
+            },
+
+        ], function (err, SpecialAwards) {
+            if (err) {
+                callback(err, null);
+            } else {
+                async.concatSeries(SpecialAwards, function (award, callback) {
+                    console.log("----------------", award);
+
+                    //make pdfObj as per Specific Award
+                    var basePath = "https://storage.googleapis.com/sfacertificate/";
+                    pdfObj.athlete = award.athlete;
+                    pdfObj.newFilename = _.join(_.split(award.award.name,  ' '), '_') + ".pdf";
+                    pdfObj.footerImage = env.realHost + "/api/upload/readFile?file=" + award.footerImage;
+                    pdfObj.sports = award.sports;
+                    pdfObj.award = award.award;
+                    pdfObj.type = award.type;
+                    if (pdfObj.type == 'athlete') {
+                        if (pdfObj.athlete.middleName) {
+                            pdfObj.athlete.fullName = pdfObj.athlete.firstName + " " + pdfObj.athlete.middleName + " " + pdfObj.athlete.surname;
+                        } else {
+                            pdfObj.athlete.fullName = pdfObj.athlete.firstName + " " + pdfObj.athlete.surname;
+                        }
+                    }
+                    switch (award.award.awardType) {
+                        case "max":
+                            pdfObj.filename = "sportMaxAwardAthlete";
+                            pdfObj.totalSportsReg = award.sports.length;
+                            pdfObj.heading = basePath + "max.png";
+                            break;
+                        case "strong":
+                            pdfObj.filename = "schoolStrongAward";
+                            pdfObj.heading = basePath + "strong.png";
+                            break;
+                        case "boost":
+                            pdfObj.filename = "schoolBoostAward";
+                            pdfObj.heading = basePath + "boost.png";
+                            break;
+                        case "coach":
+                            pdfObj.filename = "schoolMasterCoachAward";
+                            pdfObj.heading = basePath + "coach.png";
+                            break;
+                        case "rising":
+                            pdfObj.filename = "risingStar";
+                            pdfObj.newFilename = award.award.name + "_" + award.sports[0].name + ".pdf";
+                            pdfObj.heading = basePath + "rising.png";
+                            break;
+                        case "champion":
+                            pdfObj.filename = "championsAward";
+                            pdfObj.heading = basePath + "champion.png";
+                            break;
+                    }
+
+                    Config.generatePdf(pdfObj, function (err, pdfRespo) {
+                        if (err) {
+                            callback(null, err);
+                        } else if (pdfRespo) {
+                            pdfObj.pdfname = pdfRespo;
+                            callback(null, pdfObj);
+                        } else {
+                            callback(null, "Invalid data");
+                        }
+                    });
+
+
+
+                }, function (err, result) {
+                    callback(null, result);
+                });
+            }
+        });
+
+    }
 
 };
 module.exports = _.assign(module.exports, exports, model);
