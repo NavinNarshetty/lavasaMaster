@@ -34,5 +34,16 @@ var controller = {
         }
     },
 
+    getProfile: function (req, res) {
+        if (req.body) {
+            Profile.getProfile(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
 };
 module.exports = _.assign(module.exports, controller);

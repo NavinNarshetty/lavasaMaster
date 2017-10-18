@@ -132,6 +132,8 @@ var model = {
     },
 
     getProfile: function (data, callback) {
+        var profile = {};
+        profile.sport = [];
         async.waterfall([
                 function (callback) {
                     var deepSearch = "school";
@@ -144,23 +146,48 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
+                                profile.athlete = found;
                                 callback(null, found);
                             }
                         }
                     });
                 },
                 function (found, callback) {
-
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight";
                     StudentTeam.find({
-                        athleteId: data.athleteId
-                    }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                        studentId: data.athleteId
+                    }).lean().deepPopulate(deepSearch).exec(function (err, teamData) {
                         if (err) {
                             callback(err, null);
                         } else {
-                            if (_.isEmpty(found)) {
+                            if (_.isEmpty(teamData)) {
                                 callback(null, []);
                             } else {
-                                callback(null, found);
+                                _.each(teamData, function (n) {
+                                    profile.sport.push(n.sport)
+                                });
+                                callback(null, teamData);
+                            }
+                        }
+                    });
+                },
+                function (teamData, callback) {
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight";
+                    IndividualSport.find({
+                        athleteId: data.athleteId
+                    }).lean().deepPopulate(deepSearch).exec(function (err, individualData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(individualData)) {
+                                callback(null, []);
+                            } else {
+                                _.each(individualData, function (individual) {
+                                    _.each(individual.sport, function (n) {
+                                        profile.sport.push(n);
+                                    });
+                                });
+                                callback(null, individualData);
                             }
                         }
                     });
@@ -173,11 +200,14 @@ var model = {
                     if (_.isEmpty(data2)) {
                         callback(null, data2);
                     } else {
-                        callback(null, data2);
+                        profile.sport = _.uniqBy(profile.sport, "_id");
+                        console.log("length", profile.sport.length);
+                        callback(null, profile);
                     }
                 }
             });
-    }
+    },
+
 
 
 };
