@@ -238,7 +238,7 @@ var model = {
                     "foreignField": "_id",
                     "as": "sports"
                 }
-            },{
+            }, {
                 $unwind: {
                     path: "$sports",
                     includeArrayIndex: "arrayIndex", // optional
@@ -328,7 +328,6 @@ var model = {
             // get city information from config
             function (SpecialAwards, callback) {
                 ConfigProperty.find().lean().exec(function (err, property) {
-                    console.log("property", property);
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(property)) {
@@ -364,68 +363,103 @@ var model = {
                 callback(err, null);
             } else {
                 async.concatSeries(SpecialAwards, function (award, callback) {
-                    console.log("----------------", award);
+                    async.waterfall([
 
-                    //make pdfObj as per Specific Award
-                    var basePath = "https://storage.googleapis.com/sfacertificate/";
-                    pdfObj.athlete = award.athlete;
-                    pdfObj.newFilename = _.join(_.split(award.award.name,  ' '), '_') + ".pdf";
-                    pdfObj.footerImage = env.realHost + "/api/upload/readFile?file=" + award.footerImage;
-                    pdfObj.sports = award.sports;
-                    pdfObj.award = award.award;
-                    pdfObj.type = award.type;
-                    pdfObj.school = award.school;
+                        function (callback) {
+                            //make pdfObj as per Specific Award
+                            var basePath = "https://storage.googleapis.com/sfacertificate/";
+                            pdfObj.athlete = award.athlete;
+                            pdfObj.newFilename = _.join(_.split(award.award.name,  ' '), '_') + ".pdf";
+                            pdfObj.footerImage = env.realHost + "/api/upload/readFile?file=" + award.footerImage;
+                            pdfObj.sports = award.sports;
+                            pdfObj.award = award.award;
+                            pdfObj.type = award.type;
+                            pdfObj.school = award.school;
 
-                    if (pdfObj.type == 'athlete') {
-                        if (pdfObj.athlete.middleName) {
-                            pdfObj.athlete.fullName = pdfObj.athlete.firstName + " " + pdfObj.athlete.middleName + " " + pdfObj.athlete.surname;
-                        } else {
-                            pdfObj.athlete.fullName = pdfObj.athlete.firstName + " " + pdfObj.athlete.surname;
+                            if (pdfObj.type == 'athlete') {
+                                if (pdfObj.athlete.middleName) {
+                                    pdfObj.athlete.fullName = pdfObj.athlete.firstName + " " + pdfObj.athlete.middleName + " " + pdfObj.athlete.surname;
+                                } else {
+                                    pdfObj.athlete.fullName = pdfObj.athlete.firstName + " " + pdfObj.athlete.surname;
+                                }
+                            }
+
+                            switch (award.award.awardType) {
+                                case "max":
+                                    pdfObj.filename = "sportMaxAwardAthlete";
+                                    pdfObj.totalSportsReg = award.sports.length;
+                                    pdfObj.heading = basePath + "max.png";
+                                    break;
+                                case "strong":
+                                    pdfObj.filename = "schoolStrongAward";
+                                    pdfObj.heading = basePath + "strong.png";
+                                    break;
+                                case "boost":
+                                    pdfObj.filename = "schoolBoostAward";
+                                    pdfObj.heading = basePath + "boost.png";
+                                    pdfObj.boostDetail = award.boostDetail;
+                                    break;
+                                case "coach":
+                                    pdfObj.filename = "schoolMasterCoachAward";
+                                    pdfObj.heading = basePath + "coach.png";
+                                    pdfObj.coachName = award.coachName;
+                                    break;
+                                case "rising":
+                                    pdfObj.filename = "risingStar";
+                                    pdfObj.newFilename = award.award.name + "_" + award.sports[0].name + ".pdf";
+                                    pdfObj.heading = basePath + "rising.png";
+                                    break;
+                                case "champion":
+                                    pdfObj.filename = "championsAward";
+                                    pdfObj.heading = basePath + "champion.png";
+                                    break;
+                            }
+
+                            callback(null, pdfObj, award.award.awardType);
+
+                        },
+
+                        function (pdfObj, awardType, callback) {
+                            console.log("pdfObj, awardType", awardType);
+                            function calculateSchoolAthelete() {
+                                var matchObj={};
+                                if(data.school){
+                                    matchObj.school=data.school;
+                                }else if(data.college){
+                                    matchObj.school=data.college;                                    
+                                }
+                                console.log("matchObj------------------",matchObj);
+                                Athelete.aggregate([{
+                                    $match:matchObj
+                                },{
+                                    $group:{
+                                        "_id":"gender"
+                                    }
+                                }],function(err,allAthletes){
+                                    callback(null,allAthletes);
+                                });
+                            }
+
+                            switch (awardType) {
+                                case "strong":
+                                    calculateSchoolAthelete();
+                                    break;
+                                default:
+                                    callback(null, pdfObj);
+                            }
                         }
-                    }
-                    switch (award.award.awardType) {
-                        case "max":
-                            pdfObj.filename = "sportMaxAwardAthlete";
-                            pdfObj.totalSportsReg = award.sports.length;
-                            pdfObj.heading = basePath + "max.png";
-                            break;
-                        case "strong":
-                            pdfObj.filename = "schoolStrongAward";
-                            pdfObj.heading = basePath + "strong.png";
-                            break;
-                        case "boost":
-                            pdfObj.filename = "schoolBoostAward";
-                            pdfObj.heading = basePath + "boost.png";
-                            pdfObj.boostDetail = award.boostDetail;
-                            break;
-                        case "coach":
-                            pdfObj.filename = "schoolMasterCoachAward";
-                            pdfObj.heading = basePath + "coach.png";
-                            pdfObj.coachName = award.coachName;
-                            break;
-                        case "rising":
-                            pdfObj.filename = "risingStar";
-                            pdfObj.newFilename = award.award.name + "_" + award.sports[0].name + ".pdf";
-                            pdfObj.heading = basePath + "rising.png";
-                            break;
-                        case "champion":
-                            pdfObj.filename = "championsAward";
-                            pdfObj.heading = basePath + "champion.png";
-                            break;
-                    }
-
-                    Config.generatePdf(pdfObj, function (err, pdfRespo) {
-                        if (err) {
-                            callback(null, err);
-                        } else if (pdfRespo) {
-                            pdfObj.pdfname = pdfRespo;
-                            callback(null, pdfObj);
-                        } else {
-                            callback(null, "Invalid data");
-                        }
+                    ], function (err, result) {
+                        Config.generatePdf(pdfObj, function (err, pdfRespo) {
+                            if (err) {
+                                callback(null, err);
+                            } else if (pdfRespo) {
+                                pdfObj.pdfname = pdfRespo;
+                                callback(null, pdfObj);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
                     });
-
-
 
                 }, function (err, result) {
                     callback(null, result);
