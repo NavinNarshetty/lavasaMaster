@@ -41,7 +41,7 @@ schema.plugin(deepPopulate, {
             select: ''
         },
         "player.school": {
-            select: ''
+            select: 'id name'
         },
     }
 });
@@ -517,7 +517,7 @@ var model = {
                                 callback(err, null);
                             } else if (!_.isEmpty(banners)) {
                                 var banner = _.filter(banners, ['city', property[0].sfaCity]);
-                                pdfObj.bannerImage = env.realHost + "/api/upload/readFile?file="  + banner[0].banner;
+                                pdfObj.bannerImage = env.realHost + "/api/upload/readFile?file=" + banner[0].banner;
                                 callback(null, property);
                             } else {
                                 callback("Banner Not Found", null);
@@ -562,7 +562,7 @@ var model = {
                                             if (err) {
                                                 callback(err, null);
                                             } else if (!_.isEmpty(detail)) {
-                                                sport.footerImage = env.realHost + "/api/upload/readFile?file="  + detail[0].banner;
+                                                sport.footerImage = env.realHost + "/api/upload/readFile?file=" + detail[0].banner;
                                                 callback(null, sport);
                                             } else {
                                                 callback(null, sport);

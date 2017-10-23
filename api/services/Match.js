@@ -11296,5 +11296,40 @@ var model = {
             });
     },
 
+    //----------------------------------Winners-------------------------------------------
+
+    getAllWinners: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var deepSearch = "player team.studentTeam.studentId";
+                    Medal.find({
+                        sport: data.sport
+                    }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                // console.log("found0", found);
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    }
+
 };
 module.exports = _.assign(module.exports, exports, model);

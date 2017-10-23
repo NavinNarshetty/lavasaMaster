@@ -275,7 +275,7 @@ var controller = {
                                 callback(null, importData);
                             }
                         }
-                    }
+                    },
                 ],
                 function (err, results) {
                     // console.log("results", results);
@@ -772,6 +772,17 @@ var controller = {
         } else {
             res.json({
                 "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
+    getAllWinners: function (req, res) {
+        if (req.body) {
+            Match.getAllWinners(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Match Id not Found",
                 "value": false
             })
         }
