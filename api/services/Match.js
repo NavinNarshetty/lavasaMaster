@@ -11665,11 +11665,42 @@ var model = {
             // Stage 3
             {
                 $match: {
-                    sport: objectId("5953a229c1670218048dfbe5"),
-                    "opponentsSingle.athleteId": ObjectId("59ae62ad7810de3acbea187e")
+                    sport: objectid(data.sport),
+                    "opponentsSingle.athleteId": objectid(data.athlete)
                 }
             },
 
+        ];
+        return pipeline;
+    },
+
+    getTeamAggregatePipeline: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "teamsports",
+                    "localField": "opponentsTeam",
+                    "foreignField": "_id",
+                    "as": "opponentsTeam"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$opponentsTeam",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 3
+            {
+                $match: {
+                    sport: objectid(data.sport),
+                    "opponentsTeam._id": objectid(data.team)
+                }
+            },
         ];
         return pipeline;
     },
@@ -11696,13 +11727,11 @@ var model = {
                     async.concatSeries(found, function (singleData, callback) {
                             if (!_.isEmpty(singleData.player)) {
                                 async.concatSeries(singleData.player, function (n, callback) {
-                                    var deepSearch = "opponentsSingle.athleteId";
-                                    Match.find({
-                                        sport: data.sport,
-                                        "opponentsSingle.athleteId": n
-                                    }).lean().deepPopulate(deepSearch).exec(function (err, matchData) {
+                                    data.athlete = n;
+                                    var pipeLine = Match.getAggregatePipeline(data);
+                                    Match.aggregate(pipeLine, function (err, matchData) {
                                         if (err) {
-                                            callback(err, null);
+                                            callback(err, "error in mongoose");
                                         } else {
                                             callback(null, matchData);
                                         }
@@ -11717,19 +11746,13 @@ var model = {
 
                             } else {
                                 async.concatSeries(singleData.team, function (n, callback) {
-                                    var deepSearch = "opponentsTeam.studentTeam.studentId";
-                                    Match.find({
-                                        sport: data.sport,
-                                        "opponentsTeam": n
-                                    }).lean().deepPopulate(deepSearch).exec(function (err, matchData) {
+                                    data.team = n;
+                                    var pipeLine = Match.getTeamAggregatePipeline(data);
+                                    Match.aggregate(pipeLine, function (err, matchData) {
                                         if (err) {
-                                            callback(err, null);
+                                            callback(err, "error in mongoose");
                                         } else {
-                                            if (_.isEmpty(matchData)) {
-                                                callback(null, []);
-                                            } else {
-                                                callback(null, matchData);
-                                            }
+                                            callback(null, matchData);
                                         }
                                     });
                                 }, function (err, playerData) {

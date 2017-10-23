@@ -2400,7 +2400,7 @@ var model = {
                 function (found, callback) {
                     console.log(found);
                     var excelData = [];
-                    async.eachSeries(found, function (mainData, callback) {
+                    async.concatLimit(found, 20, function (mainData, callback) {
                             var obj = {};
                             obj.year = new Date().getFullYear();
                             var basicInfo = {};
@@ -2408,7 +2408,7 @@ var model = {
                             var age;
                             basicInfo.sport = [];
                             var count = 0;
-                            async.each(mainData.info, function (n, callback) {
+                            async.eachSeries(mainData.info, function (n, callback) {
                                 console.log("info", n);
                                 console.log("count", count);
                                 if (n.middlename) {
@@ -2468,7 +2468,7 @@ var model = {
 
                                 callback(null, basicInfo);
                             });
-                            // console.log("basicInfo", basicInfo);
+                            console.log("basicInfo", basicInfo);
                             obj.SFAID = basicInfo.sfaid;
                             obj.Athlete_Full_Name = basicInfo.name;
                             obj.SchoolName = basicInfo.school;
