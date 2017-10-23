@@ -2406,10 +2406,13 @@ var model = {
                         console.log("inside third place");
                         Match.findOne({
                             sport: data.sport,
-                            round: {
-                                $regex: "final",
-                                $options: "i"
-                            }
+                            $or: [{
+                                round: "Final"
+                            }, {
+                                round: "final"
+                            }, {
+                                round: "FINAL"
+                            }]
                         }).lean().exec(function (err, found) {
                             if (err) {
                                 callback(err, null);
@@ -11320,9 +11323,30 @@ var model = {
                         }
                     });
                 },
-                // function (found, callback) {
-
-                // }
+                function (found, callback) {
+                    async.concatSeries(found, function (singleData, callback) {
+                        var deepSearch = "player team.studentTeam.studentId";
+                        Match.find({
+                            sport: data.sport
+                        }).lean().deepPopulate(deepSearch).exec(function (err, matchData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(matchData)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, matchData);
+                                }
+                            }
+                        });
+                    }, function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, complete);
+                        }
+                    })
+                }
             ],
             function (err, data2) {
                 if (err) {
