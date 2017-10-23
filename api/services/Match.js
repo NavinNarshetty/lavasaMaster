@@ -1514,18 +1514,17 @@ var model = {
                         callback(null, sportData);
                     } else {
                         if (singleData["PARTICIPANT 1"] && singleData["PARTICIPANT 2"]) {
+                            var updateData = {};
                             var participant = {};
                             participant.id = singleData["PARTICIPANT 1"];
                             Match.updateIndividualSport(participant, sportData, function (err, updatedData) {
                                 if (err || _.isEmpty(updatedData)) {
                                     err = "Weight may have wrong values";
-                                    callback(null, {
-                                        error: err,
-                                        success: sportData
-                                    });
+                                    updateData.err = err;
+                                    updateData.data = sportData;
                                 } else {
 
-                                    callback(null, sportData);
+                                    updateData = sportData;
                                 }
                             });
                             var participant1 = {};
@@ -1533,15 +1532,13 @@ var model = {
                             Match.updateIndividualSport(participant1, sportData, function (err, updatedData) {
                                 if (err || _.isEmpty(updatedData)) {
                                     err = "Weight may have wrong values";
-                                    callback(null, {
-                                        error: err,
-                                        success: sportData
-                                    });
+                                    updateData.err1 = err;
+                                    updateData.data1 = sportData;
                                 } else {
-
-                                    callback(null, sportData);
+                                    updateData = sportData;
                                 }
                             });
+                            callback(null, updateData);
                         } else if (singleData["PARTICIPANT 1"]) {
                             var participant = {};
                             participant.id = singleData["PARTICIPANT 1"];
@@ -1571,7 +1568,7 @@ var model = {
                                 }
                             });
                         } else {
-                            callback(null, sportData)
+                            callback(null, sportData);
                         }
                     }
                 }
@@ -11329,7 +11326,33 @@ var model = {
                     }
                 }
             });
+    },
+
+    getAllHeatWinners: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Match.getAllWinners(data, function (err, medalData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, medalData);
+                        }
+                    });
+                },
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
     }
+
 
 };
 module.exports = _.assign(module.exports, exports, model);

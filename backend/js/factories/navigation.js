@@ -7,239 +7,239 @@ var uploadurl = imgurl;
 
 myApp.factory('NavigationService', function ($http) {
     var navigation = [{
-        name: "School",
-        classis: "activeColor",
-        sref: "",
-        icon: "phone",
-        subnav: [{
-            name: "Edit School",
-            classis: "",
-            sref: "#/page/viewRegistration//",
+            name: "School",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Edit School",
+                classis: "",
+                sref: "#/page/viewRegistration//",
+                icon: "phone"
+            }, {
+                name: "View School",
+                classis: "",
+                sref: "#/school",
+                icon: "phone"
+            }]
+        },
+        {
+            name: "Athlete",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Edit Athlete",
+                classis: "",
+                sref: "#/page/viewAthelete//",
+                icon: "phone"
+            }, {
+                name: "View Athlete",
+                classis: "",
+                sref: "#/athlete",
+                icon: "phone"
+            }]
+        },
+        {
+            name: "Old School",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Edit Old School",
+                classis: "",
+                sref: "#/page/viewOldSchool//",
+                icon: "phone"
+            }, {
+                name: "View Old School",
+                classis: "",
+                sref: "#/oldschool",
+                icon: "phone"
+            }]
+        }, {
+            name: "Additional Payment",
+            classis: "activeColor",
+            sref: "#/additional-payment",
             icon: "phone"
         }, {
-            name: "View School",
-            classis: "",
-            sref: "#/school",
-            icon: "phone"
-        }]
-    },
-    {
-        name: "Athlete",
-        classis: "activeColor",
-        sref: "",
-        icon: "phone",
-        subnav: [{
-            name: "Edit Athlete",
-            classis: "",
-            sref: "#/page/viewAthelete//",
+            name: "Age Group",
+            classis: "activeColor",
+            sref: "#/agegroup",
             icon: "phone"
         }, {
-            name: "View Athlete",
-            classis: "",
-            sref: "#/athlete",
+            name: "Rules",
+            classis: "activeColor",
+            sref: "#/rules",
             icon: "phone"
-        }]
-    },
-    {
-        name: "Old School",
-        classis: "activeColor",
-        sref: "",
-        icon: "phone",
-        subnav: [{
-            name: "Edit Old School",
-            classis: "",
-            sref: "#/page/viewOldSchool//",
+        },
+        {
+            name: "Weight",
+            classis: "activeColor",
+            sref: "#/firstcategory",
             icon: "phone"
-        }, {
-            name: "View Old School",
-            classis: "",
-            sref: "#/oldschool",
+        },
+        {
+            name: "Draw Format",
+            classis: "activeColor",
+            sref: "#/drawformat",
             icon: "phone"
-        }]
-    }, {
-        name: "Additional Payment",
-        classis: "activeColor",
-        sref: "#/additional-payment",
-        icon: "phone"
-    }, {
-        name: "Age Group",
-        classis: "activeColor",
-        sref: "#/agegroup",
-        icon: "phone"
-    }, {
-        name: "Rules",
-        classis: "activeColor",
-        sref: "#/rules",
-        icon: "phone"
-    },
-    {
-        name: "Weight",
-        classis: "activeColor",
-        sref: "#/firstcategory",
-        icon: "phone"
-    },
-    {
-        name: "Draw Format",
-        classis: "activeColor",
-        sref: "#/drawformat",
-        icon: "phone"
-    },
-    {
-        name: "Category",
-        classis: "activeColor",
-        sref: "#/sports-list-cat",
-        icon: "phone"
-    },
-    {
-        name: "Sub Category",
-        classis: "activeColor",
-        sref: "#/sports-list-subcat",
-        icon: "phone"
-    },
-    {
-        name: "Sports List",
-        classis: "activeColor",
-        sref: "#/sports-list",
-        icon: "phone"
-    },
-    {
-        name: "Sports",
-        classis: "activeColor",
-        sref: "#/sports",
-        icon: "phone"
-    },
-    {
-        name: "Team Sport",
-        classis: "activeColor",
-        sref: "#/teamsport",
-        icon: "phone"
-    },
-    {
-        name: "Rounds",
-        classis: "activeColor",
-        sref: "#/rounds",
-        icon: "phone"
-    },
-    {
-        name: "Matches",
-        classis: "activeColor",
-        sref: "#/matches",
-        icon: "phone"
-    },
-    {
-        name: "Event Pdf",
-        classis: "activeColor",
-        sref: "#/tablepdf",
-        icon: "phone",
-    },
-    {
-        name: "Medals",
-        classis: "activeColor",
-        sref: "#/medals",
-        icon: "phone"
-    },
+        },
+        {
+            name: "Category",
+            classis: "activeColor",
+            sref: "#/sports-list-cat",
+            icon: "phone"
+        },
+        {
+            name: "Sub Category",
+            classis: "activeColor",
+            sref: "#/sports-list-subcat",
+            icon: "phone"
+        },
+        {
+            name: "Sports List",
+            classis: "activeColor",
+            sref: "#/sports-list",
+            icon: "phone"
+        },
+        {
+            name: "Sports",
+            classis: "activeColor",
+            sref: "#/sports",
+            icon: "phone"
+        },
+        {
+            name: "Team Sport",
+            classis: "activeColor",
+            sref: "#/teamsport",
+            icon: "phone"
+        },
+        {
+            name: "Rounds",
+            classis: "activeColor",
+            sref: "#/rounds",
+            icon: "phone"
+        },
+        {
+            name: "Matches",
+            classis: "activeColor",
+            sref: "#/matches",
+            icon: "phone"
+        },
+        {
+            name: "Event Pdf",
+            classis: "activeColor",
+            sref: "#/tablepdf",
+            icon: "phone",
+        },
+        {
+            name: "Medals",
+            classis: "activeColor",
+            sref: "#/medals",
+            icon: "phone"
+        },
 
-    {
-        name: "Media",
-        classis: "activeColor",
-        sref: "#/media",
-        icon: "phone",
-    },
-    {
-        name: "Gallery",
-        classis: "activeColor",
-        sref: "#/gallery",
-        icon: "phone"
-    },
-    {
-        name: "Calender",
-        classis: "activeColor",
-        sref: "#/calender",
-        icon: "phone"
-    },
-    {
-        name: "Sponsor",
-        classis: "activeColor",
-        sref: "",
-        icon: "phone",
-        subnav: [{
-            name: "Sponsor Page",
-            classis: "",
-            sref: "#/sponsor",
+        {
+            name: "Media",
+            classis: "activeColor",
+            sref: "#/media",
+            icon: "phone",
+        },
+        {
+            name: "Gallery",
+            classis: "activeColor",
+            sref: "#/gallery",
+            icon: "phone"
+        },
+        {
+            name: "Calender",
+            classis: "activeColor",
+            sref: "#/calender",
+            icon: "phone"
+        },
+        {
+            name: "Sponsor",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Sponsor Page",
+                classis: "",
+                sref: "#/sponsor",
+                icon: "phone"
+            }, {
+                name: "Sponsor Card",
+                classis: "",
+                sref: "#/sponsorcard",
+                icon: "phone"
+            }]
+        },
+        {
+            name: "Special Awards",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Award Banner",
+                classis: "",
+                sref: "#/specialaward-banner",
+                icon: "phone"
+            }, {
+                name: "List of Award",
+                classis: "",
+                sref: "#/specialaward",
+                icon: "phone"
+            }, {
+                name: "Award Detail",
+                classis: "",
+                sref: "#/specialaward-detail",
+                icon: "phone"
+            }, {
+                name: "Rising Star",
+                classis: "",
+                sref: "#/risingstar",
+                icon: "phone"
+            }]
+        },
+        {
+            name: "Faq",
+            classis: "activeColor",
+            sref: "#/faq",
             icon: "phone"
         }, {
-            name: "Sponsor Card",
-            classis: "",
-            sref: "#/sponsorcard",
-            icon: "phone"
-        }]
-    },
-    {
-        name: "Special Awards",
-        classis: "activeColor",
-        sref: "",
-        icon: "phone",
-        subnav: [{
-            name: "Award Banner",
-            classis: "",
-            sref: "#/specialaward-banner",
-            icon: "phone"
-        }, {
-            name: "List of Award",
-            classis: "",
-            sref: "#/specialaward",
-            icon: "phone"
-        }, {
-            name: "Award Detail",
-            classis: "",
-            sref: "#/specialaward-detail",
-            icon: "phone"
-        }, {
-            name: "Rising Star",
-            classis: "",
-            sref: "#/risingstar",
-            icon: "phone"
-        }]
-    },
-    {
-        name: "Faq",
-        classis: "activeColor",
-        sref: "#/faq",
-        icon: "phone"
-    }, {
-        name: "Certificate",
-        classis: "activeColor",
-        sref: "",
-        icon: "phone",
-        subnav: [{
-            name: "Certificate Banner",
-            classis: "",
-            sref: "#/certificatebanner",
+            name: "Certificate",
+            classis: "activeColor",
+            sref: "",
+            icon: "phone",
+            subnav: [{
+                name: "Certificate Banner",
+                classis: "",
+                sref: "#/certificatebanner",
+                icon: "phone"
+            }, {
+                name: "Certificate Details",
+                classis: "",
+                sref: "#/certificatedetails",
+                icon: "phone"
+            }]
+        },
+        // {
+        //     name: "Student Team",
+        //     classis: "activeColor",
+        //     sref: "#/student-team",
+        //     icon: "phone"
+        // },
+        {
+            name: "Individual Sport",
+            classis: "activeColor",
+            sref: "#/individual-sport",
             icon: "phone"
         }, {
-            name: "Certificate Details",
-            classis: "",
-            sref: "#/certificatedetails",
-            icon: "phone"
-        }]
-    },
-    // {
-    //     name: "Student Team",
-    //     classis: "activeColor",
-    //     sref: "#/student-team",
-    //     icon: "phone"
-    // },
-    {
-        name: "Individual Sport",
-        classis: "activeColor",
-        sref: "#/individual-sport",
-        icon: "phone"
-    }, {
-        name: "ConfigProperty",
-        classis: "activeColor",
-        sref: "#/page/viewConfigProperty//",
-        icon: "phone",
-    },
+            name: "ConfigProperty",
+            classis: "activeColor",
+            sref: "#/page/viewConfigProperty//",
+            icon: "phone",
+        },
 
         // {
         //     name: "Second Category",
@@ -373,7 +373,6 @@ myApp.factory('NavigationService', function ($http) {
                 var header = response.headers('Content-Disposition')
                 var fileName = "Athlete" + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
                 console.log(fileName);
-
                 var blob = new Blob([response.data], {
                     type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation;charset=UTF-8'
                 });
@@ -383,6 +382,7 @@ myApp.factory('NavigationService', function ($http) {
                     href: objectUrl,
                     download: fileName
                 })[0].click();
+                callback(null, fileName);
             })
         },
 
@@ -404,6 +404,7 @@ myApp.factory('NavigationService', function ($http) {
                     href: objectUrl,
                     download: fileName
                 })[0].click();
+                callback(null, fileName);
             })
         },
 
