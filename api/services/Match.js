@@ -10349,7 +10349,6 @@ var model = {
                         var foundLength = found.length;
                         if (data.found.round == "Semi Final" && foundLength == 2) {
                             if (data.isTeam == false && _.isEmpty(found[0].opponentsSingle) && _.isEmpty(found[1].opponentsSingle)) {
-                                // console.log("inside found", data.found.resultsCombat.status);
                                 if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
                                     if (data.found.opponentsSingle[0].equals(data.found.resultsCombat.winner.opponentsSingle)) {
                                         lostPlayer.push(data.found.opponentsSingle[1]);
@@ -11323,35 +11322,6 @@ var model = {
                         }
                     });
                 },
-                function (found, callback) {
-                    async.concatSeries(found, function (singleData, callback) {
-                        var deepSearch = "opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
-                        Match.find({
-                            sport: data.sport,
-                            $or: [{
-                                "opponentsSingle.athleteId": "singleData.player"
-                            }, {
-                                "opponentsTeam.studentTeam.studentId": "singleData.player"
-                            }]
-                        }).lean().deepPopulate(deepSearch).exec(function (err, matchData) {
-                            if (err) {
-                                callback(err, null);
-                            } else {
-                                if (_.isEmpty(matchData)) {
-                                    callback(null, []);
-                                } else {
-                                    callback(null, matchData);
-                                }
-                            }
-                        });
-                    }, function (err, complete) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            callback(null, complete);
-                        }
-                    })
-                }
             ],
             function (err, data2) {
                 if (err) {
@@ -11367,32 +11337,64 @@ var model = {
     },
 
     getAllHeatWinners: function (data, callback) {
-        async.waterfall([
-                function (callback) {
-                    Match.getAllWinners(data, function (err, medalData) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            callback(null, medalData);
-                        }
-                    });
-                },
-                function (medalData, callback) {
-
-                }
-            ],
-            function (err, data2) {
+        function (callback) {
+            var deepSearch = "player team.studentTeam.studentId";
+            Medal.find({
+                sport: data.sport
+            }).lean().deepPopulate(deepSearch).exec(function (err, found) {
                 if (err) {
-                    callback(null, []);
-                } else if (data2) {
-                    if (_.isEmpty(data2)) {
-                        callback(null, data2);
+                    callback(err, null);
+                } else {
+                    if (_.isEmpty(found)) {
+                        callback(null, []);
                     } else {
-                        callback(null, data2);
+                        callback(null, found);
                     }
                 }
             });
-    }
+        },
+        function (found, callback) {
+            async.concatSeries(found, function (singleData, callback) {
+                var deepSearch = "opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                Match.find({
+                    sport: data.sport,
+                    $or: [{
+                        "opponentsSingle.athleteId": "singleData.player"
+                    }, {
+                        "opponentsTeam.studentTeam.studentId": "singleData.player"
+                    }]
+                }).lean().deepPopulate(deepSearch).exec(function (err, matchData) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        if (_.isEmpty(matchData)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, matchData);
+                        }
+                    }
+                });
+            }, function (err, complete) {
+                if (err) {
+                    callback(err, null);
+                } else {
+                    callback(null, complete);
+                }
+            })
+        }
+    ],
+    function (err, data2) {
+        if (err) {
+            callback(null, []);
+        } else if (data2) {
+            if (_.isEmpty(data2)) {
+                callback(null, data2);
+            } else {
+                callback(null, data2);
+            }
+        }
+    });
+}
 
 
 };
