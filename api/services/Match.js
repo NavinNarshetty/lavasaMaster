@@ -11337,64 +11337,88 @@ var model = {
     },
 
     getAllHeatWinners: function (data, callback) {
-        function (callback) {
-            var deepSearch = "player team.studentTeam.studentId";
-            Medal.find({
-                sport: data.sport
-            }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+        async.waterfall([
+                function (callback) {
+                    var deepSearch = "player team.studentTeam.studentId";
+                    Medal.find({
+                        sport: data.sport
+                    }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+                function (found, callback) {
+                    async.concatSeries(found, function (singleData, callback) {
+                        if (!_.isEmpty(singleData.player)) {
+                            async.concatSeries(singleData.player, function (n, callback) {
+                                var deepSearch = "opponentsSingle.athleteId";
+                                Match.find({
+                                    sport: data.sport,
+                                    "opponentsSingle.athleteId": n
+                                }).lean().deepPopulate(deepSearch).exec(function (err, matchData) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, matchData);
+                                    }
+                                });
+                            }, function (err, playerData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (_.isEmpty(matchData)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, matchData);
+                                    }
+                                }
+                            })
+
+                        } else {
+                            var deepSearch = "opponentsTeam.studentTeam.studentId";
+                            Match.find({
+                                sport: data.sport,
+                                "opponentsTeam": "singleData.team"
+                            }).lean().deepPopulate(deepSearch).exec(function (err, matchData) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (_.isEmpty(matchData)) {
+                                        callback(null, []);
+                                    } else {
+                                        callback(null, matchData);
+                                    }
+                                }
+                            });
+                        }
+                    }, function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            callback(null, complete);
+                        }
+                    })
+                }
+            ],
+            function (err, data2) {
                 if (err) {
-                    callback(err, null);
-                } else {
-                    if (_.isEmpty(found)) {
-                        callback(null, []);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
                     } else {
-                        callback(null, found);
+                        callback(null, data2);
                     }
                 }
             });
-        },
-        function (found, callback) {
-            async.concatSeries(found, function (singleData, callback) {
-                var deepSearch = "opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
-                Match.find({
-                    sport: data.sport,
-                    $or: [{
-                        "opponentsSingle.athleteId": "singleData.player"
-                    }, {
-                        "opponentsTeam.studentTeam.studentId": "singleData.player"
-                    }]
-                }).lean().deepPopulate(deepSearch).exec(function (err, matchData) {
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        if (_.isEmpty(matchData)) {
-                            callback(null, []);
-                        } else {
-                            callback(null, matchData);
-                        }
-                    }
-                });
-            }, function (err, complete) {
-                if (err) {
-                    callback(err, null);
-                } else {
-                    callback(null, complete);
-                }
-            })
-        }
-    ],
-    function (err, data2) {
-        if (err) {
-            callback(null, []);
-        } else if (data2) {
-            if (_.isEmpty(data2)) {
-                callback(null, data2);
-            } else {
-                callback(null, data2);
-            }
-        }
-    });
-}
+    }
 
 
 };
