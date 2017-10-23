@@ -1696,7 +1696,6 @@ var model = {
                                                         if (err || _.isEmpty(complete)) {
                                                             singleData["NAME"] = null;
                                                             err = "SFA ID may have wrong values";
-                                                            // console.log("err found");
                                                             callback(null, {
                                                                 error: err,
                                                                 success: singleData
@@ -2404,6 +2403,7 @@ var model = {
                 },
                 function (final, callback) {
                     if (data.thirdPlace == "yes") {
+                        console.log("inside third place");
                         Match.findOne({
                             sport: data.sport,
                             round: {
@@ -2416,12 +2416,15 @@ var model = {
                             } else {
                                 if (_.isEmpty(found)) {
                                     callback(null, []);
+                                    console.log("empty");
                                 } else {
+                                    console.log("final", found);
                                     var updateObj = {
                                         $set: {
                                             prevMatch: found.prevMatch
                                         }
                                     };
+                                    console.log("updateObj", updateObj)
                                     Match.update({
                                         sport: data.sport,
                                         round: {
@@ -2430,6 +2433,7 @@ var model = {
                                         }
                                     }, updateObj).exec(
                                         function (err, match) {
+                                            console.log("match", match);
                                             callback(null, final);
                                         });
                                 }
@@ -10259,7 +10263,7 @@ var model = {
                                 } else if (!_.isEmpty(found.opponentsTeam)) {
                                     data.isTeam = true;
                                 }
-                                console.log("data.isTeam", data.isNoMatch);
+                                // console.log("data.isTeam", data.isNoMatch);
                                 data._id = found._id;
                                 data.found = found;
                                 callback(null, found);
@@ -11311,12 +11315,14 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                // console.log("found0", found);
                                 callback(null, found);
                             }
                         }
                     });
                 },
+                // function (found, callback) {
+
+                // }
             ],
             function (err, data2) {
                 if (err) {
@@ -11342,6 +11348,9 @@ var model = {
                         }
                     });
                 },
+                function (medalData, callback) {
+
+                }
             ],
             function (err, data2) {
                 if (err) {
