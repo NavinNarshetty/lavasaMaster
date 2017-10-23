@@ -2408,90 +2408,94 @@ var model = {
                             var age;
                             basicInfo.sport = [];
                             var count = 0;
-                            async.eachSeries(mainData.info, function (n, callback) {
-                                console.log("info", n);
-                                console.log("count", count);
+                            _each(mainData.info, function (n) {
+                                // console.log("info", n);
+                                // console.log("count", count);
                                 if (n.middlename) {
-                                    basicInfo.name = n.firstname + " " + n.middlename + " " + n.surname;
+                                    obj.Athlete_Full_Name = n.firstname + " " + n.middlename + " " + n.surname;
                                 } else {
-                                    basicInfo.name = n.firstname + " " + n.surname;
+                                    obj.Athlete_Full_Name = n.firstname + " " + n.surname;
                                 }
                                 if (n.athleteSchoolName) {
-                                    basicInfo.school = n.athleteSchoolName;
+                                    obj.SchoolName = n.athleteSchoolName;
                                 } else {
-                                    basicInfo.school = n.school;
+                                    obj.SchoolName = n.school;
                                 }
-                                basicInfo.sfaid = n.sfaid;
-                                basicInfo.sportName = n.sportName;
-                                basicInfo.createdBy = n.createdby;
-                                if (n.nominatedSchoolName) {
-                                    basicInfo.nominatedSchoolName = n.nominatedSchoolName;
+                                obj.SFAID = n.sfaid;
+                                obj.Sport = n.sportName;
+                                if (n.createdby) {
+                                    obj.CreatedBy = n.createdby;
                                 } else {
-                                    basicInfo.nominatedSchoolName = "";
+                                    obj.CreatedBy = "";
+                                }
+
+                                if (n.nominatedSchoolName) {
+                                    obj.nominatedSchoolName = n.nominatedSchoolName;
+                                } else {
+                                    obj.nominatedSchoolName = "";
                                 }
                                 if (n.nominatedContactDetails) {
-                                    basicInfo.nominatedContactDetails = n.nominatedContactDetails;
+                                    obj.nominatedContactDetails = n.nominatedContactDetails;
                                 } else {
-                                    basicInfo.nominatedContactDetails = "";
+                                    obj.nominatedContactDetails = "";
                                 }
                                 if (n.nominatedEmailId) {
-                                    basicInfo.nominatedEmailId = n.nominatedEmailId;
+                                    obj.nominatedEmailId = n.nominatedEmailId;
                                 } else {
-                                    basicInfo.nominatedEmailId = "";
+                                    obj.nominatedEmailId = "";
                                 }
                                 if (n.nominatedName) {
-                                    basicInfo.nominatedName = n.nominatedName;
+                                    obj.nominatedName = n.nominatedName;
                                 } else {
-                                    basicInfo.nominatedName = "";
+                                    obj.nominatedName = "";
                                 }
                                 if (n.isVideoAnalysis) {
-                                    basicInfo.isVideoAnalysis = n.isVideoAnalysis;
+                                    obj.isVideoAnalysis = n.isVideoAnalysis;
                                 } else {
-                                    basicInfo.isVideoAnalysis = "";
+                                    obj.isVideoAnalysis = "";
                                 }
-                                basicInfo.gender = n.gender;
+                                obj.Gender = n.gender;
                                 if (count == 0) {
                                     age = n.agegroup;
                                     event = age + " - " + n.eventname;
                                     if (n.weight) {
-                                        basicInfo.weight = n.weight;
+                                        obj.Weight_Category = n.weight;
                                     }
                                     count++;
                                 } else {
                                     age = n.agegroup;
                                     event = event + " , " + age + " - " + n.eventname;
                                     if (n.weight) {
-                                        basicInfo.weight = n.weight;
+                                        obj.Weight_Category = n.weight;
                                     }
                                 }
-                                basicInfo.event = event;
-
-                                callback(null, basicInfo);
+                                obj.Event_Category = event;
+                                // callback(null, basicInfo);
                             });
-                            console.log("basicInfo", basicInfo);
-                            obj.SFAID = basicInfo.sfaid;
-                            obj.Athlete_Full_Name = basicInfo.name;
-                            obj.SchoolName = basicInfo.school;
-                            obj.Sport = basicInfo.sportName;
-                            obj.Gender = basicInfo.gender;
-                            obj.Event_Category = basicInfo.event;
-                            obj.Weight_Category = basicInfo.weight;
-                            if (basicInfo.createdBy) {
-                                obj.CreatedBy = basicInfo.createdBy;
-                            } else {
-                                obj.Createdby = " ";
-                            }
+                            // console.log("basicInfo", basicInfo);
+                            // obj.SFAID = basicInfo.sfaid;
+                            // obj.Athlete_Full_Name = basicInfo.name;
+                            // obj.SchoolName = basicInfo.school;
+                            // obj.Sport = basicInfo.sportName;
+                            // obj.Gender = basicInfo.gender;
+                            // obj.Event_Category = basicInfo.event;
+                            // obj.Weight_Category = basicInfo.weight;
+                            // if (basicInfo.createdBy) {
+                            //     obj.CreatedBy = basicInfo.createdBy;
+                            // } else {
+                            //     obj.Createdby = " ";
+                            // }
 
-                            obj.nominatedSchoolName = basicInfo.nominatedSchoolName;
-                            obj.nominatedContactDetails = basicInfo.nominatedContactDetails;
-                            obj.nominatedEmailId = basicInfo.nominatedEmailId;
-                            obj.nominatedName = basicInfo.nominatedName;
-                            obj.isVideoAnalysis = basicInfo.isVideoAnalysis;
-                            excelData.push(obj);
+                            // obj.nominatedSchoolName = basicInfo.nominatedSchoolName;
+                            // obj.nominatedContactDetails = basicInfo.nominatedContactDetails;
+                            // obj.nominatedEmailId = basicInfo.nominatedEmailId;
+                            // obj.nominatedName = basicInfo.nominatedName;
+                            // obj.isVideoAnalysis = basicInfo.isVideoAnalysis;
+                            // // excelData.push(obj);
                             console.log("obj", obj);
-                            callback(null, excelData);
+                            callback(null, obj);
                         },
-                        function (err) {
+                        function (err, excelData) {
                             Config.generateExcelOld("IndividualSport", excelData, res);
                         });
 

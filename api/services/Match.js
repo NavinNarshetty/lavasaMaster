@@ -11669,6 +11669,14 @@ var model = {
                     "opponentsSingle.athleteId": objectid(data.athlete)
                 }
             },
+            {
+                $sort: {
+                    createdAt: -1
+                }
+            },
+            {
+                $limit: 1
+            },
 
         ];
         return pipeline;
@@ -11701,6 +11709,14 @@ var model = {
                     "opponentsTeam._id": objectid(data.team)
                 }
             },
+            {
+                $sort: {
+                    createdAt: -1
+                }
+            },
+            {
+                $limit: 1
+            },
         ];
         return pipeline;
     },
@@ -11725,6 +11741,7 @@ var model = {
                 },
                 function (found, callback) {
                     async.concatSeries(found, function (singleData, callback) {
+                            console.log("singleData", singleData);
                             if (!_.isEmpty(singleData.player)) {
                                 async.concatSeries(singleData.player, function (n, callback) {
                                     data.athlete = n;
@@ -11733,7 +11750,8 @@ var model = {
                                         if (err) {
                                             callback(err, "error in mongoose");
                                         } else {
-                                            callback(null, matchData);
+                                            singleData.result = matchData;
+                                            callback(null, singleData);
                                         }
                                     });
                                 }, function (err, playerData) {
@@ -11746,13 +11764,14 @@ var model = {
 
                             } else {
                                 async.concatSeries(singleData.team, function (n, callback) {
-                                    data.team = n;
+                                    data.team = n._id;
                                     var pipeLine = Match.getTeamAggregatePipeline(data);
                                     Match.aggregate(pipeLine, function (err, matchData) {
                                         if (err) {
                                             callback(err, "error in mongoose");
                                         } else {
-                                            callback(null, matchData);
+                                            singleData.result = matchData;
+                                            callback(null, singleData);
                                         }
                                     });
                                 }, function (err, playerData) {
