@@ -10285,50 +10285,50 @@ var model = {
                                 callback(null, []);
                             } else {
                                 if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted') {
-                                    if (_.isEmpty(found[0].resultsRacquet.winner.player)) {
+                                    if (_.isEmpty(found[0].resultsRacquet)) {
                                         callback(null, found);
                                     } else {
                                         callback(null, []);
                                     }
 
                                 } else if (data.found.resultVolleyball && data.found.resultVolleyball.status == 'IsCompleted') {
-                                    if (_.isEmpty(found[0].resultsRacquet.winner.player)) {
+                                    if (_.isEmpty(found[0].resultVolleyball)) {
                                         callback(null, found);
                                     } else {
                                         callback(null, []);
                                     }
                                 } else if (data.found.resultBasketball && data.found.resultBasketball.status == 'IsCompleted') {
-                                    if (_.isEmpty(found[0].resultsRacquet.winner.player)) {
+                                    if (_.isEmpty(found[0].resultBasketball)) {
                                         callback(null, found);
                                     } else {
                                         callback(null, []);
                                     }
                                 } else if (data.found.resultHockey && data.found.resultHockey.status == 'IsCompleted') {
-                                    if (_.isEmpty(found[0].resultsRacquet.winner.player)) {
+                                    if (_.isEmpty(found[0].resultHockey)) {
                                         callback(null, found);
                                     } else {
                                         callback(null, []);
                                     }
                                 } else if (data.found.resultWaterPolo && data.found.resultWaterPolo.status == 'IsCompleted') {
-                                    if (_.isEmpty(found[0].resultsRacquet.winner.player)) {
+                                    if (_.isEmpty(found[0].resultWaterPolo)) {
                                         callback(null, found);
                                     } else {
                                         callback(null, []);
                                     }
                                 } else if (data.found.resultKabaddi && data.found.resultKabaddi.status == 'IsCompleted') {
-                                    if (_.isEmpty(found[0].resultsRacquet.winner.player)) {
+                                    if (_.isEmpty(found[0].resultKabaddi)) {
                                         callback(null, found);
                                     } else {
                                         callback(null, []);
                                     }
                                 } else if (data.found.resultHandball && data.found.resultHandball.status == 'IsCompleted') {
-                                    if (_.isEmpty(found[0].resultsRacquet.winner.player)) {
+                                    if (_.isEmpty(found[0].resultHandball)) {
                                         callback(null, found);
                                     } else {
                                         callback(null, []);
                                     }
                                 } else if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted') {
-                                    if (_.isEmpty(found[0].resultsRacquet.winner.player)) {
+                                    if (_.isEmpty(found[0].resultsCombat)) {
                                         callback(null, found);
                                     } else {
                                         callback(null, []);
@@ -11325,9 +11325,14 @@ var model = {
                 },
                 function (found, callback) {
                     async.concatSeries(found, function (singleData, callback) {
-                        var deepSearch = "player team.studentTeam.studentId";
+                        var deepSearch = "opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
                         Match.find({
-                            sport: data.sport
+                            sport: data.sport,
+                            $or: [{
+                                "opponentsSingle.athleteId": "singleData.player"
+                            }, {
+                                "opponentsTeam.studentTeam.studentId": "singleData.player"
+                            }]
                         }).lean().deepPopulate(deepSearch).exec(function (err, matchData) {
                             if (err) {
                                 callback(err, null);
