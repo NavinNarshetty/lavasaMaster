@@ -118,7 +118,7 @@
           <div class="get-center knockout-round-width">
             <div class=" knockout-doubles-cardholder">
               <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index">
-                <div class="knockout-card knockout-custom-padding" ng-repeat="player in players.studentTeam track by $index " ng-class="{'knockout-winnercard':card.isWinner===true}">
+                <div class="knockout-card knockout-custom-padding" ng-repeat="player in players.studentTeam track by $index " ng-class="{'knockout-winnercard':players.isWinner===true}">
                   <div class="knockout-cardimage display-inline ver-mid " ng-if="player.studentId.photograph">
                     <img ng-src="{{player.studentId.photograph|serverimage}}" alt="{{player.fullName}}" class="img-responsive ">
                   </div>
@@ -175,7 +175,7 @@
         <div class="knockout-doubles-cardholder-round3 relate" ng-repeat="card in roundsList[2].match track by $index">
           <div class="get-center knockout-round-width">
             <div class=" knockout-doubles-cardholder">
-              <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index" ng-class="{'knockout-winnercard':card.isWinner==true}">
+              <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index" ng-class="{'knockout-winnercard':players.isWinner==true}">
                 <div class="knockout-card knockout-custom-padding " ng-repeat="player in players.studentTeam track by $index">
                   <div class="knockout-cardimage display-inline ver-mid " ng-if="player.studentId.photograph">
                     <img ng-src="{{player.studentId.photograph|serverimage}}" alt="{{player.fullName}}" class="img-responsive ">
@@ -186,7 +186,7 @@
                   </div>
                 </div>
               </div>
-              <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true , 'knockout-live-foot': card.status === 'IsLive'}">
+              <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner === true || card.isNoMatch === true , 'knockout-live-foot': card.status === 'IsLive'}">
 
                 <p class="m-clear scheduledata-knockout " ng-if="!card.status || card.status==='' || card.status === 'IsPending'">
                   <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
@@ -227,23 +227,23 @@
       <!--ROUND 3 END-->
 
       <!--WINNERS-->
-      <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs" hidden>
+      <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs">
         <div class="knockout-winnercardholder" ng-repeat="winner in winnerDoubles track by $index">
           <div class="display-inline knockout-winnercardname">
-            <div class="knockout-winnercardname-holder" ng-repeat="doubles in winner.players track by $index">
+            <div class="knockout-winnercardname-holder" ng-repeat="doubles in winner.team[0].studentTeam track by $index">
               <div class="knockout-winnercardimgage display-inline">
                 <img src="/img/dishapatani1.jpg" alt="" class="img-responsive">
               </div>
               <div class="knockout-winnercardplayername display-inline">
-                <p class="m-clear sport-color-primary">{{doubles.player}}</p>
-                <p class="m-clear">{{doubles.schoolname | truncate:25}}</p>
+                <p class="m-clear sport-color-primary">{{doubles.fullName}}</p>
+                <p class="m-clear">{{winner.team[0].schoolName | truncate:25}}</p>
               </div>
             </div>
 
           </div>
           <div class="display-inline knockout-winnermedalholder">
             <div class="testsfa">
-              <img ng-src="/img/medal-icon/{{winner.medal}}-blue.png" alt="" class="img-responsive">
+              <img ng-src="/img/medal-icon/{{winner.medalType}}-blue.png" alt="" class="img-responsive">
             </div>
           </div>
         </div>

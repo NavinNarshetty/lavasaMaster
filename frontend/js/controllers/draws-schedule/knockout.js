@@ -399,6 +399,34 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
         }
     };
     $scope.getSportSpecificRounds();
+    $scope.getWinners = function () {
+        if ($stateParams.id) {
+            $scope.constraints.sport = $stateParams.id;
+            NavigationService.getAllWinners($scope.constraints, function (data) {
+                errorService.errorCode(data, function (allData) {
+                    if (!allData.message) {
+                        if (allData.value) {
+                            $scope.winnerDoubles = allData.data;
+                            _.each($scope.winnerDoubles, function (value) {
+                                _.each(value.team, function (key) {
+                                    _.each(key.studentTeam, function (n) {
+                                        n.fullName = n.studentId.firstName + ' ' + n.studentId.surname;
+                                    });
+                                });
+                            });
+                            console.log("  $scope.winnerDoubles", $scope.winnerDoubles);
+                        }
+                    } else {
+                        toastr.error(allData.message, 'Error Message');
+                    }
+
+                });
+
+
+            });
+        }
+    },
+        $scope.getWinners();
 
     // MATCH CENTER
     $scope.matchCenter = function (card) {

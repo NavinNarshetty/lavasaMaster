@@ -1048,6 +1048,13 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 method: 'POST'
             }).then(callback);
         },
+        getAllWinners: function (sportId, callback) {
+            $http({
+                url: adminUrl2 + 'Match/getAllWinners',
+                data: sportId,
+                method: 'POST'
+            }).then(callback);
+        },
 
         getSchool: function (callback) {
             $http({
