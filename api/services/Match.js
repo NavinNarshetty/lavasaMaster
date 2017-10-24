@@ -4352,7 +4352,7 @@ var model = {
                     obj["BEST ATTEMPT"] = "";
                     obj["RESULT"] = "";
                     obj["VIDEO TYPE"] = "";
-                    Obj["VIDEO"] = "";
+                    obj["VIDEO"] = "";
                 }
                 callback(null, obj);
 
@@ -11856,14 +11856,14 @@ var model = {
                                                 result.profile = n.school.schoolLogo;
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
-                                                _.each(matchData.resultsRacquet.teams,function(team){
-                                                   if(team.team===n._id){                     
-                                                    result.player1 = team.players[0].fullName;
-                                                    result.player1SfaId = team.players[0].sfaId;
-                                                    result.player2 = team.players[1].fullName;
-                                                    result.player2SfaId = team.players[0].sfaId;
-                                                   } 
-                                                });   
+                                                _.each(matchData.resultsRacquet.teams, function (team) {
+                                                    if (team.team === n._id) {
+                                                        result.player1 = team.players[0].fullName;
+                                                        result.player1SfaId = team.players[0].sfaId;
+                                                        result.player2 = team.players[1].fullName;
+                                                        result.player2SfaId = team.players[0].sfaId;
+                                                    }
+                                                });
                                             } else {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
