@@ -11871,7 +11871,7 @@ var model = {
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
                                             }
-                                            callback(null, matchData);
+                                            callback(null, result);
                                         }
                                     });
                                 }, function (err, playerData) {
