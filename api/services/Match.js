@@ -11856,18 +11856,14 @@ var model = {
                                                 result.profile = n.school.schoolLogo;
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
-                                                if (n.studentTeam[0].studentId.middleName) {
-                                                    result.player1 = n.studentTeam[0].studentId.firstName + " " + n.studentTeam[0].studentId.middleName + " " + n.studentTeam[0].studentId.surname;
-                                                } else {
-                                                    result.player1 = n.studentTeam[0].studentId.firstName + " " + n.studentTeam[0].studentId.surname;
-                                                }
-                                                result.player1SfaId = n.studentTeam[0].studentId.sfaId;
-                                                if (n.studentTeam[1].studentId.middleName) {
-                                                    result.player2 = n.studentTeam[1].studentId.firstName + " " + n.studentTeam[1].studentId.middleName + " " + n.studentTeam[1].studentId.surname;
-                                                } else {
-                                                    result.player2 = n.studentTeam[1].studentId.firstName + " " + n.studentTeam[1].studentId.surname;
-                                                }
-                                                result.player2SfaId = n.studentTeam[1].studentId.sfaId;
+                                                _.each(matchData.resultsRacquet.teams,function(team){
+                                                   if(team.team===n._id){                     
+                                                    result.player1 = team.players[0].fullName;
+                                                    result.player1SfaId = team.players[0].sfaId;
+                                                    result.player2 = team.players[1].fullName;
+                                                    result.player2SfaId = team.players[0].sfaId;
+                                                   } 
+                                                });   
                                             } else {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
