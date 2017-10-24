@@ -11860,7 +11860,7 @@ var model = {
                                                 result.medaltype = singleData.medalType;
                                                 _.each(matchData[0].resultsRacquet.teams, function (team) {
                                                     console.log("team", team, "n", n);
-                                                    if (team.team === n._id) {
+                                                    if (team.team.equals(n._id)) {
                                                         result.player1 = team.players[0].fullName;
                                                         result.player1SfaId = team.players[0].sfaId;
                                                         result.player2 = team.players[1].fullName;
