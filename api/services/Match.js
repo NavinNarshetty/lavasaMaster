@@ -11851,6 +11851,7 @@ var model = {
                                                 result.medaltype = singleData.medalType;
                                                 result.result = matchData.resultShooting.finalScore;
                                             } else if (matchData.resultsRacquet) {
+                                                console.log("matchData", matchData);
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
                                                 result.profile = n.school.schoolLogo;
@@ -11864,6 +11865,7 @@ var model = {
                                                         result.player2SfaId = team.players[0].sfaId;
                                                     }
                                                 });
+                                                console.log("result", result);
                                             } else {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
