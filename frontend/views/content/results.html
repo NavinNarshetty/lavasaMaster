@@ -69,7 +69,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="school in rankTable track by $index">
+            <tr ng-repeat="school in rankTable track by $index" id="rank{{school.rank}}{{$index}}">
               <td>
                 <div class="">
                   {{school.rank}}
@@ -95,9 +95,9 @@
                   {{school.bronzePoints}}
                 </div>
               </td>
-              <td ng-click="addMedalDetail($index, school);" class="pointer">
+              <td  class="">
                 <div class="">
-                  {{school.totalPoints}} <span class="pointer fa " ng-class="{'fa-angle-down': school.rowDetail == false, 'fa-angle-up':school.rowDetail == true }" ></span>
+                  {{school.totalPoints}} <span ng-click="addMedalDetail($index, school);" class="pointer fa " ng-class="{'fa-angle-down': school.rowDetail == false, 'fa-angle-up':school.rowDetail == true }" ></span>
                 </div>
               </td>
             </tr>

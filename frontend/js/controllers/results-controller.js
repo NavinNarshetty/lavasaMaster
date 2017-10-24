@@ -38,23 +38,20 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     $scope.addMedalDetail = function(index, detail){
       console.log(detail, 'detail');
       console.log(index, 'indexS');
-      var index = $(this).closest('tr').index();
-      index = index + 2;
+      var id = "#rank" + detail.rank + index;
+      var demo = "";
       if (detail.rowDetail == true) {
-        document.getElementById("schoolRankTable").deleteRow(index);
+        detailId = "#rankDetail" + detail.rank + index;
+        console.log(detailId, 'det');
+        $(detailId).remove();
         detail.rowDetail = false;
-      } else{
-        $timeout(function () {
-          detail.rowDetail = true;
-          console.log(index, 'index + 2');
-          var rankTable = document.getElementById("schoolRankTable");
-          var rowDetail = rankTable.insertRow(index);
-          var cell = rowDetail.insertCell(0);
-          cell.innerHTML = "NEW CELL1";
-          console.log(rowDetail, 'rowDetail');
-          console.log('cell', cell);
-          console.log(rankTable,'table');
-        }, 100);
+        // $(id).after(demo);
+      } else {
+        detail.detailTable = "'views/template/ranktable-detail.html'";
+        $scope.rankDetail = detail;
+         demo = '<tr id="rankDetail'+ detail.rank + index +'"> <td colspan = "6"> <div ng-include="rankDetail.detailTable"> </div> </td> </tr>'
+        detail.rowDetail = true;
+        $(id).after(demo);
       }
     };
 

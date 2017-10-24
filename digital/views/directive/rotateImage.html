@@ -1,17 +1,14 @@
-<div class="">
-    <div class="relate">
-        <img src="{{image}}" alt="" id="rotateimg" class="img-responsive" />
-        <canvas id="canvas"></canvas>
+<div class="imagerotate-container">
+    <div class="imagerotate-btnholder">
+        <p>Rotate Image: </p>
+        <button class="btn btn-rotateimage" ng-click="rotateImage(90)" >90&deg;</button>
+        <button class="btn btn-rotateimage" ng-click="rotateImage(180)" >180&deg;</button>
+        <button class="btn btn-rotateimage" ng-click="rotateImage(270)" >270&deg;</button>
+        <button class="btn btn-rotateimage" ng-click="rotateImage(0)" >Reset Image</button>
+        <button class="btn btn-rotateimage" ng-click="rotateUpload();">Save</button>
     </div>
-    <p>
-        <strong>Rotate Image: </strong>
-        <button ng-click="rotateImage(90)" id="rotate90" class="btn">90&deg;</button>
-        <button ng-click="rotateImage(180)" id="rotate180" class="btn">180&deg;</button>
-        <button ng-click="rotateImage(270)" id="rotate270" class="btn">270&deg;</button>
-        <button ng-click="rotateImage()" id="resetImage" class="btn">Reset Image</button>
-    </p>
-    <div class="">
-        <button class="btn" ng-click="saveImage();" ng-hide="showResult">Save</button>
+    <div class="relate" style="max-width:100%; width: auto; max-height:auto; border: 2px solid red;">
+        <img ng-src="{{model}}" id="rotateInput" class="img-responsive" />
+        <canvas id="rotateCanvas"></canvas>
     </div>
-    <image-rotate image="" width="" height="" result=""></image-rotate>
 </div>

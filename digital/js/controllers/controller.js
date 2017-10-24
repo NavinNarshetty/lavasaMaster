@@ -64,9 +64,10 @@ myApp.controller('HomeCtrl', function($scope, TemplateService, NavigationService
         // LOGIN POPUP CONTROLLER END
         // CHECK FOR LOGGED IN
     if ($scope.user != null || $scope.user != undefined) {
-        console.log('hello');
+        console.log('LOGGED IN');
     } else {
         $scope.loginPopup();
+        console.log('PLEASE LOG IN');
     }
     // CHECK FOR LOGGED IN  END
     var abc = _.times(100, function(n) {
@@ -94,97 +95,7 @@ myApp.controller('HomeCtrl', function($scope, TemplateService, NavigationService
         }
         // DEMO STUFF END
         // ROTATE FUNCTION
-        $scope.image = 'img/dishapatani1.jpg';
-        var img = null;
-        var  canvas = null;
-        $scope.resultImage = "";
-        $scope.showResult = false;
-
-        $scope.rotateImage = function(degree) {
-            if (document.getElementById('canvas')) {
-                var cContext = canvas.getContext('2d');
-                // TAKE WIDTH AND HEIGHT YOU WANT TO SET FOR IMAGE
-                var imgWidth, imgHeight;
-                var cw = $(img).width(),
-                    ch = $(img).height(),
-                    cx = 0,
-                    cy = 0;
-
-                //   Calculate new canvas size and x/y coorditates for image
-                switch (degree) {
-                    case 90:
-                        cw = $(img).height();
-                        ch = $(img).width();
-                        cy = $(img).height() * (-1);
-                        break;
-                    case 180:
-                        cx = $(img).width() * (-1);
-                        cy = $(img).height() * (-1);
-                        break;
-                    case 270:
-                        cw = $(img).height();
-                        ch = $(img).width();
-                        cx = $(img).width() * (-1);
-                        break;
-                }
-
-                //  Rotate image
-                canvas.setAttribute('width', cw);
-                canvas.setAttribute('height', ch);
-                cContext.rotate(degree * Math.PI / 180);
-                cContext.drawImage(img, cx, cy, cw, ch);
-                var result = canvas.toDataURL("image/png")
-                $scope.resultImage = result;
-                $('#download').attr('href', $scope.resultImage)
-            }
-            // else {
-            //     //  Use DXImageTransform.Microsoft.BasicImage filter for MSIE
-            //     switch (degree) {
-            //         case 0:
-            //             image.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation=0)';
-            //             break;
-            //         case 90:
-            //             image.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation=1)';
-            //             break;
-            //         case 180:
-            //             image.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation=2)';
-            //             break;
-            //         case 270:
-            //             image.style.filter = 'progid:DXImageTransform.Microsoft.BasicImage(rotation=3)';
-            //             break;
-            //     }
-            // }
-        }
-        $scope.saveImage =  function(){
-          console.log('save');
-          $scope.image = $scope.resultImage;
-          $scope.showResult = true;
-        }
-        $scope.rotateStart = function(){
-          $scope.showResult = false;
-        }
-
-        $scope.$on('$viewContentLoaded', function (event) {
-          $timeout(function () {
-            //  Initialize image and canvas
-            img = document.getElementById('rotateimg');
-            canvas = document.getElementById('canvas');
-
-            if (!canvas || !canvas.getContext) {
-                canvas.parentNode.removeChild(canvas);
-                // img.style.position = 'absolute';
-                // img.style.visibility = 'hidden';
-            } else {
-                img.style.position = 'absolute';
-                img.style.visibility = 'hidden';
-            }
-            $scope.rotateImage(0);
-
-            //  Handle clicks for control links
-            // $scope.rotateImage(deg);
-          }, 100);
-        })
-        // ROTATE FUNCTION END
+        $scope.image = 'img/demo300x600.jpg';
 })
 
 .controller('FormCtrl', function($scope, TemplateService, NavigationService, $timeout, toastr, $http) {
