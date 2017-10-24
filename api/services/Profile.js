@@ -8,6 +8,173 @@ module.exports = mongoose.model('Profile', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
+    getIndivivualAggregatePipeline: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "athleteId",
+                    "foreignField": "_id",
+                    "as": "athleteId"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athleteId",
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "athleteId.school",
+                    "foreignField": "_id",
+                    "as": "athleteId.school"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$athleteId.school",
+                }
+            },
+
+            // Stage 5
+            {
+                $match: {
+                    "athleteId.school.name": data.school
+                }
+            },
+
+            // Stage 6
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sportsListSubCategory"
+                }
+            },
+
+            // Stage 7
+            {
+                $unwind: {
+                    path: "$sportsListSubCategory",
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
+    getTeamAggregatePipeline: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $match: {
+                    schoolName: data.school
+                }
+            },
+
+            // Stage 2
+            {
+                $lookup: {
+                    "from": "sports",
+                    "localField": "sport",
+                    "foreignField": "_id",
+                    "as": "sport"
+                }
+            },
+
+            // Stage 3
+            {
+                $unwind: {
+                    path: "$sport",
+                }
+            },
+
+            // Stage 4
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+
+            // Stage 5
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
+
+                }
+            },
+
+            // Stage 6
+            {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sport.sportslist.sportsListSubCategory",
+                    "foreignField": "_id",
+                    "as": "sportsListSubCategory"
+                }
+            },
+
+            // Stage 7
+            {
+                $unwind: {
+                    path: "$sportsListSubCategory",
+
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
+    getAthleteAggregatePipeline: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "school",
+                    "foreignField": "_id",
+                    "as": "school"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$school",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+
+            // Stage 3
+            {
+                $match: {
+                    $or: [{
+                            "school.name": data.school
+                        },
+                        {
+                            atheleteSchoolName: data.school
+                        }
+                    ]
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
     searchAthlete: function (data, callback) {
         var maxRow = Config.maxRow;
 
@@ -131,7 +298,7 @@ var model = {
             });
     },
 
-    getProfile: function (data, callback) {
+    getAthleteProfile: function (data, callback) {
         var profile = {};
         profile.sport = [];
         async.waterfall([
@@ -269,7 +436,6 @@ var model = {
                                             // console.log("player", singleData.player);
                                             async.eachSeries(singleData.player, function (player, callback) {
                                                     if (player === data.athleteId.toString()) {
-                                                        // var medals=sin
                                                         medals.push(singleData);
                                                     }
                                                     callback(null, singleData);
@@ -317,6 +483,212 @@ var model = {
             },
             function (err, singleData) {
                 callback(null, medals);
+            });
+    },
+
+    getTeamProfile: function (data, callback) {
+        var profile = {};
+        profile.players = [];
+        async.waterfall([
+                function (callback) {
+                    var deepSearch = "studentTeam.studentId team.school";
+                    TeamSport.findOne({
+                        _id: data.teamId
+                    }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                profile.teamName = found.name;
+                                profile.teamId = found.teamId;
+                                profile.school = found.schoolName;
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+                function (found, callback) {
+                    console.log("found", found);
+                    async.concatSeries(found.studentTeam, function (n, callback) {
+                            console.log("n", n);
+                            var player = {};
+                            if (n.studentId.middleName) {
+                                player.playerName = n.studentId.firstName + " " + n.studentId.middleName + " " + n.studentId.surname;
+                            } else {
+                                player.playerName = n.studentId.firstName + " " + n.studentId.surname;
+                            }
+                            player.sfaId = n.studentId.sfaId;
+                            player.profilePic = n.studentId.photograph;
+                            callback(null, player);
+                        },
+                        function (err, playerData) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                profile.players = playerData;
+                                callback(null, profile);
+                            }
+                        });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(profile)) {
+                    callback(null, []);
+                } else {
+                    callback(null, profile);
+                }
+            });
+    },
+
+    getSchoolProfile: function (data, callback) {
+        var profile = {};
+        // profile.sport = [];
+        async.waterfall([
+                function (callback) {
+                    Registration.findOne({
+                        _id: data.school
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+                function (found, callback) {
+                    data.school = found.schoolName;
+                    var pipeLine = Profile.getIndivivualAggregatePipeline(data);
+                    IndividualSport.aggregate(pipeLine, function (err, matchData) {
+                        if (err) {
+                            callback(err, "error in mongoose");
+                        } else {
+                            profile.schoolName = found.schoolName;
+                            // profile.
+                            callback(null, matchData);
+                        }
+                    });
+                },
+                function (matchData, callback) {
+                    var pipeLine = Profile.getTeamAggregatePipeline(data);
+                    TeamSport.aggregate(pipeLine, function (err, teamSportData) {
+                        if (err) {
+                            callback(err, "error in mongoose");
+                        } else {
+                            var teamData = teamSportData;
+                            var individualData = matchData;
+                            var teamGroup = _(teamData)
+                                .groupBy('sportsListSubCategory.name')
+                                .map(function (items, name) {
+                                    var gender = _(items)
+                                        .groupBy('sport.gender')
+                                        .map(function (data, name) {
+                                            var teams = [];
+                                            _.each(data, function (n) {
+                                                var team = {};
+                                                team.sportsListSubCategoryId = n.sportsListSubCategory._id;
+                                                team.sportsListSubCategoryName = n.sportsListSubCategory.name;
+                                                teams.push(team);
+                                            });
+                                            return {
+                                                name: name,
+                                                team: teams,
+                                                count: items.length
+                                            };
+                                        }).value();
+                                    return {
+                                        name: name,
+                                        gender: gender,
+                                        count: items.length
+                                    };
+                                }).value();
+
+                            var individualGroup = _(individualData)
+                                .groupBy('sportsListSubCategory.name')
+                                .map(function (items, name) {
+                                    var gender = _(items)
+                                        .groupBy('athleteId.gender')
+                                        .map(function (data, name) {
+                                            var teams = [];
+                                            _.each(data, function (n) {
+                                                var team = {};
+                                                team.sportsListSubCategoryId = n.sportsListSubCategory._id;
+                                                team.sportsListSubCategoryName = n.sportsListSubCategory.name;
+                                                teams.push(team);
+                                            });
+                                            return {
+                                                name: name,
+                                                individual: teams,
+                                                count: items.length
+                                            };
+                                        }).value();
+                                    return {
+                                        name: name,
+                                        gender: gender,
+                                        count: items.length
+                                    };
+                                }).value();
+                            var registerSport = [].concat.apply([], [
+                                teamGroup,
+                                individualGroup
+                            ]);
+                            profile.registerSport = registerSport;
+                            callback(null, profile);
+                        }
+                    });
+                },
+                function (profile, callback) {
+                    var pipeLine = Profile.getAthleteAggregatePipeline(data);
+                    Athelete.aggregate(pipeLine, function (err, matchData) {
+                        if (err) {
+                            callback(err, "error in mongoose");
+                        } else {
+                            var atheletes = [];
+                            _.each(matchData, function (n) {
+                                var athlete = {};
+                                if (n.middleName) {
+                                    athlete.name = n.firstName + " " + n.middleName + " " + n.surname;
+                                } else {
+                                    athlete.name = n.firstName + " " + n.surname;
+                                }
+                                athlete.sfaId = n.sfaId;
+                                athlete.gender = n.gender;
+                                athlete.profilePic = n.photograph;
+                                atheletes.push(athlete);
+                            });
+                            var atheleteData = _(atheletes)
+                                .groupBy('gender')
+                                .map(function (items, name) {
+                                    return {
+                                        name: name,
+                                        items: items,
+                                        count: items.length
+                                    };
+                                }).value();
+                            profile.athletes = atheleteData;
+                            callback(null, profile);
+                        }
+                    });
+                }
+
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, profile);
+                    }
+                }
             });
     },
 

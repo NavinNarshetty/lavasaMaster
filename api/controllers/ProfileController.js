@@ -34,9 +34,31 @@ var controller = {
         }
     },
 
-    getProfile: function (req, res) {
+    getAthleteProfile: function (req, res) {
         if (req.body) {
-            Profile.getProfile(req.body, res.callback);
+            Profile.getAthleteProfile(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
+    getTeamProfile: function (req, res) {
+        if (req.body) {
+            Profile.getTeamProfile(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
+    getSchoolProfile: function (req, res) {
+        if (req.body) {
+            Profile.getSchoolProfile(req.body, res.callback);
         } else {
             res.json({
                 "data": "Body not Found",
