@@ -55,24 +55,23 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
     saveRising: function (data, callback) {
-        var matchObj={
-            "type":data.type,
-            "award":data.award,
-            "gender":data.gender,
-            "sports":data.sports
+        var matchObj = {
+            "type": data.type,
+            "award": data.award,
+            "gender": data.gender,
+            "sports": data.sports
         }
-        SpecialAwardDetails.find(matchObj).exec(function(err,data){
-            console.log("found------------------",data);
-            if(err){
-                callback(err,null);
-            }else if(_.isEmpty(data)){
-               callback(null,true);
-            }else{
-                callback(null,false);
+        SpecialAwardDetails.find(matchObj).exec(function (err, data) {
+            console.log("found------------------", data);
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(data)) {
+                callback(null, true);
+            } else {
+                callback(null, false);
             }
         });
     },
-    
 
     getAwardsList: function (data, awardListObj, awardDetailObj, callback) {
         if (data.rising) {
@@ -113,7 +112,7 @@ var model = {
                                         "award": award._id
                                     }).exec(function (err, count) {
                                         if (count < 10) {
-                                             sendList.push(award);
+                                            sendList.push(award);
                                         }
                                         callback(null);
                                     });
@@ -158,30 +157,124 @@ var model = {
                     includeArrayIndex: "arrayIndex", // optional
                     preserveNullAndEmptyArrays: false // optional
                 }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "athlete",
+                    "foreignField": "_id",
+                    "as": "athlete"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$athlete",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "registrations",
+                    "localField": "school",
+                    "foreignField": "_id",
+                    "as": "school"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$school",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
+                }
             }
+
+
+
         ];
     },
 
     getAllAwardDetails: function (data, callback) {
+        var maxRow = Config.maxRow;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['firstName', 'sfaId', 'surname'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                asc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
         var pipeline = model.getPipeline();
+        var countPipeline;
         if (data.rising) {
             pipeline.push({
                 $match: {
-                    "award.name": "Sfa Rising Star Award"
+                    "award.awardType": "rising"
+                }
+            }, {
+                $lookup: {
+                    "from": "sportslistsubcategories",
+                    "localField": "sports",
+                    "foreignField": "_id",
+                    "as": "sports"
+                }
+            }, {
+                $unwind: {
+                    path: "$sports",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
                 }
             });
         } else {
             pipeline.push({
                 $match: {
-                    "award.name": {
-                        $ne: "Sfa Rising Star Award"
+                    "award.awardType": {
+                        $ne: "rising"
                     }
                 }
             });
         }
 
+        countPipeline = _.cloneDeep(pipeline);
+        countPipeline.push({
+            $count: "totalCount"
+        });
+
+        pipeline.push({
+            $skip: options.start
+        }, {
+            $limit: options.count
+        });
+
         SpecialAwardDetails.aggregate(pipeline, function (err, arr) {
-            callback(null, arr);
+            var data = {};
+            data.options = options;
+            data.results = arr;
+            SpecialAwardDetails.aggregate(countPipeline, function (err, count) {
+                console.log("totalCount", count);
+                data.total = count[0].totalCount;
+                callback(null, data);
+            });
         });
     },
 
@@ -200,7 +293,9 @@ var model = {
                 if (err) {
                     callback(err, null);
                 } else if (!_.isEmpty(found)) {
+                    found.sportslist.sportsListSubCategory._id = found.sportslist.sportsListSubCategory._id.toString();
                     callback(null, found.sportslist.sportsListSubCategory);
+
                 } else {
                     //null if sportId is incorrect
                     callback(null);
@@ -208,12 +303,171 @@ var model = {
 
             });
         }, function (err, result) {
-            callback(null, result);
+            console.log("result", result);
+            callback(null, _.uniqBy(result, '_id'));
         });
     },
 
-   
-    
+    getAwardsCertificate: function (data, callback) {
+        var pdfObj = {};
+        async.waterfall([
+
+            //get Awards
+            function (callback) {
+                SpecialAwardDetails.find(data).deepPopulate("athlete athlete.school school sports award").lean().exec(function (err, SpecialAwards) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(SpecialAwards)) {
+                        callback(null, SpecialAwards);
+                    } else {
+                        callback("Sorry No Awards", null);
+                    }
+                })
+            },
+
+            // get city information from config
+            function (SpecialAwards, callback) {
+                ConfigProperty.find().lean().exec(function (err, property) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(property)) {
+                        pdfObj.sfaCity = property[0].sfaCity;
+                        pdfObj.institutionType = property[0].institutionType;
+                        pdfObj.year = property[0].year;
+                        pdfObj.totalSport = property[0].totalSport;
+                        callback(null, SpecialAwards);
+                    } else {
+                        callback("Config Not Found", null);
+                    }
+                });
+            },
+
+            //get banner Image
+            function (SpecialAwards, callback) {
+                SpecialAwardBanner.findOne({
+                    "city": pdfObj.sfaCity
+                }).lean().exec(function (err, banner) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (!_.isEmpty(banner)) {
+                        pdfObj.bannerImage = env.realHost + "/api/upload/readFile?file=" + banner.banner;
+                        callback(null, SpecialAwards);
+                    } else {
+                        callback("Banner Image Not Found", null);
+                    }
+                });
+            },
+
+        ], function (err, SpecialAwards) {
+            if (err) {
+                callback(err, null);
+            } else {
+                async.concatSeries(SpecialAwards, function (award, callback) {
+                    async.waterfall([
+
+                        function (callback) {
+                            //make pdfObj as per Specific Award
+                            var basePath = "https://storage.googleapis.com/sfacertificate/";
+                            pdfObj.athlete = award.athlete;
+                            pdfObj.newFilename = _.join(_.split(award.award.name,  ' '), '_') + ".pdf";
+                            pdfObj.footerImage = env.realHost + "/api/upload/readFile?file=" + award.footerImage;
+                            pdfObj.sports = award.sports;
+                            pdfObj.award = award.award;
+                            pdfObj.type = award.type;
+                            pdfObj.school = award.school;
+
+                            if (pdfObj.type == 'athlete') {
+                                if (pdfObj.athlete.middleName) {
+                                    pdfObj.athlete.fullName = pdfObj.athlete.firstName + " " + pdfObj.athlete.middleName + " " + pdfObj.athlete.surname;
+                                } else {
+                                    pdfObj.athlete.fullName = pdfObj.athlete.firstName + " " + pdfObj.athlete.surname;
+                                }
+                            }
+
+                            switch (award.award.awardType) {
+                                case "max":
+                                    pdfObj.filename = "sportMaxAwardAthlete";
+                                    pdfObj.totalSportsReg = award.sports.length;
+                                    pdfObj.heading = basePath + "max.png";
+                                    break;
+                                case "strong":
+                                    pdfObj.filename = "schoolStrongAward";
+                                    pdfObj.heading = basePath + "strong.png";
+                                    break;
+                                case "boost":
+                                    pdfObj.filename = "schoolBoostAward";
+                                    pdfObj.heading = basePath + "boost.png";
+                                    pdfObj.boostDetail = award.boostDetail;
+                                    break;
+                                case "coach":
+                                    pdfObj.filename = "schoolMasterCoachAward";
+                                    pdfObj.heading = basePath + "coach.png";
+                                    pdfObj.coachName = award.coachName;
+                                    break;
+                                case "rising":
+                                    pdfObj.filename = "risingStar";
+                                    pdfObj.newFilename = award.award.name + "_" + award.sports[0].name + ".pdf";
+                                    pdfObj.heading = basePath + "rising.png";
+                                    break;
+                                case "champion":
+                                    pdfObj.filename = "championsAward";
+                                    pdfObj.heading = basePath + "champion.png";
+                                    break;
+                            }
+
+                            callback(null, pdfObj, award.award.awardType);
+
+                        },
+
+                        function (pdfObj, awardType, callback) {
+                            console.log("pdfObj, awardType", awardType);
+                            function calculateSchoolAthelete() {
+                                var matchObj={};
+                                if(data.school){
+                                    matchObj.school=data.school;
+                                }else if(data.college){
+                                    matchObj.school=data.college;                                    
+                                }
+                                console.log("matchObj------------------",matchObj);
+                                Athelete.aggregate([{
+                                    $match:matchObj
+                                },{
+                                    $group:{
+                                        "_id":"gender"
+                                    }
+                                }],function(err,allAthletes){
+                                    callback(null,allAthletes);
+                                });
+                            }
+
+                            switch (awardType) {
+                                case "strong":
+                                    calculateSchoolAthelete();
+                                    break;
+                                default:
+                                    callback(null, pdfObj);
+                            }
+                        }
+                    ], function (err, result) {
+                        Config.generatePdf(pdfObj, function (err, pdfRespo) {
+                            if (err) {
+                                callback(null, err);
+                            } else if (pdfRespo) {
+                                pdfObj.pdfname = pdfRespo;
+                                callback(null, pdfObj);
+                            } else {
+                                callback(null, "Invalid data");
+                            }
+                        });
+                    });
+
+                }, function (err, result) {
+                    callback(null, result);
+                });
+            }
+        });
+
+    }
 
 };
 module.exports = _.assign(module.exports, exports, model);

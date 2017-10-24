@@ -275,7 +275,7 @@ var controller = {
                                 callback(null, importData);
                             }
                         }
-                    }
+                    },
                 ],
                 function (err, results) {
                     // console.log("results", results);
@@ -567,17 +567,17 @@ var controller = {
                         // console.log("sports", sportData);
                         req.body.sport = sportData.sportId;
                         if (req.body.resultType == "knockout") {
-                            Match.generateExcelKnockout(req.body, res);
+                            Match.generateGraphicsKnockout(req.body, res);
                         } else if (req.body.resultType == "heat") {
-                            Match.generateExcelHeat(req.body, res);
+                            Match.generateGraphicsHeat(req.body, res);
                         } else if (req.body.resultType == "qualifying-round" || req.body.resultType == "direct-final") {
-                            Match.generateExcelQualifyingRound(req.body, res);
+                            Match.generateGraphicsQualifyingRound(req.body, res);
                         } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "qualifying") {
-                            Match.generateExcelQualifying(req.body, res);
+                            Match.generateGraphicsQualifying(req.body, res);
                         } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "knockout") {
-                            Match.generateExcelQualifyingKnockout(req.body, res);
+                            Match.generateGraphicsQualifyingKnockout(req.body, res);
                         } else if (req.body.resultType == "league-cum-knockout") {
-                            Match.generateLeagueKnockout(req.body, res);
+                            Match.generateGraphicsLeagueKnockout(req.body, res);
                         } else if (req.body.resultType == "swiss-league") {
                             Match.generateExcelSwiss(req.body, res);
                         } else {
@@ -772,6 +772,17 @@ var controller = {
         } else {
             res.json({
                 "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
+    getAllWinners: function (req, res) {
+        if (req.body) {
+            Match.getAllWinners(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Match Id not Found",
                 "value": false
             })
         }

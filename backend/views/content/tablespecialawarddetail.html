@@ -38,6 +38,12 @@
                   <th>
                     Certificate Type
                   </th>
+                  <th>
+                    Athlete
+                  </th>
+                  <th>
+                    School
+                  </th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -55,6 +61,16 @@
                   <td>
                     <div class="text-capitalize">
                       {{item.award.name}} <span class="text-capitalize" ng-if="item.gender">-{{item.gender}}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="athlete-name">
+                      {{item.fullName | truncate:25}} <span ng-if="!item.fullName">-</span>
+                    </div>
+                  </td>
+                  <td>
+                    <div class="athlete-schoolname" title="{{item.school.schoolName}}">
+                      {{item.school.schoolName | truncate:25}} <span ng-if="!item.school">-</span>
                     </div>
                   </td>
                   <td>

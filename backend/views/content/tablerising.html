@@ -38,6 +38,8 @@
                   <th>
                     Certificate Type
                   </th>
+                  <th>Athlete Name</th>
+                  <th>Sport</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -58,7 +60,17 @@
                     </div>
                   </td>
                   <td>
-                    <a class="btn btn-primary" target="_blank" ui-sref="detailawardspecial({id:item._id})">
+                    <div class="athlete-name">
+                      {{item.fullName}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="athlete-sportname">
+                      {{item.sports.name}}
+                    </div>
+                  </td>
+                  <td>
+                    <a class="btn btn-primary" target="_blank" ui-sref="detail-rising({id:item._id})">
                                   <i class="fa fa-pencil"></i> Edit
                                 </a>
                     <a class="btn btn-danger" ng-click="confDel(item._id)">

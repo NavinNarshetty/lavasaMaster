@@ -348,6 +348,16 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'IndividualSponsorCtrl'
         })
+        .state('event-attendance', {
+            url: "/event-attendance",
+            templateUrl: tempateURL,
+            controller: 'eventAttendanceCtrl'
+        })
+        .state('eventattendance-profile', {
+            url: "/eventattendance-profile/:id",
+            templateUrl: tempateURL,
+            controller: 'eventAttendanceProfileCtrl'
+        })
         .state('additional-paymentForm', {
             url: "/additional-paymentForm",
             templateUrl: tempateURL,

@@ -51,13 +51,23 @@ var controller = {
         }
     },
 
-    searchByFilter:function(req,res){
-       Athelete.searchByFilter(req.body,res.callback);
+    searchByFilter: function (req, res) {
+        Athelete.searchByFilter(req.body, res.callback);
     },
 
     search: function (req, res) {
         if (req.body) {
             Athelete.search(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+    searchByNameId: function (req, res) {
+        if (req.body) {
+            Athelete.searchByNameId(req.body, res.callback);
         } else {
             res.json({
                 value: false,

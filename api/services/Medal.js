@@ -41,7 +41,7 @@ schema.plugin(deepPopulate, {
             select: ''
         },
         "player.school": {
-            select: ''
+            select: 'id name'
         },
     }
 });
@@ -494,6 +494,7 @@ var model = {
             function (athleteDetails, callback) {
 
                 async.waterfall([
+                    // get city information from config
                     function (callback) {
                         ConfigProperty.find().lean().exec(function (err, property) {
                             if (err) {
@@ -516,7 +517,7 @@ var model = {
                                 callback(err, null);
                             } else if (!_.isEmpty(banners)) {
                                 var banner = _.filter(banners, ['city', property[0].sfaCity]);
-                                pdfObj.bannerImage = "http://localhost:1337/api/upload/readFile?file=" + banner[0].banner;
+                                pdfObj.bannerImage = env.realHost + "/api/upload/readFile?file=" + banner[0].banner;
                                 callback(null, property);
                             } else {
                                 callback("Banner Not Found", null);
@@ -561,7 +562,7 @@ var model = {
                                             if (err) {
                                                 callback(err, null);
                                             } else if (!_.isEmpty(detail)) {
-                                                sport.footerImage = "http://localhost:1337/api/upload/readFile?file=" + detail[0].banner;
+                                                sport.footerImage = env.realHost + "/api/upload/readFile?file=" + detail[0].banner;
                                                 callback(null, sport);
                                             } else {
                                                 callback(null, sport);
@@ -618,7 +619,7 @@ var model = {
                                 //generatePdf
                                 function (pdfObj, sport, callback) {
                                     if (!pdfObj.sportObj.notFound) {
-                                        pdfObj.newFilename=pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.sportObj.ageGroup.name + "-" + pdfObj.sportObj.gender + "-" + pdfObj.sportObj.sportslist.name + "-" + pdfObj.filename + ".pdf";
+                                        pdfObj.newFilename = pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.sportObj.ageGroup.name + "-" + pdfObj.sportObj.gender + "-" + pdfObj.sportObj.sportslist.name + "-" + pdfObj.filename + ".pdf";
                                         Config.generatePdf(pdfObj, function (err, pdfRespo) {
                                             if (err) {
                                                 callback(null, err);

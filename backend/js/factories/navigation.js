@@ -138,6 +138,13 @@ myApp.factory('NavigationService', function ($http) {
             sref: "#/medals",
             icon: "phone"
         },
+
+        {
+            name: "Media",
+            classis: "activeColor",
+            sref: "#/media",
+            icon: "phone",
+        },
         {
             name: "Gallery",
             classis: "activeColor",
@@ -366,7 +373,6 @@ myApp.factory('NavigationService', function ($http) {
                 var header = response.headers('Content-Disposition')
                 var fileName = "Athlete" + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
                 console.log(fileName);
-
                 var blob = new Blob([response.data], {
                     type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation;charset=UTF-8'
                 });
@@ -376,6 +382,7 @@ myApp.factory('NavigationService', function ($http) {
                     href: objectUrl,
                     download: fileName
                 })[0].click();
+                callback(null, fileName);
             })
         },
 
@@ -397,6 +404,7 @@ myApp.factory('NavigationService', function ($http) {
                     href: objectUrl,
                     download: fileName
                 })[0].click();
+                callback(null, fileName);
             })
         },
 

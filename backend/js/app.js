@@ -345,6 +345,11 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'MedalsCtrl'
         })
+        .state('media', {
+            url: "/media",
+            templateUrl: "views/template.html",
+            controller: 'MediaCtrl'
+        })
         //detailmedal
         .state('detailmedal', {
             url: "/detailmedal/:id",
@@ -479,7 +484,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         // Detail Rising
         .state('detail-rising', {
-            url: "/detail-rising",
+            url: "/detail-rising/:id",
             templateUrl: "views/template.html",
             controller: 'DetailRisingCtrl'
         })

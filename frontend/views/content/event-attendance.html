@@ -1,0 +1,257 @@
+<div class="event-attendance-page">
+  <!-- CONTAINER -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-offset-1 col-md-10 col-sm-12">
+        <!-- SELECTION -->
+        <div class="row">
+          <!-- INDIVIDUAL SPORT HOLDER -->
+          <div class="col-md-6">
+            <div class="event-individualsport-title d-fjalla-one">
+              <p class="text-uppercase text-center">individual sports</p>
+            </div>
+            <div class="event-individual-holder">
+              <form action="" name="eventIndividual">
+                <!-- NAME -->
+                <div class="form-group">
+                  <!-- LABEL -->
+                  <div class="display-inline event-attendance-label">
+                    <label for="">SEARCH</label>
+                  </div>
+                  <!-- LABEL END -->
+                  <!-- UI SELECT -->
+                  <div class="display-inline event-attendance-dropdown override-glyp">
+                    <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" required>
+                      <ui-select-match placeholder="search by Sfa ID and NAme" allow-clear="true" title="{{$select.selected.fullName}}"> {{$select.selected.fullName}}</ui-select-match>
+                      <ui-select-choices repeat="player._id as player in athleteData | filter: $select.search">
+                        <div>
+                          <span class="text-capitalize" ng-bind-html="player.fullName"></span>
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                  </div>
+                  <!-- UI SELECT END -->
+                </div>
+                <!-- NAME END -->
+
+
+                <!-- OR -->
+                <div class="form-group">
+                  <div class="text-center">
+                    <label for="">OR</label>
+                  </div>
+                </div>
+                <!-- OR END -->
+                <!-- SCHOOL -->
+                <div class="form-group">
+                  <!-- LABEL -->
+                  <div class="display-inline event-attendance-label">
+                    <label for="">SCHOOL</label>
+                  </div>
+                  <div class="display-inline event-attendance-dropdown override-glyp">
+                    <ui-select name="schoolname" ng-model="formData.schoolName" theme="bootstrap" on-select='selectSchool(formData.schoolName)'>
+                      <ui-select-match placeholder="School Name" allow-clear="true" title="{{$select.selected.schoolName}}"> {{$select.selected.schoolName}}</ui-select-match>
+                      <ui-select-choices repeat="school._id as school in schoolData | filter: $select.search">
+                        <div>
+                          <p>{{school.schoolName}}</p>
+                          <!-- <span class="text-capitalize" ng-bind-html="school.name"></span> -->
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="label label-danger pull-right" ng-if="eventIndividual.schoolname.$invalid && eventIndividual.schoolname.$touched">Please Enter SFA ID</span>
+                  </div>
+                  <!-- LABEL END -->
+                </div>
+                <!-- SCHOOL END -->
+
+                <!-- ATHLETE NAME ON SELECT-->
+                <div class="form-group" ng-if="athlete">
+                  <!-- LABEL -->
+                  <div class="display-inline event-attendance-label">
+                    <label for="">Name</label>
+                  </div>
+                  <!-- LABEL END -->
+                  <!-- UI SELECT -->
+                  <div class="display-inline event-attendance-dropdown override-glyp">
+                    <ui-select name="playersfaid" ng-model="formData.athlete" theme="bootstrap" required>
+                      <ui-select-match placeholder="Search by SfaID or Name" allow-clear="true" title="{{$select.selected.fullName}}"> {{$select.selected.fullName}}</ui-select-match>
+                      <ui-select-choices repeat="player._id as player in selectAthleteData | filter: $select.search">
+                        <div>
+                          <span class="text-capitalize" ng-bind-html="player.fullName"></span>
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="label label-danger pull-right" ng-if="eventIndividual.playersfaid.$invalid && eventIndividual.playersfaid.$touched">Please Enter SFA ID</span>
+                  </div>
+                  <!-- UI SELECT -->
+                </div>
+                <!-- ATHLETE NAME ON SELECT -->
+
+                <!-- BUTTON -->
+                <div class="text-center athleteonselectview">
+                  <a target='_blank' ui-sref="eventattendance-profile({id:formData.athlete})">
+                  <button type="button" class="btn sport-btn-blue-outline event-individual-view" ng-disabled="!formData.athlete">View</button>
+                  </a>
+                </div>
+                <!-- BUTTON END -->
+
+              </form>
+            </div>
+          </div>
+          <!-- INDIVIDUAL SPORT HOLDER END -->
+
+          <!-- TEAM SPORT HOLDER -->
+          <div class="col-md-6">
+            <div class="event-teamsport-title d-fjalla-one">
+              <p class="text-uppercase text-center">Team Sport</p>
+            </div>
+            <div class="event-team-holder">
+              <form action="" name="eventTeam">
+                <!-- SPORT -->
+                <div class="form-group">
+                  <!-- LABEL -->
+                  <div class="display-inline event-attendance-label">
+                    <label for="">SPORT</label>
+                  </div>
+                  <!-- LABEL END -->
+                  <!-- UI SELECT SPORT -->
+                  <div class="event-attendance-dropdown display-inline override-glyp">
+                    <ui-select name="eventBySport" ng-model="formData.sportslist" theme="bootstrap" ng-change="getTeam(formData)" required>
+                      <ui-select-match placeholder="Select Event" allow-clear="true" title="{{$select.selected.name}}">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="sport._id as sport in sportList | filter: $select.search">
+                        <div>
+                          <p>{{sport.name}}</p>
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="label label-danger pull-right" ng-if="eventTeam.eventBySport.$invalid && eventTeam.eventBySport.$touched">Please Enter Sport</span>
+                  </div>
+                  <!-- UI SELECT SPORT END -->
+                </div>
+                <!-- SPORT END -->
+
+                <!-- GENDER -->
+                <div class="form-group">
+                  <div class="display-inline event-attendance-label">
+                    <label for="">GENDER</label>
+                  </div>
+                  <div class="display-inline event-attendance-dropdown override-glyp">
+                    <ui-select name="gender" ng-model="formData.gender" theme="bootstrap" ng-change="getTeam(formData)" required>
+                      <ui-select-match placeholder="Select Gender" allow-clear='true'>{{$select.selected|firstcapitalize}}</ui-select-match>
+                      <ui-select-choices repeat="item in genderList | filter: $select.search">
+                        <div>
+                          <p>{{item |firstcapitalize}}</p>
+                        </div>
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="label label-danger pull-right" ng-if="eventTeam.gender.$invalid && eventTeam.gender.$touched">Please Enter Gender</span>
+                  </div>
+                </div>
+                <!-- GENDER END -->
+
+                <!-- AGE GROUP -->
+                <div class="form-group">
+                  <!-- LABEL -->
+                  <div class="display-inline event-attendance-label">
+                    <label for="">AGE</label>
+                  </div>
+                  <!-- LABEL END -->
+
+                  <!-- UI SELECT AGE -->
+                  <div class="display-inline event-attendance-dropdown override-glyp">
+                    <ui-select name="agegroup" ng-model="formData.ageGroup" theme="bootstrap" ng-change="getTeam(formData)" required>
+                      <ui-select-match placeholder="Select Age Group" allow-clear="true">{{$select.selected.name}}</ui-select-match>
+                      <ui-select-choices repeat="age._id  as age in ageGroups | filter: $select.search">
+                        <div>
+                          <p>{{age.name}}</p>
+
+                        </div>
+
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="label label-danger pull-right" ng-if="eventTeam.agegroup.$invalid && eventTeam.agegroup.$touched">Please Enter Age</span>
+                  </div>
+                  <!-- UI SELECT AGE -->
+                </div>
+                <!-- AGE GROUP END -->
+
+                <!-- TEAM ID -->
+                <div class="form-group">
+                  <!-- LABEL -->
+                  <div class="display-inline event-attendance-label">
+                    <label for="">TEAM ID/NAME</label>
+                  </div>
+                  <div class="display-inline event-attendance-dropdown override-glyp">
+                    <ui-select name="teamname" ng-model="formData.team" theme="bootstrap" required>
+                      <ui-select-match placeholder="Select Team " title="{{$select.selected.nameId}}" allow-clear="true">{{$select.selected.nameId}}</ui-select-match>
+                      <ui-select-choices repeat="team._id  as team in teamData | filter: $select.search">
+                        <div>
+                          <p>{{team.nameId}}</p>
+
+                        </div>
+
+                      </ui-select-choices>
+                    </ui-select>
+                    <span class="label label-danger pull-right" ng-if="eventTeam.teamname.$invalid && eventTeam.teamname.$touched">Please Enter Age</span>
+                  </div>
+                  <!-- LABEL END -->
+                </div>
+                <!-- TEAM ID END -->
+
+                <!-- BUTTON -->
+                <div class="text-center">
+                  <button type="button" class="btn sport-btn-blue-outline" ng-click="viewPlayer(formData)" ng-disabled="!formData.team">View</button>
+                </div>
+                <!-- BUTTON END -->
+              </form>
+            </div>
+          </div>
+          <!-- TEAM SPORT HOLDER END -->
+        </div>
+        <!-- SELECTION END -->
+
+        <!-- TABLE FOR TEAM -->
+        <div class="row" ng-if="table">
+          <div class="text-center event-teamtable-title">
+            <h4 class="text-uppercase d-fjalla-one"> team player</h4>
+          </div>
+          <div class="championshipschedule-tableholder event-teamholder tale-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Sr.no</th>
+                  <th class="text-left">Name</th>
+                  <th>Profile</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="tableplayer in players track by $index ">
+                  <td>
+                    <div class="event-srno">
+                      {{$index + 1}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="event-teamplayername text-left text-capitalize">
+                      {{tableplayer.fullName}}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="view-profile">
+                      <a target='_blank' ui-sref="eventattendance-profile({id:tableplayer.studentId._id})">
+
+                        <button type="button" class="btn btn-info"  >View Profile</button>
+                      </a>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- TABLE FOR TEAM END -->
+      </div>
+    </div>
+  </div>
+  <!-- CONTAINER END -->
+</div>

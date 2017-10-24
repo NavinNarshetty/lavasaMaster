@@ -106,7 +106,8 @@
                     <!-- WINNER -->
                     <div class="form-group">
                       <label>winner Type</label>
-                      <select name="sponsortype" class="form-control" ng-model="formData.result.winner.player" placeholder="Enter Video Type" required>
+                      <select name="sponsortype" class="form-control" ng-model="formData.result.winner.player" ng-change="changeOpponentSingles(formData.result.winner.player)"
+                        placeholder="Enter Video Type" required>
                                <option value="{{player.athleteId._id}}" ng-repeat="player in formData.opponentsSingle">{{player.athleteId.fullName}}</option>
                         </select>
                       <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>

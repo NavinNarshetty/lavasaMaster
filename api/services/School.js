@@ -59,6 +59,8 @@
  var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
  var model = {
 
+     searchByFilter: exports.search,
+
      search: function (data, callback) {
 
          var Model = this;
@@ -251,7 +253,6 @@
                  callback(null, found);
              }
          });
-
      },
 
      generateExcel: function (res) {

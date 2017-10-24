@@ -1,0 +1,203 @@
+<div class="eventattendance-profile-page">
+  <!-- CONTAINER -->
+  <div class="container">
+
+    <!-- EVENT ATHLETE PROFILE HOLDER -->
+    <div class="event-athleteprofile-cardholder">
+      <!-- ATHLETE IMAGE -->
+      <div class="display-inline event-athleteprofile-image  relate">
+        <div class="event-athleteprofile-imageholder">
+          <span class="bib-check" ng-if="playerDetail.isBib==='true'">
+            <i class="fa fa-check"></i>
+          </span>
+          <img ng-src="{{playerDetail.photograph | serverimage2}}" alt="{{playerDetail.fullName}}" class="img-responsive">
+          <!-- <img src="img/dishapatani1.jpg" alt="{{playerDetail.fullName}}" class="img-responsive"> -->
+        </div>
+      </div>
+      <!-- ATHLETE IMAGE END -->
+
+      <!-- ATHLETE DETAILS -->
+      <div class="display-inline event-athleteprofile-detailholder">
+        <!-- ATHLETE NAME + SCHOOL -->
+        <div class="event-athleteprofile-title">
+          <h3 class="m-clear event-athletename d-fjalla-one">{{playerDetail.fullName}}</h3>
+          <p class="event-athleteschoolname d-fjalla-one">{{playerDetail.school.name}}</p>
+        </div>
+        <!-- ATHLETE NAME + SCHOOL -->
+        <!-- SFA ID -->
+        <div class="event-athleteprofile-detail">
+          <p class="d-fjalla-one">Sfa ID: <span>{{playerDetail.sfaId}}</span></p>
+          <p class="d-fjalla-one"> <span>Gender:</span> <span class="text-uppercase">{{playerDetail.gender}}</span></p>
+        </div>
+        <!-- SFA ID END -->
+        <!-- DOB -->
+        <div class="event-athleteprofile-dob">
+          <p class="d-fjalla-one"> <span>DOB :</span> <span>{{playerDetail.dob | englishNumeralDate}} </span> | <span>Age :</span> <span>{{playerDetail.age}}</span>            <span>Years</span></p>
+        </div>
+        <!-- DOB END -->
+        <!-- PAYMENT STATUS -->
+        <div class="event-athleteprofile-paymentstatus">
+          <p class="d-fjalla-one"> <span>Payment Status :</span> <span>{{playerDetail.paymentStatus}}</span> </p>
+        </div>
+        <!-- PAYMENT STATUS END -->
+        <!-- ADDITIONAL PAYMENT -->
+        <div class="event-athleteprofile-additionalpayment" ng-if="playerDetail.additionalPaymentStatus">
+          <p class="d-fjalla-one"> <span>Additional Payment Status :</span> <span>{{playerDetail.additionalPaymentStatus}}</span> </p>
+        </div>
+        <!-- ADDITIONAL PAYMENT END -->
+        <!-- REMARKS -->
+        <div class="event-athleteprofile-remarks" ng-if="playerDetail.remarks">
+          <p class="d-fjalla-one"> <span>Remarks :</span> <span> {{playerDetail.remarks}} </span> </p>
+        </div>
+        <!-- REMARKS ENS -->
+        <!-- BIB -->
+        <div class="form-group">
+          <div class="event-athleteprofile-bib">
+            <label class="d-fjalla-one">Bib Given:</label>
+            <select name="selecttype" style="width:15%;" class="form-control" ng-model="playerDetail.isBib" placeholder="Enter Type">
+                          <option value='true'>YES</option>
+                          <option value='false'>NO</option>
+                </select>
+          </div>
+        </div>
+        <!-- BIB END -->
+        <div class="upload-section" ng-if="playerDetail.isBib=='true'">
+          <!-- ATHLETE + SCHOOL -->
+          <div class="form-group">
+            <div class="row">
+              <!-- PHOTO ID -->
+              <div class="col-md-6">
+                <div class="text-uppercase d-fjalla-one">
+                  <h6 class="m-clear">Photo ID</h6>
+                </div>
+                <!-- CHOOSE FILES -->
+                <div class="event-bib-choosefiles">
+                  <!-- UPLOAD PHOTO ID -->
+                  <div class="event-bib-photo-id">
+                    <!-- <label for="">PHOTO ID:</label> -->
+                    <div class="matchstart-uploadholder display-inline text-uppercase ">
+                      <button class="btn btn-green-outline btn-scoring">Photo ID Upload</button>
+                      <upload-image2 ng-model="playerDetail.photograph" ng-callback="changeitPhotograph" file-types="'image/jpeg,image/png'" no-view
+                        class="pointer upload-scorecard"></upload-image2>
+                    </div>
+                    <div class="event-bib-photo-image">
+                      <img ng-src="{{playerDetail.photograph | serverimage2:250:250:'cover'}} " class="img-responsive">
+                    </div>
+                  </div>
+                  <!-- UPLOAD PHOTO ID END -->
+                </div>
+                <!-- CHOOSE FILES END -->
+              </div>
+              <!-- PHOTO ID END -->
+              <!-- SCHOOL ID -->
+              <div class="col-md-6">
+                <div class="text-uppercase d-fjalla-one">
+                  <h6 class="m-clear">School ID</h6>
+                </div>
+                <!-- CHOOSE FILES -->
+                <div class="event-bib-choosefiles">
+                  <!-- UPLOAD PHOTO ID -->
+                  <div class="event-bib-photo-id">
+                    <!-- <label for="">PHOTO ID:</label> -->
+                    <div class="matchstart-uploadholder display-inline text-uppercase ">
+                      <button class="btn btn-green-outline btn-scoring">School Upload </button>
+                      <upload-image2 ng-model="playerDetail.atheleteSchoolIdImage" ng-callback="changeitPhotograph" file-types="'image/jpeg,image/png'"
+                        no-view class="pointer upload-scorecard"></upload-image2>
+                    </div>
+                    <div class="event-bib-photo-image">
+                      <img ng-src="{{playerDetail.atheleteSchoolIdImage | serverimage2:250:250:'cover'}} " class="img-responsive">
+                    </div>
+                  </div>
+                  <!-- UPLOAD PHOTO ID END -->
+                </div>
+                <!-- CHOOSE FILES END -->
+              </div>
+              <!-- SCHOOL ID END -->
+            </div>
+          </div>
+          <!-- ATHLETE + SCHOOL  -->
+
+          <!-- AGE PROOF -->
+          <div class="form-group">
+            <div style="width:40%;">
+              <div class="text-uppercase d-fjalla-one">
+                <h6 class="m-clear">Age Proof</h6>
+              </div>
+              <select class="form-control " name="ageProof " ng-model="playerDetail.ageProof" required>
+                <option style="display:none "></option>
+                <option value='aadhar'>Aadhar with DD/MM/YYYY format</option>
+                <option value="age">Aadhar with only Year + Age proof with DD/MM/YYYY format</option>
+                <option value="birth">Birth Certificate + Photo ID</option>
+                <option value='pan'>PAN Card</option>
+                <option value='passport'>Passport</option>
+              </select>
+            </div>
+          </div>
+          <!-- ng-if="playerDetail.ageProof" -->
+          <div class="form-group">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="text-uppercase d-fjalla-one">
+                  <p class="eventbib-ageheader"> <span ng-if="playerDetail.ageProof=='aadhar' || playerDetail.ageProof=='age'">Aadhar:</span> <span ng-if="playerDetail.ageProof=='birth'">Birth Certificate:</span>                    <span ng-if="playerDetail.ageProof=='pan'">Pan:</span> <span ng-if="playerDetail.ageProof=='passport'">Passport:</span></p>
+                </div>
+                <!-- CHOOSE FILES -->
+                <div class="event-bib-choosefiles">
+                  <!-- UPLOAD PHOTO ID -->
+                  <div class="event-bib-photo-id">
+                    <!-- <label for="">PHOTO ID:</label> -->
+                    <div class="matchstart-uploadholder display-inline text-uppercase ">
+                      <button class="btn btn-green-outline btn-scoring">Upload </button>
+                      <upload-image2 ng-model="playerDetail.birthImage" ng-callback="changeitPhotograph" file-types="'image/jpeg,image/png'" no-view
+                        class="pointer upload-scorecard"></upload-image2>
+                    </div>
+                    <div class="event-bib-photo-image">
+                      <img ng-src="{{playerDetail.birthImage | serverimage2:250:250:'cover'}} " class="img-responsive">
+                    </div>
+                  </div>
+                  <!-- UPLOAD PHOTO ID END -->
+                </div>
+                <!-- CHOOSE FILES END -->
+              </div>
+              <div class="col-md-6">
+                <div class="text-uppercase d-fjalla-one">
+                  <p class="eventbib-ageheader"> <span ng-if="playerDetail.ageProof=='age'">Age proof:</span> <span ng-if="playerDetail.ageProof=='birth'">Photo ID:</span></p>
+                </div>
+                <!-- CHOOSE FILES -->
+                <div class="event-bib-choosefiles" ng-if="playerDetail.ageProof=='age' || playerDetail.ageProof=='birth'">
+                  <!-- UPLOAD PHOTO ID -->
+                  <div class="event-bib-photo-id">
+                    <!-- <label for="">PHOTO ID:</label> -->
+                    <div class="matchstart-uploadholder display-inline text-uppercase ">
+                      <button class="btn btn-green-outline btn-scoring">Upload </button>
+                      <upload-image2 ng-model="playerDetail.photoImage" ng-callback="changeitPhotograph" file-types="'image/jpeg,image/png'" no-view
+                        class="pointer upload-scorecard"></upload-image2>
+                    </div>
+                    <div class="event-bib-photo-image">
+                      <img ng-src="{{playerDetail.photoImage | serverimage2:250:250:'cover'}} " class="img-responsive">
+                    </div>
+                  </div>
+                  <!-- UPLOAD PHOTO ID END -->
+                </div>
+                <!-- CHOOSE FILES END -->
+              </div>
+            </div>
+          </div>
+          <!-- AGE PROOF END -->
+
+        </div>
+
+        <div class="event-athleteprofilebutton display-inline">
+          <button type="submit" class="btn btn-success" ng-click="saveBib(playerDetail)"> OK</button>
+        </div>
+        <div class="display-inline">
+          <button type="submit" class="btn btn-danger" ui-sref='event-attendance'> Cancel</button>
+        </div>
+      </div>
+
+
+      <!-- ATHLETE DETAILS END -->
+    </div>
+    <!-- EVENT ATHLETE PROFILE HOLDER END -->
+  </div>
+  <!-- CONTAINER END -->
+</div>

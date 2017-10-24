@@ -275,6 +275,10 @@ myApp.controller('SpecialAwardDetailCtrl', function ($scope, TemplateService, Na
   $scope.menutitle = NavigationService.makeactive("Special Award");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
+  $scope.formData = {};
+  $scope.formData.page = 1;
+  $scope.formData.type = '';
+  $scope.formData.keyword = '';
 
   // TABLE VIEW 
   $scope.viewTable = function () {
@@ -282,13 +286,24 @@ myApp.controller('SpecialAwardDetailCtrl', function ($scope, TemplateService, Na
     $scope.constraints = {};
     $scope.constraints.rising = {}
     $scope.constraints.rising = false;
-    // $scope.formData.page = $scope.formData.page++;
+    $scope.formData.page = $scope.formData.page++;
     NavigationService.getAllAwardDetails($scope.constraints, function (data) {
       console.log("data.value", data);
-      $scope.items = data.data.data;
+      $scope.items = data.data.data.results;
       console.log($scope.items, "item")
-      // $scope.totalItems = data.data.total;
-      // $scope.maxRow = data.data.options.count;
+      $scope.totalItems = data.data.data.total;
+      $scope.maxRow = data.data.data.options.count;
+
+      _.each($scope.items, function (n) {
+        if (n.athlete) {
+          if (n.athlete.middleName) {
+            n.fullName = n.athlete.sfaId + ' - ' + n.athlete.firstName + ' ' + n.athlete.middleName + ' ' + n.athlete.surname;
+          } else {
+            n.fullName = n.athlete.sfaId + ' - ' + n.athlete.firstName + ' ' + n.athlete.surname;
+          }
+        }
+
+      })
     });
   }
   $scope.viewTable();
@@ -536,6 +551,9 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
   $scope.saveAwardDetail = function (data) {
     console.log("i am in ");
     console.log(data, "save")
+    if (data.type == 'school' || data.type == 'college') {
+      delete data.gender;
+    }
     $scope.url = "SpecialAwardDetails/save";
     NavigationService.apiCall($scope.url, data, function (data) {
       console.log("save sponsor")
@@ -572,6 +590,10 @@ myApp.controller('RisingCtrl', function ($scope, TemplateService, NavigationServ
   $scope.menutitle = NavigationService.makeactive("Rising Star");
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
+  $scope.formData = {}
+  $scope.formData.page = 1;
+  $scope.formData.type = '';
+  $scope.formData.keyword = ''
 
 
   // TABLE VIEW 
@@ -580,13 +602,21 @@ myApp.controller('RisingCtrl', function ($scope, TemplateService, NavigationServ
     $scope.constraints = {};
     $scope.constraints.rising = {}
     $scope.constraints.rising = true;
-    // $scope.formData.page = $scope.formData.page++;
+    $scope.formData.page = $scope.formData.page++;
     NavigationService.getAllAwardDetails($scope.constraints, function (data) {
       console.log("data.value", data);
-      $scope.items = data.data.data;
+      $scope.items = data.data.data.results;
       console.log($scope.items, "item")
-      // $scope.totalItems = data.data.total;
-      // $scope.maxRow = data.data.options.count;
+      $scope.totalItems = data.data.data.total;
+      $scope.maxRow = data.data.data.options.count;
+
+      _.each($scope.items, function (value) {
+        if (value.athlete.middleName) {
+          value.fullName = value.athlete.sfaId + ' - ' + value.athlete.firstName + ' ' + value.athlete.middleName + ' ' + value.athlete.surname;
+        } else {
+          value.fullName = value.athlete.sfaId + ' - ' + value.athlete.firstName + ' ' + value.athlete.surname;
+        }
+      });
     });
   }
   $scope.viewTable();
@@ -639,6 +669,41 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
   $scope.formData.award = {}
   $scope.formData.award = "";
 
+
+  if ($stateParams.id) {
+    $scope.getOneAwardDetails = function () {
+      $scope.constraints = {};
+      $scope.constraints._id = $stateParams.id;
+      NavigationService.getOneAwardDetails($scope.constraints, function (data) {
+        console.log(data, 'detail rising edit');
+        $scope.formData = data.data.data[0];
+        $scope.getRegisterSport($scope.formData.athlete);
+        $scope.typeData = $scope.formData.type;
+        $scope.formData.sports.name = data.data.data[0].sports[0].name;
+
+        if ($scope.typeData === 'athlete') {
+          $scope.formData.sports = data.data.data[0].sports;
+          if (data.data.data[0].athlete.middleName) {
+            $scope.formData.athlete.fullName = data.data.data[0].athlete.sfaId + '-' + data.data.data[0].athlete.firstName + ' ' + data.data.data[0].athlete.middleName + ' ' + data.data.data[0].athlete.surname
+          } else {
+            $scope.formData.athlete.fullName = data.data.data[0].athlete.sfaId + '-' + data.data.data[0].athlete.firstName + ' ' + data.data.data[0].athlete.surname
+          }
+        } else {
+          if (data.data.data[0].athlete.school.sfaid) {
+            console.log('enter');
+            $scope.formData.athlete.school.schoolsfaId = data.data.data[0].athlete.school.sfaid + '-' + data.data.data[0].athlete.school.schoolName;
+          } else {
+            console.log('enter else');
+            $scope.formData.athlete.school.schoolsfaId = data.data.data[0].athlete.school.schoolName;
+          }
+        }
+        console.log($scope.formData, 'check this form')
+      });
+    }
+    $scope.getOneAwardDetails();
+
+  }
+
   // ATHLETE BY GENDER
   $scope.getGenderAthlete = function (constraints) {
     $scope.url = "Athelete/searchByFilter";
@@ -685,6 +750,9 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
     // $scope.playerData = []
     $scope.sportitems = [];
     $scope.formData.sports = [];
+    if ($stateParams.id) {
+      $scope.getGenderAthlete();
+    }
   }
   $scope.searchSportList = function (data) {
     $scope.draws = data;
@@ -734,13 +802,17 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
       console.log("save sponsor")
       if (data.value) {
         console.log("in value true")
-        // toastr.success("Data saved successfully", 'Success');
-        // $state.go('specialaward-detail')
-      } else if (data.data.nModified == '1') {
-        // toastr.success("Data saved successfully", 'Success');
-        // $state.go('sponsor')
+        if (data.data.nModified != undefined) {
+          toastr.success("Data modified successfully", 'Success');
+          $state.go('risingstar')
+        } else {
+          toastr.success("Data saved successfully", 'Success');
+          $state.go('risingstar')
+        }
+      } else if (data.error) {
+        toastr.error("Certificate Already Created", 'Error');
       } else {
-        // toastr.error("Something went wrong", 'Error');
+        toastr.error("Something went wrong", 'Error');
       }
     })
   }

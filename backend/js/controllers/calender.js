@@ -85,6 +85,7 @@ myApp.controller('DetailCalenderCtrl', function ($scope, TemplateService, Naviga
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
   console.log("$stateParams.id", $stateParams.id);
+  $scope.formData = {};
   if ($stateParams.id != '') {
     console.log("edit")
     $scope.title = "Edit";
@@ -96,14 +97,29 @@ myApp.controller('DetailCalenderCtrl', function ($scope, TemplateService, Naviga
       NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
         console.log("data.value sportlist", data);
         $scope.formData = data.data;
+        if ($scope.formData.eventDate) {
+          $scope.formData.day = moment(new Date($scope.formData.eventDate)).format('D');
+          $scope.formData.dayOfWeek = moment(new Date($scope.formData.eventDate)).format('dddd');
+        } else {
+          $scope.formData.day = '';
+          $scope.formData.dayOfWeek = '';
+        }
       });
     }
     $scope.getOneOldSchoolById();
 
-  } else {
+  } else {}
 
-  }
-
+  $scope.fetchDay = function (data) {
+    if (data) {
+      console.log(data);
+      $scope.formData.day = moment(new Date(data)).format('D');
+      $scope.formData.dayOfWeek = moment(new Date(data)).format('dddd');
+    } else {
+      $scope.formData.day = '';
+      $scope.formData.dayOfWeek = '';
+    }
+  };
 
   $scope.savecalender = function (data) {
     console.log("i am in ");

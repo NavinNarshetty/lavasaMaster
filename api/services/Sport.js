@@ -36,7 +36,7 @@ var schema = new Schema({
 schema.plugin(deepPopulate, {
     populate: {
         'sportslist': {
-            select: '_id name sportsListSubCategory drawFormat'
+            select: '_id name sportsListSubCategory drawFormat inactiveimage image'
         },
         'sportslist.sportsListSubCategory': {
             select: '_id name isTeam'

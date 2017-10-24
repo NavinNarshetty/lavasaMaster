@@ -48,7 +48,7 @@
 
     @font-face {
       font-family: 'tangerine';
-      src: url("fonts/Tangerine-Regular.ttf");
+      src: url("https://storage.googleapis.com/sfacertificate/Tangerine-Regular.ttf");
     }
 
     body {
@@ -339,7 +339,7 @@
               <img src="https://storage.googleapis.com/sfacertificate/certificate-head.jpg" alt="" class="w70">
             </div> -->
             <div class="header-img">
-              <img src="assets/1.png" alt="" class="w36">
+              <img src="<%=data.bannerImage%>" alt="" class="w36">
             </div>
           </th>
           <!-- HEADER LOGO END -->
@@ -353,7 +353,7 @@
               <div class="fr-sec">
                 <div class="">
                   <div class="header-img">
-                    <img src="assets/Gold.png" alt="" class="w70">
+                    <img src="<%=data.heading%>" alt="" class="w70">
                   </div>
                 </div>
               </div>
@@ -367,7 +367,12 @@
             <div class="form-group text-center m-auto-tran" style="margin-top: 6px;">
               <div class="fr-sec">
                 <div class="display-inline">
-                  <label class="color-blue font-os f-20" style="color:#232d69;">This certificate is awarded to</label>
+                  <%if (data.institutionType!="athlete") { %>
+                    <label class="color-blue font-os f-20" style="color:#232d69;">This certificate is awarded to</label>
+                    <% }else{ %>
+                      <label class="color-blue font-os f-20" style="color:#232d69;">Presented to</label>
+                      <%}%>
+
                 </div>
               </div>
             </div>
@@ -376,12 +381,13 @@
         </tr>
         <tr>
           <!-- ATHLETE NAME -->
+          <%if(data.type=='athlete'){%>
           <td class="text-center">
             <div class="form-group">
-              <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="Sudarshan Vijayendra Anandkumar"
-                style="color:#232d69">
+              <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="<%=data.athlete.fullName%>" style="color:#232d69">
             </div>
           </td>
+          <%}%>
           <!--ATHLETE NAME END  -->
         </tr>
         <tr>
@@ -389,7 +395,7 @@
           <td class="text-center">
             <div class="form-group border-btm" style="margin-top: 6px;">
               <div class="sf-relative">
-                <input type="text" class="form-control w60 text-center font-os f-20" value="Jamnabai Narsee School" style="text-transform: none;width: 83%;color:#666666;">
+                <input type="text" class="form-control w60 text-center font-os f-20" value="<%=data.athlete.school.name%>" style="text-transform: none;width: 83%;color:#666666;">
               </div>
 
             </div>
@@ -405,7 +411,7 @@
               </div>
               <div class="display-inline">
                 <!-- <input type="text" class="form-control  text-center font-os" value="MA1728378" style="color:#666666;"> -->
-                <label class="font-os f-20" style="color:#666666;">MA1728378</label>
+                <label class="font-os f-20" style="color:#666666;"><%=data.athlete.sfaId%></label>
               </div>
             </div>
           </td>
@@ -418,15 +424,16 @@
               <div class="fr-sec">
                 <!-- FOR SCHOOL -->
                 <div class="display-inline">
-                  <label class="color-blue font-os f-20" style="color:#232d69;">For participating in maximum number of sports </label>
+                  <%if (data.institutionType!="college") { %>
+                    <label class="color-blue font-os f-20" style="color:#232d69;">For participating in maximum number of sports </label>
+                    <% }else{ %>
+                      <label class="color-blue font-os f-20" style="color:#232d69;">For participating in maximum number of sports at the championship </label>
+                      <%}%>
                 </div>
+
                 <!--SCHOOL END  -->
 
-                <!-- COLLEGE -->
-                <div class="display-inline">
-                  <label hidden class="color-blue font-os f-20" style="color:#232d69;">For participating in maximum number of sports at the championship </label>
-                </div>
-                <!-- COLLEGE END -->
+
               </div>
 
             </div>
@@ -439,14 +446,20 @@
             <div class="form-group border-btm" style="margin-top: 6px; ">
               <!-- FOR SCHOOL -->
               <div>
-                <input type="text" class="form-control text-center font-os" value="20 Sports" style="color:#666666;width: 50%;">
+                <%if (data.institutionType!="college") { %>
+                  <input type="text" class="form-control text-center font-os" value="<%=data.totalSportsReg%>" style="color:#666666;width: 50%;">
+                  <% }else{ %>
+                    <!-- COLLEGE -->
+                    <input type="text" class="form-control text-center font-os" value="<%=data.totalSportsReg + '/' + data.totalSport + ' Sports'%>"
+                      style="color:#666666;width: 50%;">
+                    <!-- COLLEGE END-->
+                    <%}%>
+
               </div>
               <!-- SCHOOL END -->
 
-              <!-- COLLEGE -->
-              <div hidden>
-                <input type="text" class="form-control text-center font-os" value="13 / 15 Sports" style="color:#666666;width: 50%;">
-              </div>
+
+
               <!-- COLLEGE END-->
 
               <!-- <label class="font-os f-20" style="color:#666666;">20 Sports</label> -->
@@ -460,7 +473,7 @@
             <div class="footer-img">
               <div class="footer-c mnb5" style="width: 560px; height: auto;">
 
-                <img src="assets/21.png" alt="" class="width100">
+                <img src="<%=data.footerImage%>" alt="" class="width100">
                 <!-- <img src="https://storage.googleapis.com/sfacertificate/<%=data.image%>" alt="" class="f-img"> -->
                 <!--            <img src="https://storage.googleapis.com/sfacertificate/cfswiminig.jpg" alt="" class="width100" ng-if="">
                     <img src="https://storage.googleapis.com/sfacertificate/cfswimming.jpg" alt="" class="width100" ng-if="">

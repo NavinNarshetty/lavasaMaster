@@ -84,6 +84,7 @@ module.exports = [
   'frontend/js/controllers/language-controller.js',
   'frontend/js/controllers/collegeController.js',
   'frontend/js/controllers/sponsor.js',
+  'frontend/js/controllers/eventattendance.js',
   // DRAWS AND SCHEDULE
   'frontend/js/controllers/draws-schedule/direct-finalController.js',
   'frontend/js/controllers/draws-schedule/heats-Controller.js',
