@@ -11721,7 +11721,7 @@ var model = {
                                             callback(err, "error in mongoose");
                                         } else {
                                             var result = {};
-                                            if (matchData.resultHeat) {
+                                            if (matchData[0].resultHeat) {
                                                 if (n.middleName) {
                                                     result.name = n.firstName + " " + n.middleName + " " + n.surname;
                                                 } else {
@@ -11731,12 +11731,12 @@ var model = {
                                                 result.school = singleData.school[0].schoolName;
                                                 result.profile = n.photograph;
                                                 result.medaltype = singleData.medalType;
-                                                _.each(matchData.heat.players, function (player) {
+                                                _.each(matchData[0].heat.players, function (player) {
                                                     if (player.id === n._id) {
                                                         result.result = player.time;
                                                     }
                                                 });
-                                            } else if (matchData.resultQualifyingRound) {
+                                            } else if (matchData[0].resultQualifyingRound) {
                                                 if (n.middleName) {
                                                     result.name = n.firstName + " " + n.middleName + " " + n.surname;
                                                 } else {
@@ -11746,13 +11746,13 @@ var model = {
                                                 result.profile = n.photograph;
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
-                                                if (matchData.resultQualifyingRound.player.bestAttempt) {
-                                                    result.result = matchData.resultQualifyingRound.player.bestAttempt;
+                                                if (matchData[0].resultQualifyingRound.player.bestAttempt) {
+                                                    result.result = matchData[0].resultQualifyingRound.player.bestAttempt;
                                                 } else {
-                                                    var height = matchData.resultQualifyingRound.round.substring(7, 8);
+                                                    var height = matchData[0].resultQualifyingRound.round.substring(7, 8);
                                                     result.result = height;
                                                 }
-                                            } else if (matchData.resultSwiss) {
+                                            } else if (matchData[0].resultSwiss) {
                                                 if (n.middleName) {
                                                     result.name = n.firstName + " " + n.middleName + " " + n.surname;
                                                 } else {
@@ -11762,12 +11762,12 @@ var model = {
                                                 result.profile = n.photograph;
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
-                                                _.each(matchData.resultSwiss.players, function (player) {
+                                                _.each(matchData[0].resultSwiss.players, function (player) {
                                                     if (player.id === n._id) {
                                                         result.result = player.score;
                                                     }
                                                 });
-                                            } else if (matchData.resultShooting) {
+                                            } else if (matchData[0].resultShooting) {
                                                 if (n.middleName) {
                                                     result.name = n.firstName + " " + n.middleName + " " + n.surname;
                                                 } else {
@@ -11777,7 +11777,7 @@ var model = {
                                                 result.profile = n.photograph;
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
-                                                result.result = matchData.resultShooting.finalScore;
+                                                result.result = matchData[0].resultShooting.finalScore;
                                             } else {
                                                 if (n.middleName) {
                                                     result.name = n.firstName + " " + n.middleName + " " + n.surname;
@@ -11808,57 +11808,57 @@ var model = {
                                         if (err) {
                                             callback(err, "error in mongoose");
                                         } else {
-                                            console.log("matchData", matchData);
+                                            console.log("matchData[0]", matchData[0]);
                                             var result = {};
-                                            if (matchData.resultHeat) {
+                                            if (matchData[0][0].resultHeat) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
                                                 result.profile = n.school.schoolLogo;
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
-                                                _.each(matchData.heat.players, function (player) {
+                                                _.each(matchData[0].heat.players, function (player) {
                                                     if (player.id === n._id) {
                                                         result.result = player.time;
                                                     }
                                                 });
-                                            } else if (matchData.resultQualifyingRound) {
+                                            } else if (matchData[0].resultQualifyingRound) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
                                                 result.profile = n.school.schoolLogo;
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
-                                                if (matchData.resultQualifyingRound.player.bestAttempt) {
-                                                    result.result = matchData.resultQualifyingRound.player.bestAttempt;
+                                                if (matchData[0].resultQualifyingRound.player.bestAttempt) {
+                                                    result.result = matchData[0].resultQualifyingRound.player.bestAttempt;
                                                 } else {
-                                                    var height = matchData.resultQualifyingRound.round.substring(7, 8);
+                                                    var height = matchData[0].resultQualifyingRound.round.substring(7, 8);
                                                     result.result = height;
                                                 }
-                                            } else if (matchData.resultSwiss) {
+                                            } else if (matchData[0].resultSwiss) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
                                                 result.profile = n.school.schoolLogo;
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
-                                                _.each(matchData.resultSwiss.players, function (player) {
+                                                _.each(matchData[0].resultSwiss.players, function (player) {
                                                     if (player.id === n._id) {
                                                         result.result = player.score;
                                                     }
                                                 });
-                                            } else if (matchData.resultShooting) {
+                                            } else if (matchData[0].resultShooting) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
                                                 result.profile = n.school.schoolLogo;
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
-                                                result.result = matchData.resultShooting.finalScore;
-                                            } else if (matchData.resultsRacquet) {
-                                                console.log("matchData", matchData);
+                                                result.result = matchData[0].resultShooting.finalScore;
+                                            } else if (matchData[0].resultsRacquet) {
+                                                console.log("matchData[0]", matchData[0]);
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
                                                 result.profile = n.school.schoolLogo;
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
-                                                _.each(matchData.resultsRacquet.teams, function (team) {
+                                                _.each(matchData[0].resultsRacquet.teams, function (team) {
                                                     if (team.team === n._id) {
                                                         result.player1 = team.players[0].fullName;
                                                         result.player1SfaId = team.players[0].sfaId;
