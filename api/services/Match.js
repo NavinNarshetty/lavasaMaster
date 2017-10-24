@@ -11810,7 +11810,7 @@ var model = {
                                         } else {
                                             console.log("matchData[0]", matchData[0]);
                                             var result = {};
-                                            if (matchData[0][0].resultHeat) {
+                                            if (matchData[0].resultHeat) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
                                                 result.profile = n.school.schoolLogo;
