@@ -2380,7 +2380,7 @@ var model = {
         return pipeline;
     },
 
-    generateExcel: function (res) {
+    bysupriyagenerateExcel: function (res) {
         var deepSearch = "athleteId sportsListSubCategory";
         async.waterfall([
                 function (callback) {
@@ -2408,7 +2408,7 @@ var model = {
                             var age;
                             basicInfo.sport = [];
                             var count = 0;
-                            _each(mainData.info, function (n) {
+                            _.each(mainData.info, function (n) {
                                 // console.log("info", n);
                                 // console.log("count", count);
                                 if (n.middlename) {
@@ -2512,6 +2512,133 @@ var model = {
                     } else {
                         callback(null, excelData);
                     }
+                }
+            });
+    },
+    generateExcel: function (res) {
+        var deepSearch = "athleteId sportsListSubCategory";
+        async.waterfall([
+                function (callback) {
+                    var pipeLine = IndividualSport.getIndividualPipeLine();
+                    IndividualSport.aggregate(pipeLine, function (err, found) {
+                        if (err) {
+                            callback(err, "error in mongoose");
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+                function (found, callback) {
+                    console.log(found);
+                    var excelData = [];
+                    _.each(found, function (mainData) {
+                        var obj = {};
+                        obj.year = new Date().getFullYear();
+                        var basicInfo = {};
+                        var event;
+                        var age;
+                        basicInfo.sport = [];
+                        var count = 0;
+                        _.each(mainData.info, function (n) {
+                            console.log("info", n);
+                            console.log("count", count);
+                            if (n.middlename) {
+                                obj.Athlete_Full_Name = n.firstname + " " + n.middlename + " " + n.surname;
+                            } else {
+                                obj.Athlete_Full_Name = n.firstname + " " + n.surname;
+                            }
+                            if (n.athleteSchoolName) {
+                                obj.SchoolName = n.athleteSchoolName;
+                            } else {
+                                obj.SchoolName = n.school;
+                            }
+                            obj.SFAID = n.sfaid;
+                            obj.Sport = n.sportName;
+                            if (n.createdby) {
+                                obj.CreatedBy = n.createdby;
+                            } else {
+                                obj.CreatedBy = "";
+                            }
+
+                            if (n.nominatedSchoolName) {
+                                obj.nominatedSchoolName = n.nominatedSchoolName;
+                            } else {
+                                obj.nominatedSchoolName = "";
+                            }
+                            if (n.nominatedContactDetails) {
+                                obj.nominatedContactDetails = n.nominatedContactDetails;
+                            } else {
+                                obj.nominatedContactDetails = "";
+                            }
+                            if (n.nominatedEmailId) {
+                                obj.nominatedEmailId = n.nominatedEmailId;
+                            } else {
+                                obj.nominatedEmailId = "";
+                            }
+                            if (n.nominatedName) {
+                                obj.nominatedName = n.nominatedName;
+                            } else {
+                                obj.nominatedName = "";
+                            }
+                            if (n.isVideoAnalysis) {
+                                obj.isVideoAnalysis = n.isVideoAnalysis;
+                            } else {
+                                obj.isVideoAnalysis = "";
+                            }
+                            obj.Gender = n.gender;
+                            if (count == 0) {
+                                age = n.agegroup;
+                                event = age + " - " + n.eventname;
+                                if (n.weight) {
+                                    obj.Weight_Category = n.weight;
+                                }
+                                count++;
+                            } else {
+                                age = n.agegroup;
+                                event = event + " , " + age + " - " + n.eventname;
+                                if (n.weight) {
+                                    obj.Weight_Category = n.weight;
+                                }
+                            }
+                            obj.Event_Category = event;
+                            // callback(null, basicInfo);
+                        });
+                        // console.log("basicInfo", basicInfo);
+                        // obj.SFAID = basicInfo.sfaid;
+                        // obj.Athlete_Full_Name = basicInfo.name;
+                        // obj.SchoolName = basicInfo.school;
+                        // obj.Sport = basicInfo.sportName;
+                        // obj.Gender = basicInfo.gender;
+                        // obj.Event_Category = basicInfo.event;
+                        // obj.Weight_Category = basicInfo.weight;
+                        // if (basicInfo.createdBy) {
+                        //     obj.CreatedBy = basicInfo.createdBy;
+                        // } else {
+                        //     obj.Createdby = " ";
+                        // }
+
+                        // obj.nominatedSchoolName = basicInfo.nominatedSchoolName;
+                        // obj.nominatedContactDetails = basicInfo.nominatedContactDetails;
+                        // obj.nominatedEmailId = basicInfo.nominatedEmailId;
+                        // obj.nominatedName = basicInfo.nominatedName;
+                        // obj.isVideoAnalysis = basicInfo.isVideoAnalysis;
+                        excelData.push(obj);
+
+                    });
+
+                    callback(null, excelData);
+                },
+            ],
+            function (err, excelData) {
+                if (err) {
+                    console.log(err);
+                    res.callback(null, []);
+                } else if (excelData) {
+                    Config.generateExcelOld("IndividualSport", excelData, res);
                 }
             });
     },
