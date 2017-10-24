@@ -673,6 +673,19 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
     })
   }
   // BACK END
+  // CHANGE OPPONENTS SINGLES
+  $scope.changeOpponentSingles = function (id) {
+    console.log(id, 'oppsingles id');
+    console.log('loop for opp singles', $scope.matchDetails);
+    _.each($scope.matchDetails.opponentsSingle, function (key) {
+      console.log(key, 'in each')
+      if (key.athleteId._id == id) {
+        $scope.formData.result.winner.opponentsSingle = key._id;
+      }
+
+    })
+  }
+  // CHANGE OPPONENTS SINGLES END
   // SAVE
   $scope.saveDataMatch = function () {
     $scope.formData.matchId = $stateParams.id;
