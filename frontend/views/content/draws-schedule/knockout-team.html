@@ -1,4 +1,4 @@
-<div class="knockout-round">
+<div class="knockout-round knockout-round-team">
   <div class="container">
     <!--SPORT NAME-->
     <div class="knockout-sportname text-center">
@@ -132,7 +132,7 @@
               </div>
               <div class="display-inline knockout-cardplayername ver-mid ">
                 <p class="m-clear knockout-winner-name " title="{{player.teamId}}">{{player.teamId}}</p>
-                <p class="m-clear knockout-winner-school" title="{{player.schoolName}}">{{player.schoolName}}</p>
+                <p class="m-clear knockout-winner-school" title="{{player.schoolName}}">{{player.schoolName | truncate:'25'}}</p>
               </div>
             </div>
 
