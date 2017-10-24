@@ -186,6 +186,23 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
       $scope.saveDetail = {};
       $scope.saveDetail.isBib = data.isBib;
       $scope.saveDetail._id = data._id; //id for save
+      if (data.photograph) {
+        $scope.saveDetail.photograph = data.photograph;
+      } else {}
+
+      if (data.atheleteSchoolIdImage) {
+        $scope.saveDetail.atheleteSchoolIdImage = data.atheleteSchoolIdImage;
+      }
+      if (data.ageProof) {
+        $scope.saveDetail.ageProof = data.ageProof;
+      }
+      if (data.birthImage) {
+        $scope.saveDetail.birthImage = data.birthImage;
+      }
+      if (data.photoImage) {
+        $scope.saveDetail.photoImage = data.photoImage;
+      }
+
       $scope.url = 'Athelete/Save'
       NavigationService.apiCallWithData($scope.url, $scope.saveDetail, function (data) {
         console.log(data, 'savedata');
@@ -194,6 +211,18 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
         }
       })
     }
+
+    $scope.changeitPhotograph = function (err, data) {
+      console.log(err, data);
+      if (err) {
+        $scope.errorMsgpan = err;
+        toastr.error('Please upload File size upto 5Mb Only', 'Error');
+
+      } else {
+        $scope.errorMsgpan = " ";
+        $scope.errorMsgpan = "Successfully uploaded";
+      }
+    };
   }
 });
 // EVENT ATTENDANCE PROFILE END

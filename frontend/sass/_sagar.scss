@@ -10,38 +10,48 @@ $sport-grey: #e1e1e1 !default;
 $sport-darkgrey: #757575 !default;
 // COLORS END
 // COMMON CLASSES
-.full-height{
+.full-height {
   height: 100%;
 }
-.pointer{
+
+.pointer {
   cursor: pointer;
 }
-.inline-block{
+
+.inline-block {
   display: inline-block;
 }
-.color-sportprimary{
+
+.color-sportprimary {
   color: $sport-primary;
 }
-.color-sport-lightblue{
+
+.color-sport-lightblue {
   color: $sport-lightblue;
 }
+
 // AD SPACE
 .highlight-adspace {
-    background-color: #ddd;
-    height: 130px;
-    margin: 40px 0px;
+  background-color: #ddd;
+  height: 130px;
+  margin: 40px 0px;
 }
+
 // AD SPACE END
 // VIEW MORE
-.viewmore{
+.viewmore {
   text-align: right;
 }
-.btn-viewmore{
+
+.btn-viewmore {
   border: none;
   background-color: transparent;
   color: $sport-primary;
   text-decoration: underline;
-  &:active, &:hover, &:focus, &.active{
+  &:active,
+  &:hover,
+  &:focus,
+  &.active {
     border: none;
     background-color: transparent;
     color: $sport-primary;
@@ -50,91 +60,100 @@ $sport-darkgrey: #757575 !default;
     text-decoration: underline;
   }
 }
+
 // VIEW MORE END
 // ATHLETE PROFILE CARD
 .profileathlete-card {
   position: relative;
   box-shadow: 0px 0px 5px #e5e5e5;
 }
+
 .profileathlete-cardimgholder {
   display: inline-block;
-    padding: 10px;
-    padding-right: 0px;
-    vertical-align: top;
+  padding: 10px;
+  padding-right: 0px;
+  vertical-align: top;
 }
+
 .profileathleteimage-holder {
-    width: 90px;
-    height: 90px;
-    border-radius: 100%;
-    overflow: hidden;
-    // border: 5px solid #ddd;
+  width: 90px;
+  height: 90px;
+  border-radius: 100%;
+  overflow: hidden; // border: 5px solid #ddd;
 }
+
 .profileathlete-cardcontent {
   display: inline-block;
-    width: calc(100% - 120px);
-    padding: 10px;
-    padding-left: 5px;
-    vertical-align: top;
+  width: calc(100% - 120px);
+  padding: 10px;
+  padding-left: 5px;
+  vertical-align: top;
 }
+
 .athletecard-starflag {
-    position: absolute;
-    top: -15px;
-    right: -10px;
+  position: absolute;
+  top: -15px;
+  right: -10px;
 }
+
 .athletecard-flagholder {
-    width: 30px;
-    margin: 0 5px;
-    display: inline-block;
-    vertical-align: middle;
+  width: 30px;
+  margin: 0 5px;
+  display: inline-block;
+  vertical-align: middle;
 }
+
 .athletecard-starholder {
-    width: 30px;
-    display: inline-block;
-    vertical-align: middle;
+  width: 30px;
+  display: inline-block;
+  vertical-align: middle;
 }
+
 .profileathlete-athletename {
-    font-size: 15px;
-    color: #10259c;
-    font-weight: 600;
-    word-break: break-word;
+  font-size: 15px;
+  color: #10259c;
+  font-weight: 600;
+  word-break: break-word;
 }
+
 .profileathlete-athleteschool {
-    font-size: 12px;
-    color: #646464;
-    word-break: break-word;
+  font-size: 12px;
+  color: #646464;
+  word-break: break-word;
 }
+
 .profileathlete-athletesports {
-    font-size: 12px;
-    margin-bottom: 5px;
+  font-size: 12px;
+  margin-bottom: 5px;
 }
+
 .profile-bluemedals {
-    width: 20px;
-    margin: 0 auto;
+  width: 20px;
+  margin: 0 auto;
 }
-.profileathletecard-medallist{
-  ul{
+
+.profileathletecard-medallist {
+  ul {
     margin: 0;
   }
 }
+
 // ATHLETE PROFILE CARD END
 // COMMON CLASSES END
-
 // REGISTERED SPORTS
-
 .step7 {
-    @extend .step3;
-    width: 200px;
-    height: 36px;
-    border: 1px solid #d3d3d3;
-    font-size: 17px;
-    text-align: center; // padding: 5px 20px;
-    -webkit-box-shadow: 0 0 3px 1px lightgrey;
-    -moz-box-shadow: 0 0 3px 1px lightgray;
-    box-shadow: 0 0 3px 1px lightgrey;
-
-    &:after {
-        display: none;
-    }
+  @extend .step3;
+  width: 200px;
+  height: 36px;
+  border: 1px solid #d3d3d3;
+  font-size: 17px;
+  text-align: center; // padding: 5px 20px;
+  -webkit-box-shadow: 0 0 3px 1px lightgrey;
+  -moz-box-shadow: 0 0 3px 1px lightgray;
+  box-shadow: 0 0 3px 1px lightgrey;
+  &:after {
+    display: none;
+  }
 }
 
 .btn-default.active.focus,
@@ -143,357 +162,342 @@ $sport-darkgrey: #757575 !default;
 .btn-default:active.focus,
 .btn-default:active:focus,
 .btn-default:active:hover {
-    color: #333;
-    background-color: transparent;
-    border-color: inherit;
-    outline: 0;
+  color: #333;
+  background-color: transparent;
+  border-color: inherit;
+  outline: 0;
 }
 
 .btn-default:hover {
-    color: #333;
-    background-color: transparent;
-    border-color: inherit;
+  color: #333;
+  background-color: transparent;
+  border-color: inherit;
 }
 
 .btn-default.focus,
 .btn-default:focus {
-    color: #333;
-    background-color: transparent;
-    border-color: inherit;
-    outline: 0;
+  color: #333;
+  background-color: transparent;
+  border-color: inherit;
+  outline: 0;
 }
 
 .list-sportregistered {
-    margin: 10px 0;
+  margin: 10px 0;
 }
 
 .sportregistered-title {
-    display: inline-block;
-    padding: 10px 15px;
-    width: 79%;
-    margin-right: 5px;
-    border: 1px solid #091a71;
-    vertical-align: middle;
-
-    p {
-        margin: 0;
-    }
+  display: inline-block;
+  padding: 10px 15px;
+  width: 79%;
+  margin-right: 5px;
+  border: 1px solid #091a71;
+  vertical-align: middle;
+  p {
+    margin: 0;
+  }
 }
 
 .sportregistered-viewbtn {
-    display: inline-block;
-    width: 19%;
-    padding: 10px;
-    border: 1px solid #091a71;
-    text-align: center;
-    vertical-align: middle;
+  display: inline-block;
+  width: 19%;
+  padding: 10px;
+  border: 1px solid #091a71;
+  text-align: center;
+  vertical-align: middle;
 }
+
 // REGISTERED SPORTS END
 // SPORT DETAIL INDIVIDUAl
-
 .sport-detailpage {
-    margin: 30px 0;
+  margin: 30px 0;
 }
 
 .sportdetail-header {
-    color: #f37720;
-
-    h3 {
-        margin: 10px 0;
-    }
+  color: #f37720;
+  h3 {
+    margin: 10px 0;
+  }
 }
 
 .sportdetail-table {
-    padding: 30px 10px;
-    border-top: 2px solid #091a71;
-
-    &:first-child {
-        border-top: none;
+  padding: 30px 10px;
+  border-top: 2px solid #091a71;
+  &:first-child {
+    border-top: none;
+  }
+  .table {
+    th {
+      background: #091a71;
+      color: #fff;
     }
-
-    .table {
-        th {
-            background: #091a71;
-            color: #fff;
-        }
-
-        tr {
-            background: transparent;
-
-            td {
-                text-align: left;
-            }
-        }
+    tr {
+      background: transparent;
+      td {
+        text-align: left;
+      }
     }
+  }
 }
 
 .sport-individualtable {
-    max-height: 310px;
-    overflow-y: auto;
-
-    .table {
+  max-height: 310px;
+  overflow-y: auto;
+  .table {
+    border: none;
+    tbody {
+      border: none;
+      tr {
+        background-color: transparent;
         border: none;
-
-        tbody {
-            border: none;
-
-            tr {
-                background-color: transparent;
-                border: none;
-
-                td {
-                    padding: 8px;
-                    border: none;
-                    text-align: left;
-                }
-
-                .sportdetail-td {
-                    border: 1px solid #ccc;
-                    padding: 5px;
-                }
-            }
+        td {
+          padding: 8px;
+          border: none;
+          text-align: left;
         }
-
-        thead {
-            border: none;
-
-            th {
-                color: #fff;
-                border: none;
-            }
-
-            .sportdetail-th {
-                padding: 8px;
-                background-color: #091a71;
-            }
+        .sportdetail-td {
+          border: 1px solid #ccc;
+          padding: 5px;
         }
+      }
     }
+    thead {
+      border: none;
+      th {
+        color: #fff;
+        border: none;
+      }
+      .sportdetail-th {
+        padding: 8px;
+        background-color: #091a71;
+      }
+    }
+  }
 }
+
 // SPORT DETAIL INDIVIDUAl END
 // CITY-VIDEO
-
 .modal-container {
-    padding: 15px;
-
-    video::-internal-media-controls-download-button {
-        display: none;
-    }
-
-    video::-webkit-media-controls-enclosure {
-        overflow: hidden;
-    }
-
-    video::-webkit-media-controls-panel {
-        width: calc(100% + 30px);
-        /* Adjust as needed */
-    }
-
-    video {
-        max-width: 100%;
-        height: auto;
-    }
+  padding: 15px;
+  video::-internal-media-controls-download-button {
+    display: none;
+  }
+  video::-webkit-media-controls-enclosure {
+    overflow: hidden;
+  }
+  video::-webkit-media-controls-panel {
+    width: calc(100% + 30px);
+    /* Adjust as needed */
+  }
+  video {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 .sfavideo-content {
-    p {
-        font-size: 20px;
-        margin-top: 10px;
-    }
-
-    .video-city {
-        background-color: #53bb74;
-        color: #fff;
-        font-family: Titillium Web;
-        font-size: 16.68px;
-        font-weight: 400;
-    }
+  p {
+    font-size: 20px;
+    margin-top: 10px;
+  }
+  .video-city {
+    background-color: #53bb74;
+    color: #fff;
+    font-family: Titillium Web;
+    font-size: 16.68px;
+    font-weight: 400;
+  }
 }
+
 // END CITY-VIDEO
 // ABOUT CHAMPIONSHIP HYDERABAD
-
 .hyderabad-sporticonholder {
-    padding: 30px 0;
-
-    .sport-icon-championship {
-        padding: 0;
-        text-align: center;
-    }
-
-    .sport-icon-championship li {
-        width: 10%;
-        padding: 0 20px;
-    }
+  padding: 30px 0;
+  .sport-icon-championship {
+    padding: 0;
+    text-align: center;
+  }
+  .sport-icon-championship li {
+    width: 10%;
+    padding: 0 20px;
+  }
 }
 
 .prosport-holder {
-    .proffessional {
-        padding: 20px;
+  .proffessional {
+    padding: 20px;
+  }
+  .brand-blue {
+    color: #0a1a72;
+    &:before {
+      background-color: #0a1a72;
+      border: 1px solid #0a1a72;
     }
-
-    .brand-blue {
-        color: #0a1a72;
-
-        &:before {
-            background-color: #0a1a72;
-            border: 1px solid #0a1a72;
-        }
+  }
+  .hyderabad-prosportimageholder {
+    width: 90%;
+  }
+  .hyderabad-prosportexperience {
+    h3 {
+      color: #0da24a;
     }
-
-    .hyderabad-prosportimageholder {
-        width: 90%;
-    }
-
-    .hyderabad-prosportexperience {
-        h3 {
-            color: #0da24a;
-        }
-    }
+  }
 }
 
 .prosporteducation-head {
-    h3 {
-        color: #0da24a;
-    }
+  h3 {
+    color: #0da24a;
+  }
 }
 
 .prosporteducation-holder {
-    .proffessional {
-        padding: 5px;
-    }
+  .proffessional {
+    padding: 5px;
+  }
 }
 
 .pro-dataanalytics-head {
-    color: #0da24a;
-    letter-spacing: 1px;
+  color: #0da24a;
+  letter-spacing: 1px;
 }
+
 // .another-pro-data-holder {
 //     margin-top: 55px;
 // }
 // END ABOUT CHAMPIONSHIP
 // RESULTS PAGE
-
 .resultpage {
-    min-height: 100vh;
-    padding: 60px 0 50px;
+  min-height: 100vh;
+  padding: 60px 0 50px;
 }
 
-.result-title{
+.result-title {
   color: $sport-primary;
   font-size: 36px;
   text-transform: uppercase;
 }
-.resulttitle-dropdown{
+
+.resulttitle-dropdown {
   font-size: 21px;
   color: $sport-success;
 }
 
-.result-schooltitle{
+.result-schooltitle {
   color: $sport-lightblue;
   text-transform: uppercase;
 }
 
 .result-schooltableholder {
-  .table{
+  .table {
     >thead>tr {
-        background-color: #10259c;
-        color: #fff;
-        >th{
-          border: none;
-          vertical-align: middle;
-        }
+      background-color: #10259c;
+      color: #fff;
+      >th {
+        border: none;
+        vertical-align: middle;
+      }
     }
-    >tbody>tr>td{
+    >tbody>tr>td {
       border: none;
     }
   }
-
-  .table-striped{
-    >tbody{
-      >tr{
+  .table-striped {
+    >tbody {
+      >tr {
         &:nth-of-type(odd) {
-            background-color: #fff;
+          background-color: #fff;
         }
         &:nth-of-type(even) {
-            background-color: #e5e5e5;
+          background-color: #e5e5e5;
         }
       }
     }
   }
 }
-.result-schoolsection{
+
+.result-schoolsection {
   padding-bottom: 10px;
   border-bottom: 1px solid;
 }
-.schooltable-bg{
+
+.schooltable-bg {
   background-color: #000;
   color: #fff;
   padding: 15px 10px;
 }
+
 .schooltable-holder {
   .table {
-      margin-bottom: 0px;
-      >thead>tr{
-        background-color: $sport-lightblue;
-        >th{
-          padding: 0px 8px;
-          border-bottom: none;
-          text-transform: uppercase;
-          vertical-align: middle;
-        }
+    margin-bottom: 0px;
+    >thead>tr {
+      background-color: $sport-lightblue;
+      >th {
+        padding: 0px 8px;
+        border-bottom: none;
+        text-transform: uppercase;
+        vertical-align: middle;
       }
-      >tbody>tr{
-        background-color: rgba(255, 255, 255, 0.3);
-        border-bottom: 3px solid #000;
-        >td{
-          padding: 10px 8px;
-          border-top: none;
-          color: #fff;
-        }
+    }
+    >tbody>tr {
+      background-color: rgba(255, 255, 255, 0.3);
+      border-bottom: 3px solid #000;
+      >td {
+        padding: 10px 8px;
+        border-top: none;
+        color: #fff;
       }
-      .schooltable-head {
-        font-size: 16px;
-        text-align: center;
-      }
-      .table-medalimage{
-        text-align: center;
-      }
-      .profile-bluemedals {
-        width: 20px;
-        margin: 0 auto;
-      }
-      .schoolmedal-points {
-        font-size: 10px;
-      }
+    }
+    .schooltable-head {
+      font-size: 16px;
+      text-align: center;
+    }
+    .table-medalimage {
+      text-align: center;
+    }
+    .profile-bluemedals {
+      width: 20px;
+      margin: 0 auto;
+    }
+    .schoolmedal-points {
+      font-size: 10px;
+    }
   }
 }
-.schoolranktable-sportwise{
+
+.schoolranktable-sportwise {
   text-align: left;
 }
-.schoolranktable-head{
+
+.schoolranktable-head {
   margin-bottom: 15px;
-  h3{
+  h3 {
     margin: 0;
   }
 }
-.resultsport-topplayer{
+
+.resultsport-topplayer {
   margin-top: 25px;
 }
-.resultsport-viewmedalwinner{
+
+.resultsport-viewmedalwinner {
   padding: 15px 0;
 }
-.result-viewall-medalwinners{
+
+.result-viewall-medalwinners {
   padding: 10px;
   border: 2px solid #b7b7b7;
   margin: 20px 0;
   color: $sport-darkgrey;
 }
+
 .result-tablemedal {
-    width: 20px;
-    margin: 0 auto;
+  width: 20px;
+  margin: 0 auto;
 }
+
 // RESULTS PAGE END
 // DROPDOWN
-.result-dropdown{
+.result-dropdown {
   position: relative;
   cursor: pointer;
   .landingschool-schoolfilter {
@@ -507,9 +511,9 @@ $sport-darkgrey: #757575 !default;
     color: #1a1a1a;
     font-size: 16px;
     z-index: 1;
-    ul{
+    ul {
       margin: 0;
-      li{
+      li {
         margin: 10px 0;
         cursor: pointer;
       }
@@ -518,8 +522,7 @@ $sport-darkgrey: #757575 !default;
 }
 
 // DROPDOWN END
-
-.custom-toggle{
+.custom-toggle {
   .switch {
     position: relative;
     display: inline-block;
@@ -569,76 +572,86 @@ $sport-darkgrey: #757575 !default;
 }
 
 //VIEW ALL WINNER CARD
-.allmedal-filterlabel{
+.allmedal-filterlabel {
   color: $base;
   font-weight: 600;
   text-transform: uppercase;
 }
+
 .allmedal-filter {
-    padding: 0 10px;
+  padding: 0 10px;
 }
-.viewallmedal-winnertitle{
+
+.viewallmedal-winnertitle {
   margin: 0;
   color: $base;
   font-weight: 600;
   text-transform: uppercase;
 }
-.viewallmedal-winnerholder{
+
+.viewallmedal-winnerholder {
   border-top: 1px solid $base;
   padding: 10px 10px 0;
 }
-.viewall-winnerrow{
+
+.viewall-winnerrow {
   padding: 5px 0;
   border-bottom: 1px solid $sport-grey;
-  &:last-child{
+  &:last-child {
     border-bottom: none;
   }
 }
+
 .allmedal-winnercard {
-    padding: 5px;
+  padding: 5px;
 }
+
 .allmedal-medalholder {
-    width: 18px;
-    margin-left: 5px;
-    display: inline-block;
-    vertical-align: middle;
+  width: 18px;
+  margin-left: 5px;
+  display: inline-block;
+  vertical-align: middle;
 }
+
 .allmedal-profilepic {
-    width: 50px;
-    height: 50px;
-    border-radius: 100%;
-    display: inline-block;
-    overflow: hidden;
-    vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 100%;
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: middle;
 }
+
 .allmedal-studentdetails {
-    width: calc(100% - 100px);
-    padding: 0 5px;
-    display: inline-block;
-    vertical-align: middle;
+  width: calc(100% - 100px);
+  padding: 0 5px;
+  display: inline-block;
+  vertical-align: middle;
 }
+
 .allmedal-studentname {
   margin: 0;
   color: $sport-primary;
   font-size: 16px;
   font-weight: 700;
 }
+
 .allmedal-studentschool {
   margin: 0;
   color: $sport-darkgrey;
   font-size: 12px;
 }
-//VIEW ALL WINNER CARD END
 
+//VIEW ALL WINNER CARD END
 // TEAM MATCH CENTER
-.teammatchcenter-modal{
-  .modal-content{
+.teammatchcenter-modal {
+  .modal-content {
     border-radius: 0;
   }
   .modal-header {
     padding: 0px;
   }
-  .modal-container{
+  .modal-container {
     padding: 15px 0;
   }
   .matchstart-header {
@@ -655,15 +668,15 @@ $sport-darkgrey: #757575 !default;
     left: 20px;
     width: 65px;
   }
-  .matchcenter-heading{
+  .matchcenter-heading {
     font-weight: 700;
   }
-  .matchwinner{
+  .matchwinner {
     position: absolute;
     top: 0;
     left: 90px;
   }
-  .matchwinner-title{
+  .matchwinner-title {
     font-size: 16px;
     font-weight: 700;
   }
@@ -690,50 +703,50 @@ $sport-darkgrey: #757575 !default;
     overflow: hidden;
     vertical-align: middle;
   }
-  .matchplayer-details{
+  .matchplayer-details {
     width: calc(100% - 125px);
     margin-top: 10px;
     display: inline-block;
     vertical-align: middle;
-    .matchplayer-school{
+    .matchplayer-school {
       margin: 0;
       color: #0a1a72;
       font-size: 16px;
       font-weight: 700;
     }
   }
-  .playerangle-accordion{
+  .playerangle-accordion {
     font-size: 21px;
   }
-  .teamplayer-accordion{
-    .panel{
+  .teamplayer-accordion {
+    .panel {
       border: none;
       border-radius: 0px;
       box-shadow: none;
     }
-    .panel-default > .panel-heading{
+    .panel-default>.panel-heading {
       padding: 5px 10px;
       border: 0;
       border-bottom: 1px solid #ddd;
       background-color: transparent;
     }
-    .panel-body{
+    .panel-body {
       border: none;
     }
-    .panel-open{
-      .panel-heading{
+    .panel-open {
+      .panel-heading {
         border-radius: 0;
         background-color: #e1e1e1;
       }
-      .panel-body{
+      .panel-body {
         border: 1px solid #e1e1e1;
       }
     }
-    .panel-title{
+    .panel-title {
       font-size: 14px;
     }
   }
-  .playerheader-accordion{
+  .playerheader-accordion {
     padding: 5px;
     margin-bottom: 5px;
     background: #ffb026;
@@ -755,7 +768,7 @@ $sport-darkgrey: #757575 !default;
     top: 50%;
     @include transform(translateY(-50%));
   }
-  .formaton-input{
+  .formaton-input {
     width: 80px;
     border: none;
     background-color: #5aeca5;
@@ -765,14 +778,14 @@ $sport-darkgrey: #757575 !default;
     text-align: center;
     text-transform: uppercase;
   }
-  .matchcenter-teamcol{
-    &:nth-child(even){
-      .team-formationholder{
+  .matchcenter-teamcol {
+    &:nth-child(even) {
+      .team-formationholder {
         padding-left: 0;
         padding-right: 25px;
         text-align: right;
       }
-      .team-formationicon{
+      .team-formationicon {
         left: auto;
         right: 0;
       }
@@ -781,7 +794,7 @@ $sport-darkgrey: #757575 !default;
   .team-player-accordian-holder {
     margin: 20px 0;
   }
-  .teamdetail-pointholder{
+  .teamdetail-pointholder {
     padding: 10px;
     border: 1px solid #e1e1e1;
   }
@@ -802,23 +815,23 @@ $sport-darkgrey: #757575 !default;
     text-align: left;
     vertical-align: middle;
   }
-  .sportwise-finalpointholder{
+  .sportwise-finalpointholder {
     display: inline-block;
     vertical-align: middle;
   }
-  .matchcenter-teampoints{
+  .matchcenter-teampoints {
     text-align: center;
     input[type=number]::-webkit-inner-spin-button,
     input[type=number]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      appearance: none;
     }
     .setpoint-element {
       display: inline-block;
       vertical-align: middle;
     }
-    .setpointlabel{
+    .setpointlabel {
       display: block;
       font-size: 12px;
       font-weight: 500;
@@ -836,95 +849,98 @@ $sport-darkgrey: #757575 !default;
     }
   }
 }
+
 // TEAM MATCH CENTER END
 // SPECIAL EVENTS PAGE
-.specialevents-page{
+.specialevents-page {
   min-height: 100vh;
   padding: 60px 0px 50px;
 }
-.specialevents-header{
+
+.specialevents-header {
   color: $sport-primary;
   font-size: 30px;
   font-weight: 600;
 }
+
 .specialevent-title {
   margin-bottom: 10px;
   font-size: 24px;
   font-weight: 600;
 }
-.specialevent{
-  margin: 20px 0;
-  // padding: 20px 0;
-  .row{
+
+.specialevent {
+  margin: 20px 0; // padding: 20px 0;
+  .row {
     margin-left: -2px;
     margin-right: -2px;
   }
-  .col-md-6, .col-sm-6{
+  .col-md-6,
+  .col-sm-6 {
     padding-left: 2px;
     padding-right: 2px;
   }
 }
-.event-card{
+
+.event-card {
   margin: 2px 0;
-  &:hover{
+  &:hover {
     box-shadow: 0 0 10px #000;
   }
-  ::-webkit-scrollbar {
-     width: 5px;
-     height: 5px;
- }
-  ::-webkit-scrollbar-track {
-     background-color: transparent;
- }
-  ::-webkit-scrollbar-thumb {
-     background-color: $sport-grey;
- }
+   ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+   ::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+   ::-webkit-scrollbar-thumb {
+    background-color: $sport-grey;
+  }
 }
-.eventcard-yellow{
+
+.eventcard-yellow {
   border: 3px solid $sport-warning;
   background-color: $sport-warning;
-  .eventdetail-title{
+  .eventdetail-title {
     color: $sport-warning;
-  }
-  // DATE ARROW
-  .datearrow-left:after{
+  } // DATE ARROW
+  .datearrow-left:after {
     border-left: 15px solid $sport-warning;
   }
-  .datearrow-bottom:after{
+  .datearrow-bottom:after {
     border-bottom: 15px solid $sport-warning;
-  }
-  // DATE ARROW
+  } // DATE ARROW
 }
-.eventcard-blue{
+
+.eventcard-blue {
   border: 3px solid $sport-lightblue;
   background-color: $sport-lightblue;
-  .eventdetail-title{
+  .eventdetail-title {
     color: $sport-lightblue;
-  }
-  // DATE ARROW
-  .datearrow-left:after{
+  } // DATE ARROW
+  .datearrow-left:after {
     border-left: 15px solid $sport-lightblue;
   }
-  .datearrow-bottom:after{
+  .datearrow-bottom:after {
     border-bottom: 15px solid $sport-lightblue;
-  }
-  // DATE ARROW
+  } // DATE ARROW
 }
-.eventcard-green{
+
+.eventcard-green {
   border: 3px solid $sport-success;
   background-color: $sport-success;
-  .eventdetail-title{
+  .eventdetail-title {
     color: $sport-success;
-  }
-  // DATE ARROW
-  .datearrow-left:after{
+  } // DATE ARROW
+  .datearrow-left:after {
     border-left: 15px solid $sport-success;
   }
-  .datearrow-bottom:after{
+  .datearrow-bottom:after {
     border-bottom: 15px solid $sport-success;
-  }
-  // DATE ARROW
+  } // DATE ARROW
 }
+
 // DATE ARROW
 .datearrow-left:after {
   content: '';
@@ -947,13 +963,15 @@ $sport-darkgrey: #757575 !default;
   @include transform(translateX(-50%));
   z-index: 2;
 }
+
 // DATE ARROW END
-.event-tile{
+.event-tile {
   width: 50%;
   position: relative;
   float: left;
   overflow: hidden;
 }
+
 // EVENT DATE CARD
 .eventcard-datetile {
   width: 100%;
@@ -965,24 +983,28 @@ $sport-darkgrey: #757575 !default;
   font-weight: 700;
   @include transform(translateY(-50%));
 }
+
 .eventcard-date {
   margin: 0;
   font-size: 110px;
   line-height: 1;
 }
+
 .eventcard-day {
   font-size: 36px;
   line-height: 1;
 }
+
 // EVENT DATE CARD END
 // EVENT IMAGE CARD
-.eventcard-image{
+.eventcard-image {
   width: 100%;
   height: 100%;
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 // EVENT IMAGE CARD END
 // EVENT DETAIL CARD
 .eventcard-detail {
@@ -991,27 +1013,30 @@ $sport-darkgrey: #757575 !default;
   background: #fff;
   overflow-y: auto;
 }
+
 .eventdetail-title {
   padding: 0 10px;
   font-size: 21px;
   text-transform: capitalize;
 }
+
 .eventdetail-content {
   padding: 10px;
   color: $sport-darkgrey;
   text-align: justify;
 }
+
 // EVENT DETAIL CARD END
 // SPECIAL EVENTS PAGE END
-
 // TILE CARD WIREFRAME
-.tileholder{
+.tileholder {
   width: 302px;
   margin: 10px;
   border: 1px solid #000;
   display: inline-block;
 }
-.tile{
+
+.tile {
   width: 150px;
   height: 150px;
   border: 1px solid #fff;
@@ -1020,16 +1045,38 @@ $sport-darkgrey: #757575 !default;
   background-color: #ffb026;
   color: #fff;
 }
-.tile2{
+
+.tile2 {
   height: 300px;
 }
-.tiledate{
+
+.tiledate {
   background-color: #ccc;
 }
-.get-center{
+
+.get-center {
   position: absolute;
   top: 50%;
   left: 50%;
   @include transform(tranlate(-50%, -50%));
 }
+
 // TILE CARD WIREFRAME END
+// CUSTOM UPLOAD BUTTON
+.matchstart-uploadholder {
+  position: relative;
+  overflow: hidden;
+  vertical-align: middle;
+}
+
+.upload-scorecard {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  z-index: 2;
+}
+
+// CUSTOM UPLOAD BUTTON
