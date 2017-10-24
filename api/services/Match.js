@@ -11867,7 +11867,7 @@ var model = {
                                                         result.player1 = team.players[0].fullName;
                                                         result.player1SfaId = team.players[0].sfaId;
                                                         result.player2 = team.players[1].fullName;
-                                                        result.player2SfaId = team.players[0].sfaId;
+                                                        result.player2SfaId = team.players[1].sfaId;
                                                     }
                                                 });
                                                 console.log("result", result);
