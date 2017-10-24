@@ -137,7 +137,7 @@ myApp.controller('RacquetDoublesScoreCtrl', function ($scope, TemplateService, N
     $scope.set = set;
     switch (model) {
       case 'ace':
-        if ($scope.set.ace == 1) {
+        if ($scope.set.ace == "") {
           $scope.set.ace = 1;
         } else {
           $scope.set.ace = $scope.set.ace + 1;
