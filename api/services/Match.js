@@ -9098,7 +9098,7 @@ var model = {
                                                         player.result = n.success["RESULT"];
                                                     }
                                                     player.laneNo = n.success["LANE NUMBER"];
-                                                    result.players.push(player);
+                                                    result.teams.push(player);
                                                 }
                                                 console.log(paramData.opponentsSingle);
                                                 paramData.sport = n.success.SPORT;
