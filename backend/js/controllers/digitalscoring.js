@@ -158,7 +158,9 @@ myApp.controller('DetailPdfCtrl', function ($scope, TemplateService, NavigationS
     paramValue.gender = formData.gender;
     paramValue.ageGroup = formData.ageGroup._id;
     paramValue.eventPdf = formData.eventPdf;
-    paramValue.weight = formData.weight._id;
+    if (formData.weight._id) {
+      paramValue.weight = formData.weight._id;
+    }
 
     // $scope.formData.matchId = $stateParams.id;
     console.log(paramValue, "save");
