@@ -48,21 +48,23 @@ var model = {
                                 });
                             }
                         });
+
                         var medalRank = _(medals)
                             .groupBy('school')
                             .map(function (items, name) {
+
                                 var gender = _(items)
                                     .groupBy('medals.medalType')
                                     .map(function (values, name) {
                                         return {
                                             name: name,
-                                            count: values.length,
+                                            count: values.length
                                         };
                                     }).value();
                                 return {
                                     name: name,
                                     medal: gender,
-                                    // totalCount: gender.length
+                                    totalCount: items.length
                                 };
                             }).value();
                         callback(null, medalRank);
