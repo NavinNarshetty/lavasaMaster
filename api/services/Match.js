@@ -10288,7 +10288,7 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                console.log("found", found);
+                                console.log("found", found.prevMatch);
                                 if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted') {
                                     if (_.isEmpty(found[0].resultsRacquet)) {
                                         callback(null, found);
