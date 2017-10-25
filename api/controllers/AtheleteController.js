@@ -88,10 +88,14 @@ var controller = {
     },
 
     generateExcelOld: function (req, res) {
+        res.connection.setTimeout(200000000);
+        req.connection.setTimeout(200000000);
         Athelete.generateExcelOld(res);
     },
 
     generateExcel: function (req, res) {
+        res.connection.setTimeout(200000000);
+        req.connection.setTimeout(200000000);
         if (req.body) {
             console.log(req.body);
             Athelete.generateExcel(req.body, res);

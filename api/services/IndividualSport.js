@@ -2546,6 +2546,7 @@ var model = {
                         _.each(mainData.info, function (n) {
                             console.log("info", n);
                             console.log("count", count);
+                            obj.SFAID = n.sfaid;
                             if (n.middlename) {
                                 obj.Athlete_Full_Name = n.firstname + " " + n.middlename + " " + n.surname;
                             } else {
@@ -2556,14 +2557,28 @@ var model = {
                             } else {
                                 obj.SchoolName = n.school;
                             }
-                            obj.SFAID = n.sfaid;
+                            obj.Gender = n.gender;
                             obj.Sport = n.sportName;
+                            if (count == 0) {
+                                age = n.agegroup;
+                                event = age + " - " + n.eventname;
+                                if (n.weight) {
+                                    obj.Weight_Category = n.weight;
+                                }
+                                count++;
+                            } else {
+                                age = n.agegroup;
+                                event = event + " , " + age + " - " + n.eventname;
+                                if (n.weight) {
+                                    obj.Weight_Category = n.weight;
+                                }
+                            }
+                            obj.Event_Category = event;
                             if (n.createdby) {
                                 obj.CreatedBy = n.createdby;
                             } else {
                                 obj.CreatedBy = "";
                             }
-
                             if (n.nominatedSchoolName) {
                                 obj.nominatedSchoolName = n.nominatedSchoolName;
                             } else {
@@ -2589,22 +2604,6 @@ var model = {
                             } else {
                                 obj.isVideoAnalysis = "";
                             }
-                            obj.Gender = n.gender;
-                            if (count == 0) {
-                                age = n.agegroup;
-                                event = age + " - " + n.eventname;
-                                if (n.weight) {
-                                    obj.Weight_Category = n.weight;
-                                }
-                                count++;
-                            } else {
-                                age = n.agegroup;
-                                event = event + " , " + age + " - " + n.eventname;
-                                if (n.weight) {
-                                    obj.Weight_Category = n.weight;
-                                }
-                            }
-                            obj.Event_Category = event;
                             // callback(null, basicInfo);
                         });
                         // console.log("basicInfo", basicInfo);

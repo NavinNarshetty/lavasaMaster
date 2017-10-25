@@ -355,10 +355,6 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
         ];
     $scope.partner = // JavaScript Document
         [{
-                "img": "img/footer/n10.png",
-                "href": "",
-                "game": "Digital Parenting Partner"
-            }, {
                 "img": "img/footer/p1.jpg",
                 "href": "",
                 "game": "Venue Partner"
@@ -366,6 +362,10 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
                 "img": "img/footer/p6.jpg",
                 "href": "",
                 "game": "Hospital Partner"
+            }, {
+                "img": "img/footer/n10.png",
+                "href": "",
+                "game": "Digital Parenting Partner"
             }
             // {
             //     "img": "img/footer/na3.jpg",
