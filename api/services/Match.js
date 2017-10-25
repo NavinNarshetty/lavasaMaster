@@ -8476,7 +8476,7 @@ var model = {
                                                 callback(err, null);
                                             } else {
                                                 if (_.isEmpty(match)) {
-                                                    callback(null, []);
+                                                    callback(null, match);
                                                 } else {
                                                     callback(null, match);
                                                 }
@@ -8492,7 +8492,7 @@ var model = {
                                                 callback(err, null);
                                             } else {
                                                 if (_.isEmpty(match)) {
-                                                    callback(null, []);
+                                                    callback(null, match);
                                                 } else {
                                                     callback(null, match);
                                                 }
@@ -8500,7 +8500,7 @@ var model = {
                                         });
                                 }
                             ], function (err, results) {
-                                if (err || _.isEmpty(results)) {
+                                if (err) {
                                     callback(err, null);
                                 } else {
                                     callback(null, results);
@@ -8529,7 +8529,7 @@ var model = {
                 }
             ],
             function (err, results) {
-                if (err || _.isEmpty(results)) {
+                if (err) {
                     callback(err, null);
                 } else {
                     callback(null, results);
@@ -11863,16 +11863,17 @@ var model = {
                                                     var teamid = team.team;
                                                     var nId = n._id.toString();
                                                     if (teamid === nId) {
-                                                        console.log("inside",team.players);
-                                                        result.players = [];
+                                                        console.log("inside", team.players);
+                                                        // result.players = [];
                                                         var listPlayers = [];
-                                                        _.each(team.players,function(playerList){
+                                                        _.each(team.players, function (playerList) {
+                                                            console.log("playerlist", playerList);
                                                             listPlayers.push({
                                                                 name: playerList.fullName,
                                                                 sfaId: playerList.sfaId
-                                                            })
+                                                            });
                                                         })
-                                                        result.players = listPlayers
+                                                        result.players = listPlayers;
                                                         // result.player1 = team.players[0].fullName;
                                                         // result.player1SfaId = team.players[0].sfaId;
                                                         // result.player2 = team.players[1].fullName;
