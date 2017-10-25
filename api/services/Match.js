@@ -11720,8 +11720,6 @@ var model = {
                                     Match.aggregate(pipeLine, function (err, matchData) {
                                         if (err) {
                                             callback(err, "error in mongoose");
-                                        } else if (_.isEmpty(matchData)) {
-                                            callback(null, []);
                                         } else {
                                             var result = {};
                                             console.log('match data', matchData);
@@ -11811,8 +11809,6 @@ var model = {
                                     Match.aggregate(pipeLine, function (err, matchData) {
                                         if (err) {
                                             callback(err, "error in mongoose");
-                                        } else if (_.isEmpty(matchData)) {
-                                            callback(null, []);
                                         } else {
                                             console.log("matchData[0]", matchData[0]);
                                             var result = {};
