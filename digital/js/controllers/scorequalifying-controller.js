@@ -73,23 +73,34 @@ myApp.controller('QualifyingScoreCtrl', function ($scope, TemplateService, Navig
         }
         $scope.qualifyingRound = data.data;
         _.each($scope.qualifyingRound, function (n) {
+          console.log('n1 ', n);
+
           switch ($stateParams.flag) {
             case 'score':
-              if ($scope.qualifyingRound[0].resultQualifyingRound && $scope.qualifyingRound[0].resultQualifyingRound.scoreSheet.length != 0) {
+              console.log('n switch', n);
+
+              if ($scope.qualifyingRound[0].resultQualifyingRound && $scope.qualifyingRound[0].resultQualifyingRound.scoreSheet && $scope.qualifyingRound[0].resultQualifyingRound.scoreSheet.length != 0) {
                 $scope.scoreSheet = $scope.qualifyingRound[0].resultQualifyingRound.scoreSheet;
               }
-              if (!n.resultQualifyingRound) {
-                n.resultQualifyingRound = {};
-                n.resultQualifyingRound = {
-                  "player": {
-                    "id": n.opponentsSingle[0]._id,
-                    "noShow": false,
-                    "attempt": ["", "", ""],
-                    "bestAttempt": "",
-                    "result": ""
-                  },
-                  "scoreSheet": []
-                };
+              if (n.resultQualifyingRound.player.attempt.length == 0 && !n.resultQualifyingRound.scoreSheet) {
+                if (n.opponentsSingle.length > 0) {
+                  console.log('n ', n.matchId, n);
+                  n.resultQualifyingRound = {};
+                  n.resultQualifyingRound = {
+                    "player": {
+                      "id": n.opponentsSingle[0]._id,
+                      "noShow": false,
+                      "attempt": ["", "", ""],
+                      "bestAttempt": "",
+                      "result": ""
+                    },
+                    "scoreSheet": []
+                  };
+                } else {
+                  toastr.error("Some matches have incomplete data. Please Check them", "Error");
+                }
+              } else {
+                console.log("lenove");
               }
               break;
             case 'image':
@@ -173,7 +184,7 @@ myApp.controller('QualifyingScoreCtrl', function ($scope, TemplateService, Navig
       if ($stateParams.flag == 'image') {
         $scope.qualifyingResult[nindex].resultImage = {};
         $scope.qualifyingResult[nindex].resultImage = n.resultImage;
-      } else if ($stateParams.flag == 'score') {
+      } else if ($stateParams.flag == 'score' && n.resultQualifyingRound) {
         $scope.qualifyingResult[nindex].result = {};
         $scope.qualifyingResult[nindex].result = n.resultQualifyingRound.player;
         $scope.qualifyingResult[nindex].scoreSheet = $scope.scoreSheet;

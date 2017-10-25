@@ -230,20 +230,20 @@
       <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs">
         <div class="knockout-winnercardholder" ng-repeat="winner in winnerDoubles track by $index">
           <div class="display-inline knockout-winnercardname">
-            <div class="knockout-winnercardname-holder" ng-repeat="doubles in winner.team[0].studentTeam track by $index">
+            <div class="knockout-winnercardname-holder" ng-repeat="doubles in winner.players track by $index">
               <div class="knockout-winnercardimgage display-inline">
-                <img src="/img/dishapatani1.jpg" alt="" class="img-responsive">
+                <img ng-src="{{winner.profile | serverimage2:50:50:'cover' }}" alt="" class="img-responsive">
               </div>
               <div class="knockout-winnercardplayername display-inline">
-                <p class="m-clear sport-color-primary">{{doubles.fullName}}</p>
-                <p class="m-clear">{{winner.team[0].schoolName | truncate:25}}</p>
+                <p class="m-clear sport-color-primary">{{doubles.name}}</p>
+                <p class="m-clear">{{winner.school | truncate:20}}</p>
               </div>
             </div>
 
           </div>
           <div class="display-inline knockout-winnermedalholder">
             <div class="testsfa">
-              <img ng-src="/img/medal-icon/{{winner.medalType}}-blue.png" alt="" class="img-responsive">
+              <img ng-src="/img/medal-icon/{{winner.medaltype}}-blue.png" alt="" class="img-responsive">
             </div>
           </div>
         </div>

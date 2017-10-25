@@ -207,6 +207,39 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
     }
   };
   $scope.getSportSpecificRounds();
+  $scope.getWinners = function () {
+    if ($stateParams.id) {
+      $scope.constraints.sport = $stateParams.id;
+      NavigationService.getAllWinners($scope.constraints, function (data) {
+        errorService.errorCode(data, function (allData) {
+          if (!allData.message) {
+            if (allData.value) {
+              $scope.winnerTable = allData.data;
+              _.each($scope.winnerTable, function (value) {
+                if (value.medaltype === 'gold') {
+                  value.rank = 1;
+                }
+                if (value.medaltype === 'silver') {
+                  value.rank = 2;
+                }
+                if (value.medaltype === 'bronze') {
+                  value.rank = 3;
+                }
+              });
+
+              console.log("  $scope.winnerTable", $scope.winnerTable);
+            }
+          } else {
+            toastr.error(allData.message, 'Error Message');
+          }
+
+        });
+
+
+      });
+    }
+  },
+    $scope.getWinners();
   //for showing More Data
   $scope.showMoreData = function (bool, index) {
     if (bool) {
