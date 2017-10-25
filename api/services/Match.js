@@ -11824,7 +11824,7 @@ var model = {
                                                 result.profile = n.school.schoolLogo;
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
-                                                _.each(matchData[0].heat.players, function (player) {
+                                                _.each(matchData[0].heat.teams, function (player) {
                                                     if (player.id === n._id) {
                                                         result.result = player.time;
                                                     }
