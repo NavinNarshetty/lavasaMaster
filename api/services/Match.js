@@ -3224,7 +3224,7 @@ var model = {
                     obj["SCORE 2"] = "";
                     obj["DATA POINTS 2"] = "";
                     obj["VIDEO TYPE"] = "";
-                    Obj["VIDEO"] = "";
+                    obj["VIDEO"] = "";
                 }
                 callback(null, obj);
             },
@@ -3945,7 +3945,7 @@ var model = {
                     obj["SCORE 2"] = "";
                     obj["DATA POINTS 2"] = "";
                     obj["VIDEO TYPE"] = "";
-                    Obj["VIDEO"] = "";
+                    obj["VIDEO"] = "";
                 }
                 callback(null, obj);
 
@@ -4072,16 +4072,16 @@ var model = {
                             if (mainData.result) {
                                 obj["RESULT"] = mainData.result;
                                 obj["VIDEO TYPE"] = "";
-                                Obj["VIDEO"] = "";
+                                obj["VIDEO"] = "";
                             } else {
                                 if (!_.isEmpty(obj["SFA ID"])) {
                                     obj["RESULT"] = "-";
                                     obj["VIDEO TYPE"] = "";
-                                    Obj["VIDEO"] = "";
+                                    obj["VIDEO"] = "";
                                 } else {
                                     obj["RESULT"] = "";
                                     obj["VIDEO TYPE"] = "";
-                                    Obj["VIDEO"] = "";
+                                    obj["VIDEO"] = "";
                                 }
                             }
                             callback(null, obj);
@@ -4114,7 +4114,7 @@ var model = {
                     obj["TIMING"] = " ";
                     obj["RESULT"] = " ";
                     obj["VIDEO TYPE"] = "";
-                    Obj["VIDEO"] = "";
+                    obj["VIDEO"] = "";
                     callback(null, obj);
                 }
             },
@@ -4182,16 +4182,16 @@ var model = {
                             if (mainData.result) {
                                 obj["RESULT"] = mainData.result;
                                 obj["VIDEO TYPE"] = "";
-                                Obj["VIDEO"] = "";
+                                obj["VIDEO"] = "";
                             } else {
                                 if (!_.isEmpty(obj["TEAM ID"])) {
                                     obj["RESULT"] = "-";
                                     obj["VIDEO TYPE"] = "";
-                                    Obj["VIDEO"] = "";
+                                    obj["VIDEO"] = "";
                                 } else {
                                     obj["RESULT"] = "";
                                     obj["VIDEO TYPE"] = "";
-                                    Obj["VIDEO"] = "";
+                                    obj["VIDEO"] = "";
                                 }
                             }
                             callback(null, obj);
@@ -4427,7 +4427,7 @@ var model = {
                                     //     obj["MatchCenter"] = "";
                                     // }
                                     obj["VIDEO TYPE"] = "";
-                                    Obj["VIDEO"] = "";
+                                    obj["VIDEO"] = "";
                                 } else {
                                     obj["SCORE - ROUND 1"] = "";
                                     obj["SCORE - ROUND 2"] = "";
@@ -4448,7 +4448,7 @@ var model = {
                                 obj["RANK"] = "";
                                 obj["RESULT"] = "";
                                 obj["VIDEO TYPE"] = "";
-                                Obj["VIDEO"] = "";
+                                obj["VIDEO"] = "";
                             }
                             callback(null, obj);
 
@@ -4586,7 +4586,7 @@ var model = {
                                 obj["WINNER NAME"] = "";
                                 obj["WINNER SFA ID "] = "";
                                 obj["VIDEO TYPE"] = "";
-                                Obj["VIDEO"] = "";
+                                obj["VIDEO"] = "";
                             }
                             callback(null, obj);
                         },
@@ -4738,7 +4738,7 @@ var model = {
                                 obj["WINNER NAME"] = "";
                                 obj["WINNER TEAM ID"] = "";
                                 obj["VIDEO TYPE"] = "";
-                                Obj["VIDEO"] = "";
+                                obj["VIDEO"] = "";
                             }
                             // console.log(obj,"---------------------------");
                             callback(null, obj);
@@ -4829,7 +4829,7 @@ var model = {
                     obj["FINAL SCORE"] = "";
                     obj["RESULT"] = "";
                     obj["VIDEO TYPE"] = "";
-                    Obj["VIDEO"] = "";
+                    obj["VIDEO"] = "";
                 }
                 callback(null, obj);
 
@@ -4934,7 +4934,7 @@ var model = {
                                     obj["WINNER SFAID"] = "";
                                 }
                                 obj["VIDEO TYPE"] = "";
-                                Obj["VIDEO"] = "";
+                                obj["VIDEO"] = "";
                             } else {
                                 obj["P1 SCORE"] = "";
                                 obj["P2 SCORE"] = "";
@@ -4943,7 +4943,7 @@ var model = {
                                 obj["WINNER NAME"] = "";
                                 obj["WINNER SFAID"] = "";
                                 obj["VIDEO TYPE"] = "";
-                                Obj["VIDEO"] = "";
+                                obj["VIDEO"] = "";
                             }
                             callback(null, obj);
                         },
@@ -5164,7 +5164,7 @@ var model = {
                                 obj["WINNER NAME"] = "";
                                 obj["WINNER SFA ID "] = "";
                                 obj["WINNER SCHOOL"] = "";
-                                Obj["VIDEO"] = "";
+                                obj["VIDEO"] = "";
                             }
                             callback(null, obj);
                         },
@@ -5304,7 +5304,7 @@ var model = {
                     // obj["BEST ATTEMPT"] = "";
                     obj["RESULT"] = "";
                     // obj["VIDEO TYPE"] = "";
-                    // Obj["VIDEO"] = "";
+                    // obj["VIDEO"] = "";
                 }
                 callback(null, obj);
 
@@ -5379,7 +5379,7 @@ var model = {
                     obj["POINTS"] = "";
                     obj["RESULT"] = "";
                     // obj["VIDEO TYPE"] = "";
-                    // Obj["VIDEO"] = "";
+                    // obj["VIDEO"] = "";
                 }
                 callback(null, obj);
 
@@ -5505,16 +5505,16 @@ var model = {
                             if (mainData.result) {
                                 obj["RESULT"] = mainData.result;
                                 // obj["VIDEO TYPE"] = "";
-                                // Obj["VIDEO"] = "";
+                                // obj["VIDEO"] = "";
                             } else {
                                 if (!_.isEmpty(obj["SFA ID"])) {
                                     obj["RESULT"] = "-";
                                     // obj["VIDEO TYPE"] = "";
-                                    // Obj["VIDEO"] = "";
+                                    // obj["VIDEO"] = "";
                                 } else {
                                     obj["RESULT"] = "";
                                     // obj["VIDEO TYPE"] = "";
-                                    // Obj["VIDEO"] = "";
+                                    // obj["VIDEO"] = "";
                                 }
                             }
                             callback(null, obj);
@@ -5548,7 +5548,7 @@ var model = {
                     obj["TIMING"] = " ";
                     obj["RESULT"] = " ";
                     obj["VIDEO TYPE"] = "";
-                    Obj["VIDEO"] = "";
+                    obj["VIDEO"] = "";
                     callback(null, obj);
                 }
             },
@@ -5616,16 +5616,16 @@ var model = {
                             if (mainData.result) {
                                 obj["RESULT"] = mainData.result;
                                 // obj["VIDEO TYPE"] = "";
-                                // Obj["VIDEO"] = "";
+                                // obj["VIDEO"] = "";
                             } else {
                                 if (!_.isEmpty(obj["TEAM ID"])) {
                                     obj["RESULT"] = "-";
                                     // obj["VIDEO TYPE"] = "";
-                                    // Obj["VIDEO"] = "";
+                                    // obj["VIDEO"] = "";
                                 } else {
                                     obj["RESULT"] = "";
                                     // obj["VIDEO TYPE"] = "";
-                                    // Obj["VIDEO"] = "";
+                                    // obj["VIDEO"] = "";
                                 }
                             }
                             callback(null, obj);
@@ -6312,7 +6312,7 @@ var model = {
                         }
                     }
                     obj["VIDEO TYPE"] = "";
-                    Obj["VIDEO"] = "";
+                    obj["VIDEO"] = "";
                 } else {
                     obj["SFAID 2"] = "";
                     obj["SCREEN NAME ATHLETE 2"] = "";
@@ -6323,7 +6323,7 @@ var model = {
                     obj["T1 Set 1"] = "";
                     obj["T2 Set 1"] = "";
                     obj["VIDEO TYPE"] = "";
-                    Obj["VIDEO"] = "";
+                    obj["VIDEO"] = "";
                 }
                 callback(null, obj);
             },
@@ -7515,7 +7515,7 @@ var model = {
                     obj["SCORE 2"] = "";
                     obj["DATA POINTS 2"] = "";
                     obj["VIDEO TYPE"] = "";
-                    Obj["VIDEO"] = "";
+                    obj["VIDEO"] = "";
                 }
                 callback(null, obj);
 
@@ -7677,7 +7677,7 @@ var model = {
                                 obj["WINNER NAME"] = "";
                                 obj["WINNER TEAM ID"] = "";
                                 obj["VIDEO TYPE"] = "";
-                                Obj["VIDEO"] = "";
+                                obj["VIDEO"] = "";
                             }
                             // console.log(obj,"---------------------------");
                             callback(null, obj);

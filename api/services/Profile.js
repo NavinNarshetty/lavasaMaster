@@ -368,7 +368,15 @@ var model = {
                             if (_.isEmpty(medalData)) {
                                 profile.medalData = medalData;
                             } else {
-                                profile.medalData = _.groupBy(medalData, 'medalType');
+                                // profile.medalData = _.groupBy(medalData, 'medalType');
+                                profile.medalData = _(medalData)
+                                    .groupBy('medalType')
+                                    .map(function (items, name) {
+                                        return {
+                                            name: name,
+                                            count: items.length
+                                        };
+                                    }).value();
                             }
                             callback(null, profile);
                         }
@@ -607,8 +615,6 @@ var model = {
                                     function (found, callback) {
                                         async.each(matchData, function (team, callback) {
                                             async.each(team.sport, function (n, callback) {
-                                                // console.log("n", n);
-                                                // callback(null, n);
                                                 data.sport = n;
                                                 Profile.getMedalsInSchoolProfile(data, function (err, medalData) {
                                                     if (err) {
@@ -643,7 +649,15 @@ var model = {
                     var medalsUnique = _.uniqBy(sport.medals, function (item) {
                         return JSON.stringify(item);
                     });
-                    profile.medals = medalsUnique;
+                    medalsUnique = [].concat.apply([], medalsUnique);
+                    profile.medalData = _(medalsUnique)
+                        .groupBy('medalType')
+                        .map(function (items, name) {
+                            return {
+                                name: name,
+                                count: items.length
+                            };
+                        }).value();
                     var teamGroup = _(sport.teamData)
                         .groupBy('sportsListSubCategory.name')
                         .map(function (items, name) {
@@ -655,8 +669,6 @@ var model = {
                                         var team = {};
                                         team.sportsListSubCategoryId = n.sportsListSubCategory._id;
                                         team.sportsListSubCategoryName = n.sportsListSubCategory.name;
-                                        team.sport = [];
-                                        team.sport.push(n.sport._id);
                                         teams.push(team);
                                     });
                                     return {
@@ -683,13 +695,6 @@ var model = {
                                         var team = {};
                                         team.sportsListSubCategoryId = n.sportsListSubCategory._id;
                                         team.sportsListSubCategoryName = n.sportsListSubCategory.name;
-                                        team.sport = [];
-                                        // team.medalData = [];
-                                        team.sport = n.sport;
-                                        // Profile.getMedalsInSchoolProfile(team, data, function (err, medalData) {
-                                        //     // medals.push(_.groupBy(medalData, 'medalType'));
-                                        //     // console.log("medals", medals);
-                                        // });
                                         teams.push(team);
                                     });
                                     return {
