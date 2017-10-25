@@ -4140,7 +4140,7 @@ var model = {
                 var laneNo = 1;
                 var i = 0;
                 if (!_.isEmpty(matchData.resultHeat)) {
-                    async.concatSeries(matchData.resultHeat.players, function (mainData, callback) {
+                    async.concatSeries(matchData.resultHeat.teams, function (mainData, callback) {
                             var obj = {};
                             obj["MATCH ID"] = matchData.matchId;
                             var dateTime = moment(matchData.scheduleDate).format('DD/MM/YYYY');

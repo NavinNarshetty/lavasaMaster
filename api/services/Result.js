@@ -86,7 +86,8 @@ var model = {
                         } else if (_.isEmpty(medalRank)) {
                             callback(null, []);
                         } else {
-                            callback(null, medalRank);
+                            var result = _.sortBy(medalRank, item => parseFloat(item[1]));
+                            callback(null, result);
                         }
                     });
                 },
