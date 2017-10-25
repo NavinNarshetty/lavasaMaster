@@ -79,6 +79,9 @@ schema.plugin(deepPopulate, {
         "opponentsTeam.studentTeam.studentId": {
             select: '_id sfaId firstName middleName surname school photograph dob city'
         },
+        "prevMatch": {
+            select: ''
+        },
     }
 });
 schema.plugin(uniqueValidator);
@@ -10275,15 +10278,17 @@ var model = {
                     });
                 },
                 function (found, callback) {
+                    var deepSearch = "prevMatch";
                     Match.find({
                         prevMatch: data._id
-                    }).lean().exec(function (err, found) {
+                    }).lean().deepPopulate(deepSearch).exec(function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
+                                console.log("found", found);
                                 if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted') {
                                     if (_.isEmpty(found[0].resultsRacquet)) {
                                         callback(null, found);
@@ -11044,6 +11049,7 @@ var model = {
                                         // callback(null, data.found);
                                     }
                                 } else if (found[0].opponentsSingle.length == 2) {
+
                                     var playerId = found[0].opponentsSingle[0];
                                     winPlayer.push(playerId);
                                     if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
