@@ -115,8 +115,137 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             controller: 'TermsConditionCtrl'
         })
 
+        .state('results', {
+            url: "/wohlig/results",
+            templateUrl: tempateURL,
+            controller: 'ResultsCtrl'
+        })
+
+        .state('sponsors-partner', {
+            url: "/sponsors-partner",
+            templateUrl: tempateURL,
+            controller: 'SponsorPartnerCtrl'
+        })
+
+        .state('individual-sponsor', {
+            url: "/individual-sponsor/:id",
+            templateUrl: tempateURL,
+            controller: 'IndividualSponsorCtrl'
+        })
+
+        .state('event-attendance', {
+            url: "/event-attendance",
+            templateUrl: tempateURL,
+            controller: 'eventAttendanceCtrl'
+        })
+
+        .state('eventattendance-profile', {
+            url: "/eventattendance-profile/:id",
+            templateUrl: tempateURL,
+            controller: 'eventAttendanceProfileCtrl'
+        })
+
+        .state('additional-paymentForm', {
+            url: "/additional-paymentForm",
+            templateUrl: tempateURL,
+            controller: 'AdditionalPaymentFormCtrl'
+        })
+
+        .state('specialevents', {
+            url: "/wohlig/specialevents",
+            templateUrl: tempateURL,
+            controller: 'SpecialEventCtrl'
+        })
 
 
+        // Profile
+
+        .state('students', {
+            url: "/students",
+            templateUrl: "views/template.html",
+            controller: 'StudentsCtrl'
+        })
+
+        .state('student-profile', {
+            url: "/student-profile/:id",
+            templateUrl: "views/template.html",
+            controller: 'StudentProfileCtrl'
+        })
+
+        .state('student-bio', {
+            url: "/student-bio/:id",
+            templateUrl: "views/template.html",
+            controller: 'StudentBioCtrl'
+        })
+
+        .state('school', {
+            url: "/school",
+            templateUrl: "views/template.html",
+            controller: 'SchoolCtrl'
+        })
+
+        .state('school-profile', {
+            url: "/school-profile/:id",
+            templateUrl: "views/template.html",
+            controller: 'SchoolProfileCtrl'
+        })
+
+        .state('school-bio', {
+            url: "/school-bio/:id",
+            templateUrl: "views/template.html",
+            controller: 'SchoolBioCtrl'
+        })
+
+        .state('team', {
+            url: "/team",
+            templateUrl: "views/template.html",
+            controller: 'TeamCtrl'
+        })
+
+        .state('team-detail', {
+            url: "/team-detail/:id",
+            templateUrl: "views/template.html",
+            controller: 'TeamDetailCtrl'
+        })
+
+
+        // Media
+
+        .state('media-gallery', {
+            url: "/media-gallery",
+            templateUrl: "views/template.html",
+            controller: 'MediaGalleryCtrl'
+        })
+
+        .state('media-gallery-inside', {
+            url: "/media-gallery/:type/:folder",
+            templateUrl: "views/template.html",
+            controller: 'MediaGalleryCtrl'
+        })
+
+        .state('media-gallery-type', {
+            url: "/media-gallery/:type",
+            templateUrl: "views/template.html",
+            controller: 'MediaGalleryCtrl'
+        })
+
+        .state('media-press', {
+            url: "/media-press",
+            templateUrl: "views/template.html",
+            controller: 'MediaPressCtrl'
+        })
+
+        .state('media-press-inside', {
+            url: "/media-press/:type/:folder",
+            templateUrl: "views/template.html",
+            controller: 'MediaPressCtrl'
+        })
+
+        .state('media-press-type', {
+            url: "/media-press/:type",
+            templateUrl: "views/template.html",
+            controller: 'MediaPressCtrl'
+        })
 
         //Form Registration
 
@@ -332,41 +461,6 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/knockout-doubles/:id",
             templateUrl: tempateURL,
             controller: 'KnockoutDoublesCtrl'
-        })
-        .state('results', {
-            url: "/wohlig/results",
-            templateUrl: tempateURL,
-            controller: 'ResultsCtrl'
-        })
-        .state('sponsors-partner', {
-            url: "/sponsors-partner",
-            templateUrl: tempateURL,
-            controller: 'SponsorPartnerCtrl'
-        })
-        .state('individual-sponsor', {
-            url: "/individual-sponsor/:id",
-            templateUrl: tempateURL,
-            controller: 'IndividualSponsorCtrl'
-        })
-        .state('event-attendance', {
-            url: "/event-attendance",
-            templateUrl: tempateURL,
-            controller: 'eventAttendanceCtrl'
-        })
-        .state('eventattendance-profile', {
-            url: "/eventattendance-profile/:id",
-            templateUrl: tempateURL,
-            controller: 'eventAttendanceProfileCtrl'
-        })
-        .state('additional-paymentForm', {
-            url: "/additional-paymentForm",
-            templateUrl: tempateURL,
-            controller: 'AdditionalPaymentFormCtrl'
-        })
-        .state('specialevents', {
-            url: "/wohlig/specialevents",
-            templateUrl: tempateURL,
-            controller: 'SpecialEventCtrl'
         });
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {

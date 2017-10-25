@@ -11863,11 +11863,20 @@ var model = {
                                                     var teamid = team.team;
                                                     var nId = n._id.toString();
                                                     if (teamid === nId) {
-                                                        console.log("inside");
-                                                        result.player1 = team.players[0].fullName;
-                                                        result.player1SfaId = team.players[0].sfaId;
-                                                        result.player2 = team.players[1].fullName;
-                                                        result.player2SfaId = team.players[1].sfaId;
+                                                        console.log("inside",team.players);
+                                                        result.players = [];
+                                                        var listPlayers = [];
+                                                        _.each(team.players,function(playerList){
+                                                            listPlayers.push({
+                                                                name: playerList.fullName,
+                                                                sfaId: playerList.sfaId
+                                                            })
+                                                        })
+                                                        result.players = listPlayers
+                                                        // result.player1 = team.players[0].fullName;
+                                                        // result.player1SfaId = team.players[0].sfaId;
+                                                        // result.player2 = team.players[1].fullName;
+                                                        // result.player2SfaId = team.players[1].sfaId;
                                                     }
                                                 });
                                                 console.log("result", result);
