@@ -10288,7 +10288,7 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                console.log("found", found[0].prevMatch);
+                                console.log("found", found[0]);
                                 if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted') {
                                     if (_.isEmpty(found[0].resultsRacquet)) {
                                         callback(null, found);
@@ -11300,7 +11300,7 @@ var model = {
                                                 if (_.isEmpty(match)) {
                                                     callback(null, []);
                                                 } else {
-                                                    callback(null, match);
+                                                    callback(null, found[0]);
                                                 }
                                             }
                                         });
@@ -11316,7 +11316,7 @@ var model = {
                                                 if (_.isEmpty(match)) {
                                                     callback(null, []);
                                                 } else {
-                                                    callback(null, match);
+                                                    callback(null, found[1]);
                                                 }
                                             }
                                         });
@@ -11340,7 +11340,7 @@ var model = {
                                         if (_.isEmpty(match)) {
                                             callback(null, []);
                                         } else {
-                                            callback(null, match);
+                                            callback(null, found[0]);
                                         }
                                     }
                                 });
