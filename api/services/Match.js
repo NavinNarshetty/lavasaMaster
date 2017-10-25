@@ -8997,7 +8997,7 @@ var model = {
                                     var paramData = {};
                                     paramData.opponentsTeam = [];
                                     var result = {};
-                                    result.players = [];
+                                    result.teams = [];
                                     async.concatSeries(arrData, function (singleData, callback) {
                                         var date = moment(singleData.DATE, "DD-MM-YYYY");
                                         singleData.DATE = date;
