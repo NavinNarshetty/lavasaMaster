@@ -54,6 +54,29 @@
 
     <!--ROUNDS-->
     <div class="row">
+      <!--WINNERS FOR MOBILES-->
+      <div class="col-xs-12 visible-xs" >
+        <div class="knockout-winnercardholder" ng-repeat="winner in winnerDoubles track by $index">
+          <div class="display-inline knockout-winnercardname">
+            <div class="knockout-winnercardname-holder" ng-repeat="doubles in winner.players track by $index">
+              <div class="knockout-winnercardimgage display-inline">
+                <img ng-src="{{winner.profile | serverimage2:50:50:'cover' }}" alt="" class="img-responsive">
+              </div>
+              <div class="knockout-winnercardplayername display-inline">
+                <p class="m-clear sport-color-primary">{{doubles.name}}</p>
+                <p class="m-clear">{{winner.school | truncate:20}}</p>
+              </div>
+            </div>
+          </div>
+          <div class="display-inline knockout-winnermedalholder">
+            <div class="testsfa">
+              <img ng-src="/img/medal-icon/{{winner.medaltype}}-blue.png" alt="" class="img-responsive">
+            </div>
+          </div>
+        </div>
+      </div>
+      <!--WINNERS FOR MOBILES END-->
+      
       <!--ROUND 1-->
       <div class="col-md-3 col-sm-4 col-xs-12">
           <h3 class="sport-success d-fjalla-one text-center text-uppercase">{{roundsList[0].name}}
