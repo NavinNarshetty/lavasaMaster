@@ -1,0 +1,92 @@
+<!-- <section>
+    <div class="head-banner">
+        <img src="img/media-gallery.png" class="img-responsive img width100 margin-auto">
+    </div>
+</section> -->
+<section>
+    <div class="head-banner new-head-banner">
+        <img src="img/sfa-ath-new.png" class="img-responsive img width100 margin-auto newMargin">
+        <h1 class="text-up font-FjallaOne font-semi newHeadStyle forMedia">Press &amp; Media</h1>
+    </div>
+</section>
+<section class="bottom-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-content bx-mob pad-m-main pad-m-main">
+                    <div class="pht">
+                        <div class="row">
+                            <div class="text-center">
+                                <div class="col-md-12 col-xs-12 col-sm-6 text-c-m">
+                                    <h4 class="text-up color-blue display-inline">year</h4>
+                                    <div class="display-inline">
+                                        <div class="sfa-select">
+                                            <select ng-change="loadMedia();" class="select" ng-model="filter.year">
+                                                <option value="2015">SFA MUMBAI {{year15}}</option>
+                                                <option value="2016">SFA MUMBAI {{year16}}</option>
+                                            </select>
+                                            <span class="only-border"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="text-center mt25">
+                                <div class="tab-list sf-list text-up">
+                                    <ul class="padding0 margin0">
+                                        <li>
+                                            <a href="" ui-sref="media-press-inside({type:'press-photo',folder:'press-coverage'})"
+                                                class="{{classes.classpcp}}">
+                                                photos
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="" ui-sref="media-press-inside({type:'press-video',folder:'press-coverage'})"
+                                                class="{{classes.classpcv}}">videos
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <hr class="hr-padding" ng-if="mediaArr.data.length > 0">
+                            </div>
+                        </div>
+                        <div class="row" ng-if="filter.mediatype=='press-photo'">
+                            <div class="col-md-3 mt15 col-sm-6 col-xs-12" ng-repeat="item in mediaArr.data track by $index">
+                                <a href="{{item.medialink | mediapath}}" fancybox-box rel="gallery">
+                                    <div class="folder-box sf-relative">
+                                        <img ng-src="{{item.medialink | mediapath}}" alt="Sports For All" class="img-responsive width100 hover-min">
+                                        <div class="over-layer sf-absulate media-t">
+                                            <h4 class="btm-0 sf-absulate font-semi">{{item.mediatitle}}</h4>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row text-center" ng-if="filter.mediatype=='press-photo' && !(mediaArr.data.length > 0)">
+                            {{mediaArr.data === undefined && 'Loading ..' || 'No Photos Found.'}}
+                        </div>
+                        <div class="row" ng-if="filter.mediatype=='press-video'">
+                            <div class="col-md-3 mt15 col-sm-6 col-xs-12" ng-repeat="item in mediaArr.data track by $index">
+                                <a class="various fancybox.iframe" rel="gallery1" fancybox href="https://www.youtube.com/embed/{{item.medialink}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                                    <div class="folder-box sf-relative">
+                                        <img ng-src="{{item.medialink | videothumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min">
+                                        <div class="over-layer sf-absulate">
+                                            <h4 class="banner-set sf-absulate ">{{ item.mediatitle}}</h4>
+                                        </div>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row text-center" ng-if="filter.mediatype=='press-video' && !(mediaArr.data.length > 0)">
+                            {{mediaArr.data === undefined && 'Loading ..' || 'No Videos Found.'}}
+                        </div>
+                        <uib-pagination ng-if="mediaArr.data.length > 0" ng-change="loadMedia();" total-items="mediaArr.total" ng-model="filter.pagenumber"
+                            items-per-page="12">
+                        </uib-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </container>
+</section>

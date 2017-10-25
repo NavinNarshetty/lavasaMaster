@@ -1,0 +1,67 @@
+<!-- <section>
+    <div class="head-banner">
+        <img src="img/sfa-teams.png" class="img-responsive img width100 margin-auto">
+    </div>
+</section> -->
+<section>
+    <div class="head-banner new-head-banner">
+        <img src="img/sfa-ath-new.png" class="img-responsive img width100 margin-auto newMargin">
+        <h1 class="text-up font-FjallaOne font-semi newHeadStyle">TEAMS</h1>
+    </div>
+</section>
+<section class="bottom-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="search-title text-center">
+                    <h3 class="color-blue text-up font-semi f162">search from <span class="color-orange">{{count}}</span> teams</h3>
+                </div>
+                <div class="mt15 text-center" ng-class="{'border-bottom':inputs.search}">
+                    <form class="">
+                        <!-- <input type="text" class="search-input" name="q" value="Type school name" ng-model="search">
+                        <input type="image" value="Search" src="img/sfa-search.png" class="search-btn" ng-click="getSearchById(idSearch.search);"> -->
+                        <input type="text" class="search-input" name="q" value="Type student name" placeholder="Type team name or ID" ng-change="parseSearch(inputs.search);"
+                            ng-model="inputs.search">
+                        <input type="image" value="Search" src="img/sfa-search.png" class="search-btn" ng-click="doSearch();">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="inputs.search">
+            <div class="text-center mt40">
+                <h3 class="font-semi color-orange text-up">{{getSearchData.total || '0'}} Search Results</h3>
+            </div>
+            <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="data in getSearchData.data" ng-if="getSearchData.data.length > 0">
+                <a ui-sref="team-detail({id:data._id})">
+                    <div class="school-sec">
+                        <!-- <img src="img/sf-cl.png" alt="" class="mt-min-18"> -->
+                        <div class="stu-img text-center sf-relative w100p ovr-fl">
+                            <img ng-src="{{data.image | uploadpath}}" alt="" class="mx-width">
+                            <div class="sigh-pro2 sf-absulate">
+                                <!-- <img ng-show="data.status" ng-src="img/sf-right-org.png" alt=""> -->
+                            </div>
+                        </div>
+                        <div class="stu-name text-center tm-pdl">
+                            <h4 class="color-blue text-up f162">{{data.name | removeSchool:data.school.name | letterLimit : 30}}</h4>
+                        </div>
+                        <div class="stu-name text-center tm-pdl">
+                            <h4 class="color-d text-up f162">{{data.school.name | letterLimit : 25}}</h4>
+                        </div>
+                        <div class="stu-id text-center main-f">
+                            <h4 class="color-white f162">SFA ID: {{data.sfaid}}</h4>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="float-right sf-list">
+                        <nav aria-label="Page navigation" ng-if="inputs.search && getSearchData.totalpages > 1">
+                            <uib-pagination ng-change="doSearch()" total-items="getSearchData.total" ng-model="searchFilter.pagenumber" items-per-page="searchFilter.pagesize"
+                                force-ellipses="true" max-size="maxSize" class="pagination-sm" boundary-links="true"></uib-pagination>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+</section>

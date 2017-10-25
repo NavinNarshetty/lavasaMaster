@@ -1,0 +1,180 @@
+<!-- <section>
+    <div class="head-banner">
+        <img src="img/sfa-school.png" class="img-responsive img width100 margin-auto">
+    </div>
+</section> -->
+<section>
+    <div class="head-banner new-head-banner">
+        <img src="img/sfa-ath-new.png" class="img-responsive img width100 margin-auto newMargin">
+        <h1 class="text-up font-FjallaOne font-semi newHeadStyle">SCHOOLS</h1>
+    </div>
+</section>
+<section class="bottom-padding mt40">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <h4 class="color-grey f-mn">All the schools that have participated in Sports For All’s inter-school tournaments in Mumbai are listed
+                        below. The sport profile of each school will give you all the necessary information about the school’s
+                        sports status. </h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="search-title text-center">
+                    <h3 class="color-blue text-up font-semi f162">search from <span class="color-orange">{{count}}</span> schools</h3>
+                </div>
+                <div class="mt15 text-center border-bottom">
+                    <form class="">
+                        <input type="text" class="search-input" name="q" value="Type school name" placeholder="Type school name or ID" ng-change="parseSearch(search.text);"
+                            ng-model="search.text">
+                        <input type="image" value="Search" src="img/sfa-search.png" class="search-btn" ng-click="submitSearch();">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="!search.active">
+            <div class="text-center mt40">
+                <h3 class="font-semi color-orange text-up f162">{{filterselected.title}}</h3>
+            </div>
+            <div class="">
+                <div class="col-md-12 col-sm-12 col-xs-12">
+                    <!--mt-min-30 mt-min-40 mb-cell-->
+                    <div class="float-right">
+                        <h4 class="text-up color-blue display-inline">schools</h4>
+                        <div class="display-inline">
+                            <div class="sfa-select">
+                                <select class="select" ng-model="filter.year" ng-change="changeYear()">
+                                <option value="top20">Top 20 Schools</option>
+                                <option value="2015">SFA MUMBAI {{year15}}</option>
+                                <option value="2016">SFA MUMBAI {{year16}}</option>
+                                <option value="">All schools</option>
+                            </select>
+                                <span class="only-border"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-offset-2 col-md-8 col-xs-12" ng-hide="school.showTop20">
+                    <div class="">
+                        <div class="col-md-4 top-school col-sm-4 col-xs-12" ng-repeat="data in topschools">
+                            <a ui-sref="school-profile({id:data.school._id})">
+                                <div class="school-box">
+                                    <div class="box-header">
+                                        <div class="school-img border-r specialImg">
+                                            <img ng-src="{{data.logo | uploadpath}}" alt="" class="margin-auto">
+                                            <div class="sigh-img">
+                                                <img ng-show="data.school.status" ng-src="img/sf-right-big.png" alt="">
+                                            </div>
+
+                                            <div class="school-name text-center">
+                                                <h4 class="color-orange font-semi font16">{{data.school.name | letterLimit : 30}}</h4>
+                                            </div>
+                                            <div class="medal text-center">
+                                                <span class="text-up color-white text-center">Medals Won</span>
+                                                <div class="medal-count sf-list color-orange font-semi">
+                                                    <ul class="padding0">
+                                                        <li>
+                                                            <img src="img/sf-gold.png" alt="">{{data.gold || '0'}}
+                                                        </li>
+                                                        <li>
+                                                            <img src="img/sf-silver.png" alt="">{{data.silver || '0'}}
+                                                        </li>
+                                                        <li>
+                                                            <img src="img/sf-bronze.png" alt="">{{data.bronze || '0'}}
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="rank">
+                                            <h3 class="text-up color-white margin0">{{data.sfaid}}</h3>
+                                        </div>
+                                    </div>
+                                    <div class="box-footer text-center">
+                                        <span class="text-up color-white font-semi">total point {{data.school.totalPoints2016 || '0'}}</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <!-- .alag ui school page -->
+                <div ng-show="school.showAll">
+                    <div class="col-md-6">
+                        <div class="mt15">
+                            <div class="sc-name">
+                                <ul>
+                                    <li ng-repeat="schools1 in schoolsData[0]">
+                                        <a ui-sref="school-profile({id:schools1._id})">
+                                        <span>{{$index + 1}}</span>
+                                        <!-- <span>{{ schools1.sfaid }}</span> -->
+                                        <p>{{schools1.name | letterLimit : 53}}</p>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="mt15">
+                            <div class="sc-name">
+                                <ul>
+                                    <li ng-repeat="schools2 in schoolsData[1]">
+                                        <a ui-sref="school-profile({id:schools2._id})">
+                                        <span>{{$index + schoolSplit + 1}}</span>
+                                        <!-- <span>{{ schools2.sfaid }}</span> -->
+                                        <p>{{schools2.name | letterLimit : 53}}</p>
+                                    </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="search.active">
+            <div class="text-center mt40">
+                <h3 class="font-semi color-orange text-up">{{pagination.total || '0'}} Search Results</h3>
+            </div>
+            <div class="col-md-offset-2 col-md-8 col-xs-12">
+                <div class="">
+                    <div class="col-md-4 mt15 col-sm-4 col-xs-12" ng-repeat="data in schools" ng-if="schools.length > 0">
+                        <a ui-sref="school-profile({id:data._id})">
+                            <div class="school-boxs2">
+                                <div class="box-headers">
+                                    <div class="school-imgs text-center sf-relative border-r w130">
+                                        <!-- <img src="img/sf-school-grey.png" alt=""> -->
+                                        <img ng-src="{{data.logo|uploadpath}}" alt="">
+                                        <div class="sigh-imgs sf-absulate">
+                                            <img ng-show="data.status" ng-src="img/sf-right.png" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="school-names text-center">
+                                        <h4 class="text-up font-semi color-orange font16">{{data.name | letterLimit : 25}}</h4>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <!-- <div ng-if="schools.length <= 0 ">
+                        <h1 class="text-center">No data found.</h1>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="float-right sf-list">
+                    <nav aria-label="Page navigation" ng-if="search.active && pagination.totalpages > 1">
+                        <uib-pagination ng-change="submitSearch()" total-items="pagination.total" ng-model="filter.pagenumber" items-per-page="pagination.pagesize"
+                            max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true"></uib-pagination>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

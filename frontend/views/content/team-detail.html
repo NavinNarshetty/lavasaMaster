@@ -1,5 +1,5 @@
 <section>
-    <div class="banner sf-relative">
+    <div class="banner sf-relative hide">
         <img src="img/sf-default.png" alt="Sports For All" class="img-responsive width100">
         <div class="sf-absulate banner-set">
             <div class="container">
@@ -16,14 +16,39 @@
                         <div class="team-dt">
                             <h1 class="color-orange text-up font-semi f26 m-top-zero">team: {{ teamDetails.name | removeSchool:teamDetails.school.name }} {{teamDetails.year}}</h1>
                             <h2 class="color-white text-up margin0 f20 m-top-zero">{{ teamDetails.school.name }}</h2>
-                            <h2 class="color-white text-up f20 m-top-zero"><span class="color-orange">SFA ID:</span> {{teamDetails.sfaid}}</h2>
+                            <h2 class="color-white text-up f20 m-top-zero">
+                                <span class="color-orange">SFA ID:</span> {{teamDetails.sfaid}}</h2>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
+    <div class="banner my-banner-student newMargin newTeamDetail">
+        <!-- <img src="img/new-banner.png" alt="" class="img-responsive width100"> -->
+        <div class="p100">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-4 col-xs-12">
+                        <div class="sf-school-logo2 sf-relative text-center border-r">
+                            <img src="{{teamDetails.school.logo | uploadpath }}" alt="" class="img-border2 img-responsive">
+                            <div class="sigh-seconds sf-absulate">
+                                <!-- <img src="img/sf-right-big.png" alt="" class="img-responsive"> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9 col-sm-8 col-xs-12 text-c-m">
+                        <div class="team-dt">
+                            <h1 class="color-orange text-up font-semi f26 m-top-zero">team: {{ teamDetails.name | removeSchool:teamDetails.school.name }} {{teamDetails.year}}</h1>
+                            <h2 class="color-white text-up margin0 f20 m-top-zero">{{ teamDetails.school.name }}</h2>
+                            <h2 class="color-white text-up f20 m-top-zero">
+                                <span class="color-orange">SFA ID:</span> {{teamDetails.sfaid}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 <section class="bottom-padding">
     <div class="container">
@@ -33,12 +58,16 @@
                 <div class="text-center">
                     <div class="tab-list sf-list text-up">
                         <ul class="padding0 margin0">
-                            <li><a href="" ng-click="tabchange('squad',1)" class="{{classa}}">
-squad
-    </a></li>
-                            <li><a href="" ng-click="tabchange('statistic',2)" class="{{classb}}">
-    statistics
-    </a></li>
+                            <li>
+                                <a href="" ng-click="tabchange('squad',1)" class="{{classa}}">
+                                    squad
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" ng-click="tabchange('statistic',2)" class="{{classb}}">
+                                    statistics
+                                </a>
+                            </li>
                             <!-- <li><a href="" ng-click="tabchange('gallery',3)" class="{{classc}}">
     gallery
     </a></li> -->
@@ -95,7 +124,8 @@ squad
                                             <span>OPPONENT NAME</span>
                                         </th>
                                         <th>
-                                            <span>{{teamDetails.sport.drawFormat == 'Heats' ? (teamDetails.sport.name == 'Athletics' ? 'Timing/Distance/Height' : 'Timing') : 'Score'}}</span>
+                                            <span>{{teamDetails.sport.drawFormat == 'Heats' ? (teamDetails.sport.name == 'Athletics'
+                                                ? 'Timing/Distance/Height' : 'Timing') : 'Score'}}</span>
 
                                         </th>
                                         <th>
@@ -105,17 +135,27 @@ squad
                                 </thead>
                                 <tbody>
                                     <tr style="background:transparent;" ng-repeat="stat in teamStats">
-                                        <td><span>{{stat.year}}</span></td>
-                                        <td><span class="text-up">{{stat.sport.agegroup.name}} <br> {{stat.sport.gender}}  <br> {{stat.sport.firstcategory.name}}</span></td>
+                                        <td>
+                                            <span>{{stat.year}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="text-up">{{stat.sport.agegroup.name}}
+                                                <br> {{stat.sport.gender}}
+                                                <br> {{stat.sport.firstcategory.name}}</span>
+                                        </td>
 
-                                        <td><span class="text-up">{{(teamDetails.sport.drawFormat == 'Qualifying Knockout' && stat.qualifyingknockout.round) || (teamDetails.sport.drawFormat == 'Qualifying Round' && stat.qualifyinground.round) || (teamDetails.sport.drawFormat
-                                            == 'Knockout' && stat.knockout.round) || (teamDetails.sport.drawFormat == 'Heats' && stat.heat.round)
-                                            || (teamDetails.sport.drawFormat == 'League' && stat.league.round) || (teamDetails.sport.drawFormat == 'League
-                                            cum Knockout' && stat.leagueknockout.leagueknockoutround == 'Final' ? stat.leagueknockout.round
-                                            : stat.leagueknockout.leagueknockoutround) || '-'}}</span>
+                                        <td>
+                                            <span class="text-up">{{(teamDetails.sport.drawFormat == 'Qualifying Knockout' && stat.qualifyingknockout.round)
+                                                || (teamDetails.sport.drawFormat == 'Qualifying Round' && stat.qualifyinground.round)
+                                                || (teamDetails.sport.drawFormat == 'Knockout' && stat.knockout.round) ||
+                                                (teamDetails.sport.drawFormat == 'Heats' && stat.heat.round) || (teamDetails.sport.drawFormat
+                                                == 'League' && stat.league.round) || (teamDetails.sport.drawFormat == 'League
+                                                cum Knockout' && stat.leagueknockout.leagueknockoutround == 'Final' ? stat.leagueknockout.round
+                                                : stat.leagueknockout.leagueknockoutround) || '-'}}</span>
 
-                                            <td class="text-up" ng-if="teamDetails.sport.drawFormat == 'Qualifying Knockout' || teamDetails.sport.drawFormat == 'Knockout' || teamDetails.sport.drawFormat == 'League cum Knockout'"><img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.opponent.result == 'Won' || stat.opponent.result == 'Bye' || stat.opponent.result == 'Walkover'">{{stat.opponent.detail.name
-                                                || '-' | removeSchool:stat.opponent.detail.school.name }}
+                                            <td class="text-up" ng-if="teamDetails.sport.drawFormat == 'Qualifying Knockout' || teamDetails.sport.drawFormat == 'Knockout' || teamDetails.sport.drawFormat == 'League cum Knockout'">
+                                                <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.opponent.result == 'Won' || stat.opponent.result == 'Bye' || stat.opponent.result == 'Walkover'">{{stat.opponent.detail.name || '-' | removeSchool:stat.opponent.detail.school.name
+                                                }}
                                                 <p>{{stat.opponent.detail.school.name}}</p>
                                             </td>
 
@@ -130,11 +170,38 @@ squad
                                             <td>
                                                 <div class="text-center display-inline ver-mid ">
                                                     <div class="sf-play">
-                                                        <span>{{teamDetails.sport.drawFormat == 'Knockout'&& stat.self.result || (teamDetails.sport.drawFormat == 'Heats' && ((stat.self.standing || ordinal) ?(stat.self.result?(stat.self.standing || ordinal)+' / '+stat.self.result:(stat.self.standing || ordinal)):stat.self.result)) || (teamDetails.sport.drawFormat == 'League' && stat.self.result) || (teamDetails.sport.drawFormat == 'League cum Knockout' && stat.self.result) || (teamDetails.sport.drawFormat == 'Qualifying Knockout' && stat.self.result) || (teamDetails.sport.drawFormat == "Qualifying Round" && stat.qualifyinground.result) || ""}}</span>
+                                                        <span>{{teamDetails.sport.drawFormat == 'Knockout'&& stat.self.result ||
+                                                            (teamDetails.sport.drawFormat == 'Heats' && ((stat.self.standing
+                                                            || ordinal) ?(stat.self.result?(stat.self.standing || ordinal)+'
+                                                            / '+stat.self.result:(stat.self.standing || ordinal)):stat.self.result))
+                                                            || (teamDetails.sport.drawFormat == 'League' && stat.self.result)
+                                                            || (teamDetails.sport.drawFormat == 'League cum Knockout' &&
+                                                            stat.self.result) || (teamDetails.sport.drawFormat == 'Qualifying
+                                                            Knockout' && stat.self.result) || (teamDetails.sport.drawFormat
+                                                            == "Qualifying Round" && stat.qualifyinground.result) || ""}}</span>
                                                     </div>
                                                     <div class="replay-img " ng-if="stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyingknockout.video">
-                                                        <a class="various fancybox.iframe" href="https://www.youtube.com/embed/{{stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyingknockout.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
-                                                            rel="gallery1" fancybox><img src="img/sf-play.png" alt=""></a>
+                                                        <!-- <a ng-if="stat.knockout.video != 'YTU' && stat.heat.video != 'YTU' && stat.league.video != 'YTU' && stat.leagueknockout.video != 'YTU' && stat.qualifyinground.video != 'YTU' && stat.qualifyingknockout.video != 'YTU' && stat.knockout.video != 'NA' && stat.heat.video != 'NA' && stat.league.video != 'NA' && stat.leagueknockout.video != 'NA' && stat.qualifyinground.video != 'NA' && stat.qualifyingknockout.video != 'NA'"
+                                                            class="various fancybox.iframe" href="https://www.youtube.com/embed/{{stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyingknockout.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
+                                                            rel="gallery1" fancybox><img src="img/sf-play.png" alt=""></a> -->
+                                                        <a class="various fancybox.iframe" ng-if="stat.year == '2015' && stat.knockout.video != 'YTU' && stat.heat.video != 'YTU' && stat.league.video != 'YTU' && stat.leagueknockout.video != 'YTU' && stat.qualifyinground.video != 'YTU' && stat.qualifyingknockout.video != 'YTU' && stat.knockout.video != 'NA' && stat.heat.video != 'NA' && stat.league.video != 'NA' && stat.leagueknockout.video != 'NA' && stat.qualifyinground.video != 'NA' && stat.qualifyingknockout.video != 'NA'"
+                                                            href="https://www.youtube.com/embed/{{stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyinground.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
+                                                            rel="gallery1" fancybox>
+                                                            <img src="img/sf-play.png" alt="">
+                                                        </a>
+                                                        <a class="various fancybox.iframe" ng-if="stat.year == '2016' && stat.knockout.video != 'YTU' && stat.heat.video != 'YTU' && stat.league.video != 'YTU' && stat.leagueknockout.video != 'YTU' && stat.qualifyinground.video != 'YTU' && stat.qualifyingknockout.video != 'YTU' && stat.knockout.video != 'NA' && stat.heat.video != 'NA' && stat.league.video != 'NA' && stat.leagueknockout.video != 'NA' && stat.qualifyinground.video != 'NA' && stat.qualifyingknockout.video != 'NA'"
+                                                            href="https://player.vimeo.com/video/{{stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyinground.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1 frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen"
+                                                            rel="gallery1" fancybox>
+                                                            <img src="img/sf-play.png" alt="">
+                                                        </a>
+                                                        <a ng-if="stat.knockout.video == 'NA' || stat.heat.video == 'NA' || stat.league.video == 'NA' || stat.leagueknockout.video == 'NA' || stat.qualifyinground.video == 'NA' || stat.qualifyingknockout.video == 'NA'"
+                                                            ng-click="videoNA()">
+                                                            <img src="img/sf-play.png" alt="">
+                                                        </a>
+                                                        <a ng-if="stat.knockout.video == 'YTU' || stat.heat.video == 'YTU' || stat.league.video == 'YTU' || stat.leagueknockout.video == 'YTU' || stat.qualifyinground.video == 'YTU' || stat.qualifyingknockout.video == 'YTU'"
+                                                            ng-click="videoYTU()">
+                                                            <img src="img/sf-play.png" alt="">
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </td>

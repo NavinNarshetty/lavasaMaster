@@ -1,0 +1,79 @@
+<!-- <section>
+    <div class="head-banner">
+        <img src="img/sfa-ath.png" class="img-responsive img width100 margin-auto">
+    </div>
+</section> -->
+<section>
+    <div class="head-banner new-head-banner">
+        <img src="img/sfa-ath-new.png" class="img-responsive img width100 margin-auto newMargin">
+        <h1 class="text-up font-FjallaOne font-semi newHeadStyle">Athletes</h1>
+    </div>
+</section>
+<section class="bottom-padding mt40">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <h4 class="color-grey f-mn">All the athletes that have participated in Sports For All’s inter-school tournaments in Mumbai are listed
+                        below. The sport profile of each athlete will give you all the necessary videos and statistics regarding
+                        every athlete’s sporting status.</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12 col-xs-12">
+                <div class="search-title text-center">
+                    <!-- <h3 class="color-blue text-up font-semi">search from <span class="color-orange">{{count}}</span> athletes</h3> -->
+                    <h3 class="color-blue text-up font-semi">Search For Your Athlete Profile</h3>
+                </div>
+                <div class="mt15 text-center" ng-class="{'border-bottom':inputs.search}">
+                    <form class="">
+                        <!-- <input type="text" class="search-input" name="q" value="Type school name" ng-model="search">
+                        <input type="image" value="Search" src="img/sfa-search.png" class="search-btn" ng-click="getSearchById(idSearch.search);"> -->
+                        <input type="text" class="search-input" name="q" value="Type athlete name" placeholder="Type athlete name or ID" ng-change="parseSearch(inputs.search);"
+                            ng-model="inputs.search">
+                        <input type="image" value="Search" src="img/sfa-search.png" class="search-btn" ng-click="doSearch();">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-if="inputs.search">
+            <div class="text-center mt40">
+                <h3 class="font-semi color-orange text-up">{{getSearchData.total || '0'}} Search Results</h3>
+            </div>
+            <div class="col-md-12 col-xs-12">
+                <div class="">
+                    <div class="col-md-3 mt15" ng-repeat="data in getSearchData.data" ng-if="getSearchData.data.length > 0">
+                        <a ui-sref="student-profile({id:data._id})">
+                            <div class="school-sec">
+                                <!-- <img src="img/sf-cl.png" alt="" class="mt-min-18" ng-if="$index==0"> -->
+                                <div class="stu-img text-center sf-relative w130">
+                                    <img ng-src="{{data.profilePic |uploadpath:130:130:'cover'}}" alt="">
+                                    <div class="sigh-pro sf-absulate">
+                                        <!-- <img ng-show="data.status" ng-src="img/sf-right-org.png"  alt="" class="w30-main"> -->
+                                    </div>
+                                </div>
+                                <div class="stu-name text-center">
+                                    <h4 class="color-orange text-up font-semi">{{data.name}}</h4>
+                                </div>
+                                <div class="stu-id text-center">
+                                    <h4 class="color-blue">SFA ID: {{data.sfaid}}</h4>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="float-right sf-list">
+                    <nav aria-label="Page navigation" ng-if="inputs.search && getSearchData.totalpages > 1">
+                        <uib-pagination ng-change="doSearch()" total-items="getSearchData.total" ng-model="searchFilter.pagenumber" items-per-page="searchFilter.pagesize"
+                            class="pagination-sm" max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true"></uib-pagination>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

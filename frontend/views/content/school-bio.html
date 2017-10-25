@@ -1,0 +1,598 @@
+<section>
+    <div class="banner sf-relative  my-banner-school">
+        <!-- <img src="img/new-banner.png" alt="" class="img-responsive width100"> -->
+        <div class="p100 p1002">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-3 col-sm-3 col-xs-12">
+                        <div class="sf-school-logo sf-relative text-center border-r">
+                            <a ui-sref="school-profile({id:school._id})"><img ng-src="{{school.logo|uploadpath}}" alt=""></a>
+                            <div class="sigh-second sf-absulate">
+                                <img ng-if="school.status" src="img/sf-right-big.png" alt="" class="w30-main">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9  col-xs-12 col-sm-9 text-c-m">
+                        <div class="sf-school-data">
+                            <div class="scl-title display-inline">
+                                <a ui-sref="school-profile({id:school._id})">
+                                    <h3 class="color-orange font-semi f-mcell-20">{{school.name}}</h3>
+                                </a>
+                            </div>
+                            <!-- <div class="display-inline cup">
+                                <img src="img/sf-cup.png" alt="">
+                            </div> -->
+                        </div>
+                        <div class="data-list custom-li color-white display-inline mt15  text-c-m mb-36">
+                            <ul class="padding0 sf-list-padding">
+                                <li class="border-right-1 f14-zero">
+                                    <div class="">
+                                        <span class="">CONTINGENT STRENGTH {{year16}}</span>
+                                    </div>
+                                    <ul class="padding0 pad-line mt15">
+                                        <li>
+                                            <div class="sto-pro-list">
+                                                <img src="img/sf-boys.png" alt="">{{school.contingent['2016'].Boys || '0'}}
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="sto-pro-list display-inline">
+                                                <img src="img/sf-girl.png" alt="">{{school.contingent['2016'].Girls || '0'}}
+                                            </div>
+                                        </li>
+                                        <li>
+                                            <div class="sto-pro-list total display-inline">
+                                                {{school.contingent['2016'].Boys + school.contingent['2016'].Girls || '0'}}
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="border-right-1">
+                                    <div class="display-inline text-up text-center f14-zero">
+                                        <p>{{year16}} rank</p>
+                                        <p class="total display-inline mt5">{{school.rank || 'N.A.'}}</p>
+                                    </div>
+                                    <!-- <div class="stu-data display-inline text-up text-center">
+                                        <p>2016 rank</p>
+                                        <p class="total display-inline mt5">4</p>
+                                    </div> -->
+                                </li>
+                                <li class="border-right-1 hidden-xs">
+
+                                    <div class="stu-data text-center sf-list">
+                                        <span class="text-center text-up ">Medals Won</span>
+
+                                        <ul class="padd-left padding0 mt5">
+                                            <li>
+                                                <div class="medal-num">
+                                                    <div class="img-medal display-inline">
+                                                        <img src="img/sf-gold-big.png" alt="">
+                                                    </div>
+                                                    <div class="display-inline">
+                                                        <p class="margin0 color-orange text-center">{{school.medal['2016'].gold || '0'}}</p>
+                                                        <p class="margin0">Gold</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="medal-num">
+                                                    <div class="img-medal display-inline ">
+                                                        <img src="img/sf-silver-big.png" alt="">
+                                                    </div>
+                                                    <div class="display-inline">
+                                                        <p class="margin0 color-orange text-center">{{school.medal['2016'].silver || '0'}}</p>
+                                                        <p class="margin0">Silver</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li>
+                                                <div class="medal-num">
+                                                    <div class="img-medal display-inline">
+                                                        <img src="img/sf-bronze-big.png" alt="">
+                                                    </div>
+                                                    <div class="display-inline ">
+                                                        <p class="margin0 color-orange text-center">{{school.medal['2016'].bronze || '0'}}</p>
+                                                        <p class="margin0">Bronze</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="sf-list p12-per hidden-md hidden-lg hidden-sm">
+                            <span class="text-center text-up color-orange f-mcell-20">Medals Won</span>
+                            <ul class="padd-left padding0 mt5 second-border">
+                                <li>
+                                    <div class="medal-num">
+                                        <div class="img-medal display-inline">
+                                            <img src="img/sf-gold-big.png" alt="">
+                                        </div>
+                                        <div class="display-inline f16-zero">
+                                            <p class="margin0 color-orange text-center">2</p>
+                                            <p class="margin0 color-white">Gold</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="medal-num">
+                                        <div class="img-medal display-inline ">
+                                            <img src="img/sf-silver-big.png" alt="">
+                                        </div>
+                                        <div class="display-inline f16-zero">
+                                            <p class="margin0 color-orange text-center">2</p>
+                                            <p class="margin0 color-white">Silver</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="medal-num">
+                                        <div class="img-medal display-inline ">
+                                            <img src="img/sf-bronze-big.png" alt="">
+                                        </div>
+                                        <div class="display-inline f16-zero">
+                                            <p class="margin0 color-orange text-center">2</p>
+                                            <p class="margin0 color-white">Bronze</p>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!--<div class="btn-common m40-main">
+                            <button type="button" name="button" class="text-up btn-orange padd-btn" ui-sref="school-bio">school bio</button>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="sf-absulate spon" ng-if="school.supportedBy">
+            <div class="">
+                <span class="color-orange text-cap f16">Supported by: <img src="img/menulogo.png" alt="" class="w40"></span>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+<section class="bottom-padding">
+    <div class="container mt40">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-center">
+                    <h3 class="color-blue text-up font-semi">school bio</h3>
+                </div>
+                <div class="text-center mt25">
+                    <div class="tab-list sf-list text-up">
+                        <ul class="padding0 margin0">
+                            <li><a href="" ng-click="tabchange('about',1)" class="{{classa}}">
+about school
+</a></li>
+                            <li><a href="" ng-click="tabchange('record',2)" class="{{classb}}">
+sfa track record
+</a></li>
+                            <li><a href="" ng-click="tabchange('gallery',3)" class="{{classc}}">
+gallery
+</a></li>
+                            <!-- <li><a href="" ng-click="tabchange('blog',4)" class="{{classd}}">
+school’s blog
+</a></li> -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box-content bx-mob pad-m-main pad-m-main">
+                    <div class="about-school" ng-show="tab=='about'">
+                        <div class="row">
+                            <div class="col-md-offset-1 col-md-10">
+                                <div class="school-about text-up font-semi f16 mt40 pl20">
+                                    <p><span>Name:</span>{{school.name || 'Not Available'}}</p>
+                                    <p><span>sfa id:</span>{{school.sfaid || 'Not Available'}}</p>
+                                    <p class="text-sort"><span>Address:</span>{{school.address || 'Not Available' }}</p>
+                                    <p><span>board:</span>{{school.board || 'Not Available'}}</p>
+                                    <p><span>status:</span>{{school.isVerified }}</p>
+                                    <p><span>c. l. {{year16}}:</span>{{school.contingentLeader || 'Not Available'}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="text-center">
+                                <h3 class="color-blue text-up font-semi">sports department</h3>
+                            </div>
+                            <div class="box-margin2">
+
+
+                                <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="data in school.departmentSorted['2016'] track by $index" ng-if="school.departmentSorted['2016'].length > 0">
+                                    <div class="row mt15 school-boxs margin152">
+                                        <a href="">
+                                            <div class="">
+                                                <div class="col-md-6 col-xs-12">
+                                                    <div class="student-pro-img border-r w130 text-center">
+                                                        <img ng-src="{{data.icon | uploadpath}}" alt="" class="img-responsive margin-auto">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 text-center col-xs-12">
+                                                    <div class="student-pro-data text-up mt40">
+                                                        <h4 class="color-orange font-semi">{{data.name}}</h4>
+                                                        <h4 class="color-blue">{{data.designation}}</h4>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="text-center" ng-if="!(school.departmentSorted['2016'].length > 0)">
+                                    No Sports Department Details Found.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="record " ng-show="tab=='record'">
+                        <div class="row  main-over">
+                            <div class="col-md-offset-2 col-md-8 w630">
+                                <div class="record-table mb-min-fn">
+                                    <table class="tables text-up">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    year
+                                                </th>
+                                                <th class="color-orange" ng-repeat="year in school.year">
+                                                    {{year}}
+                                                </th>
+
+                                        </thead>
+                                        <tbody>
+
+
+                                            <tr>
+                                                <td>
+                                                    rank
+                                                </td>
+                                                <td ng-repeat="year in school.year">
+                                                    -
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    sports co-ordinator
+                                                </td>
+                                                <td ng-repeat="year in school.year">
+                                                    <span ng-repeat="dept in school.departmentSorted[year]">
+                                                     &nbsp;{{dept.name || '-'}}<span ng-if="$index !== school.departmentSorted[year].length-1">,</span>
+                                                    </span>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    contingent leader
+                                                </td>
+                                                <td ng-repeat="year in school.year">
+                                                    -
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    contingent strength
+                                                </td>
+                                                <td ng-repeat="year in school.year">
+                                                    <div class="sf-list">
+                                                        <ul class="padding0 pad-line margin0">
+                                                            <li class="pl0">
+                                                                <div class="sto-pro-list">
+                                                                    <img src="img/sf-boys-blue.png" alt="">{{school.contingent[year].Boys
+                                                                    || '0'}}
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="sto-pro-list display-inline">
+                                                                    <img src="img/sf-girl-blue.png" alt="">{{school.contingent[year].Girls
+                                                                    || '0'}}
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="sto-pro-list total-count display-inline">
+                                                                    {{school.contingent[year].Boys + school.contingent[year].Girls || '0'}}
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    sports participated
+                                                </td>
+                                                <td class="text-underline" ng-repeat="year in school.year">
+                                                    <a href="" class="color-orange" ng-click="open(school.sports[year],'sm')">{{school.sports[year].length}}</a>
+                                                </td>
+                                                <!-- <td class=" text-underline">
+                                                    <a href="" class="color-orange">9</a>
+                                                </td> -->
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    medals tally
+                                                </td>
+                                                <td ng-repeat="year in school.year">
+                                                    <div class="sf-list">
+                                                        <ul class="padd-left padding0 margin0">
+                                                            <li class="pl0">
+                                                                <div class="medal-num">
+                                                                    <div class="img-medal display-inline">
+                                                                        <img src="img/sf-gold-sec.png" alt="">
+                                                                    </div>
+                                                                    <div class="display-inline">
+                                                                        <p class="margin0 color-blue text-center">{{school.medal[year].gold || '0'}}</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="medal-num">
+                                                                    <div class="img-medal display-inline ">
+                                                                        <img src="img/sf-silver-sec.png" alt="">
+                                                                    </div>
+                                                                    <div class="display-inline">
+                                                                        <p class="margin0 color-blue text-center">{{school.medal[year].silver || '0'}}</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                            <li>
+                                                                <div class="medal-num">
+                                                                    <div class="img-medal display-inline">
+                                                                        <img src="img/sf-bronze-sec.png" alt="">
+                                                                    </div>
+                                                                    <div class="display-inline">
+                                                                        <p class="margin0 color-blue text-center">{{school.medal[year].bronze || '0'}}</p>
+
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    total points
+                                                </td>
+                                                <td ng-repeat="year in school.year">
+                                                    {{school['totalPoints'+year]}}
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <hr> -->
+                        <div class="row">
+                            <!-- <div class="text-center">
+                                <h3 class="color-blue text-up font-semi">Accolades sfa mumbai 2016</h3>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="accrordian mt25">
+                                    <uib-accordion close-others="oneAtATime" class="text-up text-center ">
+                                        <uib-accordion-group heading="Teams" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                                            <p class="color-base f16">best contingent leader : <span class="color-blue font-semi"> Manav mehta</span></p>
+                                        </uib-accordion-group>
+                                        <uib-accordion-group heading="special awards">
+                                            <p class="color-base f16">best contingent leader : <span class="color-blue font-semi"> Manav mehta</span></p>
+                                        </uib-accordion-group>
+                                        <uib-accordion-group heading="sfa records">
+                                            <p class="color-base f16">best contingent leader : <span class="color-blue font-semi"> Manav mehta</span></p>
+                                        </uib-accordion-group>
+
+                                        <uib-accordion-group heading="analytics">
+                                            <p class="color-base f16">best contingent leader : <span class="color-blue font-semi"> Manav mehta</span></p>
+                                        </uib-accordion-group>
+
+                                    </uib-accordion>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="gallery" ng-show="tab=='gallery'">
+                        <div class="mt30 text-center">
+                            <h4 class="color-blue">Sport needs an audience and we are here to give you a virtual one. So, upload here the pictures
+                                and videos of your students’ participation and victory in sporting tournaments all year round.
+                            </h4>
+                        </div>
+                        <!-- <div class="row">
+                            <div class="col-md-offset-3 col-md-3 col-sm-6 col-xs-12 text-c-m">
+                                <h4 class="text-up color-blue display-inline">sport</h4>
+                                <div class="display-inline">
+                                    <div class="sfa-select">
+                                        <select class="select">
+                                            <option value="All">All</option>
+                                            <option value="Table Tennis">Table Tennis</option>
+                                            <option value="squash">squash</option>
+                                            <option value="swimming">swimming</option>
+                                        </select>
+                                        <span class="only-border"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12 col-sm-6 text-c-m">
+                                <h4 class="text-up color-blue display-inline">year</h4>
+                                <div class="display-inline">
+                                    <div class="sfa-select">
+                                        <select class="select" >
+                                            <option value="2016">2016</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2016">2016</option>
+                                        </select>
+                                        <span class="only-border"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> -->
+                        <!-- <div class="row">
+                            <div class="text-center mt25">
+                                <div class="tab-list sf-list text-up">
+                                    <ul class="padding0 margin0">
+                                        <li><a href="" ng-click="tabchanges('photos',1)" class="{{classp}}">
+photos
+</a></li>
+                                        <li><a href="" ng-click="tabchanges('videos',2)" class="{{classv}}">
+match videos
+</a></li>
+
+                                    </ul>
+                                </div>
+                                <hr class="hr-padding">
+                            </div>
+                        </div> -->
+                        <!-- <div class="row" ng-show="tabs=='photos'">
+                            <div class="col-md-3 mt15 col-sm-6 col-xs-6" ng-repeat="data in photos track by $index">
+
+                                <a fancybox-box rel="gallery1" href="{{data}}">
+                              <div class="folder-box sf-relative videow-box">
+                                 <img ng-src="{{data}}" alt="Sports For All" class="img-responsive width100 hover-min">
+                                <div class="over-layer sf-absulate">
+
+                                </div>
+                              </div>
+                            </a>
+                            </div>
+                        </div> -->
+                        <!--
+                        <div class="row" ng-show="tabs=='videos'">
+                            <div class="col-md-3 mt15" ng-repeat="data in video track by $index">
+
+                                  <a class="various fancybox.iframe" rel="gallery1" fancybox href="https://www.youtube.com/embed/pIPashZ8S2Q?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                                <div class="folder-box sf-relative videow-box">
+                                   <img ng-src="{{data.icon}}" alt="Sports For All" class="img-responsive width100 hover-min">
+                                  <div class="over-layer sf-absulate">
+                                    <h5 class="banner-set sf-absulate text-up color-white font-semi">{{data.name}}</h5>
+                                  </div>
+                                </div>
+                              </a>
+                            </div>
+                        </div> -->
+
+                    </div>
+                    <div class="blogs" ng-show="tab=='blog'">
+                        <div class="row">
+                            <div class="text-center">
+                                <h3 class="color-blue text-up font-semi">school’s blog</h3>
+                            </div>
+                            <div class="mt30 text-center">
+                                <h4 class="color-blue">There are champions breeding in your school’s playground who excel in various sports tournaments.
+                                    Share their achievements and accolades in sport for the world to see. Feel free to upload
+                                    videos and images along with a write-up.
+                                </h4>
+                            </div>
+                        </div>
+                        <!-- <hr> -->
+                        <!-- <div class="row">
+                            <div class="col-md-offset-3 col-md-3 col-sm-6 col-xs-12 text-c-m">
+                                <h4 class="text-up color-blue display-inline">month</h4>
+                                <div class="display-inline">
+                                    <div class="sfa-select">
+                                        <select class="select" >
+                                            <option value="All">All</option>
+                                            <option value="2016">Table Tennis</option>
+                                            <option value="2016">squash</option>
+                                            <option value="2016">swimming</option>
+                                        </select>
+                                        <span class="only-border"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3 col-xs-12 col-sm-6 text-c-m">
+                                <h4 class="text-up color-blue display-inline">year</h4>
+                                <div class="display-inline">
+                                    <div class="sfa-select">
+                                        <select class="select" >
+                                            <option value="2016">2016</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2016">2016</option>
+                                            <option value="2016">2016</option>
+                                        </select>
+                                        <span class="only-border"></span>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div> -->
+                        <!-- <div class="row mt20">
+                            <div class="box-blog school-boxs display-inline sf-relative">
+                                <div class="col-md-4">
+                                    <div class="blog-img">
+                                        <img src="img/sf-blog1.jpg" alt="" class="img-responsive width100">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="blog-content">
+                                        <div class="blog-title">
+                                            <h4 class="color-blue font-semi text-up">winner at dso basketball championship</h4>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="blog-footer">
+                                    <p>- <span class="font-semi">Manav Mehta</span> (10th June, 2016)</p>
+                                    <div class="blog-share">
+                                        <div class="display-inline">
+                                            <span class="font-semi color-blue f16">Share: </span>
+                                        </div>
+                                        <div class="display-inline sf-share">
+                                            <span><a href=""><i class="fa fa-facebook"></i></a></span> <span><a href=""><i class="fa fa-twitter"></i></a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                        <!-- <div class="row mt20">
+                            <div class="box-blog school-boxs display-inline sf-relative">
+                                <div class="col-md-4">
+                                    <div class="blog-img">
+                                        <img src="img/sf-blog2.jpg" alt="" class="img-responsive width100">
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="blog-content">
+                                        <div class="blog-title">
+                                            <h4 class="color-blue font-semi text-up">winner at dso basketball championship</h4>
+                                            <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,Lorem Ipsum is simply dummy text of the printing and typesetting
+                                                industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="blog-footer">
+                                    <p>- <span class="font-semi">Manav Mehta</span> (10th June, 2016)</p>
+                                    <div class="blog-share">
+                                        <div class="display-inline">
+                                            <span class="font-semi color-blue f16">Share: </span>
+                                        </div>
+                                        <div class="display-inline sf-share">
+                                            <span><a href=""><i class="fa fa-facebook"></i></a></span> <span><a href=""><i class="fa fa-twitter"></i></a></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</section>
