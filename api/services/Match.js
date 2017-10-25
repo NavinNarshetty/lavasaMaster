@@ -11714,11 +11714,14 @@ var model = {
                             console.log("singleData", singleData);
                             if (!_.isEmpty(singleData.player)) {
                                 async.concatSeries(singleData.player, function (n, callback) {
+                                    console.log("n", n);
                                     data.athlete = n._id;
                                     var pipeLine = Match.getAggregatePipeline(data);
                                     Match.aggregate(pipeLine, function (err, matchData) {
                                         if (err) {
                                             callback(err, "error in mongoose");
+                                        } else if (_.isEmpty(matchData)) {
+                                            callback(null, []);
                                         } else {
                                             var result = {};
                                             console.log('match data', matchData);
@@ -11808,6 +11811,8 @@ var model = {
                                     Match.aggregate(pipeLine, function (err, matchData) {
                                         if (err) {
                                             callback(err, "error in mongoose");
+                                        } else if (_.isEmpty(matchData)) {
+                                            callback(null, []);
                                         } else {
                                             console.log("matchData[0]", matchData[0]);
                                             var result = {};
