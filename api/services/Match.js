@@ -7880,6 +7880,8 @@ var model = {
                                             opponentsSingle: lostPlayer
                                         }
                                     };
+                                } else {
+                                    callback(null, "match is live");
                                 }
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle) && !_.isEmpty(found[1].opponentsSingle)) {
                                 if (found[0].opponentsSingle.length == 1 && found[1].opponentsSingle.length == 1) {
@@ -7928,7 +7930,7 @@ var model = {
                                             }
                                         };
                                     } else {
-                                        callback(null, data.found);
+                                        callback(null, "match is live");
                                     }
 
                                 } else {
@@ -8097,7 +8099,7 @@ var model = {
                                         }
                                     };
                                 } else {
-                                    callback(null, data.found);
+                                    callback(null, "match is live");
                                 }
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam) && !_.isEmpty(found[1].opponentsTeam)) {
                                 if (found[0].opponentsTeam.length == 1 && found[1].opponentsTeam.length == 1) {
@@ -8266,7 +8268,7 @@ var model = {
                                             }
                                         };
                                     } else {
-                                        callback(null, data.found);
+                                        callback(null, "match is live");
                                     }
                                 } else {
                                     updateObj = {};
@@ -8291,7 +8293,7 @@ var model = {
                                         }
                                     };
                                 } else {
-                                    // callback(null, data.found);
+                                    callback(null, "match is live");
                                 }
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle)) {
                                 console.log("updating match", data.found);
@@ -8315,7 +8317,7 @@ var model = {
                                             }
                                         };
                                     } else {
-                                        // callback(null, data.found);
+                                        callback(null, "match is live");
                                     }
                                 } else {
                                     updateObj = {};
@@ -8386,7 +8388,7 @@ var model = {
                                         }
                                     };
                                 } else {
-                                    // callback(null, data.found);
+                                    callback(null, "match is live");
                                 }
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam)) {
                                 console.log("updating match", data.found);
@@ -8458,7 +8460,7 @@ var model = {
                                             }
                                         };
                                     } else {
-                                        // callback(null, data.found);
+                                        callback(null, "match is live");
                                     }
                                 } else {
                                     updateObj = {};
@@ -8522,8 +8524,6 @@ var model = {
                                         }
                                     }
                                 });
-                        } else {
-                            callback(null, found);
                         }
                     }
                 }
@@ -11920,7 +11920,7 @@ var model = {
                     }
                 }
             });
-    }
+    },
 
 
 };

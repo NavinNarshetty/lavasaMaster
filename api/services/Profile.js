@@ -595,6 +595,8 @@ var model = {
                                                 var team = {};
                                                 team.sportsListSubCategoryId = n.sportsListSubCategory._id;
                                                 team.sportsListSubCategoryName = n.sportsListSubCategory.name;
+                                                team.sport = [];
+                                                team.sport.push(n.sport._id);
                                                 teams.push(team);
                                             });
                                             return {
@@ -606,7 +608,7 @@ var model = {
                                     return {
                                         name: name,
                                         gender: gender,
-                                        count: items.length
+                                        totalCount: items.length
                                     };
                                 }).value();
 
@@ -621,6 +623,8 @@ var model = {
                                                 var team = {};
                                                 team.sportsListSubCategoryId = n.sportsListSubCategory._id;
                                                 team.sportsListSubCategoryName = n.sportsListSubCategory.name;
+                                                team.sport = [];
+                                                team.sport = n.sport;
                                                 teams.push(team);
                                             });
                                             return {
@@ -689,6 +693,85 @@ var model = {
                         callback(null, profile);
                     }
                 }
+            });
+    },
+
+    getMedalsInSchoolProfile: function (data, callback) {
+        var medals = [];
+        async.concatSeries(data.sport, function (mainData, callback) {
+                async.waterfall([
+                        function (callback) {
+                            Medal.find({
+                                sport: mainData._id
+                            }).lean().exec(function (err, found) {
+                                if (err) {
+                                    callback(err, null);
+                                } else {
+                                    if (_.isEmpty(found)) {
+                                        callback(null, found);
+                                    } else {
+                                        callback(null, found);
+                                    }
+                                }
+                            });
+                        },
+                        function (found, callback) {
+                            // console.log("found", found);
+                            if (_.isEmpty(found)) {
+                                callback(null, medals);
+                            } else {
+                                async.eachSeries(found, function (singleData, callback) {
+                                        if (!_.isEmpty(singleData.player)) {
+                                            // console.log("player", singleData.player);
+                                            async.eachSeries(singleData.player, function (player, callback) {
+                                                    if (player === data.athleteId.toString()) {
+                                                        medals.push(singleData);
+                                                    }
+                                                    callback(null, singleData);
+                                                },
+                                                function (err) {
+                                                    callback(null, singleData);
+                                                });
+                                        } else {
+                                            // console.log("team", singleData.team);
+                                            async.eachSeries(singleData.team, function (teamData, callback) {
+                                                    StudentTeam.find({
+                                                        sport: mainData._id,
+                                                        teamId: teamData,
+                                                        studentId: data.athleteId
+                                                    }).lean().exec(function (err, found) {
+                                                        console.log("found", found);
+                                                        medals.push(singleData);
+                                                        callback(null, found);
+                                                    });
+                                                },
+                                                function (err) {
+                                                    callback(null, singleData);
+                                                });
+                                        }
+                                    },
+                                    function (err) {
+                                        // console.log("medals", medals)
+                                        callback(null, medals);
+                                    });
+                            }
+                        }
+
+                    ],
+                    function (err, data2) {
+                        if (err) {
+                            callback(null, []);
+                        } else if (data2) {
+                            if (_.isEmpty(data2)) {
+                                callback(null, data2);
+                            } else {
+                                callback(null, data2);
+                            }
+                        }
+                    });
+            },
+            function (err, singleData) {
+                callback(null, medals);
             });
     },
 
