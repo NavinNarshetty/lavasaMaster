@@ -36,35 +36,35 @@
                         </label>
                     </div>
                     <div class="input-group">
-                        <input type="number" class="form-control" ng-model="inOutTime.time" placeholder="Time" ng-disabled="selectedPlayer.out.length <= 0">
+                        <input type="number" class="form-control" ng-model="inOutTime.time" placeholder="Time" ng-disabled="selectedPlayer.isPlaying===true">
                         <span class="input-group-addon">Min</span>
                     </div>
                 </div>
             </div>
             <!-- OUT -->
-             <!-- IN -->
-             <div class="col-md-3 col-sm-3" ng-if="!selectedPlayer.isPlaying">
+            <!-- IN -->
+            <div class="col-md-3 col-sm-3" ng-if="!selectedPlayer.isPlaying">
                 <div class="teamscore-pointholder">
                     <div class="match-selectwinner">
                         <label for="">Select substitute {{substitutePlayer.player}}</label>
                         <ui-select id="matchWinnerPlayer" ng-model="substitutePlayer.player" theme="bootstrap">
-                            <ui-select-match placeholder="Select Winner">{{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+                            <ui-select-match placeholder="Select Substitute">{{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
                             <ui-select-choices repeat="player as player in match[matchData.resultVar].teams[selectedTeamIndex].players | filter: $select.search">
                                 <p class="opponentsingle-selector" ng-if="player.isPlaying == false "> {{player.firstName}} {{player.surname}} </p>
                             </ui-select-choices>
                         </ui-select>
                     </div>
                 </div>
-            <!-- IN -->
+                <!-- IN -->
+            </div>
         </div>
-    </div>
-    <!--<div class="row">
+        <!--<div class="row">
         <pre>{{selectedPlayer|json}}</pre>
     </div>-->
-</div>
-<div class="modal-footer">
-    <div class="scoreplayer-save">
-        <button class="btn btn-green-outline text-center" type="button" ng-click="updatePlayerDetails(selectedPlayer, substitutePlayer.player)">Done</button>
-        <button class="btn btn-green-outline text-center" type="button" ng-click="$dismiss()">Cancel</button>
     </div>
-</div>
+    <div class="modal-footer">
+        <div class="scoreplayer-save">
+            <button class="btn btn-green-outline text-center" type="button" ng-click="updatePlayerDetails(selectedPlayer, substitutePlayer.player)">Done</button>
+            <button class="btn btn-green-outline text-center" type="button" ng-click="$dismiss()">Cancel</button>
+        </div>
+    </div>

@@ -16,11 +16,8 @@
             <div class="row">
               <div class="col-md-12">
                 <!-- SPORT INFORMATION -->
-                <!-- REPEAT SPORT DATA DIV -->
                 <div>
                   <h5 class="text-center text-uppercase">Sport information</h5>
-
-
                   <div class="row">
                     <!-- MATCH ID -->
                     <div class="col-md-2">
@@ -79,7 +76,6 @@
                     <!-- WEIGHT END -->
                   </div>
                 </div>
-                <!-- REPEAT SPORT DATA DIV END -->
                 <!-- SPORT INFORMATION END -->
                 <!-- END MATCH ID -->
 
@@ -201,16 +197,19 @@
                                 <!-- <div class="extra-div"> extradiv justincase -->
                                 <!-- LANE NO -->
                                 <div class="edit-team-player-holder-raid form-group">
-                                  <label for=""> Lane No</label>
+
                                   <div class="row">
                                     <div class="col-md-2">
+                                      <label for=""> Lane No</label>
                                       <input type="number" name="jerseyno" ng-model="team.laneNo" class="form-control" placeholder="Enter jersey no">
                                     </div>
                                     <div class="col-md-2" ng-if="team.result !== undefined">
+                                      <label>Result</label>
                                       <input type="number" name="result" ng-model="team.result" class="form-control" placeholder="Result">
                                     </div>
                                     <div class="col-md-2" ng-if="team.time !== undefined">
-                                      <input type="number" name="time" ng-model="team.time" class="form-control" placeholder="Time">
+                                      <label>Time</label>
+                                      <input type="text" name="time" ng-model="team.time" class="form-control" placeholder="Time">
                                     </div>
                                   </div>
                                 </div>
@@ -276,7 +275,8 @@
                         <!-- TEAM STATUS -->
                         <div class="form-group">
                           <label>Status</label>
-                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultsCombat.status" required>
+                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultsCombat.status" ng-disabled="formData.resultsCombat.status==='IsCompleted'"
+                            required>
                             <ui-select-match placeholder="Please Enter Status">
                               {{$select.selected}}
                               <!-- {{formData.resultsCombat.status.status}} -->
@@ -412,6 +412,19 @@
                           <!-- COACH NAME END -->
                         </div>
                       </div>
+
+                      <!-- COMBAT STATUS -->
+                      <div class="combat-status">
+                        <div class="row">
+                          <div class="col-md-4">
+                            <label><input type="checkbox" ng-model="team.noShow"> No Show</label>
+                          </div>
+                          <div class="col-md-4">
+                            <label><input type="checkbox" ng-model="team.walkover"> Walkover</label>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- COMBAT STATUS END -->
                       <!-- TEAM POINTS -->
                       <div class="volleyball-team-data-holder">
                         <!-- SETS HOLDER -->
@@ -493,7 +506,8 @@
                         <!-- TEAM STATUS -->
                         <div class="form-group">
                           <label>Status</label>
-                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultHockey.status" required>
+                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultHockey.status" ng-disabled="formData.resultHockey.status==='IsCompleted'"
+                            required>
                             <ui-select-match placeholder="Please Enter Status">
                               {{$select.selected}}
                               <!-- {{formData.resultsCombat.status.status}} -->
@@ -512,10 +526,10 @@
                         <div class="checkbox  checkbox-mb from-group">
                           <div class="row">
                             <div class="col-md-6">
-                              <label><input type="checkbox" ng-model="formData.resultHockey.isDraw" value="formData.resultFootball.isdraw"> isdraw</label>
+                              <label><input type="checkbox" ng-model="formData.resultHockey.isDraw" value="formData.resultFootball.isdraw"> DRAW</label>
                             </div>
                             <div class="col-md-6">
-                              <label><input type="checkbox" ng-model="formData.resultHockey.isNoMatch" value="formData.resultFootball.isNoMatch"> isNoMatch</label>
+                              <label><input type="checkbox" ng-model="formData.resultHockey.isNoMatch" value="formData.resultFootball.isNoMatch"> No Match</label>
                             </div>
                           </div>
                         </div>
@@ -631,6 +645,19 @@
                           <!-- COACH NAME END -->
                         </div>
                       </div>
+
+                      <!-- STATUS -->
+                      <div class="hockeystatus">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label><input type="checkbox" ng-model="team.noShow"> No Show</label>
+                          </div>
+                          <div class="col-md-6">
+                            <label><input type="checkbox" ng-model="team.walkover"> Walkover</label>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- STATUS -->
                       <!-- TEAM POINTS -->
                       <div class="form-group team-data-points-holder">
                         <h5> TEAM DATA POINTS</h5>
@@ -641,12 +668,12 @@
                             <div class="row">
                               <div class="col-md-6">
                                 <label for="">HALF POINTS</label>
-                                <input type="text" name="halfgoalpoints" ng-model="team.teamResults.halfPoints" class="form-control" placeholder="Enter  goal points">
+                                <input type="number" name="halfgoalpoints" ng-model="team.teamResults.halfPoints" class="form-control" placeholder="Enter  goal points">
                               </div>
 
                               <div class="col-md-6">
                                 <label for="">FULL POINTS</label>
-                                <input type="text" name="fullgoalpoints" ng-model="team.teamResults.finalPoints" class="form-control" placeholder="Enter  goal points">
+                                <input type="number" name="fullgoalpoints" ng-model="team.teamResults.finalPoints" class="form-control" placeholder="Enter  goal points">
                               </div>
 
                             </div>
@@ -657,33 +684,33 @@
                             <div class="row">
                               <div class="col-md-3">
                                 <label for=""> ShotsOn Goal</label>
-                                <input type="text" name="shotsongoal" ng-model="team.teamResults.shotsOnGoal" class="form-control" placeholder="Enter shots on goal">
+                                <input type="number" name="shotsongoal" ng-model="team.teamResults.shotsOnGoal" class="form-control" placeholder="Enter shots on goal">
                               </div>
                               <div class="col-md-3">
                                 <label for=""> Total Shots</label>
-                                <input type="text" name="totalshots" ng-model="team.teamResults.totalShots" class="form-control" placeholder="Enter Total Shots">
+                                <input type="number" name="totalshots" ng-model="team.teamResults.totalShots" class="form-control" placeholder="Enter Total Shots">
                               </div>
                               <div class="col-md-3">
                                 <label for=""> Penality Points</label>
-                                <input type="text" name="penalitypoints" ng-model="team.teamResults.penalityPoints" class="form-control" placeholder="Enter Penalty Points">
+                                <input type="number" name="penalitypoints" ng-model="team.teamResults.penaltyPoints" class="form-control" placeholder="Enter Penalty Points">
                               </div>
                               <div class="col-md-3">
                                 <label for=""> Penalty Corners</label>
-                                <input type="text" name="penaltycorners" ng-model="team.teamResults.penalityCorners" class="form-control" placeholder="Enter Penalty Corner">
+                                <input type="number" name="penaltycorners" ng-model="team.teamResults.penaltyCorners" class="form-control" placeholder="Enter Penalty Corner">
                               </div>
                             </div>
                             <div class="row">
                               <div class="col-md-3">
                                 <label for=""> Penalty Stroke</label>
-                                <input type="text" name="penaltystroke" ng-model="team.teamResults.penalityStroke" class="form-control" placeholder="Enter Penalty Stroke">
+                                <input type="number" name="penaltystroke" ng-model="team.teamResults.penaltyStroke" class="form-control" placeholder="Enter Penalty Stroke">
                               </div>
                               <div class="col-md-3">
                                 <label for=""> Save</label>
-                                <input type="text" name="save" ng-model="team.teamResults.saves" class="form-control" placeholder="Enter Save">
+                                <input type="number" name="save" ng-model="team.teamResults.saves" class="form-control" placeholder="Enter Save">
                               </div>
                               <div class="col-md-3">
                                 <label for=""> Fouls</label>
-                                <input type="text" name="fouls" ng-model="team.teamResults.fouls" class="form-control" placeholder="Enter Fouls">
+                                <input type="number" name="fouls" ng-model="team.teamResults.fouls" class="form-control" placeholder="Enter Fouls">
                               </div>
                             </div>
                           </div>
@@ -833,7 +860,7 @@
                                     <label for=""> PENALTY POINTS</label>
                                     <div class="input-group">
                                       <span class="input-group-addon">COUNT</span>
-                                      <input type="number" class="form-control" ng-model="matchData.penalityPoint" placeholder="999" aria-label="Product name">
+                                      <input type="number" class="form-control" ng-model="player.playerPoints.penaltyPoint" placeholder="999" aria-label="Product name">
                                       <!-- <span class="input-group-addon">Min</span> -->
                                     </div>
                                   </div>
@@ -892,7 +919,8 @@
                         <!-- TEAM STATUS -->
                         <div class="form-group">
                           <label>Status</label>
-                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultBasketball.status" required>
+                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultBasketball.status" ng-disabled="formData.resultBasketball.status==='IsCompleted'"
+                            required>
                             <ui-select-match placeholder="Please Enter Status">
                               {{$select.selected}}
                               <!-- {{formData.resultsCombat.status.status}} -->
@@ -911,10 +939,10 @@
                         <div class="checkbox  checkbox-mb from-group">
                           <div class="row">
                             <div class="col-md-6">
-                              <label><input type="checkbox" ng-model="formData.resultBasketball.isDraw" value="formData.resultFootball.isdraw"> isdraw</label>
+                              <label><input type="checkbox" ng-model="formData.resultBasketball.isDraw" value="formData.resultFootball.isdraw"> DRAW</label>
                             </div>
                             <div class="col-md-6">
-                              <label><input type="checkbox" ng-model="formData.resultBasketball.isNoMatch" value="formData.resultFootball.isNoMatch"> isNoMatch</label>
+                              <label><input type="checkbox" ng-model="formData.resultBasketball.isNoMatch" value="formData.resultFootball.isNoMatch"> NO MATCH</label>
                             </div>
                           </div>
                         </div>
@@ -980,14 +1008,10 @@
                         <div class="radio-control-holder">
                           <label class="radio-inline" ng-repeat="radio in formData.resultBasketball.teams track by $index">
                                           <input type="radio" ng-model="radioData.radio1" value="{{$index}}" name="optradio">Team {{$index + 1}}
-                                </label>
-                          <!-- <label class="radio-inline">
-                                          <input type="radio" name="optradio">Team 2
-                                </label> -->
+                          </label>
                         </div>
                       </div>
                       <!-- RADIO BUTTON END -->
-
                     </div>
                   </div>
                   <div class="team-basketball-holder" ng-repeat="team in formData.resultBasketball.teams track by $index" ng-init="teamIndex = $index"
@@ -1044,10 +1068,18 @@
                         <!-- FINAL GOAL POINT -->
                         <div class="team-data-points-2">
                           <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-md-4">
                               <label for=""> Final Goal Points</label>
-                              <input type="number" name="basketballscore" ng-model="team.teamResults.finalGoalPoints" class="form-control" min="0" max="100"
+                              <input type="number" name="basketballscore" ng-model="team.teamResults.finalGoalPoints" class="form-control" min="0" max="1000"
                                 placeholder="Enter Final Goal Point">
+                            </div>
+                            <div class="basketball" style="margin-top:30px;">
+                              <div class="col-md-4">
+                                <label><input type="checkbox" ng-model="team.noShow"> noShow</label>
+                              </div>
+                              <div class="col-md-4">
+                                <label><input type="checkbox" ng-model="team.walkover"> walkover</label>
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1204,7 +1236,8 @@
                         <!-- TEAM STATUS -->
                         <div class="form-group">
                           <label>Status</label>
-                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultVolleyball.status" required>
+                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultVolleyball.status" ng-disabled="formData.resultVolleyball.status==='IsCompleted'"
+                            required>
                             <ui-select-match placeholder="Please Enter Status">
                               {{$select.selected}}
                               <!-- {{formData.resultsCombat.status.status}} -->
@@ -1255,8 +1288,8 @@
                           <label>Winner Team</label>
                           <select name="sponsortype" class="form-control" ng-model="formData.resultVolleyball.winner.player" placeholder="Enter Video Type"
                             required>
-                                       <option value="{{team._id}}" ng-repeat="team in formData.opponentsTeam">{{team.schoolName}}</option>
-                                </select>
+                            <option value="{{team._id}}" ng-repeat="team in formData.opponentsTeam">{{team.schoolName}}</option>
+                          </select>
                           <div class="error-msg" ng-if="sponsorForm.sponsortype.$invalid && sponsorForm.sponsortype.$touched">Please Enter Valid Type *</div>
                         </div>
                         <!-- WINNER END -->
@@ -1296,7 +1329,7 @@
                         <div class="radio-control-holder">
                           <label class="radio-inline" ng-repeat="radio in formData.resultVolleyball.teams track by $index">
                                             <input type="radio" ng-model="radioData.radio1" value="{{$index}}" name="optradio">Team {{$index + 1}}
-                              </label>
+                          </label>
                         </div>
                       </div>
                       <!-- RADIO BUTTON END -->
@@ -1362,29 +1395,47 @@
                         <!-- REMANING DATA POINTS -->
                         <div class="form-group team-data-points">
                           <div class="row">
+                            <!-- FINAL POINTS -->
+                            <div class="col-md-3">
+                              <label>Final Points</label>
+                              <input type="number" name="finalpoint" ng-model="team.teamResults.finalPoints" class="form-control" placeholder="Enter points">
+                            </div>
+                            <!-- FINAL POINTS -->
                             <!-- FOULS -->
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                               <label for="">Fouls</label>
                               <input type="number" name="fouls" ng-model="team.teamResults.fouls" class="form-control" placeholder="Enter fouls">
                             </div>
                             <!-- FOULS END -->
 
                             <!-- SPIKE -->
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                               <label for="">Spike</label>
-                              <input type="text" name="spike" ng-model="team.teamResults.spike" class="form-control" placeholder="Enter fouls">
+                              <input type="number" name="spike" ng-model="team.teamResults.spike" class="form-control" placeholder="Enter fouls">
                             </div>
                             <!-- SPIKE END -->
 
                             <!-- BLOCK -->
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                               <label for="">Block</label>
-                              <input type="text" name="block" ng-model="team.teamResults.block" class="form-control" placeholder="Enter block">
+                              <input type="number" name="block" ng-model="team.teamResults.block" class="form-control" placeholder="Enter block">
                             </div>
                             <!-- BLOCK END -->
                           </div>
                         </div>
                         <!-- REMANING DATA POINTS END -->
+                        <!-- VOLLEYBALL STATUS -->
+                        <div class="volleyball-status">
+                          <div class="row">
+                            <div class="col-md-6">
+                              <label><input type="checkbox" ng-model="team.noShow"> No Show</label>
+                            </div>
+                            <div class="col-md-6">
+                              <label><input type="checkbox" ng-model="team.walkover"> Walkover</label>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- VOLLEYBALL STATUS END -->
                         <div class="row">
                           <div class="col-md-8">
                             <h5>PLAYER DETAILS</h5>
@@ -1485,7 +1536,8 @@
                         <!-- TEAM STATUS -->
                         <div class="form-group">
                           <label>Status</label>
-                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultHandball.status" required>
+                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultHandball.status" ng-disabled="formData.resultHandball.status==='IsCompleted'"
+                            required>
                             <ui-select-match placeholder="Please Enter Status">
                               {{$select.selected}}
                               <!-- {{formData.resultsCombat.status.status}} -->
@@ -1620,6 +1672,16 @@
                           <!-- SCHOOL NAME END -->
                         </div>
                       </div>
+                      <!-- STATUS -->
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label><input type="checkbox" ng-model="team.noShow"> No Show</label>
+                        </div>
+                        <div class="col-md-6">
+                          <label><input type="checkbox" ng-model="team.walkover"> Walkover</label>
+                        </div>
+                      </div>
+                      <!-- STATUS END -->
                       <!-- TEAM POINTS -->
                       <div class="form-group team-data-points-holder">
                         <h5> TEAM DATA POINTS</h5>
@@ -1627,37 +1689,35 @@
                           <label for="">GOAL POINTS</label>
                           <div class="row mb15">
                             <!-- GOAL POINTS -->
-                            <div class="col-md-6" ng-repeat="goal in team.teamResults.goalPoints track by $index ">
-                              <label for=""> {{$index+1}}- HALF </label>
-                              <input type="text" name="goalPoints" ng-model="goal.time" class="form-control" placeholder="Enter Final goal points">
+                            <div class="col-md-2">
+                              <label for="">HALF </label>
+                              <input type="number" name="goalPoints" ng-model="team.teamResults.halfPoints" class="form-control" placeholder="Enter Final goal points">
                             </div>
                             <!-- GOAL POINTS END -->
-                          </div>
-                          <div class="row">
                             <!-- FINAL GOAL POINTS -->
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                               <label for=""> Final Goal-Points</label>
-                              <input type="text" name="finalgoalPoints" ng-model="team.teamResults.finalGoalPoints" class="form-control" placeholder="Enter Final goal points">
+                              <input type="number" name="finalgoalPoints" ng-model="team.teamResults.finalPoints" class="form-control" placeholder="Enter Final goal points">
                             </div>
                             <!-- FINAL GOAL POINTS END -->
                             <!-- SHOTS AND GOAL -->
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                               <label for=""> ShotsOn Goal</label>
-                              <input type="text" name="shotsongoal" ng-model="team.teamResults.shotsOnGoal" class="form-control" placeholder="Enter shots on goal">
+                              <input type="number" name="shotsongoal" ng-model="team.teamResults.shotsOnGoal" class="form-control" placeholder="Enter shots on goal">
                             </div>
                             <!-- SHOTS AND GOAL END -->
 
                             <!-- PENALITY SHOTS -->
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                               <label for=""> Penalty</label>
-                              <input type="text" name="penalitypoints" ng-model="team.teamResults.penalty" class="form-control" placeholder="Enter Total Shots">
+                              <input type="number" name="penalitypoints" ng-model="team.teamResults.penalty" class="form-control" placeholder="Enter Total Shots">
                             </div>
                             <!-- PENALITY SHOTS END -->
 
                             <!-- SAVES POINTS  -->
-                            <div class="col-md-3">
+                            <div class="col-md-2">
                               <label for=""> Saves</label>
-                              <input type="text" name="saves" ng-model="team.teamResults.saves" class="form-control" placeholder="Enter Save Points">
+                              <input type="number" name="saves" ng-model="team.teamResults.saves" class="form-control" placeholder="Enter Save Points">
                             </div>
                             <!-- SAVES POINTS END -->
                           </div>
@@ -1816,7 +1876,8 @@
                         <!-- TEAM STATUS -->
                         <div class="form-group">
                           <label>Status</label>
-                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultWaterPolo.status" required>
+                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultWaterPolo.status" ng-disabled="formData.resultWaterPolo.status==='IsCompleted'"
+                            required>
                             <ui-select-match placeholder="Please Enter Status">
                               {{$select.selected}}
                               <!-- {{formData.resultsCombat.status.status}} -->
@@ -1951,6 +2012,19 @@
                           <!-- Coach NAME END -->
                         </div>
                       </div>
+
+                      <!-- STATUS -->
+                      <div class="waterpolo">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label><input type="checkbox" ng-model="team.noShow"> No Show</label>
+                          </div>
+                          <div class="col-md-6">
+                            <label><input type="checkbox" ng-model="team.walkover"> Walkover</label>
+                          </div>
+                        </div>
+                      </div>
+                      <!-- STATUS END -->
                       <!-- TEAM POINTS -->
                       <div class="water-polo-teampoints">
                         <!-- QUATER POINTS + FINAL POINT -->
@@ -1961,12 +2035,12 @@
                             <div class="row">
                               <div class="col-md-2" ng-repeat="quater in team.teamResults.quarterPoints track by $index">
                                 <label for="">Quarter {{$index + 1}}</label>
-                                <input type="text" name="finalgoalPoints" ng-model="quater.points" class="form-control" placeholder="Enter  goal points">
+                                <input type="number" name="finalgoalPoints" ng-model="quater.points" class="form-control" placeholder="Enter  goal points">
                               </div>
                               <!-- FINAL GOAL POINTS -->
                               <div class="col-md-2">
                                 <label for=""> Final Goal-Points</label>
-                                <input type="text" name="finalgoalPoints" ng-model="team.teamResults.finalGoalPoints" class="form-control" placeholder="Final goal points">
+                                <input type="number" name="finalgoalPoints" ng-model="team.teamResults.finalGoalPoints" class="form-control" placeholder="Final goal points">
                               </div>
                               <!-- FINAL GOAL POINTS END -->
                             </div>
@@ -1979,23 +2053,23 @@
                           <div class="row">
                             <div class="col-md-2">
                               <label for=""> ShotsOn Goal</label>
-                              <input type="text" name="shotsongoal" ng-model="team.teamResults.shotsOnGoal" class="form-control" placeholder="Enter shots on goal">
+                              <input type="number" name="shotsongoal" ng-model="team.teamResults.shotsOnGoal" class="form-control" placeholder="Enter shots on goal">
                             </div>
                             <div class="col-md-2">
                               <label for=""> Total Shots</label>
-                              <input type="text" name="totalshots" ng-model="team.teamResults.totalShots" class="form-control" placeholder="Enter Total Shots">
+                              <input type="number" name="totalshots" ng-model="team.teamResults.totalShots" class="form-control" placeholder="Enter Total Shots">
                             </div>
                             <div class="col-md-2">
                               <label for=""> Penality Points</label>
-                              <input type="text" name="penalitypoints" ng-model="team.teamResults.penalityPoints" class="form-control" placeholder="Enter Penalty Points">
+                              <input type="number" name="penalitypoints" ng-model="team.teamResults.penaltyPoints" class="form-control" placeholder="Enter Penalty Points">
                             </div>
                             <div class="col-md-2">
                               <label for=""> Penality</label>
-                              <input type="text" name="penalitypoints" ng-model="team.teamResults.penality" class="form-control" placeholder="Enter Penalty Scored">
+                              <input type="number" name="penalitypoints" ng-model="team.teamResults.penalty" class="form-control" placeholder="Enter Penalty Scored">
                             </div>
                             <div class="col-md-2">
                               <label for=""> Saves</label>
-                              <input type="text" name="penalitypoints" ng-model="team.teamResults.saves" class="form-control" placeholder="Enter Save Points">
+                              <input type="number" name="penalitypoints" ng-model="team.teamResults.saves" class="form-control" placeholder="Enter Save Points">
                             </div>
                           </div>
                         </div>
@@ -2073,7 +2147,7 @@
                                   <div class="input-group">
                                     <!-- <span class="cross-team" ng-click="removeField('greenCard','resultWaterPolo',teamIndex,playerIndex,greenIndex)"><i class="fa fa-times" aria-hidden="true"></i></span> -->
                                     <span class="input-group-addon">COUNT</span>
-                                    <input type="number" class="form-control" ng-model="player.playerPoints.penalityPoint" placeholder="999" aria-label="Product name">
+                                    <input type="number" class="form-control" ng-model="player.playerPoints.penaltyPoint" placeholder="999" aria-label="Product name">
                                     <!-- <span class="input-group-addon">Min</span> -->
                                   </div>
                                 </div>
@@ -2133,7 +2207,8 @@
                         <!-- TEAM STATUS -->
                         <div class="form-group">
                           <label>Status</label>
-                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultKabaddi.status" required>
+                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultKabaddi.status" ng-disabled="formData.resultKabaddi.status==='IsCompleted'"
+                            required>
                             <ui-select-match placeholder="Please Enter Status">
                               {{$select.selected}}
                               <!-- {{formData.resultsCombat.status.status}} -->
@@ -2276,31 +2351,31 @@
                             <!-- HALF POINT  -->
                             <div class="col-md-2">
                               <label for="">HALF POINTS</label>
-                              <input type="text" name="halfpoints" ng-model="team.teamResults.halfPoints" class="form-control" placeholder="Enter Half Point">
+                              <input type="number" name="halfpoints" ng-model="team.teamResults.halfPoints" class="form-control" placeholder="Enter Half Point">
                             </div>
                             <!-- HALF POINT END -->
                             <!-- FINAL POINT -->
                             <div class="col-md-2">
                               <label for="">FINAL POINTS</label>
-                              <input type="text" name="halfpoints" ng-model="team.teamResults.finalPoints" class="form-control" placeholder="Enter Half Point">
+                              <input type="number" name="halfpoints" ng-model="team.teamResults.finalPoints" class="form-control" placeholder="Enter Half Point">
                             </div>
                             <!-- FINAL POINTS END -->
                             <!-- FINAL GOAL POINTS -->
                             <div class="col-md-2">
                               <label for=""> Final Goal-Points</label>
-                              <input type="text" name="finalgoalPoints" ng-model="team.teamResults.finalGoalPoints" class="form-control" placeholder="Enter Final goal points">
+                              <input type="number" name="finalgoalPoints" ng-model="team.teamResults.finalGoalPoints" class="form-control" placeholder="Enter Final goal points">
                             </div>
                             <!-- FINAL GOAL POINTS END -->
                             <!-- SUPER TACKLE -->
                             <div class="col-md-2">
                               <label for=""> Super Tackle</label>
-                              <input type="text" name="supertackle" ng-model="team.teamResults.superTackle" class="form-control" placeholder="Enter Super Tackle">
+                              <input type="number" name="supertackle" ng-model="team.teamResults.superTackle" class="form-control" placeholder="Enter Super Tackle">
                             </div>
                             <!-- SUPER TACKLE END -->
                             <!-- ALL OUT -->
                             <div class="col-md-2">
                               <label for="">All Out</label>
-                              <input type="text" name="allout" ng-model="team.teamResults.allOut" class="form-control" placeholder="Enter All Out">
+                              <input type="number" name="allout" ng-model="team.teamResults.allOut" class="form-control" placeholder="Enter All Out">
                             </div>
                             <!-- ALL OUT END -->
                           </div>
