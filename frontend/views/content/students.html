@@ -30,7 +30,7 @@
                     <form class="">
                         <!-- <input type="text" class="search-input" name="q" value="Type school name" ng-model="search">
                         <input type="image" value="Search" src="img/sfa-search.png" class="search-btn" ng-click="getSearchById(idSearch.search);"> -->
-                        <input type="text" class="search-input" name="q" value="Type athlete name" placeholder="Type athlete name or ID" ng-change="parseSearch(inputs.search);"
+                        <input type="text" class="search-input" name="q" value="Type athlete name" placeholder="Type athlete name or ID" ng-change="searchInTable(inputs.search);"
                             ng-model="inputs.search">
                         <input type="image" value="Search" src="img/sfa-search.png" class="search-btn" ng-click="doSearch();">
                     </form>
@@ -39,11 +39,12 @@
         </div>
         <div class="row" ng-if="inputs.search">
             <div class="text-center mt40">
-                <h3 class="font-semi color-orange text-up">{{getSearchData.total || '0'}} Search Results</h3>
+                <h3 class="font-semi color-orange text-up">{{totalItem || '0'}} Search Results</h3>
             </div>
             <div class="col-md-12 col-xs-12">
                 <div class="">
-                    <div class="col-md-3 mt15" ng-repeat="data in getSearchData.data" ng-if="getSearchData.data.length > 0">
+                    <div class="col-md-3 mt15" ng-repeat="data in getSearchData" ng-if="getSearchData.length > 0">
+                        <pre>{{data|json}}</pre>
                         <a ui-sref="student-profile({id:data._id})">
                             <div class="school-sec">
                                 <!-- <img src="img/sf-cl.png" alt="" class="mt-min-18" ng-if="$index==0"> -->
@@ -68,9 +69,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="float-right sf-list">
-                    <nav aria-label="Page navigation" ng-if="inputs.search && getSearchData.totalpages > 1">
-                        <uib-pagination ng-change="doSearch()" total-items="getSearchData.total" ng-model="searchFilter.pagenumber" items-per-page="searchFilter.pagesize"
-                            class="pagination-sm" max-size="maxSize" class="pagination-sm" boundary-links="true" force-ellipses="true"></uib-pagination>
+                    <nav aria-label="Page navigation" ng-if="inputs.search && totalItem > 1">
+                        <uib-pagination ng-change="doSearch()" total-items="totalItem" ng-model="searchFilter.page" items-per-page="maxSize" class="pagination-sm"
+                            max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></uib-pagination>
                     </nav>
                 </div>
             </div>

@@ -162,49 +162,49 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
 
         .state('students', {
             url: "/students",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'StudentsCtrl'
         })
 
         .state('student-profile', {
             url: "/student-profile/:id",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'StudentProfileCtrl'
         })
 
         .state('student-bio', {
             url: "/student-bio/:id",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'StudentBioCtrl'
         })
 
         .state('school', {
             url: "/school",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'SchoolCtrl'
         })
 
         .state('school-profile', {
             url: "/school-profile/:id",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'SchoolProfileCtrl'
         })
 
         .state('school-bio', {
             url: "/school-bio/:id",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'SchoolBioCtrl'
         })
 
         .state('team', {
             url: "/team",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'TeamCtrl'
         })
 
         .state('team-detail', {
             url: "/team-detail/:id",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'TeamDetailCtrl'
         })
 
@@ -213,37 +213,37 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
 
         .state('media-gallery', {
             url: "/media-gallery",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'MediaGalleryCtrl'
         })
 
         .state('media-gallery-inside', {
             url: "/media-gallery/:type/:folder",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'MediaGalleryCtrl'
         })
 
         .state('media-gallery-type', {
             url: "/media-gallery/:type",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'MediaGalleryCtrl'
         })
 
         .state('media-press', {
             url: "/media-press",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'MediaPressCtrl'
         })
 
         .state('media-press-inside', {
             url: "/media-press/:type/:folder",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'MediaPressCtrl'
         })
 
         .state('media-press-type', {
             url: "/media-press/:type",
-            templateUrl: "views/template.html",
+            templateUrl: tempateURL,
             controller: 'MediaPressCtrl'
         })
 

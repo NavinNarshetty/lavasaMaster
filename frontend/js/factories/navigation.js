@@ -127,14 +127,14 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             }).success(callback);
         },
 
-        getSearchDataStudent: function (input, i, callback) {
+        getSearchDataStudent: function (input, callback) {
             $http({
-                url: adminUrl + 'student/searchStudent',
+                url: adminUrl2 + 'profile/searchAthlete',
                 method: 'POST',
                 withCredentials: true,
                 data: input
-            }).success(function (data) {
-                callback(data, i);
+            }).then(function (data) {
+                callback(data.data);
             });
         },
 

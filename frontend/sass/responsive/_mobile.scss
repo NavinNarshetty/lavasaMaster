@@ -1,4 +1,7 @@
     @media (max-width:1200px) {
+      .videoSize {
+        height: 420px;
+      }
       .f-12 li {
         font-size: 12px !important;
       } // .sport-registration .category-padding-sport .v-line {
@@ -96,6 +99,27 @@
       // .ver-line:after {
       //   right: -80px;
       // }
+      .head-banner-city {
+        h2 {
+          font-size: 24px;
+        }
+      }
+      .videoSize {
+        height: 320px;
+      }
+      .newMargin {
+        margin: 47px auto 0;
+      }
+      .newHeadStyle {
+        font-size: 80px;
+      }
+      .forMedia {
+        font-size: 46px;
+      }
+      .newHead {
+        font-size: 52px;
+        margin-top: 110px;
+      }
       .spc-inside-box {
         .form-control {
           font-size: 14px;
@@ -494,10 +518,22 @@
       }
     }
 
+    @media (min-width:951px) and (max-width:961px) {
+      // .typePlace {
+      //   left: -172px;
+      // }
+      .newMargin {
+        margin: 93px auto 0;
+      }
+    }
+
     @media (min-width:858px) and (max-width:951px) {
       // .typePlace {
-      //   left: -px;
+      //   left: -172px;
       // }
+      .newMargin {
+        margin: 93px auto 0;
+      }
     }
 
     @media (max-width:857px) {
@@ -508,6 +544,9 @@
         .championship-scheduletitle {
           padding: 120px 0px 30px 0px;
         }
+      }
+      .newMargin {
+        margin: 93px auto 0;
       }
     }
 
@@ -520,11 +559,31 @@
           padding: 50px 0px 30px 0px;
         }
       }
+      .head-banner-city {
+        h2 {
+          font-size: 20px;
+        }
+      }
+      .newHeadStyle {
+        font-size: 50px;
+      }
+      .forMedia {
+        font-size: 27px;
+      }
+      .newMargin {
+        margin: 0 auto;
+      }
+      .newHead {
+        margin-top: 50px;
+      }
       .w1200 {
         width: auto;
       }
       .text-c {
         font-size: 18px;
+      }
+      .videoSize {
+        height: 200px;
       }
       .wt-resonsive-table {
         overflow-x: auto;
@@ -754,7 +813,13 @@
         }
         p {
           font-size: 7px;
-        }
+        } // li {
+        // width: 11%;
+        // padding: 3px;
+        // }
+        // p {
+        // font-size: 5px;
+        // }
       }
       .multi-sporting {
         padding: 30px 0px;
@@ -807,10 +872,9 @@
       .sigh-pro {
         left: 15px;
         bottom: 10px;
-      }
-      .m-top-zero {
-        margin-top: 0px;
-      }
+      } // .m-top-zero {
+      //   margin-top: 0px;
+      // }
       .sigh-seconds {
         left: 10px;
         img {
@@ -820,13 +884,17 @@
       .sf-school-logo2 {
         width: 50px;
         height: auto;
-      }
+      } // .f26 {
+      //   font-size: 12px;
+      // }
+      // .f20 {
+      //   font-size: 12px !important;
+      // }
       .f26 {
-        font-size: 12px;
-      }
-      .f20 {
-        font-size: 12px !important;
-      }
+        font-size: 21px;
+      } // .f20 {
+      //   font-size: 12px !important;
+      // }
       .acc-img.float-right {
         float: right;
       }
@@ -946,10 +1014,9 @@
       }
       .statement p {
         font-size: 14px;
-      }
-      .f20 {
-        font-size: 20px;
-      }
+      } // .f20 {
+      //   font-size: 20px;
+      // }
       .mt15 {
         h4 {
           font-size: 16px;
@@ -1018,24 +1085,25 @@
         background-repeat: no-repeat;
       }
       .my-banner-school {
-        background: url(../img/sfa-bg.png);
+        // background: url(../img/sfa-bg.png);
+        background: url(../img/sfa-profile.png);
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
         margin-top: -14px;
       }
       .my-banner-student {
-        background: url(../img/sfa-bg.png);
+        // background: url(../img/sfa-bg.png);
+        background: url(../img/sfa-profile.png);
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
       }
       .ptop-per {
         padding-top: 0%;
-      }
-      .p100 {
-        padding: 25px 0px;
-      }
+      } // .p100 {
+      //   padding: 25px 0px;
+      // }
       .sf-school-logo,
       .sf-school-logo2 {
         width: 120px;
@@ -1253,6 +1321,12 @@
       .dis-inline {
         width: 32.3%;
       }
+      .placingBlock {
+        left: 4px;
+        width: 258px;
+        font-size: 14px;
+        padding: 6px;
+      }
       .selectAthletes .separateTwoBox .school-sec .stu-check .checkbox-custom input[type="checkbox"]+label {
         width: 342px;
       }
@@ -1267,11 +1341,28 @@
           font-size: 6.9px;
         }
       }
+      .forMedia {
+        font-size: 25px;
+      }
     }
 
     @media (max-width:480px) {
       .ktkSize input[type="radio"]+label {
         margin-left: -16px;
+      }
+      .head-banner-city {
+        h2 {
+          font-size: 16px;
+        }
+      }
+      .newHeadStyle {
+        font-size: 40px;
+      }
+      .forMedia {
+        font-size: 19px;
+      }
+      .newHead {
+        font-size: 36px;
       }
       .selectAthletes .separateTwoBox .scroll-div .scrollbar {
         height: 490px;
@@ -1830,10 +1921,9 @@
           max-width: 100%;
           max-height: 100%;
         }
-      }
-      .p100 {
-        padding: 25px 0px;
-      }
+      } // .p100 {
+      //   padding: 25px 0px;
+      // }
       .p1002 {
         padding: 25px 0px 200px 0px !important;
       }
@@ -1848,14 +1938,16 @@
         margin-top: -14px;
       }
       .my-banner-school {
-        background: url(../img/sfa-bg.png);
+        // background: url(../img/sfa-bg.png);
+        background: url(../img/sfa-profile.png);
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
         margin-top: -14px;
       }
       .my-banner-student {
-        background: url(../img/sfa-bg.png);
+        // background: url(../img/sfa-bg.png);
+        background: url(../img/sfa-profile.png);
         background-size: cover;
         background-position: center center;
         background-repeat: no-repeat;
@@ -1902,16 +1994,21 @@
         img {
           width: 11px;
         }
-      }
-      .sf-school-logo2 {
-        width: 35px;
-        height: auto;
-      }
+      } // .sf-school-logo2 {
+      //   width: 35px;
+      //   height: auto;
+      // }
+      // .f26 {
+      //   font-size: 8px;
+      // }
+      // .f20 {
+      //   font-size: 8px !important;
+      // }
       .f26 {
-        font-size: 8px;
+        font-size: 18px;
       }
       .f20 {
-        font-size: 8px !important;
+        font-size: 16px;
       }
       .f162 {
         font-size: 16px;
@@ -1927,10 +2024,9 @@
         h4 {
           font-size: 12px;
         }
-      }
-      .f20 {
-        font-size: 20px;
-      }
+      } // .f20 {
+      //   font-size: 20px;
+      // }
       .statement p {
         font-size: 14px;
       }
@@ -2367,6 +2463,23 @@
       .mLogoPlacing {
         left: 52px;
         right: 0;
+      }
+      .head-banner-city {
+        h2 {
+          font-size: 12px;
+        }
+      }
+      .newHeadStyle {
+        font-size: 30px;
+      }
+      .forMedia {
+        font-size: 13px;
+      }
+      .placingBlock {
+        left: 4px;
+        width: 222px;
+        font-size: 12px;
+        padding: 5px;
       }
       .w800 {
         width: 50px;
