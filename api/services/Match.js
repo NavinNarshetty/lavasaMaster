@@ -11388,21 +11388,6 @@ var model = {
             });
     },
 
-    updateNextOpponent: function (data, callback) {
-        async.waterfall([
-                function (callback) {
-
-                },
-            ],
-            function (err, results) {
-                if (err || _.isEmpty(results)) {
-                    callback(err, null);
-                } else {
-                    callback(null, results);
-                }
-            });
-    },
-
     updateSwiss: function (importData, data, callback) {
         var countError = 0;
         async.waterfall([
@@ -11871,8 +11856,8 @@ var model = {
                                             if (matchData[0].resultHeat) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school.schoolLogo != null) {
-                                                    result.profile = n.school.schoolLogo;
+                                                if (n.school[0].schoolLogo != null) {
+                                                    result.profile = n.school[0].schoolLogo;
                                                 } else {
                                                     result.profile = "";
                                                 }
@@ -11886,8 +11871,8 @@ var model = {
                                             } else if (matchData[0].resultQualifyingRound) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school.schoolLogo != null) {
-                                                    result.profile = n.school.schoolLogo;
+                                                if (n.school[0].schoolLogo != null) {
+                                                    result.profile = n.school[0].schoolLogo;
                                                 } else {
                                                     result.profile = "";
                                                 }
@@ -11902,8 +11887,8 @@ var model = {
                                             } else if (matchData[0].resultSwiss) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school.schoolLogo != null) {
-                                                    result.profile = n.school.schoolLogo;
+                                                if (n.school[0].schoolLogo != null) {
+                                                    result.profile = n.school[0].schoolLogo;
                                                 } else {
                                                     result.profile = "";
                                                 }
@@ -11917,8 +11902,8 @@ var model = {
                                             } else if (matchData[0].resultShooting) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school.schoolLogo != null) {
-                                                    result.profile = n.school.schoolLogo;
+                                                if (n.school[0].schoolLogo != null) {
+                                                    result.profile = n.school[0].schoolLogo;
                                                 } else {
                                                     result.profile = "";
                                                 }
@@ -11929,8 +11914,8 @@ var model = {
                                                 console.log("matchData[0]", matchData[0]);
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school.schoolLogo != null) {
-                                                    result.profile = n.school.schoolLogo;
+                                                if (n.school[0].schoolLogo != null) {
+                                                    result.profile = n.school[0].schoolLogo;
                                                 } else {
                                                     result.profile = "";
                                                 }
@@ -11962,8 +11947,8 @@ var model = {
                                             } else {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school.schoolLogo != null) {
-                                                    result.profile = n.school.schoolLogo;
+                                                if (n.school[0].schoolLogo != null) {
+                                                    result.profile = n.school[0].schoolLogo;
                                                 } else {
                                                     result.profile = "";
                                                 }
