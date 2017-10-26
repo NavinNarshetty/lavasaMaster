@@ -569,15 +569,12 @@ var model = {
         var file = pdfObj.filename;
 
         var i = 0;
-        console.log(file);
         sails.hooks.views.render(file, {
             data: pdfObj
         }, function (err, html) {
-            console.log("inside sails", html, err);
             if (err) {
                 callback(err, null);
             } else {
-                console.log("inside else");
                 //var path = "http://104.155.129.33:1337/upload/readFile/";
                 var path = "pdf/";
                 var newFilename = pdfObj.newFilename;
@@ -587,7 +584,6 @@ var model = {
                     if (err) {
                         console.log("Something Fishy", err);
                     } else {
-                        console.log("Finish Is Called");
                         callback(null, {
                             name: newFilename,
                             url: newFilename
@@ -619,14 +615,10 @@ var model = {
                     },
                     // "filename": page.filename + ".pdf"
                 };
-
-                console.log("qwerty");
                 pdf.create(html, options).toStream(function (err, stream) {
-                    console.log("qwerty", err, stream);
                     if (err) {
                         callback(err);
                     } else {
-                        console.log("In Config To generate PDF");
                         i++;
                         stream.pipe(writestream);
                     }

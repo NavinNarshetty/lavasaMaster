@@ -447,11 +447,11 @@
               <!-- FOR SCHOOL -->
               <div>
                 <%if (data.institutionType!="college") { %>
-                  <input type="text" class="form-control text-center font-os" value="<%=data.totalSportsReg%>" style="color:#666666;width: 50%;">
+                  <input type="text" class="form-control text-center font-os" value="<%=data.totalSportsReg%> Sports" style="color:#666666;width: 50%;"> 
                   <% }else{ %>
                     <!-- COLLEGE -->
-                    <input type="text" class="form-control text-center font-os" value="<%=data.totalSportsReg + '/' + data.totalSport + ' Sports'%>"
-                      style="color:#666666;width: 50%;">
+                    <input type="text" class="form-control text-center font-os" value="<%=data.totalSportsReg + '/' + data.totalSport + ' Sports'%>" 
+                      style="color:#666666;width: 50%;"> 
                     <!-- COLLEGE END-->
                     <%}%>
 

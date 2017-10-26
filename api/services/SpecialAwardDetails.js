@@ -310,6 +310,8 @@ var model = {
 
     getAwardsCertificate: function (data, callback) {
         var pdfObj = {};
+        var pdfArray=[];
+        // var Result=require("Result");
         async.waterfall([
 
             //get Awards
@@ -362,14 +364,21 @@ var model = {
             if (err) {
                 callback(err, null);
             } else {
+                console.log("SpecialAwards",SpecialAwards.length);
+                var i=0;
                 async.concatSeries(SpecialAwards, function (award, callback) {
+                    console.log("awardType",award.award.awardType,i++);
+                    //make pdfObj as per Specific Award
                     async.waterfall([
 
                         function (callback) {
-                            //make pdfObj as per Specific Award
                             var basePath = "https://storage.googleapis.com/sfacertificate/";
                             pdfObj.athlete = award.athlete;
-                            pdfObj.newFilename = _.join(_.split(award.award.name,  ' '), '_') + ".pdf";
+                            if(award.athlete){
+                                pdfObj.newFilename = _.join(_.split(award.award.name,  ' '), '_') +'_'+ award.athlete.sfaId +".pdf";
+                            }else if(award.school){
+                                pdfObj.newFilename = _.join(_.split(award.award.name,  ' '), '_') +'_'+ award.school.schoolName+ '_' +award._id +".pdf";
+                            }
                             pdfObj.footerImage = env.realHost + "/api/upload/readFile?file=" + award.footerImage;
                             pdfObj.sports = award.sports;
                             pdfObj.award = award.award;
@@ -388,7 +397,7 @@ var model = {
                                 case "max":
                                     pdfObj.filename = "sportMaxAwardAthlete";
                                     pdfObj.totalSportsReg = award.sports.length;
-                                    pdfObj.heading = basePath + "max.png";
+                                    pdfObj.heading = basePath + "max.png";  //url to get Heading of Certificate
                                     break;
                                 case "strong":
                                     pdfObj.filename = "schoolStrongAward";
@@ -416,49 +425,181 @@ var model = {
                             }
 
                             callback(null, pdfObj, award.award.awardType);
-
                         },
 
                         function (pdfObj, awardType, callback) {
-                            console.log("pdfObj, awardType", awardType);
                             function calculateSchoolAthelete() {
-                                var matchObj={};
-                                if(data.school){
-                                    matchObj.school=data.school;
-                                }else if(data.college){
-                                    matchObj.school=data.college;                                    
-                                }
-                                console.log("matchObj------------------",matchObj);
-                                Athelete.aggregate([{
-                                    $match:matchObj
-                                },{
-                                    $group:{
-                                        "_id":"gender"
+                                var matchObj = {
+                                    $or: [{
+                                        "school.name": pdfObj.school.schoolName
+                                    }, {
+                                        "atheleteSchoolName": pdfObj.school.schoolName
+                                    }]
+                                };
+
+                                Athelete.aggregate([
+                                    // Stage 1
+                                    {
+                                        $lookup: {
+                                            "from": "schools",
+                                            "localField": "school",
+                                            "foreignField": "_id",
+                                            "as": "school"
+                                        }
+                                    },
+
+                                    // Stage 2
+                                    {
+                                        $unwind: {
+                                            path: "$school",
+                                            includeArrayIndex: "arrayIndex", // optional
+                                            preserveNullAndEmptyArrays: true // optional
+                                        }
+                                    },
+
+                                    // Stage 3
+                                    {
+                                        $match: {
+                                            $or: [{
+                                                "school.name": pdfObj.school.schoolName
+                                            }, {
+                                                "atheleteSchoolName": pdfObj.school.schoolName
+                                            }]
+                                        }
+
+                                    },
+                                    {
+                                        $group: {
+                                            "_id": "$gender",
+                                            "count": {
+                                                $sum: 1
+                                            }
+                                        }
                                     }
-                                }],function(err,allAthletes){
-                                    callback(null,allAthletes);
+
+
+                                ], function (err, allAthletes) {
+                                    console.log(err,allAthletes);
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (!_.isEmpty(allAthletes)) {
+                                        console.log(allAthletes);
+                                        pdfObj.maleAthCount = (_.find(allAthletes, ['_id', "male"])).count;
+                                        pdfObj.femaleAthCount = (_.find(allAthletes, ['_id', "female"])).count;
+                                        pdfObj.totalAthCount = pdfObj.maleAthCount + pdfObj.femaleAthCount;
+                                        pdfObj.generate = true;
+                                        callback(null, pdfObj);
+                                    } else {
+                                        pdfObj.generate = false;
+                                        callback(null, pdfObj);
+                                    }
                                 });
                             }
 
+                            function calculateMedalsWon() {
+                                Medal.find({
+                                    "school.schoolName": pdfObj.school.schoolName
+                                }).deepPopulate("team").lean().exec(function (err, medals) {
+
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (!_.isEmpty(medals)) {
+                                        async.concatSeries(medals, function (medal, callback) {
+                                            var indexArr = [];
+                                            _.forEach(medal.school, function (n, ind) {
+                                                if (n.schoolName == pdfObj.school.schoolName) {
+                                                    indexArr.push(ind);
+                                                }
+                                            });
+                                            medal.indexArr = indexArr;
+                                            medal.school = _.pullAt(medal.school, indexArr);
+
+                                            if (!_.isEmpty(medal.team)) {
+                                                medal.player = [];
+                                                medal.team = _.pullAt(medal.team, indexArr);
+                                                callback(null, medal);
+                                            } else {
+                                                medal.player = _.pullAt(medal.player, indexArr);
+                                                callback(null, medal);
+                                            }
+                                        }, function (err, result) {
+                                            result = _.groupBy(result, 'medalType');
+                                            fcallback(null, result);
+                                        });
+                                    } else {
+                                        callback(null, []);
+                                    }
+                                })
+                            }
+                            // console.log("awardType",awardType);
                             switch (awardType) {
                                 case "strong":
                                     calculateSchoolAthelete();
                                     break;
+                                case "champion":
+                                    Result.getMedalsSchool(" ", function (err, data) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else {
+                                            data = _.find(data, ['name', pdfObj.school.schoolName]);
+                                            console.log("data",data);
+                                            if (!_.isEmpty(data)) {
+                                                pdfObj.totalCount = data.totalCount;
+                                                var gold = _.find(data.medal, ['name', 'gold']);
+                                                if (gold) {
+                                                    pdfObj.goldCount = gold.count;
+                                                } else {
+                                                    pdfObj.goldCount = 0;
+                                                }
+                                                var silver = _.find(data.medal, ['name', 'silver']);
+                                                if (silver) {
+                                                    pdfObj.silverCount = silver.count;
+                                                } else {
+                                                    pdfObj.silverCount = 0;
+                                                }
+                                                var bronze = _.find(data.medal, ['name', 'bronze']);
+                                                console.log("bronze", bronze);
+                                                if (bronze) {
+                                                    pdfObj.bronzeCount = bronze.count;
+                                                } else {
+                                                    pdfObj.bronzeCount = 0;
+                                                }
+                                                pdfObj.generate = true;
+                                            } else {
+                                                pdfObj.generate = false;
+                                                callback(null, pdfObj);
+                                            }
+                                        }
+                                    });
+                                    break;
                                 default:
+                                    pdfObj.generate = true;
                                     callback(null, pdfObj);
                             }
                         }
+
                     ], function (err, result) {
-                        Config.generatePdf(pdfObj, function (err, pdfRespo) {
-                            if (err) {
-                                callback(null, err);
-                            } else if (pdfRespo) {
-                                pdfObj.pdfname = pdfRespo;
-                                callback(null, pdfObj);
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (result.generate) {
+                                Config.generatePdf(result, function (err, pdfRespo) {
+                                    if (err) {
+                                        callback(null, err);
+                                    } else if (pdfRespo) {
+                                        // result.pdfname = pdfRespo;
+                                        pdfArray.push(pdfRespo);
+                                        callback(null, pdfRespo);
+                                    } else {
+                                        callback(null, "Some Error Occured in Config Property");
+                                    }
+                                });
                             } else {
-                                callback(null, "Invalid data");
+                                callback(null, "Some Error Occured while generating "+result.award.name);
                             }
-                        });
+
+
+                        }
                     });
 
                 }, function (err, result) {
