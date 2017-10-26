@@ -10288,7 +10288,7 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                console.log("found", found[0]);
+                                console.log("found*******", found[0]);
                                 if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted') {
                                     if (_.isEmpty(found[0].resultsRacquet)) {
                                         callback(null, found);
@@ -11022,7 +11022,7 @@ var model = {
                                         }
                                     };
                                 } else {
-                                    callback(null, data.found);
+                                    callback(null, found);
                                 }
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle)) {
                                 console.log("updating match", data.found);
@@ -11137,7 +11137,7 @@ var model = {
                                         }
                                     };
                                 } else {
-                                    callback(null, data.found);
+                                    callback(null, found);
                                 }
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam)) {
                                 console.log("updating match", data.found);
@@ -11209,7 +11209,7 @@ var model = {
                                             }
                                         };
                                     } else {
-                                        callback(null, data.found);
+                                        callback(null, found);
                                     }
                                 } else if (found[0].opponentsTeam.length == 2) {
                                     var playerId = found[0].opponentsTeam[0];
@@ -11279,7 +11279,7 @@ var model = {
                                             }
                                         };
                                     } else {
-                                        callback(null, data.found);
+                                        callback(null, found);
                                     }
                                 } else {
                                     updateObj = {};
