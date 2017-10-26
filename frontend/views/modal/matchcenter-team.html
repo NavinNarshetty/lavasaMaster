@@ -110,7 +110,7 @@
                                     <p>Team ID: <span>{{team.teamId}}</span></p>
                                 </div>
                                 <!-- src="img/dishapatani1.jpg" -->
-                                <div class="matchplayer-image">
+                                <div class="matchplayer-image" ng-class="{'bg-team-male': currentMatch.sport.gender == 'male', 'bg-team-female': currentMatch.sport.gender == 'female'}">
                                     <img ng-src="{{currentMatch.opponentsTeam[index].photograph|serverimage}}"  alt="{{team.schoolName}}" class="img-responsive">
                                 </div>
                                 <div class="matchplayer-details">
