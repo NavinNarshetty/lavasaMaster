@@ -11857,8 +11857,8 @@ var model = {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
                                                 console.log("school", n.school);
-                                                if (!_.isEmpty(n.school[0].schoolLogo)) {
-                                                    result.profile = n.school[0].schoolLogo;
+                                                if (!_.isEmpty(n.school.schoolLogo)) {
+                                                    result.profile = n.school.schoolLogo;
                                                 } else {
                                                     result.profile = "";
                                                 }
