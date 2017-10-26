@@ -5072,6 +5072,7 @@ var model = {
                                 } else {
                                     obj["NAME 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
                                 }
+                                console.log("school", mainData.opponentsSingle[0].athleteId.school);
                                 if (mainData.opponentsSingle[0].athleteId.school != null) {
                                     obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
                                 } else {
@@ -5093,6 +5094,7 @@ var model = {
                                 } else {
                                     obj["NAME 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.surname;
                                 }
+                                console.log("school", mainData.opponentsSingle[0].athleteId.school.name);
                                 if (mainData.opponentsSingle[0].athleteId.school != null) {
                                     obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
                                 } else {
@@ -5102,7 +5104,6 @@ var model = {
                                 obj["SFAID 2"] = "";
                                 obj["PARTICIPANT 2"] = "";
                                 obj["SCHOOL 2"] = "";
-
                             }
                             if (mainData.resultSwiss) {
                                 if (mainData.resultSwiss.players.length == 2) {
@@ -5155,7 +5156,6 @@ var model = {
                 Config.generateExcel("KnockoutIndividual", excelData, res);
             });
     },
-
 
     //-------------------------------EXCEL FOR GRAPHICS------------------------------------------
 
