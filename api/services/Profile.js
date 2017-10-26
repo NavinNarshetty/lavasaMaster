@@ -199,7 +199,7 @@ var model = {
         };
         var deepSearch = "school";
         var profile = {};
-        profile.players = [];
+        profile.results = [];
         async.waterfall([
             function (callback) {
                 Athelete.find(data.term)
@@ -236,7 +236,9 @@ var model = {
                         if (err) {
                             callback(err, null);
                         } else {
-                            profile.players = playerData;
+                            profile.results = playerData;
+                            profile.options = found.options;
+                            profile.total = found.total;
                             callback(null, profile);
                         }
                     });
