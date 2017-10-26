@@ -10278,10 +10278,10 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    // var deepSearch = "prevMatch";
+                    var deepSearch = "prevMatch";
                     Match.find({
                         prevMatch: data._id
-                    }).lean().exec(function (err, found) {
+                    }).lean().deepPopulate(deepSearch).exec(function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else {
