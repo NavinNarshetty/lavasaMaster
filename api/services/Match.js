@@ -10278,7 +10278,7 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    var deepSearch = "prevMatch";
+                    var deepSearch = "prevMatch.opponentsTeam prevMatch.opponentsSingle";
                     Match.find({
                         prevMatch: data._id
                     }).lean().deepPopulate(deepSearch).exec(function (err, found) {
@@ -11713,16 +11713,19 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    async.concatSeries(found, function (singleData, callback) {
+                    var finalData = [];
+                    async.eachSeries(found, function (singleData, callback) {
                             console.log("singleData", singleData);
                             if (!_.isEmpty(singleData.player)) {
-                                async.concatSeries(singleData.player, function (n, callback) {
+                                async.eachSeries(singleData.player, function (n, callback) {
                                     console.log("n", n);
                                     data.athlete = n._id;
                                     var pipeLine = Match.getAggregatePipeline(data);
                                     Match.aggregate(pipeLine, function (err, matchData) {
                                         if (err) {
                                             callback(err, "error in mongoose");
+                                        } else if (_.isEmpty(matchData)) {
+                                            callback(null, []);
                                         } else {
                                             var result = {};
                                             console.log('match data', matchData);
@@ -11794,7 +11797,8 @@ var model = {
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
                                             }
-                                            callback(null, result);
+                                            finalData.push(result);
+                                            callback(null, finalData);
                                         }
                                     });
                                 }, function (err, playerData) {
@@ -11806,19 +11810,21 @@ var model = {
                                 });
 
                             } else {
-                                async.concatSeries(singleData.team, function (n, callback) {
+                                async.eachSeries(singleData.team, function (n, callback) {
                                     data.team = n._id;
                                     var pipeLine = Match.getTeamAggregatePipeline(data);
                                     Match.aggregate(pipeLine, function (err, matchData) {
                                         if (err) {
                                             callback(err, "error in mongoose");
+                                        } else if (_.isEmpty(matchData)) {
+                                            callback(null, []);
                                         } else {
                                             console.log("matchData[0]", matchData[0]);
                                             var result = {};
                                             if (matchData[0].resultHeat) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school.schoolLogo) {
+                                                if (!_.isEmpty(n.school.schoolLogo)) {
                                                     result.profile = n.school.schoolLogo;
                                                 } else {
                                                     result.profile = "";
@@ -11833,7 +11839,7 @@ var model = {
                                             } else if (matchData[0].resultQualifyingRound) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school.schoolLogo) {
+                                                if (!_.isEmpty(n.school.schoolLogo)) {
                                                     result.profile = n.school.schoolLogo;
                                                 } else {
                                                     result.profile = "";
@@ -11849,7 +11855,7 @@ var model = {
                                             } else if (matchData[0].resultSwiss) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school.schoolLogo) {
+                                                if (!_.isEmpty(n.school.schoolLogo)) {
                                                     result.profile = n.school.schoolLogo;
                                                 } else {
                                                     result.profile = "";
@@ -11864,7 +11870,7 @@ var model = {
                                             } else if (matchData[0].resultShooting) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school.schoolLogo) {
+                                                if (!_.isEmpty(n.school.schoolLogo)) {
                                                     result.profile = n.school.schoolLogo;
                                                 } else {
                                                     result.profile = "";
@@ -11876,7 +11882,7 @@ var model = {
                                                 console.log("matchData[0]", matchData[0]);
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school.schoolLogo) {
+                                                if (!_.isEmpty(n.school.schoolLogo)) {
                                                     result.profile = n.school.schoolLogo;
                                                 } else {
                                                     result.profile = "";
@@ -11909,7 +11915,7 @@ var model = {
                                             } else {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school.schoolLogo) {
+                                                if (!_.isEmpty(n.school.schoolLogo)) {
                                                     result.profile = n.school.schoolLogo;
                                                 } else {
                                                     result.profile = "";
@@ -11917,7 +11923,8 @@ var model = {
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
                                             }
-                                            callback(null, result);
+                                            finalData.push(result);
+                                            callback(null, finalData);
                                         }
                                     });
                                 }, function (err, playerData) {
@@ -11929,11 +11936,11 @@ var model = {
                                 })
                             }
                         },
-                        function (err, complete) {
+                        function (err) {
                             if (err) {
                                 callback(err, null);
                             } else {
-                                callback(null, complete);
+                                callback(null, finalData);
                             }
                         })
                 }
