@@ -11900,7 +11900,7 @@ var model = {
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
                                                 _.each(matchData[0].resultSwiss.players, function (player) {
-                                                    if (player.id === n._id) {
+                                                    if (player.id.equals(n._id)) {
                                                         result.result = player.score;
                                                     }
                                                 });
