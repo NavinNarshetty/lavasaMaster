@@ -226,7 +226,11 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
       $scope.set = set;
       switch (model) {
         case 'points':
+        if ($scope.set.points == "") {
+          $scope.set.points = 1;
+        } else {
           $scope.set.points = $scope.set.points + 1;
+        }
         break;
       }
       console.log("increment");
