@@ -242,7 +242,7 @@
 
     <!--WINNERS-->
     <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs hidden-sm">
-      <div class="knockout-winnercardholder" ng-repeat="winner in winnersCard track by $index">
+      <div class="knockout-winnercardholder" ng-repeat="winner in winnersCard | orderBy:'rank' track by $index">
         <div class="display-inline knockout-winnercardname">
           <div class="knockout-winnercardimgage display-inline">
             <img ng-src="{{winner.profile | serverimage2:50:50:'cover'}}" alt="image" class="img-responsive">

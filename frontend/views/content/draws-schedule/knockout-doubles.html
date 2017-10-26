@@ -251,18 +251,17 @@
 
       <!--WINNERS-->
       <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs">
-        <div class="knockout-winnercardholder" ng-repeat="winner in winnerDoubles track by $index">
+        <div class="knockout-winnercardholder" ng-repeat="winner in winnerDoubles | orderBy :'rank' track by $index">
           <div class="display-inline knockout-winnercardname">
             <div class="knockout-winnercardname-holder" ng-repeat="doubles in winner.players track by $index">
-              <div class="knockout-winnercardimgage display-inline">
-                <img ng-src="{{winner.profile | serverimage2:50:50:'cover' }}" alt="" class="img-responsive">
+              <div class="knockout-winnercardimgage display-inline" ng-if="doubles.profile">
+                <img ng-src="{{doubles.profile | serverimage2:50:50:'cover' }}" alt="" class="img-responsive">
               </div>
               <div class="knockout-winnercardplayername display-inline">
                 <p class="m-clear sport-color-primary">{{doubles.name}}</p>
                 <p class="m-clear">{{winner.school | truncate:20}}</p>
               </div>
             </div>
-
           </div>
           <div class="display-inline knockout-winnermedalholder">
             <div class="testsfa">
