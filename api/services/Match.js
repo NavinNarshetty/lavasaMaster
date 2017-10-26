@@ -11868,7 +11868,7 @@ var model = {
                                                 result.medaltype = singleData.medalType;
 
                                                 _.each(matchData[0].resultHeat.teams, function (player) {
-                                                    console.log("player", player);
+                                                    console.log("player", player, "n", n._id);
                                                     if (player.id === n._id) {
                                                         console.log("matched");
                                                         result.result = player.time;
