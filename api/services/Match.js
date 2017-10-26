@@ -5094,7 +5094,7 @@ var model = {
                                 } else {
                                     obj["NAME 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.surname;
                                 }
-                                console.log("school", mainData.opponentsSingle[0].athleteId.school.name);
+                                console.log("school", mainData.opponentsSingle[1].athleteId.school.name);
                                 if (mainData.opponentsSingle[0].athleteId.school != null) {
                                     obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
                                 } else {
