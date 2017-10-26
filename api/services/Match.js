@@ -1379,25 +1379,25 @@ var model = {
                                         }
 
                                     },
-                                    function (singleData, callback) {
-                                        console.log("logssss***", singleData);
-                                        if (singleData.error) {
-                                            countError++;
-                                            callback(null, singleData);
-                                        } else if (!_.isEmpty(singleData["NEW WEIGHT"])) {
-                                            Match.saveWeightChange(singleData, function (err, complete) {
-                                                if (err || _.isEmpty(complete)) {
-                                                    err = "New weight not valid";
-                                                    callback(err, null);
-                                                } else {
-                                                    singleData.SPORT = complete.sportId;
-                                                    callback(null, singleData);
-                                                }
-                                            });
-                                        } else {
-                                            callback(null, singleData);
-                                        }
-                                    },
+                                    // function (singleData, callback) {
+                                    //     console.log("logssss***", singleData);
+                                    //     if (singleData.error) {
+                                    //         countError++;
+                                    //         callback(null, singleData);
+                                    //     } else if (!_.isEmpty(singleData["NEW WEIGHT"])) {
+                                    //         Match.saveWeightChange(singleData, function (err, complete) {
+                                    //             if (err || _.isEmpty(complete)) {
+                                    //                 err = "New weight not valid";
+                                    //                 callback(err, null);
+                                    //             } else {
+                                    //                 singleData.SPORT = complete.sportId;
+                                    //                 callback(null, singleData);
+                                    //             }
+                                    //         });
+                                    //     } else {
+                                    //         callback(null, singleData);
+                                    //     }
+                                    // },
                                     function (singleData, callback) {
                                         console.log("logssss", singleData);
                                         if (singleData.error) {
@@ -1487,6 +1487,190 @@ var model = {
                     callback(null, results);
                 }
             });
+    },
+
+    saveforWeightIndividual: function (importData, data, callback) {
+        var countError = 0;
+        async.waterfall([
+                function (callback) {
+                    async.concatSeries(importData, function (singleData, callback) {
+                            async.waterfall([
+                                    function (callback) {
+                                        var paramData = {};
+                                        paramData.name = singleData.EVENT;
+                                        console.log("para,", paramData.name);
+                                        paramData.age = singleData["AGE GROUP"];
+                                        if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                            paramData.gender = "male";
+                                        } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                            paramData.gender = "female";
+                                        }
+                                        var weight = singleData["WEIGHT CATEGORIES"];
+                                        paramData.weight = _.trimStart(weight, " ");
+                                        Match.getSportId(paramData, function (err, sportData) {
+                                            if (err || _.isEmpty(sportData)) {
+                                                singleData.SPORT = null;
+                                                err = "Sport,Event,AgeGroup,Gender may have wrong values";
+                                                callback(null, {
+                                                    error: err,
+                                                    success: singleData
+                                                });
+                                            } else {
+                                                singleData.SPORT = sportData.sportId;
+                                                callback(null, singleData);
+                                            }
+                                        });
+                                    },
+                                    function (singleData, callback) {
+                                        console.log("logssss", singleData);
+                                        if (singleData.error) {
+                                            countError++;
+                                            callback(null, singleData);
+                                        } else {
+                                            if (_.isEmpty(singleData["SFAID"])) {
+                                                singleData["PARTICIPANT"] = null;
+                                                callback(null, singleData);
+                                            } else {
+                                                // console.log("singleData1", singleData);
+                                                var paramData = {};
+                                                paramData.participant = singleData["SFAID"];
+                                                paramData.sport = singleData.SPORT;
+                                                Match.getAthleteId(paramData, function (err, complete) {
+                                                    if (err || _.isEmpty(complete)) {
+                                                        singleData["PARTICIPANT"] = "";
+                                                        err = "SFAID 1 may have wrong values";
+                                                        callback(null, {
+                                                            error: err,
+                                                            success: singleData
+                                                        });
+                                                    } else {
+                                                        singleData["PARTICIPANT"] = complete._id;
+                                                        callback(null, singleData);
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    },
+                                    function (singleData, callback) {
+                                        console.log("logssss***", singleData);
+                                        if (singleData.error) {
+                                            countError++;
+                                            callback(null, singleData);
+                                        } else if (!_.isEmpty(singleData["NEW WEIGHT"])) {
+                                            Match.saveWeightChange(singleData, function (err, complete) {
+                                                if (err || _.isEmpty(complete)) {
+                                                    err = "New weight not valid";
+                                                    callback(err, null);
+                                                } else {
+                                                    singleData.SPORT = complete.sportId;
+                                                    callback(null, singleData);
+                                                }
+                                            });
+                                        } else {
+                                            callback(null, singleData);
+                                        }
+                                    },
+                                ],
+                                function (err, results) {
+                                    if (err || _.isEmpty(results)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, results);
+                                    }
+                                });
+                        },
+                        function (err, singleData) {
+                            callback(null, singleData)
+                        });
+                },
+                function (singleData, callback) {
+                    async.concatSeries(singleData, function (n, callback) {
+                            if (countError != 0 && n.error == null) {
+                                Match.remove({
+                                    _id: n.success._id
+                                }).exec(function (err, found) {
+                                    if (err || _.isEmpty(found)) {
+                                        callback(err, null);
+                                    } else {
+                                        callback(null, n);
+                                    }
+                                });
+                            } else {
+                                callback(null, n);
+                            }
+                        },
+                        function (err, singleData) {
+                            callback(null, singleData);
+                        });
+                },
+            ],
+            function (err, results) {
+                if (err || _.isEmpty(results)) {
+                    callback(err, null);
+                } else {
+                    callback(null, results);
+                }
+            });
+    },
+
+    saveWeightChangeNew: function (singleData, callback) {
+        async.waterfall([
+                function (callback) {
+                    var paramData = {};
+                    paramData.name = singleData["EVENT"];
+                    paramData.age = singleData["AGE GROUP"];
+                    if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                        paramData.gender = "male";
+                    } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                        paramData.gender = "female";
+                    }
+                    var weight = singleData["NEW WEIGHT"];
+                    paramData.weight = _.trimStart(weight, " ");
+                    Match.getSportId(paramData, function (err, sportData) {
+                        if (err || _.isEmpty(sportData)) {
+                            err = "Weight may have wrong values";
+                            callback(null, {
+                                error: err,
+                                success: sportData
+                            });
+                        } else {
+                            callback(null, sportData);
+                        }
+                    });
+                },
+                function (sportData, callback) {
+                    if (sportData.error) {
+                        countError++;
+                        callback(null, sportData);
+                    } else {
+                        if (singleData["PARTICIPANT"]) {
+                            var participant = {};
+                            participant.id = singleData["PARTICIPANT"];
+                            Match.updateIndividualSport(participant, sportData, function (err, updatedData) {
+                                if (err || _.isEmpty(updatedData)) {
+                                    err = "Weight may have wrong values";
+                                    callback(null, {
+                                        error: err,
+                                        success: sportData
+                                    });
+                                } else {
+                                    callback(null, sportData);
+                                }
+                            });
+                        } else {
+                            callback(null, sportData);
+                        }
+                    }
+                }
+            ],
+            function (err, results) {
+                if (err || _.isEmpty(results)) {
+                    callback(err, null);
+                } else {
+                    callback(null, results);
+                }
+            });
+
     },
 
     saveWeightChange: function (singleData, callback) {
@@ -1608,7 +1792,7 @@ var model = {
                 function (found, callback) {
                     var sportArry = [];
                     _.each(found.sport, function (n) {
-                        if (param.sportId == n) {
+                        if (param.sportId.equals(n)) {
                             sportArry.push(param.sportId);
                         } else {
                             sportArry.push(n);
@@ -4888,7 +5072,12 @@ var model = {
                                 } else {
                                     obj["NAME 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
                                 }
-                                obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
+                                console.log("school", mainData.opponentsSingle[0].athleteId.school);
+                                if (mainData.opponentsSingle[0].athleteId.school != null) {
+                                    obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
+                                } else {
+                                    obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.atheleteSchoolName;
+                                }
                             } else {
                                 obj["SFAID 1"] = "";
                                 obj["NAME 1"] = "";
@@ -4905,12 +5094,16 @@ var model = {
                                 } else {
                                     obj["NAME 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.surname;
                                 }
-                                obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
+                                console.log("school", mainData.opponentsSingle[1].athleteId);
+                                if (mainData.opponentsSingle[0].athleteId.school != null) {
+                                    obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
+                                } else {
+                                    obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.atheleteSchoolName;
+                                }
                             } else {
                                 obj["SFAID 2"] = "";
                                 obj["PARTICIPANT 2"] = "";
                                 obj["SCHOOL 2"] = "";
-
                             }
                             if (mainData.resultSwiss) {
                                 if (mainData.resultSwiss.players.length == 2) {
@@ -4963,7 +5156,6 @@ var model = {
                 Config.generateExcel("KnockoutIndividual", excelData, res);
             });
     },
-
 
     //-------------------------------EXCEL FOR GRAPHICS------------------------------------------
 
