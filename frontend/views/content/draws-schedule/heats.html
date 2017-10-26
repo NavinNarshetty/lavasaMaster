@@ -98,15 +98,21 @@
                 </td>
                 <td>
                   <div class="text-capitalize ">
-                    <span> {{final.result}}</span>
+                    <span ng-if="final.result>3"> {{final.result}}</span>
                     <span ng-if="!final.result">-</span>
+                    <div class="heat-medal-width">
+                      <img src="/img/medal-icon/gold-blue.png" alt="" class="img-responsive" ng-if="final.result === 1">
+                      <img src=" /img/medal-icon/silver-blue.png " alt=" " class="img-responsive " ng-if="final.result===2">
+                      <img src="/img/medal-icon/bronze-blue.png" alt="" class="img-responsive" ng-if="final.result === 3">
+                    </div>
+
                   </div>
 
                 </td>
                 <td>
-                  <div class="text-capitalize ">
+                  <div class=" text-capitalize ">
                     <span>{{final.time}}</span>
-                    <span ng-if="!final.time">-</span>
+                    <span ng-if="!final.time ">-</span>
                   </div>
 
                 </td>
@@ -115,7 +121,8 @@
                 </td>
               </tr>
 
-              <tr ng-repeat="final in roundsList[0].match[0].opponentsTeam|orderBy: 'result'| limitTo:finalLimit " ng-if="roundsList[0].match[0].opponentsTeam.length>0">
+              <tr ng-repeat="final in roundsList[0].match[0].opponentsTeam|orderBy: 'result'| limitTo:finalLimit
+                      " ng-if="roundsList[0].match[0].opponentsTeam.length>0">
                 <td>
                   <div class="text-capitalize ">
                     {{final.laneNo}}

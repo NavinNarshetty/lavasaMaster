@@ -118,6 +118,28 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
     }
   };
   $scope.getSportSpecificRounds();
+  $scope.getWinners = function () {
+    if ($stateParams.id) {
+      $scope.constraints.sport = $stateParams.id;
+      NavigationService.getAllWinners($scope.constraints, function (data) {
+        errorService.errorCode(data, function (allData) {
+          if (!allData.message) {
+            if (allData.value) {
+              $scope.winnerDoubles = allData.data;
+
+              console.log("  $scope.winnerDoubles", $scope.winnerDoubles);
+            }
+          } else {
+            toastr.error(allData.message, 'Error Message');
+          }
+
+        });
+
+
+      });
+    }
+  },
+    $scope.getWinners();
   $scope.showMoreData = function (bool, index) {
     if (bool === true) {
       $scope.roundsList[index].limitValue = 5000;

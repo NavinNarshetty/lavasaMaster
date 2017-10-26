@@ -131,6 +131,17 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                         if (allData.value) {
                             $scope.winnerCard = allData.data;
                             console.log("  $scope.winnerCard", $scope.winnerCard);
+                            _.each($scope.winnerCard, function (key) {
+                                if (key.medaltype === "gold") {
+                                    key.rank = 1;
+                                }
+                                if (key.medaltype === "bronze") {
+                                    key.rank = 3;
+                                }
+                                if (key.medaltype === "silver") {
+                                    key.rank = 2;
+                                }
+                            });
                         }
                     } else {
                         toastr.error(allData.message, 'Error Message');
@@ -428,6 +439,17 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
                     if (!allData.message) {
                         if (allData.value) {
                             $scope.winnerDoubles = allData.data;
+                            _.each($scope.winnerDoubles, function (value) {
+                                if (value.medaltype === 'gold') {
+                                    value.rank = 1;
+                                }
+                                if (value.medaltype === 'silver') {
+                                    value.rank = 2;
+                                }
+                                if (value.medaltype === 'bronze') {
+                                    value.rank = 3;
+                                }
+                            });
 
                             console.log("  $scope.winnerDoubles", $scope.winnerDoubles);
                         }
@@ -702,13 +724,17 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
                     if (!allData.message) {
                         if (allData.value) {
                             $scope.winnersCard = allData.data;
-                            // _.each($scope.winnerDoubles, function (value) {
-                            //     _.each(value.team, function (key) {
-                            //         _.each(key.studentTeam, function (n) {
-                            //             n.fullName = n.studentId.firstName + ' ' + n.studentId.surname;
-                            //         });
-                            //     });
-                            // });
+                            _.each($scope.winnersCard, function (value) {
+                                if (value.medaltype === 'gold') {
+                                    value.rank = 1;
+                                }
+                                if (value.medaltype === 'silver') {
+                                    value.rank = 2;
+                                }
+                                if (value.medaltype === 'bronze') {
+                                    value.rank = 3;
+                                }
+                            });
                             console.log("  $scope.winnerDoubles", $scope.winnerDoubles);
                         }
                     } else {

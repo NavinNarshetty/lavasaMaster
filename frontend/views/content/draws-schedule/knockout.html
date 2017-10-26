@@ -240,7 +240,7 @@
 
               </div>
             </div>
-            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true ,'knockout-live-foot': card.status === 'IsLive'}">
+            <div class="knockout-card-content" ng-class="{'knockout-winner-card-content':card.isWinner===true || card.isNoMatch === true,'knockout-live-foot': card.status === 'IsLive'}">
 
               <p class="m-clear scheduledata-knockout" ng-if="!card.status || card.status==='' || card.status === 'IsPending'">
                 <span>Date: {{card.scheduleDate|englishNumeralDate}}</span> <span class="pull-right">  {{card.scheduleTime}} </span>
@@ -284,7 +284,7 @@
 
     <!--WINNERS-->
     <div class="col-md-3 col-sm-4 col-xs-12 hidden-xs hidden-sm">
-      <div class="knockout-winnercardholder" ng-repeat="winner in winnerCard track by $index">
+      <div class="knockout-winnercardholder" ng-repeat="winner in winnerCard | orderBy:'rank' track by $index">
         <div class="display-inline knockout-winnercardname">
           <div class="knockout-winnercardimgage display-inline">
             <img ng-src="{{winner.profile | serverimage2:50:50:'cover'}}" alt="image" class="img-responsive">
