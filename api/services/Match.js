@@ -4925,6 +4925,7 @@ var model = {
                                     obj["P2 RANK"] = "";
                                 }
                                 if (!_.isEmpty(mainData.resultSwiss.winner)) {
+                                    console.log("opponentsSingle", mainData.opponentsSingle[0], "player", mainData.resultSwiss.winner.player);
                                     if (mainData.opponentsSingle[0].equals(mainData.resultSwiss.winner.player)) {
                                         obj["WINNER NAME"] = obj["NAME 1"];
                                         obj["WINNER SFAID"] = mainData.opponentsSingle[0].athleteId.sfaId;

@@ -18,6 +18,81 @@ module.exports = mongoose.model('Result', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
 
+    getAggregatePipeline: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "individualsports",
+                    "localField": "opponentsSingle",
+                    "foreignField": "_id",
+                    "as": "opponentsSingle"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$opponentsSingle",
+
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "opponentsSingle.athleteId",
+                    "foreignField": "_id",
+                    "as": "opponentsSingle.athleteId"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$opponentsSingle.athleteId",
+                }
+            },
+
+            // Stage 5
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "opponentsSingle.athleteId.school",
+                    "foreignField": "_id",
+                    "as": "opponentsSingle.athleteId.school"
+                }
+            },
+
+            // Stage 6
+            {
+                $unwind: {
+                    path: "$opponentsSingle.athleteId.school",
+
+                }
+            },
+
+            // Stage 7
+            {
+                $match: {
+                    $or: [{
+                        "opponentsSingle.athleteId.school.name": data.school
+                    }, {
+                        "opponentsSingle.athleteId.atheleteSchoolName": data.school
+                    }]
+                }
+            },
+
+            // Stage 8
+            {
+                $count: "count"
+            },
+
+        ];
+        return pipeline;
+    },
+
     getMedalsSchool: function (data, callback) {
         var medals = [];
         async.waterfall([
@@ -62,7 +137,6 @@ var model = {
                                     }).value();
                                 var result = _.sortBy(gender, item => parseFloat(item[1]));
                                 return {
-                                    _id: items,
                                     name: name,
                                     medal: result,
                                     totalCount: items.length
@@ -92,10 +166,32 @@ var model = {
                         }
                     });
                 },
-                // function (result, callback) {
-
-                // },
-
+                function (result, callback) {
+                    async.concatSeries(result, function (mainData, callback) {
+                        console.log("mainData", mainData);
+                        data.school = mainData.name;
+                        var pipeLine = Result.getAggregatePipeline(data);
+                        Match.aggregate(pipeLine, function (err, matchData) {
+                            if (err) {
+                                callback(err, "error in mongoose");
+                            } else {
+                                mainData.totalMatch = matchData[0].count;
+                                callback(null, mainData);
+                            }
+                        });
+                    }, function (err, complete) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            var result = _(complete).chain()
+                                .sort("totalMatch")
+                                .reverse() // sort by date descending
+                                .sort("totalCount") // sort by name ascending
+                                .result()
+                            callback(null, result);
+                        }
+                    });
+                }
             ],
             function (err, data2) {
                 callback(null, data2);

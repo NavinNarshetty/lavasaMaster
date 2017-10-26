@@ -11,6 +11,7 @@ var controller = {
             })
         }
     },
+
     getRankSchool: function (req, res) {
         if (req.body) {
             Result.getRankSchool(req.body, res.callback);
@@ -21,5 +22,6 @@ var controller = {
             })
         }
     },
+
 };
 module.exports = _.assign(module.exports, controller);
