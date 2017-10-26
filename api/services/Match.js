@@ -11976,7 +11976,7 @@ var model = {
                                                 result.medaltype = singleData.medalType;
                                                 _.each(matchData[0].resultHeat.players, function (player) {
                                                     console.log("player", player, "n", n._id);
-                                                    if (player.id.equals(n._id)) {
+                                                    if (player.athleteId.equals(n._id)) {
                                                         result.result = player.time;
                                                     }
                                                 });
@@ -12008,7 +12008,7 @@ var model = {
                                                 result.medaltype = singleData.medalType;
                                                 _.each(matchData[0].resultSwiss.players, function (player) {
                                                     console.log("player", player, "n", n._id);
-                                                    if (player.id.equals(n._id)) {
+                                                    if (player.athleteId.equals(n._id)) {
                                                         result.result = player.score;
                                                     }
                                                 });
