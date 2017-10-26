@@ -8527,6 +8527,8 @@ var model = {
                                         }
                                     }
                                 });
+                        } else {
+                            callback(null, "updated");
                         }
                     }
                 }
