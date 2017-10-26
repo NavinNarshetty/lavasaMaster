@@ -129,13 +129,25 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
       $scope.team = team;
       switch (point) {
         case 'spike':
-          $scope.team.teamResults.spike = $scope.team.teamResults.spike + 1;
+          if ($scope.team.teamResults.spike == "") {
+            $scope.team.teamResults.spike = 1;
+          } else {
+            $scope.team.teamResults.spike = $scope.team.teamResults.spike + 1;
+          }
         break;
         case 'fouls':
-          $scope.team.teamResults.fouls = $scope.team.teamResults.fouls + 1;
+          if ($scope.team.teamResults.fouls == "") {
+            $scope.team.teamResults.fouls = 1;
+          } else {
+            $scope.team.teamResults.fouls = $scope.team.teamResults.fouls + 1;
+          }
         break;
         case 'block':
-          $scope.team.teamResults.block = $scope.team.teamResults.block + 1;
+          if ($scope.team.teamResults.block == "") {
+            $scope.team.teamResults.block = 1;
+          } else {
+            $scope.team.teamResults.block = $scope.team.teamResults.block + 1;
+          }
         break;
       }
       console.log(point,'inTP');
@@ -237,7 +249,7 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
     $scope.addSet = function(){
       _.each($scope.match.resultVolleyball.teams, function(n){
         n.teamResults.sets.push({
-              points: 0
+              points: ''
         });
       })
       _.each($scope.match.resultVolleyball.teams[0].teamResults.sets, function(n,key){
@@ -338,19 +350,29 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
     // SAVE PLAYER POINTS
     $scope.savePlayerPoints = function(){
       if($scope.selectedPlayer.isPlaying == false){
-        var inLength = $scope.selectedPlayer.playerPoints.out.length - 1;
-        _.each($scope.match.resultVolleyball.teams[$scope.teamIndex].players, function(n){
-          if(n.player == $scope.selectedInPlayer.player){
-            n.isPlaying = true;
-            n.playerPoints.in.push({
-              time: $scope.selectedPlayer.playerPoints.out[inLength].time
+        if (!_.isEmpty($scope.selectedInPlayer.player)) {
+          var inLength = $scope.selectedPlayer.playerPoints.out.length - 1;
+          $scope.inOutTime = $scope.selectedPlayer.playerPoints.out[inLength];
+          console.log('inOutTime', $scope.inOutTime);
+          if ($scope.inOutTime && $scope.inOutTime.time && $scope.inOutTime.time != '') {
+            _.each($scope.match.resultVolleyball.teams[$scope.teamIndex].players, function(n){
+              if(n.player == $scope.selectedInPlayer.player){
+                n.isPlaying = true;
+                n.playerPoints.in.push({
+                  time: $scope.inOutTime.time
+                });
+                console.log(n, 'yomama');
+              }
             });
-            console.log(n, 'yomama');
+            $rootScope.modalInstance.close('a');
+            $scope.selectedInPlayer = {};
+          } else{
+            toastr.error("Please Enter Out Time", "Error");
           }
-        });
+        } else {
+          toastr.error("Please select a Substitute", "Error");
+        }
       }
-      $rootScope.modalInstance.close('a');
-      $scope.selectedInPlayer = {};
     }
     // SAVE PLAYER POINTS END
     // PENALTY SHOOTOUTS MODAL

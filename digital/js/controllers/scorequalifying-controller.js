@@ -104,9 +104,9 @@ myApp.controller('QualifyingScoreCtrl', function ($scope, TemplateService, Navig
               }
               break;
             case 'image':
-              if (!n.resultImage) {
-                n.resultImage = {};
-                n.resultImage = {
+              if (!n.resultQualifyingRound.resultImage) {
+                n.resultQualifyingRound.resultImage = {};
+                n.resultQualifyingRound.resultImage = {
                   "matchPhoto": [],
                   "attendance": false
                 };
@@ -130,7 +130,7 @@ myApp.controller('QualifyingScoreCtrl', function ($scope, TemplateService, Navig
       }
       if ($stateParams.flag == 'image') {
         $scope.qualifyingResult[nindex].resultImage = {};
-        $scope.qualifyingResult[nindex].resultImage = n.resultImage;
+        $scope.qualifyingResult[nindex].resultImage = n.resultQualifyingRound.resultImage;
       } else if ($stateParams.flag == 'score') {
         $scope.qualifyingResult[nindex].result = {};
         $scope.qualifyingResult[nindex].result = n.resultQualifyingRound.player;
@@ -183,7 +183,7 @@ myApp.controller('QualifyingScoreCtrl', function ($scope, TemplateService, Navig
       }
       if ($stateParams.flag == 'image') {
         $scope.qualifyingResult[nindex].resultImage = {};
-        $scope.qualifyingResult[nindex].resultImage = n.resultImage;
+        $scope.qualifyingResult[nindex].resultImage = n.resultQualifyingRound.resultImage;
       } else if ($stateParams.flag == 'score' && n.resultQualifyingRound) {
         $scope.qualifyingResult[nindex].result = {};
         $scope.qualifyingResult[nindex].result = n.resultQualifyingRound.player;

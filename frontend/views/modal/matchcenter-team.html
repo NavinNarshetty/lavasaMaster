@@ -19,7 +19,7 @@
                 <p ng-if="currentMatch.result.isDraw == false || !currentMatch.result.isDraw">Match Winner: <span class="matchwinner-title"><span>{{currentMatch.winnerName}}</span></p>
                 <p ng-if="currentMatch.result.isDraw == true"><span class="matchwinner-title">Draw Match</span></p>
             </div>
-            <div class="matchcenter-teamfinalholder" ng-if="currentMatch.sportName != 'Volleyball'">
+            <div class="matchcenter-teamfinalholder" >
               <div class="matchcenter-teampoints" ng-repeat = "team in currentMatch.result.teams track by $index">
                 <div class="matchcenter-teamschool">
                   <p>{{team.schoolName}}</p>
@@ -72,6 +72,22 @@
                   <!-- penaltyPoints END -->
                 </div>
                 <!-- WATER POLO FINAL POINTS END-->
+                <!-- VOLLEYBALL FINAL POINTS -->
+                <div class="sportwise-finalpointholder" ng-if = "currentMatch.sportName == 'Volleyball'">
+                  <!-- sets -->
+                  <div class="relate setpoint-element" ng-repeat="set in team.teamResults.sets track by $index">
+                    <label class="text-uppercase setpointlabel">Set {{$index + 1}}</label>
+                    <input type="number" ng-model="set.points" class="score-number display-inline form-control" placeholder="0" readonly>
+                  </div>
+                  <!-- sets END -->
+                  <!-- finalPoints -->
+                  <div class="relate setpoint-element" ng-if="team.teamResults.finalPoints">
+                    <label class="text-uppercase setpointlabel">Final Point</label>
+                    <input type="number" ng-model="team.teamResult.finalPoints" class="score-number display-inline form-control" placeholder="0" readonly>
+                  </div>
+                  <!-- finalPoints END -->
+                </div>
+                <!-- VOLLEYBALL FINAL POINTS END -->
               </div>
             </div>
             <div class="row">
@@ -93,8 +109,9 @@
                                 <div class="matchplayer-playerid">
                                     <p>Team ID: <span>{{team.teamId}}</span></p>
                                 </div>
+                                <!-- src="img/dishapatani1.jpg" -->
                                 <div class="matchplayer-image">
-                                    <img ng-src="{{currentMatch.opponentsTeam[index].photograph|serverimage}}" src="img/dishapatani1.jpg" alt="{{team.schoolName}}" class="img-responsive">
+                                    <img ng-src="{{currentMatch.opponentsTeam[index].photograph|serverimage}}"  alt="{{team.schoolName}}" class="img-responsive">
                                 </div>
                                 <div class="matchplayer-details">
                                     <p class="matchplayer-school matchplayer-name">{{team.schoolName| truncate:'20'}}</p>
@@ -210,12 +227,6 @@
                             <!-- TEAM POINTS VOLLEYBALL -->
                             <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Volleyball'">
                               <div class="row">
-                                <!-- sets -->
-                                <div class="col-md-4 col-sm-6 col-xs-6" ng-repeat="set in team.teamResults.sets track by $index">
-                                    <label class="text-uppercase setpoint-label">Set {{$index + 1}}</label>
-                                    <input type="number" ng-model="set.points" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
-                                </div>
-                                <!-- sets END -->
                                 <!-- spike -->
                                 <div class="col-md-4 col-sm-6 col-xs-6">
                                     <label class="text-uppercase setpoint-label">Spike</label>

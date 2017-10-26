@@ -701,7 +701,107 @@ $brand-green: #0eda85 !default; //green
 } //VIEW ALL WINNER CARD END
 // TEAM MATCH CENTER
 .teammatchcenter-modal {
+<<<<<<< HEAD
+  .modal-content {
+    border-radius: 0;
+  }
+  .modal-header {
+    padding: 0px;
+  }
+  .modal-container {
+    padding: 15px 0;
+  }
+  .matchstart-header {
+    padding: 10px 15px;
+    padding-left: 90px;
+    background-color: #337ab7;
+    color: #fff;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+  .matchcenter-sporticon {
+    position: absolute;
+    top: 5px;
+    left: 20px;
+    width: 65px;
+  }
+  .matchcenter-heading {
+    font-weight: 700;
+  }
+  .matchwinner {
+    position: absolute;
+    top: 0;
+    left: 90px;
+  }
+  .matchwinner-title {
+    font-size: 16px;
+    font-weight: 700;
+  }
+  .matchplayer-card {
+    padding: 10px;
+    margin: 20px auto 0;
+    box-shadow: 0 0 10px #a0a0a0;
+    position: relative;
+  }
+  .matchplayer-playerid {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 5px;
+    font-size: 12px;
+    color: #757575;
+  }
+  .matchplayer-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    margin: 0 10px;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
+  }
+  .matchplayer-details {
+    width: calc(100% - 125px);
+    margin-top: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    .matchplayer-school {
+      margin: 0;
+      color: #0a1a72;
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+  .playerangle-accordion {
+    font-size: 21px;
+  }
+  .teamplayer-accordion {
+    .panel {
+      border: none;
+      border-radius: 0px;
+      box-shadow: none;
+    }
+    .panel-default>.panel-heading {
+      padding: 5px 10px;
+      border: 0;
+      border-bottom: 1px solid #ddd;
+      background-color: transparent;
+    }
+    .panel-default{
+      &:last-child{
+        > .panel-heading{
+          border-bottom: 0px;
+        }
+      }
+    }
+    .panel-body {
+      border: none;
+    }
+    .panel-open {
+      .panel-heading {
+=======
     .modal-content {
+>>>>>>> c687fb746be7c97c2149b935f3a7aebc016e6f44
         border-radius: 0;
     }
     .modal-header {
@@ -1531,8 +1631,12 @@ $tickerDuration: 60s;
     }
 }
 
+<<<<<<< HEAD
+// CUSTOM UPLOAD BUTTON
+=======
 // **************************************************************************
 // TICKER ANIMATION END
 // **************************************************************************
 // CUSTOM TICKER END
 // LIVE UPDATES PAGE END
+>>>>>>> c687fb746be7c97c2149b935f3a7aebc016e6f44
