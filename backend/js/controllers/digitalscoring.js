@@ -21,6 +21,19 @@ myApp.controller('TablePdfCtrl', function ($scope, TemplateService, NavigationSe
   $scope.formData.type = '';
   $scope.formData.keyword = '';
 
+  $scope.confDel = function (data) {
+    $scope.pdf = data;
+    console.log(data, "in modal")
+    $scope.modalInstance = $uibModal.open({
+      animation: $scope.animationsEnabled,
+      templateUrl: 'views/modal/pdfdelete.html',
+      backdrop: 'static',
+      keyboard: false,
+      size: 'sm',
+      scope: $scope
+    });
+  };
+
   $scope.removepdf = function (data) {
     console.log(data, "remove");
     // delete data.eventPdf;
@@ -32,14 +45,18 @@ myApp.controller('TablePdfCtrl', function ($scope, TemplateService, NavigationSe
       NavigationService.apiCall($scope.url, data, function (data) {
         console.log("data.value", data);
         if (data.data.nModified == '1') {
-          toastr.success(" Saved Successfully", "Sport Message");
-          $state.go('tablepdf');
+          toastr.error(" Deleted Successfully", "Event Pdf");
+          $state.reload('tablepdf');
         }
       });
 
     } else {
       toastr.error("Something went wrong", "Error");
     }
+  }
+
+  $scope.noDelete = function () {
+    $scope.modalInstance.close();
   }
 
   $scope.searchForEventPdf = function () {
@@ -168,7 +185,18 @@ myApp.controller('DetailPdfCtrl', function ($scope, TemplateService, NavigationS
       if (data.value == true) {
         console.log("res", data);
         toastr.success("Data saved successfully", 'Success');
-        $state.go('tablepdf')
+        // if (data.data == []) {
+        //   console.log("in empty");
+        //   $scope.formData = {};
+        //   toastr.error("Mention Sport Do not exist", 'error');
+        // } else {
+        //   $state.go('tablepdf')
+        // }
+
+        if (data.data.nModified === 1) {
+          console.log("edit")
+          $state.go('tablepdf');
+        }
 
       } else {
         toastr.error("Data save failed ,please try again or check your internet connection", 'Save error');

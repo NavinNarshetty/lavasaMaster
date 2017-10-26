@@ -100,7 +100,7 @@
                         </label>
                     </div>
                     <div class="input-group">
-                        <input type="number" class="form-control" ng-model="inOutTime.time" placeholder="Time" ng-disabled="selectedPlayer.out.length <= 0">
+                        <input type="number" class="form-control" ng-model="inOutTime.time" placeholder="Time" ng-disabled="selectedPlayer.isPlaying===true">
                         <span class="input-group-addon">Min</span>
                     </div>
                 </div>
@@ -112,7 +112,7 @@
                     <div class="match-selectwinner">
                         <label for="">Select substitute {{substitutePlayer.player}}</label>
                         <ui-select id="matchWinnerPlayer" ng-model="substitutePlayer.player" theme="bootstrap">
-                            <ui-select-match placeholder="Select Winner">{{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+                            <ui-select-match placeholder="SelectSubstitute">{{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
                             <ui-select-choices repeat="player as player in match[matchData.resultVar].teams[selectedTeamIndex].players | filter: $select.search">
                                 <p class="opponentsingle-selector" ng-if="player.isPlaying == false "> {{player.firstName}} {{player.surname}} </p>
                             </ui-select-choices>
