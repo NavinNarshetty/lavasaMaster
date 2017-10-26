@@ -11856,7 +11856,7 @@ var model = {
                                             if (matchData[0].resultHeat) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                if (n.school[0].schoolLogo != undefined) {
+                                                if (n.school[0].schoolLogo) {
                                                     result.profile = n.school[0].schoolLogo;
                                                 } else {
                                                     result.profile = "";
