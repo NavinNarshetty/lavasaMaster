@@ -8391,6 +8391,7 @@ var model = {
                                         }
                                     };
                                 } else {
+                                    updateObj = {};
                                     callback(null, "match is live");
                                 }
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam)) {
@@ -8528,7 +8529,7 @@ var model = {
                                     }
                                 });
                         } else {
-                            callback(null, "updated");
+                            // callback(null, "updated");
                         }
                     }
                 }
