@@ -7884,6 +7884,7 @@ var model = {
                                         }
                                     };
                                 } else {
+                                    updateObj = {};
                                     callback(null, "match is live");
                                 }
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle) && !_.isEmpty(found[1].opponentsSingle)) {
@@ -7938,6 +7939,7 @@ var model = {
 
                                 } else {
                                     updateObj = {};
+                                    callback(null, "match is live");
                                 }
                             } else if (data.isTeam == true && _.isEmpty(found[0].opponentsTeam) && _.isEmpty(found[1].opponentsTeam)) {
                                 // console.log("inside found", data.found.resultsCombat.status);
@@ -8102,6 +8104,7 @@ var model = {
                                         }
                                     };
                                 } else {
+                                    updateObj = {};
                                     callback(null, "match is live");
                                 }
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam) && !_.isEmpty(found[1].opponentsTeam)) {
@@ -8271,10 +8274,12 @@ var model = {
                                             }
                                         };
                                     } else {
+                                        updateObj = {};
                                         callback(null, "match is live");
                                     }
                                 } else {
                                     updateObj = {};
+                                    callback(null, "match is live");
                                 }
                             }
                         } else {
@@ -8296,6 +8301,7 @@ var model = {
                                         }
                                     };
                                 } else {
+                                    updateObj = {};
                                     callback(null, "match is live");
                                 }
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle)) {
@@ -8320,10 +8326,12 @@ var model = {
                                             }
                                         };
                                     } else {
+                                        updateObj = {};
                                         callback(null, "match is live");
                                     }
                                 } else {
                                     updateObj = {};
+                                    callback(null, "match is live");
                                 }
                             } else if (data.isTeam == true && _.isEmpty(found[0].opponentsTeam)) {
                                 if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted' && data.found.resultsRacquet.isNoMatch == false) {
@@ -8464,10 +8472,12 @@ var model = {
                                             }
                                         };
                                     } else {
+                                        updateObj = {};
                                         callback(null, "match is live");
                                     }
                                 } else {
                                     updateObj = {};
+                                    callback(null, "match is live");
                                 }
                             }
                         }
@@ -8528,8 +8538,6 @@ var model = {
                                         }
                                     }
                                 });
-                        } else {
-                            // callback(null, "updated");
                         }
                     }
                 }

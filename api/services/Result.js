@@ -52,7 +52,6 @@ var model = {
                         var medalRank = _(medals)
                             .groupBy('school')
                             .map(function (items, name) {
-
                                 var gender = _(items)
                                     .groupBy('medals.medalType')
                                     .map(function (values, name) {
@@ -63,6 +62,7 @@ var model = {
                                     }).value();
                                 var result = _.sortBy(gender, item => parseFloat(item[1]));
                                 return {
+                                    _id: items,
                                     name: name,
                                     medal: result,
                                     totalCount: items.length
@@ -92,6 +92,9 @@ var model = {
                         }
                     });
                 },
+                // function (result, callback) {
+
+                // },
 
             ],
             function (err, data2) {
