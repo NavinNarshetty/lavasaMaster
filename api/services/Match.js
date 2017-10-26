@@ -5071,7 +5071,7 @@ var model = {
                                 } else {
                                     obj["NAME 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
                                 }
-                                console.log("school", mainData.opponentsSingle[0].athleteId.atheleteSchoolName);
+                                // console.log("school", mainData.opponentsSingle[0].athleteId.atheleteSchoolName);
                                 if (!_.isEmpty(mainData.opponentsSingle[0].athleteId.school)) {
                                     obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
                                 } else {
@@ -5093,8 +5093,8 @@ var model = {
                                 } else {
                                     obj["NAME 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.surname;
                                 }
-                                console.log("school", mainData.opponentsSingle[1].athleteId);
-                                if (mainData.opponentsSingle[0].athleteId.school != null) {
+                                console.log("school", mainData.opponentsSingle[1].athleteId.atheleteSchoolName);
+                                if (_.isEmpty(mainData.opponentsSingle[0].athleteId.school)) {
                                     obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
                                 } else {
                                     obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.atheleteSchoolName;
