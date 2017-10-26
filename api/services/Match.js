@@ -68,7 +68,7 @@ schema.plugin(deepPopulate, {
             select: '_id athleteId sportsListSubCategory createdBy'
         },
         "opponentsSingle.athleteId": {
-            select: '_id sfaId firstName middleName surname school photograph dob city'
+            select: '_id sfaId firstName middleName surname school photograph dob city atheleteSchoolName'
         },
         "opponentsSingle.athleteId.school": {
             select: '_id name'
@@ -1531,7 +1531,6 @@ var model = {
                                                 singleData["PARTICIPANT"] = null;
                                                 callback(null, singleData);
                                             } else {
-                                                // console.log("singleData1", singleData);
                                                 var paramData = {};
                                                 paramData.participant = singleData["SFAID"];
                                                 paramData.sport = singleData.SPORT;
@@ -3433,7 +3432,7 @@ var model = {
             obj["AGE GROUP"] = "";
             obj["EVENT"] = "";
             obj["WEIGHT CATEGORIES"] = "";
-            obj["NEW WEIGHT"] = "";
+            // obj["NEW WEIGHT"] = "";
             obj.DATE = "";
             obj.TIME = "";
             obj["SFAID 1"] = "";
