@@ -10845,10 +10845,17 @@ var model = {
                                         callback(null, data.found);
                                     }
                                 } else if (found[0].opponentsTeam.length == 2 && found[1].opponentsTeam.length == 2) {
-                                    var playerId = found[0].opponentsTeam[0];
-                                    var playerId1 = found[1].opponentsTeam[0];
-                                    winPlayer.push(playerId);
-                                    lostPlayer.push(playerId1);
+                                    if (data._id == found[0].prevMatch[1]) {
+                                        var playerId = found[0].opponentsTeam[1];
+                                        var playerId1 = found[1].opponentsTeam[1];
+                                        winPlayer.push(playerId);
+                                        lostPlayer.push(playerId1);
+                                    } else {
+                                        var playerId = found[0].opponentsTeam[0];
+                                        var playerId1 = found[1].opponentsTeam[0];
+                                        winPlayer.push(playerId);
+                                        lostPlayer.push(playerId1);
+                                    }
                                     if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted' && data.found.resultsRacquet.isNoMatch == false) {
                                         if (data.found.opponentsTeam[0].equals(data.found.resultsRacquet.winner.player)) {
                                             lostPlayer.push(data.found.opponentsTeam[1]);
@@ -11231,10 +11238,10 @@ var model = {
                                     }
                                 } else if (found[0].opponentsTeam.length == 2) {
                                     if (data._id == found[0].prevMatch[1]) {
-                                        var playerId = found[0].opponentsSingle[1];
+                                        var playerId = found[0].opponentsTeam[1];
                                         winPlayer.push(playerId);
                                     } else {
-                                        var playerId = found[0].opponentsSingle[0];
+                                        var playerId = found[0].opponentsTeam[0];
                                         winPlayer.push(playerId);
                                     }
                                     if (data.found.resultsRacquet && data.found.resultsRacquet.status == "IsCompleted" && data.found.resultsRacquet.isNoMatch == false) {
