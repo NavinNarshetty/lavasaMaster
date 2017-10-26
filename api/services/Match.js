@@ -11865,8 +11865,11 @@ var model = {
                                                 }
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
+
                                                 _.each(matchData[0].resultHeat.teams, function (player) {
+                                                    console.log("player", player);
                                                     if (player.id === n._id) {
+                                                        console.log("matched");
                                                         result.result = player.time;
                                                     }
                                                 });

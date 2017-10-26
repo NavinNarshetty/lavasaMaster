@@ -61,9 +61,10 @@ var model = {
                                             count: values.length
                                         };
                                     }).value();
+                                var result = _.sortBy(gender, item => parseFloat(item[1]));
                                 return {
                                     name: name,
-                                    medal: gender,
+                                    medal: result,
                                     totalCount: items.length
                                 };
                             }).value();
