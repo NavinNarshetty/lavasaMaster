@@ -10278,10 +10278,10 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    var deepSearch = "prevMatch";
+                    // var deepSearch = "prevMatch";
                     Match.find({
                         prevMatch: data._id
-                    }).lean().deepPopulate(deepSearch).exec(function (err, found) {
+                    }).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -11022,7 +11022,7 @@ var model = {
                                         }
                                     };
                                 } else {
-                                    // callback(null, data.found);
+                                    callback(null, data.found);
                                 }
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle)) {
                                 console.log("updating match", data.found);
@@ -11049,7 +11049,6 @@ var model = {
                                         // callback(null, data.found);
                                     }
                                 } else if (found[0].opponentsSingle.length == 2) {
-
                                     var playerId = found[0].opponentsSingle[0];
                                     winPlayer.push(playerId);
                                     if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
@@ -11138,7 +11137,7 @@ var model = {
                                         }
                                     };
                                 } else {
-                                    // callback(null, data.found);
+                                    callback(null, data.found);
                                 }
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam)) {
                                 console.log("updating match", data.found);
@@ -11210,7 +11209,7 @@ var model = {
                                             }
                                         };
                                     } else {
-                                        // callback(null, data.found);
+                                        callback(null, data.found);
                                     }
                                 } else if (found[0].opponentsTeam.length == 2) {
                                     var playerId = found[0].opponentsTeam[0];
@@ -11280,7 +11279,7 @@ var model = {
                                             }
                                         };
                                     } else {
-                                        // callback(null, data.found);
+                                        callback(null, data.found);
                                     }
                                 } else {
                                     updateObj = {};
@@ -11344,8 +11343,6 @@ var model = {
                                         }
                                     }
                                 });
-                        } else {
-                            callback(null, found);
                         }
                     }
                 }
@@ -11821,7 +11818,11 @@ var model = {
                                             if (matchData[0].resultHeat) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                result.profile = n.school.schoolLogo;
+                                                if (n.school.schoolLogo) {
+                                                    result.profile = n.school.schoolLogo;
+                                                } else {
+                                                    result.profile = "";
+                                                }
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
                                                 _.each(matchData[0].resultHeat.teams, function (player) {
@@ -11832,7 +11833,11 @@ var model = {
                                             } else if (matchData[0].resultQualifyingRound) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                result.profile = n.school.schoolLogo;
+                                                if (n.school.schoolLogo) {
+                                                    result.profile = n.school.schoolLogo;
+                                                } else {
+                                                    result.profile = "";
+                                                }
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
                                                 if (matchData[0].resultQualifyingRound.player.bestAttempt) {
@@ -11844,7 +11849,11 @@ var model = {
                                             } else if (matchData[0].resultSwiss) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                result.profile = n.school.schoolLogo;
+                                                if (n.school.schoolLogo) {
+                                                    result.profile = n.school.schoolLogo;
+                                                } else {
+                                                    result.profile = "";
+                                                }
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
                                                 _.each(matchData[0].resultSwiss.players, function (player) {
@@ -11855,7 +11864,11 @@ var model = {
                                             } else if (matchData[0].resultShooting) {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                result.profile = n.school.schoolLogo;
+                                                if (n.school.schoolLogo) {
+                                                    result.profile = n.school.schoolLogo;
+                                                } else {
+                                                    result.profile = "";
+                                                }
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
                                                 result.result = matchData[0].resultShooting.finalScore;
@@ -11863,7 +11876,11 @@ var model = {
                                                 console.log("matchData[0]", matchData[0]);
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                result.profile = n.school.schoolLogo;
+                                                if (n.school.schoolLogo) {
+                                                    result.profile = n.school.schoolLogo;
+                                                } else {
+                                                    result.profile = "";
+                                                }
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
                                                 _.each(matchData[0].resultsRacquet.teams, function (team) {
@@ -11892,7 +11909,11 @@ var model = {
                                             } else {
                                                 result.name = n.name;
                                                 result.teamId = n.teamId;
-                                                result.profile = n.school.schoolLogo;
+                                                if (n.school.schoolLogo) {
+                                                    result.profile = n.school.schoolLogo;
+                                                } else {
+                                                    result.profile = "";
+                                                }
                                                 result.school = singleData.school[0].schoolName;
                                                 result.medaltype = singleData.medalType;
                                             }
