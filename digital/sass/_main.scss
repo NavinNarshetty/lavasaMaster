@@ -282,6 +282,23 @@ header {
     border: none !important;
 }
 
+.bg-team-male{
+  background-image: url('../img/medal-icon/male-team.png');
+}
+.bg-team-female{
+  background-image: url('../img/medal-icon/female-team.png');
+}
+.bg-athlete-male{
+  background-image: url('../img/medal-icon/male-athlete.png');
+}
+.bg-athlete-female{
+  background-image: url('../img/medal-icon/male-athlete.png');
+}
+.bg-school-icon{
+  background-image: url('../img/medal-icon/school-icon.png');
+}
+
+
 // SWIPER
 .digital-swiper {
     margin: 15px 0;
@@ -987,6 +1004,9 @@ header {
     border-radius: 100%;
     margin: 0 10px;
     display: inline-block;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
     overflow: hidden;
     vertical-align: middle;
   }
@@ -1016,6 +1036,13 @@ header {
       border: 0;
       border-bottom: 1px solid #ddd;
       background-color: transparent;
+    }
+    .panel-default{
+      &:last-child{
+        > .panel-heading{
+          border-bottom: 0px;
+        }
+      }
     }
     .panel-body{
       border: none;

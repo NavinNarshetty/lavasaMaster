@@ -94,17 +94,17 @@
               <!-- IMAGE  -->
               <td ng-if="editFlag == 'image'">
                 <div class="form-group text-center">
-                  <input type="checkbox" ng-model="match.resultImage.attendance" class="form-control">
+                  <input type="checkbox" ng-model="match.resultQualifyingRound.resultImage.attendance" class="form-control">
                 </div>
               </td>
               <td ng-if="editFlag == 'image'">
                 <div class="form-group qualifying-swiper">
                   <div class="matchstart-uploadholder text-uppercase ">
                     <button class="btn btn-green-outline btn-qualifyingscore btn-scoring btn-uploadscoring">Upload Picture</button>
-                    <upload-image ng-model="match.resultImage.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
+                    <upload-image ng-model="match.resultQualifyingRound.resultImage.matchPhoto" ng-callback="getMatchPhoto(data)" allow-type="image/*" no-view class="pointer upload-scorecard" multiple inobj></upload-image>
                   </div>
                   <div class=" digital-swiper">
-                  <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultImage.matchPhoto track by $index">
+                  <div class="combatscore-uploadpic text-uppercase" ng-repeat="pic in match.resultQualifyingRound.resultImage.matchPhoto track by $index">
                     <span class="remove-pic" ng-click="removeMatchScore(pic, match,'matchPhoto')"><i class="fa fa-times"></i></span>
                     <img ng-src="{{pic.image|serverimage}}" alt="" class="img-responsive">
                   </div>

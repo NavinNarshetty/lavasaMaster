@@ -730,6 +730,13 @@ $sport-darkgrey: #757575 !default;
       border-bottom: 1px solid #ddd;
       background-color: transparent;
     }
+    .panel-default{
+      &:last-child{
+        > .panel-heading{
+          border-bottom: 0px;
+        }
+      }
+    }
     .panel-body {
       border: none;
     }
