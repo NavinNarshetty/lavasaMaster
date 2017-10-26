@@ -10,6 +10,17 @@ $dark-grey: #e1e1e1 !default;
 $light-grey: #ebebeb !default;
 $other-blue: #2a45d4 !default;
 $green: #bcd200 !default;
+$font-family-sans-serif: "Titillium Web",
+"Sansation",
+"Built Titling",
+"avenir",
+Arial,
+sans-serif !default;
+@font-face {
+    font-family: 'FjallaOne';
+    src: url("../fonts/FjallaOne-Regular.ttf"); // font-weight: 400;
+}
+
 @font-face {
     font-family: 'Sansation';
     src: url("../fonts/Sansation_Regular.ttf");
@@ -96,8 +107,25 @@ $green: #bcd200 !default;
 }
 
 body {
-    font-family: "Titillium Web", "Sansation", "Built Titling", "avenir", Arial, sans-serif;
+    // font-family: "Titillium Web", "Sansation", "Built Titling", "avenir", Arial, sans-serif;
+    font-family: $font-family-sans-serif;
     overflow-x: hidden;
+}
+
+.placingBlock {
+    position: fixed;
+    bottom: 0;
+    left: 5px;
+    z-index: 9999;
+    background: #091a71;
+    color: white;
+    width: 301px;
+    height: auto;
+    margin: 0;
+    font-size: 16px;
+    padding: 10px;
+    border: 1px solid #fff;
+    border-radius: 15px;
 }
 
 .font-titling {
@@ -254,6 +282,10 @@ a {
 
 .font-sansation {
     font-family: 'Sansation';
+}
+
+.font-FjallaOne {
+    font-family: 'FjallaOne';
 }
 
 .text-up {
@@ -999,6 +1031,12 @@ hr {
         top: -2px;
         z-index: -1;
         right: 0;
+    }
+}
+
+.sfa-select.dropArrowChange {
+    &:after {
+        background-color: #091a71;
     }
 }
 
@@ -2546,7 +2584,8 @@ img.fancybox-image {
 }
 
 .my-banner-school {
-    background: url(../img/sf-default.png)center;
+    // background: url(../img/sf-default.png)center;
+    background: url(../img/sfa-default.png)center; // background: url(../img/sf-default.png)center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     position: relative;
@@ -2554,7 +2593,8 @@ img.fancybox-image {
 }
 
 .my-banner-student {
-    background: url(../img/sf-default.png)center;
+    // background: url(../img/sf-default.png)center;
+    background: url(../img/sfa-default.png)center; // background: url(../img/sf-default.png)center;
     background-repeat: no-repeat;
     background-size: 100% 100%;
     position: relative;
@@ -5298,7 +5338,8 @@ input[type="radio"]:checked+label span {
 }
 
 .registration-desc {
-    padding: 44px;
+    // padding: 44px;
+    padding: 60px;
     h2 {
         font-family: Futura Std Bold Condensed;
         color: white;
@@ -5321,7 +5362,8 @@ input[type="radio"]:checked+label span {
 }
 
 .venue {
-    box-shadow: 2px 2px 12px #ccc;
+    box-shadow: 2px 2px 12px #ccc; // padding: 20px 40px;
+    // margin: -55px 0 60px 0;
     padding: 20px 40px; // margin: -55px 0 60px 0;
     margin: 0 0 60px 0;
     background: #fff;
@@ -7530,7 +7572,7 @@ h1.forgot-space {
     @extend .typePlacing; // width: 304px;
     // left: -94px;
     width: 150px;
-    left: 0;
+    left: 0px;
     .typeList {
         padding: 0 10px;
         margin: 0; // vertical-align: top;
@@ -7612,6 +7654,10 @@ h1.forgot-space {
 }
 
 // END COLLEGE-FAQ
+.videoSize {
+    height: 440px;
+}
+
 .schedule {
     .championship-scheduletitle {
         border-top: 0 !important;
@@ -7680,4 +7726,153 @@ h1.forgot-space {
 
 .forCityPlacingSm {
     float: right;
+}
+
+.video-close-btn {
+    background: transparent;
+    border: none;
+    color: #091a71;
+    line-height: 24px;
+    margin: 0 4px;
+    &:active,
+    &:focus,
+    &:hover {
+        outline: 0;
+        &:focus {
+            outline: 0;
+        }
+    }
+}
+
+.video-cross-close-term {
+    position: absolute;
+    top: -14px;
+    right: -14px;
+    width: 30px;
+    height: 30px;
+    background: #fff; // background: #091a71;
+    border-radius: 100%;
+    border: 1px solid #0a1a72;
+    &:active,
+    &:focus,
+    &:hover {
+        outline: 0;
+        &:focus {
+            outline: 0;
+        }
+    }
+}
+
+.blackOut.in {
+    opacity: 0.80;
+}
+
+.modal-dialog {
+    margin-top: 0;
+    margin-bottom: 0;
+    height: 100vh;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+}
+
+.modal.fade .modal-dialog {
+    -webkit-transform: translate(0, -100%);
+    transform: translate(0, -100%);
+}
+
+.modal.in .modal-dialog {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+}
+
+// sfacity-selectmodal
+.sfacity-selectmodal+.modal-backdrop {
+    //  {
+    background-color: transparent;
+    background-image: url('../img/bgmodal.jpg');
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    opacity: 1 !important;
+    z-index: 10000 !important;
+}
+
+.sfacity-selectmodal {
+    .modal-content {
+        background: transparent;
+    }
+    z-index: 10001 !important;
+}
+
+.newHead {
+    letter-spacing: 2px;
+    color: #10259c;
+    margin-bottom: 0;
+    font-size: 68px;
+}
+
+.new-head-banner {
+    position: relative;
+}
+
+.newHeadStyle {
+    letter-spacing: 5px;
+    color: #fe9c31;
+    font-size: 130px;
+    position: absolute;
+    margin: 0;
+    top: 50%;
+    left: 50%;
+    @include transform(translate(-50%,
+    -50%));
+}
+
+.forMedia {
+    font-size: 68px;
+}
+
+.head-banner-city {
+    .box-color-participate {
+        color: #02b664;
+        border: 1px solid #02b664;
+        border-top: 0;
+        h2 {
+            letter-spacing: 1px;
+            padding: 10px 0;
+            margin: 0;
+        }
+    }
+    .box-color-mumbai {
+        color: #fff;
+        border: 1px solid #00a8ff;
+        background-color: #00a8ff;
+        border-top: 0;
+        h2 {
+            letter-spacing: 1px;
+            padding: 10px 0;
+            margin: 0;
+        }
+    }
+    .box-color-hyderabad {
+        color: #fff;
+        border: 1px solid #02b664;
+        background-color: #02b664;
+        border-top: 0;
+        h2 {
+            letter-spacing: 1px;
+            padding: 10px 0;
+            margin: 0;
+        }
+    }
 }

@@ -198,23 +198,60 @@ var model = {
             count: maxRow
         };
         var deepSearch = "school";
-
-        Athelete.find(data.term)
-            .sort({
-                createdAt: -1
-            })
-            .order(options)
-            .keyword(options)
-            .deepPopulate(deepSearch)
-            .page(options, function (err, found) {
-                if (err) {
-                    callback(err, null);
-                } else if (_.isEmpty(found)) {
-                    callback(null, "Data is empty");
+        var profile = {};
+        profile.players = [];
+        async.waterfall([
+            function (callback) {
+                Athelete.find(data.term)
+                    .sort({
+                        createdAt: -1
+                    })
+                    .order(options)
+                    .keyword(options)
+                    .deepPopulate(deepSearch)
+                    .page(options, function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, "Data is empty");
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+            },
+            function (found, callback) {
+                async.concatSeries(found.results, function (mainData, callback) {
+                        console.log("mainData", mainData);
+                        var player = {};
+                        if (mainData.middleName) {
+                            player.fullName = mainData.firstName + " " + mainData.middleName + " " + mainData.surname;
+                        } else {
+                            player.fullName = mainData.firstName + " " + mainData.surname;
+                        }
+                        player.sfaId = mainData.sfaId;
+                        player.profilePic = mainData.photograph;
+                        callback(null, player);
+                    },
+                    function (err, playerData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            profile.players = playerData;
+                            callback(null, profile);
+                        }
+                    });
+            }
+        ], function (err, data2) {
+            if (err) {
+                callback(null, []);
+            } else if (data2) {
+                if (_.isEmpty(data2)) {
+                    callback(null, data2);
                 } else {
-                    callback(null, found);
+                    callback(null, data2);
                 }
-            });
+            }
+        });
     },
 
     searchSchool: function (data, callback) {

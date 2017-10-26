@@ -8,152 +8,153 @@ $sport-base: #1a1a1a !default; //black
 $sport-lightblue:#00aaff !default;
 $sport-grey: #e1e1e1 !default;
 $sport-darkgrey: #757575 !default;
+$brand-green: #0eda85 !default; //green
 // COLORS END
 // COMMON CLASSES
 .full-height {
-  height: 100%;
+    height: 100%;
 }
 
 .pointer {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .inline-block {
-  display: inline-block;
+    display: inline-block;
 }
 
 .color-sportprimary {
-  color: $sport-primary;
+    color: $sport-primary;
 }
 
 .color-sport-lightblue {
-  color: $sport-lightblue;
+    color: $sport-lightblue;
 }
 
 // AD SPACE
 .highlight-adspace {
-  background-color: #ddd;
-  height: 130px;
-  margin: 40px 0px;
+    background-color: #ddd;
+    height: 130px;
+    margin: 40px 0px;
 }
 
 // AD SPACE END
 // VIEW MORE
 .viewmore {
-  text-align: right;
+    text-align: right;
 }
 
 .btn-viewmore {
-  border: none;
-  background-color: transparent;
-  color: $sport-primary;
-  text-decoration: underline;
-  &:active,
-  &:hover,
-  &:focus,
-  &.active {
     border: none;
     background-color: transparent;
     color: $sport-primary;
-    outline: none;
-    outline-offset: 0;
     text-decoration: underline;
-  }
+    &:active,
+    &:hover,
+    &:focus,
+    &.active {
+        border: none;
+        background-color: transparent;
+        color: $sport-primary;
+        outline: none;
+        outline-offset: 0;
+        text-decoration: underline;
+    }
 }
 
 // VIEW MORE END
 // ATHLETE PROFILE CARD
 .profileathlete-card {
-  position: relative;
-  box-shadow: 0px 0px 5px #e5e5e5;
+    position: relative;
+    box-shadow: 0px 0px 5px #e5e5e5;
 }
 
 .profileathlete-cardimgholder {
-  display: inline-block;
-  padding: 10px;
-  padding-right: 0px;
-  vertical-align: top;
+    display: inline-block;
+    padding: 10px;
+    padding-right: 0px;
+    vertical-align: top;
 }
 
 .profileathleteimage-holder {
-  width: 90px;
-  height: 90px;
-  border-radius: 100%;
-  overflow: hidden; // border: 5px solid #ddd;
+    width: 90px;
+    height: 90px;
+    border-radius: 100%;
+    overflow: hidden; // border: 5px solid #ddd;
 }
 
 .profileathlete-cardcontent {
-  display: inline-block;
-  width: calc(100% - 120px);
-  padding: 10px;
-  padding-left: 5px;
-  vertical-align: top;
+    display: inline-block;
+    width: calc(100% - 120px);
+    padding: 10px;
+    padding-left: 5px;
+    vertical-align: top;
 }
 
 .athletecard-starflag {
-  position: absolute;
-  top: -15px;
-  right: -10px;
+    position: absolute;
+    top: -15px;
+    right: -10px;
 }
 
 .athletecard-flagholder {
-  width: 30px;
-  margin: 0 5px;
-  display: inline-block;
-  vertical-align: middle;
+    width: 30px;
+    margin: 0 5px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .athletecard-starholder {
-  width: 30px;
-  display: inline-block;
-  vertical-align: middle;
+    width: 30px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .profileathlete-athletename {
-  font-size: 15px;
-  color: #10259c;
-  font-weight: 600;
-  word-break: break-word;
+    font-size: 15px;
+    color: #10259c;
+    font-weight: 600;
+    word-break: break-word;
 }
 
 .profileathlete-athleteschool {
-  font-size: 12px;
-  color: #646464;
-  word-break: break-word;
+    font-size: 12px;
+    color: #646464;
+    word-break: break-word;
 }
 
 .profileathlete-athletesports {
-  font-size: 12px;
-  margin-bottom: 5px;
+    font-size: 12px;
+    margin-bottom: 5px;
 }
 
 .profile-bluemedals {
-  width: 20px;
-  margin: 0 auto;
+    width: 20px;
+    margin: 0 auto;
 }
 
 .profileathletecard-medallist {
-  ul {
-    margin: 0;
-  }
+    ul {
+        margin: 0;
+    }
 }
 
 // ATHLETE PROFILE CARD END
 // COMMON CLASSES END
 // REGISTERED SPORTS
 .step7 {
-  @extend .step3;
-  width: 200px;
-  height: 36px;
-  border: 1px solid #d3d3d3;
-  font-size: 17px;
-  text-align: center; // padding: 5px 20px;
-  -webkit-box-shadow: 0 0 3px 1px lightgrey;
-  -moz-box-shadow: 0 0 3px 1px lightgray;
-  box-shadow: 0 0 3px 1px lightgrey;
-  &:after {
-    display: none;
-  }
+    @extend .step3;
+    width: 200px;
+    height: 36px;
+    border: 1px solid #d3d3d3;
+    font-size: 17px;
+    text-align: center; // padding: 5px 20px;
+    -webkit-box-shadow: 0px 0px 3px 1px lightgrey;
+    -moz-box-shadow: 0px 0px 3px 1px lightgray;
+    box-shadow: 0px 0px 3px 1px lightgrey;
+    &:after {
+        display: none;
+    }
 }
 
 .btn-default.active.focus,
@@ -162,489 +163,545 @@ $sport-darkgrey: #757575 !default;
 .btn-default:active.focus,
 .btn-default:active:focus,
 .btn-default:active:hover {
-  color: #333;
-  background-color: transparent;
-  border-color: inherit;
-  outline: 0;
+    color: #333;
+    background-color: transparent;
+    border-color: inherit;
+    outline: 0;
 }
 
 .btn-default:hover {
-  color: #333;
-  background-color: transparent;
-  border-color: inherit;
+    color: #333;
+    background-color: transparent;
+    border-color: inherit;
 }
 
 .btn-default.focus,
 .btn-default:focus {
-  color: #333;
-  background-color: transparent;
-  border-color: inherit;
-  outline: 0;
+    color: #333;
+    background-color: transparent;
+    border-color: inherit;
+    outline: 0;
 }
 
 .list-sportregistered {
-  margin: 10px 0;
+    margin: 10px 0;
 }
 
 .sportregistered-title {
-  display: inline-block;
-  padding: 10px 15px;
-  width: 79%;
-  margin-right: 5px;
-  border: 1px solid #091a71;
-  vertical-align: middle;
-  p {
-    margin: 0;
-  }
+    display: inline-block;
+    padding: 10px 15px;
+    width: 79%;
+    margin-right: 5px;
+    border: 1px solid #091a71;
+    vertical-align: middle;
+    p {
+        margin: 0;
+    }
 }
 
 .sportregistered-viewbtn {
-  display: inline-block;
-  width: 19%;
-  padding: 10px;
-  border: 1px solid #091a71;
-  text-align: center;
-  vertical-align: middle;
+    display: inline-block;
+    width: 19%;
+    padding: 10px;
+    border: 1px solid #091a71;
+    text-align: center;
+    vertical-align: middle;
 }
 
 // REGISTERED SPORTS END
 // SPORT DETAIL INDIVIDUAl
 .sport-detailpage {
-  margin: 30px 0;
+    margin: 30px 0;
 }
 
 .sportdetail-header {
-  color: #f37720;
-  h3 {
-    margin: 10px 0;
-  }
+    color: #f37720;
+    h3 {
+        margin: 10px 0;
+    }
 }
 
 .sportdetail-table {
-  padding: 30px 10px;
-  border-top: 2px solid #091a71;
-  &:first-child {
-    border-top: none;
-  }
-  .table {
-    th {
-      background: #091a71;
-      color: #fff;
+    padding: 30px 10px;
+    border-top: 2px solid #091a71;
+    &:first-child {
+        border-top: none;
     }
-    tr {
-      background: transparent;
-      td {
-        text-align: left;
-      }
+    .table {
+        th {
+            background: #091a71;
+            color: #fff;
+        }
+        tr {
+            background: transparent;
+            td {
+                text-align: left;
+            }
+        }
     }
-  }
 }
 
 .sport-individualtable {
-  max-height: 310px;
-  overflow-y: auto;
-  .table {
-    border: none;
-    tbody {
-      border: none;
-      tr {
-        background-color: transparent;
+    max-height: 310px;
+    overflow-y: auto;
+    .table {
         border: none;
-        td {
-          padding: 8px;
-          border: none;
-          text-align: left;
+        tbody {
+            border: none;
+            tr {
+                background-color: transparent;
+                border: none;
+                td {
+                    padding: 8px;
+                    border: none;
+                    text-align: left;
+                }
+                .sportdetail-td {
+                    border: 1px solid #ccc;
+                    padding: 5px;
+                }
+            }
         }
-        .sportdetail-td {
-          border: 1px solid #ccc;
-          padding: 5px;
+        thead {
+            border: none;
+            th {
+                color: #fff;
+                border: none;
+            }
+            .sportdetail-th {
+                padding: 8px;
+                background-color: #091a71;
+            }
         }
-      }
     }
-    thead {
-      border: none;
-      th {
-        color: #fff;
-        border: none;
-      }
-      .sportdetail-th {
-        padding: 8px;
-        background-color: #091a71;
-      }
-    }
-  }
 }
 
 // SPORT DETAIL INDIVIDUAl END
 // CITY-VIDEO
+.sfacity-modal {
+    background: rgba(10, 26, 114, 0.9);
+    .img-holder {
+        text-align: center;
+        img {
+            margin: 0 auto;
+            width: 200px;
+        }
+    }
+    .last-date-holder {
+        h4 {
+            color: #fff;
+        }
+    }
+    .last-date-holder-text {
+        h4 {
+            color: #fff;
+            font-size: 17px;
+        }
+    }
+    .day-header {
+        h2 {
+            color: #fff;
+            text-align: center;
+            text-transform: uppercase;
+        }
+        .sfa-input-modal {
+            width: 55px;
+            padding: 5px 10px;
+            background: transparent;
+            border: 1px solid #00a9ff;
+            border-radius: 3px;
+            color: orange;
+            text-align: center;
+            margin: 0 5px;
+        }
+    }
+}
+
 .modal-container {
-  padding: 15px;
-  video::-internal-media-controls-download-button {
-    display: none;
-  }
-  video::-webkit-media-controls-enclosure {
-    overflow: hidden;
-  }
-  video::-webkit-media-controls-panel {
-    width: calc(100% + 30px);
-    /* Adjust as needed */
-  }
-  video {
-    max-width: 100%;
-    height: auto;
-  }
+    padding: 15px;
+    video::-internal-media-controls-download-button {
+        display: none;
+    }
+    video::-webkit-media-controls-enclosure {
+        overflow: hidden;
+    }
+    video::-webkit-media-controls-panel {
+        width: calc(100% + 30px);
+        /* Adjust as needed */
+    }
+    video {
+        max-width: 100%;
+        height: auto;
+    }
 }
 
 .sfavideo-content {
-  p {
-    font-size: 20px;
-    margin-top: 10px;
-  }
-  .video-city {
-    background-color: #53bb74;
-    color: #fff;
-    font-family: Titillium Web;
-    font-size: 16.68px;
-    font-weight: 400;
-  }
+    // p {
+    //     font-size: 20px;
+    //     margin-top: 10px;
+    // }
+    p {
+        font-size: 18px;
+        margin-bottom: 0;
+        color: #00a9ff;
+    }
+    p:first-child {
+        margin-top: 30px;
+    }
+    p:nth-child(2) {
+        margin-bottom: 30px;
+    }
+    .mt30 {
+        margin: 30px 0 0;
+    }
+    a {
+        font-size: 18px;
+        color: #00a9ff;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    .btn {
+        margin: 0 0 10px;
+    }
+    .video-city {
+        padding: 0;
+        background-color: transparent; // background-color: #53bb74;
+        color: #fff;
+        font-family: Titillium Web;
+        font-size: 14px;
+        padding: 8px 12px; // font-size: 16.68px;
+        font-weight: 400
+    }
 }
 
 // END CITY-VIDEO
 // ABOUT CHAMPIONSHIP HYDERABAD
 .hyderabad-sporticonholder {
-  padding: 30px 0;
-  .sport-icon-championship {
-    padding: 0;
-    text-align: center;
-  }
-  .sport-icon-championship li {
-    width: 10%;
-    padding: 0 20px;
-  }
+    padding: 30px 0;
+    .sport-icon-championship {
+        padding: 0;
+        text-align: center;
+    }
+    .sport-icon-championship li {
+        width: 10%;
+        padding: 0 20px;
+    }
 }
 
 .prosport-holder {
-  .proffessional {
-    padding: 20px;
-  }
-  .brand-blue {
-    color: #0a1a72;
-    &:before {
-      background-color: #0a1a72;
-      border: 1px solid #0a1a72;
+    .proffessional {
+        padding: 20px;
     }
-  }
-  .hyderabad-prosportimageholder {
-    width: 90%;
-  }
-  .hyderabad-prosportexperience {
-    h3 {
-      color: #0da24a;
+    .brand-blue {
+        color: #0a1a72;
+        &:before {
+            background-color: #0a1a72;
+            border: 1px solid #0a1a72;
+        }
     }
-  }
+    .hyderabad-prosportimageholder {
+        width: 90%;
+    }
+    .hyderabad-prosportexperience {
+        h3 {
+            color: #0da24a;
+        }
+    }
 }
 
 .prosporteducation-head {
-  h3 {
-    color: #0da24a;
-  }
+    h3 {
+        color: #0da24a;
+    }
 }
 
 .prosporteducation-holder {
-  .proffessional {
-    padding: 5px;
-  }
+    .proffessional {
+        padding: 5px;
+    }
 }
 
 .pro-dataanalytics-head {
-  color: #0da24a;
-  letter-spacing: 1px;
-}
-
-// .another-pro-data-holder {
+    color: #0da24a;
+    letter-spacing: 1px;
+} // .another-pro-data-holder {
 //     margin-top: 55px;
 // }
 // END ABOUT CHAMPIONSHIP
 // RESULTS PAGE
 .resultpage {
-  min-height: 100vh;
-  padding: 60px 0 50px;
+    min-height: 100vh;
+    padding: 60px 0 50px;
 }
 
 .result-title {
-  color: $sport-primary;
-  font-size: 36px;
-  text-transform: uppercase;
+    color: $sport-primary;
+    font-size: 36px;
+    text-transform: uppercase;
 }
 
 .resulttitle-dropdown {
-  font-size: 21px;
-  color: $sport-success;
+    font-size: 21px;
+    color: $sport-success;
 }
 
 .result-schooltitle {
-  color: $sport-lightblue;
-  text-transform: uppercase;
+    color: $sport-lightblue;
+    text-transform: uppercase;
 }
 
 .result-schooltableholder {
-  .table {
-    >thead>tr {
-      background-color: #10259c;
-      color: #fff;
-      >th {
-        border: none;
-        vertical-align: middle;
-      }
-    }
-    >tbody>tr>td {
-      border: none;
-    }
-  }
-  .table-striped {
-    >tbody {
-      >tr {
-        &:nth-of-type(odd) {
-          background-color: #fff;
+    .table {
+        >thead>tr {
+            background-color: #10259c;
+            color: #fff;
+            >th {
+                border: none;
+                vertical-align: middle;
+            }
         }
-        &:nth-of-type(even) {
-          background-color: #e5e5e5;
+        >tbody>tr>td {
+            border: none;
         }
-      }
     }
-  }
+    .table-striped {
+        >tbody {
+            >tr {
+                &:nth-of-type(odd) {
+                    background-color: #fff;
+                }
+                &:nth-of-type(even) {
+                    background-color: #e5e5e5;
+                }
+            }
+        }
+    }
 }
 
 .result-schoolsection {
-  padding-bottom: 10px;
-  border-bottom: 1px solid;
+    padding-bottom: 10px;
+    border-bottom: 1px solid;
 }
 
 .schooltable-bg {
-  background-color: #000;
-  color: #fff;
-  padding: 15px 10px;
+    background-color: #000;
+    color: #fff;
+    padding: 15px 10px;
 }
 
 .schooltable-holder {
-  .table {
-    margin-bottom: 0px;
-    >thead>tr {
-      background-color: $sport-lightblue;
-      >th {
-        padding: 0px 8px;
-        border-bottom: none;
-        text-transform: uppercase;
-        vertical-align: middle;
-      }
+    .table {
+        margin-bottom: 0px;
+        >thead>tr {
+            background-color: $sport-lightblue;
+            >th {
+                padding: 0px 8px;
+                border-bottom: none;
+                text-transform: uppercase;
+                vertical-align: middle;
+            }
+        }
+        >tbody>tr {
+            background-color: rgba(255, 255, 255, 0.3);
+            border-bottom: 3px solid #000;
+            >td {
+                padding: 10px 8px;
+                border-top: none;
+                color: #fff;
+            }
+        }
+        .schooltable-head {
+            font-size: 16px;
+            text-align: center;
+        }
+        .table-medalimage {
+            text-align: center;
+        }
+        .profile-bluemedals {
+            width: 20px;
+            margin: 0 auto;
+        }
+        .schoolmedal-points {
+            font-size: 10px;
+        }
     }
-    >tbody>tr {
-      background-color: rgba(255, 255, 255, 0.3);
-      border-bottom: 3px solid #000;
-      >td {
-        padding: 10px 8px;
-        border-top: none;
-        color: #fff;
-      }
-    }
-    .schooltable-head {
-      font-size: 16px;
-      text-align: center;
-    }
-    .table-medalimage {
-      text-align: center;
-    }
-    .profile-bluemedals {
-      width: 20px;
-      margin: 0 auto;
-    }
-    .schoolmedal-points {
-      font-size: 10px;
-    }
-  }
 }
 
 .schoolranktable-sportwise {
-  text-align: left;
+    text-align: left;
 }
 
 .schoolranktable-head {
-  margin-bottom: 15px;
-  h3 {
-    margin: 0;
-  }
+    margin-bottom: 15px;
+    h3 {
+        margin: 0;
+    }
 }
 
 .resultsport-topplayer {
-  margin-top: 25px;
+    margin-top: 25px;
 }
 
 .resultsport-viewmedalwinner {
-  padding: 15px 0;
+    padding: 15px 0;
 }
 
 .result-viewall-medalwinners {
-  padding: 10px;
-  border: 2px solid #b7b7b7;
-  margin: 20px 0;
-  color: $sport-darkgrey;
+    padding: 10px;
+    border: 2px solid #b7b7b7;
+    margin: 20px 0;
+    color: $sport-darkgrey;
 }
 
 .result-tablemedal {
-  width: 20px;
-  margin: 0 auto;
-}
-
-// RESULTS PAGE END
+    width: 20px;
+    margin: 0 auto;
+} // RESULTS PAGE END
 // DROPDOWN
 .result-dropdown {
-  position: relative;
-  cursor: pointer;
-  .landingschool-schoolfilter {
-    width: 210px;
-    padding: 5px 10px;
-    box-shadow: 0 0 10px #e5e5e5;
-    position: absolute;
-    top: 30px;
-    left: 0px;
-    background: #fff;
-    color: #1a1a1a;
-    font-size: 16px;
-    z-index: 1;
-    ul {
-      margin: 0;
-      li {
-        margin: 10px 0;
-        cursor: pointer;
-      }
-    }
-  }
-}
-
-// DROPDOWN END
-.custom-toggle {
-  .switch {
     position: relative;
-    display: inline-block;
-    width: 30px;
-    height: 20px;
-    vertical-align: middle;
-  }
-  .switch input {
-    // display: none;
-  }
-  .slider {
-    position: absolute;
     cursor: pointer;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: #ccc;
-    @include transition(0.4s);
-  }
-  .slider:before {
-    position: absolute;
-    content: "";
-    height: 15px;
-    width: 15px;
-    left: 3px;
-    bottom: 3px;
-    background-color: white;
-    @include transition(0.4s);
-  }
-  input:checked+.slider {
-    background-color: red;
-  }
-  input:focus+.slider {
-    box-shadow: 0 0 1px #2196F3;
-  }
-  input:checked+.slider:before {
-    @include transform(translateX(10px));
-  }
-  /* Rounded sliders */
-  .slider.round {
-    border-radius: 34px;
-  }
-  .slider.round:before {
-    border-radius: 50%;
-  }
-}
-
-//VIEW ALL WINNER CARD
+    .landingschool-schoolfilter {
+        width: 210px;
+        padding: 5px 10px;
+        box-shadow: 0 0 10px #e5e5e5;
+        position: absolute;
+        top: 30px;
+        left: 0px;
+        background: #fff;
+        color: #1a1a1a;
+        font-size: 16px;
+        z-index: 1;
+        ul {
+            margin: 0;
+            li {
+                margin: 10px 0;
+                cursor: pointer;
+            }
+        }
+    }
+} // DROPDOWN END
+.custom-toggle {
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 30px;
+        height: 20px;
+        vertical-align: middle;
+    }
+    .switch input {
+        // display: none;
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        @include transition(0.4s);
+    }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 15px;
+        width: 15px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        @include transition(0.4s);
+    }
+    input:checked+.slider {
+        background-color: red;
+    }
+    input:focus+.slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+    input:checked+.slider:before {
+        @include transform(translateX(10px));
+    }
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+    .slider.round:before {
+        border-radius: 50%;
+    }
+} //VIEW ALL WINNER CARD
 .allmedal-filterlabel {
-  color: $base;
-  font-weight: 600;
-  text-transform: uppercase;
+    color: $base;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .allmedal-filter {
-  padding: 0 10px;
+    padding: 0 10px;
 }
 
 .viewallmedal-winnertitle {
-  margin: 0;
-  color: $base;
-  font-weight: 600;
-  text-transform: uppercase;
+    margin: 0;
+    color: $base;
+    font-weight: 600;
+    text-transform: uppercase;
 }
 
 .viewallmedal-winnerholder {
-  border-top: 1px solid $base;
-  padding: 10px 10px 0;
+    border-top: 1px solid $base;
+    padding: 10px 10px 0;
 }
 
 .viewall-winnerrow {
-  padding: 5px 0;
-  border-bottom: 1px solid $sport-grey;
-  &:last-child {
-    border-bottom: none;
-  }
+    padding: 5px 0;
+    border-bottom: 1px solid $sport-grey;
+    &:last-child {
+        border-bottom: none;
+    }
 }
 
 .allmedal-winnercard {
-  padding: 5px;
+    padding: 5px;
 }
 
 .allmedal-medalholder {
-  width: 18px;
-  margin-left: 5px;
-  display: inline-block;
-  vertical-align: middle;
+    width: 18px;
+    margin-left: 5px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .allmedal-profilepic {
-  width: 50px;
-  height: 50px;
-  border-radius: 100%;
-  display: inline-block;
-  overflow: hidden;
-  vertical-align: middle;
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: middle;
 }
 
 .allmedal-studentdetails {
-  width: calc(100% - 100px);
-  padding: 0 5px;
-  display: inline-block;
-  vertical-align: middle;
+    width: calc(100% - 100px);
+    padding: 0 5px;
+    display: inline-block;
+    vertical-align: middle;
 }
 
 .allmedal-studentname {
-  margin: 0;
-  color: $sport-primary;
-  font-size: 16px;
-  font-weight: 700;
+    margin: 0;
+    color: $sport-primary;
+    font-size: 16px;
+    font-weight: 700;
 }
 
 .allmedal-studentschool {
-  margin: 0;
-  color: $sport-darkgrey;
-  font-size: 12px;
-}
-
-//VIEW ALL WINNER CARD END
+    margin: 0;
+    color: $sport-darkgrey;
+    font-size: 12px;
+} //VIEW ALL WINNER CARD END
 // TEAM MATCH CENTER
 .teammatchcenter-modal {
+<<<<<<< HEAD
   .modal-content {
     border-radius: 0;
   }
@@ -742,348 +799,844 @@ $sport-darkgrey: #757575 !default;
     }
     .panel-open {
       .panel-heading {
+=======
+    .modal-content {
+>>>>>>> c687fb746be7c97c2149b935f3a7aebc016e6f44
         border-radius: 0;
-        background-color: #e1e1e1;
-      }
-      .panel-body {
-        border: 1px solid #e1e1e1;
-      }
     }
-    .panel-title {
-      font-size: 14px;
+    .modal-header {
+        padding: 0px;
     }
-  }
-  .playerheader-accordion {
-    padding: 5px;
-    margin-bottom: 5px;
-    background: #ffb026;
-    color: #fff;
-    font-size: 18px;
-    font-weight: 700;
-    text-align: center;
-    text-transform: uppercase;
-  }
-  .team-formationholder {
-    padding-left: 25px;
-    margin-top: 15px;
-    position: relative;
-  }
-  .team-formationicon {
-    width: 30px;
-    position: absolute;
-    left: 0;
-    top: 50%;
-    @include transform(translateY(-50%));
-  }
-  .formaton-input {
-    width: 80px;
-    border: none;
-    background-color: #5aeca5;
-    color: #fff;
-    font-size: 15px;
-    font-weight: 700;
-    text-align: center;
-    text-transform: uppercase;
-  }
-  .matchcenter-teamcol {
-    &:nth-child(even) {
-      .team-formationholder {
-        padding-left: 0;
-        padding-right: 25px;
-        text-align: right;
-      }
-      .team-formationicon {
-        left: auto;
+    .modal-container {
+        padding: 15px 0;
+    }
+    .matchstart-header {
+        padding: 10px 15px;
+        padding-left: 90px;
+        background-color: #337ab7;
+        color: #fff;
+        font-size: 16px;
+        text-transform: uppercase;
+    }
+    .matchcenter-sporticon {
+        position: absolute;
+        top: 5px;
+        left: 20px;
+        width: 65px;
+    }
+    .matchcenter-heading {
+        font-weight: 700;
+    }
+    .matchwinner {
+        position: absolute;
+        top: 0;
+        left: 90px;
+    }
+    .matchwinner-title {
+        font-size: 16px;
+        font-weight: 700;
+    }
+    .matchplayer-card {
+        padding: 10px;
+        margin: 20px auto 0;
+        box-shadow: 0 0 10px #a0a0a0;
+        position: relative;
+    }
+    .matchplayer-playerid {
+        position: absolute;
+        top: 0;
         right: 0;
-      }
+        padding: 5px;
+        font-size: 12px;
+        color: #757575;
     }
-  }
-  .team-player-accordian-holder {
-    margin: 20px 0;
-  }
-  .teamdetail-pointholder {
-    padding: 10px;
-    border: 1px solid #e1e1e1;
-  }
-  .setpoint-label {
-    font-weight: 600;
-    font-size: 12px;
-  }
-  .matchcenter-playerpoint {
-    border: none;
-    background-color: #e1e1e1;
-    font-size: 21px;
-    font-weight: 700;
-  }
-  .matchcenter-teamschool {
-    width: 180px;
-    display: inline-block;
-    font-weight: 700;
-    text-align: left;
-    vertical-align: middle;
-  }
-  .sportwise-finalpointholder {
-    display: inline-block;
-    vertical-align: middle;
-  }
-  .matchcenter-teampoints {
-    text-align: center;
-    input[type=number]::-webkit-inner-spin-button,
-    input[type=number]::-webkit-outer-spin-button {
-      -webkit-appearance: none;
-      -moz-appearance: none;
-      appearance: none;
+    .matchplayer-image {
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+        margin: 0 10px;
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: middle;
     }
-    .setpoint-element {
-      display: inline-block;
-      vertical-align: middle;
+    .matchplayer-details {
+        width: calc(100% - 125px);
+        margin-top: 10px;
+        display: inline-block;
+        vertical-align: middle;
+        .matchplayer-school {
+            margin: 0;
+            color: #0a1a72;
+            font-size: 16px;
+            font-weight: 700;
+        }
     }
-    .setpointlabel {
-      display: block;
-      font-size: 12px;
-      font-weight: 500;
+    .playerangle-accordion {
+        font-size: 21px;
     }
-    .score-number {
-      width: 60px;
-      height: 60px;
-      padding: 5px 10px;
-      border: none;
-      margin: 0 10px;
-      background-color: #e1e1e1;
-      font-size: 24px;
-      font-weight: 700;
-      text-align: center;
+    .teamplayer-accordion {
+        .panel {
+            border: none;
+            border-radius: 0px;
+            box-shadow: none;
+        }
+        .panel-default>.panel-heading {
+            padding: 5px 10px;
+            border: 0;
+            border-bottom: 1px solid #ddd;
+            background-color: transparent;
+        }
+        .panel-body {
+            border: none;
+        }
+        .panel-open {
+            .panel-heading {
+                border-radius: 0;
+                background-color: #e1e1e1;
+            }
+            .panel-body {
+                border: 1px solid #e1e1e1;
+            }
+        }
+        .panel-title {
+            font-size: 14px;
+        }
     }
-  }
-}
-
-// TEAM MATCH CENTER END
+    .playerheader-accordion {
+        padding: 5px;
+        margin-bottom: 5px;
+        background: #ffb026;
+        color: #fff;
+        font-size: 18px;
+        font-weight: 700;
+        text-align: center;
+        text-transform: uppercase;
+    }
+    .team-formationholder {
+        padding-left: 25px;
+        margin-top: 15px;
+        position: relative;
+    }
+    .team-formationicon {
+        width: 30px;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        @include transform(translateY(-50%));
+    }
+    .formaton-input {
+        width: 80px;
+        border: none;
+        background-color: #5aeca5;
+        color: #fff;
+        font-size: 15px;
+        font-weight: 700;
+        text-align: center;
+        text-transform: uppercase;
+    }
+    .matchcenter-teamcol {
+        &:nth-child(even) {
+            .team-formationholder {
+                padding-left: 0;
+                padding-right: 25px;
+                text-align: right;
+            }
+            .team-formationicon {
+                left: auto;
+                right: 0;
+            }
+        }
+    }
+    .team-player-accordian-holder {
+        margin: 20px 0;
+    }
+    .teamdetail-pointholder {
+        padding: 10px;
+        border: 1px solid #e1e1e1;
+    }
+    .setpoint-label {
+        font-weight: 600;
+        font-size: 12px;
+    }
+    .matchcenter-playerpoint {
+        border: none;
+        background-color: #e1e1e1;
+        font-size: 21px;
+        font-weight: 700;
+    }
+    .matchcenter-teamschool {
+        width: 180px;
+        display: inline-block;
+        font-weight: 700;
+        text-align: left;
+        vertical-align: middle;
+    }
+    .sportwise-finalpointholder {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .matchcenter-teampoints {
+        text-align: center;
+        input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        .setpoint-element {
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .setpointlabel {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .score-number {
+            width: 60px;
+            height: 60px;
+            padding: 5px 10px;
+            border: none;
+            margin: 0 10px;
+            background-color: #e1e1e1;
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+        }
+    }
+} // TEAM MATCH CENTER END
 // SPECIAL EVENTS PAGE
 .specialevents-page {
-  min-height: 100vh;
-  padding: 60px 0px 50px;
+    min-height: 100vh;
+    padding: 60px 0px 50px;
 }
 
 .specialevents-header {
-  color: $sport-primary;
-  font-size: 30px;
-  font-weight: 600;
+    color: $sport-primary;
+    font-size: 30px;
+    font-weight: 600;
 }
 
 .specialevent-title {
-  margin-bottom: 10px;
-  font-size: 24px;
-  font-weight: 600;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 600;
 }
 
 .specialevent {
-  margin: 20px 0; // padding: 20px 0;
-  .row {
-    margin-left: -2px;
-    margin-right: -2px;
-  }
-  .col-md-6,
-  .col-sm-6 {
-    padding-left: 2px;
-    padding-right: 2px;
-  }
+    margin: 20px 0; // padding: 20px 0;
+    .row {
+        margin-left: -2px;
+        margin-right: -2px;
+    }
+    .col-md-6,
+    .col-sm-6 {
+        padding-left: 2px;
+        padding-right: 2px;
+    }
 }
 
 .event-card {
-  margin: 2px 0;
-  &:hover {
-    box-shadow: 0 0 10px #000;
-  }
-   ::-webkit-scrollbar {
-    width: 5px;
-    height: 5px;
-  }
-   ::-webkit-scrollbar-track {
-    background-color: transparent;
-  }
-   ::-webkit-scrollbar-thumb {
-    background-color: $sport-grey;
-  }
+    margin: 2px 0;
+    &:hover {
+        box-shadow: 0 0 10px #000;
+    }
+     ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+     ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+     ::-webkit-scrollbar-thumb {
+        background-color: $sport-grey;
+    }
 }
 
 .eventcard-yellow {
-  border: 3px solid $sport-warning;
-  background-color: $sport-warning;
-  .eventdetail-title {
-    color: $sport-warning;
-  } // DATE ARROW
-  .datearrow-left:after {
-    border-left: 15px solid $sport-warning;
-  }
-  .datearrow-bottom:after {
-    border-bottom: 15px solid $sport-warning;
-  } // DATE ARROW
+    border: 3px solid $sport-warning;
+    background-color: $sport-warning;
+    .eventdetail-title {
+        color: $sport-warning;
+    } // DATE ARROW
+    .datearrow-left:after {
+        border-left: 15px solid $sport-warning;
+    }
+    .datearrow-bottom:after {
+        border-bottom: 15px solid $sport-warning;
+    } // DATE ARROW
 }
 
 .eventcard-blue {
-  border: 3px solid $sport-lightblue;
-  background-color: $sport-lightblue;
-  .eventdetail-title {
-    color: $sport-lightblue;
-  } // DATE ARROW
-  .datearrow-left:after {
-    border-left: 15px solid $sport-lightblue;
-  }
-  .datearrow-bottom:after {
-    border-bottom: 15px solid $sport-lightblue;
-  } // DATE ARROW
+    border: 3px solid $sport-lightblue;
+    background-color: $sport-lightblue;
+    .eventdetail-title {
+        color: $sport-lightblue;
+    } // DATE ARROW
+    .datearrow-left:after {
+        border-left: 15px solid $sport-lightblue;
+    }
+    .datearrow-bottom:after {
+        border-bottom: 15px solid $sport-lightblue;
+    } // DATE ARROW
 }
 
 .eventcard-green {
-  border: 3px solid $sport-success;
-  background-color: $sport-success;
-  .eventdetail-title {
-    color: $sport-success;
-  } // DATE ARROW
-  .datearrow-left:after {
-    border-left: 15px solid $sport-success;
-  }
-  .datearrow-bottom:after {
-    border-bottom: 15px solid $sport-success;
-  } // DATE ARROW
-}
-
-// DATE ARROW
+    border: 3px solid $sport-success;
+    background-color: $sport-success;
+    .eventdetail-title {
+        color: $sport-success;
+    } // DATE ARROW
+    .datearrow-left:after {
+        border-left: 15px solid $sport-success;
+    }
+    .datearrow-bottom:after {
+        border-bottom: 15px solid $sport-success;
+    } // DATE ARROW
+} // DATE ARROW
 .datearrow-left:after {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 0;
-  border-top: 15px solid transparent;
-  border-bottom: 15px solid transparent;
-  @include transform(translateY(-50%));
-  z-index: 2;
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    border-top: 15px solid transparent;
+    border-bottom: 15px solid transparent;
+    @include transform(translateY(-50%));
+    z-index: 2;
 }
 
 .datearrow-bottom:after {
-  content: '';
-  position: absolute;
-  left: 50%;
-  bottom: 0;
-  border-right: 15px solid transparent;
-  border-left: 15px solid transparent;
-  @include transform(translateX(-50%));
-  z-index: 2;
-}
-
-// DATE ARROW END
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    border-right: 15px solid transparent;
+    border-left: 15px solid transparent;
+    @include transform(translateX(-50%));
+    z-index: 2;
+} // DATE ARROW END
 .event-tile {
-  width: 50%;
-  position: relative;
-  float: left;
-  overflow: hidden;
-}
-
-// EVENT DATE CARD
+    width: 50%;
+    position: relative;
+    float: left;
+    overflow: hidden;
+} // EVENT DATE CARD
 .eventcard-datetile {
-  width: 100%;
-  padding: 20px;
-  position: absolute;
-  top: 50%;
-  left: 0;
-  color: #fff;
-  font-weight: 700;
-  @include transform(translateY(-50%));
+    width: 100%;
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    color: #fff;
+    font-weight: 700;
+    @include transform(translateY(-50%));
 }
 
 .eventcard-date {
-  margin: 0;
-  font-size: 110px;
-  line-height: 1;
+    margin: 0;
+    font-size: 110px;
+    line-height: 1;
 }
 
 .eventcard-day {
-  font-size: 36px;
-  line-height: 1;
-}
-
-// EVENT DATE CARD END
+    font-size: 36px;
+    line-height: 1;
+} // EVENT DATE CARD END
 // EVENT IMAGE CARD
 .eventcard-image {
-  width: 100%;
-  height: 100%;
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-// EVENT IMAGE CARD END
+    width: 100%;
+    height: 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+} // EVENT IMAGE CARD END
 // EVENT DETAIL CARD
 .eventcard-detail {
-  height: 100%;
-  padding: 10px;
-  background: #fff;
-  overflow-y: auto;
+    height: 100%;
+    padding: 10px;
+    background: #fff;
+    overflow-y: auto;
 }
 
 .eventdetail-title {
-  padding: 0 10px;
-  font-size: 21px;
-  text-transform: capitalize;
+    padding: 0 10px;
+    font-size: 21px;
+    text-transform: capitalize;
 }
 
 .eventdetail-content {
-  padding: 10px;
-  color: $sport-darkgrey;
-  text-align: justify;
-}
-
-// EVENT DETAIL CARD END
+    padding: 10px;
+    color: $sport-darkgrey;
+    text-align: justify;
+} // EVENT DETAIL CARD END
 // SPECIAL EVENTS PAGE END
 // TILE CARD WIREFRAME
 .tileholder {
-  width: 302px;
-  margin: 10px;
-  border: 1px solid #000;
-  display: inline-block;
+    width: 302px;
+    margin: 10px;
+    border: 1px solid #000;
+    display: inline-block;
 }
 
 .tile {
-  width: 150px;
-  height: 150px;
-  border: 1px solid #fff;
-  float: left;
-  position: relative;
-  background-color: #ffb026;
-  color: #fff;
+    width: 150px;
+    height: 150px;
+    border: 1px solid #fff;
+    float: left;
+    position: relative;
+    background-color: #ffb026;
+    color: #fff;
 }
 
 .tile2 {
-  height: 300px;
+    height: 300px;
 }
 
 .tiledate {
-  background-color: #ccc;
+    background-color: #ccc;
 }
 
 .get-center {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  @include transform(tranlate(-50%, -50%));
-}
-
-// TILE CARD WIREFRAME END
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include transform(tranlate(-50%, -50%));
+} // TILE CARD WIREFRAME END
 // CUSTOM UPLOAD BUTTON
 .matchstart-uploadholder {
-  position: relative;
-  overflow: hidden;
-  vertical-align: middle;
+    position: relative;
+    overflow: hidden;
+    vertical-align: middle;
 }
 
 .upload-scorecard {
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  z-index: 2;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    z-index: 2;
+} // CUSTOM UPLOAD BUTTON
+// LIVE UPDATES PAGE
+.swiper-slide {
+    // width: 100%;
+    height: 300px;
+    border: 1px solid red;
+    background-color: green;
 }
 
+.liveupdate-bannerslide {
+    width: 100%;
+    height: 300px;
+}
+
+.liveupdate-bannerswiper {
+    width: 100%;
+    height: 300px;
+    background-color: $brand-primary;
+}
+
+// RANKING TABLES
+.liveupdate-rankingstable,
+.liveupdate-imagesection,
+.liveupdates-draws {
+    margin: 30px 0;
+}
+
+.liveupdate-tabletime {
+    color: #fff;
+    background: $brand-green;
+    display: inline-block;
+    padding: 5px 15px;
+    line-height: 1;
+    font-size: 12px;
+    border-radius: 5px 5px 0 0;
+}
+
+.liveupdate-rankingtitle,
+.liveupdate-imagetitile,
+.liveupdates-drawstitle {
+    font-size: 24px;
+    margin-bottom: 10px;
+    color: #00aaff;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.liveupdate-rankingtableholder {
+    .table {
+        margin-bottom: 10px;
+        >thead>tr {
+            background-color: #10259c;
+            color: #fff;
+            >th {
+                border: none;
+                vertical-align: middle;
+            }
+        }
+        >tbody>tr>td {
+            border: none;
+        }
+    }
+    .table-striped {
+        >tbody {
+            >tr {
+                &:nth-of-type(odd) {
+                    background-color: #e5e5e5;
+                }
+                &:nth-of-type(even) {
+                    background-color: #fff;
+                }
+            }
+        }
+    }
+    .result-tablemedal {
+        width: 15px;
+        margin: 0 auto;
+    }
+}
+
+.point-color-box {
+    width: 10px;
+    height: 10px;
+    margin-right: 5px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.gold-box {
+    background-color: #e8c936;
+}
+
+.silver-box {
+    background-color: #c9c9cf;
+}
+
+.bronze-box {
+    background-color: #d38936;
+}
+
+.point-number {
+    margin: 0;
+    text-transform: uppercase;
+    vertical-align: middle;
+}
+
+// RANKING TABLES END
+// TICKR SECTION
+.liveupdate-tickr {
+    padding: 10px 0;
+    background-color: #5b5b5b;
+    color: #fff;
+    p {
+        margin: 0;
+    }
+}
+
+.tickr-livelabel {
+    padding: 2px 15px;
+    border-radius: 5px 5px 0 0;
+    position: absolute;
+    top: -26px;
+    left: 0;
+    background: $brand-green;
+    color: #fff;
+    font-size: 12px;
+    line-height: 1;
+}
+
+// TICKR SECTION END
+// IMAGE SECTION
+.liveupdate-albumholder {
+    width: 50%;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    float: left;
+    cursor: pointer;
+    &:first-child {
+        width: 100%;
+    }
+}
+
+.liveupdate-albumfooter {
+    width: calc(100% - 10px);
+    padding: 10px;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+}
+
+.album-thumbnailholder {
+    width: 15px;
+    display: inline-block;
+}
+
+.liveupdate-photoholder {
+    width: 50%;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    position: relative;
+    float: left;
+    &:last-child {
+        width: 100%;
+    }
+}
+
+// ALBUM POPUP
+.album-picholder {
+    margin: 15px 0;
+    border-radius: 0;
+    box-shadow: 0 0 3px #000;
+}
+
+.album-modal {
+    .modal-dialog {
+        height: auto;
+        margin: 50px auto;
+    }
+    .modal-header {
+        position: relative;
+        background-color: $brand-primary;
+        color: #fff;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+    .modal-close {
+        width: 30px;
+        height: 30px;
+        position: absolute;
+        top: 15px;
+        right: 10px;
+        color: #fff;
+        cursor: pointer;
+        font-size: 25px;
+        line-height: 30px;
+        text-align: center;
+    }
+}
+
+// ALBUM POPUP END
+// IMAGE SECTION END
+// VIDEO SECTION
+.album-videoicon {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 10px;
+    bottom: 0px;
+    background: #d8485a;
+    color: #fff;
+    text-align: center;
+    .fa-play {
+        font-size: 18px;
+        line-height: 30px;
+    }
+}
+
+// VIDEO SECTION END
+// DRAWS SCHEDULE
+.liveupdates-drawholder {
+    padding: 20px 0;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+}
+
+.drawschedule-tabholder {
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 10px;
+}
+
+.drawschedule-tablist {
+    margin: 0;
+}
+
+.drawschedule-tab {
+    width: 49%;
+    padding: 5px;
+    cursor: pointer;
+    text-align: center;
+    text-transform: uppercase;
+    &.active,
+    &:hover,
+    &:active,
+    &:focus {
+        border-bottom: 2px solid $brand-success;
+    }
+}
+
+.liveupdates-drawscard {
+    padding: 20px;
+    border: 1px solid #ccc;
+}
+
+.updatedrawsschedule-lable {
+    min-width: 25%;
+    color: #757575;
+    vertical-align: middle;
+}
+
+.updatedraws-dropdown {
+    width: 70%;
+    padding: 0px 10px;
+    border: 1px solid #ccc;
+    vertical-align: middle;
+    p {
+        margin-bottom: 5px;
+    }
+}
+
+.livedraw-formholder {
+    padding: 10px 5px;
+    position: relative;
+    &:hover {
+        box-shadow: 0 0 3px #ccc;
+    }
+    &:after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+}
+
+// DRAWS SCHEDULE END
+// EVENTS
+.liveupdates-eventholder {
+    width: 50%;
+    height: 320px;
+    padding: 5px;
+    float: left;
+     ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+     ::-webkit-scrollbar-thumb {
+        background-color: #fff;
+    }
+     ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    &:nth-of-type(odd) {
+        .liveupdate-eventcard {
+            background-color: $brand-green;
+        }
+    }
+    &:nth-of-type(even) {
+        .liveupdate-eventcard {
+            background-color: $brand-success;
+        }
+    }
+}
+
+.liveupdate-eventcard {
+    width: 100%;
+    height: 100%;
+    padding: 20px 30px;
+    color: #fff;
+    overflow-y: auto;
+}
+
+.event-date {
+    font-size: 48px;
+}
+
+.event-day {
+    border-bottom: 1px solid #fff;
+    font-size: 30px;
+}
+
+.event-detail {
+    margin: 10px 0;
+}
+
+.event-header {
+    font-size: 21px;
+    text-transform: uppercase;
+}
+
+.event-content {
+    font-size: 16px;
+}
+
+// EVENTS END
+// CUSTOM TICKER
+.ticker-wrap {
+    width: 100%;
+    overflow: hidden;
+    padding-left: 100%; // offset items to begin
+}
+
+$tickerDuration: 60s;
+.ticker {
+    display: inline-block;
+    white-space: nowrap; // display items in a line
+    padding-right: 100%; // ensure items go before animations repeat (taken from parent due to inline-block)
+    animation-iteration-count: infinite;
+    -webkit-animation-iteration-count: infinite;
+    animation-timing-function: linear;
+    -webkit-animation-timing-function: linear;
+    animation-name: ticker;
+    -webkit-animation-name: ticker;
+    animation-duration: $tickerDuration;
+    -webkit-animation-duration: $tickerDuration;
+    &__item {
+        display: inline-block;
+    }
+}
+
+.ticker__item {
+    padding-left: 35px;
+    margin-right: 20px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.ticker-icon {
+    width: 30px;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+// **************************************************************************
+// TICKER ANIMATION
+// **************************************************************************
+@-webkit-keyframes ticker {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+    100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+@keyframes ticker {
+    0% {
+        -webkit-transform: translate3d(0, 0, 0);
+        transform: translate3d(0, 0, 0);
+        visibility: visible;
+    }
+    100% {
+        -webkit-transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+<<<<<<< HEAD
 // CUSTOM UPLOAD BUTTON
+=======
+// **************************************************************************
+// TICKER ANIMATION END
+// **************************************************************************
+// CUSTOM TICKER END
+// LIVE UPDATES PAGE END
+>>>>>>> c687fb746be7c97c2149b935f3a7aebc016e6f44

@@ -95,6 +95,11 @@ module.exports = [
   'frontend/js/controllers/draws-schedule/championshipschedule.js',
   'frontend/js/controllers/draws-schedule/knockout.js',
   'frontend/js/controllers/draws-schedule/swissleague.js',
+  'frontend/js/controllers/profile/school.js',
+  'frontend/js/controllers/profile/team.js',
+  'frontend/js/controllers/profile/student.js',
+  'frontend/js/controllers/media/gallery.js',
+  'frontend/js/controllers/media/press.js',
   'frontend/js/controllers/results-controller.js',
   'frontend/js/controllers/specialevent-controller.js',
 ];

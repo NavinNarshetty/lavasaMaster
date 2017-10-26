@@ -4,6 +4,7 @@ myApp.service('TemplateService', function () {
     this.metadesc = "Home";
     this.description = "";
     this.keywords = "";
+    this.pageMax = 10;
     var d = new Date();
     this.year = d.getFullYear();
     this.onlyAlpha = /^[A-z]+$/;
