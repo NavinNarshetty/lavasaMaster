@@ -3115,5 +3115,91 @@ var model = {
         });
 
     },
+
+    getTargetAthlete: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    athlete = [];
+                    async.parallel([
+                            function (callback) {
+                                StudentTeam.find().lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (_.isEmpty(found)) {
+                                        callback(null, []);
+                                    } else {
+                                        _.each(found, function (n) {
+                                            athlete.push(n.studentId);
+                                        })
+                                        callback(null, athlete);
+                                    }
+                                });
+                            },
+                            function (callback) {
+                                IndividualSport.find().lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback(err, null);
+                                    } else if (_.isEmpty(found)) {
+                                        callback(null, []);
+                                    } else {
+                                        _.each(found, function (n) {
+                                            athlete.push(n.athleteId);
+                                        })
+                                        callback(null, athlete);
+                                    }
+                                });
+                            }
+                        ],
+                        function (err, data2) {
+                            if (err) {
+                                console.log(err);
+                                callback(null, []);
+                            } else if (data2) {
+                                if (_.isEmpty(data2)) {
+                                    callback(null, []);
+                                } else {
+                                    var registerdAthlete = [].concat.apply([], [
+                                        data2[0],
+                                        data2[1]
+                                    ]);
+                                    callback(null, registerdAthlete);
+                                }
+                            }
+                        });
+                },
+                function (registerdAthlete, callback) {
+                    var targetAthlete = [];
+                    var deepSearch = "school";
+                    Athelete.find().lean().exec(function (err, athlete) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(athlete)) {
+                            callback(null, []);
+                        } else {
+                            var i = 0;
+                            _.each(athlete, function (n) {
+                                if (!n._id.equals(registerdAthlete[i])) {
+                                    targetAthlete.push(n);
+                                }
+                            });
+                            callback(null, targetAthlete);
+                        }
+                    });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+
+    },
 };
 module.exports = _.assign(module.exports, exports, model);

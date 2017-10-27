@@ -76,6 +76,17 @@ var controller = {
         }
     },
 
+    getTargetAthlete: function (req, res) {
+        if (req.body) {
+            Athelete.getTargetAthlete(req.body, res.callback);
+        } else {
+            res.json({
+                value: false,
+                data: "Invalid Request"
+            });
+        }
+    },
+
     getOneBySfaId: function (req, res) {
         if (req.body) {
             Athelete.getOneBySfaId(req.body, res.callback);
