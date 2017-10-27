@@ -408,6 +408,27 @@ myApp.factory('NavigationService', function ($http) {
             })
         },
 
+        generateExcelWithoutData: function (url, data, callback) {
+            $http.post(adminurl + url, data, {
+                responseType: 'arraybuffer'
+            }).then(function (response) {
+                var header = response.headers('Content-Disposition')
+                var fileName = data.file + "-" + moment().format("MMM-DD-YYYY-hh-mm-ss-a") + ".xlsx";
+                console.log(fileName);
+
+                var blob = new Blob([response.data], {
+                    type: 'application/vnd.openxmlformats-officedocument.presentationml.presentation;charset=UTF-8'
+                });
+                var objectUrl = (window.URL || window.webkitURL).createObjectURL(blob);
+                var link = angular.element('<a/>');
+                link.attr({
+                    href: objectUrl,
+                    download: fileName
+                })[0].click();
+                callback(null, fileName);
+            })
+        },
+
         generateExcel: function (url, callback) {
             $http.post(adminurl + url).then(function (data) {
                 // data = data.data;
