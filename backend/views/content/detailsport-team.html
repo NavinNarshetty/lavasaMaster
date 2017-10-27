@@ -2349,31 +2349,31 @@
                           <label for="">Score</label>
                           <div class="row mb15">
                             <!-- HALF POINT  -->
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                               <label for="">HALF POINTS</label>
                               <input type="number" name="halfpoints" ng-model="team.teamResults.halfPoints" class="form-control" placeholder="Enter Half Point">
                             </div>
                             <!-- HALF POINT END -->
                             <!-- FINAL POINT -->
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                               <label for="">FINAL POINTS</label>
                               <input type="number" name="halfpoints" ng-model="team.teamResults.finalPoints" class="form-control" placeholder="Enter Half Point">
                             </div>
                             <!-- FINAL POINTS END -->
                             <!-- FINAL GOAL POINTS -->
-                            <div class="col-md-2">
+                            <!-- <div class="col-md-2">
                               <label for=""> Final Goal-Points</label>
-                              <input type="number" name="finalgoalPoints" ng-model="team.teamResults.finalGoalPoints" class="form-control" placeholder="Enter Final goal points">
-                            </div>
+                              <input type="number" name="finalgoalPoints" ng-model="team.teamResults.finalPoints" class="form-control" placeholder="Enter Final goal points">
+                            </div> -->
                             <!-- FINAL GOAL POINTS END -->
                             <!-- SUPER TACKLE -->
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                               <label for=""> Super Tackle</label>
                               <input type="number" name="supertackle" ng-model="team.teamResults.superTackle" class="form-control" placeholder="Enter Super Tackle">
                             </div>
                             <!-- SUPER TACKLE END -->
                             <!-- ALL OUT -->
-                            <div class="col-md-2">
+                            <div class="col-md-3">
                               <label for="">All Out</label>
                               <input type="number" name="allout" ng-model="team.teamResults.allOut" class="form-control" placeholder="Enter All Out">
                             </div>
@@ -2461,7 +2461,7 @@
                                     <div class="input-group">
                                       <span class="cross-team" ng-click="removeField('superRaid','resultKabaddi',teamIndex,playerIndex,superIndex)"><i class="fa fa-times" aria-hidden="true"></i></span>
                                       <span class="input-group-addon">Time</span>
-                                      <input type="number" class="form-control" ng-model="superraid.time" placeholder="999" min="0" max="1" aria-label="Product name">
+                                      <input type="number" class="form-control" ng-model="superraid.time" placeholder="999" min="0" max="1000" aria-label="Product name">
                                       <span class="input-group-addon">Min</span>
                                     </div>
                                   </div>
@@ -2493,12 +2493,12 @@
                                 <label for=""> IN TIME</label>
                                 <div class="row">
                                   <!-- IN TIME -->
-                                  <div class="col-md-3" ng-repeat="intime in  player.playerPoints.in track by $index" ng-init="intime=$index">
+                                  <div class="col-md-3" ng-repeat="inn in  player.playerPoints.in track by $index" ng-init="intime=$index">
                                     <label for=""> IN</label>
                                     <div class="input-group">
                                       <span class="cross-team" ng-click="removeField('in','resultKabaddi',teamIndex,playerIndex,intime)"><i class="fa fa-times" aria-hidden="true"></i></span>
                                       <span class="input-group-addon">TIME</span>
-                                      <input type="number" class="form-control" ng-model="matchData.time" min="0" max="120" placeholder="999" aria-label="Product name">
+                                      <input type="number" class="form-control" ng-model="inn.time" min="0" max="1200" placeholder="999" aria-label="Product name">
                                       <span class="input-group-addon">Min</span>
                                     </div>
                                   </div>
@@ -2511,12 +2511,12 @@
                                 <label for=""> OUT TIME</label>
                                 <div class="row">
                                   <!-- OUT TIME  -->
-                                  <div class="col-md-3" ng-repeat="outtime in  player.playerPoints.out track by $index" ng-init="outtime=$index">
+                                  <div class="col-md-3" ng-repeat="outt in  player.playerPoints.out track by $index" ng-init="outtime=$index">
                                     <label for=""> OUT</label>
                                     <div class="input-group">
                                       <span class="cross-team" ng-click="removeField('out','resultKabaddi',teamIndex,playerIndex,outtime)"><i class="fa fa-times" aria-hidden="true"></i></span>
                                       <span class="input-group-addon">TIME</span>
-                                      <input type="number" class="form-control" ng-model="matchData.time" min="0" max="120" placeholder="999" aria-label="Product name">
+                                      <input type="number" class="form-control" ng-model="outt.time" min="0" max="1200" placeholder="999" aria-label="Product name">
                                       <span class="input-group-addon">Min</span>
                                     </div>
                                   </div>
@@ -2538,7 +2538,6 @@
 
                   </div>
                 </div>
-
                 <!-- ****************KABADDI HOLDER END ***************************** -->
 
                 <!-- *******************FOOTBALL HOLDER********************************* -->
@@ -2550,7 +2549,8 @@
                         <!-- TEAM STATUS -->
                         <div class="form-group">
                           <label>Status</label>
-                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultFootball.status" required>
+                          <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.resultFootball.status" ng-disabled="formData.resultFootball.status==='IsCompleted'"
+                            required>
                             <ui-select-match placeholder="Please Enter Status">
                               {{$select.selected}}
                               <!-- {{formData.resultsCombat.status.status}} -->
@@ -2687,6 +2687,16 @@
                         </div>
                       </div>
 
+                      <div class="football-status">
+                        <div class="row">
+                          <div class="col-md-6">
+                            <label><input type="checkbox" ng-model="team.noShow"> No Show</label>
+                          </div>
+                          <div class="col-md-6">
+                            <label><input type="checkbox" ng-model="team.walkover"> Walkover</label>
+                          </div>
+                        </div>
+                      </div>
 
                       <!-- TEAM POINTS -->
                       <div class="form-group team-data-points-holder">
@@ -2759,7 +2769,8 @@
                             <!-- CLEANSHEET -->
                             <div class="col-md-2">
                               <label for="">Clean-sheet</label>
-                              <input type="number" name="cleanSheet" ng-model="team.teamResults.cleanSheet" class="form-control" placeholder="Enter cleansheet">
+                              <!-- <input type="number" name="cleanSheet" ng-model="team.teamResults.cleanSheet" class="form-control" placeholder="Enter cleansheet"> -->
+                              <input style="display:block; margin:10px auto" type="checkbox" ng-model="team.teamResults.cleanSheet">
                             </div>
                             <!-- CLEANSHEET END -->
 
@@ -2893,7 +2904,7 @@
                                   <div class="input-group">
                                     <!-- <span class="cross-team"><i class="fa fa-times" aria-hidden="true"></i></span> -->
                                     <span class="input-group-addon">Time</span>
-                                    <input type="number" class="form-control" ng-model="player.penaltyPoint" placeholder="999" aria-label="Product name">
+                                    <input type="number" class="form-control" ng-model="player.playerPoints.penaltyPoint" placeholder="999" aria-label="Product name">
                                     <span class="input-group-addon">Min</span>
                                   </div>
                                 </div>

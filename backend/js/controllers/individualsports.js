@@ -26,16 +26,18 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
     if (data.length >= 2) {
       $scope.form.keyword = data;
       $scope.viewTable();
+
     } else if (data.length == '') {
       $scope.form.keyword = data;
       $scope.viewTable();
+
     }
   }
   // SEARCH IN TABLE END
 
   $scope.viewTable = function () {
     console.log("in")
-
+    $scope.result = [];
     // console.log("data in table", formValue);
     $scope.url = "Match/getPerSport"
     // $scope.formData = formValue;
@@ -91,9 +93,9 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
           } else {
             resultKnockout.isTeam = false;
           }
-          console.log("data", data);
+          // console.log("data", data);
           $scope.result.push(resultKnockout);
-          console.log($scope.result, "check this");
+          // console.log($scope.result, "check this");
         } else if (data.resultsRacquet) {
           var resultKnockout = {};
           console.log("in Racquet");
@@ -156,7 +158,7 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
           resultKnockout.sportType = "Racquet";
           // console.log("data", data);
           $scope.result.push(resultKnockout);
-          console.log($scope.result, "reddddddddddd")
+          // console.log($scope.result, "reddddddddddd")
         } else if (data.resultQualifyingRound && data.excelType == "qualifying") {
           console.log("in resultQualifyingRound", data);
           var resultKnockout = {};
@@ -182,7 +184,7 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
           // resultKnockout.result = data.resultQualifyingRound.player.result;
           // console.log("data", data);
           $scope.result.push(resultKnockout);
-          console.log(resultKnockout, "naavin")
+          // console.log(resultKnockout, "naavin")
         } else if (data.resultKnockout && data.excelType == "knockout") {
           console.log("in resultQualifyingRound", data);
           var resultKnockout = {};
