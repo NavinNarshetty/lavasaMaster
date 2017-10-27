@@ -3,108 +3,139 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     $scope.template = TemplateService.getHTML("content/school.html");
     TemplateService.title = "Schools"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
-    $scope.search = {};
-    $scope.search.active = false;
-    $scope.filter = {};
-    $scope.filterselected = {};
-    $scope.school = {};
-    $scope.pagination = {};
-    $scope.pagination.pagesize = 20;
-    $scope.filter.pagenumber = 1;
-    $scope.setPage = function (pageNo) {
-        $scope.currentPage = pageNo;
-    };
+    $scope.inputs = {};
+    $scope.searchFilter = {};
 
-    $scope.maxSize = 20;
-    $scope.parseSearch = function (input) {
-        $scope.search.active = false;
-        $scope.filter.pagenumber = 1;
-        if (input === '' || input === null) {
-            $scope.filter.name = undefined;
-            $scope.filter.sfaid = undefined;
-        } else {
-            if (isNaN(input)) {
-                $scope.filter.name = input;
-                $scope.filter.sfaid = undefined;
-            } else {
-                $scope.filter.name = undefined;
-                $scope.filter.sfaid = parseInt(input);
-            }
-            $scope.schools = [];
-            $scope.pagination.total = 0;
-            $scope.pagination.totalpages = 0;
-            $scope.search.active = true;
+    $scope.searchFilter.page = 1;
+    $scope.searchFilter.type = '';
+    $scope.searchFilter.keyword = '';
+    $scope.$on('$stateChangeSuccess', function () {
+        NavigationService.schoolSearch($scope.searchFilter, function (data) {
+            $scope.total = data.data.total;
+        });
+    });
+
+    $scope.searchInTable = function (data) {
+        $scope.searchFilter.page = 1;
+        if (data.length >= 2) {
+            $scope.searchFilter.keyword = data;
+        } else if (data.length === '') {
+            $scope.searchFilter.keyword = data;
         }
-        $scope.submitSearch();
-    };
-    var i = 0;
-    $scope.submitSearch = function () {
-        if ($scope.search.active) {
-            NavigationService.schoolSearch($scope.filter, ++i, function (data, ini) {
-                console.log(data);
-                if (i == ini) {
-                    if (data.value) {
-                        $scope.schools = data.data.data;
-                        console.log("Schools data", $scope.schools);
-                        $scope.pagination.totalpages = data.data.totalpages;
-                        $scope.pagination.total = data.data.total;
-                    }
-                }
-            });
-        } else {
-            NavigationService.getFirstListSchool({
-                year: "2016"
-            }, function (data) {
-                if (data.value !== false) {
-                    $scope.topschools = data.data.data;
-                    //console.log("top school",$scope.topschools);
-                    $scope.count = data.data.count;
-                } else {
-                    $scope.getFirstList = [];
-                }
-            });
-        }
+        $scope.doSearch();
     };
 
-    $scope.changeYear = function () {
-        $scope.filterselected.title = "";
-
-        if ($scope.filter.year == "top20") {
-            $scope.school.showAll = false;
-            $scope.school.showTop20 = false;
-            $scope.submitSearch();
-            $scope.filterselected.title = "SFA MUMBAI " + year16 + " - Top 20 Schools";
-        } else {
-            var constraints = {};
-            constraints.year = null;
-            $scope.filterselected.title = "All Schools";
-            if ($scope.filter.year == '2015') {
-                $scope.filterselected.title = "SFA MUMBAI " + year15;
-                constraints.year = $scope.filter.year;
-            } else if ($scope.filter.year == '2016') {
-                $scope.filterselected.title = "SFA MUMBAI " + year16;
-                constraints.year = $scope.filter.year;
-            }
-            $scope.allSchoolByYear(constraints);
-            $scope.school.showAll = true;
-            $scope.school.showTop20 = true;
-        }
-    };
-
-    $scope.allSchoolByYear = function (constraints) {
-        NavigationService.getSchoolByYear(constraints, function (data) {
-            if (data.value !== false) {
-                $scope.allSchools = data.data.data;
-                $scope.schoolSplit = Math.round($scope.allSchools.length / 2);
-                $scope.schoolsData = _.chunk($scope.allSchools, $scope.schoolSplit);
-            } else {
-                $scope.allSchools = [];
-                $scope.schoolsData = [];
-            }
+    $scope.doSearch = function () {
+        $scope.searchFilter.page = $scope.searchFilter.page++;
+        NavigationService.schoolSearch($scope.searchFilter, function (data) {
+            console.log('school', data);
+            $scope.getSearchData = data.data.results;
+            $scope.maxSize = data.data.options.count;
+            $scope.totalItem = data.data.total;
         });
     };
-    $scope.filter.year = "top20";
-    $scope.changeYear();
+    // $scope.search = {};
+    // $scope.search.active = false;
+    // $scope.filter = {};
+    // $scope.filterselected = {};
+    // $scope.school = {};
+    // $scope.pagination = {};
+    // $scope.pagination.pagesize = 20;
+    // $scope.filter.pagenumber = 1;
+    // $scope.setPage = function (pageNo) {
+    //     $scope.currentPage = pageNo;
+    // };
+
+    // $scope.maxSize = 20;
+    // $scope.parseSearch = function (input) {
+    //     $scope.search.active = false;
+    //     $scope.filter.pagenumber = 1;
+    //     if (input === '' || input === null) {
+    //         $scope.filter.name = undefined;
+    //         $scope.filter.sfaid = undefined;
+    //     } else {
+    //         if (isNaN(input)) {
+    //             $scope.filter.name = input;
+    //             $scope.filter.sfaid = undefined;
+    //         } else {
+    //             $scope.filter.name = undefined;
+    //             $scope.filter.sfaid = parseInt(input);
+    //         }
+    //         $scope.schools = [];
+    //         $scope.pagination.total = 0;
+    //         $scope.pagination.totalpages = 0;
+    //         $scope.search.active = true;
+    //     }
+    //     $scope.submitSearch();
+    // };
+    // var i = 0;
+    // $scope.submitSearch = function () {
+    //     if ($scope.search.active) {
+    //         NavigationService.schoolSearch($scope.filter, ++i, function (data, ini) {
+    //             console.log(data);
+    //             if (i == ini) {
+    //                 if (data.value) {
+    //                     $scope.schools = data.data.data;
+    //                     console.log("Schools data", $scope.schools);
+    //                     $scope.pagination.totalpages = data.data.totalpages;
+    //                     $scope.pagination.total = data.data.total;
+    //                 }
+    //             }
+    //         });
+    //     } else {
+    //         NavigationService.getFirstListSchool({
+    //             year: "2016"
+    //         }, function (data) {
+    //             if (data.value !== false) {
+    //                 $scope.topschools = data.data.data;
+    //                 //console.log("top school",$scope.topschools);
+    //                 $scope.count = data.data.count;
+    //             } else {
+    //                 $scope.getFirstList = [];
+    //             }
+    //         });
+    //     }
+    // };
+
+    // $scope.changeYear = function () {
+    //     $scope.filterselected.title = "";
+
+    //     if ($scope.filter.year == "top20") {
+    //         $scope.school.showAll = false;
+    //         $scope.school.showTop20 = false;
+    //         $scope.submitSearch();
+    //         $scope.filterselected.title = "SFA MUMBAI " + year16 + " - Top 20 Schools";
+    //     } else {
+    //         var constraints = {};
+    //         constraints.year = null;
+    //         $scope.filterselected.title = "All Schools";
+    //         if ($scope.filter.year == '2015') {
+    //             $scope.filterselected.title = "SFA MUMBAI " + year15;
+    //             constraints.year = $scope.filter.year;
+    //         } else if ($scope.filter.year == '2016') {
+    //             $scope.filterselected.title = "SFA MUMBAI " + year16;
+    //             constraints.year = $scope.filter.year;
+    //         }
+    //         $scope.allSchoolByYear(constraints);
+    //         $scope.school.showAll = true;
+    //         $scope.school.showTop20 = true;
+    //     }
+    // };
+
+    // $scope.allSchoolByYear = function (constraints) {
+    //     NavigationService.getSchoolByYear(constraints, function (data) {
+    //         if (data.value !== false) {
+    //             $scope.allSchools = data.data.data;
+    //             $scope.schoolSplit = Math.round($scope.allSchools.length / 2);
+    //             $scope.schoolsData = _.chunk($scope.allSchools, $scope.schoolSplit);
+    //         } else {
+    //             $scope.allSchools = [];
+    //             $scope.schoolsData = [];
+    //         }
+    //     });
+    // };
+    // $scope.filter.year = "top20";
+    // $scope.changeYear();
 });
 
 myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, $uibModal) {

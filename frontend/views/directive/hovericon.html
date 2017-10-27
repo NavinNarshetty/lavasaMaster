@@ -1,0 +1,10 @@
+<li class="hovers" ng-class="{'active':game.active}">
+    <!-- <li class="hovers" ng-class="{'active':game.active}"  ui-sref="{{game.url}}"> -->
+    <figure class="top">
+        <img ng-src="{{game.sportslist.sportsListSubCategory.inactiveimage | serverimage2}}" class="img-responsive iconBlue">
+    </figure>
+    <figure class="bottom">
+        <img ng-src="{{game.sportslist.sportsListSubCategory.image | serverimage2}}" class="img-responsive iconBlue">
+    </figure>
+    <figcaption>{{game.sportslist.sportsListSubCategory.name}}</figcaption>
+</li>

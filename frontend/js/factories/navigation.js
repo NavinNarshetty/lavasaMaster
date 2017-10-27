@@ -155,14 +155,14 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             }
         },
 
-        getSearchDataTeam: function (input, i, callback) {
+        getSearchDataTeam: function (input, callback) {
             $http({
-                url: adminUrl + 'team/searchTeam',
+                url: adminUrl2 + 'profile/searchTeam',
                 method: 'POST',
                 withCredentials: true,
                 data: input
-            }).success(function (data) {
-                callback(data, i);
+            }).then(function (data) {
+                callback(data.data);
             });
         },
 
@@ -251,13 +251,15 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
 
         getStudentProfile: function (id, callback) {
             $http({
-                url: adminUrl + 'student/getOne',
+                url: adminUrl2 + 'profile/getAthleteProfile',
                 method: 'POST',
                 withCredentials: true,
                 data: {
-                    "_id": id
+                    "athleteId": id
                 }
-            }).success(callback);
+            }).then(function (data) {
+                callback(data.data);
+            });
         },
 
         editStudent: function (request, callback) {
@@ -271,23 +273,25 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
 
         getTeamDetail: function (id, callback) {
             $http({
-                url: adminUrl + 'team/getOne',
+                url: adminUrl2 + 'profile/getTeamProfile',
                 method: 'POST',
                 withCredentials: true,
                 data: {
-                    "_id": id
+                    "teamId": id
                 }
-            }).success(callback);
+            }).then(function (data) {
+                callback(data.data);
+            });
         },
 
-        schoolSearch: function (request, i, callback) {
+        schoolSearch: function (request, callback) {
             $http({
-                url: adminUrl + 'school/getLimited',
+                url: adminUrl2 + 'profile/searchSchool',
                 method: 'POST',
                 withCredentials: true,
                 data: request
-            }).success(function (data) {
-                callback(data, i);
+            }).then(function (data) {
+                callback(data.data);
             });
         },
 

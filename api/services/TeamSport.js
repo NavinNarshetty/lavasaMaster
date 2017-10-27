@@ -43,7 +43,11 @@ var schema = new Schema({
     isVideoAnalysis: Boolean
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    'school': {
+        select: ''
+    }
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 schema.plugin(autoIncrement.plugin, {

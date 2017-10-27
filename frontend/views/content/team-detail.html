@@ -14,10 +14,10 @@
                     </div>
                     <div class="col-md-9 col-sm-9 col-xs-9">
                         <div class="team-dt">
-                            <h1 class="color-orange text-up font-semi f26 m-top-zero">team: {{ teamDetails.name | removeSchool:teamDetails.school.name }} {{teamDetails.year}}</h1>
-                            <h2 class="color-white text-up margin0 f20 m-top-zero">{{ teamDetails.school.name }}</h2>
+                            <h1 class="color-orange text-up font-semi f26 m-top-zero">team: {{ teamDetails.teamName | removeSchool:teamDetails.school }} {{teamDetails.year}}</h1>
+                            <h2 class="color-white text-up margin0 f20 m-top-zero">{{ teamDetails.school }}</h2>
                             <h2 class="color-white text-up f20 m-top-zero">
-                                <span class="color-orange">SFA ID:</span> {{teamDetails.sfaid}}</h2>
+                                <span class="color-orange">SFA ID:</span> {{teamDetails.teamId}}</h2>
                         </div>
                     </div>
                 </div>
@@ -31,7 +31,7 @@
                 <div class="row">
                     <div class="col-md-3 col-sm-4 col-xs-12">
                         <div class="sf-school-logo2 sf-relative text-center border-r">
-                            <img src="{{teamDetails.school.logo | uploadpath }}" alt="" class="img-border2 img-responsive">
+                            <img src="{{teamDetails.schoolLogo | serverimage2 }}" alt="" class="img-border2 img-responsive">
                             <div class="sigh-seconds sf-absulate">
                                 <!-- <img src="img/sf-right-big.png" alt="" class="img-responsive"> -->
                             </div>
@@ -39,10 +39,10 @@
                     </div>
                     <div class="col-md-9 col-sm-8 col-xs-12 text-c-m">
                         <div class="team-dt">
-                            <h1 class="color-orange text-up font-semi f26 m-top-zero">team: {{ teamDetails.name | removeSchool:teamDetails.school.name }} {{teamDetails.year}}</h1>
-                            <h2 class="color-white text-up margin0 f20 m-top-zero">{{ teamDetails.school.name }}</h2>
+                            <h1 class="color-orange text-up font-semi f26 m-top-zero">team: {{ teamDetails.teamName | removeSchoolWithDash:teamDetails.school }} {{teamDetails.year}}</h1>
+                            <h2 class="color-white text-up margin0 f20 m-top-zero">{{ teamDetails.school }}</h2>
                             <h2 class="color-white text-up f20 m-top-zero">
-                                <span class="color-orange">SFA ID:</span> {{teamDetails.sfaid}}</h2>
+                                <span class="color-orange">MATCH ID:</span> {{teamDetails.teamId}}</h2>
                         </div>
                     </div>
                 </div>
@@ -83,18 +83,19 @@
                     <div class="col-md-3 col-sm-4" ng-repeat="players in teamDetails.players track by $index">
                         <a ui-sref="student-profile({id:players._id})">
                             <div class="school-sec">
-                                <img ng-if="teamDetails.captain._id == players._id" src="img/sf-capt.png" alt="" class="mt-min-18">
+                                <img ng-if="players.isCaptain == true" src="img/sf-capt.png" alt="" class="mt-min-18">
+                                <!-- <img ng-if="players.isGoalKeeper == true" src="img/sf-capt.png" alt="" class="mt-min-18"> -->
                                 <div class="stu-img text-center sf-relative w130">
-                                    <img ng-src="{{players.profilePic | uploadpath}}" alt="">
+                                    <img ng-src="{{players.profilePic | serverimage2}}" alt="">
                                     <div class="sigh-pro sf-absulate">
                                         <!-- <img src="img/sf-right.png" alt=""> -->
                                     </div>
                                 </div>
                                 <div class="stu-name text-center">
-                                    <h4 class="color-orange text-up font-semi">{{players.name}}</h4>
+                                    <h4 class="color-orange text-up font-semi">{{players.playerName}}</h4>
                                 </div>
                                 <div class="stu-id text-center">
-                                    <h4 class="color-blue">SFA ID : {{players.sfaid}}</h4>
+                                    <h4 class="color-blue">SFA ID : {{players.sfaId}}</h4>
                                 </div>
                             </div>
                         </a>

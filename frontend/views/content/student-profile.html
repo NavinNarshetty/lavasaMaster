@@ -6,17 +6,17 @@
                 <div class="row">
                     <div class="col-md-offset-2 col-md-3 col-sm-4 col-xs-12">
                         <div class="sf-school-logo sf-relative text-center border-r ">
-                            <img ng-src="{{ studentProfile.profilePic | uploadpath:200:200:'cover' }}" alt="" class="img-border img-responsive">
+                            <img ng-src="{{ athlete.photograph | serverimage2:200:200:'cover' }}" alt="" class="img-border img-responsive">
                             <div class="sigh-second sf-absulate l6">
-                                <img ng-if="studentProfile.status" ng-src="img/sf-right-org.png" alt="" class="w30-main">
+                                <img ng-if="athlete.status == 'Verified'" ng-src="img/sf-right-org.png" alt="" class="w30-main">
                             </div>
                         </div>
                     </div>
                     <div class="col-md-7 col-xs-12 col-sm-8 text-c-m">
                         <div class="sf-school-data text-c-m">
                             <div class="scl-title display-inline ">
-                                <h3 class="color-orange font-semi text-up f18-main">{{studentProfile.name}}</h3>
-                                <h4 class="color-white text-up f16-main">{{studentProfile.school.name}}</h4>
+                                <h3 class="color-orange font-semi text-up f18-main">{{fullName}}</h3>
+                                <h4 class="color-white text-up f16-main">{{schoolName}}</h4>
                             </div>
                             <!-- <div class="display-inline cup">
                                 <img src="img/sf-cup.png" alt="">
@@ -24,22 +24,23 @@
                         </div>
                         <div class="data-list custom-li color-white mt15 display-inline text-c-m mar0-main">
                             <ul class="padding0 sf-list-padding">
-                                <li class="border-right-2">
+                                <!-- <li class="border-right-2">
                                     <div class="f16-zero">
                                         <p class="text-up color-orange" ng-model="abc">age group</p>
                                         <p>{{(studentProfile.dob | ageFilter) || '-'}}</p>
                                     </div>
-                                </li>
+                                </li> -->
                                 <li class="border-right-2">
                                     <div class="f16-zero">
                                         <p class="text-up color-orange">SFA ID</p>
-                                        <p>{{studentProfile.sfaid || '-'}}</p>
+                                        <p>{{athlete.sfaId || '-'}}</p>
                                     </div>
                                 </li>
                                 <li class="border-right-2">
                                     <div class="f16-zero">
                                         <p class="text-up color-orange" data-id="age">Age</p>
-                                        <p class="text-up">{{studentProfile.dob | ageYearFilter }}
+                                        <p class="text-up">{{athlete.age}}
+                                            <!-- <p class="text-up">{{athlete.dob | ageYearFilter }} -->
                                             <span ng-if="studentProfile.dob">years</span>
                                         </p>
                                     </div>
@@ -47,7 +48,7 @@
                                 <li class="border-right-2">
                                     <div class="f16-zero">
                                         <p class="text-up color-orange">gender</p>
-                                        <p class="text-up">{{studentProfile.gender || '-'}}</p>
+                                        <p class="text-up">{{athlete.gender || '-'}}</p>
                                     </div>
                                 </li>
                             </ul>
@@ -56,13 +57,24 @@
                             <div class="sf-list ptop-per">
                                 <span class="text-center text-up color-orange f-mcell-20">Medals Won</span>
                                 <ul class="padd-left padding0 mt5 second-border">
+                                    <!-- <li ng-repeat="medal in medals">
+                                        <div class="medal-num">
+                                            <div class="img-medal display-inline">
+                                                <img src="img/{{medal.badge}}" alt="">
+                                            </div>
+                                            <div class="display-inline f16-zero">
+                                                <p class="margin0 color-orange text-center">{{medal.count || '0' }}</p>
+                                                <p class="margin0 color-white">{{medal.name}}</p>
+                                            </div>
+                                        </div>
+                                    </li> -->
                                     <li>
                                         <div class="medal-num">
                                             <div class="img-medal display-inline">
                                                 <img src="img/sf-gold-big.png" alt="">
                                             </div>
                                             <div class="display-inline f16-zero">
-                                                <p class="margin0 color-orange text-center">{{studentMedal.gold && studentMedal.gold || '0' }}</p>
+                                                <p class="margin0 color-orange text-center">{{goldCount|| '0' }}</p>
                                                 <p class="margin0 color-white">Gold</p>
                                             </div>
                                         </div>
@@ -73,7 +85,7 @@
                                                 <img src="img/sf-silver-big.png" alt="">
                                             </div>
                                             <div class="display-inline f16-zero">
-                                                <p class="margin0 color-orange text-center">{{studentMedal.silver && studentMedal.silver || '0' }}</p>
+                                                <p class="margin0 color-orange text-center">{{silverCount || '0' }}</p>
                                                 <p class="margin0 color-white">Silver</p>
                                             </div>
                                         </div>
@@ -84,7 +96,7 @@
                                                 <img src="img/sf-bronze-big.png" alt="">
                                             </div>
                                             <div class="display-inline f16-zero">
-                                                <p class="margin0 color-orange text-center">{{studentMedal.bronze && studentMedal.bronze || '0' }}</p>
+                                                <p class="margin0 color-orange text-center">{{bronzeCount || '0' }}</p>
                                                 <p class="margin0 color-white">Bronze</p>
                                             </div>
                                         </div>
@@ -93,8 +105,7 @@
                             </div>
                             <div class="btn-common mt25">
                                 <button type="button" name="button" class="text-up btn-orange padd-btn" ui-sref="student-bio({'id':studentid})">athlete bio</button>
-                                <button type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-hide="studentSport.length==0 || medalData.data.length==0"
-                                    ng-click="exportCertificate(studentProfile,SPORTDATA,medalData); ">Certificate</button>
+                                <button type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-if="certificate" ng-click="exportCertificate(studentProfile,SPORTDATA,medalData); ">Certificate</button>
                             </div>
                         </div>
                     </div>
@@ -109,13 +120,13 @@
             <div class="row">
                 <div class="col-md-offset-2 col-md-8 col-sm-offset-1 col-sm-10 col-xs-12">
                     <div class="head-banner-city">
-                        <div class="box-color-participate">
+                        <!-- <div class="box-color-participate">
                             <h2 class="font-semi font-FjallaOne">Participated at SFA MUMBAI 2015-16 / 2016-17</h2>
+                        </div> -->
+                        <div ng-class="sfaCity == 'Hyderabad'?'box-color-hyderabad':'box-color-mumbai'">
+                            <h2 class="font-semi font-FjallaOne">Competing at SFA {{sfaCity}} {{eventYear}}</h2>
                         </div>
-                        <!-- <div class="box-color-hyderabad">
-                            <h2 class="font-semi font-FjallaOne">Competing at SFA HYDERABAD 2017-18</h2>
-                        </div>
-                        <div class="box-color-mumbai">
+                        <!-- <div class="box-color-mumbai" ng-if="sfaCity == 'Mumbai'">
                             <h2 class="font-semi font-FjallaOne">Competing at SFA MUMBAI 2017-18</h2>
                         </div> -->
                     </div>
@@ -132,48 +143,25 @@
                 <div class="display-inline">
                     <div class="sfa-select">
                         <select ng-change="changeYear()" class="select" ng-model="filter.year">
-                            <option value="2015">{{year15}}</option>
-                            <option value="2016">{{year16}}</option>
+                            <option value="2015">2015</option>
+                            <option value="2016">2016</option>
+                            <option value="2017">2017-18</option>
                         </select>
                         <span class="only-border"></span>
                     </div>
                 </div>
                 <h4 class="color-blue text-up font-semi mt25">sports participated</h4>
-                <h5 ng-if="!(studentSport.length > 0) && filter.year == '2015'" class="mt25">{{studentSport === undefined && 'Loading ..' || 'No Sports Participated in '+year15}}</h5>
-                <h5 ng-if="!(studentSport.length > 0) && filter.year == '2016'" class="mt25">{{studentSport === undefined && 'Loading ..' || 'No Sports Participated in '+year16}}</h5>
+                <h5 ng-if="!(sport.length > 0)" class="mt25">{{sport === undefined && 'Loading ..' || 'No Sports Participated'}}</h5>
                 <div class="sf-relative mt15">
                     <div class="sport-icon-list sf-list blue-cat">
                         <ul>
-                            <hovericon game="game" ng-repeat="game in studentSport" ng-click="sportsSelected(game);">
+                            <hovericon game="game" ng-repeat="game in sport" ng-click="sportsSelected(game);">
                             </hovericon>
                         </ul>
                     </div>
                 </div>
             </div>
-            <!-- <div class="text-center pad-fr-mob" ng-if="!filterStatistics.sport">
-              <h3 class="color-blue">It is mandatory for each participant to carry both, AGE PROOF and SCHOOL ID to avoid disqualification from the tournament. </h3>
-              <h3 class="color-blue">Kindly note school ID wont be considered as age proof. </h3>
-            </div> -->
         </div>
-        <!-- <div class="row mt25">
-            <div class="col-md-12">
-                <div class="text-center">
-                    <div class="tab-list sf-list text-up">
-                        <ul class="padding0 margin0">
-                            <li><a href="" ng-click="tabchange('record',1)" class="{{classa}}">
-sfa track record
-</a></li>
-                            <li><a href="" ng-click="tabchange('gallery',2)" class="{{classb}}">
-gallery
-</a></li>
-                            <li><a href="" ng-click="tabchange('blog',3)" class="{{classc}}">
-student’s blog
-</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div> -->
         <div class="box-content bx-mob" ng-if="filterStatistics.sport">
             <div class="">
                 <div class="row">
@@ -197,29 +185,6 @@ student’s blog
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row mt25"  ng-if="dropdowns.category.length > 0">
-                    <div class="col-md-offset-2 col-md-3 col-sm-6 col-xs-12 text-c-m">
-                        <h4 class="text-up color-blue display-inline">Year</h4>
-                        <div class="display-inline">
-                            <div class="sfa-select">
-                              <select class="select" ng-change="getStats()" ng-model="filterStatistics.year">
-                                  <option value="2015">2015</option>
-                                  <option value="2016">2016</option>
-                              </select>
-                                <span class="only-border"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-5 col-sm-6 col-xs-12 text-c-m">
-                        <h4 class="text-up color-blue display-inline">Category</h4>
-                        <div class="display-inline">
-                            <div class="sfa-select">
-                              <select class="select" ng-change="getStats()" ng-model="filterStatistics.category" ng-options="item.name as item.name for item in dropdowns.category"></select>
-                                <span class="only-border"></span>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
                 <div class="row mt25" ng-if="filterStatistics.sport">
                     <div class="col-md-12 mt25 main-over">
                         <div class="table-statistics w700">
@@ -294,9 +259,6 @@ student’s blog
                                                         "Qualifying Round" && stat.qualifyinground.result) || ""}}</span>
                                                 </div>
                                                 <div class="replay-img " ng-if="stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyingknockout.video">
-                                                    <!-- <a ng-if="stat.knockout.video != 'YTU' && stat.heat.video != 'YTU' && stat.league.video != 'YTU' && stat.leagueknockout.video != 'YTU' && stat.qualifyinground.video != 'YTU' && stat.qualifyingknockout.video != 'YTU' && stat.knockout.video != 'NA' && stat.heat.video != 'NA' && stat.league.video != 'NA' && stat.leagueknockout.video != 'NA' && stat.qualifyinground.video != 'NA' && stat.qualifyingknockout.video != 'NA'"
-                                                        class="various fancybox.iframe" href="https://www.youtube.com/embed/{{stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyingknockout.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
-                                                        rel="gallery1" fancybox><img src="img/sf-play.png" alt=""></a> -->
                                                     <a class="various fancybox.iframe" ng-if="stat.year == '2015' && stat.knockout.video != 'YTU' && stat.heat.video != 'YTU' && stat.league.video != 'YTU' && stat.leagueknockout.video != 'YTU' && stat.qualifyinground.video != 'YTU' && stat.qualifyingknockout.video != 'YTU' && stat.knockout.video != 'NA' && stat.heat.video != 'NA' && stat.league.video != 'NA' && stat.leagueknockout.video != 'NA' && stat.qualifyinground.video != 'NA' && stat.qualifyingknockout.video != 'NA'"
                                                         href="https://www.youtube.com/embed/{{stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyinground.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
                                                         rel="gallery1" fancybox>
@@ -320,64 +282,6 @@ student’s blog
                                             <div ng-if="stat.qualifyinground.position">{{stat.qualifyinground.position}}</div>
                                         </td>
                                     </tr>
-                                    <!-- <tr class="other-bg">
-                                        <td><span>2016</span></td>
-                                        <td><span class="text-up">U-10 <br> GIRLS <br> SINGLES</span></td>
-                                        <td class="text-up">Soheb Shaikh</td>
-                                        <td class="text-up"><img src="img/sf-cup-mini.png" alt="" class="table-img">Rahul Patil
-                                            <p>Don Bosco School</p>
-                                        </td>
-                                        <td>
-                                            <div class="table-data display-inline text-center text-up">
-                                                <p>5/11</p>
-                                            </div>
-                                            <div class="table-data display-inline text-center text-up">
-                                                <p>5/11</p>
-                                            </div>
-                                            <div class="table-data display-inline text-center text-up">
-                                                <p>5/11</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-center display-inline ver-mid ">
-                                                <div class="sf-play">
-                                                    <span>Won</span>
-                                                </div>
-                                                <div class="replay-img ">
-                                                    <a href=""><img src="img/sf-play.png" alt=""></a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr class="other-bg">
-                                        <td><span>2016</span></td>
-                                        <td><span class="text-up">U-10 <br> GIRLS <br> SINGLES</span></td>
-                                        <td class="text-up">Soheb Shaikh</td>
-                                        <td class="text-up"><img src="img/sf-cup-mini.png" alt="" class="table-img">Rahul Patil
-                                            <p>Don Bosco School</p>
-                                        </td>
-                                        <td>
-                                            <div class="table-data display-inline text-center text-up">
-                                                <p>5/11</p>
-                                            </div>
-                                            <div class="table-data display-inline text-center text-up">
-                                                <p>5/11</p>
-                                            </div>
-                                            <div class="table-data display-inline text-center text-up">
-                                                <p>5/11</p>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="text-center display-inline ver-mid ">
-                                                <div class="sf-play">
-                                                    <span>Won</span>
-                                                </div>
-                                                <div class="replay-img ">
-                                                    <a href=""><img src="img/sf-play.png" alt=""></a>
-                                                </div>
-                                            </div>
-                                        </td>
-                                    </tr> -->
                                 </tbody>
                             </table>
                             <div ng-if="!(studentStats.length > 0) " class="text-center">
@@ -385,362 +289,12 @@ student’s blog
                                 <div ng-if="studentStats.length === 0"> {{participatedSports[filterStatistics.year].length>0 && 'Athlete registered but did not participate.
                                     No statistics and videos available.' || 'No Data found.'}}
                                     <span ng-repeat="sport in participatedSports[filterStatistics.year]">{{$index !== participatedSports[filterStatistics.year].length-1 && ',' || ''}}&nbsp;</span>
-                                    <!-- <span ng-repeat="sport in participatedSports[filterStatistics.year]">{{sport.sportslist.name}}&nbsp;{{sport.firstcategory.name}}&nbsp;{{sport.agegroup.name}}{{$index !== participatedSports[filterStatistics.year].length-1 && ',' || '.'}}&nbsp;</span> -->
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <!-- <div class="record" ng-show="tab=='record'">
-                <div class="row mt25">
-                    <div class="col-md-12 text-center">
-                        <h4 class="text-up color-blue display-inline">Year</h4>
-                        <div class="display-inline">
-                            <div class="sfa-select">
-                                <select class="select">
-                                    <option value="2016">2016</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2016">2016</option>
-                                </select>
-                                <span class="only-border"></span>
-                            </div>
-                        </div>
-                    </div>
-
-
-                </div>
-                <div class="row">
-                    <div class="col-md-offset-1 col-md-10">
-                        <div class="sport-slider mt40 bg-none">
-                            <flex-slider class="carousel" flex-slide="slide in games track by $index" animation="slide">
-                                <li>
-                                    <div class="record-table">
-                                        <table class="tables text-up margin-auto">
-                                            <thead class="text-set-cap">
-                                                <tr>
-                                                    <th>
-                                                        sports
-                                                    </th>
-                                                    <th class="color-orange">
-                                                        table tennis
-                                                    </th>
-                                                    <th class="color-orange">
-                                                        aquatics
-                                                    </th>
-
-                                                    <th class="color-orange">
-                                                        basketball
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="text-set-cap">
-
-
-                                                <tr>
-                                                    <td>
-                                                        school
-                                                    </td>
-                                                    <td>
-                                                        Dhirubhai Ambani Intertional School
-                                                    </td>
-                                                    <td>
-                                                        Jamnabai Narsee School
-                                                    </td>
-                                                    <td>
-                                                        Shishuranjan School
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        age group
-                                                    </td>
-                                                    <td>
-                                                        U- 12
-                                                    </td>
-                                                    <td>
-                                                        U- 12
-                                                    </td>
-                                                    <td>
-                                                        U- 12
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        category
-                                                    </td>
-                                                    <td>
-                                                        Doubles
-                                                    </td>
-                                                    <td>
-                                                        <span>50 m Butterfly<br>200 m Individual Medley<br>100 m Breaststroke</span>
-                                                    </td>
-                                                    <td>
-                                                        Doubles
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        result
-                                                    </td>
-                                                    <td>
-                                                        2<sup>nd</sup>
-                                                    </td>
-                                                    <td>
-                                                        <span>1 <sup>st</sup> - in 50 m Butterfly<br>5 <sup>th</sup> - 200 m Individual Medley<br> 2 <sup>nd</sup> - 100 m Breaststroke</span>
-                                                    </td>
-                                                    <td>No show</td>
-                                                </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </li>
-                            </flex-slider>
-                        </div>
-                        <div class="text-center">
-                            <div class="total-medals-count">
-                                <div class="display-inline">
-                                    <h4 class="margin0 color-blue text-up">total medals won</h4>
-                                </div>
-                                <div class="sf-list display-inline stu-data ">
-                                    <ul class="padd-left padding0 mt5">
-                                        <li>
-                                            <div class="medal-num">
-                                                <div class="img-medal display-inline">
-                                                    <img src="img/sf-gold-sec.png" alt="">
-                                                </div>
-                                                <div class="display-inline">
-                                                    <p class="margin0 color-blue text-center f16">2</p>
-
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="medal-num">
-                                                <div class="img-medal display-inline ">
-                                                    <img src="img/sf-silver-sec.png" alt="">
-                                                </div>
-                                                <div class="display-inline">
-                                                    <p class="margin0 color-blue text-center f16">2</p>
-
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="medal-num">
-                                                <div class="img-medal display-inline">
-                                                    <img src="img/sf-bronze-sec.png" alt="">
-                                                </div>
-                                                <div class="display-inline">
-                                                    <p class="margin0 color-blue text-center f16">2</p>
-
-                                                </div>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="gallery" ng-show="tab=='gallery'">
-                <div class="row">
-                    <div class="col-md-offset-3 col-md-3">
-                        <h4 class="text-up color-blue display-inline">sport</h4>
-                        <div class="display-inline">
-                            <div class="sfa-select">
-                                <select class="select">
-                                    <option value="All">All</option>
-                                    <option value="Table Tennis">Table Tennis</option>
-                                    <option value="squash">squash</option>
-                                    <option value="swimming">swimming</option>
-                                </select>
-                                <span class="only-border"></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-3">
-                        <h4 class="text-up color-blue display-inline">year</h4>
-                        <div class="display-inline">
-                            <div class="sfa-select">
-                                <select class="select">
-                                    <option value="2016">2016</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2016">2016</option>
-                                    <option value="2016">2016</option>
-                                </select>
-                                <span class="only-border"></span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="text-center mt25">
-                        <div class="tab-list sf-list text-up">
-                            <ul class="padding0 margin0">
-                                <li><a href="" ng-click="tabchanges('photos',1)" class="{{classp}}">
-photos
-</a></li>
-                                <li><a href="" ng-click="tabchanges('videos',2)" class="{{classv}}">
-match videos
-</a></li>
-
-                            </ul>
-                        </div>
-                        <hr class="hr-padding">
-                    </div>
-                </div>
-                <div class="row" ng-show="tabs=='photos'">
-                    <div class="col-md-3 mt15" ng-repeat="data in photos track by $index">
-                        <a href="{{data}}" fancybox-box><img ng-src="{{data}}" alt="" class="img-responsive width100"></a>
-                    </div>
-                </div>
-
-                <div class="row mt25" ng-show="tabs=='videos'">
-                    <div class="col-md-3 mt25" ng-repeat="data in video track by $index">
-                        <a class="various fancybox.iframe" fancybox href="https://www.youtube.com/embed/pIPashZ8S2Q?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
-                            <div class="videow-box">
-                                <div class="video-img">
-                                    <img ng-src="{{data.icon}}" alt="" class="img-responsive width100">
-                                </div>
-                                <div class="video-name">
-                                    <h5 class="text-up color-blue font-semi">{{data.name}}</h5>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-            </div>
-            <div class="blog" ng-show="tab=='blog'">
-                <div class="data-box" style="text-align:center;">
-                    <p>Sport For All (SFA) cannot be held responsible for the details of the student's achievements in other tournaments. SFA does not guarantee the authenticity of the below mentioned triumphs.</p>
-                </div>
-                <div class="row">
-                    <div class="table-statistics mt15">
-                        <table class="table">
-                            <thead>
-                                <tr class="text-up color-white bg-table">
-                                    <th>
-                                        <span>date</span>
-                                    </th>
-                                    <th>
-                                        <span>sport</span>
-                                    </th>
-                                    <th>
-                                        <span>tournament</span>
-                                    </th>
-                                    <th>
-                                        <span>CATEGORY</span>
-                                    </th>
-                                    <th>
-                                        <span>OPPONENT NAME</span>
-                                    </th>
-                                    <th>
-                                        <span>score</span>
-                                    </th>
-                                    <th>
-                                        <span>result</span>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr style="background:transparent;">
-                                    <td><span>23 <sup class="text-set-cap">rd</sup> May, 2015</span></td>
-                                    <td><span class="text-up">table Tennis</span></td>
-                                    <td><span class="text-up">mumbai school <br>sports association</span></td>
-                                    <td class="text-up">U-10
-                                        <br>GIRLS
-                                        <br>SINGLES</td>
-                                    <td class="text-up">Rahul Patil
-                                        <p>Don Bosco School</p>
-                                    </td>
-                                    <td>
-                                        <div class="table-data display-inline text-center text-up">
-
-                                            <p>5/11</p>
-                                        </div>
-                                        <div class="table-data display-inline text-center text-up">
-
-                                            <p>5/11</p>
-                                        </div>
-                                        <div class="table-data display-inline text-center text-up">
-
-                                            <p>5/11</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span>2 <sup class="text-set-cap">nd</sup> <br><a href="" class="color-orange text-underline">Upload
-Certificate</a></span>
-                                    </td>
-                                </tr>
-                                <tr style="background:transparent;">
-                                    <td><span>23 <sup class="text-set-cap">rd</sup> May, 2015</span></td>
-                                    <td><span class="text-up">table Tennis</span></td>
-                                    <td><span class="text-up">mumbai school <br>sports association</span></td>
-                                    <td class="text-up">U-10
-                                        <br>GIRLS
-                                        <br>SINGLES</td>
-                                    <td class="text-up">Rahul Patil
-                                        <p>Don Bosco School</p>
-                                    </td>
-                                    <td>
-                                        <div class="table-data display-inline text-center text-up">
-
-                                            <p>5/11</p>
-                                        </div>
-                                        <div class="table-data display-inline text-center text-up">
-
-                                            <p>5/11</p>
-                                        </div>
-                                        <div class="table-data display-inline text-center text-up">
-
-                                            <p>5/11</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span>2 <sup class="text-set-cap">nd</sup> <br><a href="" class="color-orange text-underline">Upload
-    Certificate</a></span>
-                                    </td>
-                                </tr>
-                                <tr style="background:transparent;">
-                                    <td><span>23 <sup class="text-set-cap">rd</sup> May, 2015</span></td>
-                                    <td><span class="text-up">table Tennis</span></td>
-                                    <td><span class="text-up">mumbai school <br>sports association</span></td>
-                                    <td class="text-up">U-10
-                                        <br>GIRLS
-                                        <br>SINGLES</td>
-                                    <td class="text-up">Rahul Patil
-                                        <p>Don Bosco School</p>
-                                    </td>
-                                    <td>
-                                        <div class="table-data display-inline text-center text-up">
-
-                                            <p>5/11</p>
-                                        </div>
-                                        <div class="table-data display-inline text-center text-up">
-
-                                            <p>5/11</p>
-                                        </div>
-                                        <div class="table-data display-inline text-center text-up">
-
-                                            <p>5/11</p>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <span>2 <sup class="text-set-cap">nd</sup> <br><a href="" class="color-orange text-underline">Upload
-  Certificate</a></span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div> -->
         </div>
     </div>
 </section>

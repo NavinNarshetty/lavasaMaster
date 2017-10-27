@@ -14,13 +14,12 @@
         <div class="row">
             <div class="col-md-12 col-xs-12">
                 <div class="search-title text-center">
-                    <h3 class="color-blue text-up font-semi f162">search from <span class="color-orange">{{count}}</span> teams</h3>
+                    <h3 class="color-blue text-up font-semi f162">search from
+                        <span class="color-orange">{{total}}</span> teams</h3>
                 </div>
                 <div class="mt15 text-center" ng-class="{'border-bottom':inputs.search}">
                     <form class="">
-                        <!-- <input type="text" class="search-input" name="q" value="Type school name" ng-model="search">
-                        <input type="image" value="Search" src="img/sfa-search.png" class="search-btn" ng-click="getSearchById(idSearch.search);"> -->
-                        <input type="text" class="search-input" name="q" value="Type student name" placeholder="Type team name or ID" ng-change="parseSearch(inputs.search);"
+                        <input type="text" class="search-input" name="q" value="Type student name" placeholder="Type team name or ID" ng-change="searchInTable(inputs.search);"
                             ng-model="inputs.search">
                         <input type="image" value="Search" src="img/sfa-search.png" class="search-btn" ng-click="doSearch();">
                     </form>
@@ -29,26 +28,27 @@
         </div>
         <div class="row" ng-if="inputs.search">
             <div class="text-center mt40">
-                <h3 class="font-semi color-orange text-up">{{getSearchData.total || '0'}} Search Results</h3>
+                <h3 class="font-semi color-orange text-up">{{totalItem || '0'}} Search Results</h3>
             </div>
-            <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="data in getSearchData.data" ng-if="getSearchData.data.length > 0">
+            <div class="col-md-3 col-sm-6 col-xs-12" ng-repeat="data in getSearchData | orderBy:'sport.sportslist.sportsListSubCategory.name'"
+                ng-if="getSearchData.length > 0">
                 <a ui-sref="team-detail({id:data._id})">
                     <div class="school-sec">
                         <!-- <img src="img/sf-cl.png" alt="" class="mt-min-18"> -->
                         <div class="stu-img text-center sf-relative w100p ovr-fl">
-                            <img ng-src="{{data.image | uploadpath}}" alt="" class="mx-width">
+                            <img ng-src="{{data.profile | serverimage2}}" alt="" class="mx-width">
                             <div class="sigh-pro2 sf-absulate">
                                 <!-- <img ng-show="data.status" ng-src="img/sf-right-org.png" alt=""> -->
                             </div>
                         </div>
-                        <div class="stu-name text-center tm-pdl">
-                            <h4 class="color-blue text-up f162">{{data.name | removeSchool:data.school.name | letterLimit : 30}}</h4>
+                        <div class="stu-name text-center tm-pdl" title="{{data.name | removeSchoolWithDash:data.schoolName}}">
+                            <h4 class="color-blue text-up f162">{{data.name | removeSchoolWithDash:data.schoolName | letterLimit : 30}}</h4>
                         </div>
-                        <div class="stu-name text-center tm-pdl">
-                            <h4 class="color-d text-up f162">{{data.school.name | letterLimit : 25}}</h4>
+                        <div class="stu-name text-center tm-pdl" title="{{data.schoolName}}">
+                            <h4 class="color-d text-up f162">{{data.schoolName | letterLimit : 20}}</h4>
                         </div>
                         <div class="stu-id text-center main-f">
-                            <h4 class="color-white f162">SFA ID: {{data.sfaid}}</h4>
+                            <h4 class="color-white f162">MATCH ID: {{data.teamId}}</h4>
                         </div>
                     </div>
                 </a>
@@ -56,9 +56,9 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="float-right sf-list">
-                        <nav aria-label="Page navigation" ng-if="inputs.search && getSearchData.totalpages > 1">
-                            <uib-pagination ng-change="doSearch()" total-items="getSearchData.total" ng-model="searchFilter.pagenumber" items-per-page="searchFilter.pagesize"
-                                force-ellipses="true" max-size="maxSize" class="pagination-sm" boundary-links="true"></uib-pagination>
+                        <nav aria-label="Page navigation" ng-if="inputs.search && totalItem > 1">
+                            <uib-pagination ng-change="doSearch()" total-items="totalItem" ng-model="searchFilter.page" items-per-page="maxSize" class="pagination-sm"
+                                max-size="template.pageMax" class="pagination-sm" boundary-links="true" force-ellipses="true"></uib-pagination>
                         </nav>
                     </div>
                 </div>

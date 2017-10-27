@@ -29,7 +29,7 @@ schema.plugin(deepPopulate, {
             select: '_id firstName middleName surname school atheleteSchoolName sfaId gender age dob city'
         },
         'sportsListSubCategory': {
-            select: '_id name'
+            select: '_id name inactiveimage image'
         }
     }
 });

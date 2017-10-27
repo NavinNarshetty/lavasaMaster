@@ -4,57 +4,44 @@ myApp.controller('TeamCtrl', function ($scope, TemplateService, NavigationServic
     TemplateService.title = "Team"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
     $scope.oneAtATime = true;
+
     $scope.inputs = {};
-    $scope.status = {
-        isCustomHeaderOpen: false,
-        isFirstOpen: true,
-        isFirstDisabled: false
-    };
-    $scope.setPage = function (pageNo) {
-        $scope.currentPage = pageNo;
-    };
 
-    $scope.maxSize = 20;
-
-    NavigationService.countTeam(function (data) {
-        $scope.count = data.data;
-    });
-    $scope.getsearch = false;
     $scope.searchFilter = {};
-    $scope.searchFilter.pagenumber = 1;
-    $scope.searchFilter.pagesize = 12;
-    $scope.searchFilter.search = "";
-    $scope.parseSearch = function (input) {
-        $scope.searchFilter.pagenumber = 1;
 
-        if (input === '' || input === null) {
-            $scope.searchFilter.search = undefined;
-            $scope.searchFilter.sfaid = undefined;
-            $scope.getsearch = false;
-        } else {
-            $scope.getsearch = true;
-
-            if (isNaN(input)) {
-                $scope.searchFilter.search = input;
-                $scope.searchFilter.sfaid = undefined;
-            } else {
-                $scope.searchFilter.search = undefined;
-                $scope.searchFilter.sfaid = parseInt(input);
-            }
-
+    $scope.searchFilter.page = 1;
+    $scope.searchFilter.type = '';
+    $scope.searchFilter.keyword = '';
+    $scope.searchInTable = function (data) {
+        $scope.searchFilter.page = 1;
+        if (data.length >= 2) {
+            $scope.searchFilter.keyword = data;
+        } else if (data.length === '') {
+            $scope.searchFilter.keyword = data;
         }
         $scope.doSearch();
     };
-    var i = 0;
-    $scope.doSearch = function () {
-        NavigationService.getSearchDataTeam($scope.searchFilter, ++i, function (data, ini) {
-            if (i == ini) {
-                $scope.getSearchData = data.data;
 
-            }
+    $scope.$on('$stateChangeSuccess', function () {
+        NavigationService.getSearchDataTeam($scope.searchFilter, function (data) {
+            $scope.total = data.data.total;
+        });
+    });
+    $scope.doSearch = function () {
+        $scope.searchFilter.page = $scope.searchFilter.page++;
+        NavigationService.getSearchDataTeam($scope.searchFilter, function (data) {
+            console.log('athlete', data);
+            $scope.getSearchData = data.data.results;
+            $scope.maxSize = data.data.options.count;
+            $scope.totalItem = data.data.total;
         });
     };
 
+    // $scope.status = {
+    //     isCustomHeaderOpen: false,
+    //     isFirstOpen: true,
+    //     isFirstDisabled: false
+    // };
 });
 
 myApp.controller('TeamDetailCtrl', function ($scope, TemplateService, NavigationService, $stateParams, $timeout, $uibModal) {
@@ -177,7 +164,7 @@ myApp.controller('TeamDetailCtrl', function ($scope, TemplateService, Navigation
 
     $scope.teamDetail = function () {
         NavigationService.getTeamDetail($stateParams.id, function (data) {
-            console.log(data.data);
+            console.log(data);
             if (data.value) {
                 $scope.teamDetails = data.data;
                 console.log($scope.teamDetails);
@@ -188,79 +175,79 @@ myApp.controller('TeamDetailCtrl', function ($scope, TemplateService, Navigation
         });
     };
     $scope.teamDetail();
-    $scope.getStats = function () {
-        $scope.filterStatistics.team = $stateParams.id;
-        $scope.teamStats = undefined;
-        NavigationService.getStatsForTeam($scope.filterStatistics, function (response) {
-            if (response.value) {
-                $scope.teamStats = response.data;
-                console.log($scope.teamStats);
-                var drawF = "";
-                if ($scope.teamStats[0].drawFormat == 'Knockout') {
-                    drawF = "knockout";
-                } else if ($scope.teamStats[0].drawFormat == 'League cum Knockout') {
-                    drawF = "leagueknockout"
-                } else if ($scope.teamStats[0].drawFormat == 'Qualifying Knockout') {
-                    drawF = "qualifyingknockout"
-                }
-                if ($scope.teamStats) {
-                    if ($scope.teamStats[0].drawFormat == 'Knockout' || $scope.teamStats[0].drawFormat == 'League cum Knockout' || $scope.teamStats[0].drawFormat == 'Qualifying Knockout') {
-                        _.each($scope.teamStats, function (key) {
-                            key.opponent = {};
-                            key.self = {};
-                            if (key[drawF].participantType == 'player') {
-                                if (key[drawF][key[drawF].participantType + '1']._id == $stateParams.id) {
-                                    key.opponent.detail = key[drawF][key[drawF].participantType + '2'];
-                                    key.self.detail = key[drawF][key[drawF].participantType + '1'];
-                                    key.opponent.result = key[drawF]["result" + key[drawF].participantType + '2'];
-                                    key.self.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '1'] : key[drawF]["result1"];
-                                } else {
-                                    key.opponent.detail = key[drawF][key[drawF].participantType + '1'];
-                                    key.self.detail = key[drawF][key[drawF].participantType + '2'];
-                                    key.opponent.result = key[drawF]["result" + key[drawF].participantType + '1'];
-                                    key.self.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '2'] : key[drawF]["result2"];
-                                }
-                            } else {
-                                if (key[drawF][key[drawF].participantType + '1']._id == $stateParams.id) {
-                                    key.opponent.detail = key[drawF][key[drawF].participantType + '2'];
-                                    key.self.detail = key[drawF][key[drawF].participantType + '1'];
-                                    key.opponent.result = key[drawF]["result" + key[drawF].participantType + '2'];
-                                    key.self.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '1'] : key[drawF]["result1"];
-                                } else {
-                                    key.opponent.detail = key[drawF][key[drawF].participantType + '1'];
-                                    key.self.detail = key[drawF][key[drawF].participantType + '2'];
-                                    key.opponent.result = key[drawF]["result" + key[drawF].participantType + '1'];
-                                    key.self.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '2'] : key[drawF]["result2"];
-                                }
-                            }
-                        });
-                    } else if ($scope.teamStats[0].drawFormat == 'Heats') {
-                        _.each($scope.teamStats, function (key) {
-                            key.self = {};
-                            _.each(key.heat.heats, function (single) {
-                                var schoolid = single.team._id;
-                                if (schoolid == $stateParams.id) {
-                                    key.self = single;
-                                }
+    // $scope.getStats = function () {
+    //     $scope.filterStatistics.team = $stateParams.id;
+    //     $scope.teamStats = undefined;
+    //     NavigationService.getStatsForTeam($scope.filterStatistics, function (response) {
+    //         if (response.value) {
+    //             $scope.teamStats = response.data;
+    //             console.log($scope.teamStats);
+    //             var drawF = "";
+    //             if ($scope.teamStats[0].drawFormat == 'Knockout') {
+    //                 drawF = "knockout";
+    //             } else if ($scope.teamStats[0].drawFormat == 'League cum Knockout') {
+    //                 drawF = "leagueknockout"
+    //             } else if ($scope.teamStats[0].drawFormat == 'Qualifying Knockout') {
+    //                 drawF = "qualifyingknockout"
+    //             }
+    //             if ($scope.teamStats) {
+    //                 if ($scope.teamStats[0].drawFormat == 'Knockout' || $scope.teamStats[0].drawFormat == 'League cum Knockout' || $scope.teamStats[0].drawFormat == 'Qualifying Knockout') {
+    //                     _.each($scope.teamStats, function (key) {
+    //                         key.opponent = {};
+    //                         key.self = {};
+    //                         if (key[drawF].participantType == 'player') {
+    //                             if (key[drawF][key[drawF].participantType + '1']._id == $stateParams.id) {
+    //                                 key.opponent.detail = key[drawF][key[drawF].participantType + '2'];
+    //                                 key.self.detail = key[drawF][key[drawF].participantType + '1'];
+    //                                 key.opponent.result = key[drawF]["result" + key[drawF].participantType + '2'];
+    //                                 key.self.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '1'] : key[drawF]["result1"];
+    //                             } else {
+    //                                 key.opponent.detail = key[drawF][key[drawF].participantType + '1'];
+    //                                 key.self.detail = key[drawF][key[drawF].participantType + '2'];
+    //                                 key.opponent.result = key[drawF]["result" + key[drawF].participantType + '1'];
+    //                                 key.self.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '2'] : key[drawF]["result2"];
+    //                             }
+    //                         } else {
+    //                             if (key[drawF][key[drawF].participantType + '1']._id == $stateParams.id) {
+    //                                 key.opponent.detail = key[drawF][key[drawF].participantType + '2'];
+    //                                 key.self.detail = key[drawF][key[drawF].participantType + '1'];
+    //                                 key.opponent.result = key[drawF]["result" + key[drawF].participantType + '2'];
+    //                                 key.self.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '1'] : key[drawF]["result1"];
+    //                             } else {
+    //                                 key.opponent.detail = key[drawF][key[drawF].participantType + '1'];
+    //                                 key.self.detail = key[drawF][key[drawF].participantType + '2'];
+    //                                 key.opponent.result = key[drawF]["result" + key[drawF].participantType + '1'];
+    //                                 key.self.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '2'] : key[drawF]["result2"];
+    //                             }
+    //                         }
+    //                     });
+    //                 } else if ($scope.teamStats[0].drawFormat == 'Heats') {
+    //                     _.each($scope.teamStats, function (key) {
+    //                         key.self = {};
+    //                         _.each(key.heat.heats, function (single) {
+    //                             var schoolid = single.team._id;
+    //                             if (schoolid == $stateParams.id) {
+    //                                 key.self = single;
+    //                             }
 
-                                // if (key.heat.participantType == "team") {
-                                //     if (key.team._id == $stateParams.id) {
-                                //         key.self = single;
-                                //     }
-                                // } else {
-                                //     if (single.player._id == single.team._id) {
-                                //         key.self = single;
-                                //     }
-                                // }
-                            });
-                        });
-                    }
-                }
-            } else {
-                $scope.teamStats = [];
-            }
-        });
-    };
+    //                             // if (key.heat.participantType == "team") {
+    //                             //     if (key.team._id == $stateParams.id) {
+    //                             //         key.self = single;
+    //                             //     }
+    //                             // } else {
+    //                             //     if (single.player._id == single.team._id) {
+    //                             //         key.self = single;
+    //                             //     }
+    //                             // }
+    //                         });
+    //                     });
+    //                 }
+    //             }
+    //         } else {
+    //             $scope.teamStats = [];
+    //         }
+    //     });
+    // };
 
     $scope.videoNA = function () {
         var modalInstance = $uibModal.open({

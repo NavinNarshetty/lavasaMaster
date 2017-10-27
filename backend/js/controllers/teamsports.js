@@ -339,6 +339,7 @@ myApp.controller('DetailTeamCtrl', function ($scope, TemplateService, Navigation
     NavigationService.getOneMatch($scope.matchData, function (data) {
       if (data.value == true) {
         $scope.formData = data.data;
+        console.log($scope.formData, 'detail team data')
       } else {
         toastr.error("error");
       }

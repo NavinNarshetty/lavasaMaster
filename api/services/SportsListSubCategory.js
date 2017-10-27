@@ -18,7 +18,9 @@ var schema = new Schema({
         index: true
     },
     sportType: String,
-    maxSelect: Number
+    maxSelect: Number,
+    inactiveimage: String,
+    image: String
 
 });
 

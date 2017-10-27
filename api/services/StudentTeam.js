@@ -35,7 +35,7 @@ schema.plugin(deepPopulate, {
             select: '_id sportslist gender ageGroup maxTeamPlayers minTeamPlayers weight eventPdf'
         },
         "sport.sportslist.sportsListSubCategory": {
-            select: '_id name'
+            select: '_id name inactiveimage image'
         }
     }
 });
