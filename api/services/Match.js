@@ -11984,9 +11984,6 @@ var model = {
                                                             result.result = player.time;
                                                         }
                                                     });
-                                                    // if (player.athleteId.equals(n._id)) {
-                                                    //     result.result = player.time;
-                                                    // }
                                                 });
                                             } else if (matchData[0].resultQualifyingRound) {
                                                 if (n.middleName) {
