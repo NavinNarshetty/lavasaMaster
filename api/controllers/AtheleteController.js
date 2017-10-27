@@ -78,7 +78,7 @@ var controller = {
 
     getTargetAthlete: function (req, res) {
         if (req.body) {
-            Athelete.getTargetAthlete(req.body, res.callback);
+            Athelete.getTargetAthlete(req.body, res);
         } else {
             res.json({
                 value: false,

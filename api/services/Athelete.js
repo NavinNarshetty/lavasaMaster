@@ -3116,7 +3116,7 @@ var model = {
 
     },
 
-    getTargetAthlete: function (data, callback) {
+    getTargetAthlete: function (data, res) {
         async.waterfall([
                 function (callback) {
                     athlete = [];
@@ -3185,6 +3185,11 @@ var model = {
                             callback(null, targetAthlete);
                         }
                     });
+                },
+                function (targetAthlete, callback) {
+                    Athelete.generateTargetAthlete(match, function (err, singleData) {
+                        Config.generateExcel("targetAthlete", singleData, res);
+                    });
                 }
             ],
             function (err, data2) {
@@ -3200,6 +3205,33 @@ var model = {
                 }
             });
 
+    },
+
+    generateTargetAthlete: function (match, callback) {
+        async.concatSeries(match, function (athleteData, callback) {
+                var obj = {};
+                if (athleteData.sfaId) {
+                    obj["SFA ID"] = athleteData.sfaId;
+                } else {
+                    obj["SFA ID"] = "";
+                }
+                if (athleteData.middleName) {
+                    obj.NAME = athleteData.fistName + " " + athleteData.middleName + " " + athleteData.surname;
+                } else {
+                    obj.NAME = athleteData.firstName + " " + athleteData.surname;
+                }
+                obj["EMAIL ID"] = athleteData.email;
+                obj["MOBILE NO."] = athleteData.mobile;
+                if (!_.isEmpty(athleteData.school)) {
+                    obj.SCHOOL = athleteData.school.name;
+                } else {
+                    obj.SCHOOL = athleteData.school.atheleteSchoolName;
+                }
+                callback(null, obj);
+            },
+            function (err, singleData) {
+                callback(null, singleData);
+            });
     },
 };
 module.exports = _.assign(module.exports, exports, model);
