@@ -223,13 +223,18 @@ var model = {
                 async.concatSeries(found.results, function (mainData, callback) {
                         console.log("mainData", mainData);
                         var player = {};
+                        player._id = mainData._id;
+                        player.sfaId = mainData.sfaId;
                         if (mainData.middleName) {
                             player.fullName = mainData.firstName + " " + mainData.middleName + " " + mainData.surname;
                         } else {
                             player.fullName = mainData.firstName + " " + mainData.surname;
                         }
-                        player.sfaId = mainData.sfaId;
-                        player.profilePic = mainData.photograph;
+                        if (mainData.photograph) {
+                            player.profilePic = mainData.photograph;
+                        } else {
+                            player.profilePic = '';
+                        }
                         callback(null, player);
                     },
                     function (err, playerData) {
@@ -257,7 +262,7 @@ var model = {
     },
 
     searchSchool: function (data, callback) {
-        var maxRow = Config.maxRow;
+        var maxRow = 18;
 
         var page = 1;
         if (data.page) {
@@ -268,7 +273,7 @@ var model = {
             field: data.field,
             filters: {
                 keyword: {
-                    fields: ['firstName', 'middleName', 'surname', 'sfaId'],
+                    fields: ['schoolName'],
                     term: data.keyword
                 }
             },
@@ -278,22 +283,67 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        Registration.find(data.term)
-            .sort({
-                createdAt: -1
-            })
-            .order(options)
-            .keyword(options)
-            .deepPopulate()
-            .page(options, function (err, found) {
-                if (err) {
-                    callback(err, null);
-                } else if (_.isEmpty(found)) {
-                    callback(null, "Data is empty");
+        var profile = {};
+        profile.results = [];
+        async.waterfall([
+            function (callback) {
+                Registration.find(data.term)
+                    .sort({
+                        createdAt: -1
+                    })
+                    .order(options)
+                    .keyword(options)
+                    .deepPopulate()
+                    .page(options, function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, "Data is empty");
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+            },
+            function (found, callback) {
+                async.concatSeries(found.results, function (mainData, callback) {
+                        console.log("mainData", mainData);
+                        var player = {};
+                        player._id = mainData._id;
+                        if (mainData.sfaID) {
+                            player.sfaId = mainData.sfaID;
+                        } else {
+                            player.sfaId = '';
+                        }
+                        player.schoolName = mainData.schoolName;
+                        if (mainData.schoolLogo) {
+                            player.schoolLogo = mainData.schoolLogo;
+                        } else {
+                            player.schoolLogo = '';
+                        }
+                        callback(null, player);
+                    },
+                    function (err, playerData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            profile.results = playerData;
+                            profile.options = found.options;
+                            profile.total = found.total;
+                            callback(null, profile);
+                        }
+                    });
+            }
+        ], function (err, data2) {
+            if (err) {
+                callback(null, []);
+            } else if (data2) {
+                if (_.isEmpty(data2)) {
+                    callback(null, data2);
                 } else {
-                    callback(null, found);
+                    callback(null, data2);
                 }
-            });
+            }
+        });
     },
 
     searchTeam: function (data, callback) {
@@ -307,7 +357,7 @@ var model = {
             field: data.field,
             filters: {
                 keyword: {
-                    fields: ['firstName', 'middleName', 'surname', 'sfaId'],
+                    fields: ['schoolName', 'name', 'teamId'],
                     term: data.keyword
                 }
             },
@@ -474,15 +524,13 @@ var model = {
                             });
                         },
                         function (found, callback) {
-                            // console.log("found", found);
                             if (_.isEmpty(found)) {
                                 callback(null, medals);
                             } else {
                                 async.eachSeries(found, function (singleData, callback) {
                                         if (!_.isEmpty(singleData.player)) {
-                                            // console.log("player", singleData.player);
                                             async.eachSeries(singleData.player, function (player, callback) {
-                                                    if (player === data.athleteId.toString()) {
+                                                    if (player.equals(data.athleteId)) {
                                                         medals.push(singleData);
                                                     }
                                                     callback(null, singleData);
@@ -538,7 +586,7 @@ var model = {
         profile.players = [];
         async.waterfall([
                 function (callback) {
-                    var deepSearch = "studentTeam.studentId team.school";
+                    var deepSearch = "studentTeam.studentId school";
                     TeamSport.findOne({
                         _id: data.teamId
                     }).lean().deepPopulate(deepSearch).exec(function (err, found) {
@@ -551,15 +599,14 @@ var model = {
                                 profile.teamName = found.name;
                                 profile.teamId = found.teamId;
                                 profile.school = found.schoolName;
+                                profile.schoolLogo = found.school.schoolLogo;
                                 callback(null, found);
                             }
                         }
                     });
                 },
                 function (found, callback) {
-                    console.log("found", found);
                     async.concatSeries(found.studentTeam, function (n, callback) {
-                            console.log("n", n);
                             var player = {};
                             if (n.studentId.middleName) {
                                 player.playerName = n.studentId.firstName + " " + n.studentId.middleName + " " + n.studentId.surname;
@@ -568,6 +615,9 @@ var model = {
                             }
                             player.sfaId = n.studentId.sfaId;
                             player.profilePic = n.studentId.photograph;
+                            player.isCaptain = n.isCaptain;
+                            player.isGoalKeeper = n.isGoalKeeper;
+                            player._id = n.studentId._id;
                             callback(null, player);
                         },
                         function (err, playerData) {

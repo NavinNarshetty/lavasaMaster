@@ -95,6 +95,16 @@ myApp.filter('myFilter', function () {
         };
     })
 
+    .filter('removeSchoolWithDash', function () {
+        return function (value, school) {
+            if (value) {
+                return value.replace(school + "-", "");
+            } else {
+                return "";
+            }
+        };
+    })
+
     .filter('knockoutRoundName', function () {
         return function (value) {
             if (value) {

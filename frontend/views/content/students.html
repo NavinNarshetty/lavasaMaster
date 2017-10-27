@@ -44,21 +44,20 @@
             <div class="col-md-12 col-xs-12">
                 <div class="">
                     <div class="col-md-3 mt15" ng-repeat="data in getSearchData" ng-if="getSearchData.length > 0">
-                        <pre>{{data|json}}</pre>
                         <a ui-sref="student-profile({id:data._id})">
                             <div class="school-sec">
                                 <!-- <img src="img/sf-cl.png" alt="" class="mt-min-18" ng-if="$index==0"> -->
                                 <div class="stu-img text-center sf-relative w130">
-                                    <img ng-src="{{data.profilePic |uploadpath:130:130:'cover'}}" alt="">
+                                    <img ng-src="{{data.profilePic |serverimage2:130:130:'cover'}}" alt="">
                                     <div class="sigh-pro sf-absulate">
                                         <!-- <img ng-show="data.status" ng-src="img/sf-right-org.png"  alt="" class="w30-main"> -->
                                     </div>
                                 </div>
                                 <div class="stu-name text-center">
-                                    <h4 class="color-orange text-up font-semi">{{data.name}}</h4>
+                                    <h4 class="color-orange text-up font-semi">{{data.fullName}}</h4>
                                 </div>
                                 <div class="stu-id text-center">
-                                    <h4 class="color-blue">SFA ID: {{data.sfaid}}</h4>
+                                    <h4 class="color-blue">SFA ID: {{data.sfaId}}</h4>
                                 </div>
                             </div>
                         </a>
