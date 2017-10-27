@@ -14,20 +14,15 @@
       <div class="widget">
         <div class="table-area">
           <div class="widget-title">
-            <div class="pull-right">
+            <div class="pull-left">
               <span class="btn btn-primary" ng-click="generateExcel(false,true)"><i class="fa fa-download"></i>&nbsp;Sample Excel</span>
               <span class="btn btn-primary" ng-click="generateExcel(true,true)"><i class="fa fa-download"></i>&nbsp;Sample Press Excel</span>
-              <span class="btn btn-success media-uploadholder">
-              <button>Choose File</button>
-                <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();" class="medi-excel-button">CHOOSE</upload-image>
-             </span>
               <span class="btn btn-primary" ng-click="generateExcel(false,false)"><i class="fa fa-download"></i>&nbsp;Gallery Excel</span>
               <span class="btn btn-primary" ng-click="generateExcel(true,false)"><i class="fa fa-download"></i>&nbsp;Press Excel</span>
-
-
-
             </div>
-            <h3> All Media </h3>
+            <div class="upload-button-media pull-right">
+              <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();" class="">CHOOSE</upload-image>
+            </div>
           </div>
           <div class="table-responsive">
             <table class="table">
