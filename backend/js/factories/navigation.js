@@ -356,6 +356,12 @@ myApp.factory('NavigationService', function ($http) {
                 callback(data);
             });
         },
+        generateMediaExcel: function (url, data, callback) {
+            $http.post(adminurl + url, data).then(function (data) {
+                // data = data.data;
+                callback(data);
+            });
+        },
         // generateAthleteExcelWithData: function (data, callback) {
         //     console.log('from Controller', data);
         //     $http.get(adminurl + 'Athelete/generateExcel', data).then(function (data) {

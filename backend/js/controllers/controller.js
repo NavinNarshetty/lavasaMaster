@@ -4438,6 +4438,22 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         $scope.menutitle = NavigationService.makeactive("Media List");
         TemplateService.title = $scope.menutitle;
         $scope.navigation = NavigationService.getnav();
+        $scope.form = {};
+        $scope.excelUploaded = function () {
+            NavigationService.uploadExcel("Media/uploadExcel", $scope.form, function (data) {
+                console.log(data);
+                $scope.data = data.data;
+            });
+        };
+
+        $scope.generateExcel = function (press, sample) {
+            $scope.url = "media/generateExcel";
+            NavigationService.generateMediaExcel($scope.url, {
+                'press': press
+            }, function (data) {
+                window.location.href = adminurl + $scope.url + "?press=" + press + "&sample=" + sample;
+            });
+        }
 
     })
     .controller('DetailMedalCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, toastr) {

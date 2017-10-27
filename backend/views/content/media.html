@@ -15,13 +15,17 @@
         <div class="table-area">
           <div class="widget-title">
             <div class="pull-right">
-              <a class="btn btn-primary" href="{{adminURL}}media/sampleExcelDownload"><i class="fa fa-download"></i>&nbsp;Sample Excel</a>
-              <a class="btn btn-primary" href="{{adminURL}}media/sampleExcelDownloadPress"><i class="fa fa-download"></i>&nbsp;Sample Press Excel</a>
-
-
-              <span class="btn btn-success" ui-sref="excel-upload({controller:'match',funcName:'uploadExcelMatch',view:'uploadFilter'})">
-                Upload-Excel
+              <span class="btn btn-primary" ng-click="generateExcel(false,true)"><i class="fa fa-download"></i>&nbsp;Sample Excel</span>
+              <span class="btn btn-primary" ng-click="generateExcel(true,true)"><i class="fa fa-download"></i>&nbsp;Sample Press Excel</span>
+              <span class="btn btn-success media-uploadholder">
+              <button>Choose File</button>
+                <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();" class="medi-excel-button">CHOOSE</upload-image>
              </span>
+              <span class="btn btn-primary" ng-click="generateExcel(false,false)"><i class="fa fa-download"></i>&nbsp;Gallery Excel</span>
+              <span class="btn btn-primary" ng-click="generateExcel(true,false)"><i class="fa fa-download"></i>&nbsp;Press Excel</span>
+
+
+
             </div>
             <h3> All Media </h3>
           </div>
@@ -60,6 +64,33 @@
             <uib-pagination total-items="media.total" ng-model="pagination.pagenumber" items-per-page="20"></uib-pagination>
             <!-- <uib-pagination ng-show="medias.length > 0" ng-change="reload();" total-items="media.total" ng-model="pagination.pagenumber"
                 items-per-page="20"></uib-pagination> -->
+          </div>
+          <div ng-if="data">
+            <h5>Upload Status:</h5>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th width="100">Row #</th>
+                  <th>Status</th>
+                  <th width="200">Total Entries: {{data.length}}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="d in data">
+                  <td>
+                    <span class="success" ng-if="!d.error"><i class="fa fa-check-circle"></i> Row {{$index+2}}</span>
+                    <span class="danger" ng-if="d.error"><i class="fa fa-times-circle"></i> Row {{$index+2}}</span>
+                  </td>
+                  <td colspan="2">
+                    <span ng-if="!d.error">Entry successful!</span>
+                    <span ng-if="d.error">
+                                <span>Entry failed!</span>
+                    <pre class="danger-pre"><code>{{d | json:4}}</code></pre>
+                    </span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>
