@@ -2476,9 +2476,9 @@ myApp.controller('AthleteCtrl', function ($scope, TemplateService, NavigationSer
     }
 
     $scope.targetAthleteExcel = function () {
-        $scope.param = {};
+        var param = {};
         param.file = "targetAthlete"
-        $scope.url = "Athelete/getTargetAthlete"
+        var url = "Athelete/getTargetAthlete"
         NavigationService.generateExcelWithoutData(url, param, function (data) {});
     }
     $scope.generateExcel = function (formdata) {

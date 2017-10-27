@@ -3170,7 +3170,7 @@ var model = {
                 function (registerdAthlete, callback) {
                     var targetAthlete = [];
                     var deepSearch = "school";
-                    Athelete.find().lean().exec(function (err, athlete) {
+                    Athelete.find().lean().deepPopulate(deepSearch).exec(function (err, athlete) {
                         if (err) {
                             callback(err, null);
                         } else if (_.isEmpty(athlete)) {
@@ -3187,7 +3187,7 @@ var model = {
                     });
                 },
                 function (targetAthlete, callback) {
-                    Athelete.generateTargetAthlete(match, function (err, singleData) {
+                    Athelete.generateTargetAthlete(targetAthlete, function (err, singleData) {
                         Config.generateExcel("targetAthlete", singleData, res);
                     });
                 }
@@ -3213,7 +3213,7 @@ var model = {
                 if (athleteData.sfaId) {
                     obj["SFA ID"] = athleteData.sfaId;
                 } else {
-                    obj["SFA ID"] = "";
+                    obj["SFA ID"] = "-";
                 }
                 if (athleteData.middleName) {
                     obj.NAME = athleteData.fistName + " " + athleteData.middleName + " " + athleteData.surname;
@@ -3221,12 +3221,13 @@ var model = {
                     obj.NAME = athleteData.firstName + " " + athleteData.surname;
                 }
                 obj["EMAIL ID"] = athleteData.email;
-                obj["MOBILE NO."] = athleteData.mobile;
+                obj["MOBILE"] = athleteData.mobile;
                 if (!_.isEmpty(athleteData.school)) {
                     obj.SCHOOL = athleteData.school.name;
                 } else {
-                    obj.SCHOOL = athleteData.school.atheleteSchoolName;
+                    obj.SCHOOL = athleteData.atheleteSchoolName;
                 }
+                obj["STATUS"] = athleteData.status;
                 callback(null, obj);
             },
             function (err, singleData) {
