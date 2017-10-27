@@ -446,7 +446,7 @@ var model = {
                     if (_.isEmpty(data2)) {
                         callback(null, data2);
                     } else {
-                        profile.sport = _.uniqBy(profile.sport, "_id");
+                        profile.sport = _.uniqBy(profile.sport, "sportslist.sportsListSubCategory.name");
                         console.log("length", profile.sport.length);
                         callback(null, profile);
                     }
