@@ -23,12 +23,12 @@
     <!--OUTER DIV HOLDER-->
     <div class="time-trial-winnerholder">
       <!--WINNER HEAD-->
-      <div class="time-trial-winnerhead">
+      <div class="time-trial-winnerhead" ng-if="winnerTable.length>0">
         <h3 class="d-fjalla-one sport-type-head text-uppercase m-clear">Winners</h3>
       </div>
       <!--END WINNER HEAD-->
       <!--WINNER TABLE-->
-      <div class="time-trial-winnertable q-orange-table table-responsive">
+      <div class="time-trial-winnertable q-orange-table table-responsive" ng-if="winnerTable.length>0">
         <table class="table-draws-schedule table-four">
           <thead>
             <tr>
@@ -60,25 +60,30 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="win in timeTable | limitTo:3 track by $index">
+            <tr ng-repeat="win in winnerTable|orderBy:'rank' | limitTo:3 track by $index">
               <td>
                 <div class="text-capitalize">
-                  {{$index+1}}
+                  <div class="qualifying-final-medals">
+                    <img ng-src="/img/medal-icon/{{win.medaltype}}-blue.png" alt="" class="img-responsive">
+                  </div>
                 </div>
               </td>
               <td>
-                <div class="text-capitalize">
+                <div class="text-capitalize" ng-if="eventName === 'Swimming 4x50m Medley Relay'|| eventName==='Swimming 4x50m Freestyle Relay'">
+                  {{win.teamId |filterConcate : win.school | truncate :40}}
+                </div>
+                <div class="text-capitalize" ng-if="eventName!='Swimming 4x50m Medley Relay' && eventName!='Swimming 4x50m Freestyle Relay'">
                   {{win.name}}
                 </div>
               </td>
               <td ng-if="eventName!='Swimming 4x50m Medley Relay' && eventName!='Swimming 4x50m Freestyle Relay'">
                 <div class="text-capitalize">
-                  {{win.schoolname}}
+                  {{win.school}}
                 </div>
               </td>
               <td>
                 <div class="text-capitalize">
-                  {{win.time}}
+                  {{win.result}}
                 </div>
               </td>
             </tr>
@@ -161,7 +166,7 @@
                       </td>
                       <td>
                         <div class="text-capitalize">
-                          {{qualify.teamId}} - {{qualify.schoolName}}
+                          {{qualify.teamId | filterConcate : qualify.schoolName | truncate :40}}
                         </div>
                       </td>
                       <td>

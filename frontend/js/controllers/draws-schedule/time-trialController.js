@@ -125,9 +125,20 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
         errorService.errorCode(data, function (allData) {
           if (!allData.message) {
             if (allData.value) {
-              $scope.winnerDoubles = allData.data;
+              $scope.winnerTable = allData.data;
+              _.each($scope.winnerTable, function (key) {
+                if (key.medaltype === 'gold') {
+                  key.rank = 1;
+                }
+                if (key.medaltype === 'silver') {
+                  key.rank = 2;
+                }
+                if (key.medaltype === 'bronze') {
+                  key.rank = 3;
+                }
+              });
 
-              console.log("  $scope.winnerDoubles", $scope.winnerDoubles);
+              console.log("  $scope.winnerTable", $scope.winnerTable);
             }
           } else {
             toastr.error(allData.message, 'Error Message');

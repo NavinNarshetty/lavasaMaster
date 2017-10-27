@@ -62,7 +62,17 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
   }];
 
   $scope.constraints = {};
+  $scope.swissLimit = 3;
   $scope.pdfdata = {};
+  $scope.showMoreSwiss = function (bool) {
+    if (bool === true) {
+      $scope.swissLimit = 5000;
+      $scope.showMoreRecords = true;
+    } else if (bool === false) {
+      $scope.swissLimit = 3;
+      $scope.showMoreRecords = false;
+    }
+  }
 
   $scope.getSportSpecificRounds = function () {
     if ($stateParams.id) {
@@ -134,6 +144,39 @@ myApp.controller('swissLeagueCtrl', function ($scope, TemplateService, $state, N
     }
   };
   $scope.getSportSpecificRounds();
+
+  $scope.getWinners = function () {
+    if ($stateParams.id) {
+      $scope.constraints.sport = $stateParams.id;
+      NavigationService.getAllWinners($scope.constraints, function (data) {
+        errorService.errorCode(data, function (allData) {
+          if (!allData.message) {
+            if (allData.value) {
+              $scope.swissWinners = allData.data;
+              _.each($scope.swissWinners, function (value) {
+                if (value.medaltype === 'gold') {
+                  value.rank = 1;
+                }
+                if (value.medaltype === 'silver') {
+                  value.rank = 2;
+                }
+                if (value.medaltype === 'bronze') {
+                  value.rank = 3;
+                }
+              });
+              console.log("  $scope.swissWinners", $scope.swissWinners);
+            }
+          } else {
+            toastr.error(allData.message, 'Error Message');
+          }
+
+        });
+
+
+      });
+    }
+  }
+  $scope.getWinners();
 
 
   $scope.showMoreData = function (bool, index) {

@@ -14,7 +14,7 @@
     <!-- OUTER HOLDER DIV  -->
     <div class="swiss-league-holder">
       <!-- FINAL STANDING TABLE -->
-      <div class="swiss-league-finaltable q-orange-table" hidden>
+      <div class="swiss-league-finaltable q-orange-table" ng-if="swissWinners.length>0">
         <div class="table-responsive">
           <!--SWISS LEAGUE HEAD-->
           <div class="swiss-league-finalhead">
@@ -48,10 +48,10 @@
               </tr>
             </thead>
             <tbody>
-              <tr ng-repeat="final in swissTable | limitTo :3 track by $index ">
+              <tr ng-repeat="final in swissWinners|orderBy:'rank'| limitTo :swissLimit track by $index ">
                 <td>
                   <div class="text-capitalize swissleague-standingholder">
-                    <img src="img/medal-icon/gold-blue.png" alt="" class="img-responsive">
+                    <img src="img/medal-icon/{{final.medaltype}}-blue.png" alt="" class="img-responsive">
                   </div>
                 </td>
                 <td>
@@ -61,12 +61,12 @@
                 </td>
                 <td>
                   <div class="text-center">
-                    <p class="m-clear text-capitalize ">{{final.schoolname}}</p>
+                    <p class="m-clear text-capitalize ">{{final.school}}</p>
                   </div>
                 </td>
                 <td>
                   <div>
-                    {{final.points}}
+                    {{final.result}}
                   </div>
                 </td>
               </tr>
@@ -74,8 +74,13 @@
           </table>
         </div>
         <!-- VIEW MORE -->
-        <div class="swiss-league-viewmore text-right ">
-          <button class="btn sport-btn-blue-outline text-uppercase ">View More</button>
+        <div class="swiss-league-viewmore text-right" ng-click=showMoreSwiss(true) ng-if="!showMoreRecords && swissWinners.length>3">
+          <button class="btn sport-btn-blue-outline text-uppercase "> View More</button>
+
+        </div>
+        <div class="swiss-league-viewmore text-right" ng-click=showMoreSwiss(false) ng-if="showMoreRecords">
+          <button class="btn sport-btn-blue-outline text-uppercase ">View Less</button>
+
         </div>
         <!-- VIEW MORE END -->
       </div>
