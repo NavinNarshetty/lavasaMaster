@@ -11976,9 +11976,17 @@ var model = {
                                                 result.medaltype = singleData.medalType;
                                                 _.each(matchData[0].resultHeat.players, function (player) {
                                                     console.log("player", player, "n", n._id);
-                                                    if (player.athleteId.equals(n._id)) {
-                                                        result.result = player.time;
-                                                    }
+                                                    IndividualSport.find({
+                                                        _id: player.id,
+                                                        athleteId: n._id
+                                                    }).lean.exec(function (err, found) {
+                                                        if (!_.isEmpty(found)) {
+                                                            result.result = player.time;
+                                                        }
+                                                    });
+                                                    // if (player.athleteId.equals(n._id)) {
+                                                    //     result.result = player.time;
+                                                    // }
                                                 });
                                             } else if (matchData[0].resultQualifyingRound) {
                                                 if (n.middleName) {
