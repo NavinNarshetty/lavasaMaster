@@ -11977,7 +11977,7 @@ var model = {
                                                             result.school = singleData.school[0].schoolName;
                                                             result.profile = n.photograph;
                                                             result.medaltype = singleData.medalType;
-                                                            _.each(matchData[0].resultHeat.players, function (player) {
+                                                            async.each(matchData[0].resultHeat.players, function (player, callback) {
                                                                 console.log("player", player, "n", n._id);
                                                                 IndividualSport.findOne({
                                                                     _id: player.id,
@@ -11986,10 +11986,12 @@ var model = {
                                                                     if (!_.isEmpty(found)) {
                                                                         result.result = player.time;
                                                                     }
+                                                                    callback(null, result);
 
                                                                 });
+                                                            }, function (err) {
+                                                                callback(null, result);
                                                             });
-                                                            callback(null, result);
                                                         } else if (matchData[0].resultQualifyingRound) {
                                                             if (n.middleName) {
                                                                 result.name = n.firstName + " " + n.middleName + " " + n.surname;
@@ -12032,7 +12034,6 @@ var model = {
                                                             }, function (err) {
                                                                 callback(null, result);
                                                             });
-                                                            // callback(null, result);
                                                         } else if (matchData[0].resultShooting) {
                                                             if (n.middleName) {
                                                                 result.name = n.firstName + " " + n.middleName + " " + n.surname;
