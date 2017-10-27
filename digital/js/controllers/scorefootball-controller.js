@@ -454,6 +454,10 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
                 $scope.matchError = data.data.error;
                 console.log($scope.matchError,'error');
                 toastr.error('Invalid MatchID. Please check the MatchID entered.', 'Error');
+                $state.go('league-knockout', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
               }
                 $scope.match = data.data;
                 $scope.match.matchId = $scope.matchData.matchId;

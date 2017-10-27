@@ -29,6 +29,10 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
           $scope.matchError = data.data.error;
           console.log($scope.matchError, 'error');
           toastr.error('Invalid MatchID. Please check the MatchID entered.', 'Error');
+          $state.go('knockout-team', {
+            drawFormat: $stateParams.drawFormat,
+            id: $stateParams.sport
+          });
         }
         $scope.match = data.data;
         $scope.match.matchId = $stateParams.id;
@@ -69,7 +73,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
     })
   }
   //SELECT PLAYING
-  //Common Modal For All Matches ends 
+  //Common Modal For All Matches ends
 
 
   $scope.selectPlaying = function (team, player) {
@@ -281,7 +285,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
 
   // SAVE RESULT
-  //1-save AND getONE 
+  //1-save AND getONE
   //2-just save i.e. for autoSave
   //3-complete and save
   //
@@ -307,7 +311,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       });
     }
 
-    
+
     $scope.matchComplete=function(){
       save();
       completeMatchModal.close();

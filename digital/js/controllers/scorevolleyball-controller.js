@@ -420,6 +420,10 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
                 $scope.matchError = data.data.error;
                 console.log($scope.matchError,'error');
                 toastr.error('Invalid MatchID. Please check the MatchID entered.', 'Error');
+                $state.go('knockout-team', {
+                  drawFormat: $stateParams.drawFormat,
+                  id: $stateParams.sport
+                });
               }
                 $scope.match = data.data;
                 $scope.match.matchId = $scope.matchData.matchId;
