@@ -175,6 +175,36 @@ var model = {
         return pipeline;
     },
 
+    getSchoolSpecialAwardsAggregatePipeline: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "registration",
+                    "localField": "school",
+                    "foreignField": "_id",
+                    "as": "school"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$school",
+                    preserveNullAndEmptyArrays: true
+                }
+            },
+
+            // Stage 3
+            {
+                $match: {
+                    "school.schoolName": data.school
+                }
+            },
+        ];
+        return pipeline;
+    },
+
     searchAthlete: function (data, callback) {
         var maxRow = Config.maxRow;
 
@@ -668,7 +698,7 @@ var model = {
                             callback(err, "error in mongoose");
                         } else {
                             profile.schoolName = found.schoolName;
-                            // profile.
+                            profile.schoolLogo = found.schoolLogo;
                             callback(null, matchData);
                         }
                     });
@@ -758,6 +788,8 @@ var model = {
                                         var team = {};
                                         team.sportsListSubCategoryId = n.sportsListSubCategory._id;
                                         team.sportsListSubCategoryName = n.sportsListSubCategory.name;
+                                        team.inactiveimage = n.sportsListSubCategory.inactiveimage;
+                                        team.image = n.sportsListSubCategory.image;
                                         teams.push(team);
                                     });
                                     return {
@@ -784,6 +816,8 @@ var model = {
                                         var team = {};
                                         team.sportsListSubCategoryId = n.sportsListSubCategory._id;
                                         team.sportsListSubCategoryName = n.sportsListSubCategory.name;
+                                        team.inactiveimage = n.sportsListSubCategory.inactiveimage;
+                                        team.image = n.sportsListSubCategory.image;
                                         teams.push(team);
                                     });
                                     return {
@@ -814,6 +848,46 @@ var model = {
                             var atheletes = [];
                             _.each(matchData, function (n) {
                                 var athlete = {};
+                                athlete.gender = n.gender;
+                                atheletes.push(athlete);
+                            });
+                            var atheleteData = _(atheletes)
+                                .groupBy('gender')
+                                .map(function (items, name) {
+                                    return {
+                                        name: name,
+                                        // items: items,
+                                        count: items.length
+                                    };
+                                }).value();
+                            profile.athletesCount = atheleteData;
+                            callback(null, profile);
+                        }
+                    });
+                },
+                function (profile, callback) {
+                    var maxRow = 8;
+                    var page = 1;
+                    if (data.page) {
+                        page = data.page;
+                    }
+                    var start = (page - 1) * maxRow;
+                    var pipeLine = Profile.getAthleteAggregatePipeline(data);
+                    var newPipeLine = _.cloneDeep(pipeLine);
+                    newPipeLine.push(
+                        // Stage 6
+                        {
+                            '$skip': parseInt(start)
+                        }, {
+                            '$limit': maxRow
+                        });
+                    Athelete.aggregate(newPipeLine, function (err, matchData) {
+                        if (err) {
+                            callback(err, "error in mongoose");
+                        } else {
+                            var atheletes = [];
+                            _.each(matchData, function (n) {
+                                var athlete = {};
                                 if (n.middleName) {
                                     athlete.name = n.firstName + " " + n.middleName + " " + n.surname;
                                 } else {
@@ -824,16 +898,21 @@ var model = {
                                 athlete.profilePic = n.photograph;
                                 atheletes.push(athlete);
                             });
-                            var atheleteData = _(atheletes)
-                                .groupBy('gender')
-                                .map(function (items, name) {
-                                    return {
-                                        name: name,
-                                        items: items,
-                                        count: items.length
-                                    };
-                                }).value();
-                            profile.athletes = atheleteData;
+                            profile.athletes = atheletes;
+                            callback(null, profile);
+                        }
+                    });
+                },
+                function (profile, callback) {
+                    var pipeLine = Profile.getSchoolSpecialAwardsAggregatePipeline(data);
+                    SpecialAwardDetails.aggregate(pipeLine, function (err, awardData) {
+                        if (err) {
+                            callback(err, "error in mongoose");
+                        } else if (_.isEmpty(awardData)) {
+                            profile.isSpecialAward = false;
+                            callback(null, profile);
+                        } else {
+                            profile.isSpecialAward = true;
                             callback(null, profile);
                         }
                     });
