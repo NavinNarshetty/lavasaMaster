@@ -262,6 +262,17 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             });
         },
 
+        getSchoolProfileData: function (id, callback) {
+            $http({
+                url: adminUrl2 + 'profile/getSchoolProfile',
+                method: 'POST',
+                withCredentials: true,
+                data: id
+            }).then(function (data) {
+                callback(data.data);
+            });
+        },
+
         editStudent: function (request, callback) {
             $http({
                 url: adminUrl + 'student/editStudent',

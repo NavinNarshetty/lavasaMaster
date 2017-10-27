@@ -904,9 +904,8 @@ a {
 .boy-sec {
     img {
         display: inline-block !important;
-        width: 15px !important;
-        margin-right: 5px;
-        vertical-align: bottom;
+        width: 16px !important;
+        margin-right: 5px; // vertical-align: bottom;
     }
 }
 
@@ -7875,4 +7874,9 @@ h1.forgot-space {
             margin: 0;
         }
     }
+}
+
+.equalSpacing {
+    min-height: 52px !important;
+    display: block;
 }

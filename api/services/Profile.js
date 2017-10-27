@@ -894,6 +894,7 @@ var model = {
                                     athlete.name = n.firstName + " " + n.surname;
                                 }
                                 athlete.sfaId = n.sfaId;
+                                athlete._id = n._id;
                                 athlete.gender = n.gender;
                                 athlete.profilePic = n.photograph;
                                 atheletes.push(athlete);
