@@ -46,11 +46,11 @@
              <div class="col-md-3 col-sm-3" ng-if="!selectedPlayer.isPlaying">
                 <div class="teamscore-pointholder">
                     <div class="match-selectwinner">
-                        <label for="">Select substitute {{substitutePlayer.player}}</label>
+                        <label for="">Select substitute </label>
                         <ui-select id="matchWinnerPlayer" ng-model="substitutePlayer.player" theme="bootstrap">
-                            <ui-select-match placeholder="Select Winner">{{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
+                            <ui-select-match placeholder="Select Substitute">{{$select.selected.firstName}} {{$select.selected.surname}}</ui-select-match>
                             <ui-select-choices repeat="player as player in match[matchData.resultVar].teams[selectedTeamIndex].players | filter: $select.search">
-                                <p class="opponentsingle-selector" ng-if="player.isPlaying == false "> {{player.firstName}} {{player.surname}} </p>
+                                <p class="opponentsingle-selector" ng-if="player.isPlaying == false "> <span class="pull-right">{{player.jerseyNo}}</span> {{player.firstName}} {{player.surname}} </p>
                             </ui-select-choices>
                         </ui-select>
                     </div>
