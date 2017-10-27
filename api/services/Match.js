@@ -12017,7 +12017,7 @@ var model = {
                                                             result.profile = n.photograph;
                                                             result.school = singleData.school[0].schoolName;
                                                             result.medaltype = singleData.medalType;
-                                                            _.each(matchData[0].resultSwiss.players, function (player) {
+                                                            async.each(matchData[0].resultSwiss.players, function (player, callback) {
                                                                 console.log("player", player, "n", n._id);
                                                                 IndividualSport.findOne({
                                                                     _id: player.id,
@@ -12025,10 +12025,14 @@ var model = {
                                                                 }).lean().exec(function (err, found) {
                                                                     if (!_.isEmpty(found)) {
                                                                         result.result = player.score;
+
                                                                     }
+                                                                    callback(null, result);
                                                                 });
+                                                            }, function (err) {
+                                                                callback(null, result);
                                                             });
-                                                            callback(null, result);
+                                                            // callback(null, result);
                                                         } else if (matchData[0].resultShooting) {
                                                             if (n.middleName) {
                                                                 result.name = n.firstName + " " + n.middleName + " " + n.surname;
@@ -12059,14 +12063,14 @@ var model = {
                                                         callback(null, finalData);
                                                     }
                                                 ],
-                                                function (err, data2) {
+                                                function (err, finalData) {
                                                     if (err) {
                                                         callback(null, []);
-                                                    } else if (data2) {
-                                                        if (_.isEmpty(data2)) {
-                                                            callback(null, data2);
+                                                    } else if (finalData) {
+                                                        if (_.isEmpty(finalData)) {
+                                                            callback(null, finalData);
                                                         } else {
-                                                            callback(null, data2);
+                                                            callback(null, finalData);
                                                         }
                                                     }
                                                 });
