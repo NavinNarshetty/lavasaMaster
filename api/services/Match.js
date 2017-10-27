@@ -12013,9 +12013,14 @@ var model = {
                                                 result.medaltype = singleData.medalType;
                                                 _.each(matchData[0].resultSwiss.players, function (player) {
                                                     console.log("player", player, "n", n._id);
-                                                    if (player.athleteId.equals(n._id)) {
-                                                        result.result = player.score;
-                                                    }
+                                                    IndividualSport.findOne({
+                                                        _id: player.id,
+                                                        athleteId: n._id
+                                                    }).lean().exec(function (err, found) {
+                                                        if (!_.isEmpty(found)) {
+                                                            result.result = player.score;
+                                                        }
+                                                    });
                                                 });
                                             } else if (matchData[0].resultShooting) {
                                                 if (n.middleName) {
