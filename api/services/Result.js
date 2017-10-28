@@ -196,7 +196,20 @@ var model = {
             function (err, data2) {
                 callback(null, data2);
             });
-    }
+    },
+
+    getSchool: function (data, callback) {
+        //get all medals
+        //for each school get schoolname,sport,and all medaldata
+    },
+
+    getMedalsPerSport: function (data, callback) {
+        //group by school->parallel groupBy medalType and groupBy sport with medalType
+
+    },
+
+
+
 
 
 };
