@@ -199,12 +199,12 @@ var model = {
     },
 
     getSchool: function (data, callback) {
-        //get all medals
+        //get all medals deepPopulate sport->sportslist->sportsListSubCategory
         //for each school get schoolname,sport,and all medaldata
     },
 
     getMedalsPerSport: function (data, callback) {
-        //group by school->parallel groupBy medalType and groupBy sport with medalType
+        //group by school->parallel groupBy medalType and groupBy (sportsListSubCategory.name and medalType)
 
     },
 
