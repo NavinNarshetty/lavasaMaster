@@ -3177,12 +3177,14 @@ var model = {
                             callback(null, []);
                         } else {
                             var i = 0;
-                            _.each(athlete, function (n) {
+                            async.each(athlete, function (n, callback) {
                                 if (!n._id.equals(registerdAthlete[i])) {
                                     targetAthlete.push(n);
                                 }
+                                callback(null, n);
+                            }, function (err) {
+                                callback(null, targetAthlete);
                             });
-                            callback(null, targetAthlete);
                         }
                     });
                 },
