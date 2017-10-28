@@ -12095,116 +12095,144 @@ var model = {
                                         } else if (_.isEmpty(matchData)) {
                                             callback(null, []);
                                         } else {
-                                            console.log("matchData[0]", matchData[0]);
-                                            var result = {};
-                                            if (matchData[0].resultHeat) {
-                                                result.name = n.name;
-                                                result.teamId = n.teamId;
+                                            async.waterfall([
+                                                    function (callback) {
+                                                        console.log("matchData[0]", matchData[0]);
+                                                        var result = {};
+                                                        if (matchData[0].resultHeat) {
+                                                            result.name = n.name;
+                                                            result.teamId = n.teamId;
 
-                                                console.log("school", n.school);
-                                                if (n.school != null) {
-                                                    result.profile = n.school.schoolLogo;
-                                                } else {
-                                                    result.profile = "";
-                                                }
-                                                result.school = singleData.school[0].schoolName;
-                                                result.medaltype = singleData.medalType;
-                                                _.each(matchData[0].resultHeat.teams, function (player) {
-                                                    console.log("player", player, "n", n._id);
-                                                    if (player.id.equals(n._id)) {
-                                                        console.log("matched", player.time);
-                                                        result.result = player.time;
-                                                    }
-                                                });
-                                            } else if (matchData[0].resultQualifyingRound) {
-                                                result.name = n.name;
-                                                result.teamId = n.teamId;
-                                                if (n.school != null) {
-                                                    result.profile = n.school[0].schoolLogo;
-                                                } else {
-                                                    result.profile = "";
-                                                }
-                                                result.school = singleData.school[0].schoolName;
-                                                result.medaltype = singleData.medalType;
-                                                if (matchData[0].resultQualifyingRound.player.bestAttempt) {
-                                                    result.result = matchData[0].resultQualifyingRound.player.bestAttempt;
-                                                } else {
-                                                    var height = matchData[0].resultQualifyingRound.round.substring(7, 8);
-                                                    result.result = height;
-                                                }
-                                            } else if (matchData[0].resultSwiss) {
-                                                result.name = n.name;
-                                                result.teamId = n.teamId;
-                                                if (n.school != null) {
-                                                    result.profile = n.school[0].schoolLogo;
-                                                } else {
-                                                    result.profile = "";
-                                                }
-                                                result.school = singleData.school[0].schoolName;
-                                                result.medaltype = singleData.medalType;
-                                                _.each(matchData[0].resultSwiss.players, function (player) {
-                                                    if (player.id.equals(n._id)) {
-                                                        result.result = player.score;
-                                                    }
-                                                });
-                                            } else if (matchData[0].resultShooting) {
-                                                result.name = n.name;
-                                                result.teamId = n.teamId;
-                                                if (n.school != null) {
-                                                    result.profile = n.school[0].schoolLogo;
-                                                } else {
-                                                    result.profile = "";
-                                                }
-                                                result.school = singleData.school[0].schoolName;
-                                                result.medaltype = singleData.medalType;
-                                                result.result = matchData[0].resultShooting.finalScore;
-                                            } else if (matchData[0].resultsRacquet) {
-                                                console.log("matchData[0]", matchData[0]);
-                                                result.name = n.name;
-                                                result.teamId = n.teamId;
-                                                if (n.school != null) {
-                                                    result.profile = n.school[0].schoolLogo;
-                                                } else {
-                                                    result.profile = "";
-                                                }
-                                                result.school = singleData.school[0].schoolName;
-                                                result.medaltype = singleData.medalType;
-                                                _.each(matchData[0].resultsRacquet.teams, function (team) {
-                                                    console.log("team", team, "n", n);
-                                                    var teamid = team.team;
-                                                    var nId = n._id.toString();
-                                                    if (teamid === nId) {
-                                                        console.log("inside", team.players);
-                                                        // result.players = [];
-                                                        var listPlayers = [];
-                                                        _.each(team.players, function (playerList) {
-                                                            console.log("playerlist", playerList);
-                                                            listPlayers.push({
-                                                                name: playerList.fullName,
-                                                                sfaId: playerList.sfaId
+                                                            console.log("school", n.school);
+                                                            if (n.school != null) {
+                                                                result.profile = n.school.schoolLogo;
+                                                            } else {
+                                                                result.profile = "";
+                                                            }
+                                                            result.school = singleData.school[0].schoolName;
+                                                            result.medaltype = singleData.medalType;
+                                                            async.each(matchData[0].resultHeat.teams, function (player, callback) {
+                                                                console.log("player", player, "n", n._id);
+                                                                if (player.id.equals(n._id)) {
+                                                                    console.log("matched", player.time);
+                                                                    result.result = player.time;
+                                                                }
+                                                                callback(null, result);
+                                                            }, function (err) {
+                                                                callback(null, result);
                                                             });
-                                                        })
-                                                        result.players = listPlayers;
-                                                        // result.player1 = team.players[0].fullName;
-                                                        // result.player1SfaId = team.players[0].sfaId;
-                                                        // result.player2 = team.players[1].fullName;
-                                                        // result.player2SfaId = team.players[1].sfaId;
+                                                        } else if (matchData[0].resultQualifyingRound) {
+                                                            result.name = n.name;
+                                                            result.teamId = n.teamId;
+                                                            if (n.school != null) {
+                                                                result.profile = n.school[0].schoolLogo;
+                                                            } else {
+                                                                result.profile = "";
+                                                            }
+                                                            result.school = singleData.school[0].schoolName;
+                                                            result.medaltype = singleData.medalType;
+                                                            if (matchData[0].resultQualifyingRound.player.bestAttempt) {
+                                                                result.result = matchData[0].resultQualifyingRound.player.bestAttempt;
+                                                            } else {
+                                                                var height = matchData[0].resultQualifyingRound.round.substring(7, 8);
+                                                                result.result = height;
+                                                            }
+                                                            callback(null, result);
+                                                        } else if (matchData[0].resultSwiss) {
+                                                            result.name = n.name;
+                                                            result.teamId = n.teamId;
+                                                            if (n.school != null) {
+                                                                result.profile = n.school[0].schoolLogo;
+                                                            } else {
+                                                                result.profile = "";
+                                                            }
+                                                            result.school = singleData.school[0].schoolName;
+                                                            result.medaltype = singleData.medalType;
+                                                            async.each(matchData[0].resultSwiss.players, function (player, callback) {
+                                                                if (player.id.equals(n._id)) {
+                                                                    result.result = player.score;
+                                                                }
+                                                                callback(null, result);
+                                                            }, function (err) {
+                                                                callback(null, result);
+                                                            });
+                                                        } else if (matchData[0].resultShooting) {
+                                                            result.name = n.name;
+                                                            result.teamId = n.teamId;
+                                                            if (n.school != null) {
+                                                                result.profile = n.school[0].schoolLogo;
+                                                            } else {
+                                                                result.profile = "";
+                                                            }
+                                                            result.school = singleData.school[0].schoolName;
+                                                            result.medaltype = singleData.medalType;
+                                                            result.result = matchData[0].resultShooting.finalScore;
+                                                            callback(null, result);
+                                                        } else if (matchData[0].resultsRacquet) {
+                                                            console.log("matchData[0]", matchData[0]);
+                                                            result.name = n.name;
+                                                            result.teamId = n.teamId;
+                                                            if (n.school != null) {
+                                                                result.profile = n.school[0].schoolLogo;
+                                                            } else {
+                                                                result.profile = "";
+                                                            }
+                                                            result.school = singleData.school[0].schoolName;
+                                                            result.medaltype = singleData.medalType;
+                                                            async.each(matchData[0].resultsRacquet.teams, function (team, callback) {
+                                                                console.log("team", team, "n", n);
+                                                                var teamid = team.team;
+                                                                var nId = n._id.toString();
+                                                                if (teamid === nId) {
+                                                                    console.log("inside", team.players);
+                                                                    // result.players = [];
+                                                                    var listPlayers = [];
+                                                                    async.each(team.players, function (playerList, callback) {
+                                                                        console.log("playerlist", playerList);
+                                                                        listPlayers.push({
+                                                                            name: playerList.fullName,
+                                                                            sfaId: playerList.sfaId
+                                                                        });
+                                                                        callback(null, listPlayers);
+                                                                    }, function (err) {
+                                                                        callback(null, listPlayers);
+                                                                    })
+                                                                    result.players = listPlayers;
+                                                                    callback(null, result);
+                                                                }
+                                                            }, function (err) {
+                                                                callback(null, result);
+                                                            });
+                                                            console.log("result", result);
+                                                        } else {
+                                                            result.name = n.name;
+                                                            result.teamId = n.teamId;
+                                                            if (n.school != null) {
+                                                                result.profile = n.school[0].schoolLogo;
+                                                            } else {
+                                                                result.profile = "";
+                                                            }
+                                                            result.school = singleData.school[0].schoolName;
+                                                            result.medaltype = singleData.medalType;
+                                                            callback(null, result);
+                                                        }
+                                                    },
+                                                    function (result, callback) {
+                                                        finalData.push(result);
+                                                        callback(null, finalData);
+                                                    }
+                                                ],
+                                                function (err, finalData) {
+                                                    if (err) {
+                                                        callback(null, []);
+                                                    } else if (finalData) {
+                                                        if (_.isEmpty(finalData)) {
+                                                            callback(null, finalData);
+                                                        } else {
+                                                            callback(null, finalData);
+                                                        }
                                                     }
                                                 });
-                                                console.log("result", result);
-                                            } else {
-                                                result.name = n.name;
-                                                result.teamId = n.teamId;
-                                                if (n.school != null) {
-                                                    result.profile = n.school[0].schoolLogo;
-                                                } else {
-                                                    result.profile = "";
-                                                }
-                                                result.school = singleData.school[0].schoolName;
-                                                result.medaltype = singleData.medalType;
-                                            }
-                                            finalData.push(result);
-                                            callback(null, finalData);
                                         }
                                     });
                                 }, function (err, playerData) {
