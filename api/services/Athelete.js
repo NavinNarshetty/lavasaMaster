@@ -3128,10 +3128,12 @@ var model = {
                                     } else if (_.isEmpty(found)) {
                                         callback(null, []);
                                     } else {
-                                        _.each(found, function (n) {
+                                        async.concatLimit(found, 20, function (n) {
                                             athlete.push(n.studentId);
-                                        })
-                                        callback(null, athlete);
+                                            callback(null, n);
+                                        }, function (err, complete) {
+                                            callback(null, athlete);
+                                        });
                                     }
                                 });
                             },
@@ -3142,10 +3144,12 @@ var model = {
                                     } else if (_.isEmpty(found)) {
                                         callback(null, []);
                                     } else {
-                                        _.each(found, function (n) {
+                                        async.concatLimit(found, 20, function (n) {
                                             athlete.push(n.athleteId);
-                                        })
-                                        callback(null, athlete);
+                                            callback(null, n);
+                                        }, function (err, complete) {
+                                            callback(null, athlete);
+                                        });
                                     }
                                 });
                             }
@@ -3177,12 +3181,12 @@ var model = {
                             callback(null, []);
                         } else {
                             var i = 0;
-                            async.eachSeries(athlete, function (n, callback) {
+                            async.concatLimit(athlete, 20, function (n, callback) {
                                 if (!n._id.equals(registerdAthlete[i])) {
                                     targetAthlete.push(n);
                                 }
                                 callback(null, n);
-                            }, function (err) {
+                            }, function (err, complete) {
                                 callback(null, targetAthlete);
                             });
                         }
