@@ -31,17 +31,17 @@
                                     <ul class="padding0 pad-line mt15">
                                         <li>
                                             <div class="sto-pro-list">
-                                                <img src="img/sf-boys.png" alt="">{{maleCount}}
+                                                <img src="img/sf-boys.png" alt="">{{maleCount || '0'}}
                                             </div>
                                         </li>
                                         <li>
                                             <div class="sto-pro-list display-inline">
-                                                <img src="img/sf-girl.png" alt="">{{femaleCount}}
+                                                <img src="img/sf-girl.png" alt="">{{femaleCount || '0'}}
                                             </div>
                                         </li>
                                         <li>
                                             <div class="sto-pro-list total display-inline">
-                                                {{ totalCount }}
+                                                {{ totalCount || '0'}}
                                             </div>
                                         </li>
                                     </ul>

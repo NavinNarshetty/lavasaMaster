@@ -105,8 +105,8 @@
                             </div>
                             <div class="btn-common mt25">
                                 <button type="button" name="button" class="text-up btn-orange padd-btn" ui-sref="student-bio({'id':studentid})">athlete bio</button>
-                                <button type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-if="sport.length > 0" ng-click="getCertificate(studentid);">Certificate</button>
-                                <button ng-if="studentProfile.isSpecialAward" type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-click="getSpecialAward(studentid)">Special Award</button>
+                                <button type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-if="certificate" ng-click="getCertificate(studentid);">Certificate</button>
+                                <button ng-if="specialAward" type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-click="getSpecialAward(studentid)">Special Award</button>
                             </div>
                         </div>
                     </div>
@@ -156,7 +156,7 @@
                 <div class="sf-relative mt15">
                     <div class="sport-icon-list sf-list blue-cat">
                         <ul>
-                            <hovericon game="game" ng-repeat="game in sport" ng-click="sportsSelected(game);">
+                            <hovericon game="game" ng-repeat="game in sport | orderBy:'sportslist.sportsListSubCategory.name'" ng-click="sportsSelected(game);">
                             </hovericon>
                         </ul>
                     </div>

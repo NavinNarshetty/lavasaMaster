@@ -3128,12 +3128,14 @@ var model = {
                                     } else if (_.isEmpty(found)) {
                                         callback(null, []);
                                     } else {
-                                        async.concatLimit(found, 20, function (n) {
+                                        _.each(found, function (n) {
                                             athlete.push(n.studentId);
-                                            callback(null, n);
-                                        }, function (err, complete) {
-                                            callback(null, athlete);
+                                            // callback(null, n);
+                                            // }, function (err, complete) {
+                                            console.log("team", athlete);
+                                            //     callback(null, athlete);
                                         });
+                                        callback(null, athlete);
                                     }
                                 });
                             },
@@ -3144,12 +3146,14 @@ var model = {
                                     } else if (_.isEmpty(found)) {
                                         callback(null, []);
                                     } else {
-                                        async.concatLimit(found, 20, function (n) {
+                                        _.each(found, function (n) {
                                             athlete.push(n.athleteId);
-                                            callback(null, n);
-                                        }, function (err, complete) {
-                                            callback(null, athlete);
+                                            // callback(null, n);
+                                            // }, function (err, complete) {
+                                            console.log("athlete", athlete);
+                                            //     callback(null, athlete);
                                         });
+                                        callback(null, athlete);
                                     }
                                 });
                             }
@@ -3181,20 +3185,22 @@ var model = {
                             callback(null, []);
                         } else {
                             var i = 0;
-                            async.concatLimit(athlete, 20, function (n, callback) {
-                                if (!n._id.equals(registerdAthlete[i])) {
-                                    targetAthlete.push(n);
-                                }
-                                callback(null, n);
-                            }, function (err, complete) {
-                                callback(null, targetAthlete);
+                            _.each(athlete, function (n) {
+                                _.each(registerdAthlete, function (m) {
+                                    if (n._id !== m) {
+                                        console.log("matched", n);
+                                        targetAthlete.push(n);
+                                    }
+                                });
                             });
+                            callback(null, targetAthlete);
                         }
                     });
                 },
                 function (targetAthlete, callback) {
                     console.log("inside generate");
                     Athelete.generateTargetAthlete(targetAthlete, function (err, singleData) {
+                        // callback(null, singleData);
                         Config.generateExcel("targetAthlete", singleData, res);
                     });
                 }
@@ -3215,32 +3221,31 @@ var model = {
     },
 
     generateTargetAthlete: function (match, callback) {
-        async.concatLimit(match, 20, function (athleteData, callback) {
-                console.log("atheleteDate", athleteData);
-                var obj = {};
-                if (athleteData.sfaId) {
-                    obj["SFA ID"] = athleteData.sfaId;
-                } else {
-                    obj["SFA ID"] = "-";
-                }
-                if (athleteData.middleName) {
-                    obj.NAME = athleteData.fistName + " " + athleteData.middleName + " " + athleteData.surname;
-                } else {
-                    obj.NAME = athleteData.firstName + " " + athleteData.surname;
-                }
-                obj["EMAIL ID"] = athleteData.email;
-                obj["MOBILE"] = athleteData.mobile;
-                if (!_.isEmpty(athleteData.school)) {
-                    obj.SCHOOL = athleteData.school.name;
-                } else {
-                    obj.SCHOOL = athleteData.atheleteSchoolName;
-                }
-                obj["STATUS"] = athleteData.status;
-                callback(null, obj);
-            },
-            function (err, singleData) {
-                callback(null, singleData);
-            });
+        var singleData = [];
+        _.each(match, function (athleteData) {
+            // console.log("atheleteDate", athleteData);
+            var obj = {};
+            if (athleteData.sfaId) {
+                obj["SFA ID"] = athleteData.sfaId;
+            } else {
+                obj["SFA ID"] = "-";
+            }
+            if (athleteData.middleName) {
+                obj.NAME = athleteData.fistName + " " + athleteData.middleName + " " + athleteData.surname;
+            } else {
+                obj.NAME = athleteData.firstName + " " + athleteData.surname;
+            }
+            obj["EMAIL ID"] = athleteData.email;
+            obj["MOBILE"] = athleteData.mobile;
+            if (!_.isEmpty(athleteData.school)) {
+                obj.SCHOOL = athleteData.school.name;
+            } else {
+                obj.SCHOOL = athleteData.atheleteSchoolName;
+            }
+            obj["STATUS"] = athleteData.status;
+            singleData.push(obj);
+        });
+        callback(null, singleData);
     },
 };
 module.exports = _.assign(module.exports, exports, model);
