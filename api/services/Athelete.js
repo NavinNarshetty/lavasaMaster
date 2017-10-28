@@ -3248,7 +3248,7 @@ var model = {
         callback(null, singleData);
     },
 
-    getTargetAthlete: function (data, callback) {
+    getTargetAthlete: function (data, res) {
         async.waterfall([
                 function (callback) {
                     var deepSearch = "school";
@@ -3265,7 +3265,7 @@ var model = {
                 function (athlete, callback) {
                     var targetAthlete = [];
                     var flag = false;
-                    _.each(athlete, function (n) {
+                    async.each(athlete, function (n, callback) {
                         async.waterfall([
                                 function (callback) {
                                     StudentTeam.findOne({
@@ -3312,8 +3312,9 @@ var model = {
                                     callback(null, data2);
                                 }
                             });
+                    }, function (err) {
+                        callback(null, targetAthlete);
                     });
-                    callback(null, targetAthlete);
                 },
                 function (targetAthlete, callback) {
                     console.log("inside generate");
