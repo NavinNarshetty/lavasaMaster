@@ -3152,7 +3152,6 @@ var model = {
                         ],
                         function (err, data2) {
                             if (err) {
-                                console.log(err);
                                 callback(null, []);
                             } else if (data2) {
                                 if (_.isEmpty(data2)) {
@@ -3162,6 +3161,7 @@ var model = {
                                         data2[0],
                                         data2[1]
                                     ]);
+                                    console.log("registerdAthlete", registerdAthlete);
                                     callback(null, registerdAthlete);
                                 }
                             }
@@ -3177,7 +3177,7 @@ var model = {
                             callback(null, []);
                         } else {
                             var i = 0;
-                            async.each(athlete, function (n, callback) {
+                            async.eachSeries(athlete, function (n, callback) {
                                 if (!n._id.equals(registerdAthlete[i])) {
                                     targetAthlete.push(n);
                                 }
@@ -3189,6 +3189,7 @@ var model = {
                     });
                 },
                 function (targetAthlete, callback) {
+                    console.log("inside generate");
                     Athelete.generateTargetAthlete(targetAthlete, function (err, singleData) {
                         Config.generateExcel("targetAthlete", singleData, res);
                     });
@@ -3211,6 +3212,7 @@ var model = {
 
     generateTargetAthlete: function (match, callback) {
         async.concatLimit(match, 20, function (athleteData, callback) {
+                console.log("atheleteDate", athleteData);
                 var obj = {};
                 if (athleteData.sfaId) {
                     obj["SFA ID"] = athleteData.sfaId;
