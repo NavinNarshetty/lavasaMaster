@@ -3223,7 +3223,6 @@ var model = {
     generateTargetAthlete: function (match, callback) {
         var singleData = [];
         _.each(match, function (athleteData) {
-            // console.log("atheleteDate", athleteData);
             var obj = {};
             if (athleteData.sfaId) {
                 obj["SFA ID"] = athleteData.sfaId;
@@ -3231,7 +3230,7 @@ var model = {
                 obj["SFA ID"] = "-";
             }
             if (athleteData.middleName) {
-                obj.NAME = athleteData.fistName + " " + athleteData.middleName + " " + athleteData.surname;
+                obj.NAME = athleteData.firstName + " " + athleteData.middleName + " " + athleteData.surname;
             } else {
                 obj.NAME = athleteData.firstName + " " + athleteData.surname;
             }
@@ -3322,7 +3321,6 @@ var model = {
                         Config.generateExcel("targetAthlete", singleData, res);
                     });
                 }
-
             ],
             function (err, data2) {
                 if (err) {
