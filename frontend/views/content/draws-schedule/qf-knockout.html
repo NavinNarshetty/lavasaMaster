@@ -2,9 +2,9 @@
   <div class="container">
     <!--SPORT NAME-->
     <div class="qf-knockout-sportname text-center">
-      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>{{knockout[0].sport.sportslist.sportsListSubCategory.name}}</span> |
-        <span>{{knockout[0].sport.gender}}</span> |
-        <span>{{knockout[0].sport.ageGroup.name}}</span></h3>
+      <h3 class="d-fjalla-one text-uppercase sport-type-head"> <span>{{qualifying[0].match[0].sport.sportslist.sportsListSubCategory.name}}</span> |
+        <span>{{qualifying[0].match[0].sport.gender}}</span> |
+        <span>{{qualifying[0].match[0].sport.ageGroup.name}}</span></h3>
       <div class="draws-downloadpdf draws-a" ng-if="showPdf">
         <a href="{{trustedURL}}" target="_new">Download the schedule in pdf format</a>
       </div>
@@ -13,7 +13,7 @@
 
     <!--SPORT EVENT NAME-->
     <div class="qf-knockout-sporteventname text-center">
-      <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">{{knockout[0].match[0].sport.sportslist.name}}</h3>
+      <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">{{qualifying[0].match[0].sport.sportslist.name}}</h3>
     </div>
     <!--SPORT END EVENT NAME-->
 

@@ -44,27 +44,7 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     // END SWIPER
 
 
-    $scope.winnersCard = [{
-        player: 'Harshit shah',
-        schoolname: 'Dhirubhai Ambani Intertional',
-        medal: 'gold'
 
-    }, {
-        player: 'Harshit shah',
-        schoolname: 'Dhirubhai Ambani Intertional',
-        medal: 'silver'
-
-    }, {
-        player: 'Harshit shah',
-        schoolname: 'Dhirubhai Ambani Intertional',
-        medal: 'bronze'
-
-    }, {
-        player: 'Harshit shah',
-        schoolname: 'Dhirubhai Ambani Intertional',
-        medal: 'bronze'
-
-    }];
 
 
     $scope.constraints = {};
@@ -280,74 +260,74 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
     },]
     // END DOUBLES JSON
 
-    $scope.winnersCard = [{
-        player: 'Harshit shah',
-        schoolname: 'Dhirubhai Ambani Intertional',
-        medal: 'gold'
+    // $scope.winnersCard = [{
+    //     player: 'Harshit shah',
+    //     schoolname: 'Dhirubhai Ambani Intertional',
+    //     medal: 'gold'
 
-    }, {
-        player: 'Harshit shah',
-        schoolname: 'Dhirubhai Ambani Intertional',
-        medal: 'silver'
+    // }, {
+    //     player: 'Harshit shah',
+    //     schoolname: 'Dhirubhai Ambani Intertional',
+    //     medal: 'silver'
 
-    }, {
-        player: 'Harshit shah',
-        schoolname: 'Dhirubhai Ambani Intertional',
-        medal: 'bronze'
+    // }, {
+    //     player: 'Harshit shah',
+    //     schoolname: 'Dhirubhai Ambani Intertional',
+    //     medal: 'bronze'
 
-    }, {
-        player: 'Harshit shah',
-        schoolname: 'Dhirubhai Ambani Intertional',
-        medal: 'bronze'
+    // }, {
+    //     player: 'Harshit shah',
+    //     schoolname: 'Dhirubhai Ambani Intertional',
+    //     medal: 'bronze'
 
-    }]
+    // }]
 
-    $scope.winnerDoubles = [{
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }],
-        medal: 'gold'
+    // $scope.winnerDoubles = [{
+    //     players: [{
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }],
+    //     medal: 'gold'
 
-    }, {
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }],
-        medal: 'silver'
+    // }, {
+    //     players: [{
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }],
+    //     medal: 'silver'
 
-    }, {
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }],
-        medal: 'bronze'
+    // }, {
+    //     players: [{
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }],
+    //     medal: 'bronze'
 
-    }];
+    // }];
 
 
-    $scope.roundName = [{
-        roundname: 'Round 1'
-    }, {
-        roundname: 'Round 2'
-    }, {
-        roundname: 'Round 3'
-    }];
+    // $scope.roundName = [{
+    //     roundname: 'Round 1'
+    // }, {
+    //     roundname: 'Round 2'
+    // }, {
+    //     roundname: 'Round 3'
+    // }];
     $scope.constraints = {};
     $scope.getSportSpecificRounds = function (roundName) {
         if ($stateParams.id) {
@@ -521,132 +501,132 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
     // END SWIPER
 
     // DOUBLES JSON
-    $scope.knockoutMatch = [{
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }],
-        date: '27th July, 2017',
-        time: '10.30am'
-    }, {
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }],
-        matchcenter: true
-    }, {
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional'
-        }],
-        matchcenter: true
-    }, {
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }],
-        date: '27th July, 2017',
-        time: '10.30am'
-    },]
-    // END DOUBLES JSON
+    // $scope.knockoutMatch = [{
+    //     players: [{
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional'
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional'
+    //     }],
+    //     date: '27th July, 2017',
+    //     time: '10.30am'
+    // }, {
+    //     players: [{
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional'
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional'
+    //     }],
+    //     matchcenter: true
+    // }, {
+    //     players: [{
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional'
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional'
+    //     }],
+    //     matchcenter: true
+    // }, {
+    //     players: [{
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }],
+    //     date: '27th July, 2017',
+    //     time: '10.30am'
+    // },]
+    // // END DOUBLES JSON
 
-    $scope.winnersCard = [{
-        player: 'Harshit shah',
-        schoolname: 'Dhirubhai Ambani Intertional',
-        medal: 'gold'
+    // $scope.winnersCard = [{
+    //     player: 'Harshit shah',
+    //     schoolname: 'Dhirubhai Ambani Intertional',
+    //     medal: 'gold'
 
-    }, {
-        player: 'Harshit shah',
-        schoolname: 'Dhirubhai Ambani Intertional',
-        medal: 'silver'
+    // }, {
+    //     player: 'Harshit shah',
+    //     schoolname: 'Dhirubhai Ambani Intertional',
+    //     medal: 'silver'
 
-    }, {
-        player: 'Harshit shah',
-        schoolname: 'Dhirubhai Ambani Intertional',
-        medal: 'bronze'
+    // }, {
+    //     player: 'Harshit shah',
+    //     schoolname: 'Dhirubhai Ambani Intertional',
+    //     medal: 'bronze'
 
-    }, {
-        player: 'Harshit shah',
-        schoolname: 'Dhirubhai Ambani Intertional',
-        medal: 'bronze'
+    // }, {
+    //     player: 'Harshit shah',
+    //     schoolname: 'Dhirubhai Ambani Intertional',
+    //     medal: 'bronze'
 
-    }]
+    // }]
 
-    $scope.winnerDoubles = [{
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }],
-        medal: 'gold'
+    // $scope.winnerDoubles = [{
+    //     players: [{
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }],
+    //     medal: 'gold'
 
-    }, {
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }],
-        medal: 'silver'
+    // }, {
+    //     players: [{
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }],
+    //     medal: 'silver'
 
-    }, {
-        players: [{
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }, {
-            player: 'Harshit shah',
-            schoolname: 'Dhirubhai Ambani Intertional',
-            winner: true
-        }],
-        medal: 'bronze'
+    // }, {
+    //     players: [{
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }, {
+    //         player: 'Harshit shah',
+    //         schoolname: 'Dhirubhai Ambani Intertional',
+    //         winner: true
+    //     }],
+    //     medal: 'bronze'
 
-    }];
+    // }];
 
 
 

@@ -100,7 +100,7 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
 
               }
 
-              if ($scope.qualifying[0].match.length > 0) {
+              if ($scope.qualifying && $scope.qualifying[0].match.length > 0) {
                 _.each($scope.qualifying, function (data, index) {
                   _.each(data.match, function (key) {
                     if (key.sport.eventPdf) {

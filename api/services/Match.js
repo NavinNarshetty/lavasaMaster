@@ -8931,6 +8931,7 @@ var model = {
                                     } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
                                         paramData.gender = "female";
                                     }
+                                    paramData.weight=singleData["WEIGHT CATEGORIES"];
                                     Match.getSportId(paramData, function (err, sportData) {
                                         if (err || _.isEmpty(sportData)) {
                                             singleData.SPORT = null;
@@ -9751,6 +9752,8 @@ var model = {
                                     } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
                                         paramData.gender = "female";
                                     }
+                                        paramData.weight=singleData["WEIGHT CATEGORIES"];                                       
+                                                                 
                                     Match.getSportId(paramData, function (err, sportData) {
                                         if (err || _.isEmpty(sportData)) {
                                             singleData.SPORT = null;
@@ -9862,9 +9865,9 @@ var model = {
                 },
                 function (singleData, callback) {
                     async.concatSeries(singleData, function (n, callback) {
-                            console.log("n", n);
-                            if (countError != 0 && n.error == null) {
-                                console.log("inside", n.success._id, "count", countError);
+                            console.log("n", n,singleData);
+                            if (countError != 0 && n.error != null) {
+                                console.log("inside", n);
                                 Match.remove({
                                     _id: n.success._id
                                 }).exec(function (err, found) {
