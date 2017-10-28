@@ -3210,7 +3210,7 @@ var model = {
     },
 
     generateTargetAthlete: function (match, callback) {
-        async.concatSeries(match, function (athleteData, callback) {
+        async.concatLimit(match, 20, function (athleteData, callback) {
                 var obj = {};
                 if (athleteData.sfaId) {
                     obj["SFA ID"] = athleteData.sfaId;
