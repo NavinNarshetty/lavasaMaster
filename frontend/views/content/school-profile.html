@@ -138,6 +138,7 @@
                         </div>
                         <div class="btn-common m40-main">
                             <button type="button" name="button" class="text-up btn-orange padd-btn" ui-sref="school-bio({id:callObject._id})">school bio</button>
+                            <button ng-if="getSchoolProfile.isSpecialAward" type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-click="getSpecialAward(schoolData.school)">Special Award</button>
                         </div>
                     </div>
                 </div>
@@ -183,17 +184,13 @@
             </div>
             <div class="col-md-offset-1 col-md-10">
                 <div class="sport-slider mt40">
-                    <!-- SOLUTION to FLex slider not updating, 2 flex sliders NOT THE BEST SOLUTION-->
                     <flex-slider class="carousel" flex-slide="sportDetails in schoolSports | orderBy:'name' track by $index" animation="slide"
                         item-width="140" item-margin="60">
                         <li>
                             <a>
                                 <div class="sports-participate text-center">
                                     <!-- sportDetails.image  | serverimage2 -->
-                                    {{sportDetails._id}}
                                     <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails._id)">
-                                    <!-- <img ng-src="{{ sportDetails._id.name !== filter.sport.name && (sportDetails._id.inactiveimage | server) || (sportDetails._id.image  | uploadpath)}}"
-                                        alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails._id)"> -->
                                     <span class="color-base text-up f16 mt10 equalSpacing">{{sportDetails.name}}</span>
                                     <div class="combine mt10">
                                         <div class="boy-sec display-inline color-base icon-right">

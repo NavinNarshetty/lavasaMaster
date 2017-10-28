@@ -105,7 +105,8 @@
                             </div>
                             <div class="btn-common mt25">
                                 <button type="button" name="button" class="text-up btn-orange padd-btn" ui-sref="student-bio({'id':studentid})">athlete bio</button>
-                                <button type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-if="certificate" ng-click="exportCertificate(studentProfile,SPORTDATA,medalData); ">Certificate</button>
+                                <button type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-if="sport.length > 0" ng-click="getCertificate(studentid);">Certificate</button>
+                                <button ng-if="studentProfile.isSpecialAward" type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-click="getSpecialAward(studentid)">Special Award</button>
                             </div>
                         </div>
                     </div>
