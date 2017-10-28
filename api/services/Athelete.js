@@ -3116,7 +3116,7 @@ var model = {
 
     },
 
-    getTargetAthlete: function (data, res) {
+    getTargetAthleteold: function (data, res) {
         async.waterfall([
                 function (callback) {
                     athlete = [];
@@ -3247,5 +3247,94 @@ var model = {
         });
         callback(null, singleData);
     },
+
+    getTargetAthlete: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var deepSearch = "school";
+                    Athelete.find().lean().deepPopulate(deepSearch).exec(function (err, athlete) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(athlete)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, athlete);
+                        }
+                    });
+                },
+                function (athlete, callback) {
+                    var targetAthlete = [];
+                    var flag = false;
+                    _.each(athlete, function (n) {
+                        async.waterfall([
+                                function (callback) {
+                                    StudentTeam.findOne({
+                                        studentId: n._id
+                                    }).lean().exec(function (err, found) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (_.isEmpty(found)) {
+                                            flag = false;
+                                            callback(null, flag);
+                                        } else {
+                                            flag = true;
+                                            callback(null, flag);
+                                        }
+                                    });
+                                },
+                                function (flag, callback) {
+                                    if (flag == false) {
+                                        IndividualSport.findOne({
+                                            athleteId: n._id
+                                        }).lean().exec(function (err, found) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (_.isEmpty(found)) {
+                                                flag = false;
+                                                callback(null, flag);
+                                            } else {
+                                                flag = true
+                                                callback(null, flag);
+                                            }
+                                        });
+                                    } else {
+                                        callback(null, flag);
+                                    }
+                                }
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    callback(null, []);
+                                } else {
+                                    if (data2 == false) {
+                                        targetAthlete.push(n);
+                                    }
+                                    callback(null, data2);
+                                }
+                            });
+                    });
+                    callback(null, targetAthlete);
+                },
+                function (targetAthlete, callback) {
+                    console.log("inside generate");
+                    Athelete.generateTargetAthlete(targetAthlete, function (err, singleData) {
+                        Config.generateExcel("targetAthlete", singleData, res);
+                    });
+                }
+
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    }
 };
 module.exports = _.assign(module.exports, exports, model);
