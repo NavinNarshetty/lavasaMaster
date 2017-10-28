@@ -973,5 +973,161 @@ var model = {
             });
     },
 
+    getAthleteStatAggregatePipeline: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "sports",
+                    "localField": "sport",
+                    "foreignField": "_id",
+                    "as": "sport"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport",
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
+
+                }
+            },
+            // Stage 5
+            {
+                $match: {
+                    "sport.sportslist.sportsListSubCategory": data.sportsListSubCategory,
+                }
+            },
+        ];
+        return pipeline;
+    },
+
+    getAthleteStats: function (data, callback) {
+        var stats = {};
+        async.waterfall([
+                function (callback) {
+                    SportsListSubCategory.findOne({
+                        _id: data.sportsListSubCategory,
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, found);
+                            } else {
+                                callback(null, found);
+                            }
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.isTeam == false) {
+                        var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
+                        var newPipeLine = _.cloneDeep(pipeLine);
+                        newPipeLine.push(
+                            // Stage 6
+                            {
+                                $lookup: {
+                                    "from": "individualsports",
+                                    "localField": "opponentsSingle",
+                                    "foreignField": "_id",
+                                    "as": "opponentsSingle"
+                                }
+                            }
+                        );
+                        Match.aggregate(newPipeLine, function (err, matchData) {
+                            if (err) {
+                                callback(err, "error in mongoose");
+                            } else {
+                                var match = [];
+                                _.each(matchData, function (singleData) {
+                                    _.each(singleData.opponentsSingle, function (n) {
+                                        if (n.athleteId.equals(data.athleteId)) {
+                                            match.push(singleData);
+                                        }
+                                    });
+                                });
+                                callback(null, match);
+                            }
+                        });
+                    } else {
+                        var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
+                        var newPipeLine = _.cloneDeep(pipeLine);
+                        newPipeLine.push(
+                            // Stage 7
+                            {
+                                $lookup: {
+                                    "from": "teamsports",
+                                    "localField": "opponentsTeam",
+                                    "foreignField": "_id",
+                                    "as": "opponentsTeam"
+                                }
+                            },
+
+                            // Stage 8
+                            {
+                                $unwind: {
+                                    path: "$opponentsTeam",
+                                    preserveNullAndEmptyArrays: true // optional
+                                }
+                            },
+
+                            // Stage 9
+                            {
+                                $lookup: {
+                                    "from": "studentteams",
+                                    "localField": "opponentsTeam.studentTeam",
+                                    "foreignField": "_id",
+                                    "as": "opponentsTeam.studentTeam"
+                                }
+                            },
+
+                            // Stage 10
+                            {
+                                $match: {
+                                    "opponentsTeam.studentTeam.studentId": data.athleteId
+                                }
+                            }
+                        );
+                        Match.aggregate(newPipeLine, function (err, matchData) {
+                            if (err) {
+                                callback(err, "error in mongoose");
+                            } else {
+                                var match = [];
+                                _.each(matchData, function (singleData) {
+                                    _.each(singleData.opponentsSingle, function (n) {
+                                        if (n.athleteId.equals(data.athleteId)) {
+                                            match.push(singleData);
+                                        }
+                                    });
+                                });
+                                callback(null, match);
+                            }
+                        });
+                    }
+                }
+            ],
+            function (err, data2) {
+                callback(null, data2);
+            });
+    }
+
 };
 module.exports = _.assign(module.exports, exports, model);
