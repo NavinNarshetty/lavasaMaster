@@ -12241,7 +12241,7 @@ var model = {
                                     } else {
                                         callback(null, playerData);
                                     }
-                                })
+                                });
                             }
                         },
                         function (err) {
@@ -12250,7 +12250,7 @@ var model = {
                             } else {
                                 callback(null, finalData);
                             }
-                        })
+                        });
                 }
             ],
             function (err, data2) {
