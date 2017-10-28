@@ -12125,7 +12125,7 @@ var model = {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
                                                             if (n.school != null) {
-                                                                result.profile = n.school[0].schoolLogo;
+                                                                result.profile = n.school.schoolLogo;
                                                             } else {
                                                                 result.profile = "";
                                                             }
@@ -12142,7 +12142,7 @@ var model = {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
                                                             if (n.school != null) {
-                                                                result.profile = n.school[0].schoolLogo;
+                                                                result.profile = n.school.schoolLogo;
                                                             } else {
                                                                 result.profile = "";
                                                             }
@@ -12160,7 +12160,7 @@ var model = {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
                                                             if (n.school != null) {
-                                                                result.profile = n.school[0].schoolLogo;
+                                                                result.profile = n.school.schoolLogo;
                                                             } else {
                                                                 result.profile = "";
                                                             }
@@ -12173,7 +12173,7 @@ var model = {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
                                                             if (n.school != null) {
-                                                                result.profile = n.school[0].schoolLogo;
+                                                                result.profile = n.school.schoolLogo;
                                                             } else {
                                                                 result.profile = "";
                                                             }
@@ -12208,7 +12208,7 @@ var model = {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
                                                             if (n.school != null) {
-                                                                result.profile = n.school[0].schoolLogo;
+                                                                result.profile = n.school.schoolLogo;
                                                             } else {
                                                                 result.profile = "";
                                                             }
