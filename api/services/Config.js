@@ -597,21 +597,21 @@ var model = {
                     "directory": "/tmp",
                     "height": "10.5in", // allowed units: mm, cm, in, px
                     "width": "10in",
-                    // "format": "Letter", // allowed units: A3, A4, A5, Legal, Letter, Tabloid 
+                    "format": "Letter", // allowed units: A3, A4, A5, Legal, Letter, Tabloid 
                     // "orientation": "portrait", // portrait or landscape 
                     // "zoomFactor": "1", // default is 1 
                     // Page options 
                     "border": {
-                        "top": "2cm", // default is 0, units: mm, cm, in, px 
-                        "right": "1cm",
-                        "bottom": "1cm",
-                        "left": "1cm"
+                        "top": "0.5cm", // default is 0, units: mm, cm, in, px 
+                        "right": "0",
+                        "bottom": "0",
+                        "left": "0"
                     },
                     // File options 
                     "type": "pdf", // allowed file types: png, jpeg, pdf 
                     "timeout": 30000, // Timeout that will cancel phantomjs, in milliseconds 
                     "footer": {
-                        "height": "2cm",
+                        "height": "0",
                     },
                     // "filename": page.filename + ".pdf"
                 };
