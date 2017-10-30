@@ -78,5 +78,16 @@ var controller = {
         }
     },
 
+    getTeamStats: function (req, res) {
+        if (req.body) {
+            Profile.getTeamStats(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
 };
 module.exports = _.assign(module.exports, controller);

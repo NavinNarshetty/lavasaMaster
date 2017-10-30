@@ -10605,10 +10605,6 @@ var model = {
                                 }
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle) && !_.isEmpty(found[1].opponentsSingle)) {
                                 if (found[0].opponentsSingle.length == 1 && found[1].opponentsSingle.length == 1) {
-                                    // var playerId = found[0].opponentsSingle[0];
-                                    // var playerId1 = found[1].opponentsSingle[0];
-                                    // winPlayer.push(playerId);
-                                    // lostPlayer.push(playerId1);
                                     if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
                                         if (data.found.opponentsSingle[0].equals(data.found.resultsCombat.winner.opponentsSingle)) {
                                             lostPlayer.push(data.found.opponentsSingle[1]);
