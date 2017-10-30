@@ -248,10 +248,19 @@ myApp.factory('ResultSportInitialization', function () {
     //for getting result variable that sport contains
     getResultVariable: function (sportName, sportType) {
       if (sportType == "Racquet Sports") {
-        return {
-          resultVar: "resultsRacquet",
-          opponentsVar: "opponentsTeam"
-        };
+        var arr = _.split(sportName, " ");
+        var foundDoubles = _.indexOf(arr, 'Doubles');
+        if (foundDoubles == -1) {
+          return {
+            resultVar: "resultsRacquet",
+            opponentsVar: "opponentsSingle"
+          };
+        } else {
+          return {
+            resultVar: "resultsRacquet",
+            opponentsVar: "opponentsTeam"
+          };
+        }
       } else if (sportType == "Combat Sports") {
         switch (sportName) {
           case "Karate Team Kumite":
