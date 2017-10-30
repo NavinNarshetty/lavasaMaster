@@ -179,7 +179,7 @@ myApp.controller('DetailQualifyingCtrl', function ($scope, TemplateService, Navi
 
         // })
         console.log($scope.formData, "****************form")
-        if ($scope.formData.resultQualifyingRound) {
+        if ($scope.formData.resultQualifyingRound && $scope.formData.sport.sportslist.sportsListSubCategory.name != 'Shooting') {
           _.each($scope.formData.opponentsSingle, function (key) {
             // console.log($scope.formData.players, 'plr');
             key.sfaId = key.athleteId.sfaId;
@@ -209,8 +209,13 @@ myApp.controller('DetailQualifyingCtrl', function ($scope, TemplateService, Navi
 
           console.log($scope.formData)
 
+        } else if ($scope.formData.resultShooting) {
+          if ($scope.formData.opponentsSingle[0].athleteId.middleName == undefined) {
+            $scope.formData.opponentsSingle[0].athleteId.fullname = $scope.formData.opponentsSingle[0].athleteId.firstName + ' ' + $scope.formData.opponentsSingle[0].athleteId.surname;
+          } else {
+            $scope.formData.opponentsSingle[0].athleteId.fullname = $scope.formData.opponentsSingle[0].athleteId.firstName + ' ' + $scope.formData.opponentsSingle[0].athleteId.middleName + ' ' + $scope.formData.opponentsSingle[0].athleteId.surname;
+          }
         }
-
 
       } else {
         console.log("ERROR IN getOneMatch");

@@ -102,30 +102,33 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
           resultKnockout.set = 0;
           var i = 0;
           var count = 0;
-          var playerLength = data.resultsRacquet.players.length;
-          if (playerLength == 2) {
-            var player1Set = data.resultsRacquet.players[0].sets.length;
-            while (i < player1Set) {
-              if (i == 0) {
-                resultKnockout.set = data.resultsRacquet.players[0].sets[i].point + "-" + data.resultsRacquet.players[1].sets[i].point;
-                i++;
-              } else {
-                resultKnockout.set = resultKnockout.set + "," + data.resultsRacquet.players[0].sets[i].point + "-" + data.resultsRacquet.players[1].sets[i].point;
-                i++;
+          if (data.resultsRacquet.players) {
+            var playerLength = data.resultsRacquet.players.length;
+            if (playerLength == 2) {
+              var player1Set = data.resultsRacquet.players[0].sets.length;
+              while (i < player1Set) {
+                if (i == 0) {
+                  resultKnockout.set = data.resultsRacquet.players[0].sets[i].point + "-" + data.resultsRacquet.players[1].sets[i].point;
+                  i++;
+                } else {
+                  resultKnockout.set = resultKnockout.set + "," + data.resultsRacquet.players[0].sets[i].point + "-" + data.resultsRacquet.players[1].sets[i].point;
+                  i++;
+                }
               }
-            }
-          } else {
-            var player1Set = data.resultsRacquet.players[0].sets.length;
-            while (count < player1Set) {
-              if (count == 0) {
-                resultKnockout.set = data.resultsRacquet.players[0].sets[count].point;
-                count++;
-              } else {
-                resultKnockout.set = resultKnockout.set + "," + data.resultsRacquet.players[0].sets[count].point;
-                count++;
+            } else {
+              var player1Set = data.resultsRacquet.players[0].sets.length;
+              while (count < player1Set) {
+                if (count == 0) {
+                  resultKnockout.set = data.resultsRacquet.players[0].sets[count].point;
+                  count++;
+                } else {
+                  resultKnockout.set = resultKnockout.set + "," + data.resultsRacquet.players[0].sets[count].point;
+                  count++;
+                }
               }
             }
           }
+
 
           resultKnockout.matchId = data.matchId;
           resultKnockout.round = data.round;
@@ -212,33 +215,38 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
           $scope.result.push(resultKnockout);
         } else if (data.resultQualifyingRound) {
           console.log("in resultQualifyingRound", data);
-          var resultKnockout = {};
-          resultKnockout.sportType = "QualifyingRound";
-          resultKnockout.matchId = data.matchId;
-          resultKnockout.round = data.round;
-          if (data.opponentsSingle[0]) {
-            if (data.opponentsSingle[0].athleteId.middleName === undefined) {
-              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.surname
-            } else {
-              resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.middleName + ' ' + data.opponentsSingle[0].athleteId.surname
-            }
-            // resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
+          if (data.resultShooting) {
+            console.log('in shooting')
           } else {
-            resultKnockout.player1 = "-";
-          }
-          var i = 0;
-          _.each(data.resultQualifyingRound.player.attempt, function (n) {
-            if (i == 0) {
-              resultKnockout.set = n;
-              i++;
+            var resultKnockout = {};
+            resultKnockout.sportType = "QualifyingRound";
+            resultKnockout.matchId = data.matchId;
+            resultKnockout.round = data.round;
+            if (data.opponentsSingle[0]) {
+              if (data.opponentsSingle[0].athleteId.middleName === undefined) {
+                resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.surname
+              } else {
+                resultKnockout.player1 = data.opponentsSingle[0].athleteId.firstName + ' ' + data.opponentsSingle[0].athleteId.middleName + ' ' + data.opponentsSingle[0].athleteId.surname
+              }
+              // resultKnockout.player1 = data.opponentsSingle[0].athleteId.fullname;
             } else {
-              resultKnockout.set = resultKnockout.set + "," + n;
+              resultKnockout.player1 = "-";
             }
-          })
-          resultKnockout.result = data.resultQualifyingRound.player.result;
-          // console.log("data", data);
-          $scope.result.push(resultKnockout);
-          console.log(resultKnockout, "naavin")
+            var i = 0;
+            _.each(data.resultQualifyingRound.player.attempt, function (n) {
+              if (i == 0) {
+                resultKnockout.set = n;
+                i++;
+              } else {
+                resultKnockout.set = resultKnockout.set + "," + n;
+              }
+            })
+            resultKnockout.result = data.resultQualifyingRound.player.result;
+            // console.log("data", data);
+            $scope.result.push(resultKnockout);
+            console.log(resultKnockout, "naavin")
+          }
+
         } else if (data.resultHeat) {
           // var resultKnockout = {};
           // resultKnockout.matchId = data.matchId;
@@ -568,6 +576,12 @@ myApp.controller('FormatTableCtrl', function ($scope, TemplateService, Navigatio
         $state.go('detailplayer', {
           id: data.matchId
         });
+      } else if (data.sport.sportslist.sportsListSubCategory.name === 'Shooting') {
+        console.log("in shooting")
+        $state.go('detail-qualifying', {
+          id: data.matchId
+        });
+
       }
     }
 
