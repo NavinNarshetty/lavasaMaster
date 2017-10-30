@@ -229,7 +229,11 @@
                   </div>
 
                   <!-- SETS -->
+                  <div class="text-right add-sets">
+                    <button class="btn btn-dark" type="submit " ng-click="addRacquetSet($index)">ADD</button>
+                  </div>
                   <div class="form-group" ng-repeat="set in team.sets track by $index">
+                    <span class="" ng-click="removeRacquet($parent.$index,$index)"><i class="fa fa-times" aria-hidden="true"></i></span>
                     <h5>SET-{{$index + 1}} </h5>
                     <div class="row">
                       <div class="col-md-2">

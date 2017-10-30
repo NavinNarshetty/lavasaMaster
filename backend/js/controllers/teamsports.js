@@ -307,6 +307,26 @@ myApp.controller('DetailSportTeamCtrl', function ($scope, TemplateService, Navig
     $scope.formData[type].teams[teamIndex].players[playerIndex].playerPoints[val].splice(goalIndex, 1);
   };
   // ADD AND REMOVE FUNCTION END
+
+
+  // ADD SET VOLLEYBALL
+  $scope.addVolleyballSet = function (data) {
+    console.log(data, 'in add')
+    $scope.formData.resultVolleyball.teams[data].teamResults.sets.push({
+      points: ''
+    })
+  }
+  // ADD SET VOLLEYBALL END
+
+  // REMOVE VOLLEYBALL SET
+  $scope.removeVolleyballSet = function (data, index) {
+    console.log(data, index, 'in remove');
+    $scope.formData.resultVolleyball.teams[data].teamResults.sets.splice(index, 1);
+  }
+  // REMOVE VOLLEYBALL SET END
+
+
+
 })
 // DETAIL TEAM SPORT EXPECT RACQUET
 
@@ -368,6 +388,26 @@ myApp.controller('DetailTeamCtrl', function ($scope, TemplateService, Navigation
   }
   // SAVE-END
 
+  // ADD RACQUET DOUBLES
+  $scope.addRacquetSet = function (data) {
+    console.log(data, 'in add')
+    $scope.formData.resultsRacquet.teams[data].sets.push({
+      'ace': '',
+      'doubleFaults': '',
+      'point': '',
+      'serviceError': '',
+      'unforcedError': '',
+      'winner': ''
+    })
+  }
+  // ADD RACQUET DOUBLES END
+
+  // REMOVE
+  $scope.removeRacquet = function (data, index) {
+    console.log(data, index, 'in remove')
+    $scope.formData.resultsRacquet.teams[data].sets.splice(index, 1);
+  }
+  // REMOVE END
 
 })
 // TEAM SPORT END FOR RACQUET

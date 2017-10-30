@@ -1365,6 +1365,13 @@
      cursor: pointer;
  }
 
+ .cross-team-set {
+     position: absolute;
+     right: 10px;
+     top: 0px;
+     cursor: pointer;
+ }
+
  .date-mb40 {
      margin-bottom: 35px;
  }
@@ -1425,27 +1432,28 @@
      background-color: #ccc;
  } //////////////////////////////CSS END
  // ROTATE IMAGE DIRECTIVE
- .imagerotate-btnholder{
-   margin: 10px 0;
+ .imagerotate-btnholder {
+     margin: 10px 0;
  }
- .btn-rotateimage{
-   margin-bottom: 5px;
+
+ .btn-rotateimage {
+     margin-bottom: 5px;
  }
 
  .media-uploadholder {
-position: relative;
-overflow: hidden;
-}
-.medi-excel-button {
-width: 100%;
-height: 100%;
-position: absolute;
-top: 0;
-left: 0;
-opacity: 0;
-z-index: 2;
-}
- // ROTATE IMAGE DIRECTIVE  END
+     position: relative;
+     overflow: hidden;
+ }
+
+ .medi-excel-button {
+     width: 100%;
+     height: 100%;
+     position: absolute;
+     top: 0;
+     left: 0;
+     opacity: 0;
+     z-index: 2;
+ } // ROTATE IMAGE DIRECTIVE  END
  //  TILE WIREFRAME END
  @import "fancybox-override";
  @import "other/mobile";

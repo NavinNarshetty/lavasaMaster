@@ -1379,12 +1379,14 @@
                       <div class="volleyball-team-data-holder">
                         <!-- SETS HOLDER -->
                         <div class="form-group team-data-points-holder">
+                          <button class="btn btn-dark pull-right" type="submit " ng-click="addVolleyballSet($index)">ADD</button>
                           <h5> TEAM DATA POINTS</h5>
                           <div class="team-data-points-1">
                             <div class="row mb15">
                               <!-- SETS  POINTS -->
-                              <div class="col-md-2" ng-repeat="set in team.teamResults.sets track by $index">
+                              <div class="col-md-2 relative" ng-repeat="set in team.teamResults.sets track by $index">
                                 <label for="">Set {{$index+1}}</label>
+                                <span class="cross-team-set" ng-click="removeVolleyballSet($parent.$index,$index)"><i class="fa fa-times" aria-hidden="true"></i></span>
                                 <input type="number" name="setpoints" ng-model="set.points" class="form-control" placeholder="Enter Points">
                               </div>
                               <!-- SETS POINTS END -->
