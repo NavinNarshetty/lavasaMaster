@@ -235,6 +235,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
     };
     $scope.getStudentProfile();
 
+    $scope.url = window.location.origin;
     $scope.getCertificate = function (athleteId) {
         $scope.constraints = {};
         $scope.constraints._id = athleteId;
@@ -242,7 +243,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
             console.log(data.data.regSports);
             _.each(data.data.regSports, function (n) {
                 console.log(n.pdfname.url);
-                window.open(adminUrl2 + 'pdf/' + n.pdfname.url, '_blank');
+                window.open($scope.url + '/pdf/' + n.pdfname.url, '_blank');
             });
         });
     };
