@@ -8,44 +8,26 @@
     <style>
         @font-face {
             font-family: 'Angelface';
-            src: url("https://storage.googleapis.com/sfacertificate/Angelface.otf");
+            /*src: url("https://storage.googleapis.com/sfacertificate/Angelface.otf");*/
+            src: url("../fonts/Angelface.otf");
             font-weight: 400;
         }
 
         @font-face {
             font-family: 'fjallaone';
-            src: url("https://storage.googleapis.com/sfacertificate/FjallaOne-Regular.otf");
+            /*src: url("https://storage.googleapis.com/sfacertificate/FjallaOne-Regular.otf");*/
+            src: url("../views/fonts/FjallaOne-Regular.otf");
         }
 
         @font-face {
             font-family: 'tangerine';
-            src: url("https://storage.cloud.google.com/sfacertificate/Tangerine-Regular.ttf");
+            /*src: url("https://storage.cloud.google.com/sfacertificate/Tangerine-Regular.ttf");*/
+            src: url("../views/fonts/Tangerine-Regular.ttf");
         }
-        /* @font-face {
-            font-family: 'avenirtp';
-            src: url("https://storage.googleapis.com/sfacertificate/AvenirNextLTPro-Cn_2.otf");
-            font-weight: 400;
-        } */
-        /* @font-face {
-            font-family: 'avenirtpI';
-            src: url("https://storage.googleapis.com/sfacertificate/AvenirNextLTPro-UltLtCnIt_2.otf");
-            font-weight: 400;
-        } */
-        /* @font-face {
-            font-family: 'avenir';
-            src: url("https://storage.googleapis.com/sfacertificate/AvenirNextLTPro-MediumCn_2.otf");
-            font-weight: 500;
-        } */
-        /* @font-face {
-            font-family: 'avenirDemi';
-            src: url("https://storage.googleapis.com/sfacertificate/AvenirNextLTPro-DemiCn_2.otf");
-            font-weight: 500;
-        }
-
         @font-face {
             font-family: 'opensanscondlight';
-            src: url("https://storage.googleapis.com/sfacertificate/OpenSans-CondLight.ttf");
-        } */
+            src: url("../views/fonts/OpenSans-CondLight.ttf");
+        }
 
         body {
             font-family: 'avenir';
@@ -53,26 +35,38 @@
 
         .font-av {
             font-family: 'avenirtp';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .font-fo {
             font-family: 'fjallaone';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .font-os {
             font-family: 'opensanscondlight';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .font-tran {
             font-family: 'tangerine';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .font-avI {
             font-family: 'avenirtpI';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
         .font-demi {
             font-family: 'avenirDemi';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
         /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
 
@@ -104,16 +98,19 @@
             }
         }
 
-        .width100 {
-            width: 100%;
+        .certificate-footerimg {
+            width: 95%;
+            margin: 0px auto;
+            display: block;
         }
 
         .certificate {
             width: 600px;
             max-width: 600px;
-            margin: 0 auto;
             padding: 30px 0px 0px 0px;
-            border: 12px solid #0a1a72;
+            margin: 0 auto;
+            border: 10px solid #0a1a72;
+            background-color: #fff;
         }
 
         .w70 {
@@ -242,7 +239,7 @@
         }
 
         .footer-img {
-            margin: 0 0 -7px;
+            /*margin: 0 0 -7px;*/
         }
 
         .footer-c {
@@ -313,10 +310,17 @@
         }
 
         .border-bg {
-            background: url(https://storage.googleapis.com/sfacertificate/bg-line.png)no-repeat;
             border: none;
-            background-position-y: 36px;
+            border-bottom: 1px solid #ddd;
             height: 35px;
+        }
+
+        .padding-clear{
+          padding: 0;
+        }
+
+        .disabled-input{
+          background-color: transparent;
         }
         /* .forGold {
       background: #83512e;
@@ -372,9 +376,8 @@
                 <tr>
                     <td class="text-center">
                         <div class="form-group">
-                            <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="Raj Mukesh Shah" style="color:#232d69">
-                            <!-- <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="<%= data.athlete.firstName + ' ' + data.athlete.middleName + ' ' + data.athlete.surname%>  "
-                                style="color:#232d69"> -->
+                            <input type="text" class="form-control w60 font-tran text-center f-32  border-bg disabled-input" value="Raj Mukesh Shah" style="color:#232d69" disabled>
+                            <!-- <input type="text" class="form-control w60 font-tran text-center f-32  border-bg disabled-input" value="<%= data.athlete.firstName + ' ' + data.athlete.middleName + ' ' + data.athlete.surname%>  " style="color:#232d69" disabled> -->
                             <!-- <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="<%= data.name%>  " style="color:#232d69"> -->
                         </div>
                     </td>
@@ -384,8 +387,8 @@
                         <div class="form-group border-btm" style="margin-top: 6px;">
                             <div class="sf-relative">
 
-                                <input type="text" class="form-control w60 text-center font-os f-20" value="Jamnabai Narshee School" style="text-transform: none;width: 83%;color:#666666;">
-                                <!-- <input type="text" class="form-control w60 text-center font-os f-20" value="<%=data.athlete.school.name%>" style="text-transform: none;width: 83%;color:#666666;"> -->
+                                <input type="text" class="form-control w60 text-center font-os f-20 disabled-input" value="Jamnabai Narshee School" style="text-transform: none;width: 83%;color:#666666;" disabled>
+                                <!-- <input type="text" class="form-control w60 text-center font-os f-20 disabled-input" value="<%=data.athlete.school.name%>" style="text-transform: none;width: 83%;color:#666666;" disabled> -->
 
                             </div>
 
@@ -399,8 +402,8 @@
                                 <label class="color-blue font-os f-20" style="color:#232d69;">SFA ID</label>
                             </div>
                             <div class="display-inline">
-                                <input type="text" class="form-control  text-center font-os" value="MA1829328" style="color:#666666;">
-                                <!-- <input type="text" class="form-control  text-center font-os" value="<%= data.athlete.sfaId%>" style="color:#666666;"> -->
+                                <input type="text" class="form-control  text-center font-os disabled-input" value="MA1829328" style="color:#666666;" disabled>
+                                <!-- <input type="text" class="form-control  text-center font-os disabled-input" value="<%= data.athlete.sfaId%>" style="color:#666666;" disabled> -->
 
                             </div>
                     </td>
@@ -430,19 +433,19 @@
                 <tr>
                     <td class="text-center">
                         <div class="form-group border-btm" style="margin-top: 6px;">
-                            <input type="text" class="form-control text-center font-os" value="Epee" style="color:#666666;width: 50%;">
-                            <!-- <input type="text" class="form-control text-center font-os" value="<%=data.sportObj.ageGroup.name + ' ' + data.sportObj.gender + ' ' + data.sportObj.sportslist.name%>"
-                                style="color:#666666;width: 50%;"> -->
+                            <input type="text" class="form-control text-center font-os disabled-input" value="Epee" style="color:#666666;width: 50%;" disabled>
+                            <!-- <input type="text" class="form-control text-center font-os disabled-input" value="<%=data.sportObj.ageGroup.name + ' ' + data.sportObj.gender + ' ' + data.sportObj.sportslist.name%>"
+                                style="color:#666666;width: 50%;" disabled> -->
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td>
+                    <td class="padding-clear">
                         <div class="footer-img">
                             <div class="footer-c" style="width: 600px; height: auto;">
 
-                                <img src="https://storage.googleapis.com/sfacertificate/32.jpg" alt="" class="width100">
-                                <!-- <img src="<%=data.sportObj.footerImage%>" alt="" class="width100"> -->
+                                <img src="https://storage.googleapis.com/sfacertificate/32.jpg" alt="" class="certificate-footerimg">
+                                <!-- <img src="<%=data.sportObj.footerImage%>" alt="" class="certificate-footerimg"> -->
                             </div>
                         </div>
                     </td>
