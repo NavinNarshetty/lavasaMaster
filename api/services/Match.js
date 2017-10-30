@@ -12089,6 +12089,9 @@ var model = {
                                 });
 
                             } else {
+
+                               
+
                                 async.eachSeries(singleData.team, function (n, callback) {
                                     data.team = n._id;
                                     var pipeLine = Match.getTeamAggregatePipeline(data);
@@ -12172,6 +12175,7 @@ var model = {
                                                             result.result = matchData[0].resultShooting.finalScore;
                                                             callback(null, result);
                                                         } else if (matchData[0].resultsRacquet) {
+                                                            
                                                             console.log("matchData[0]", matchData[0]);
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
@@ -12196,18 +12200,20 @@ var model = {
                                                                             name: playerList.fullName,
                                                                             sfaId: playerList.sfaId
                                                                         });
-                                                                        callback(null, listPlayers);
+                                                                        callback();
                                                                     }, function (err) {
-                                                                        callback(null, listPlayers);
+                                                                       result.players = listPlayers;
+                                                                        callback();
                                                                     })
-                                                                    result.players = listPlayers;
-                                                                    callback(null, result);
+                                                                   
+                                                                    // callback(null, result);
+                                                                }else{
+                                                                    callback();
                                                                 }
                                                             }, function (err) {
-                                                                callback(null, result);
+                                                              callback(null, result);
                                                             });
-                                                            console.log("result", result);
-                                                        } else {
+                                                           } else {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
                                                             if (n.school != null) {
@@ -12251,19 +12257,27 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else {
+                               
                                 callback(null, finalData);
                             }
                         });
                 }
             ],
             function (err, data2) {
+               
                 if (err) {
                     callback(null, []);
                 } else if (data2) {
                     if (_.isEmpty(data2)) {
                         callback(null, data2);
                     } else {
+
+                        console.log("****************************************************************************");
+                        console.log("****************************************************************************");
+                        console.log("****************************************************************************");
+                        console.log("****************************************************************************");
                         callback(null, data2);
+                        
                     }
                 }
             });
