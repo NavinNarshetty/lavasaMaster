@@ -4202,6 +4202,16 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
             });
         }
 
+        $scope.weightUpload = function (data) {
+            $scope.url = "Match/uploadExcelWeight";
+            $scope.constraints = {};
+            $scope.constraints = data;
+            console.log("form", $scope.constraints);
+            NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+                console.log("data upload", data);
+            });
+        }
+
         $scope.getAllSportList = function (data) {
             $scope.url = "SportsList/search";
             console.log(data);

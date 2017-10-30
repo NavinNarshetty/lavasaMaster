@@ -5,8 +5,6 @@ var controller = {
         Match.getAll(req.body, res.callback);
     },
 
-
-
     getOne: function (req, res) {
         if (req.body && req.body.matchId) {
             Match.getOne(req.body, res.callback);
@@ -279,6 +277,43 @@ var controller = {
                 ],
                 function (err, results) {
                     // console.log("results", results);
+                    if (err || _.isEmpty(results)) {
+                        res.callback(results, null);
+                    } else {
+                        res.callback(null, results);
+                    }
+                });
+        } else {
+            var data = [{
+                error: "All Fields Required !"
+            }];
+            res.callback(null, data);
+        }
+    },
+
+    uploadExcelWeight: function (req, res) {
+        if (req.body) {
+            async.waterfall([
+                    function (callback) {
+                        Config.importGS(req.body.file, function (err, importData) {
+                            if (err || _.isEmpty(importData)) {
+                                callback(err, null);
+                            } else {
+                                callback(null, importData);
+                            }
+                        });
+                    },
+                    function (importData, callback) {
+                        Match.saveforWeightIndividual(importData, function (err, complete) {
+                            if (err || _.isEmpty(complete)) {
+                                callback(err, null);
+                            } else {
+                                callback(null, complete);
+                            }
+                        });
+                    },
+                ],
+                function (err, results) {
                     if (err || _.isEmpty(results)) {
                         res.callback(results, null);
                     } else {

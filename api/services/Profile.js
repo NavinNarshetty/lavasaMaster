@@ -1,3 +1,11 @@
+var mongoose = require('mongoose');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
+var uniqueValidator = require('mongoose-unique-validator');
+var timestamps = require('mongoose-timestamp');
+var validators = require('mongoose-validators');
+var monguurl = require('monguurl');
+var autoIncrement = require('mongoose-auto-increment');
+var objectid = require("mongodb").ObjectID;
 var schema = new Schema({});
 
 schema.plugin(deepPopulate, {});
@@ -1012,7 +1020,7 @@ var model = {
             // Stage 5
             {
                 $match: {
-                    "sport.sportslist.sportsListSubCategory": data.sportsListSubCategory,
+                    "sport.sportslist.sportsListSubCategory": objectid(data.sportsListSubCategory)
                 }
             },
         ];
@@ -1051,9 +1059,17 @@ var model = {
                                     "foreignField": "_id",
                                     "as": "opponentsSingle"
                                 }
+                            },
+
+                            // Stage 7
+                            {
+                                $match: {
+                                    "opponentsSingle.athleteId": objectid(data.athleteId),
+                                }
                             }
                         );
                         Match.aggregate(newPipeLine, function (err, matchData) {
+                            console.log("match", matchData);
                             if (err) {
                                 callback(err, "error in mongoose");
                             } else {

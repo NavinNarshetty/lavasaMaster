@@ -1489,7 +1489,7 @@ var model = {
             });
     },
 
-    saveforWeightIndividual: function (importData, data, callback) {
+    saveforWeightIndividual: function (importData, callback) {
         var countError = 0;
         async.waterfall([
                 function (callback) {
@@ -8931,7 +8931,7 @@ var model = {
                                     } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
                                         paramData.gender = "female";
                                     }
-                                    paramData.weight=singleData["WEIGHT CATEGORIES"];
+                                    paramData.weight = singleData["WEIGHT CATEGORIES"];
                                     Match.getSportId(paramData, function (err, sportData) {
                                         if (err || _.isEmpty(sportData)) {
                                             singleData.SPORT = null;
@@ -9752,8 +9752,8 @@ var model = {
                                     } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
                                         paramData.gender = "female";
                                     }
-                                        paramData.weight=singleData["WEIGHT CATEGORIES"];                                       
-                                                                 
+                                    paramData.weight = singleData["WEIGHT CATEGORIES"];
+
                                     Match.getSportId(paramData, function (err, sportData) {
                                         if (err || _.isEmpty(sportData)) {
                                             singleData.SPORT = null;
@@ -9865,7 +9865,7 @@ var model = {
                 },
                 function (singleData, callback) {
                     async.concatSeries(singleData, function (n, callback) {
-                            console.log("n", n,singleData);
+                            console.log("n", n, singleData);
                             if (countError != 0 && n.error != null) {
                                 console.log("inside", n);
                                 Match.remove({
@@ -12090,7 +12090,7 @@ var model = {
 
                             } else {
 
-                               
+
 
                                 async.eachSeries(singleData.team, function (n, callback) {
                                     data.team = n._id;
@@ -12175,7 +12175,7 @@ var model = {
                                                             result.result = matchData[0].resultShooting.finalScore;
                                                             callback(null, result);
                                                         } else if (matchData[0].resultsRacquet) {
-                                                            
+
                                                             console.log("matchData[0]", matchData[0]);
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
@@ -12202,18 +12202,18 @@ var model = {
                                                                         });
                                                                         callback();
                                                                     }, function (err) {
-                                                                       result.players = listPlayers;
+                                                                        result.players = listPlayers;
                                                                         callback();
                                                                     })
-                                                                   
+
                                                                     // callback(null, result);
-                                                                }else{
+                                                                } else {
                                                                     callback();
                                                                 }
                                                             }, function (err) {
-                                                              callback(null, result);
+                                                                callback(null, result);
                                                             });
-                                                           } else {
+                                                        } else {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
                                                             if (n.school != null) {
@@ -12257,14 +12257,14 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else {
-                               
+
                                 callback(null, finalData);
                             }
                         });
                 }
             ],
             function (err, data2) {
-               
+
                 if (err) {
                     callback(null, []);
                 } else if (data2) {
@@ -12277,7 +12277,7 @@ var model = {
                         console.log("****************************************************************************");
                         console.log("****************************************************************************");
                         callback(null, data2);
-                        
+
                     }
                 }
             });
