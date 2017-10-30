@@ -74,11 +74,21 @@ myApp.controller('QualifyingScoreCtrl', function ($scope, TemplateService, Navig
         $scope.qualifyingRound = data.data;
         _.each($scope.qualifyingRound, function (n) {
           console.log('n1 ', n);
+          if (!n.resultQualifyingRound) {
+            n.resultQualifyingRound = {};
+          }
 
           switch ($stateParams.flag) {
             case 'score':
               console.log('n switch', n);
-
+              if (!n.resultQualifyingRound.player) {
+                n.resultQualifyingRound = {
+                  "player": {
+                    "id": n.opponentsSingle[0]._id,
+                    "attempt": [],
+                  }
+                };
+              }
               if ($scope.qualifyingRound[0].resultQualifyingRound && $scope.qualifyingRound[0].resultQualifyingRound.scoreSheet && $scope.qualifyingRound[0].resultQualifyingRound.scoreSheet.length != 0) {
                 $scope.scoreSheet = $scope.qualifyingRound[0].resultQualifyingRound.scoreSheet;
               }
@@ -98,6 +108,7 @@ myApp.controller('QualifyingScoreCtrl', function ($scope, TemplateService, Navig
                   };
                 } else {
                   toastr.error("Some matches have incomplete data. Please Check them", "Error");
+                  $scope.qualifyingBack();
                 }
               } else {
                 console.log("lenove");
@@ -105,11 +116,14 @@ myApp.controller('QualifyingScoreCtrl', function ($scope, TemplateService, Navig
               break;
             case 'image':
               if (!n.resultQualifyingRound.resultImage) {
+                console.log("in heres");
                 n.resultQualifyingRound.resultImage = {};
                 n.resultQualifyingRound.resultImage = {
                   "matchPhoto": [],
                   "attendance": false
                 };
+              } else {
+                console.log('not in');
               }
               break;
           }
@@ -155,7 +169,7 @@ myApp.controller('QualifyingScoreCtrl', function ($scope, TemplateService, Navig
       }, 10000);
     })
   }
-  // $scope.autoSave();
+  $scope.autoSave();
   // AUTO SAVE FUNCTION END
   // DESTROY AUTO SAVE
   // $scope.destroyAutoSave = function(){
@@ -167,13 +181,17 @@ myApp.controller('QualifyingScoreCtrl', function ($scope, TemplateService, Navig
   // DESTROY AUTO SAVE END
   // MATCH COMPLETE
   $scope.completePopup = function () {
-    var modalCompleteMatch;
-    $rootScope.modalInstance = $uibModal.open({
-      animation: true,
-      scope: $scope,
-      templateUrl: 'views/modal/confirmcomplete.html',
-      windowClass: 'completematch-modal'
-    })
+    if ( $stateParams.flag == 'score' && $scope.scoreSheet.length == 0) {
+      toastr.error("Please upload Scoresheet", "Error");
+    } else{
+      var modalCompleteMatch;
+      $rootScope.modalInstance = $uibModal.open({
+        animation: true,
+        scope: $scope,
+        templateUrl: 'views/modal/confirmcomplete.html',
+        windowClass: 'completematch-modal'
+      })
+    }
   };
   $scope.matchComplete = function () {
     $scope.qualifyingResult = [];
