@@ -445,6 +445,11 @@ var model = {
                         console.log("data", data);
                         athleteDetails = data;
                         pdfObj.athlete = _.cloneDeep(data);
+                        if (pdfObj.athlete.middleName) {
+                            pdfObj.athleteName = pdfObj.athlete.firstName + ' ' + pdfObj.athlete.middleName + ' ' + pdfObj.athlete.surname;
+                        } else {
+                            pdfObj.athleteName = pdfObj.athlete.firstName + ' ' + pdfObj.athlete.surname;
+                        }
                         callback(null, athleteDetails);
                     } else {
                         finalCallback("Athlete Not Found", null)
