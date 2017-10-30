@@ -114,6 +114,15 @@
                   <label>Inactive Image</label>
                   <upload-image ng-model="formData.inactiveimage"></upload-image>
                 </div>
+                <div class="date-holder">
+                  <div class="form-group">
+                    <label>End Date</label>
+                    <input name="schDate" ui-date="dateOptions" ng-model="formData.endDate" class="form-control" ng-required="true" placeholder="Enter Event Date"
+                      required>
+                    <div class="error-msg" ng-if="detailForm.schDate.$invalid && detailForm.schDate.$touched">Please Enter End Date *</div>
+                  </div>
+                </div>
+
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-default" type="submit" ng-click="saveData(formData,detailForm)">Save</button>
                   <button class="btn btn-default" ng-click="onCancel('sportslistsubcat')">Cancel</button>

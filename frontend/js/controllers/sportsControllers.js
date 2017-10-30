@@ -152,33 +152,93 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
     // ===========removeThis========
     $scope.redirectTo = function (val) {
         console.log(val);
-        $.jStorage.set("confirmPageKey", val.sportType);
-        selectService.redirectTo = val.sportType;
-        console.log(selectService.redirectTo);
-        if ($.jStorage.get('userType') == 'athlete') {
-            NavigationService.getIndividualAthlete({
-                'athleteToken': $.jStorage.get('userDetails').accessToken,
-                '_id': val._id,
-                'age': '',
-                'gender': '',
-                'page': 1
-            }, function (data) {
-                console.log(data);
-                if (data.data.data._id) {
+        $scope.currentDate = new Date();
+        console.log($scope.currentDate, " $scope.currentDate ");
+        $scope.currentDate = $scope.currentDate.setHours(0, 0, 0, 0);
+        $scope.endDate = new Date(val.endDate);
+        console.log("$scope.endDate ", $scope.endDate);
+        $scope.endDate = $scope.endDate.setHours(0, 0, 0, 0);
+        if ($scope.currentDate && $scope.endDate) {
+            if ($scope.currentDate <= $scope.endDate) {
+                console.log("eligible for registering sport");
+                $.jStorage.set("confirmPageKey", val.sportType);
+                selectService.redirectTo = val.sportType;
+                console.log(selectService.redirectTo);
+                if ($.jStorage.get('userType') == 'athlete') {
+                    NavigationService.getIndividualAthlete({
+                        'athleteToken': $.jStorage.get('userDetails').accessToken,
+                        '_id': val._id,
+                        'age': '',
+                        'gender': '',
+                        'page': 1
+                    }, function (data) {
+                        console.log(data);
+                        if (data.data.data._id) {
+                            $state.go('sports-rules', {
+                                id: val._id
+                            });
+                        } else {
+                            toastr.error("You are already selected for this sport");
+                        }
+                    });
+                } else {
                     $state.go('sports-rules', {
                         id: val._id
                     });
-                } else {
-                    toastr.error("You are already selected for this sport");
                 }
-            });
-        } else {
-            $state.go('sports-rules', {
-                id: val._id
-            });
+            } else {
+                console.log("Not eligible for registering sport");
+                $scope.particularSport = val.name;
+                $scope.registrationEnd = $uibModal.open({
+                    animation: true,
+                    scope: $scope,
+                    backdrop: 'static',
+                    keyboard: false,
+                    // size: 'sm',
+                    templateUrl: "views/modal/registrationend.html"
+                });
+                $timeout(function () {
+                    $scope.registrationEnd.close();
+                }, 8000);
+            }
+        }
+
+
+    };
+    //for Tennis Mixed Doubles
+    $scope.redirectForTennis = function (val) {
+        if (val) {
+            $scope.currentDate = new Date();
+            console.log($scope.currentDate, " $scope.currentDate ");
+            $scope.currentDate = $scope.currentDate.setHours(0, 0, 0, 0);
+            $scope.endDate = new Date(val.endDate);
+            console.log("$scope.endDate ", $scope.endDate);
+            $scope.endDate = $scope.endDate.setHours(0, 0, 0, 0);
+            if ($scope.currentDate && $scope.endDate) {
+                if ($scope.currentDate <= $scope.endDate) {
+                    console.log("eligible for registering sport");
+                    $state.go('sports-rules', {
+                        id: val._id
+                    });
+
+                } else {
+                    console.log("Not eligible for registering sport");
+                    $scope.particularSport = val.name;
+                    $scope.registrationEnd = $uibModal.open({
+                        animation: true,
+                        scope: $scope,
+                        backdrop: 'static',
+                        keyboard: false,
+                        // size: 'sm',
+                        templateUrl: "views/modal/registrationend.html"
+                    });
+                    $timeout(function () {
+                        $scope.registrationEnd.close();
+                    }, 8000);
+                }
+            }
         }
     };
-
 
     $scope.messageForTennisMixedDoubles = function () {
         $scope.uploadSizeInstances = $uibModal.open({

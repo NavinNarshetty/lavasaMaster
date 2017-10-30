@@ -74,8 +74,7 @@
                         <button class="btn btn-default " ng-if="value.name != 'Tennis Mixed Doubles'" type="button" ng-click="redirectTo(value);setTeamIdNull();">{{value.name}}</button>
                         <!-- <button class="btn btn-default " ng-if="value.name == 'Tennis Mixed Doubles' && !detail.mixAccess" type="button" ng-click="messageForTennisMixedDoubles()">{{value.name}}</button> -->
                         <!-- && detail.mixAccess -->
-                        <button class="btn btn-default " ng-if="value.name == 'Tennis Mixed Doubles'" type="button" ui-sref="sports-rules({id:value._id})"
-                            ng-click="setTeamIdNull();">{{value.name}}</button>
+                        <button class="btn btn-default " ng-if="value.name == 'Tennis Mixed Doubles'" type="button" ng-click="redirectForTennis(value);setTeamIdNull();">{{value.name}}</button>
                     </li>
 
                 </ul>

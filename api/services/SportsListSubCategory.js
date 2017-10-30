@@ -20,7 +20,8 @@ var schema = new Schema({
     sportType: String,
     maxSelect: Number,
     inactiveimage: String,
-    image: String
+    image: String,
+    endDate: Date
 
 });
 
@@ -156,67 +157,67 @@ var model = {
     //get one sport when Athelete login
     getSchoolPerAthlete: function (data, callback) {
         async.waterfall([
-                function (callback) {
-                    Athelete.findOne({
-                        accessToken: data.athleteToken
-                    }).exec(function (err, found) {
-                        if (_.isEmpty(found)) {
+            function (callback) {
+                Athelete.findOne({
+                    accessToken: data.athleteToken
+                }).exec(function (err, found) {
+                    if (_.isEmpty(found)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                if (found.atheleteSchoolName) {
+                    var schoolName = {};
+                    schoolName.name = found.atheleteSchoolName;
+                    data.schoolName = found.atheleteSchoolName;
+                    callback(null, schoolName);
+                } else {
+                    School.findOne({
+                        _id: found.school
+                    }).exec(function (err, schoolData) {
+                        if (_.isEmpty(schoolData)) {
                             callback(null, []);
                         } else {
-                            callback(null, found);
+                            var schoolName = {};
+                            schoolName.name = schoolData.name;
+                            data.schoolName = found.name;
+                            callback(null, schoolName);
                         }
                     });
-                },
-                function (found, callback) {
-                    if (found.atheleteSchoolName) {
-                        var schoolName = {};
-                        schoolName.name = found.atheleteSchoolName;
-                        data.schoolName = found.atheleteSchoolName;
-                        callback(null, schoolName);
-                    } else {
-                        School.findOne({
-                            _id: found.school
-                        }).exec(function (err, schoolData) {
-                            if (_.isEmpty(schoolData)) {
-                                callback(null, []);
+                }
+
+            },
+            function (schoolName, callback) {
+                Registration.findOne({
+                    schoolName: schoolName.name
+                }).exec(function (err, complete) {
+                    if (_.isEmpty(complete)) {
+                        SportsListSubCategory.getOneSport(data, function (err, complete1) {
+                            if (err) {
+                                callback(err, null);
                             } else {
-                                var schoolName = {};
-                                schoolName.name = schoolData.name;
-                                data.schoolName = found.name;
-                                callback(null, schoolName);
+                                callback(null, complete1);
                             }
+
+                        });
+                    } else {
+                        data.school = complete._id;
+                        data.schoolName = complete.schoolName;
+                        SportsListSubCategory.getOneSport(data, function (err, complete1) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, complete1);
+                            }
+
                         });
                     }
-
-                },
-                function (schoolName, callback) {
-                    Registration.findOne({
-                        schoolName: schoolName.name
-                    }).exec(function (err, complete) {
-                        if (_.isEmpty(complete)) {
-                            SportsListSubCategory.getOneSport(data, function (err, complete1) {
-                                if (err) {
-                                    callback(err, null);
-                                } else {
-                                    callback(null, complete1);
-                                }
-
-                            });
-                        } else {
-                            data.school = complete._id;
-                            data.schoolName = complete.schoolName;
-                            SportsListSubCategory.getOneSport(data, function (err, complete1) {
-                                if (err) {
-                                    callback(err, null);
-                                } else {
-                                    callback(null, complete1);
-                                }
-
-                            });
-                        }
-                    });
-                },
-            ],
+                });
+            },
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
@@ -663,67 +664,67 @@ var model = {
 
     editSchoolPerAthlete: function (data, callback) {
         async.waterfall([
-                function (callback) {
-                    Athelete.findOne({
-                        accessToken: data.athleteToken
-                    }).exec(function (err, found) {
-                        if (_.isEmpty(found)) {
+            function (callback) {
+                Athelete.findOne({
+                    accessToken: data.athleteToken
+                }).exec(function (err, found) {
+                    if (_.isEmpty(found)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, found);
+                    }
+                });
+            },
+            function (found, callback) {
+                if (found.atheleteSchoolName) {
+                    var schoolName = {};
+                    schoolName.name = found.atheleteSchoolName;
+                    data.schoolName = found.atheleteSchoolName;
+                    callback(null, schoolName);
+                } else {
+                    School.findOne({
+                        _id: found.school
+                    }).exec(function (err, schoolData) {
+                        if (_.isEmpty(schoolData)) {
                             callback(null, []);
                         } else {
-                            callback(null, found);
+                            var schoolName = {};
+                            schoolName.name = schoolData.name;
+                            data.schoolName = found.name;
+                            callback(null, schoolName);
                         }
                     });
-                },
-                function (found, callback) {
-                    if (found.atheleteSchoolName) {
-                        var schoolName = {};
-                        schoolName.name = found.atheleteSchoolName;
-                        data.schoolName = found.atheleteSchoolName;
-                        callback(null, schoolName);
-                    } else {
-                        School.findOne({
-                            _id: found.school
-                        }).exec(function (err, schoolData) {
-                            if (_.isEmpty(schoolData)) {
-                                callback(null, []);
+                }
+
+            },
+            function (schoolName, callback) {
+                Registration.findOne({
+                    schoolName: schoolName.name
+                }).exec(function (err, complete) {
+                    if (_.isEmpty(complete)) {
+                        SportsListSubCategory.editOneSport(data, function (err, complete1) {
+                            if (err) {
+                                callback(err, null);
                             } else {
-                                var schoolName = {};
-                                schoolName.name = schoolData.name;
-                                data.schoolName = found.name;
-                                callback(null, schoolName);
+                                callback(null, complete1);
                             }
+
+                        });
+                    } else {
+                        data.school = complete._id;
+                        data.schoolName = complete.schoolName;
+                        SportsListSubCategory.editOneSport(data, function (err, complete1) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                callback(null, complete1);
+                            }
+
                         });
                     }
-
-                },
-                function (schoolName, callback) {
-                    Registration.findOne({
-                        schoolName: schoolName.name
-                    }).exec(function (err, complete) {
-                        if (_.isEmpty(complete)) {
-                            SportsListSubCategory.editOneSport(data, function (err, complete1) {
-                                if (err) {
-                                    callback(err, null);
-                                } else {
-                                    callback(null, complete1);
-                                }
-
-                            });
-                        } else {
-                            data.school = complete._id;
-                            data.schoolName = complete.schoolName;
-                            SportsListSubCategory.editOneSport(data, function (err, complete1) {
-                                if (err) {
-                                    callback(err, null);
-                                } else {
-                                    callback(null, complete1);
-                                }
-
-                            });
-                        }
-                    });
-                },
-            ],
+                });
+            },
+        ],
             function (err, data2) {
                 if (err) {
                     console.log(err);
