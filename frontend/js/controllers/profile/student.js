@@ -235,6 +235,25 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
     };
     $scope.getStudentProfile();
 
+    $scope.getCertificate = function (athleteId) {
+        $scope.constraints = {};
+        $scope.constraints._id = athleteId;
+        NavigationService.getCertificate($scope.constraints, function (data) {
+            console.log(data.data.regSports);
+            _.each(data.data.regSports, function (n) {
+                console.log(n.pdfname.url);
+                window.open(adminUrl2 + 'pdf/' + n.pdfname.url, '_blank');
+            });
+        });
+    };
+    $scope.getSpecialAward = function (athleteId) {
+        $scope.constraints = {};
+        $scope.constraints.athlete = athleteId;
+        NavigationService.getAwardsCertificate($scope.constraints, function (data) {
+            console.log(data);
+            // window.open(adminUrl2 + 'pdf' + data, '_blank');
+        });
+    };
     // $scope.changeYear = function () {
     //     var constraints = {};
     //     constraints.year = $scope.filter.year;

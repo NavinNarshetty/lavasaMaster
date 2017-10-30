@@ -39,6 +39,29 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             return menuname;
         },
 
+
+        getAwardsCertificate: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'SpecialAwardDetails/getAwardsCertificate',
+                method: 'POST',
+                withCredentials: true,
+                data: request
+            }).then(function (data) {
+                callback(data.data);
+            });
+        },
+
+        getCertificate: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'Medal/getCertificate',
+                method: 'POST',
+                withCredentials: true,
+                data: request
+            }).then(function (data) {
+                callback(data.data);
+            });
+        },
+
         getAllYears: function () {
             return currentYears;
         },

@@ -285,6 +285,14 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
         });
     };
     $scope.getSchoolProfiles();
+    $scope.getSpecialAward = function (schoolId) {
+        $scope.constraints = {};
+        $scope.constraints.school = schoolId;
+        NavigationService.getAwardsCertificate($scope.constraints, function (data) {
+            console.log(data);
+            // window.open(adminUrl2 + 'pdf' + data, '_blank');
+        });
+    };
     // $scope.setPage = function (pageNo) {
     //     $scope.currentPage = pageNo;
     // };

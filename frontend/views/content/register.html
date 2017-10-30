@@ -448,7 +448,8 @@
                             </div>
                         </div>
                         <div class="category-padding f-s mod-cls">
-                            <p><b>Register your {{type}} for SFA {{sfaCity}} {{eventYear}}:</b>
+                            <p>
+                                <b>Register your {{type}} for SFA {{sfaCity}} {{eventYear}}:</b>
                             </p>
                             <ul class="list-unstyled school-list">
                                 <li ng-if="isCollege == false">Fill out the online ‘{{type |firstcapitalize}} Registration Form’ & pay the registration
@@ -468,12 +469,19 @@
                             </ul>
                             <p class="f-16">Successful registration will enable all athletes from your {{type}} to participate in all
                                 <span ng-if="isCollege == false">26+</span>
-                                <span ng-if="isCollege == true">17+</span> disciplines of sport at a subsidized registration
-                                fee.
+                                <span ng-if="isCollege == true">17+</span> disciplines of sport at a subsidized registration fee.
                             </p>
-                            <p class="custom-a"><a ng-click="regisBenModal(type, sfaCity, year, eventYear)"><strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
+                            <p class="custom-a">
+                                <a ng-click="regisBenModal(type, sfaCity, year, eventYear)">
+                                    <strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{eventYear}}</strong>
+                                </a>
+                            </p>
                         </div>
-                        <div class="text-center mb-20 "><a ui-sref="formregis"><button class="btn-category green-btn "> Click here for {{type |firstcapitalize}} Registration Form</button></a></div>
+                        <div class="text-center mb-20 ">
+                            <a ui-sref="formregis">
+                                <button class="btn-category green-btn "> Click here for {{type |firstcapitalize}} Registration Form</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -491,18 +499,20 @@
                             <!--<p>Once an athlete registers with SFA, he/she can participate in as many sports as he/she chooses to
                             (basis eligibility criteria).
                         </p>-->
-                            <p><b>Register as an athlete for SFA {{sfaCity}} {{eventYear}}:</b>
+                            <p>
+                                <b>Register as an athlete for SFA {{sfaCity}} {{eventYear}}:</b>
                             </p>
                             <ul class="list-unstyled athlete-list f-s">
                                 <li> Fill out the online ‘Athlete Registration Form’ & pay the registration amount of INR
-                                    <span ng-if="isCollege == false">200</span><span ng-if="isCollege == true">100</span>/-
-                                    (inclusive of all applicable taxes)<br>
-                                    <span class="f-14">*In the event that your {{type}} does not register for SFA {{sfaCity}} {{eventYear}} by the<span
-                                        ng-if="isCollege == false"> 15th of October</span>
-                                    <span ng-if="isCollege == true"> 15th of October</span>, an additional fee of INR
-                                    <span ng-if="isCollege == false">400</span>
-                                    <span ng-if="isCollege == true">200</span>/- (Inclusive of all applicable taxes) will
-                                    be levied.</span>
+                                    <span ng-if="isCollege == false">200</span>
+                                    <span ng-if="isCollege == true">100</span>/- (inclusive of all applicable taxes)
+                                    <br>
+                                    <span class="f-14">*In the event that your {{type}} does not register for SFA {{sfaCity}} {{eventYear}}
+                                        by the
+                                        <span ng-if="isCollege == false"> 15th of October</span>
+                                        <span ng-if="isCollege == true"> 15th of October</span>, an additional fee of INR
+                                        <span ng-if="isCollege == false">400</span>
+                                        <span ng-if="isCollege == true">200</span>/- (Inclusive of all applicable taxes) will be levied.</span>
                                 </li>
                                 <!-- <li ng-if="isCollege == true">Fill out the athlete registration form & pay the athlete registration fees.</li>
                                 <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 300 will be charged to each athlete registering
@@ -522,10 +532,22 @@
                             </ul>
                             <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
                             from their school registrations. </p>-->
-                            <p class="custom-a mb-33" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year, eventYear) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
-                            <p class="custom-a mb-75" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year, eventYear) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
+                            <p class="custom-a mb-33" ng-if="isCollege==false">
+                                <a ng-click="athBenModal(type, sfaCity, year, eventYear) ">
+                                    <strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong>
+                                </a>
+                            </p>
+                            <p class="custom-a mb-75" ng-if="isCollege==true">
+                                <a ng-click="athBenModal(type, sfaCity, year, eventYear) ">
+                                    <strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong>
+                                </a>
+                            </p>
                         </div>
-                        <div class="text-center mb-20 "><a ui-sref="formathlete"><button class="btn-category orange "> Click here for Athlete Registration Form</button></a></div>
+                        <div class="text-center mb-20 ">
+                            <a ui-sref="formathlete">
+                                <button class="btn-category orange "> Click here for Athlete Registration Form</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -555,20 +577,36 @@
                             <p class="mb-75 custom-a " ng-if="isCollege==false"><a href="http://mumbaischool.sfanow.in/formathlete
                             " target="_new "><strong>Click here for Athlete Registration Form</strong></a>
                             </p> -->
-                                <p class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:<br><a href="http://mumbaischool.sfanow.in/formregis" target="_new">http://mumbaischool.sfanow.in/formregis</a>
+                                <p class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:
+                                    <br>
+                                    <a href="http://mumbaischool.sfanow.in/formregis" target="_new">http://mumbaischool.sfanow.in/formregis</a>
                                 </p>
-                                <p class="mb91 custom-a" ng-if="isCollege==false">For Athlete:<br><a href="http://mumbaischool.sfanow.in/formathlete" target="_new"><strong>http://mumbaischool.sfanow.in/formathlete</strong></a>
+                                <p class="mb91 custom-a" ng-if="isCollege==false">For Athlete:
+                                    <br>
+                                    <a href="http://mumbaischool.sfanow.in/formathlete" target="_new">
+                                        <strong>http://mumbaischool.sfanow.in/formathlete</strong>
+                                    </a>
                                 </p>
-                                <p class="custom-a" ng-if="isCollege==true">For {{type | firstcapitalize}}:<br><a href="http://mumbaicollege.sfanow.in/formregis" target="_new">http://mumbaicollege.sfanow.in/formregis</a>
+                                <p class="custom-a" ng-if="isCollege==true">For {{type | firstcapitalize}}:
+                                    <br>
+                                    <a href="http://mumbaicollege.sfanow.in/formregis" target="_new">http://mumbaicollege.sfanow.in/formregis</a>
                                 </p>
-                                <p class="mb91 custom-a" ng-if="isCollege==true">For Athlete:<br><a href="http://mumbaicollege.sfanow.in/formathlete" target="_new"><strong>http://mumbaicollege.sfanow.in/formathlete</strong></a>
+                                <p class="mb91 custom-a" ng-if="isCollege==true">For Athlete:
+                                    <br>
+                                    <a href="http://mumbaicollege.sfanow.in/formathlete" target="_new">
+                                        <strong>http://mumbaicollege.sfanow.in/formathlete</strong>
+                                    </a>
                                 </p>
                                 <!-- <p class="mb-33" ng-if="isCollege==true">All registered {{type}}s and athletes will be notified when registration for sports will
                                     be open!
                                 </p> -->
                             </div>
                             <!--<div class="text-center mb-20 "><button class="btn-category blue-light ">Sports Registration Form</button></div>-->
-                            <div class="text-center mb-20"><a ui-sref="sports-registration"><button class="btn-category blue-light " >Click here for Sports Registration</button></a></div>
+                            <div class="text-center mb-20">
+                                <a ui-sref="sports-registration">
+                                    <button class="btn-category blue-light ">Click here for Sports Registration</button>
+                                </a>
+                            </div>
                             <!-- <div class="text-center mb-20" ng-if="isCollege==true"><button class="com-category blue-light">Opening shortly</button></div> -->
                             <!-- <div class="text-center mb-20 "><a ui-sref="sports-registration "><button class="com-category
                             blue-light " >Opening shortly</button></a></div> -->
@@ -592,20 +630,59 @@
                                         <div class="t-center ">
                                             <ul class="display-table list-style v-line f-12 sf-relative ">
 
-                                                <li class="pl-8 "><span class="font-boldcus ">1. Archery:</span> 15<sup>th</sup>-17<sup>th</sup>                                                    Dec
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">1. Archery:</span> 15
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec
                                                 </li>
-                                                <li class="pl-8 "><span class="font-boldcus ">2. Athletics:</span> 9<sup>th</sup>-12<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">3. Badminton:</span> 6<sup>th</sup>-13<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">4. Basketball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">5. Boxing:</span> 13<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">6. Carrom:</span> 9<sup>th</sup>-11<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">7. Chess:</span> 13<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">8. Fencing:</span> 14<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">9. Football:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">10. Handball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">11. Hockey:</span> 2<sup>nd</sup>-5<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">12. Judo:</span> 16<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">13. Kabaddi:</span> 6<sup>th</sup>-12<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">2. Athletics:</span> 9
+                                                    <sup>th</sup>-12
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">3. Badminton:</span> 6
+                                                    <sup>th</sup>-13
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">4. Basketball:</span> 6
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">5. Boxing:</span> 13
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">6. Carrom:</span> 9
+                                                    <sup>th</sup>-11
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">7. Chess:</span> 13
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">8. Fencing:</span> 14
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">9. Football:</span> 6
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">10. Handball:</span> 6
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">11. Hockey:</span> 2
+                                                    <sup>nd</sup>-5
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">12. Judo:</span> 16
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">13. Kabaddi:</span> 6
+                                                    <sup>th</sup>-12
+                                                    <sup>th</sup> Dec</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -614,19 +691,57 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="t-center ">
                                             <ul class="display-table list-style v-line f-12 To25 ">
-                                                <li><span class="font-boldcus ">14. Karate:</span> 8<sup>th</sup>-10<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">15. Kho Kho:</span> 7<sup>th</sup>-10<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">16. Sport MMA:</span> 11<sup>th</sup>-12<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">17. Shooting:</span> 6<sup>th</sup>-9<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">18. Squash:</span> 7<sup>th</sup>-10<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">19. Swimming:</span> 9<sup>th</sup>-10<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">20. Table Tennis:</span> 13<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">21. Taekwondo:</span> 6<sup>th</sup>-7<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">22. Tennis:</span> 7<sup>th</sup>-13<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">23. Throwball:</span> 14<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">24. Volleyball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">25. Water Polo:</span> 11<sup>th</sup> Dec</li>
-                                                <li><span class="font-boldcus ">26. Wrestling:</span> 14<sup>th</sup>-15<sup>th</sup>                                                    Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">14. Karate:</span> 8
+                                                    <sup>th</sup>-10
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">15. Kho Kho:</span> 7
+                                                    <sup>th</sup>-10
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">16. Sport MMA:</span> 11
+                                                    <sup>th</sup>-12
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">17. Shooting:</span> 6
+                                                    <sup>th</sup>-9
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">18. Squash:</span> 7
+                                                    <sup>th</sup>-10
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">19. Swimming:</span> 9
+                                                    <sup>th</sup>-10
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">20. Table Tennis:</span> 13
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">21. Taekwondo:</span> 6
+                                                    <sup>th</sup>-7
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">22. Tennis:</span> 7
+                                                    <sup>th</sup>-13
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">23. Throwball:</span> 14
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">24. Volleyball:</span> 6
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">25. Water Polo:</span> 11
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">26. Wrestling:</span> 14
+                                                    <sup>th</sup>-15
+                                                    <sup>th</sup> Dec</li>
                                                 <!-- <li>26. Wrestling: TBA</li> -->
                                             </ul>
                                         </div>
@@ -639,30 +754,80 @@
                                         <div class="t-center">
                                             <ul class="display-table list-style v-line f-12 sf-relative">
 
-                                                <li class="pl-8 "><span class="font-boldcus ">1. Archery:</span> 15<sup>th</sup>-17<sup>th</sup>                                                    Dec
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">1. Archery:</span> 15
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec
                                                 </li>
-                                                <li class="pl-8 "><span class="font-boldcus ">2. Basketball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">3. Boxing:</span> 13<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">4. Carrom:</span> 9<sup>th</sup>-11<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">5. Chess:</span> 13<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">6. Fencing:</span> 14<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">7. Handball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8"><span class="font-boldcus ">8. Hockey:</span> 2<sup>nd</sup>-5<sup>th</sup>                                                    Dec</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">9. Judo:</span> 16<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">2. Basketball:</span> 6
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">3. Boxing:</span> 13
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">4. Carrom:</span> 9
+                                                    <sup>th</sup>-11
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">5. Chess:</span> 13
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">6. Fencing:</span> 14
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">7. Handball:</span> 6
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8">
+                                                    <span class="font-boldcus ">8. Hockey:</span> 2
+                                                    <sup>nd</sup>-5
+                                                    <sup>th</sup> Dec</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">9. Judo:</span> 16
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="t-center ">
                                             <ul class="display-table list-style v-line f-12 To25 ">
-                                                <li><span class="font-boldcus ">10. Kabaddi:</span> 6<sup>th</sup>-12<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">11. Shooting:</span> 6<sup>th</sup>-9<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">12. Squash:</span> 7<sup>th</sup>-10<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">13. Swimming:</span> 9<sup>th</sup>-10<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">14. Taekwondo:</span> 6<sup>th</sup>-7<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">15. Tennis:</span> 7<sup>th</sup>-13<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">16. Volleyball:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Dec</li>
-                                                <li><span class="font-boldcus ">17. Water Polo:</span> 11<sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">10. Kabaddi:</span> 6
+                                                    <sup>th</sup>-12
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">11. Shooting:</span> 6
+                                                    <sup>th</sup>-9
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">12. Squash:</span> 7
+                                                    <sup>th</sup>-10
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">13. Swimming:</span> 9
+                                                    <sup>th</sup>-10
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">14. Taekwondo:</span> 6
+                                                    <sup>th</sup>-7
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">15. Tennis:</span> 7
+                                                    <sup>th</sup>-13
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">16. Volleyball:</span> 6
+                                                    <sup>th</sup>-17
+                                                    <sup>th</sup> Dec</li>
+                                                <li>
+                                                    <span class="font-boldcus ">17. Water Polo:</span> 11
+                                                    <sup>th</sup> Dec</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -709,10 +874,13 @@
                         <div class="common-store pd-left f-s ">
                             <p>PRO ATHLETE DEVELOPMENT</p>
                             <ul class="store-for-you-list ">
-                                <li><b>Athlete & School Profiles</b></li>
+                                <li>
+                                    <b>Athlete & School Profiles</b>
+                                </li>
                                 <li style="list-style-type: circle; "> Profiles Comprehensive sport bios </li>
                                 <li style="list-style-type: circle; ">Statistics, scores and records</li>
-                                <li><b> HD Match Videos of Every Game</b>
+                                <li>
+                                    <b> HD Match Videos of Every Game</b>
                                 </li>
                             </ul>
                         </div>
@@ -724,7 +892,9 @@
                     <div class="common-store f-s ">
                         <p>ELITE ATHLETE CLUB</p>
                         <ul class="store-for-you-list ">
-                            <li><b>Scouting for talented athletes across different sports and empowering them with:</b></li>
+                            <li>
+                                <b>Scouting for talented athletes across different sports and empowering them with:</b>
+                            </li>
                             <li style="list-style-type: circle; "> Training & Development Scholarships</li>
                             <li style="list-style-type: circle; "> Complimentary mental and fitness assessment programs</li>
                         </ul>
@@ -838,24 +1008,24 @@
                 <div class="video ">
                     <div class="display-inline relate ">
                         <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
-                        <img src="img/icon/sport1.jpg " class="img-responsive ">
-                    </a>
+                            <img src="img/icon/sport1.jpg " class="img-responsive ">
+                        </a>
                         <h2 class="text-center ">SFA {{sfaCity | capitalize}} {{year16}}</h2>
                         <div class="video-icon ">
                             <a class="fancybox.iframe " href="https://www.youtube.com/embed/j-iLIlmhi4I " fancybox-box>
-                            <img src="img/video.png " class="img-responsive ">
-                        </a>
+                                <img src="img/video.png " class="img-responsive ">
+                            </a>
                         </div>
                     </div>
                     <div class="display-inline ml3 relate ">
                         <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
-                        <img src="img/icon/sport2.jpg " class="img-responsive ">
-                    </a>
+                            <img src="img/icon/sport2.jpg " class="img-responsive ">
+                        </a>
                         <h2 class="text-center ">SFA {{sfaCity | capitalize}} {{year15}}</h2>
                         <div class="video-icon ">
                             <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
-                            <img src="img/video.png " class="img-responsive ">
-                        </a>
+                                <img src="img/video.png " class="img-responsive ">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -874,8 +1044,8 @@
             </div>
             <div class="btn-tab dis-bloc ">
                 <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
-                <button class=" ">Registration Process</button>
-            </a>
+                    <button class=" ">Registration Process</button>
+                </a>
             </div>
         </div>
         <div class="tab1 ">
@@ -888,8 +1058,8 @@
                 </div>
                 <div class="btn-tab dis-bloc ">
                     <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
-                    <button class=" ">Age Group & Event Categories</button>
-                </a>
+                        <button class=" ">Age Group & Event Categories</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -904,8 +1074,8 @@
             </div>
             <div class="btn-tab dis-bloc ">
                 <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
-                <button class=" ">Registration Process</button>
-            </a>
+                    <button class=" ">Registration Process</button>
+                </a>
             </div>
         </div>
         <div class="tab1 ">
@@ -918,8 +1088,8 @@
                 </div>
                 <div class="btn-tab dis-bloc ">
                     <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
-                    <button class=" ">Age Group & Event Categories</button>
-                </a>
+                        <button class=" ">Age Group & Event Categories</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -936,8 +1106,8 @@
             </div>
             <div class="btn-tab dis-bloc ">
                 <a href="img/pdf/sfa_atheletecollege_group.pdf " target="_new ">
-                <button class=" ">Registration Process</button>
-            </a>
+                    <button class=" ">Registration Process</button>
+                </a>
             </div>
         </div>
         <div class="tab1 ">
@@ -950,8 +1120,8 @@
                 </div>
                 <div class="btn-tab dis-bloc ">
                     <a href="img/pdf/sfa_agegroupcollege_event.pdf " target="_new ">
-                    <button class=" ">Age Group & Event Categories</button>
-                </a>
+                        <button class=" ">Age Group & Event Categories</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -966,8 +1136,8 @@
             </div>
             <div class="btn-tab dis-bloc ">
                 <a href="img/pdf/sfa_athelete_group.pdf " target="_new ">
-                <button class=" ">Registration Process</button>
-            </a>
+                    <button class=" ">Registration Process</button>
+                </a>
             </div>
         </div>
         <div class="tab1 ">
@@ -980,8 +1150,8 @@
                 </div>
                 <div class="btn-tab dis-bloc ">
                     <a href="img/pdf/sfa_agegroup_event.pdf " target="_new ">
-                    <button class=" ">Age Group & Event Categories</button>
-                </a>
+                        <button class=" ">Age Group & Event Categories</button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -1418,7 +1588,8 @@
                             </div>
                         </div>
                         <div class="category-padding f-s mod-cls">
-                            <p><b>Register your {{type}} for SFA {{sfaCity}} {{eventYear}}:</b>
+                            <p>
+                                <b>Register your {{type}} for SFA {{sfaCity}} {{eventYear}}:</b>
                             </p>
                             <ul class="list-unstyled school-list">
                                 <li ng-if="isCollege == false">Fill out the online ‘{{type |firstcapitalize}} Registration Form’ & pay the registration
@@ -1440,12 +1611,19 @@
                             </ul>
                             <p class="f-16">Successful registration will enable all athletes from your {{type}} to participate in all
                                 <span ng-if="isCollege == false">20+</span>
-                                <span ng-if="isCollege == true">15+</span> disciplines of sport at a subsidized registration
-                                fee.
+                                <span ng-if="isCollege == true">15+</span> disciplines of sport at a subsidized registration fee.
                             </p>
-                            <p class="custom-a"><a ng-click="regisBenModal(type, sfaCity, year, eventYear)"><strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
+                            <p class="custom-a">
+                                <a ng-click="regisBenModal(type, sfaCity, year, eventYear)">
+                                    <strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{eventYear}}</strong>
+                                </a>
+                            </p>
                         </div>
-                        <div class="text-center mb-20 "><a ui-sref="formregis"><button class="btn-category green-btn "> Click here for {{type |firstcapitalize}} Registration Form</button></a></div>
+                        <div class="text-center mb-20 ">
+                            <a ui-sref="formregis">
+                                <button class="btn-category green-btn "> Click here for {{type |firstcapitalize}} Registration Form</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
 
@@ -1463,13 +1641,16 @@
                             <!--<p>Once an athlete registers with SFA, he/she can participate in as many sports as he/she chooses to
                             (basis eligibility criteria).
                         </p>-->
-                            <p><b>Register as an athlete for SFA {{sfaCity}} {{eventYear}}:</b>
+                            <p>
+                                <b>Register as an athlete for SFA {{sfaCity}} {{eventYear}}:</b>
                             </p>
                             <ul class="list-unstyled athlete-list f-s">
                                 <li ng-if="isCollege == false"> Fill out the online ‘Athlete Registration Form’ & pay the registration amount of INR 200/-
-                                    (inclusive of all applicable taxes)<br>
-                                    <span class="f-14">*In the event that your school does not register for SFA {{sfaCity}} {{eventYear}} by the 15th of October,
-                                    an additional fee of INR 200/- (Inclusive of all applicable taxes) will be levied.</span>
+                                    (inclusive of all applicable taxes)
+                                    <br>
+                                    <span class="f-14">*In the event that your school does not register for SFA {{sfaCity}} {{eventYear}} by
+                                        the 15th of October, an additional fee of INR 200/- (Inclusive of all applicable
+                                        taxes) will be levied.</span>
                                 </li>
                                 <li ng-if="isCollege == true">Fill out the athlete registration form & pay the athlete registration fees.</li>
                                 <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 300 will be charged to each athlete registering
@@ -1487,10 +1668,22 @@
                             </ul>
                             <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
                             from their school registrations. </p>-->
-                            <p class="custom-a mb-33" ng-if="isCollege==false"><a ng-click="athBenModal(type, sfaCity, year, eventYear) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
-                            <p class="custom-a mb-75" ng-if="isCollege==true"><a ng-click="athBenModal(type, sfaCity, year, eventYear) "><strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong></a></p>
+                            <p class="custom-a mb-33" ng-if="isCollege==false">
+                                <a ng-click="athBenModal(type, sfaCity, year, eventYear) ">
+                                    <strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong>
+                                </a>
+                            </p>
+                            <p class="custom-a mb-75" ng-if="isCollege==true">
+                                <a ng-click="athBenModal(type, sfaCity, year, eventYear) ">
+                                    <strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong>
+                                </a>
+                            </p>
                         </div>
-                        <div class="text-center mb-20 "><a ui-sref="formathlete"><button class="btn-category orange "> Click here for Athlete Registration Form</button></a></div>
+                        <div class="text-center mb-20 ">
+                            <a ui-sref="formathlete">
+                                <button class="btn-category orange "> Click here for Athlete Registration Form</button>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1543,17 +1736,26 @@
                             <p class="mb-75 custom-a " ng-if="isCollege==false"><a href="http://mumbaischool.sfanow.in/formathlete
                             " target="_new "><strong>Click here for Athlete Registration Form</strong></a>
                             </p> -->
-                                <p class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:<br><a href="http://hyderabadschool.sfanow.in/formregis "
-                                        target="_new ">http://hyderabadschool.sfanow.in/formregis</a>
+                                <p class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:
+                                    <br>
+                                    <a href="http://hyderabadschool.sfanow.in/formregis " target="_new ">http://hyderabadschool.sfanow.in/formregis</a>
                                 </p>
-                                <p class="mb25 custom-a" ng-if="isCollege==false">For Athlete:<br><a href="http://hyderabadschool.sfanow.in/formathlete
-                            " target="_new "><strong>http://hyderabadschool.sfanow.in/formathlete</strong></a>
+                                <p class="mb25 custom-a" ng-if="isCollege==false">For Athlete:
+                                    <br>
+                                    <a href="http://hyderabadschool.sfanow.in/formathlete
+                            " target="_new ">
+                                        <strong>http://hyderabadschool.sfanow.in/formathlete</strong>
+                                    </a>
                                 </p>
                                 <p class="mb-33" ng-if="isCollege==true">All registered {{type}}s and athletes will be notified when registration for sports will
                                     be open!
                                 </p>
                             </div>
-                            <div class="text-center mb-20"><a ui-sref="sports-registration"><button class="btn-category blue-light" >Click here for Sports Registration</button></a></div>
+                            <div class="text-center mb-20">
+                                <a ui-sref="sports-registration">
+                                    <button class="btn-category blue-light">Click here for Sports Registration</button>
+                                </a>
+                            </div>
                             <!-- ng-if="isCollege==true" -->
                             <!-- <div class="text-center mb-20"><button class="com-category blue-light">Opening shortly</button></div> -->
                         </div>
@@ -1576,20 +1778,56 @@
                                         <div class="t-center ">
                                             <ul class="display-table list-style v-line f-12 sf-relative ">
 
-                                                <li class="pl-8 "><span class="font-boldcus ">1. Archery:</span> 11<sup>th</sup>-12<sup>th</sup>                                                    Nov
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">1. Archery:</span> 11
+                                                    <sup>th</sup>-12
+                                                    <sup>th</sup> Nov
                                                 </li>
-                                                <li class="pl-8 "><span class="font-boldcus ">2. Athletics:</span> 13<sup>th</sup>-15<sup>th</sup>                                                    Nov</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">3. Badminton:</span> 11<sup>th</sup>-15<sup>th</sup>                                                    Nov</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">4. Basketball:</span>11<sup>th</sup>-15<sup>th</sup>                                                    Nov</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">5. Boxing:</span> 16<sup>th</sup>-18<sup>th</sup>                                                    Nov</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">6. Carrom:</span> 15<sup>th</sup>-18<sup>th</sup>                                                    Nov</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">7. Chess:</span> 11<sup>th</sup>-13<sup>th</sup>                                                    Nov</li>
-                                                <li class="pl-8 "><span class="font-boldcus ">8. Fencing:</span> 17<sup>th</sup>-18<sup>th</sup>                                                    Nov</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">2. Athletics:</span> 13
+                                                    <sup>th</sup>-15
+                                                    <sup>th</sup> Nov</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">3. Badminton:</span> 11
+                                                    <sup>th</sup>-14
+                                                    <sup>th</sup> Nov</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">4. Basketball:</span>11
+                                                    <sup>th</sup>-16
+                                                    <sup>th</sup> Nov</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">5. Boxing:</span> 14
+                                                    <sup>th</sup>-15
+                                                    <sup>th</sup> Nov</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">6. Carrom:</span> 11
+                                                    <sup>th</sup>-14
+                                                    <sup>th</sup> Nov</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">7. Chess:</span> 11
+                                                    <sup>th</sup>-13
+                                                    <sup>th</sup> Nov</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">8. Fencing:</span> 14
+                                                    <sup>th</sup>-15
+                                                    <sup>th</sup> Nov</li>
                                                 <!-- <li class="pl-8 "><span class="font-boldcus ">9. Football:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Nov</li> -->
-                                                <li class="pl-8">9. Football: TBA</li>
-                                                <li><span class="font-boldcus ">10. Handball:</span> 11<sup>th</sup>-15<sup>th</sup>                                                    Nov</li>
-                                                <li><span class="font-boldcus ">11. Hockey:</span> 11<sup>th</sup>-13<sup>th</sup>                                                    Nov</li>
-                                                <li><span class="font-boldcus ">12. Judo:</span> 16<sup>th</sup> Nov</li>
+                                                <li class="pl-8 ">
+                                                    <span class="font-boldcus ">9. Football:</span> 9
+                                                    <sup>th</sup>-16
+                                                    <sup>th</sup> Nov</li>
+                                                <!-- <li class="pl-8">9. Football: TBA</li> -->
+                                                <li>
+                                                    <span class="font-boldcus ">10. Handball:</span> 11
+                                                    <sup>th</sup>-13
+                                                    <sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">11. Hockey:</span> 11
+                                                    <sup>th</sup>-13
+                                                    <sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">12. Judo:</span> 14
+                                                    <sup>th</sup> Nov</li>
                                                 <!-- -16<sup>th</sup>                                     -->
                                             </ul>
                                         </div>
@@ -1599,18 +1837,48 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="t-center ">
                                             <ul class="display-table list-style v-line f-12 To25 ">
-                                                <li><span class="font-boldcus ">13. Kabaddi:</span> 12<sup>th</sup>-18<sup>th</sup>                                                    Nov</li>
-                                                <li><span class="font-boldcus ">14. Karate:</span> 17<sup>th</sup>-18<sup>th</sup>                                                    Nov</li>
-                                                <li><span class="font-boldcus ">15. Kho Kho:</span> 13<sup>th</sup>-16<sup>th</sup>                                                    Nov</li>
-                                                <li><span class="font-boldcus ">16. Shooting:</span> 17<sup>th</sup>-18<sup>th</sup>                                                    Nov</li>
-                                                <li><span class="font-boldcus ">17. Swimming:</span> 11<sup>th</sup>-12<sup>th</sup>                                                    Nov</li>
-                                                <li><span class="font-boldcus ">18. Table Tennis:</span> 13<sup>th</sup>-15<sup>th</sup>                                                    Nov</li>
-                                                <li><span class="font-boldcus ">19. Taekwondo:</span> 16<sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">13. Kabaddi:</span> 11
+                                                    <sup>th</sup>-13
+                                                    <sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">14. Karate:</span> 14
+                                                    <sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">15. Kho Kho:</span> 13
+                                                    <sup>th</sup>-16
+                                                    <sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">16. Shooting:</span> 12
+                                                    <sup>th</sup>-13
+                                                    <sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">17. Swimming:</span> 11
+                                                    <sup>th</sup>-12
+                                                    <sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">18. Table Tennis:</span> 14
+                                                    <sup>th</sup>-16
+                                                    <sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">19. Taekwondo:</span> 16
+                                                    <sup>th</sup> Nov</li>
                                                 <!-- -17<sup>th</sup>                                                    -->
-                                                <li><span class="font-boldcus ">20. Tennis:</span> 16<sup>th</sup>-18<sup>th</sup>                                                    Nov</li>
-                                                <li><span class="font-boldcus ">21. Throwball:</span> 14<sup>th</sup>-16<sup>th</sup>                                                    Nov</li>
-                                                <li><span class="font-boldcus ">22. Volleyball:</span> 11<sup>th</sup>-16<sup>th</sup>                                                    Nov</li>
-                                                <li><span class="font-boldcus ">23. Water Polo:</span> 13<sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">20. Tennis:</span> 13
+                                                    <sup>th</sup>-18
+                                                    <sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">21. Throwball:</span> 14
+                                                    <sup>th</sup>-15
+                                                    <sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">22. Volleyball:</span> 11
+                                                    <sup>th</sup>-16
+                                                    <sup>th</sup> Nov</li>
+                                                <li>
+                                                    <span class="font-boldcus ">23. Water Polo:</span> 13
+                                                    <sup>th</sup> Nov</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1810,24 +2078,24 @@
                 <div class="video ">
                     <div class="display-inline relate ">
                         <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
-                        <img src="img/icon/sport1.jpg " class="img-responsive ">
-                    </a>
+                            <img src="img/icon/sport1.jpg " class="img-responsive ">
+                        </a>
                         <h2 class="text-center ">SFA MUMBAI {{year16}}</h2>
                         <div class="video-icon ">
                             <a class="fancybox.iframe " href="https://www.youtube.com/embed/j-iLIlmhi4I " fancybox-box>
-                            <img src="img/video.png " class="img-responsive ">
-                        </a>
+                                <img src="img/video.png " class="img-responsive ">
+                            </a>
                         </div>
                     </div>
                     <div class="display-inline ml3 relate ">
                         <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
-                        <img src="img/icon/sport2.jpg " class="img-responsive ">
-                    </a>
+                            <img src="img/icon/sport2.jpg " class="img-responsive ">
+                        </a>
                         <h2 class="text-center ">SFA MUMBAI {{year15}}</h2>
                         <div class="video-icon ">
                             <a class="fancybox.iframe " href="https://www.youtube.com/embed/Gfhf2uWIg98 " fancybox-box>
-                            <img src="img/video.png " class="img-responsive ">
-                        </a>
+                                <img src="img/video.png " class="img-responsive ">
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -1847,8 +2115,8 @@
                 </div>
                 <div class="btn-tab dis-bloc ">
                     <a href="img/pdf/hyderabad_athlete_event.pdf " target="_new">
-                <button class=" ">Registration Process</button>
-            </a>
+                        <button class=" ">Registration Process</button>
+                    </a>
                 </div>
             </div>
             <div class="tab1 ">
@@ -1861,8 +2129,8 @@
                     </div>
                     <div class="btn-tab dis-bloc ">
                         <a href="img/pdf/hyderabad_agegroup_event.pdf " target="_new ">
-                    <button class=" ">Age Group & Event Categories</button>
-                </a>
+                            <button class=" ">Age Group & Event Categories</button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1877,8 +2145,8 @@
                 </div>
                 <div class="btn-tab dis-bloc ">
                     <a href="img/pdf/hyderabad_athlete_event.pdf " target="_new ">
-                <button class=" ">Registration Process</button>
-            </a>
+                        <button class=" ">Registration Process</button>
+                    </a>
                 </div>
             </div>
             <div class="tab1 ">
@@ -1891,8 +2159,8 @@
                     </div>
                     <div class="btn-tab dis-bloc ">
                         <a href="img/pdf/hyderabad_agegroup_event.pdf " target="_new ">
-                    <button class=" ">Age Group & Event Categories</button>
-                </a>
+                            <button class=" ">Age Group & Event Categories</button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1909,8 +2177,8 @@
                 </div>
                 <div class="btn-tab dis-bloc ">
                     <a href="img/pdf/hyderabad_athletecollege_event.pdf " target="_new ">
-                <button class=" ">Registration Process</button>
-            </a>
+                        <button class=" ">Registration Process</button>
+                    </a>
                 </div>
             </div>
             <div class="tab1 ">
@@ -1923,8 +2191,8 @@
                     </div>
                     <div class="btn-tab dis-bloc ">
                         <a href="img/pdf/hyderabad_agegroupcollege_event.pdf " target="_new ">
-                    <button class=" ">Age Group & Event Categories</button>
-                </a>
+                            <button class=" ">Age Group & Event Categories</button>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -1939,8 +2207,8 @@
                 </div>
                 <div class="btn-tab dis-bloc ">
                     <a href="img/pdf/hyderabad_athletecollege_event.pdf " target="_new ">
-                <button class=" ">Registration Process</button>
-            </a>
+                        <button class=" ">Registration Process</button>
+                    </a>
                 </div>
             </div>
             <div class="tab1 ">
@@ -1953,8 +2221,8 @@
                     </div>
                     <div class="btn-tab dis-bloc ">
                         <a href="img/pdf/hyderabad_agegroupcollege_event.pdf " target="_new ">
-                    <button class=" ">Age Group & Event Categories</button>
-                </a>
+                            <button class=" ">Age Group & Event Categories</button>
+                        </a>
                     </div>
                 </div>
             </div>

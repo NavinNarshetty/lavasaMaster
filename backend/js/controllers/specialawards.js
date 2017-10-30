@@ -105,19 +105,33 @@ myApp.controller('DetailSpecialAwardBannerCtrl', function ($scope, TemplateServi
     console.log(data, "save")
     $scope.url = "SpecialAwardBanner/save";
     NavigationService.apiCall($scope.url, data, function (data) {
-      console.log("save sponsor")
+      console.log("save sponsor");
+      // if (data.value) {
+      //   console.log("in")
+      //   toastr.success("Data saved successfully", 'Success');
+      //   $state.go('specialaward-banner')
+      // } else if (data.data.nModified == '1') {
+      //   toastr.success("Data modified successfully", 'Success');
+      //   $state.go('sponsor')
+      // } else {
+      //   toastr.error("Something went wrong", 'Error');
+      // }
       if (data.value) {
-        console.log("in")
-        toastr.success("Data saved successfully", 'Success');
-        $state.go('specialaward-banner')
-      } else if (data.data.nModified == '1') {
-        toastr.success("Data saved successfully", 'Success');
-        $state.go('sponsor')
+        console.log("in value true")
+        if (data.data.nModified != undefined) {
+          toastr.success("Data modified successfully", 'Success');
+          $state.go('specialaward-banner')
+        } else {
+          toastr.success("Data saved successfully", 'Success');
+          $state.go('specialaward-banner')
+        }
+      } else if (data.error) {
+        toastr.error("Certificate Already Created", 'Error');
       } else {
         toastr.error("Something went wrong", 'Error');
       }
-    })
-  }
+    });
+  };
   // SAVE END
 });
 // DETAIL SPECIAL AWARD BANNER END

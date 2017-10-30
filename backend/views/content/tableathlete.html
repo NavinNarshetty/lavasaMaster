@@ -22,56 +22,70 @@
             <div class="widget ">
                 <div class="table-area ">
                     <div class="widget-title ">
-                        <h3>List of Registered Athlete<span class="tableTotal ">(Total : {{totalItems}}) </span></h3>
+                        <h3>List of Registered Athlete
+                            <span class="tableTotal ">(Total : {{totalItems}}) </span>
+                        </h3>
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <div class="mtp5">
                                         <div class="dropdown">
                                             <button class="btn default btn-md dropdown-toggle" type="button" data-toggle="dropdown">Filter
-                                                <span class="caret"></span></button>
+                                                <span class="caret"></span>
+                                            </button>
                                             <ul class="dropdown-menu cur">
-                                                <li><input type="radio" id="radio8" ng-model="formData.type" ng-change="changeAll()"
+                                                <li>
+                                                    <input type="radio" id="radio8" ng-model="formData.type" ng-change="changeAll()"
                                                         value="">
                                                     <label for="radio8">All</label>
                                                 </li>
-                                                <li><input type="radio" id="radio1" ng-model="formData.type" value="Date">
+                                                <li>
+                                                    <input type="radio" id="radio1" ng-model="formData.type" value="Date">
                                                     <label for="radio1">Date</label>
                                                 </li>
-                                                <li><input type="radio" id="radio2" ng-model="formData.type" value="SFA-ID" ng-change="changeInput()">
+                                                <li>
+                                                    <input type="radio" id="radio2" ng-model="formData.type" value="SFA-ID" ng-change="changeInput()">
                                                     <label for="radio2">SFA-ID</label>
                                                 </li>
-                                                <li><input type="radio" id="radio9" ng-model="formData.type" value="UTM_Source"
+                                                <li>
+                                                    <input type="radio" id="radio9" ng-model="formData.type" value="UTM_Source"
                                                         ng-change="changeInput()">
                                                     <label for="radio9">UTM_Source</label>
                                                 </li>
-                                                <li><input type="radio" id="radio10" ng-model="formData.type" value="UTM_Medium"
+                                                <li>
+                                                    <input type="radio" id="radio10" ng-model="formData.type" value="UTM_Medium"
                                                         ng-change="changeInput()">
                                                     <label for="radio10">UTM_Medium</label>
                                                 </li>
-                                                <li><input type="radio" id="radio11" ng-model="formData.type" value="UTM_Campaign"
+                                                <li>
+                                                    <input type="radio" id="radio11" ng-model="formData.type" value="UTM_Campaign"
                                                         ng-change="changeInput()">
                                                     <label for="radio11">UTM_Campaign</label>
                                                 </li>
-                                                <li><input type="radio" id="radio3" ng-model="formData.type" value="School Name"
+                                                <li>
+                                                    <input type="radio" id="radio3" ng-model="formData.type" value="School Name"
                                                         ng-change="changeInput()">
                                                     <label for="radio3">School Name
-                                                        </label>
+                                                    </label>
                                                 </li>
-                                                <li><input type="radio" id="radio7" ng-model="formData.type" value="Athlete Name"
+                                                <li>
+                                                    <input type="radio" id="radio7" ng-model="formData.type" value="Athlete Name"
                                                         ng-change="changeInput()">
                                                     <label for="radio7">Athlete Name
-                                                        </label>
+                                                    </label>
                                                 </li>
-                                                <li><input type="radio" id="radio4" ng-model="formData.type" value="Payment Mode"
+                                                <li>
+                                                    <input type="radio" id="radio4" ng-model="formData.type" value="Payment Mode"
                                                         ng-change="changeInput()">
                                                     <label for="radio4">Payment Mode</label>
                                                 </li>
-                                                <li><input type="radio" id="radio5" ng-model="formData.type" value="Payment Status"
+                                                <li>
+                                                    <input type="radio" id="radio5" ng-model="formData.type" value="Payment Status"
                                                         ng-change="changeInput()">
                                                     <label for="radio5">Payment Status</label>
                                                 </li>
-                                                <li><input type="radio" id="radio6" ng-model="formData.type" value="Verified Status"
+                                                <li>
+                                                    <input type="radio" id="radio6" ng-model="formData.type" value="Verified Status"
                                                         ng-change="changeInput()">
                                                     <label for="radio6">Verified Status</label>
                                                 </li>
@@ -108,7 +122,7 @@
                              " ng-model="search" />
                                     </form>
                                     <a class="btn btn-success" ng-click="generateExcel(formData)">Excel Export</a>
-                                    <a class="btn btn-success" ng-click="targetAthleteExcel()">Athlete Export</a>
+                                    <a class="btn btn-success" ng-click="targetAthleteExcel()">Export</a>
                                 </div>
                             </div>
                         </div>
@@ -154,8 +168,9 @@
                                         <a class="btn btn-info" target="_blank" ui-sref="viewAthlete({id:item._id})">
                                             <i class="fa fa-eye"></i> View
                                         </a>
-                                        <a class="btn btn-link" ng-click="transferToWebsite(item._id)"><i class="fa  fa-user"></i> Access
-                    </a>
+                                        <a class="btn btn-link" ng-click="transferToWebsite(item._id)">
+                                            <i class="fa  fa-user"></i> Access
+                                        </a>
                                     </td>
                                     <!--<td ng-repeat="but in json.json.action">
                                         <a class="btn" ng-class="but.buttonClass" ng-click="json.eventAction(but,item) ">

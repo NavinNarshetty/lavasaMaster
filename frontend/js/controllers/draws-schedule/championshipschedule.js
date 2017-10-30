@@ -161,22 +161,22 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                 }, {
                     sport: 'Badminton',
                     date1: '11',
-                    date2: '15',
+                    date2: '14',
                     month: 'Nov'
                 }, {
                     sport: 'Basketball',
                     date1: '11',
-                    date2: '18',
+                    date2: '16',
                     month: 'Nov'
                 }, {
                     sport: 'Boxing',
-                    date1: '16',
-                    date2: '18',
+                    date1: '14',
+                    date2: '15',
                     month: 'Nov'
                 }, {
                     sport: 'Carrom',
-                    date1: '15',
-                    date2: '18',
+                    date1: '11',
+                    date2: '14',
                     month: 'Nov'
                 }, {
                     sport: 'Chess',
@@ -185,15 +185,18 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     month: 'Nov'
                 }, {
                     sport: 'Fencing',
-                    date1: '17',
-                    date2: '18',
+                    date1: '14',
+                    date2: '15',
                     month: 'Nov'
                 }, {
-                    sport: 'Football'
+                    sport: 'Football',
+                    date1: '9',
+                    date2: '16',
+                    month: 'Nov'
                 }, {
                     sport: 'Handball',
                     date1: '11',
-                    date2: '15',
+                    date2: '13',
                     month: 'Nov'
                 }, {
                     sport: 'Hockey',
@@ -202,19 +205,18 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     month: 'Nov'
                 }, {
                     sport: 'Judo',
-                    date: '16',
+                    date: '14',
                     month: 'Nov'
                 }];
 
                 $scope.schedulelist2 = [{
                     sport: 'Kabaddi',
-                    date1: '12',
-                    date2: '18',
+                    date1: '11',
+                    date2: '13',
                     month: 'Nov'
                 }, {
                     sport: 'Karate',
-                    date1: '17',
-                    date2: '18',
+                    date: '14',
                     month: 'Nov'
                 }, {
                     sport: 'Kho Kho',
@@ -223,8 +225,8 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     month: 'Nov'
                 }, {
                     sport: 'Shooting',
-                    date1: '17',
-                    date2: '18',
+                    date1: '12',
+                    date2: '13',
                     month: 'Nov'
                 }, {
                     sport: 'Swimming',
@@ -233,8 +235,8 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     month: 'Nov'
                 }, {
                     sport: 'Table Tennis',
-                    date1: '13',
-                    date2: '15',
+                    date1: '14',
+                    date2: '16',
                     month: 'Nov'
                 }, {
                     sport: 'Taekwondo',
@@ -242,13 +244,13 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     month: 'Nov'
                 }, {
                     sport: 'Tennis',
-                    date1: '16',
+                    date1: '13',
                     date2: '18',
                     month: 'Nov'
                 }, {
                     sport: 'Throwball',
                     date1: '14',
-                    date2: '16',
+                    date2: '15',
                     month: 'Nov'
                 }, {
                     sport: 'Volleyball',

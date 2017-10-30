@@ -366,6 +366,10 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
                 "img": "img/footer/n10.png",
                 "href": "",
                 "game": "Digital Parenting Partner"
+            }, {
+                "img": "img/footer/n11.png",
+                "href": "",
+                "game": "Health & Togetherness Partner"
             }
             // {
             //     "img": "img/footer/na3.jpg",
