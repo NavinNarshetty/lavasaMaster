@@ -18,24 +18,25 @@
         }
 
         @font-face {
+            font-family: 'tangerine';
+            src: url("https://storage.cloud.google.com/sfacertificate/Tangerine-Regular.ttf");
+        }
+        /* @font-face {
             font-family: 'avenirtp';
             src: url("https://storage.googleapis.com/sfacertificate/AvenirNextLTPro-Cn_2.otf");
             font-weight: 400;
-        }
-
-        @font-face {
+        } */
+        /* @font-face {
             font-family: 'avenirtpI';
             src: url("https://storage.googleapis.com/sfacertificate/AvenirNextLTPro-UltLtCnIt_2.otf");
             font-weight: 400;
-        }
-
-        @font-face {
+        } */
+        /* @font-face {
             font-family: 'avenir';
             src: url("https://storage.googleapis.com/sfacertificate/AvenirNextLTPro-MediumCn_2.otf");
             font-weight: 500;
-        }
-
-        @font-face {
+        } */
+        /* @font-face {
             font-family: 'avenirDemi';
             src: url("https://storage.googleapis.com/sfacertificate/AvenirNextLTPro-DemiCn_2.otf");
             font-weight: 500;
@@ -44,12 +45,7 @@
         @font-face {
             font-family: 'opensanscondlight';
             src: url("https://storage.googleapis.com/sfacertificate/OpenSans-CondLight.ttf");
-        }
-
-        @font-face {
-            font-family: 'tangerine';
-            src: url("https://storage.googleapis.com/sfacertificate/Tangerine-Regular.ttf");
-        }
+        } */
 
         body {
             font-family: 'avenir';
@@ -113,23 +109,21 @@
         }
 
         .certificate {
-            /* width: 560px;
-            height: 683px; */
-            width: 595px;
-            height: 842px;
+            width: 600px;
+            max-width: 600px;
             margin: 0 auto;
             padding: 30px 0px 0px 0px;
             border: 12px solid #0a1a72;
         }
 
         .w70 {
-            width: 75%;
-            /* width: 70%; */
+            /* width: 75%; */
+            width: 60%;
         }
 
         .w36 {
-            width: 45%;
-            /* width: 36%; */
+            /* width: 45%; */
+            width: 30%;
         }
 
         .pt50 {
@@ -244,11 +238,18 @@
         }
 
         .mymgbt {
-            margin: 16px auto 10px !important;
+            margin: 10px auto;
+        }
+
+        .footer-img {
+            margin: 0 0 -7px;
         }
 
         .footer-c {
-            padding-top: 54px;
+            padding-top: 0px;
+
+            /* .footer-c {
+            padding-top: 7px; */
             text-align: center;
         }
 
@@ -295,8 +296,8 @@
         }
 
         .m-20 {
-            /* margin: 25px 0 20px; */
-            margin: 35px 0 25px;
+            margin: 25px 0 15px;
+            /* margin: 35px 0 25px; */
         }
 
         .mymt {
@@ -336,8 +337,8 @@
                 <tr>
                     <th>
                         <div class="header-img">
-                            <!-- <img src="https://storage.googleapis.com/sfacertificate/1.png" alt="" class="w36"> -->
-                            <img src="<%=data.bannerImage%>" alt="" class="w36">
+                            <img src="https://storage.googleapis.com/sfacertificate/1.png" alt="" class="w36">
+                            <!-- <img src="<%=data.bannerImage%>" alt="" class="w36"> -->
                         </div>
                     </th>
                 </tr>
@@ -349,8 +350,8 @@
                             <div class="fr-sec">
                                 <div class="">
                                     <div class="header-img">
-                                        <!-- <img src="https://storage.googleapis.com/sfacertificate/Gold.png" alt="" class="w70"> -->
-                                        <img src="<%=data.sportObj.heading%>" alt="" class="w70">
+                                        <img src="https://storage.googleapis.com/sfacertificate/Gold.png" alt="" class="w70">
+                                        <!-- <img src="<%=data.sportObj.heading%>" alt="" class="w70"> -->
                                     </div>
                                 </div>
                             </div>
@@ -371,8 +372,9 @@
                 <tr>
                     <td class="text-center">
                         <div class="form-group">
-                            <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="<%= data.athlete.firstName + ' ' + data.athlete.middleName + ' ' + data.athlete.surname%>  "
-                                style="color:#232d69">
+                            <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="Raj Mukesh Shah" style="color:#232d69">
+                            <!-- <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="<%= data.athlete.firstName + ' ' + data.athlete.middleName + ' ' + data.athlete.surname%>  "
+                                style="color:#232d69"> -->
                             <!-- <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="<%= data.name%>  " style="color:#232d69"> -->
                         </div>
                     </td>
@@ -382,7 +384,8 @@
                         <div class="form-group border-btm" style="margin-top: 6px;">
                             <div class="sf-relative">
 
-                                <input type="text" class="form-control w60 text-center font-os f-20" value="<%=data.athlete.school.name%>" style="text-transform: none;width: 83%;color:#666666;">
+                                <input type="text" class="form-control w60 text-center font-os f-20" value="Jamnabai Narshee School" style="text-transform: none;width: 83%;color:#666666;">
+                                <!-- <input type="text" class="form-control w60 text-center font-os f-20" value="<%=data.athlete.school.name%>" style="text-transform: none;width: 83%;color:#666666;"> -->
 
                             </div>
 
@@ -391,12 +394,13 @@
                 </tr>
                 <tr>
                     <td class="text-center">
-                        <div class="form-group border-btm text-center m-auto-20 mymgbt">
+                        <div class="form-group border-btm text-center mymgbt">
                             <div class="display-inline" style="line-height: 28px; vertical-align: inherit;">
                                 <label class="color-blue font-os f-20" style="color:#232d69;">SFA ID</label>
                             </div>
                             <div class="display-inline">
-                                <input type="text" class="form-control  text-center font-os" value="<%= data.athlete.sfaId%>" style="color:#666666;">
+                                <input type="text" class="form-control  text-center font-os" value="MA1829328" style="color:#666666;">
+                                <!-- <input type="text" class="form-control  text-center font-os" value="<%= data.athlete.sfaId%>" style="color:#666666;"> -->
 
                             </div>
                     </td>
@@ -408,10 +412,16 @@
                                 <div class="display-inline">
                                     <label class="color-blue font-os f-20" style="color:#232d69;">For securing a </label>
                                 </div>
-                                <span class="form-control text-center font-os f-20" style="color:#232d69"><%=data.sportObj.medalType%></span>
+                                <span class="form-control text-center font-os f-20" style="color:#232d69">
+                                    Gold
+                                    <!-- <%=data.sportObj.medalType%> -->
+                                </span>
 
-                                <label class="color-blue f-20 font-os" style="color:#232d69">in</label> <label class="font-os f-20"
-                                    style="color:#232d69"><%=data.sportObj.sportslist.sportsListSubCategory.name%></label>
+                                <label class="color-blue f-20 font-os" style="color:#232d69">in</label>
+                                <label class="font-os f-20" style="color:#232d69">
+                                    Epee
+                                    <!-- <%=data.sportObj.sportslist.sportsListSubCategory.name%> -->
+                                </label>
                             </div>
 
                         </div>
@@ -420,19 +430,19 @@
                 <tr>
                     <td class="text-center">
                         <div class="form-group border-btm" style="margin-top: 6px;">
-                            <input type="text" class="form-control text-center font-os" value="<%=data.sportObj.ageGroup.name + ' ' + data.sportObj.gender + ' ' + data.sportObj.sportslist.name%>"
-                                style="color:#666666;width: 50%;">
+                            <input type="text" class="form-control text-center font-os" value="Epee" style="color:#666666;width: 50%;">
+                            <!-- <input type="text" class="form-control text-center font-os" value="<%=data.sportObj.ageGroup.name + ' ' + data.sportObj.gender + ' ' + data.sportObj.sportslist.name%>"
+                                style="color:#666666;width: 50%;"> -->
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td>
                         <div class="footer-img">
-                            <div class="footer-c" style="width: 592px; height: auto;">
+                            <div class="footer-c" style="width: 600px; height: auto;">
 
-                                <!-- <img src="https://storage.googleapis.com/sfacertificate/32.jpg" alt="" class="width100"> -->
-                                <img src="<%=data.sportObj.footerImage%>" alt="" class="width100">
-
+                                <img src="https://storage.googleapis.com/sfacertificate/32.jpg" alt="" class="width100">
+                                <!-- <img src="<%=data.sportObj.footerImage%>" alt="" class="width100"> -->
                             </div>
                         </div>
                     </td>
