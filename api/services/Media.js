@@ -117,7 +117,7 @@ var model = {
 
         function sampleExcel() {
             var obj = {};
-            var name="";
+            var name = "";
             obj.year = "2015";
             obj.order = 1;
             obj.imageorder = 1;
@@ -125,13 +125,13 @@ var model = {
             obj.mediatitle = "Tennis day 1";
 
             if (data.press == 'true') {
-                name="sampleMediaPress";
+                name = "sampleMediaPress";
                 obj.folder = "press-coverage";
                 obj.mediatype = "press-photo";
                 obj.medialink = "1.jpeg";
 
             } else {
-                name="sampleMediaGallery";                
+                name = "sampleMediaGallery";
                 obj.folder = "Tennis";
                 obj.mediatype = "photo";
                 obj.medialink = "2.jpg";
@@ -170,6 +170,79 @@ var model = {
 
 
 
+    },
+
+    getFolders: function (data, callback) {
+        var matchObj = {
+            "mediatype": data.mediatype
+        }
+        var pipeline = [{
+            $match: matchObj
+        }, {
+            $group: {
+                "_id": '$folder',
+                "media": {
+                    "$push": "$medialink"
+                }
+            }
+        }];
+
+        Media.aggregate(pipeline, function (err, mediaFolders) {
+            if (err || _.isEmpty(mediaFolders)) {
+                callback(err, "Folders Not Found");
+            } else {
+                _.each(mediaFolders, function (n, key) {
+                    n.media = n.media[0];
+                    if (key == mediaFolders.length - 1)
+                        callback(null, mediaFolders);
+                });
+            }
+        })
+
+    },
+
+    getMedias: function (data, callback) {
+        var sendObj={};
+        var matchObj = {
+            "folder": data.folder,
+            "mediatype": data.mediatype,
+            "year": data.year
+        }
+
+        var maxRow = Config.maxRow;
+        var page = 1;
+        if (data && data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['medalType'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                asc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+
+        sendObj.options=options;
+        Media.count(matchObj,function(err,count){
+            sendObj.total=count
+        })
+
+        Media.find(matchObj).lean().exec(function (err, medias) {
+            if (err || _.isEmpty(data)) {
+                callback(err, "Medias Not Found");
+            } else {
+                sendObj.results=medias;
+                callback(null, sendObj);
+            }
+        });
     }
 };
 module.exports = _.assign(module.exports, exports, model);
