@@ -1039,6 +1039,7 @@ var model = {
                 },
                 function (found, callback) {
                     if (found.isTeam == false) {
+                        console.log("found", found);
                         var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
                         var newPipeLine = _.cloneDeep(pipeLine);
                         newPipeLine.push(
@@ -1068,6 +1069,7 @@ var model = {
                             }
                         });
                     } else {
+                        console.log("found in else", found);
                         var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
                         var newPipeLine = _.cloneDeep(pipeLine);
                         newPipeLine.push(
@@ -1098,7 +1100,6 @@ var model = {
                                     "as": "opponentsTeam.studentTeam"
                                 }
                             },
-
                             // Stage 10
                             {
                                 $match: {
@@ -1107,6 +1108,7 @@ var model = {
                             }
                         );
                         Match.aggregate(newPipeLine, function (err, matchData) {
+                            console.log("matchData", matchData);
                             if (err) {
                                 callback(err, "error in mongoose");
                             } else {
@@ -1127,7 +1129,8 @@ var model = {
             function (err, data2) {
                 callback(null, data2);
             });
-    }
+    },
+
 
 };
 module.exports = _.assign(module.exports, exports, model);
