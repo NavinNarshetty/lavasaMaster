@@ -602,6 +602,8 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
   $scope.matchData = {};
   $scope.formData.scorecard = [];
 
+
+
   // STATUS LIST
   $scope.statusList = ["IsLive", "IsPending", "IsCompleted"];
   // STATUS LIST END
@@ -702,6 +704,24 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
     })
   }
   // CHANGE OPPONENTS SINGLES END
+
+  $scope.addField = function (data) {
+    console.log('in add')
+    $scope.formData.resultsRacquet.players[data].sets.push({
+      'ace': '',
+      'doubleFaults': '',
+      'point': '',
+      'serviceError': '',
+      'unforcedError': '',
+      'winner': ''
+
+    })
+  };
+
+  $scope.removeField = function (data, index) {
+    console.log(data, index, 'in remove')
+    $scope.formData.resultsRacquet.players[data].sets.splice(index, 1);
+  }
   // SAVE
   $scope.saveDataMatch = function () {
     $scope.formData.matchId = $stateParams.id;

@@ -88,7 +88,7 @@
                     <!-- COMBAT /RACQUET STATUS -->
                     <div class="form-group">
                       <label>Status</label>
-                      <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.result.status">
+                      <ui-select name="status" id="status" theme="bootstrap" ng-model="formData.result.status" ng-disabled="formData.result.status==='IsCompleted'">
                         <ui-select-match placeholder="Please Enter Status">
                           {{$select.selected}}
                           <!-- {{formData.resultsCombat.status.status}} -->
@@ -238,6 +238,7 @@
                   </div>
                   <!-- CHECKBOX END -->
 
+
                   <!-- SETS -->
                   <div class="form-group" ng-repeat="set in player.sets track by $index">
                     <h5>SET</h5>
@@ -296,9 +297,12 @@
                     </div>
                   </div>
                   <!-- CHECKBOX END -->
-
+                  <div class="text-right">
+                    <button class="btn" ng-click="addField($index)">Add Set</button>
+                  </div>
                   <!-- SETS -->
                   <div class="form-group" ng-repeat="set in player.sets track by $index">
+                    <span class="" ng-click="removeField($parent.$index,$index)"><i class="fa fa-times" aria-hidden="true"></i></span>
                     <h5>SET</h5>
                     <div class="row">
                       <div class="col-md-2">
