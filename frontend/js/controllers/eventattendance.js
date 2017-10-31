@@ -1,6 +1,8 @@
 // EVENT ATTENDANCE
 myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout, configService) {
   $scope.template = TemplateService.getHTML("content/event-attendance.html");
+  TemplateService.header = ''
+  TemplateService.footer = ''
   TemplateService.title = "Attendance"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
   $scope.formData = {};
