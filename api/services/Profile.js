@@ -2419,7 +2419,8 @@ var model = {
     },
 
     getSchoolStats: function (data, callback) {
-        var stats = {};
+        var profile = {};
+        profile.match = [];
         async.waterfall([
                 function (callback) {
                     SportsListSubCategory.findOne({
@@ -2539,7 +2540,7 @@ var model = {
                             if (err) {
                                 callback(err, "error in mongoose");
                             } else {
-                                var match = [];
+                                // var match = [];
                                 async.each(matchData, function (singleData, callback) {
                                         var stats = {};
                                         stats.year = new Date(singleData.createdAt).getFullYear();
@@ -2552,6 +2553,7 @@ var model = {
                                         stats.round = singleData.round;
                                         stats.video = singleData.video;
                                         stats.videoType = singleData.videoType;
+                                        var player = {};
                                         if (singleData.resultsCombat) {
                                             var i = 0;
                                             if (singleData.resultsCombat.players.length == 1) {
@@ -2566,7 +2568,7 @@ var model = {
                                                 }
                                                 stats.isAthleteWinner = true;
                                                 stats.score = result;
-                                                match.push(stats);
+                                                profile.match.push(stats);
                                                 callback(null, stats);
                                             } else {
                                                 async.each(singleData.resultsCombat.players, function (player, callback) {
@@ -2589,8 +2591,14 @@ var model = {
                                                             } else {
                                                                 stats.isAthleteWinner = true;
                                                             }
-                                                            match.push(stats);
-                                                            callback(null, match);
+                                                            var player = {};
+                                                            player.name = stats.opponentName;
+                                                            player.school = stats.school;
+                                                            player.sfaId = found.sfaId;
+                                                            player.profilePic = found.photograph;
+
+                                                            profile.match.push(stats);
+                                                            callback(null, profile.match);
                                                         });
                                                     } else {
                                                         while (i < singleData.resultsCombat.players[0].sets.length) {
@@ -2602,7 +2610,7 @@ var model = {
                                                             i++;
                                                         }
                                                         stats.score = result;
-                                                        match.push(stats);
+                                                        profile.match.push(stats);
                                                         callback(null, stats);
                                                     }
                                                 }, function (err) {
@@ -2611,7 +2619,6 @@ var model = {
 
 
                                             }
-
                                         } else if (singleData.resultRacquets) {
                                             var i = 0;
                                             if (singleData.resultRacquets.players.length == 1) {
@@ -2626,7 +2633,7 @@ var model = {
                                                 }
                                                 stats.isAthleteWinner = true;
                                                 stats.score = result;
-                                                match.push(stats);
+                                                profile.match.push(stats);
                                                 callback(null, stats);
                                             } else {
                                                 async.each(singleData.resultRacquets.players, function (player, callback) {
@@ -2649,8 +2656,8 @@ var model = {
                                                             } else {
                                                                 stats.isAthleteWinner = true;
                                                             }
-                                                            match.push(stats);
-                                                            callback(null, match);
+                                                            profile.match.push(stats);
+                                                            callback(null, profile.match);
                                                         });
                                                     } else {
                                                         while (i < singleData.resultRacquets.players[0].sets.length) {
@@ -2662,7 +2669,7 @@ var model = {
                                                             i++;
                                                         }
                                                         stats.score = result;
-                                                        match.push(stats);
+                                                        profile.match.push(stats);
                                                         callback(null, stats);
                                                     }
                                                 }, function (err) {
@@ -2678,19 +2685,19 @@ var model = {
                                                 if (n === singleData.opponentsSingle.athleteId) {
                                                     stats.score = n.time;
                                                     stats.result = n.result;
-                                                    match.push(stats);
-                                                    callback(null, match);
+                                                    profile.match.push(stats);
+                                                    callback(null, profile.match);
                                                 } else {
-                                                    callback(null, match);
+                                                    callback(null, profile.match);
                                                 }
                                             }, function (err) {
-                                                callback(null, match);
+                                                callback(null, profile.match);
                                             });
                                         } else if (singleData.resultQualifyingRound) {
                                             stats.score = singleData.resultQualifyingRound.player.bestAttempt;
                                             stats.result = singleData.resultQualifyingRound.player.result;
-                                            match.push(stats);
-                                            callback(null, match);
+                                            profile.match.push(stats);
+                                            callback(null, profile.match);
 
                                         } else if (singleData.resultSwiss) {
                                             var result;
@@ -2698,8 +2705,8 @@ var model = {
                                                 if (n === singleData.opponentsSingle._id) {
                                                     stats.score = n.score;
                                                     stats.rank = n.rank;
-                                                    match.push(stats);
-                                                    callback(null, match);
+                                                    profile.match.push(stats);
+                                                    callback(null, profile.match);
                                                 } else if (!n.equals(singleData.opponentsSingle._id)) {
                                                     Athelete.findOne({
                                                         _id: n.athleteId
@@ -2719,14 +2726,14 @@ var model = {
                                                         } else {
                                                             stats.isAthleteWinner = true;
                                                         }
-                                                        match.push(stats);
-                                                        callback(null, match);
+                                                        profile.match.push(stats);
+                                                        callback(null, profile.match);
                                                     });
                                                 } else {
-                                                    callback(null, match);
+                                                    callback(null, profile.match);
                                                 }
                                             }, function (err) {
-                                                callback(null, match);
+                                                callback(null, profile.match);
                                             });
                                         } else if (singleData.resultKnockout) {
                                             var result;
@@ -2734,8 +2741,8 @@ var model = {
                                                 if (n === singleData.opponentsSingle._id) {
                                                     stats.score = n.score;
                                                     stats.rank = n.rank;
-                                                    match.push(stats);
-                                                    callback(null, match);
+                                                    profile.match.push(stats);
+                                                    callback(null, profile.match);
                                                 } else if (!n.equals(singleData.opponentsSingle._id)) {
 
                                                     Athelete.findOne({
@@ -2756,28 +2763,28 @@ var model = {
                                                         } else {
                                                             stats.isAthleteWinner = true;
                                                         }
-                                                        match.push(stats);
-                                                        callback(null, match);
+                                                        profile.match.push(stats);
+                                                        callback(null, profile.match);
                                                     });
                                                 } else {
-                                                    callback(null, match);
+                                                    callback(null, profile.match);
                                                 }
                                             }, function (err) {
-                                                callback(null, match);
+                                                callback(null, profile.match);
                                             });
                                         } else if (singleData.resultShooting) {
                                             stats.score = singleData.resultShooting.finalScore;
                                             stats.result = singleData.resultShooting.result;
-                                            match.push(stats);
-                                            callback(null, match);
+                                            profile.match.push(stats);
+                                            callback(null, profile.match);
 
                                         } else {
-                                            callback(null, match);
+                                            callback(null, profile.match);
                                         }
 
                                     },
                                     function (err) {
-                                        callback(null, match);
+                                        callback(null, profile.match);
                                     });
                             }
                         });
@@ -2847,7 +2854,7 @@ var model = {
                             if (err) {
                                 callback(err, "error in mongoose");
                             } else {
-                                var match = [];
+                                // var match = [];
                                 async.each(matchData, function (singleData, callback) {
                                         var stats = {};
                                         stats.year = new Date(singleData.createdAt).getFullYear();
@@ -2876,8 +2883,8 @@ var model = {
                                                 }
                                                 stats.score = result;
                                                 stats.isAthleteWinner = true;
-                                                match.push(stats);
-                                                callback(null, match);
+                                                profile.match.push(stats);
+                                                callback(null, profile.match);
                                             } else {
                                                 async.each(singleData.resultsCombat.teams, function (n, callback) {
                                                         if (n.team !== opponentsTeam._id) {
@@ -2887,7 +2894,7 @@ var model = {
                                                                 if (err) {
                                                                     callback(null, err);
                                                                 } else if (_.isEmpty(found)) {
-                                                                    callback(null, match);
+                                                                    callback(null, profile.match);
                                                                 } else {
                                                                     opponentName = found.teamId;
                                                                     opponentSchool = found.schoolName;
@@ -2896,8 +2903,8 @@ var model = {
                                                                     } else {
                                                                         stats.isAthleteWinner = true;
                                                                     }
-                                                                    match.push(stats);
-                                                                    callback(null, match);
+                                                                    profile.match.push(stats);
+                                                                    callback(null, profile.match);
                                                                 }
                                                             });
                                                         } else {
@@ -2912,12 +2919,12 @@ var model = {
                                                             }
                                                             stats.score = result;
                                                             stats.isAthleteWinner = true;
-                                                            match.push(stats);
-                                                            callback(null, match);
+                                                            profile.match.push(stats);
+                                                            callback(null, profile.match);
                                                         }
                                                     },
                                                     function (err) {
-                                                        callback(null, match);
+                                                        callback(null, profile.match);
                                                     });
                                             }
                                         } else if (singleData.resultRacquets) {
@@ -2935,8 +2942,8 @@ var model = {
                                                 }
                                                 stats.score = result;
                                                 stats.isAthleteWinner = true;
-                                                match.push(stats);
-                                                callback(null, match);
+                                                profile.match.push(stats);
+                                                callback(null, profile.match);
                                             } else {
                                                 async.each(singleData.resultRacquets.teams, function (n, callback) {
                                                         if (n.team !== opponentsTeam._id) {
@@ -2946,7 +2953,7 @@ var model = {
                                                                 if (err) {
                                                                     callback(null, err);
                                                                 } else if (_.isEmpty(found)) {
-                                                                    callback(null, match);
+                                                                    callback(null, profile.match);
                                                                 } else {
                                                                     opponentName = found.teamId;
                                                                     opponentSchool = found.schoolName;
@@ -2955,8 +2962,8 @@ var model = {
                                                                     } else {
                                                                         stats.isAthleteWinner = true;
                                                                     }
-                                                                    match.push(stats);
-                                                                    callback(null, match);
+                                                                    profile.match.push(stats);
+                                                                    callback(null, profile.match);
                                                                 }
                                                             });
                                                         } else {
@@ -2971,12 +2978,12 @@ var model = {
                                                             }
                                                             stats.score = result;
                                                             stats.isAthleteWinner = true;
-                                                            match.push(stats);
-                                                            callback(null, match);
+                                                            profile.match.push(stats);
+                                                            callback(null, profile.match);
                                                         }
                                                     },
                                                     function (err) {
-                                                        callback(null, match);
+                                                        callback(null, profile.match);
                                                     });
                                             }
                                         } else if (singleData.resultHeat) {
@@ -2986,13 +2993,13 @@ var model = {
                                                 if (singleData.winner.player === n.player) {
                                                     stats.score = n.time;
                                                     stats.result = n.result;
-                                                    match.push(stats);
-                                                    callback(null, match);
+                                                    profile.match.push(stats);
+                                                    callback(null, profile.match);
                                                 } else {
-                                                    callback(null, match);
+                                                    callback(null, profile.match);
                                                 }
                                             }, function (err) {
-                                                callback(null, match);
+                                                callback(null, profile.match);
                                             });
                                         } else if (singleData.resultBasketball) {
                                             var i = 0;
@@ -3000,8 +3007,8 @@ var model = {
                                             if (singleData.resultBasketball.teams.length == 1) {
                                                 stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints;
                                                 stats.isAthleteWinner = true;
-                                                match.push(stats);
-                                                callback(null, match);
+                                                profile.match.push(stats);
+                                                callback(null, profile.match);
                                             } else {
                                                 async.each(singleData.resultBasketball.teams, function (n, callback) {
                                                     StudentTeam.findOne({
@@ -3010,7 +3017,7 @@ var model = {
                                                         if (err) {
                                                             callback(null, err);
                                                         } else if (_.isEmpty(found)) {
-                                                            callback(null, match);
+                                                            callback(null, profile.match);
                                                         } else {
                                                             stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultBasketball.teams[1].teamResults.finalGoalPoints;
                                                             if (singleData.resultBasketball.winner.player === n.team) {
@@ -3020,14 +3027,14 @@ var model = {
                                                                 stats.school = found.teamId.schoolName;
                                                                 stats.teamId = found.teamId.teamId;
                                                             }
-                                                            match.push(stats);
-                                                            callback(null, match);
+                                                            profile.match.push(stats);
+                                                            callback(null, profile.match);
                                                         }
 
                                                     });
 
                                                 }, function (err) {
-                                                    callback(null, match);
+                                                    callback(null, profile.match);
                                                 });
                                             }
                                         } else if (singleData.resultFootball) {
@@ -3036,8 +3043,8 @@ var model = {
                                             if (singleData.opponentsTeam.length == 1) {
                                                 stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints;
                                                 stats.isAthleteWinner = true;
-                                                match.push(stats);
-                                                callback(null, match);
+                                                profile.match.push(stats);
+                                                callback(null, profile.match);
                                             } else {
                                                 async.each(singleData.resultFootball.teams, function (n, callback) {
                                                     StudentTeam.findOne({
@@ -3046,7 +3053,7 @@ var model = {
                                                         if (err) {
                                                             callback(null, err);
                                                         } else if (_.isEmpty(found)) {
-                                                            callback(null, match);
+                                                            callback(null, profile.match);
                                                         } else {
                                                             stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
                                                             if (singleData.resultFootball.winner.player === n.team) {
@@ -3056,14 +3063,14 @@ var model = {
                                                                 stats.school = found.teamId.schoolName;
                                                                 stats.teamId = found.teamId.teamId;
                                                             }
-                                                            match.push(stats);
-                                                            callback(null, match);
+                                                            profile.match.push(stats);
+                                                            callback(null, profile.match);
                                                         }
 
                                                     });
 
                                                 }, function (err) {
-                                                    callback(null, match);
+                                                    callback(null, profile.match);
                                                 });
                                             }
                                         } else if (singleData.resultVolleyball) {
@@ -3082,8 +3089,8 @@ var model = {
                                                 }
                                                 stats.score = result;
                                                 stats.isAthleteWinner = true;
-                                                match.push(stats);
-                                                callback(null, match);
+                                                profile.match.push(stats);
+                                                callback(null, profile.match);
                                             } else {
                                                 async.each(singleData.resultVolleyball.teams, function (n, callback) {
                                                     StudentTeam.findOne({
@@ -3092,7 +3099,7 @@ var model = {
                                                         if (err) {
                                                             callback(null, err);
                                                         } else if (_.isEmpty(found)) {
-                                                            callback(null, match);
+                                                            callback(null, profile.match);
                                                         } else {
                                                             var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
                                                             while (i < length) {
@@ -3114,14 +3121,14 @@ var model = {
                                                                 stats.school = found.teamId.schoolName;
                                                                 stats.teamId = found.teamId.teamId;
                                                             }
-                                                            match.push(stats);
-                                                            callback(null, match);
+                                                            profile.match.push(stats);
+                                                            callback(null, profile.match);
                                                         }
 
                                                     });
 
                                                 }, function (err) {
-                                                    callback(null, match);
+                                                    callback(null, profile.match);
                                                 });
                                             }
                                         } else if (singleData.resultHockey) {
@@ -3130,8 +3137,8 @@ var model = {
                                             if (singleData.resultHockey.teams.length == 1) {
                                                 stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints;
                                                 stats.isAthleteWinner = true;
-                                                match.push(stats);
-                                                callback(null, match);
+                                                profile.match.push(stats);
+                                                callback(null, profile.match);
                                             } else {
                                                 async.each(singleData.resultHockey.teams, function (n, callback) {
                                                     StudentTeam.findOne({
@@ -3140,7 +3147,7 @@ var model = {
                                                         if (err) {
                                                             callback(null, err);
                                                         } else if (_.isEmpty(found)) {
-                                                            callback(null, match);
+                                                            callback(null, profile.match);
                                                         } else {
                                                             stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[0].teamResults.finalPoints;;
                                                             if (singleData.resultHockey.winner.player === n.team) {
@@ -3150,14 +3157,14 @@ var model = {
                                                                 stats.school = found.teamId.schoolName;
                                                                 stats.teamId = found.teamId.teamId;
                                                             }
-                                                            match.push(stats);
-                                                            callback(null, match);
+                                                            profile.match.push(stats);
+                                                            callback(null, profile.match);
                                                         }
 
                                                     });
 
                                                 }, function (err) {
-                                                    callback(null, match);
+                                                    callback(null, profile.match);
                                                 });
                                             }
                                         } else if (singleData.resultWaterPolo) {
@@ -3166,8 +3173,8 @@ var model = {
                                             if (singleData.resultWaterPolo.teams.length == 1) {
                                                 stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;
                                                 stats.isAthleteWinner = true;
-                                                match.push(stats);
-                                                callback(null, match);
+                                                profile.match.push(stats);
+                                                callback(null, profile.match);
                                             } else {
                                                 async.each(singleData.resultWaterPolo.teams, function (n, callback) {
                                                     StudentTeam.findOne({
@@ -3176,7 +3183,7 @@ var model = {
                                                         if (err) {
                                                             callback(null, err);
                                                         } else if (_.isEmpty(found)) {
-                                                            callback(null, match);
+                                                            callback(null, profile.match);
                                                         } else {
 
                                                             stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;;
@@ -3188,14 +3195,14 @@ var model = {
                                                                 stats.teamId = found.teamId.teamId;
 
                                                             }
-                                                            match.push(stats);
-                                                            callback(null, match);
+                                                            profile.match.push(stats);
+                                                            callback(null, profile.match);
                                                         }
 
                                                     });
 
                                                 }, function (err) {
-                                                    callback(null, match);
+                                                    callback(null, profile.match);
                                                 });
                                             }
                                         } else if (singleData.resultKabaddi) {
@@ -3204,8 +3211,8 @@ var model = {
                                             if (singleData.opponentsTeam.length == 1) {
                                                 stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints;
                                                 stats.isAthleteWinner = true;
-                                                match.push(stats);
-                                                callback(null, match);
+                                                profile.match.push(stats);
+                                                callback(null, profile.match);
                                             } else {
                                                 async.each(singleData.resultKabaddi.teams, function (n, callback) {
                                                         StudentTeam.findOne({
@@ -3214,7 +3221,7 @@ var model = {
                                                             if (err) {
                                                                 callback(null, err);
                                                             } else if (_.isEmpty(found)) {
-                                                                callback(null, match);
+                                                                callback(null, profile.match);
                                                             } else {
                                                                 stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[0].teamResults.finalPoints;;
                                                                 if (singleData.resultKabaddi.winner.player === n.team) {
@@ -3231,15 +3238,15 @@ var model = {
                                                                         stats.school = found.studentId.school.name;
                                                                     }
                                                                 }
-                                                                match.push(stats);
-                                                                callback(null, match);
+                                                                profile.match.push(stats);
+                                                                callback(null, profile.match);
                                                             }
 
                                                         });
 
                                                     },
                                                     function (err) {
-                                                        callback(null, match);
+                                                        callback(null, profile.match);
                                                     });
                                             }
                                         } else if (singleData.resultHandball) {
@@ -3248,8 +3255,8 @@ var model = {
                                             if (singleData.opponentsTeam.length == 1) {
                                                 stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints;
                                                 stats.isAthleteWinner = true;
-                                                match.push(stats);
-                                                callback(null, match);
+                                                profile.match.push(stats);
+                                                callback(null, profile.match);
                                             } else {
                                                 async.each(singleData.resultHandball.teams, function (n, callback) {
                                                         StudentTeam.findOne({
@@ -3258,7 +3265,7 @@ var model = {
                                                             if (err) {
                                                                 callback(null, err);
                                                             } else if (_.isEmpty(found)) {
-                                                                callback(null, match);
+                                                                callback(null, profile.match);
                                                             } else {
                                                                 stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[0].teamResults.finalPoints;;
                                                                 if (singleData.resultHandball.winner.player === n) {
@@ -3268,25 +3275,25 @@ var model = {
                                                                     stats.school = found.teamId.schoolName;
                                                                     stats.teamId = found.teamId.teamId;
                                                                 }
-                                                                match.push(stats);
-                                                                callback(null, match);
+                                                                profile.match.push(stats);
+                                                                callback(null, profile.match);
                                                             }
 
                                                         });
 
                                                     },
                                                     function (err) {
-                                                        callback(null, match);
+                                                        callback(null, profile.match);
                                                     });
                                             }
                                         } else {
-                                            callback(null, match);
+                                            callback(null, profile.match);
                                         }
                                     },
                                     function (err) {
-                                        callback(null, match);
+                                        callback(null, profile.match);
                                     });
-                                callback(null, match);
+                                callback(null, profile.match);
                             }
                         });
                     }
@@ -3297,5 +3304,6 @@ var model = {
                 callback(null, data2);
             });
     },
+
 };
 module.exports = _.assign(module.exports, exports, model);
