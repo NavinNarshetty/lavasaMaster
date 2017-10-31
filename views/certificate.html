@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Certificate</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        @font-face {
+            font-family: 'Angelface';
+            /*src: url("https://storage.googleapis.com/sfacertificate/Angelface.otf");*/
+            src: url("../fonts/Angelface.otf");
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: 'fjallaone';
+            src: url("/js/certificateFonts/FjallaOne-Regular.ttf");
+            /* src: url("https://storage.googleapis.com/sfacertificate/FjallaOne-Regular.otf"); */
+            /* src: url("../views/fonts/FjallaOne-Regular.otf"); */
+        }
+
+        @font-face {
+            font-family: 'tangerine';
+            src: url("/js/certificateFonts/Tangerine-Regular.ttf");
+            /* src: url("https://storage.cloud.google.com/sfacertificate/Tangerine-Regular.ttf"); */
+            /* src: url("../views/fonts/Tangerine-Regular.ttf"); */
+        }
+
+        @font-face {
+            font-family: 'opensanscondlight';
+            src: url("/js/certificateFonts/OpenSans-CondLight.ttf");
+            /* src: url("https://storage.cloud.google.com/sfacertificate/OpenSans-CondLight.ttf"); */
+            /* src: url("../views/fonts/OpenSans-CondLight.ttf"); */
+        }
+
+        body {
+            font-family: 'fjallaone';
+        }
+
+        .font-av {
+            font-family: 'avenirtp';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .font-fo {
+            font-family: 'fjallaone';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .font-os {
+            font-family: 'opensanscondlight';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .font-tran {
+            font-family: 'tangerine';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .font-avI {
+            font-family: 'avenirtpI';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .font-demi {
+            font-family: 'avenirDemi';
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        /* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+
+        .row.content {
+            height: 1500px
+        }
+        /* Set gray background color and 100% height */
+
+        .sidenav {
+            background-color: #f1f1f1;
+            height: 100%;
+        }
+        /* Set black background color, white text and some padding */
+
+        footer {
+            background-color: #555;
+            color: white;
+            padding: 15px;
+        }
+        /* On small screens, set height to 'auto' for sidenav and grid */
+
+        @media screen and (max-width: 767px) {
+            .sidenav {
+                height: auto;
+                padding: 15px;
+            }
+            .row.content {
+                height: auto;
+            }
+        }
+
+        .certificate-footerimg {
+            width: 95%;
+            margin: 0px auto;
+            display: block;
+        }
+
+        .certificate {
+            width: 600px;
+            max-width: 600px;
+            padding: 30px 0px 0px 0px;
+            margin: 0 auto;
+            border: 10px solid #0a1a72;
+            background-color: #fff;
+        }
+
+        .w70 {
+            /* width: 75%; */
+            width: 60%;
+        }
+
+        .w36 {
+            /* width: 45%; */
+            width: 30%;
+        }
+
+        .pt50 {
+            padding-top: 50px;
+        }
+
+        .border-btm label {
+            font-weight: 500;
+        }
+
+        .f28 {
+            font-size: 25px !important;
+        }
+
+        .border-btm input {
+            border-bottom: 1px solid #dddddd !important;
+            border: none;
+            color: #666666;
+            font-size: 20px;
+            text-transform: capitalize;
+        }
+
+        .border-none input {
+            border: 0 solid #dddddd;
+            color: #666666;
+            font-size: 24px;
+            text-transform: capitalize;
+            text-align: center;
+        }
+
+        .border-none label {
+            font-weight: 500;
+        }
+
+        .lb-f {
+            position: absolute;
+            bottom: 0;
+        }
+
+        .mr-r {
+            margin: 0 0 0 26px;
+            width: 95%;
+        }
+
+        .middle-c .form-group {
+
+            margin-bottom: 22px;
+        }
+
+        .middle-c {
+            padding-top: 25px;
+        }
+
+        .cl-blue {
+            color: #0594ce;
+        }
+
+        .cl-yellow {
+            color: #D6DF22;
+        }
+
+        .cl-purple {
+            color: #7f54a3;
+        }
+
+        .cl-orange {
+            color: #fcae28;
+        }
+
+        .cl-green {
+            color: #55bd80;
+        }
+
+        .cl-pink {
+            color: #da485b;
+        }
+
+        .cl-text {
+            color: #232d69;
+        }
+
+        .font-avenir {
+            font-family: 'avenir';
+        }
+
+        .f-18 {
+            font-size: 18px;
+        }
+
+        .f-26 {
+            font-size: 26px;
+        }
+
+        .f-20 {
+            font-size: 20px;
+        }
+
+        .f-30 {
+            font-size: 30px;
+        }
+
+        .f-32 {
+            font-size: 32px;
+        }
+
+        .m-auto-tran {
+            margin: 12px auto 0px;
+        }
+
+        .m-auto-20 {
+            margin: 12px auto 18px;
+        }
+
+        .mymgbt {
+            margin: 10px auto;
+        }
+
+        .footer-img {
+            margin: 0;
+            /* margin: 0 0 -7px; */
+        }
+
+        .footer-c {
+            padding-top: 0px;
+
+            /* .footer-c {
+            padding-top: 7px; */
+            text-align: center;
+        }
+
+        .f-img {
+            width: auto;
+            height: 171.48px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .ml10 {
+            margin-left: 10px;
+        }
+
+        .sf-relative {
+            position: relative;
+        }
+
+        .sf-absulate {
+            position: absolute;
+        }
+
+        input {
+            color: #666666;
+            font-size: 24px;
+            text-transform: capitalize;
+            font-family: 'avenir';
+        }
+
+        .display-inline {
+            display: inline-block;
+        }
+
+        input:focus {
+            outline: 0;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .mt15 {
+            margin-top: 15px;
+        }
+
+        .m-20 {
+            margin: 25px 0 15px;
+            /* margin: 35px 0 25px; */
+        }
+
+        .mymt {
+            margin-top: 0px!important;
+        }
+
+        .font-angel {
+            font-family: 'Angelface';
+        }
+
+        .w60 {
+            width: 90%;
+        }
+
+        .border-bg {
+            border: none;
+            border-bottom: 1px solid #ddd;
+            height: 35px;
+        }
+
+        .padding-clear {
+            padding: 0;
+        }
+
+        .disabled-input {
+            background-color: transparent;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="certificate">
+        <table style="margin:0 auto;border-spacing:0">
+            <thead>
+                <tr>
+                    <th>
+                        <div class="header-img">
+                            <!-- <img src="https://storage.googleapis.com/sfacertificate/1.png" alt="" class="w36"> -->
+                            <img src="<%=data.bannerImage%>" alt="" class="w36">
+                        </div>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="text-center">
+                        <div class="form-group text-center m-20">
+                            <div class="fr-sec">
+                                <div class="">
+                                    <div class="header-img">
+                                        <!-- <img src="https://storage.googleapis.com/sfacertificate/Gold.png" alt="" class="w70"> -->
+                                        <img src="<%=data.sportObj.heading%>" alt="" class="w70">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <div class="form-group text-center m-auto-tran" style="margin-top: 6px;">
+                            <div class="fr-sec">
+                                <div class="display-inline">
+                                    <label class="color-blue font-os f-20" style="color:#232d69;">This certificate is awarded to</label>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <div class="form-group">
+                            <input type="text" class="form-control w60 font-tran text-center f-32  border-bg disabled-input" value="Raj Mukesh Shah"
+                                style="color:#232d69" disabled>
+                            <!-- <input type="text" class="form-control w60 font-tran text-center f-32  border-bg disabled-input" value="<%= data.athleteName%>"
+                                style="color:#232d69" disabled> -->
+                            <!-- <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="<%= data.name%>  " style="color:#232d69"> -->
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <div class="form-group border-btm" style="margin-top: 6px;">
+                            <div class="sf-relative">
+
+                                <!-- <input type="text" class="form-control w60 text-center font-os f-20 disabled-input" value="Jamnabai Narshee School" style="text-transform: none;width: 83%;color:#666666;"
+                                    disabled> -->
+                                <input type="text" class="form-control w60 text-center font-os f-20 disabled-input" value="<%=data.athlete.school.name%>"
+                                    style="text-transform: none;width: 83%;color:#666666;" disabled>
+
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <div class="form-group border-btm text-center mymgbt">
+                            <div class="display-inline" style="line-height: 28px; vertical-align: inherit;">
+                                <label class="color-blue font-os f-20" style="color:#232d69;">SFA ID</label>
+                            </div>
+                            <div class="display-inline">
+                                <!-- <input type="text" class="form-control  text-center font-os disabled-input" value="MA1829328" style="color:#666666;" disabled> -->
+                                <input type="text" class="form-control  text-center font-os disabled-input" value="<%= data.athlete.sfaId%>" style="color:#666666;"
+                                    disabled>
+
+                            </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <div class="form-group text-center" style="margin-top: 0px;">
+                            <div class="fr-sec">
+                                <div class="display-inline">
+                                    <label class="color-blue font-os f-20" style="color:#232d69;">For securing a </label>
+                                </div>
+                                <span class="form-control text-center font-os f-20" style="color:#232d69">
+                                    <!-- Gold -->
+                                    <%=data.sportObj.medalType%>
+                                </span>
+
+                                <label class="color-blue f-20 font-os" style="color:#232d69">in</label>
+                                <label class="font-os f-20" style="color:#232d69">
+                                    <!-- Epee -->
+                                    <%=data.sportObj.sportslist.sportsListSubCategory.name%>
+                                </label>
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="text-center">
+                        <div class="form-group border-btm" style="margin-top: 6px;">
+                            <!-- <input type="text" class="form-control text-center font-os disabled-input" value="Epee" style="color:#666666;width: 50%;"
+                                disabled> -->
+                            <input type="text" class="form-control text-center font-os disabled-input" value="<%=data.sportObj.ageGroup.name + ' ' + data.sportObj.gender + ' ' + data.sportObj.sportslist.name%>"
+                                style="color:#666666;width: 50%;" disabled>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="padding-clear">
+                        <div class="footer-img">
+                            <div class="footer-c" style="width: 600px; height: auto;">
+
+                                <!-- <img src="https://storage.googleapis.com/sfacertificate/32.jpg" alt="" class="certificate-footerimg"> -->
+                                <img src="<%=data.sportObj.footerImage%>" alt="" class="certificate-footerimg">
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+</body>
+
+</html>
