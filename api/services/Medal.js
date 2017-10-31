@@ -508,6 +508,46 @@ var model = {
                                 pdfObj.sfaCity = property[0].sfaCity;
                                 pdfObj.institutionType = property[0].institutionType;
                                 pdfObj.year = property[0].year;
+                                if (_.isEmpty(property[0].reqUrl)) {
+                                    pdfObj.tang = 'http://localhost:8080/js/certificateFonts/Tangerine-Regular.ttf';
+                                    pdfObj.fjalla = 'http://localhost:8080/js/certificateFonts/FjallaOne-Regular.ttf';
+                                    pdfObj.opens = 'http://localhost:8080/js/certificateFonts/OpenSans-CondLight.ttf';
+                                } else if (property[0].reqUrl == 'test') {
+                                    pdfObj.baseUrl = 'http://testhyderabadschool.sfanow.in/js/certificateFonts/'
+                                    if (property[0].sfaCity == 'Mumbai') {
+                                        if (property[0].institutionType == 'school') {
+                                            pdfObj.tang = 'http://testmumbaischool.sfanow.in/js/certificateFonts/Tangerine-Regular.ttf';
+                                            pdfObj.fjalla = 'http://testmumbaischool.sfanow.in/js/certificateFonts/FjallaOne-Regular.ttf';
+                                            pdfObj.opens = 'http://testmumbaischool.sfanow.in/js/certificateFonts/OpenSans-CondLight.ttf';
+                                        } else {
+                                            pdfObj.tang = 'http://testmumbaicollege.sfanow.in/js/certificateFonts/Tangerine-Regular.ttf';
+                                            pdfObj.fjalla = 'http://testmumbaicollege.sfanow.in/js/certificateFonts/FjallaOne-Regular.ttf';
+                                            pdfObj.opens = 'http://testmumbaicollege.sfanow.in/js/certificateFonts/OpenSans-CondLight.ttf';
+                                        }
+
+                                    } else if (property[0].sfaCity == 'Hyderabad') {
+                                        pdfObj.tang = 'http://testhyderabadschool.sfanow.in/js/certificateFonts/Tangerine-Regular.ttf';
+                                        pdfObj.fjalla = 'http://testhyderabadschool.sfanow.in/js/certificateFonts/FjallaOne-Regular.ttf';
+                                        pdfObj.opens = 'http://testhyderabadschool.sfanow.in/js/certificateFonts/OpenSans-CondLight.ttf';
+                                    }
+                                } else if (property[0].reqUrl == 'live') {
+                                    if (property[0].sfaCity == 'Mumbai') {
+                                        if (property[0].institutionType == 'school') {
+                                            pdfObj.tang = 'http://mumbaischool.sfanow.in/js/certificateFonts/Tangerine-Regular.ttf';
+                                            pdfObj.fjalla = 'http://mumbaischool.sfanow.in/js/certificateFonts/FjallaOne-Regular.ttf';
+                                            pdfObj.opens = 'http://mumbaischool.sfanow.in/js/certificateFonts/OpenSans-CondLight.ttf';
+                                        } else {
+                                            pdfObj.tang = 'http://mumbaicollege.sfanow.in/js/certificateFonts/Tangerine-Regular.ttf';
+                                            pdfObj.fjalla = 'http://mumbaicollege.sfanow.in/js/certificateFonts/FjallaOne-Regular.ttf';
+                                            pdfObj.opens = 'http://mumbaicollege.sfanow.in/js/certificateFonts/OpenSans-CondLight.ttf';
+                                        }
+
+                                    } else if (property[0].sfaCity == 'Hyderabad') {
+                                        pdfObj.tang = 'http://hyderabadschool.sfanow.in/js/certificateFonts/Tangerine-Regular.ttf';
+                                        pdfObj.fjalla = 'http://hyderabadschool.sfanow.in/js/certificateFonts/FjallaOne-Regular.ttf';
+                                        pdfObj.opens = 'http://hyderabadschool.sfanow.in/js/certificateFonts/OpenSans-CondLight.ttf';
+                                    }
+                                }
                                 callback(null, property);
                             } else {
                                 callback(null, property);
