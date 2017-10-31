@@ -231,7 +231,6 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                // console.log("found0", found);
                                 callback(null, found);
                             }
                         }
