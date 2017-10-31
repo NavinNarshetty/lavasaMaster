@@ -735,7 +735,7 @@ var model = {
         var matchData = [];
         async.waterfall([
             function (callback) {
-                var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
+                var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId opponentsTeam.school";
                 Match.find({
                     sport: data.sport
                 }).lean().deepPopulate(deepSearch).sort({
