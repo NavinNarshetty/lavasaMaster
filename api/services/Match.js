@@ -79,6 +79,9 @@ schema.plugin(deepPopulate, {
         "opponentsTeam.studentTeam.studentId": {
             select: '_id sfaId firstName middleName surname school photograph dob city'
         },
+        "opponentsTeam.school": {
+            select: '_id schoolLogo schoolName'
+        },
         "prevMatch": {
             select: ''
         },
