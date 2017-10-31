@@ -447,7 +447,7 @@ var model = {
                     });
                 },
                 function (found, callback) {
-                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight";
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight sport.sportslist.drawFormat";
                     StudentTeam.find({
                         studentId: data.athleteId
                     }).lean().deepPopulate(deepSearch).exec(function (err, teamData) {
@@ -466,7 +466,7 @@ var model = {
                     });
                 },
                 function (teamData, callback) {
-                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight";
+                    var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight sport.sportslist.drawFormat";
                     IndividualSport.find({
                         athleteId: data.athleteId
                     }).lean().deepPopulate(deepSearch).exec(function (err, individualData) {
