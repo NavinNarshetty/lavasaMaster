@@ -12,6 +12,8 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
   $scope.genderList = ['male', 'female', 'mixed'];
   // GENDER END
 
+
+
   // INDIVIDUAL ATHELTE
   $scope.getAthleteName = function () {
     NavigationService.getAthletesfaID(function (data) {
@@ -58,6 +60,13 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
 
   }
 
+  $scope.playerChange = function (data) {
+    console.log(data, 'ng-change');
+  }
+
+  $scope.playerRefresh = function (data) {
+    console.log(data, 'refresh player')
+  }
   // INDIVIDUAL
   // GET ALL SPORTS
   $scope.getAllSports = function () {

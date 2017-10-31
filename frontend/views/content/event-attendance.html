@@ -21,9 +21,10 @@
                   <!-- LABEL END -->
                   <!-- UI SELECT -->
                   <div class="display-inline event-attendance-dropdown override-glyp">
-                    <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" required>
+                    <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" ng-change="playerChange($select.selected.fullName)"
+                      required>
                       <ui-select-match placeholder="search by Sfa ID and Name" allow-clear="true" title="{{$select.selected.fullName}}"> {{$select.selected.fullName}}</ui-select-match>
-                      <ui-select-choices repeat="player._id as player in athleteData | filter: $select.search">
+                      <ui-select-choices refresh-delay="0" repeat="player._id as player in athleteData | filter: $select.search" refresh="playerRefresh($select.search)">
                         <div>
                           <span class="text-capitalize" ng-bind-html="player.fullName"></span>
                         </div>

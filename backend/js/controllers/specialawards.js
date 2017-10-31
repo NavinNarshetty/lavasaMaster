@@ -426,6 +426,15 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
     }
     // BOOST AWARD END
 
+    // SEARCH ATHLETE
+    $scope.searchAthlete = function (gender) {
+      console.log(gender, "in search athlete");
+
+
+    }
+    // SEARCH ATHLETE END
+
+
   }
 
   // FOR INSTITUTE TYPE
@@ -485,6 +494,7 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
       $scope.constraints.type = data.type;
       $scope.constraints.gender = data.gender;
       $scope.constraints.filter.gender = data.gender;
+      $scope.constraints.page = 1;
       $scope.getAwardsList($scope.constraints);
       $scope.getGenderAthlete($scope.constraints)
 
@@ -498,6 +508,12 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
 
   // SPECIAL AWARD LIST  END
 
+  // // SEARCH ATHLETE
+  // $scope.searchAthlete = function () {
+  //   console.log("in search athlete");
+
+  // }
+  // // SEARCH ATHLETE END
 
   // BOOST AWARD
   $scope.addRow = function (formData) {
@@ -720,7 +736,9 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
 
   // ATHLETE BY GENDER
   $scope.getGenderAthlete = function (constraints) {
-    $scope.url = "Athelete/searchByFilter";
+    console.log(constraints, 'inside api call')
+    $scope.url = "SpecialAwardDetails/getAllAthleteByGender";
+    // $scope.url = "Athelete/searchByFilter";
     NavigationService.getGenderAthlete(constraints, $scope.url, function (data) {
       console.log('gender wise', data)
       $scope.playerData = data.data.data.results;
@@ -780,10 +798,11 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
       console.log("in")
       $scope.constraints = {}
       $scope.constraints.filter = {}
-      $scope.constraints.type = data.type;
+      // $scope.constraints.type = data.type;
       $scope.constraints.gender = data.gender;
-      $scope.constraints.filter.gender = data.gender;
-      $scope.constraints.rising = true;
+      $scope.constraints.input = '';
+      // $scope.constraints.filter.gender = data.gender;
+      // $scope.constraints.rising = true;
       // $scope.getAwardsList($scope.constraints);
       $scope.getGenderAthlete($scope.constraints)
 
@@ -804,6 +823,37 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
   $scope.getAwardsList({
     "rising": true
   });
+
+  // $scope.risingAthlete = function (data) {
+  //   console.log(data, 'rising athlete')
+  // }
+  $scope.searchChange = function (data) {
+    console.log("changekeyword", data);
+    $scope.formData.athlete = data;
+
+  }
+
+  $scope.refreshChange = function (data, formData) {
+    if (data) {
+      $scope.paramData = {}
+      // $scope.paramData.filter = {}
+
+      console.log(data, 'keyword', formData)
+
+      // $scope.paramData.type = formData.type;
+      $scope.paramData.gender = formData.gender;
+      $scope.paramData.input = data;
+      // $scope.paramData.filter.gender = formData.gender;
+      // $scope.paramData.rising = true;
+      // $scope.paramData.filter.firstName = data;
+      // $scope.paramData.filter.middleName = data;
+      // $scope.paramData.filter.surname = data;
+      // $scope.paramData.filter.sfaId = data;
+      $scope.getGenderAthlete($scope.paramData)
+    } else {
+      // $scope.getList(formData)
+    }
+  }
 
   // SAVE
   $scope.saveAwardDetail = function (data) {

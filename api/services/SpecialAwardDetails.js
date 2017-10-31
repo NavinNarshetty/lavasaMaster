@@ -310,7 +310,7 @@ var model = {
 
     getAwardsCertificate: function (data, callback) {
         var pdfObj = {};
-        var pdfArray=[];
+        var pdfArray = [];
         // var Result=require("Result");
         async.waterfall([
 
@@ -364,20 +364,20 @@ var model = {
             if (err) {
                 callback(err, null);
             } else {
-                console.log("SpecialAwards",SpecialAwards.length);
-                var i=0;
+                console.log("SpecialAwards", SpecialAwards.length);
+                var i = 0;
                 async.concatSeries(SpecialAwards, function (award, callback) {
-                    console.log("awardType",award.award.awardType,i++);
+                    console.log("awardType", award.award.awardType, i++);
                     //make pdfObj as per Specific Award
                     async.waterfall([
 
                         function (callback) {
                             var basePath = "https://storage.googleapis.com/sfacertificate/";
                             pdfObj.athlete = award.athlete;
-                            if(award.athlete){
-                                pdfObj.newFilename = _.join(_.split(award.award.name,  ' '), '_') +'_'+ award.athlete.sfaId +".pdf";
-                            }else if(award.school){
-                                pdfObj.newFilename = _.join(_.split(award.award.name,  ' '), '_') +'_'+ award.school.schoolName+ '_' +award._id +".pdf";
+                            if (award.athlete) {
+                                pdfObj.newFilename = _.join(_.split(award.award.name,  ' '), '_') + '_' + award.athlete.sfaId + ".pdf";
+                            } else if (award.school) {
+                                pdfObj.newFilename = _.join(_.split(award.award.name,  ' '), '_') + '_' + award.school.schoolName + '_' + award._id + ".pdf";
                             }
                             pdfObj.footerImage = env.realHost + "/api/upload/readFile?file=" + award.footerImage;
                             pdfObj.sports = award.sports;
@@ -397,7 +397,7 @@ var model = {
                                 case "max":
                                     pdfObj.filename = "sportMaxAwardAthlete";
                                     pdfObj.totalSportsReg = award.sports.length;
-                                    pdfObj.heading = basePath + "max.png";  //url to get Heading of Certificate
+                                    pdfObj.heading = basePath + "max.png"; //url to get Heading of Certificate
                                     break;
                                 case "strong":
                                     pdfObj.filename = "schoolStrongAward";
@@ -479,7 +479,7 @@ var model = {
 
 
                                 ], function (err, allAthletes) {
-                                    console.log(err,allAthletes);
+                                    console.log(err, allAthletes);
                                     if (err) {
                                         callback(err, null);
                                     } else if (!_.isEmpty(allAthletes)) {
@@ -542,7 +542,7 @@ var model = {
                                             callback(err, null);
                                         } else {
                                             data = _.find(data, ['name', pdfObj.school.schoolName]);
-                                            console.log("data",data);
+                                            console.log("data", data);
                                             if (!_.isEmpty(data)) {
                                                 pdfObj.totalCount = data.totalCount;
                                                 var gold = _.find(data.medal, ['name', 'gold']);
@@ -595,7 +595,7 @@ var model = {
                                     }
                                 });
                             } else {
-                                callback(null, "Some Error Occured while generating "+result.award.name);
+                                callback(null, "Some Error Occured while generating " + result.award.name);
                             }
 
 
@@ -608,7 +608,85 @@ var model = {
             }
         });
 
-    }
+    },
+
+    getAllAthleteByGender: function (data, callback) {
+        console.log("data", data);
+        if (_.isEmpty(data.input)) {
+            var matchObj = {
+                gender: data.gender
+            };
+        } else {
+            var matchObj = {
+                gender: data.gender,
+                $or: [{
+                        firstName: {
+                            $regex: data.input,
+                            $options: "i"
+                        }
+                    },
+                    {
+                        middleName: {
+                            $regex: data.input,
+                            $options: "i"
+
+                        },
+                    },
+                    {
+                        surname: {
+                            $regex: data.input,
+                            $options: "i"
+
+                        },
+                    }, {
+                        sfaId: {
+                            $regex: data.input,
+                            $options: "i"
+
+                        },
+                    }
+                ]
+            };
+        }
+
+        var maxRow = Config.maxRow;
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['firstName', 'sfaId', 'surname', 'middleName'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                desc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        // console.log('match', matchObj);
+        Athelete.find(matchObj)
+            .sort({
+                createdAt: -1
+            })
+            .order(options)
+            .keyword(options)
+            .page(options, function (err, found) {
+                if (err) {
+                    callback(err, null);
+                } else if (_.isEmpty(found)) {
+                    callback(null, "Data is empty");
+                } else {
+                    console.log("found", found);
+                    callback(null, found);
+                }
+            });
+    },
 
 };
 module.exports = _.assign(module.exports, exports, model);

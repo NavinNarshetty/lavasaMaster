@@ -170,17 +170,59 @@ var model = {
     },
 
     searchByNameId: function (data, callback) {
-        var matchObj = {
-            $or: [{
-                registrationFee: {
-                    $ne: "online PAYU"
-                }
-            }, {
-                paymentStatus: {
-                    $ne: "Pending"
-                }
-            }]
-        };
+        if (_.isEmpty(data.input)) {
+            var matchObj = {
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }]
+            };
+        } else {
+            var matchObj = {
+                $or: [{
+                    registrationFee: {
+                        $ne: "online PAYU"
+                    }
+                }, {
+                    paymentStatus: {
+                        $ne: "Pending"
+                    }
+                }],
+                $or: [{
+                        firstName: {
+                            $regex: data.input,
+                            $options: "i"
+
+                        }
+                    },
+                    {
+                        middleName: {
+                            $regex: data.input,
+                            $options: "i"
+
+                        },
+                    },
+                    {
+                        surname: {
+                            $regex: data.input,
+                            $options: "i"
+
+                        },
+                    }, {
+                        sfaId: {
+                            $regex: data.input,
+                            $options: "i"
+
+                        },
+                    }
+                ]
+            };
+        }
         var Model = this;
         var Const = this(data);
         var maxRow = Config.maxRow;

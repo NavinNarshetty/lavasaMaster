@@ -72,10 +72,12 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label> Player</label>
-                      <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" on-select="getRegisterSport($item)" on-remove="removeRegisterSport($item)"
-                        required>
+                      <!-- on-select="getRegisterSport($item)" -->
+                      <!-- on-remove="removeRegisterSport($item)" -->
+                      <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" ng-change="searchChange($select.selected.fullName)"
+                        on-select="getRegisterSport($item)" on-remove="removeRegisterSport($item)" required>
                         <ui-select-match placeholder="Select Certificate Name" allow-clear="true"> {{$select.selected.fullName}}</ui-select-match>
-                        <ui-select-choices repeat="player in playerData | filter: $select.search">
+                        <ui-select-choices refresh-delay="0" repeat="player in playerData | filter: $select.search" refresh="refreshChange($select.search, formData)">
                           <div>
                             <span class="text-capitalize" ng-bind-html="player.fullName"></span>
                           </div>

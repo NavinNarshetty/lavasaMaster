@@ -87,7 +87,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label> Player</label>
-                      <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" required>
+                      <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" ng-change="searchAthlete(player.gender)" required>
                         <ui-select-match placeholder="Select Certificate Name" allow-clear="true"> {{$select.selected.fullName}}</ui-select-match>
                         <ui-select-choices repeat="player in playerData | filter: $select.search">
                           <div>

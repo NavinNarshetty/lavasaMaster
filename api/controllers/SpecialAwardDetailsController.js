@@ -103,14 +103,25 @@ var controller = {
 
     getAwardsCertificate: function (req, res) {
         if (req.body.athlete || req.body.school) {
-            SpecialAwardDetails.getAwardsCertificate(req.body,res.callback);
+            SpecialAwardDetails.getAwardsCertificate(req.body, res.callback);
         } else {
             res.json({
                 data: "Insufficient Fields",
                 value: false
             });
         }
-    }
+    },
+
+    getAllAthleteByGender: function (req, res) {
+        if (req.body) {
+            SpecialAwardDetails.getAllAthleteByGender(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            });
+        }
+    },
 
 
 };
