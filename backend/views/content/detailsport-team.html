@@ -201,15 +201,15 @@
                                   <div class="row">
                                     <div class="col-md-2">
                                       <label for=""> Lane No</label>
-                                      <input type="number" name="jerseyno" ng-model="team.laneNo" class="form-control" placeholder="Enter jersey no">
+                                      <input type="number" name="laneno" ng-model="team.laneNo" class="form-control" placeholder="Enter LaneNo" readonly>
                                     </div>
                                     <div class="col-md-2" ng-if="team.result !== undefined">
                                       <label>Result</label>
-                                      <input type="number" name="result" ng-model="team.result" class="form-control" placeholder="Result">
+                                      <input type="text" name="result" ng-model="team.result" class="form-control" placeholder="Result" readonly>
                                     </div>
                                     <div class="col-md-2" ng-if="team.time !== undefined">
                                       <label>Time</label>
-                                      <input type="text" name="time" ng-model="team.time" class="form-control" placeholder="Time">
+                                      <input type="text" name="time" ng-model="team.time" class="form-control" placeholder="Time" readonly>
                                     </div>
                                   </div>
                                 </div>

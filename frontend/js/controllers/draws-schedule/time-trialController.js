@@ -91,6 +91,14 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
 
                   }
                   if (value.opponentsSingle.length > 0) {
+                    if (value.opponentsSingle.length < value.resultHeat.players.length) {
+                      _.each(value.resultHeat.players, function (player) {
+                        if (player.id === undefined) {
+                          var tempObjIndex = _.findIndex(value.resultHeat.players, player);
+                          value.opponentsSingle.splice(tempObjIndex, 0, {});
+                        }
+                      });
+                    }
                     _.each(value.opponentsSingle, function (obj, index1) {
                       obj.athleteId.fullName = obj.athleteId.firstName + '  ' + obj.athleteId.surname;
                       obj.result = value.resultHeat.players[index1].result;
@@ -99,6 +107,14 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
                     });
                   }
                   if (value.opponentsTeam.length > 0) {
+                    if (value.opponentsTeam.length < value.resultHeat.teams.length) {
+                      _.each(value.resultHeat.teams, function (team) {
+                        if (team.id === undefined) {
+                          var tempObjIndex = _.findIndex(value.resultHeat.teams, team);
+                          value.opponentsTeam.splice(tempObjIndex, 0, {});
+                        }
+                      });
+                    }
                     _.each(value.opponentsTeam, function (obj, index1) {
                       obj.result = value.resultHeat.teams[index1].result;
                       obj.laneNo = value.resultHeat.teams[index1].laneNo;
@@ -119,37 +135,37 @@ myApp.controller('TimeTrialCtrl', function ($scope, TemplateService, $state, Nav
   };
   $scope.getSportSpecificRounds();
   $scope.getWinners = function () {
-    if ($stateParams.id) {
-      $scope.constraints.sport = $stateParams.id;
-      NavigationService.getAllWinners($scope.constraints, function (data) {
-        errorService.errorCode(data, function (allData) {
-          if (!allData.message) {
-            if (allData.value) {
-              $scope.winnerTable = allData.data;
-              _.each($scope.winnerTable, function (key) {
-                if (key.medaltype === 'gold') {
-                  key.rank = 1;
-                }
-                if (key.medaltype === 'silver') {
-                  key.rank = 2;
-                }
-                if (key.medaltype === 'bronze') {
-                  key.rank = 3;
-                }
-              });
+      if ($stateParams.id) {
+        $scope.constraints.sport = $stateParams.id;
+        NavigationService.getAllWinners($scope.constraints, function (data) {
+          errorService.errorCode(data, function (allData) {
+            if (!allData.message) {
+              if (allData.value) {
+                $scope.winnerTable = allData.data;
+                _.each($scope.winnerTable, function (key) {
+                  if (key.medaltype === 'gold') {
+                    key.rank = 1;
+                  }
+                  if (key.medaltype === 'silver') {
+                    key.rank = 2;
+                  }
+                  if (key.medaltype === 'bronze') {
+                    key.rank = 3;
+                  }
+                });
 
-              console.log("  $scope.winnerTable", $scope.winnerTable);
+                console.log("  $scope.winnerTable", $scope.winnerTable);
+              }
+            } else {
+              toastr.error(allData.message, 'Error Message');
             }
-          } else {
-            toastr.error(allData.message, 'Error Message');
-          }
+
+          });
+
 
         });
-
-
-      });
-    }
-  },
+      }
+    },
     $scope.getWinners();
   $scope.showMoreData = function (bool, index) {
     if (bool === true) {
