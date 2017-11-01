@@ -29,6 +29,13 @@ var requrl = "http://testhyderabadschool.sfanow.in/api/";
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
     maxRow: 20,
+
+    medalPoints:{
+        "gold":5,
+        "silver":3,
+        "bronze":1
+    },
+
     getForeignKeys: function (schema) {
         var arr = [];
         _.each(schema.tree, function (n, name) {

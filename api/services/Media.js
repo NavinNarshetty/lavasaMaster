@@ -32,8 +32,11 @@ var schema = new Schema({
     },
     medialink: {
         type: String,
-        required: true,
-        validate: [validators.matches(/\.(gif|jpg|jpeg|tiff|png)$/i)]
+        required: true
+        // validate: [validators.matches(/\.(gif|jpg|jpeg|tiff|png)$/i)]
+    },
+    videotype: {
+        type: String
     }
 });
 
@@ -116,30 +119,44 @@ var model = {
         }
 
         function sampleExcel() {
-            var obj = {};
-            var name = "";
-            obj.year = "2015";
-            obj.order = 1;
-            obj.imageorder = 1;
-            obj.date = moment().format('DD/MM/YY');
-            obj.mediatitle = "Tennis day 1";
+            var arrJsonExcel = [];
 
+            function initObj(folder, mediatype, medialink, videotype) {
+                var obj = {};
+                var name = "";
+                obj.year = "2015";
+                obj.order = 1;
+                obj.imageorder = 1;
+                obj.date = moment().format('DD/MM/YY');
+                obj.mediatitle = "Tennis day 1";
+                obj.folder = folder;
+                obj.mediatype = mediatype;
+                obj.medialink = medialink;
+                obj.videotype = videotype;
+                
+                arrJsonExcel.push(obj);
+            }
             if (data.press == 'true') {
-                name = "sampleMediaPress";
-                obj.folder = "press-coverage";
-                obj.mediatype = "press-photo";
-                obj.medialink = "1.jpeg";
+                // "sampleMediaPress"
+                // "press-coverage"
+                name="sampleMediaPress";
+                initObj("press-coverage","press-photo","qwerty.jpg","NA");
+                initObj("press-coverage","press-video","58fe4jfkls849","youtube");
+                initObj("press-coverage","press-video","12345678","vimeo");
+                Config.generateExcel(name, arrJsonExcel, res);               
 
             } else {
-                name = "sampleMediaGallery";
-                obj.folder = "Tennis";
-                obj.mediatype = "photo";
-                obj.medialink = "2.jpg";
+                // "sampleMediaGallery"
+                // "Tennis"
+                name="sampleMediaGallery";
+                initObj("TENNIS","photo","qwerty.jpg","NA");
+                initObj("TENNIS","video","58fe4jfkls849","youtube");
+                initObj("TENNIS","video","12345678","vimeo");
+                Config.generateExcel(name, arrJsonExcel, res); 
             }
-            Config.generateExcel(name, [obj], res);
+
+            
         }
-
-
 
         if (data.sample == 'true') {
             sampleExcel();
@@ -165,11 +182,6 @@ var model = {
             }
             populatedExcel(matchObj);
         }
-
-
-
-
-
     },
 
     getFolders: function (data, callback) {
@@ -202,7 +214,7 @@ var model = {
     },
 
     getMedias: function (data, callback) {
-        var sendObj={};
+        var sendObj = {};
         var matchObj = {
             "folder": data.folder,
             "mediatype": data.mediatype,
@@ -230,16 +242,16 @@ var model = {
             count: maxRow
         };
 
-        sendObj.options=options;
-        Media.count(matchObj,function(err,count){
-            sendObj.total=count
+        sendObj.options = options;
+        Media.count(matchObj, function (err, count) {
+            sendObj.total = count
         })
 
         Media.find(matchObj).lean().exec(function (err, medias) {
             if (err || _.isEmpty(data)) {
                 callback(err, "Medias Not Found");
             } else {
-                sendObj.results=medias;
+                sendObj.results = medias;
                 callback(null, sendObj);
             }
         });

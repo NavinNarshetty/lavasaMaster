@@ -113,6 +113,8 @@ var model = {
                     if (_.isEmpty(found)) {
                         callback(null, found);
                     } else {
+                        var sendObj={};
+
                         _.each(found, function (singleData) {
                             if (!_.isEmpty(singleData.school)) {
                                 _.each(singleData.school, function (school) {
@@ -124,6 +126,8 @@ var model = {
                             }
                         });
 
+                        sendObj.medals=medals;
+
                         var medalRank = _(medals)
                             .groupBy('school')
                             .map(function (items, name) {
@@ -132,17 +136,30 @@ var model = {
                                     .map(function (values, name) {
                                         return {
                                             name: name,
-                                            count: values.length
+                                            count: values.length,
+                                            points: values.length * Config.medalPoints[name]
                                         };
                                     }).value();
-                                var result = _.sortBy(gender, item => parseFloat(item[1]));
+                                var countArr = _.map(gender, function (n) {
+                                    return n.count;
+                                });
+
+                                var pointsArr = _.map(gender, function (n) {
+                                    return n.points;
+                                });
+
+                                var totalCount = _.sum(countArr);
+                                var totalPoints = _.sum(pointsArr);
+                                // var result = _.sortBy(gender, item => parseFloat(item[1]));
                                 return {
                                     name: name,
-                                    medal: result,
-                                    totalCount: items.length
+                                    medal: gender,
+                                    totalCount: totalCount,
+                                    totalPoints: totalPoints
                                 };
                             }).value();
-                        callback(null, medalRank);
+                        sendObj.medalRank=medalRank
+                        callback(null, sendObj);
                     }
                 },
             ],
@@ -175,6 +192,7 @@ var model = {
                             if (err) {
                                 callback(err, "error in mongoose");
                             } else {
+                                console.log("matchData", matchData);
                                 mainData.totalMatch = matchData[0].count;
                                 callback(null, mainData);
                             }
@@ -198,9 +216,201 @@ var model = {
             });
     },
 
-    getSchool: function (data, callback) {
+    getMatchesBySchool: function (callback) {
+
+        var oppSingPipeline = [{
+            $unwind: {
+                path: "$opponentsSingle",
+                includeArrayIndex: "arrayIndex", // optional
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }, {
+            $lookup: {
+                "from": "individualsports",
+                "localField": "opponentsSingle",
+                "foreignField": "_id",
+                "as": "opponentsSingle"
+            }
+        }, {
+            $unwind: {
+                path: "$opponentsSingle",
+                includeArrayIndex: "arrayIndex", // optional
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }, {
+            $lookup: {
+                "from": "atheletes",
+                "localField": "opponentsSingle.athleteId",
+                "foreignField": "_id",
+                "as": "opponentsSingle.athleteId"
+            }
+        }, {
+            $unwind: {
+                path: "$opponentsSingle.athleteId",
+                includeArrayIndex: "arrayIndex", // optional
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }, {
+            $lookup: {
+                "from": "schools",
+                "localField": "opponentsSingle.athleteId.school",
+                "foreignField": "_id",
+                "as": "opponentsSingle.athleteId.school"
+            }
+        }, {
+            $unwind: {
+                path: "$opponentsSingle.athleteId.school",
+                includeArrayIndex: "arrayIndex", // optional
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }, {
+            $lookup: {
+                "from": "sports",
+                "localField": "sport",
+                "foreignField": "_id",
+                "as": "sport"
+            }
+        }, {
+            $unwind: {
+                path: "$sport",
+                includeArrayIndex: "arrayIndex", // optional
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }];
+
+        var oppTeamPipeline = [{
+                $unwind: {
+                    path: "$opponentsTeam",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            }, {
+                $lookup: {
+                    "from": "teamsports",
+                    "localField": "opponentsTeam",
+                    "foreignField": "_id",
+                    "as": "opponentsTeam"
+                }
+            }, {
+                $unwind: {
+                    path: "$opponentsTeam",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: false // optional
+                }
+            }, {
+                $lookup: {
+                    "from": "registrations",
+                    "localField": "opponentsTeam.school",
+                    "foreignField": "_id",
+                    "as": "opponentsTeam.school"
+                }
+            }, {
+                $unwind: {
+                    path: "$opponentsTeam.school",
+                    includeArrayIndex: "arrayIndex", // optional
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+        ];
+
+
+        async.waterfall([
+
+            function (callback) {
+                var individualMatches = [];
+                Match.aggregate(oppSingPipeline, function (err, result1) {
+                    _.each(result1, function (n, k) {
+                        var obj = {};
+                        obj.matchId = n.matchId;
+                        if (n.opponentsSingle.athleteId.school) {
+                            obj.name = n.opponentsSingle.athleteId.school.name;
+                        } else {
+                            obj.name = n.opponentsSingle.athleteId.atheleteSchoolName;
+                        }
+                        individualMatches.push(obj);
+                        if (k == result1.length - 1) {
+                            callback(null, individualMatches);
+                        }
+                    });
+
+                })
+            },
+
+            function (individualMatches, callback) {
+                var teamMatches = [];
+                Match.aggregate(oppTeamPipeline, function (err, result1) {
+                    _.each(result1, function (n, k) {
+                        var obj = {};
+                        obj.matchId = n.matchId;
+                        obj.name = n.opponentsTeam.schoolName;
+                        teamMatches.push(obj);
+                        if (k == result1.length - 1) {
+                            callback(null, individualMatches, teamMatches);
+                        }
+                    });
+
+                })
+            }
+
+        ], function (err, arr1, arr2) {
+            finalArr = _.concat(arr1, arr2);
+            finalArr = _.uniqBy(finalArr, 'matchId');
+            finalArr = _(finalArr)
+                .groupBy('name')
+                .map(function (schoolMatches, schoolName) {
+                    totalMatches = schoolMatches.length;
+                    return {
+                        name: schoolName,
+                        totalMatches: totalMatches
+                    }
+                })
+
+            callback(null, finalArr);
+        })
+    },
+
+    getSchool: function (data, fcallback) {
         //get all medals deepPopulate sport->sportslist->sportsListSubCategory
         //for each school get schoolname,sport,and all medaldata
+        async.waterfall([
+
+            function (callback) {
+                Result.getMedalsSchool({}, function (err, totalMedals) {
+                    var medalRank=totalMedals.medalRank;
+                    var medals=totalMedals.medals;
+                    callback(null, totalMedals, medals);
+                });
+            },
+
+            function (totalMedals,medals, callback) {
+                Result.getMatchesBySchool(function (err, totalMatches) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null,totalMedals ,totalMatches, medals);
+                    }
+                });
+            },
+
+            function (totalMedals, totalMatches, medals, callback) {
+                var sportData=_(medals)
+                .groupBy('school')
+                .map(function(items,name){
+                    var sportWise =_(items)
+                    .groupBy('medals.sport')
+                    
+                })
+               fcallback(null,sportData);
+            }
+
+        ], function (err, result) {
+            if (err) {
+
+            } else {
+
+            }
+        })
     },
 
     getMedalsPerSport: function (data, callback) {
