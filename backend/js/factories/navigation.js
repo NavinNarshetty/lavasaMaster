@@ -680,6 +680,15 @@ myApp.factory('NavigationService', function ($http) {
                 method: 'POST'
             }).then(callback);
         },
+        rotateImage: function (data, callback) {
+            $http({
+              url: adminurl + 'upload/rotateImage',
+              data: data,
+              method: 'POST'
+            }).then(function(data){
+              callback(data.data);
+            });
+        },
 
 
         setDetail: function (data, callback) {

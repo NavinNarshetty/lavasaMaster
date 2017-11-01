@@ -59,7 +59,7 @@
             "id": "type"
         }, {
             "name": "Upload Image ID",
-            "type": "image",
+            "type": "rotate",
             "size": "250 x 250",
             "view": true,
             "disabled": true,

@@ -559,7 +559,7 @@ myApp.directive('touppercase', function () {
         };
     })
     // ROTATE IMAGE
-myApp.directive('rotateImage', function($http, $filter, $timeout) {
+myApp.directive('rotateImage', function($http, $filter, $timeout, NavigationService) {
         return {
             templateUrl: 'views/directive/rotateImage.html',
             restrict: 'E',
@@ -570,9 +570,18 @@ myApp.directive('rotateImage', function($http, $filter, $timeout) {
                 var img = null;
                 var canvas = null;
                 $scope.resultImage = "";
+                $scope.formData = {
+                  file: $scope.model,
+                  angle: 0
+                };
+                console.log("hellelo");
                 // UPLOAD IMAGE
                 $scope.rotateUpload = function() {
-                        console.log('UPLOAD');
+                    console.log('UPLOAD');
+                    console.log("form", $scope.formData);
+                    NavigationService.rotateImage($scope.formData, function(data){
+                      console.log(data);
+                    })
                 }
                 // UPLOAD IMAGE END
                 // ROTATE CANVAS FUNCTION
@@ -639,29 +648,33 @@ myApp.directive('rotateImage', function($http, $filter, $timeout) {
                         case 0:
                           $(img).attr("class", "");
                           $(img).addClass("img-responsive rotate-0");
+                          $scope.formData.angle = 0;
                           console.log("rotate 0");
                         break;
                         case 90:
                           $(img).attr("class", "");
                           $(img).addClass("img-responsive rotate-90");
+                          $scope.formData.angle = 90;
                           console.log("rotate 90");
                         break;
                         case 180:
                           $(img).attr("class", "");
                           $(img).addClass("img-responsive rotate-180");
+                          $scope.formData.angle = 180;
                           console.log("rotate 180");
                         break;
                         case 270:
                           $(img).attr("class", "");
                           $(img).addClass("img-responsive rotate-270");
+                          $scope.formData.angle = 270;
                           console.log("rotate 270");
                         break;
                         default:
                           $(img).attr("class", "");
                           $(img).addClass("img-responsive rotate-0")
+                          $scope.formData.angle = 0;
                           console.log("default rotate");
                         break;
-
                       }
                     }
                     // ROTATE TRANSFORM FUNCTION END
