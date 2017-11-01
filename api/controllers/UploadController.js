@@ -59,6 +59,11 @@ module.exports = {
         Config.readUploaded(req.query.file, req.query.width, req.query.height, req.query.style, res);
     },
     rotateImage: function (req, res) {
-        Config.rotateImage(req.query.file, req.query.angle, res.callback);
+        if (req.query.file) {
+            console.log("file found");
+            Config.rotateImage(req.query.file, req.query.angle, res.callback);
+        } else {
+            console.log("file not found");
+        }
     }
 };

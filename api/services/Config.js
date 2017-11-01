@@ -634,6 +634,7 @@ var model = {
 
         });
     },
+
     rotateImage: function (filename, angle, callback) {
 
         var readstream = gfs.createReadStream({
