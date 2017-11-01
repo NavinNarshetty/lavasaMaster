@@ -147,38 +147,6 @@ var model = {
     },
 
     getAllAthleteBySchoolId: function (data, callback) {
-        var matchObj = {
-            $or: [{
-                    school: data.schoolId
-                }, {
-                    firstName: {
-                        $regex: data.input,
-                        $options: "i"
-
-                    }
-                },
-                {
-                    middleName: {
-                        $regex: data.input,
-                        $options: "i"
-
-                    },
-                },
-                {
-                    surname: {
-                        $regex: data.input,
-                        $options: "i"
-
-                    },
-                }, {
-                    sfaId: {
-                        $regex: data.input,
-                        $options: "i"
-
-                    },
-                }
-            ]
-        };
 
         var maxRow = Config.maxRow;
         var page = 1;
@@ -190,7 +158,7 @@ var model = {
             field: data.field,
             filters: {
                 keyword: {
-                    fields: ['firstName', 'sfaId', 'surname', 'middleName'],
+                    fields: ['firstName', 'sfaId', 'surname', 'middleName', 'school'],
                     term: data.keyword
                 }
             },
@@ -200,21 +168,98 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        Athelete.find(matchObj)
-            .sort({
-                createdAt: -1
-            })
-            .order(options)
-            .keyword(options)
-            .page(options, function (err, found) {
+        async.waterfall([
+                function (callback) {
+                    School.findOne({
+                            name: data.schoolName
+                        })
+                        .lean()
+                        .exec(function (err, schoolData) {
+                            // console.log("school", schoolData);
+                            if (err) {
+                                callback(err, null);
+                            } else if (_.isEmpty(schoolData)) {
+                                callback(null, []);
+                            } else {
+                                callback(null, schoolData);
+                            }
+                        });
+                },
+                function (schoolData, callback) {
+                    console.log("School", schoolData);
+                    if (_.isEmpty(schoolData)) {
+                        var found = {};
+                        found.result = [];
+                    } else {
+                        if (_.isEmpty(data.input)) {
+                            var matchObj = {
+                                school: schoolData._id
+                            };
+                        } else {
+                            var matchObj = {
+                                $or: [{
+                                        school: schoolData._id
+                                    }, {
+                                        firstName: {
+                                            $regex: data.input,
+                                            $options: "i"
+
+                                        }
+                                    },
+                                    {
+                                        middleName: {
+                                            $regex: data.input,
+                                            $options: "i"
+
+                                        },
+                                    },
+                                    {
+                                        surname: {
+                                            $regex: data.input,
+                                            $options: "i"
+
+                                        },
+                                    }, {
+                                        sfaId: {
+                                            $regex: data.input,
+                                            $options: "i"
+
+                                        },
+                                    }
+                                ]
+                            };
+                        }
+                        Athelete.find(matchObj)
+                            .order(options)
+                            .keyword(options)
+                            .page(options, callback);
+                    }
+                },
+                function (found, callback) {
+                    Athelete.getSportRegisteredAthlete(found, function (err, athlete) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(athlete)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, athlete);
+                        }
+                    });
+                }
+            ],
+            function (err, data2) {
                 if (err) {
-                    callback(err, null);
-                } else if (_.isEmpty(found)) {
-                    callback(null, "Data is empty");
-                } else {
-                    callback(null, found);
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
                 }
             });
+
     },
 
     getAthleteProfile: function (data, callback) {
