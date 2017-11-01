@@ -30,10 +30,10 @@ var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
     maxRow: 20,
 
-    medalPoints:{
-        "gold":5,
-        "silver":3,
-        "bronze":1
+    medalPoints: {
+        "gold": 5,
+        "silver": 3,
+        "bronze": 1
     },
 
     getForeignKeys: function (schema) {
@@ -634,5 +634,53 @@ var model = {
 
         });
     },
+    rotateImage: function (filename, angle, callback) {
+
+        var readstream = gfs.createReadStream({
+            filename: filename
+        });
+        readstream.on('error', function (err) {
+            callback({
+                value: false,
+                error: err
+            });
+        });
+        var buf;
+        var newNameExtire;
+        var bufs = [];
+        var proceedI = 0;
+        var wi;
+        var he;
+        readstream.on('data', function (d) {
+            bufs.push(d);
+        });
+        readstream.on('end', function () {
+            buf = Buffer.concat(bufs);
+            proceed();
+        });
+
+
+        function proceed() {
+            proceedI++;
+            if (proceedI === 2) {
+                Jimp.read(buf, function (err, image) {
+                    image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
+                });
+            }
+        }
+
+        function writer2(err, imageBuf) {
+            var writestream2 = gfs.createWriteStream({
+                filename: filename,
+            });
+            var bufferStream = new stream.PassThrough();
+            bufferStream.end(imageBuf);
+            bufferStream.pipe(writestream2);
+            writestream2.on('end', function () {
+                callback(null, "Image is rotated");
+            });
+        }
+
+    }
 };
 module.exports = _.assign(module.exports, exports, model);
