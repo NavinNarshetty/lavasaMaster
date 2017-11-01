@@ -246,12 +246,92 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        var Search = Model.find(matchObj)
+        async.waterfall([
+                function (callback) {
+                    Athelete.find(matchObj)
+                        .order(options)
+                        .deepPopulate("school")
+                        // .lean()
+                        // .exec(function (err, found) {
+                        //     callback(null, found);
+                        // })
+                        .keyword(options)
+                        .page(options, callback);
+                },
+                function (found, callback) {
+                    var targetAthlete = [];
+                    var flag = false;
+                    async.each(found.results, function (n, callback) {
+                        console.log("n", n);
+                        async.waterfall([
+                                function (callback) {
+                                    StudentTeam.findOne({
+                                        studentId: n._id
+                                    }).lean().exec(function (err, found) {
+                                        if (err) {
+                                            callback(err, null);
+                                        } else if (_.isEmpty(found)) {
+                                            flag = false;
+                                            callback(null, flag);
+                                        } else {
+                                            flag = true;
+                                            callback(null, flag);
+                                        }
+                                    });
+                                },
+                                function (flag, callback) {
+                                    if (flag == false) {
+                                        IndividualSport.findOne({
+                                            athleteId: n._id
+                                        }).lean().exec(function (err, found) {
+                                            if (err) {
+                                                callback(err, null);
+                                            } else if (_.isEmpty(found)) {
+                                                flag = false;
+                                                callback(null, flag);
+                                            } else {
+                                                flag = true
+                                                callback(null, flag);
+                                            }
+                                        });
+                                    } else {
+                                        callback(null, flag);
+                                    }
+                                }
+                            ],
+                            function (err, data2) {
+                                if (err) {
+                                    callback(null, []);
+                                } else {
+                                    if (data2 == true) {
+                                        targetAthlete.push(n);
+                                    }
+                                    callback(null, data2);
+                                }
+                            });
+                    }, function (err) {
+                        var final = {};
+                        final.options = found.options;
+                        final.results = targetAthlete;
+                        final.total = found.total;
+                        callback(null, final);
+                    });
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    console.log(err);
+                    callback(null, []);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
 
-            .order(options)
-            // .deepPopulate(deepSearch)
-            .keyword(options)
-            .page(options, callback);
+
 
     },
 
