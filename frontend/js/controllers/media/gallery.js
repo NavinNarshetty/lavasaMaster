@@ -91,27 +91,27 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
     };
     $scope.getMediaFolders = function () {
         $scope.folders = undefined;
-        NavigationService.getFolders($scope.filter, function (response) {
-            if (response) {
-                console.log(response);
-                $scope.folders = response.data;
-            } else {
-                // console.log("No data found");
-                $scope.folders = [];
-            }
-        });
+        // NavigationService.getFolders($scope.filter, function (response) {
+        //     if (response) {
+        //         console.log(response);
+        //         $scope.folders = response.data;
+        //     } else {
+        //         // console.log("No data found");
+        //         $scope.folders = [];
+        //     }
+        // });
     };
     $scope.loadMedia = function () {
         $scope.mediaArr = undefined;
-        NavigationService.getLimitedMedia($scope.filter, function (response) {
-            if (response) {
-                console.log("get limited media : ", response);
-                $scope.mediaArr = response.data;
-            } else {
-                console.log("No data found");
-                $scope.mediaArr.data = [];
-            }
-        });
+        // NavigationService.getLimitedMedia($scope.filter, function (response) {
+        //     if (response) {
+        //         console.log("get limited media : ", response);
+        //         $scope.mediaArr = response.data;
+        //     } else {
+        //         console.log("No data found");
+        //         $scope.mediaArr.data = [];
+        //     }
+        // });
     };
     //console.log($stateParams);
     if (!$stateParams.type && !$stateParams.folder) {

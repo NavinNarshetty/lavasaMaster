@@ -637,7 +637,12 @@ var model = {
                                 profile.teamName = found.name;
                                 profile.teamId = found.teamId;
                                 profile.school = found.schoolName;
-                                profile.schoolLogo = found.school.schoolLogo;
+                                console.log(found);
+                                if (found.school) {
+                                    profile.schoolLogo = found.school.schoolLogo;
+                                } else {
+                                    profile.schoolLogo = '';
+                                }
                                 callback(null, found);
                             }
                         }
