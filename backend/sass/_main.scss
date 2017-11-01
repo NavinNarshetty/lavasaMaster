@@ -1453,7 +1453,21 @@
      left: 0;
      opacity: 0;
      z-index: 2;
- } // ROTATE IMAGE DIRECTIVE  END
+ }
+
+ .rotate-0{
+   @include transform(rotate(0deg));
+ }
+ .rotate-90{
+   @include transform(rotate(90deg));
+ }
+ .rotate-180{
+   @include transform(rotate(180deg));
+ }
+ .rotate-270{
+   @include transform(rotate(270deg));
+ }
+ // ROTATE IMAGE DIRECTIVE  END
  //  TILE WIREFRAME END
  @import "fancybox-override";
  @import "other/mobile";

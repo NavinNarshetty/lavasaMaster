@@ -573,9 +573,9 @@ myApp.directive('rotateImage', function($http, $filter, $timeout) {
                 // UPLOAD IMAGE
                 $scope.rotateUpload = function() {
                         console.log('UPLOAD');
-                    }
-                    // UPLOAD IMAGE END
-                    // ROTATE FUNCTION
+                }
+                // UPLOAD IMAGE END
+                // ROTATE CANVAS FUNCTION
                 $scope.rotateImage = function(degree) {
                         if (document.getElementById('rotateCanvas')) {
                             var cContext = canvas.getContext('2d');
@@ -632,22 +632,53 @@ myApp.directive('rotateImage', function($http, $filter, $timeout) {
 
                         }
                     }
-                    // ROTATE FUNCTION END
-                    // $scope.$on('$viewContentLoaded', function () {
+                    // ROTATE CANVAS FUNCTION END
+                    // ROTATE TRANSFORM FUNCTION
+                    $scope.transformRotate = function(degree){
+                      switch (degree) {
+                        case 0:
+                          $(img).attr("class", "");
+                          $(img).addClass("img-responsive rotate-0");
+                          console.log("rotate 0");
+                        break;
+                        case 90:
+                          $(img).attr("class", "");
+                          $(img).addClass("img-responsive rotate-90");
+                          console.log("rotate 90");
+                        break;
+                        case 180:
+                          $(img).attr("class", "");
+                          $(img).addClass("img-responsive rotate-180");
+                          console.log("rotate 180");
+                        break;
+                        case 270:
+                          $(img).attr("class", "");
+                          $(img).addClass("img-responsive rotate-270");
+                          console.log("rotate 270");
+                        break;
+                        default:
+                          $(img).attr("class", "");
+                          $(img).addClass("img-responsive rotate-0")
+                          console.log("default rotate");
+                        break;
+
+                      }
+                    }
+                    // ROTATE TRANSFORM FUNCTION END
                 $timeout(function() {
                     //  Initialize image and canvas
                     img = document.getElementById('rotateInput');
-                    canvas = document.getElementById('rotateCanvas');
+                    // canvas = document.getElementById('rotateCanvas');
 
-                    if (!canvas || !canvas.getContext) {
-                        canvas.parentNode.removeChild(canvas);
-                    } else {
-                        img.style.position = 'absolute';
-                        img.style.visibility = 'hidden';
-                    }
-                    $scope.rotateImage(0);
+                    // if (!canvas || !canvas.getContext) {
+                    //     canvas.parentNode.removeChild(canvas);
+                    // } else {
+                    //     img.style.position = 'absolute';
+                    //     img.style.visibility = 'hidden';
+                    // }
+                    // $scope.rotateImage(0);
+                    $scope.transformRotate(0);
                 }, 100);
-                // })
             }
         }
     })
