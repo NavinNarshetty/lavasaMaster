@@ -13,10 +13,12 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
   // GENDER END
 
 
+  $scope.const = {};
+  $scope.const.input = '';
 
   // INDIVIDUAL ATHELTE
-  $scope.getAthleteName = function () {
-    NavigationService.getAthletesfaID(function (data) {
+  $scope.getAthleteName = function (input) {
+    NavigationService.getAthletesfaID(input, function (data) {
       console.log(data, 'athlete for individual')
       $scope.athleteData = data.data.data.results;
       $scope.athleteData.fullName = '';
@@ -62,10 +64,15 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
 
   $scope.playerChange = function (data) {
     console.log(data, 'ng-change');
+    $scope.formData.athlete = data;
   }
 
   $scope.playerRefresh = function (data) {
     console.log(data, 'refresh player')
+    $scope.refreshData = {}
+    $scope.refreshData.input = data;
+    console.log($scope.refreshData, "in")
+    $scope.getAthleteName($scope.refreshData);
   }
   // INDIVIDUAL
   // GET ALL SPORTS
@@ -90,10 +97,9 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
   // GET ALL AGE GROUP END
 
   // GET ALL SCHOOL
+
+
   $scope.getSchoolreg = function () {
-    // $scope.constraints = {};
-    // $scope.constraints.keyword = ''
-    // $scope.url = 'school/search';
     NavigationService.getSchoolRegistration(function (data) {
       console.log(data, "get all school");
       $scope.schoolData = data.data.data.results;
@@ -101,6 +107,11 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
     });
   }
   $scope.getSchoolreg();
+
+  $scope.schoolRefresh = function (data) {
+    console.log(data, "in refresh")
+  }
+
   // GET ALL SCHOOL END
 
 

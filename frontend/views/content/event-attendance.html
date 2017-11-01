@@ -50,9 +50,10 @@
                     <label for="">SCHOOL</label>
                   </div>
                   <div class="display-inline event-attendance-dropdown override-glyp">
-                    <ui-select name="schoolname" ng-model="formData.schoolName" theme="bootstrap" on-select='selectSchool(formData.schoolName)'>
+                    <ui-select name="schoolname" ng-model="formData.schoolName" theme="bootstrap" on-select='selectSchool(formData.schoolName)'
+                      ng-change="searchSchool($select.selected.schoolName)">
                       <ui-select-match placeholder="School Name" allow-clear="true" title="{{$select.selected.schoolName}}"> {{$select.selected.schoolName}}</ui-select-match>
-                      <ui-select-choices repeat="school._id as school in schoolData | filter: $select.search">
+                      <ui-select-choices refresh-delay="0" repeat="school._id as school in schoolData | filter: $select.search" refresh="schoolRefresh($select.search)">
                         <div>
                           <p>{{school.schoolName}}</p>
                           <!-- <span class="text-capitalize" ng-bind-html="school.name"></span> -->

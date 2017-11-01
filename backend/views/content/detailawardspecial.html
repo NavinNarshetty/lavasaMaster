@@ -86,10 +86,10 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label> Player</label>
-                      <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" ng-change="searchAthlete(player.gender)" required>
-                        <ui-select-match placeholder="Select Certificate Name" allow-clear="true"> {{$select.selected.fullName}}</ui-select-match>
-                        <ui-select-choices repeat="player in playerData | filter: $select.search">
+                      <label> Player</label>{{formData.athlete}}
+                      <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" on-select="selectSchool($item)" required>
+                        <ui-select-match placeholder="Select Certificate Name"> {{$select.selected.fullName}}</ui-select-match>
+                        <ui-select-choices refresh-delay='0' repeat="player._id as player in playerData | filter: $select.search" refresh="refreshChange($select.search,formData.gender)">
                           <div>
                             <span class="text-capitalize" ng-bind-html="player.fullName"></span>
                           </div>
@@ -101,7 +101,7 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">School Name</label>
-                      <input type="text" name="schoolname" ng-model="formData.athlete.school.name" class="form-control" placeholder="" readonly>
+                      <input type="text" name="schoolname" ng-model="foundSchool.school.name" class="form-control" placeholder="" readonly>
                     </div>
                   </div>
                 </div>
