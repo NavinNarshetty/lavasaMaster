@@ -622,7 +622,6 @@ var model = {
     },
 
     getAllAthleteByGender: function (data, callback) {
-        console.log("data", data);
         if (_.isEmpty(data.input)) {
             var matchObj = {
                 gender: data.gender
@@ -653,7 +652,6 @@ var model = {
                         sfaId: {
                             $regex: data.input,
                             $options: "i"
-
                         },
                     }
                 ]
@@ -680,13 +678,13 @@ var model = {
             start: (page - 1) * maxRow,
             count: maxRow
         };
-        // console.log('match', matchObj);
         Athelete.find(matchObj)
             .sort({
                 createdAt: -1
             })
             .order(options)
             .keyword(options)
+            .deepPopulate("school")
             .page(options, function (err, found) {
                 if (err) {
                     callback(err, null);
