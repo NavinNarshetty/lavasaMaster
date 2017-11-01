@@ -660,7 +660,6 @@ var model = {
             proceed();
         });
 
-
         function proceed() {
             proceedI++;
             if (proceedI === 2) {
@@ -678,7 +677,9 @@ var model = {
             bufferStream.end(imageBuf);
             bufferStream.pipe(writestream2);
             writestream2.on('end', function () {
-                callback(null, "Image is rotated");
+                callback(null, {
+                    name: filename
+                });
             });
         }
 
