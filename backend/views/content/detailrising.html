@@ -29,7 +29,7 @@
                     <div class="special-award-type">
                       <div class="form-group">
                         <label> Gender</label>
-                        <select name="selectgender" class="form-control" ng-model="formData.gender" ng-disabled="flag" ng-change="getList(formData)"
+                        <select name="selectgender" class="form-control" ng-model="formData.gender" ng-disabled="editGender" ng-change="getList(formData)"
                           placeholder="Enter Type" ng-change="getList(formData)" required>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>              
@@ -50,7 +50,7 @@
                     <label for="">Award Name</label>
                     <ui-select name="selectsportslist" id="selectsportslist" theme="bootstrap" ng-model="formData.award" ng-disabled='true' required>
                       <ui-select-match placeholder="Enter Sports List" allow-clear="true">
-                        {{$select.selected.name}}
+                        {{$select.items[$select.activeIndex].name}}
                       </ui-select-match>
                       <ui-select-choices refresh.delay="0" repeat="item._id as item in awardList | filter:$select.search">
                         <span ng-bind-html="item.name"></span>
@@ -74,12 +74,16 @@
                       <label> Player</label>
                       <!-- on-select="getRegisterSport($item)" -->
                       <!-- on-remove="removeRegisterSport($item)" -->
-                      <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" ng-change="searchChange($select.selected.fullName)"
-                        on-select="getRegisterSport($item)" on-remove="removeRegisterSport($item)" required>
-                        <ui-select-match placeholder="Select Certificate Name" allow-clear="true"> {{$select.selected.fullName}}</ui-select-match>
-                        <ui-select-choices refresh-delay="0" repeat="player in playerData | filter: $select.search" refresh="refreshChange($select.search, formData)">
+                      <!-- <pre>{{formData.athlete | json}}</pre> -->
+                      <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" on-select="getRegisterSport($item)" on-remove="removeRegisterSport()"
+                        ng-disabled="editGender" required>
+                        <ui-select-match placeholder="Select Certificate Name" allow-clear="true">
+                          <!-- <pre>{{$select | json}}</pre> -->
+                          {{$select.items[$select.activeIndex].fullName}}
+                        </ui-select-match>
+                        <ui-select-choices refresh-delay="0" repeat="player._id as player in playerData | filter: $select.search" refresh="refreshChange($select.search, formData)">
                           <div>
-                            <span class="text-capitalize" ng-bind-html="player.fullName"></span>
+                            <span class="" ng-bind-html="player.fullName"></span>
                           </div>
                         </ui-select-choices>
                       </ui-select>
@@ -89,7 +93,8 @@
                   <div class="col-md-6">
                     <div class="form-group">
                       <label for="">School Name</label>
-                      <input type="text" name="schoolname" ng-model="formData.athlete.school.name" class="form-control" placeholder="" readonly>
+                      <input type="text" name="schoolname" ng-model="foundSchool.school.name" ng-disabled="editGender" class="form-control" placeholder=""
+                        readonly>
                     </div>
                   </div>
                 </div>
@@ -102,11 +107,12 @@
                   <div class="form-group">
                     <!-- <pre>{{sportitems}} -->
                     <label>Sports </label>
-                    <ui-select name="selectsportslist" id="selectsportslist" theme="bootstrap" ng-model="formData.sports" required>
+                    <ui-select name="selectsportslist" id="selectsportslist" theme="bootstrap" ng-model="formData.sports" ng-change="sportChange($select.selected.name)"
+                      ng-disabled="editGender" required>
                       <ui-select-match placeholder="Enter Sports List" allow-clear="true">
                         {{$select.selected.name}}
                       </ui-select-match>
-                      <ui-select-choices refresh.delay="0" repeat="item in sportitems | filter:$select.search">
+                      <ui-select-choices refresh.delay="0" repeat="item in sportitems | filter:$select.search track by $index" refresh="refreshSport($select.search,formData.player)">
                         <span ng-bind-html="item.name"></span>
                       </ui-select-choices>
                     </ui-select>

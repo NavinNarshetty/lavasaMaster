@@ -1074,10 +1074,11 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 data: formData
             }).then(callback);
         },
-        getAthletesfaID: function (callback) {
+        getAthletesfaID: function (id, callback) {
             $http({
                 url: adminUrl2 + 'Athelete/searchByNameId',
                 method: 'POST',
+                data: id
             }).then(callback);
         },
         getSponsor: function (callback) {

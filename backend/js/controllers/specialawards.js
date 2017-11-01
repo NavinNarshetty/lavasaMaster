@@ -452,7 +452,7 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
 
   // ATHLETE BY GENDER
   $scope.getGenderAthlete = function (constraints) {
-    $scope.url = "Athelete/searchByFilter";
+    $scope.url = "SpecialAwardDetails/getAllAthleteByGender";
     NavigationService.getGenderAthlete(constraints, $scope.url, function (data) {
       console.log('gender wise', data)
       $scope.playerData = data.data.data.results;
@@ -506,14 +506,25 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
   }
 
 
-  // SPECIAL AWARD LIST  END
 
-  // // SEARCH ATHLETE
-  // $scope.searchAthlete = function () {
-  //   console.log("in search athlete");
+  $scope.selectSchool = function (data) {
+    console.log(data, 'on select')
+    $scope.foundSchool = {};
+    if (data) {
+      $scope.foundSchool = _.find($scope.playerData, ['_id', data._id])
+      console.log($scope.foundSchool.school.name, 'found school')
+    }
 
-  // }
-  // // SEARCH ATHLETE END
+  }
+  $scope.refreshChange = function (data, formData) {
+    if (data) {
+      $scope.paramData = {}
+      console.log(data, 'keyword', formData)
+      $scope.paramData.gender = formData;
+      $scope.paramData.input = data;
+      $scope.getGenderAthlete($scope.paramData)
+    }
+  }
 
   // BOOST AWARD
   $scope.addRow = function (formData) {
@@ -698,33 +709,44 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
   $scope.formData.type = 'athlete'
   $scope.formData.award = {}
   $scope.formData.award = "";
+  $scope.formData.sports = {};
+  $scope.foundSchool = {};
+  $scope.foundSchool.school = {};
+  $scope.playerData = [];
+
 
 
   if ($stateParams.id) {
+    $scope.editGender = true;
     $scope.getOneAwardDetails = function () {
       $scope.constraints = {};
       $scope.constraints._id = $stateParams.id;
       NavigationService.getOneAwardDetails($scope.constraints, function (data) {
         console.log(data, 'detail rising edit');
-        $scope.formData = data.data.data[0];
-        $scope.getRegisterSport($scope.formData.athlete);
-        $scope.typeData = $scope.formData.type;
+        $scope.getData = data.data.data[0];
+        $scope.formData.athlete = $scope.getData.athlete;
+        $scope.playerData.push($scope.formData.athlete);
+        $scope.foundSchool.school.name = $scope.getData.athlete.school.name;
+        $scope.formData.gender = $scope.getData.athlete.gender;
+        console.log($scope.formData.athlete, 'athlete getone')
+        $scope.getRegisterSport($scope.getData.athlete);
+        $scope.typeData = $scope.getData.type;
         $scope.formData.sports.name = data.data.data[0].sports[0].name;
 
         if ($scope.typeData === 'athlete') {
-          $scope.formData.sports = data.data.data[0].sports;
+          $scope.getData.sports = data.data.data[0].sports;
           if (data.data.data[0].athlete.middleName) {
-            $scope.formData.athlete.fullName = data.data.data[0].athlete.sfaId + '-' + data.data.data[0].athlete.firstName + ' ' + data.data.data[0].athlete.middleName + ' ' + data.data.data[0].athlete.surname
+            $scope.getData.athlete.fullName = data.data.data[0].athlete.sfaId + '-' + data.data.data[0].athlete.firstName + ' ' + data.data.data[0].athlete.middleName + ' ' + data.data.data[0].athlete.surname
           } else {
-            $scope.formData.athlete.fullName = data.data.data[0].athlete.sfaId + '-' + data.data.data[0].athlete.firstName + ' ' + data.data.data[0].athlete.surname
+            $scope.getData.athlete.fullName = data.data.data[0].athlete.sfaId + '-' + data.data.data[0].athlete.firstName + ' ' + data.data.data[0].athlete.surname
           }
         } else {
           if (data.data.data[0].athlete.school.sfaid) {
             console.log('enter');
-            $scope.formData.athlete.school.schoolsfaId = data.data.data[0].athlete.school.sfaid + '-' + data.data.data[0].athlete.school.schoolName;
+            $scope.getData.athlete.school.schoolsfaId = data.data.data[0].athlete.school.sfaid + '-' + data.data.data[0].athlete.school.schoolName;
           } else {
             console.log('enter else');
-            $scope.formData.athlete.school.schoolsfaId = data.data.data[0].athlete.school.schoolName;
+            $scope.getData.athlete.school.schoolsfaId = data.data.data[0].athlete.school.schoolName;
           }
         }
         console.log($scope.formData, 'check this form')
@@ -732,13 +754,17 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
     }
     $scope.getOneAwardDetails();
 
+    $scope.removeRegisterSport = function () {
+      console.log('in edit remove')
+    }
+
+
   }
 
   // ATHLETE BY GENDER
   $scope.getGenderAthlete = function (constraints) {
     console.log(constraints, 'inside api call')
     $scope.url = "SpecialAwardDetails/getAllAthleteByGender";
-    // $scope.url = "Athelete/searchByFilter";
     NavigationService.getGenderAthlete(constraints, $scope.url, function (data) {
       console.log('gender wise', data)
       $scope.playerData = data.data.data.results;
@@ -764,6 +790,11 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
   // Registered Sport
   $scope.getRegisterSport = function (data) {
     console.log(data, "in on select")
+    if (data) {
+      console.log('find school')
+      $scope.foundSchool = _.find($scope.playerData, ['_id', data._id])
+    }
+    console.log($scope.foundSchool, 'school')
     $scope.constraints = {};
     if (data && data !== null && data._id) {
       $scope.constraints._id = data._id;
@@ -777,11 +808,12 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
     }
 
   };
+
   $scope.removeRegisterSport = function () {
     console.log("in remove ****")
-    // $scope.playerData = []
     $scope.sportitems = [];
     $scope.formData.sports = [];
+    $scope.foundSchool.school.name = ''
     if ($stateParams.id) {
       $scope.getGenderAthlete();
     }
@@ -792,18 +824,13 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
   // Registered Sport END
 
   $scope.getList = function (data) {
-    // $scope.formData.award = ''
     console.log(data, "ng-change")
     if (data.type === "athlete") {
       console.log("in")
       $scope.constraints = {}
       $scope.constraints.filter = {}
-      // $scope.constraints.type = data.type;
       $scope.constraints.gender = data.gender;
       $scope.constraints.input = '';
-      // $scope.constraints.filter.gender = data.gender;
-      // $scope.constraints.rising = true;
-      // $scope.getAwardsList($scope.constraints);
       $scope.getGenderAthlete($scope.constraints)
 
     } else {
@@ -815,43 +842,28 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
     NavigationService.getAwardsList(constraints, function (data) {
       $scope.awardList = data.data.data;
       $scope.formData.award = data.data.data[0];
-      // console.log($scope.formData.certificateType, "certificate data")
+      console.log($scope.formData.award, "awardssss")
     });
 
   }
+
 
   $scope.getAwardsList({
     "rising": true
   });
 
-  // $scope.risingAthlete = function (data) {
-  //   console.log(data, 'rising athlete')
-  // }
-  $scope.searchChange = function (data) {
-    console.log("changekeyword", data);
-    $scope.formData.athlete = data;
 
-  }
+
 
   $scope.refreshChange = function (data, formData) {
     if (data) {
       $scope.paramData = {}
-      // $scope.paramData.filter = {}
-
       console.log(data, 'keyword', formData)
-
-      // $scope.paramData.type = formData.type;
       $scope.paramData.gender = formData.gender;
       $scope.paramData.input = data;
-      // $scope.paramData.filter.gender = formData.gender;
-      // $scope.paramData.rising = true;
-      // $scope.paramData.filter.firstName = data;
-      // $scope.paramData.filter.middleName = data;
-      // $scope.paramData.filter.surname = data;
-      // $scope.paramData.filter.sfaId = data;
       $scope.getGenderAthlete($scope.paramData)
     } else {
-      // $scope.getList(formData)
+      // DO NOTHING
     }
   }
 
@@ -861,6 +873,7 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
     console.log(data, "save")
     data.award = data.award._id;
     data.sports = [data.sports._id];
+    // data.athlete = data.player;
     $scope.url = "SpecialAwardDetails/saveRising";
     NavigationService.apiCall($scope.url, data, function (data) {
       console.log("save sponsor")
