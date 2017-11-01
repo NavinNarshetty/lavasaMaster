@@ -59,9 +59,9 @@ module.exports = {
         Config.readUploaded(req.query.file, req.query.width, req.query.height, req.query.style, res);
     },
     rotateImage: function (req, res) {
-        if (req.query.file) {
-            console.log("file found");
-            Config.rotateImage(req.query.file, req.query.angle, res.callback);
+        if (req.body) {
+            console.log("file", req.body);
+            Config.rotateImage(req.body.file, req.body.angle, res.callback);
         } else {
             console.log("file not found");
         }
