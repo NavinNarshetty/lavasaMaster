@@ -60,8 +60,8 @@ module.exports = {
     },
     rotateImage: function (req, res) {
         if (req) {
-            console.log("file found", req);
-            Config.rotateImage(req.query.file, req.query.angle, res.callback);
+            console.log("file", req.body);
+            Config.rotateImage(req.body.file, req.body.angle, res.callback);
         } else {
             console.log("file not found");
         }
