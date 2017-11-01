@@ -97,7 +97,7 @@ var model = {
         var medals = [];
         async.waterfall([
                 function (callback) {
-                    Medal.find().lean().exec(function (err, found) {
+                    Medal.find().deepPopulate("sport sport.sportslist sport.sportslist.sportsListSubCategory").lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else {
@@ -113,7 +113,7 @@ var model = {
                     if (_.isEmpty(found)) {
                         callback(null, found);
                     } else {
-                        var sendObj={};
+                        var sendObj = {};
 
                         _.each(found, function (singleData) {
                             if (!_.isEmpty(singleData.school)) {
@@ -126,7 +126,7 @@ var model = {
                             }
                         });
 
-                        sendObj.medals=medals;
+                        sendObj.medals = medals;
 
                         var medalRank = _(medals)
                             .groupBy('school')
@@ -158,7 +158,7 @@ var model = {
                                     totalPoints: totalPoints
                                 };
                             }).value();
-                        sendObj.medalRank=medalRank
+                        sendObj.medalRank = medalRank
                         callback(null, sendObj);
                     }
                 },
@@ -359,12 +359,12 @@ var model = {
             finalArr = _(finalArr)
                 .groupBy('name')
                 .map(function (schoolMatches, schoolName) {
-                    totalMatches = schoolMatches.length;
+                    var tm = schoolMatches.length;
                     return {
                         name: schoolName,
-                        totalMatches: totalMatches
+                        totalMatches: tm
                     }
-                })
+                }).value();
 
             callback(null, finalArr);
         })
@@ -377,34 +377,79 @@ var model = {
 
             function (callback) {
                 Result.getMedalsSchool({}, function (err, totalMedals) {
-                    var medalRank=totalMedals.medalRank;
-                    var medals=totalMedals.medals;
-                    callback(null, totalMedals, medals);
+                    var medalRank = totalMedals.medalRank;
+                    var medals = totalMedals.medals;
+                    callback(null, medalRank, medals);
                 });
             },
 
-            function (totalMedals,medals, callback) {
+            function (medalRank, medals, callback) {
                 Result.getMatchesBySchool(function (err, totalMatches) {
                     if (err) {
                         callback(err, null);
                     } else {
-                        callback(null,totalMedals ,totalMatches, medals);
+                        callback(null, medalRank, totalMatches, medals);
                     }
                 });
             },
 
-            function (totalMedals, totalMatches, medals, callback) {
-                var sportData=_(medals)
-                .groupBy('school')
+            function (medalRank, totalMatches, medals, callback) {
+                var medalRanksBySport = _(medals)
+                    .groupBy('school')
+                    .map(function (items, name) {
+                        var gender = _(items)
+                            .groupBy('medals.sport.sportslist.sportsListSubCategory.name')
+                            .map(function (values, name) {
+                                var qwerty = _(values)
+                                    .groupBy('medals.medalType')
+                                    .map(function (values, name) {
+                                        return {
+                                            name: name,
+                                            count: values.length,
+                                            points: values.length * Config.medalPoints[name]
+                                        };
+                                    }).value();
+                                var countArr = _.map(qwerty, function (n) {
+                                    return n.count;
+                                });
+
+                                var pointsArr = _.map(qwerty, function (n) {
+                                    return n.points;
+                                });
+
+                                var totalCount = _.sum(countArr);
+                                var totalPoints = _.sum(pointsArr);
+                                return {
+                                    name: name,
+                                    medals: qwerty,
+                                    count: values.length,
+                                    totalCount: totalCount,
+                                    totalPoints: totalPoints
+                                };
+                            }).value();
+                        return {
+                            name: name,
+                            sportData: gender,
+                        };
+                    }).value();
+                callback(null,medalRank, totalMatches,medalRanksBySport);
+            },
+
+            function (medalRank, totalMatches,medalRanksBySport, callback){
+                var totalLength= medalRank.length + totalMatches.length + medalRanksBySport.length;
+                var finalArr=_.concat(medalRank, totalMatches,medalRanksBySport);
+                var finalArrLength=finalArr.length;
+
+                var tp=_(finalArr)
+                .groupBy('name')
                 .map(function(items,name){
-                    var sportWise =_(items)
-                    .groupBy('medals.sport')
-                    
+                    return  _.assign.apply(_, items)
                 })
-               fcallback(null,sportData);
+
+                fcallback(null,tp);
             }
 
-        ], function (err, result) {
+        ], function (err,result) {
             if (err) {
 
             } else {

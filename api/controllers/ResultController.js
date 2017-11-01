@@ -25,7 +25,11 @@ var controller = {
 
     getSchool: function (req, res) {
         Result.getSchool(req.body,res.callback);
-    }
+    },
+
+    getMedalsPerSport: function (req, res) {
+        Result.getMedalsPerSport(req.body,res.callback);
+    },
 
 };
 module.exports = _.assign(module.exports, controller);
