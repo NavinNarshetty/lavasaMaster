@@ -145,6 +145,12 @@ var model = {
                 paymentStatus: {
                     $ne: "Pending"
                 }
+            }],
+            $or: [{
+                schoolName: {
+                    $regex: data.input,
+                    $options: 'i'
+                }
             }]
         };
 

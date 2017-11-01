@@ -267,14 +267,25 @@ var model = {
         });
 
         SpecialAwardDetails.aggregate(pipeline, function (err, arr) {
-            var data = {};
-            data.options = options;
-            data.results = arr;
-            SpecialAwardDetails.aggregate(countPipeline, function (err, count) {
-                console.log("totalCount", count);
-                data.total = count[0].totalCount;
-                callback(null, data);
-            });
+            if (err) {
+                callback(err, null);
+            } else {
+                var data = {};
+                if (_.isEmpty(arr)) {
+                    data.options = options;
+                    data.results = arr;
+                    data.total = 0;
+                    callback(null, data);
+                } else {
+                    data.options = options;
+                    data.results = arr;
+                    SpecialAwardDetails.aggregate(countPipeline, function (err, count) {
+                        console.log("totalCount", count);
+                        data.total = count[0].totalCount;
+                        callback(null, data);
+                    });
+                }
+            }
         });
     },
 
