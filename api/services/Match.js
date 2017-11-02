@@ -11442,7 +11442,7 @@ var model = {
                                         // callback(null, found);
                                     }
                                 } else if (found[0].opponentsTeam.length == 2) {
-                                    if (data._id.equals(found[0].prevMatch[1])) {
+                                    if (data._id.equals(found[0].prevMatch[1]._id)) {
                                         console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
                                         var playerId = found[0].opponentsTeam[1];
                                         console.log("playerId", playerId);
