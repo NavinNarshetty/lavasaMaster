@@ -118,5 +118,16 @@ var controller = {
         }
     },
 
+    getSchoolStats: function (req, res) {
+        if (req.body) {
+            Profile.getSchoolStats(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
 };
 module.exports = _.assign(module.exports, controller);
