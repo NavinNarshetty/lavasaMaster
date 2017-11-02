@@ -3372,6 +3372,7 @@ var model = {
             }
             obj["STATUS"] = athleteData.status;
             obj["PAYMENT MODE"]=athleteData.registrationFee;
+            obj["PAYMENT STATUS"]=athleteData.paymentStatus;
             singleData.push(obj);
         });
         callback(null, singleData);
@@ -3466,24 +3467,5 @@ var model = {
             });
     },
 
-    updateImageRorate: function (data, callback) {
-        async.waterfall([
-                function (callback) {
-
-                }
-            ],
-            function (err, data2) {
-                if (err) {
-                    console.log(err);
-                    callback(null, []);
-                } else if (data2) {
-                    if (_.isEmpty(data2)) {
-                        callback(null, []);
-                    } else {
-                        callback(null, data2);
-                    }
-                }
-            });
-    }
 };
 module.exports = _.assign(module.exports, exports, model);

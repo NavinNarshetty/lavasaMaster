@@ -1514,7 +1514,6 @@ var model = {
                                 }
                             }
                         });
-                        callback(null, data);
                     } else if (data.athleteToken && data.countEdit > 0) {
                         callback(null, data);
                         TeamSport.editAtheleteTeamMailers(data, total, function (err, final) {

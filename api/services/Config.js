@@ -635,22 +635,14 @@ var model = {
         });
     },
 
-    rotateImage: function (filename, angle, callback) {
-        // var id = mongoose.Types.ObjectId();
-        // var extension = filename.split(".").pop();
-        // extension = extension.toLowerCase();
-        // if (extension == "jpeg") {
-        //     extension = "jpg";
-        // }
-        // var newFilename = id + "." + extension;
-        // console.log("file", filename);
-        var athlete = '599d72f6c26d2074468b4d81';
+    rotateImage: function (filename, angle, callback, res) {
 
         var readstream = gfs.createReadStream({
             filename: filename
         });
+        // console.log("readstream", readstream);
         readstream.on('error', function (err) {
-            console.log("error", err);
+            // console.log("error", err);
             callback({
                 value: false,
                 error: err
@@ -676,41 +668,44 @@ var model = {
             proceedI++;
             if (proceedI === 1) {
                 Jimp.read(buf, function (err, image) {
-                    image.rotate(180, false).getBuffer(Jimp.AUTO, writer2);
+                    gfs.remove({
+                        filename: filename,
+                    }, function () {
+                        image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
+                    });
+
                 });
             }
         }
 
         function writer2(err, imageBuf) {
+
             var writestream2 = gfs.createWriteStream({
                 filename: filename,
             });
-            // console.log("writestream2", writestream2);
             var bufferStream = new stream.PassThrough();
             bufferStream.end(imageBuf);
             bufferStream.pipe(writestream2);
-            console.log("bufferStream", bufferStream);
+            writestream2.on('err', function (err) {
+                console.log(err);
+            });
             writestream2.on('finish', function () {
-                // console.log("inside writestream", filename);
-                var matchObj = {
-                    $set: {
-                        atheleteSchoolIdImage: imageBuf
-                    }
-                };
-                Athelete.update({
-                    _id: athlete
-                }, matchObj).exec(
-                    function (err, data3) {
-                        if (err) {
-                            console.log(err);
-                            callback(err, null);
-                        } else if (data3) {
-                            console.log("data3", data3);
-                            callback(null, filename);
-                        }
-                    });
+                console.log("inside writestream", writestream2);
+                callback(null, filename);
             });
         }
+    },
+
+    rotateImageMy: function (filename, angle, callback) {
+        Jimp.read("http://wohlig.io:1337/api/upload/readFile?file=59facfb5f54957310c222ef2.jpg").then(function (image) {
+            console.log("before", image);
+            image.rotate(180) // resize 
+                .write("http://wohlig.io:1337/api/upload/readFile?file=" + filename); // save
+            console.log("image", image);
+            callback(null, filename);
+        }).catch(function (err) {
+            console.error(err);
+        });
     }
 
 };
