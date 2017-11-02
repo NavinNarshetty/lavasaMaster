@@ -30,8 +30,8 @@
               <img ng-src="{{player.photograph|serverimage}}" alt="{{player.firstName}} {{player.surname}}" class="img-responsive">
             </div>
             <div class="matchplayer-details">
-              <p class="matchplayer-name">{{player.firstName}} {{player.surname}}</p>
-              <p class="matchplayer-school">{{player.school.name}}</p>
+              <p class="matchplayer-name" title="{{player.firstName}} {{player.surname}}">{{player.firstName}} {{player.surname}}</p>
+              <p class="matchplayer-school" title="{{player.school.name}}">{{player.school.name}}</p>
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@
               <img ng-src="{{team.photograph|serverimage}}" alt="{{team.schoolName}}" class="img-responsive">
             </div>
             <div class="matchplayer-details">
-              <p class="matchplayer-name">{{team.schoolName}}</p>
+              <p class="matchplayer-name" title="{{team.schoolName}}">{{team.schoolName}}</p>
             </div>
           </div>
         </div>

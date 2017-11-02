@@ -16,7 +16,7 @@
                 <div class="col-md-6 col-sm-6" ng-repeat="team in match.teams track by $index">
                     <div class="teamcard">
                       <div class="teamcard-header text-uppercase">
-                        <p>{{team.schoolName}}</p>
+                        <p title="{{team.schoolName}}">{{team.schoolName}}</p>
                         <p>Team ID: <span> {{team.teamId}} </span></p>
                       </div>
                         <div class="combatscore-player" ng-repeat="player in team.studentTeam track by $index">
@@ -28,7 +28,7 @@
                                     <img ng-src="{{player.studentId.photograph|serverimage}}" alt="{player.studentId.firstName}} {{player.surname}}" class="img-responsive">
                                 </div>
                                 <div class="matchplayer-details">
-                                    <p class="matchplayer-name"><span> {{player.studentId.firstName}} </span> <span> {{player.studentId.surname}} </span></p>
+                                    <p class="matchplayer-name" title="{{player.studentId.firstName}} {{player.studentId.surname}}"><span> {{player.studentId.firstName}} </span> <span> {{player.studentId.surname}} </span></p>
                                 </div>
                             </div>
                         </div>

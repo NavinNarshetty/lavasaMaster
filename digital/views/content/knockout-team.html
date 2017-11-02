@@ -90,8 +90,8 @@
             </h3>
           <div class="knockout-cardholder" ng-repeat="card in roundsList[0].match track by $index">
             <div class="knockout-card"  ng-if="card.opponentsTeam.length>0" ng-repeat="player  in card.opponentsTeam track by $index" ng-class="{'knockout-winnercard':player.isWinner===true}">
-              <div class="knockout-cardimage inline-block ver-mid" ng-if="player.athleteId.photograph">
-                <img ng-src="{{player.athleteId.photograph|serverimage:50:50:'cover'}}" alt="{{player.schoolName}}" class="img-responsive">
+              <div class="knockout-cardimage inline-block ver-mid" ng-if="player.school.schoolLogo">
+                <img ng-src="{{player.school.schoolLogo|serverimage:50:50:'cover'}}" alt="{{player.schoolName}}" class="img-responsive">
               </div>
 
               <div class="inline-block knockout-cardplayername ver-mid">
@@ -161,8 +161,8 @@
                     <div class=" knockout-cardholder">
                         <div class="knockout-card " ng-if="card.opponentsTeam.length>0" ng-repeat="player in card.opponentsTeam track by $index "
                             ng-class="{'knockout-winnercard':player.isWinner===true}">
-                            <div class="knockout-cardimage inline-block ver-mid " ng-if="player.athleteId.photograph">
-                                <img ng-src="{{player.athleteId.photograph|serverimage:50:50:'cover'}}" alt=" {{player.schoolName}}" class="img-responsive ">
+                            <div class="knockout-cardimage inline-block ver-mid " ng-if="player.school.schoolLogo">
+                                <img ng-src="{{player.school.schoolLogo|serverimage:50:50:'cover'}}" alt=" {{player.schoolName}}" class="img-responsive ">
                             </div>
                             <div class="inline-block knockout-cardplayername ver-mid ">
                                 <p class="m-clear knockout-winner-name " title="{{player.teamId}}">{{player.teamId}}</p>
@@ -236,8 +236,8 @@
                     <div class=" knockout-cardholder">
                         <div class="knockout-card " ng-class="{'knockout-winnercard':player.isWinner===true}" ng-repeat="player in card.opponentsTeam track by $index"
                             ng-if="card.opponentsTeam.length>0">
-                            <div class="knockout-cardimage inline-block ver-mid " ng-if="player.athleteId.photograph">
-                                <img ng-src="{{player.athleteId.photograph|serverimage:50:50:'cover'}}" alt="{{player.schoolName}} " class="img-responsive ">
+                            <div class="knockout-cardimage inline-block ver-mid " ng-if="player.school.schoolLogo">
+                                <img ng-src="{{player.school.schoolLogo|serverimage:50:50:'cover'}}" alt="{{player.schoolName}} " class="img-responsive ">
                             </div>
                             <div class="inline-block knockout-cardplayername ver-mid ">
                                 <p class="m-clear knockout-winner-name " title="{{player.teamId}}">{{player.teamId}}</p>

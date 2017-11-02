@@ -54,6 +54,13 @@
                     <input type="number" ng-model="quarter.basket" class="score-number display-inline form-control" placeholder="0" readonly>
                   </div>
                   <!-- quarterPoints END -->
+                  <!-- finalGoalPoints -->
+                  <div class="relate setpoint-element" >
+                    <label class="text-uppercase setpointlabel">Final Points</label>
+                    <input type="number" ng-model="team.teamResults.finalGoalPoints" class="score-number display-inline form-control" placeholder="0" readonly>
+                  </div>
+                  <!-- finalGoalPoints END -->
+
                 </div>
                 <!-- BASKETBALL FINAL POINTS END -->
                 <!-- WATER POLO FINAL POINTS -->
@@ -120,7 +127,7 @@
                         </div>
                         <!-- TEAM CARD END -->
                         <!-- TEAM POINTS -->
-                        <div class="teamdetail-pointholder">
+                        <div class="teamdetail-pointholder"  ng-if = "currentMatch.sportName != 'Basketball'">
                           <!-- <pre>{{team.teamResults | json}}</pre> -->
                             <!-- TEAM POINTS HOCKEY -->
                             <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Hockey'">
@@ -138,10 +145,10 @@
                                     </div>
                                     <!-- totalShots END -->
                                     <!-- penalty -->
-                                    <div class="col-md-4 col-sm-6 col-xs-6">
+                                    <!-- <div class="col-md-4 col-sm-6 col-xs-6">
                                         <label class="text-uppercase setpoint-label">Penalties</label>
                                         <input type="number" ng-model="team.teamResults.penalty" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
-                                    </div>
+                                    </div> -->
                                     <!-- penalty END -->
                                     <!-- penaltyCorners -->
                                     <div class="col-md-4 col-sm-6 col-xs-6">
@@ -249,16 +256,16 @@
                             </div>
                             <!-- TEAM POINTS VOLLEYBALL END -->
                             <!-- TEAM POINTS BASKETBALL -->
-                            <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Basketball'">
+                            <!-- <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Basketball'">
                               <div class="row">
-                                <!-- QUARTERS -->
+                                QUARTERS
                                 <div class="col-md-4 col-sm-6 col-xs-6" >
                                     <label class="text-uppercase setpoint-label">Final Goal Points</label>
                                     <input type="number" ng-model="team.teamResults.finalGoalPoints" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
                                 </div>
-                                <!-- QUARTERS END -->
+                                QUARTERS END
                               </div>
-                            </div>
+                            </div> -->
                             <!-- TEAM POINTS BASKETBALL END -->
                             <!-- TEAM POINTS THROWBALL -->
                             <div class="teamdetail-points" ng-if="currentMatch.sportName == 'Handball'">
