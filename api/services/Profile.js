@@ -688,9 +688,16 @@ var model = {
         var profile = {};
         async.waterfall([
                 function (callback) {
-                    Registration.findOne({
-                        sfaID: "MS16" + data.sfaId
-                    }).lean().exec(function (err, found) {
+                    if (!_.isEmpty(data.sfaId)) {
+                        var matchObj = {
+                            sfaId: "MS16" + data.sfaId
+                        };
+                    } else {
+                        var matchObj = {
+                            _id: data.athleteId
+                        };
+                    }
+                    Registration.findOne(matchObj).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);
                         } else {

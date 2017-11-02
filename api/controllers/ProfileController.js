@@ -38,9 +38,16 @@ var controller = {
         if (req.body) {
             async.waterfall([
                     function (callback) {
-                        Athelete.findOne({
-                            sfaId: "MA16" + data.sfaId
-                        }).lean().exec(function (err, athlete) {
+                        if (!_.isEmpty(req.sfaId)) {
+                            var matchObj = {
+                                sfaId: "MA16" + req.body.sfaId
+                            };
+                        } else {
+                            var matchObj = {
+                                _id: req.body.athleteId
+                            };
+                        }
+                        Athelete.findOne(matchObj).lean().exec(function (err, athlete) {
                             if (err) {
                                 callback(err, null);
                             } else {
@@ -52,7 +59,7 @@ var controller = {
                             }
                         });
                     },
-                    function (property, callback) {
+                    function (athlete, callback) {
                         req.body.athleteId = athlete._id;
                         Profile.getAthleteProfile(req.body, res.callback);
                     }
