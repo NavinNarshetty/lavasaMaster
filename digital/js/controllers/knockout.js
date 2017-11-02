@@ -11,34 +11,37 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     };
     // MODAL END
     // SWIPER
-    $scope.$on('$viewContentLoaded', function (event) {
+    $scope.initSwiper = function(){
+      $timeout(function () {
+          mySwiper = new Swiper('.swiper-container', {
+              paginationClickable: true,
+              nextButton: '.swiper-button-next',
+              prevButton: '.swiper-button-prev',
+              slidesPerView: 3,
+              spaceBetween: 5,
+              grabCursor: true,
+              breakpoints: {
+                  992: {
+                      slidesPerView: 3
+                  },
+                  768: {
+                      slidesPerView: 2
 
-        $timeout(function () {
-            mySwiper = new Swiper('.swiper-container', {
-                paginationClickable: true,
-                nextButton: '.swiper-button-next',
-                prevButton: '.swiper-button-prev',
-                slidesPerView: 3,
-                spaceBetween: 5,
-                grabCursor: true,
-                breakpoints: {
-                    992: {
-                        slidesPerView: 3
-                    },
-                    768: {
-                        slidesPerView: 2
-
-                    },
-                    481: {
-                        slidesPerView: 1
-                    },
-                    320: {
-                        slidesPerView: 1
-                    }
-                }
-            });
-        }, 300)
-    });
+                  },
+                  481: {
+                      slidesPerView: 1
+                  },
+                  320: {
+                      slidesPerView: 1
+                  }
+              }
+          });
+      }, 600)
+    };
+    // $scope.$on('$viewContentLoaded', function (event) {
+    //   $scope.initSwiper();
+    // });
+    $scope.initSwiper();
     // END SWIPER
 
     // START SCORING FUNCTION
@@ -230,34 +233,37 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
 
     $scope.oneAtATime = true;
     // SWIPER
-    $scope.$on('$viewContentLoaded', function (event) {
+    $scope.initSwiper = function(){
+      $timeout(function () {
+          mySwiper = new Swiper('.swiper-container', {
+              paginationClickable: true,
+              nextButton: '.swiper-button-next',
+              prevButton: '.swiper-button-prev',
+              slidesPerView: 3,
+              spaceBetween: 5,
+              grabCursor: true,
+              breakpoints: {
+                  992: {
+                      slidesPerView: 3
+                  },
+                  768: {
+                      slidesPerView: 2
 
-        $timeout(function () {
-            mySwiper = new Swiper('.swiper-container', {
-                paginationClickable: true,
-                nextButton: '.swiper-button-next',
-                prevButton: '.swiper-button-prev',
-                slidesPerView: 3,
-                spaceBetween: 5,
-                grabCursor: true,
-                breakpoints: {
-                    992: {
-                        slidesPerView: 3
-                    },
-                    768: {
-                        slidesPerView: 2
-
-                    },
-                    481: {
-                        slidesPerView: 1
-                    },
-                    320: {
-                        slidesPerView: 1
-                    }
-                }
-            });
-        }, 300)
-    });
+                  },
+                  481: {
+                      slidesPerView: 1
+                  },
+                  320: {
+                      slidesPerView: 1
+                  }
+              }
+          });
+      }, 600);
+    }
+    // $scope.$on('$viewContentLoaded', function (event) {
+    //   $scope.initSwiper();
+    // });
+    $scope.initSwiper();
     // END SWIPER
 
     // DOUBLES JSON

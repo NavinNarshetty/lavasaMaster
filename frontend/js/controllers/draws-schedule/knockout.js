@@ -12,7 +12,6 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
     // MODAL END
     // SWIPER
     $scope.initSwiper = function () {
-        $scope.$on('$viewContentLoaded', function (event) {
             $timeout(function () {
                 mySwiper = new Swiper('.swiper-container', {
                     paginationClickable: true,
@@ -37,10 +36,12 @@ myApp.controller('KnockoutCtrl', function ($scope, TemplateService, $state, Navi
                         }
                     }
                 });
-            }, 300);
-        });
+            }, 600);
     };
     $scope.initSwiper();
+    // $scope.$on('$viewContentLoaded', function (event) {
+    //   $scope.initSwiper();
+    // });
     // END SWIPER
 
 
@@ -162,34 +163,37 @@ myApp.controller('KnockoutDoublesCtrl', function ($scope, TemplateService, $stat
 
     $scope.oneAtATime = true;
     // SWIPER
-    $scope.$on('$viewContentLoaded', function (event) {
+    $scope.initSwiper = function () {
+      $timeout(function () {
+          mySwiper = new Swiper('.swiper-container', {
+              paginationClickable: true,
+              nextButton: '.swiper-button-next',
+              prevButton: '.swiper-button-prev',
+              slidesPerView: 3,
+              spaceBetween: 5,
+              grabCursor: true,
+              breakpoints: {
+                  992: {
+                      slidesPerView: 3
+                  },
+                  768: {
+                      slidesPerView: 2
 
-        $timeout(function () {
-            mySwiper = new Swiper('.swiper-container', {
-                paginationClickable: true,
-                nextButton: '.swiper-button-next',
-                prevButton: '.swiper-button-prev',
-                slidesPerView: 3,
-                spaceBetween: 5,
-                grabCursor: true,
-                breakpoints: {
-                    992: {
-                        slidesPerView: 3
-                    },
-                    768: {
-                        slidesPerView: 2
-
-                    },
-                    481: {
-                        slidesPerView: 1
-                    },
-                    320: {
-                        slidesPerView: 1
-                    }
-                }
-            });
-        }, 300);
-    });
+                  },
+                  481: {
+                      slidesPerView: 1
+                  },
+                  320: {
+                      slidesPerView: 1
+                  }
+              }
+          });
+      }, 600);
+    }
+    // $scope.$on('$viewContentLoaded', function () {
+    //   $scope.initSwiper();
+    // });
+    $scope.initSwiper();
     // END SWIPER
 
     // DOUBLES JSON
@@ -470,34 +474,39 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
     $scope.navigation = NavigationService.getNavigation();
     $scope.oneAtATime = true;
     // SWIPER
-    $scope.$on('$viewContentLoaded', function (event) {
+    $scope.initSwiper = function () {
+      $timeout(function () {
+          mySwiper1 = new Swiper('.swiper-container', {
+            slidesPerView: 3,
+              paginationClickable: true,
+              nextButton: '.swiper-button-next',
+              prevButton: '.swiper-button-prev',
+              spaceBetween: 5,
+              grabCursor: true,
+              breakpoints: {
+                  992: {
+                      slidesPerView: 3
+                  },
+                  768: {
+                      slidesPerView: 2
 
-        $timeout(function () {
-            mySwiper1 = new Swiper('.swiper-container', {
-                paginationClickable: true,
-                nextButton: '.swiper-button-next',
-                prevButton: '.swiper-button-prev',
-                slidesPerView: 3,
-                spaceBetween: 5,
-                grabCursor: true,
-                breakpoints: {
-                    992: {
-                        slidesPerView: 3
-                    },
-                    768: {
-                        slidesPerView: 2
+                  },
+                  481: {
+                      slidesPerView: 1
+                  },
+                  320: {
+                      slidesPerView: 1
+                  }
+              }
+          });
+      }, 600);
+    }
+    $scope.initSwiper();
+    // $scope.$on('$viewContentLoaded', function (event) {
+    //   $scope.initSwiper();
+    // });
 
-                    },
-                    481: {
-                        slidesPerView: 1
-                    },
-                    320: {
-                        slidesPerView: 1
-                    }
-                }
-            });
-        }, 300);
-    });
+
     // END SWIPER
 
     // DOUBLES JSON
