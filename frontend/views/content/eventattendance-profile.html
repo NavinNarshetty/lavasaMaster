@@ -20,16 +20,15 @@
       <div class="display-inline event-athleteprofile-detailholder">
         <!-- ATHLETE NAME + SCHOOL -->
         <div class="event-athleteprofile-title">
-          <h3 class="m-clear event-athletename d-fjalla-one">{{playerDetail.fullName}}</h3>
+          <h3 class="event-athletename d-fjalla-one">{{playerDetail.sfaId}}- {{playerDetail.fullName}}</h3>
           <p class="event-athleteschoolname d-fjalla-one">{{playerDetail.school.name}}</p>
         </div>
         <!-- ATHLETE NAME + SCHOOL -->
-        <!-- SFA ID -->
+        <!-- GENDER -->
         <div class="event-athleteprofile-detail">
-          <p class="d-fjalla-one">Sfa ID: <span>{{playerDetail.sfaId}}</span></p>
           <p class="d-fjalla-one"> <span>Gender:</span> <span class="text-uppercase">{{playerDetail.gender}}</span></p>
         </div>
-        <!-- SFA ID END -->
+        <!-- GENDER END -->
         <!-- DOB -->
         <div class="event-athleteprofile-dob">
           <p class="d-fjalla-one"> <span>DOB :</span> <span>{{playerDetail.dob | englishNumeralDate}} </span> | <span>Age :</span> <span>{{playerDetail.age}}</span>            <span>Years</span></p>
@@ -37,12 +36,14 @@
         <!-- DOB END -->
         <!-- PAYMENT STATUS -->
         <div class="event-athleteprofile-paymentstatus">
-          <p class="d-fjalla-one"> <span>Payment Status :</span> <span>{{playerDetail.paymentStatus}}</span> </p>
+          <p class="d-fjalla-one"> <span>Payment Status :</span> <span ng-if="playerDetail.paymentStatus">{{playerDetail.paymentStatus}}</span>
+
+          </p>
         </div>
         <!-- PAYMENT STATUS END -->
         <!-- ADDITIONAL PAYMENT -->
-        <div class="event-athleteprofile-additionalpayment" ng-if="playerDetail.additionalPaymentStatus">
-          <p class="d-fjalla-one"> <span>Additional Payment Status :</span> <span>{{playerDetail.additionalPaymentStatus}}</span> </p>
+        <div class="event-athleteprofile-additionalpayment">
+          <p class="d-fjalla-one"> <span>Additional Payment Status :</span> <span>{{playerDetail.additionalPaymentStatus}}</span> <span ng-if="!playerDetail.additionalPaymentStatus">NO NEED TO PAY</span>            </p>
         </div>
         <!-- ADDITIONAL PAYMENT END -->
         <!-- REMARKS -->
@@ -53,7 +54,7 @@
         <!-- BIB -->
         <div class="form-group">
           <div class="event-athleteprofile-bib">
-            <label class="d-fjalla-one">Bib Given:</label>
+            <p class="d-fjalla-one">Bib Given:</p>
             <select name="selecttype" style="width:15%;" class="form-control" ng-model="playerDetail.isBib" placeholder="Enter Type">
                           <option value='true'>YES</option>
                           <option value='false'>NO</option>

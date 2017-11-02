@@ -67,13 +67,26 @@
 
                 <!-- VIDEO LINK -->
                 <div class="row">
-                  <div class="form-group">
-                    <label>Video Link</label>
-                    <input type="text" name="video" ng-model="formData.videolink" class="form-control" placeholder="Enter video link">
-                    <div class="error-msg" ng-if="detailForm.video.$invalid && detailForm.video.$touched">Please Enter Video Link*</div>
+                  <div class="col-md-6">
+                    <div class="form-group">
+                      <label>Video Link</label>
+                      <input type="text" name="video" ng-model="formData.videolink" class="form-control" placeholder="Enter video link">
+                      <div class="error-msg" ng-if="detailForm.video.$invalid && detailForm.video.$touched">Please Enter Video Link*</div>
+                    </div>
                   </div>
+                  <div class="col-md-6">
+                    <div style="margin-top:25px;">
+                      <label><input type="checkbox" ng-model="formData.resultQualifyingRound.resultImage.attendance" value="formData.resultsCombat.isdraw"> Attendance</label>
+                    </div>
+                  </div>
+
                 </div>
                 <!-- VIDEO LINK END -->
+
+                <div class="form-group">
+                  <label>Match<span ng-show="type.required">*</span></label>
+                  <upload-image ng-model="formData.resultQualifyingRound.resultImage.matchPhoto" multiple inobj></upload-image>
+                </div>
 
                 <!-- GENDER + AGE + EVENT + ROUND-->
                 <div class="row">
@@ -142,7 +155,7 @@
                             <span> Result (Position)</span>
                           </div>
                         </th>
-                        <th ng-if="!formData.sport.name==='High jump'">
+                        <th ng-if="formData.sport.sportslist.name !='High jump'">
                           <div class="text-center">
                             Best Attempt
                           </div>
@@ -200,7 +213,7 @@
                             </div>
                             <div class="edit-content-holder" ng-if="show">
                               <input type="text" name="attempt" ng-model="formData.resultQualifyingRound.player.attempt.length" class="form-control" placeholder="Sport"
-                                ng-if="show">
+                                readonly>
                               <div class="error-msg" ng-if="detailForm.incrementalId.$invalid && detailForm.incrementalId.$touched">Please Enter Attempts *</div>
                             </div>
                           </td>
@@ -217,7 +230,7 @@
                           </td>
                           <!-- RESULT END -->
                           <!-- BEST ATTEMPT -->
-                          <td ng-if="!formData.sport.name==='High jump'">
+                          <td ng-if="formData.sport.sportslist.name !='High jump'">
                             <div class="diplay-content-holder" ng-if="!show">
                               <p>{{formData.resultQualifyingRound.player.bestAttempt}}</p>
                             </div>
@@ -251,9 +264,9 @@
                       <div class="attempt-holder-highjump form-group input-group">
                         <span class="pull-right" ng-click="removeField()" ng-if="show"><i class="fa fa-times" aria-hidden="true"></i></span>
                         <label for="">Attempt {{$index + 1}}</label>
-                        <input type="text" name="attempt" ng-model="formData.resultQualifyingRound.player.attempt[$index]" class="form-control" placeholder="Sport"
+                        <input type="text" name="attempt" ng-model="formData.resultQualifyingRound.player.attempt[$index]" class="form-control" placeholder="Attempt"
                           ng-if="!show" readonly>
-                        <input type="text" name="attempt" ng-model="formData.resultQualifyingRound.player.attempt[$index]" class="form-control" placeholder="Sport"
+                        <input type="text" name="attempt" ng-model="formData.resultQualifyingRound.player.attempt[$index]" class="form-control" placeholder="Attempt"
                           ng-if="show">
                       </div>
                     </div>

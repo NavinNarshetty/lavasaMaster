@@ -507,6 +507,7 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
 
 
 
+  // SELECT SCHOOL ON SELECTION OF ATHLETE
   $scope.selectSchool = function (data) {
     console.log(data, 'on select')
     $scope.foundSchool = {};
@@ -516,6 +517,9 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
     }
 
   }
+  // SELECT SCHOOL ON SELECTION OF ATHLETE END
+
+  // FOR SEARCH OF ATHLETE
   $scope.refreshChange = function (data, formData) {
     if (data) {
       $scope.paramData = {}
@@ -525,6 +529,8 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
       $scope.getGenderAthlete($scope.paramData)
     }
   }
+  // FOR SEARCH OF ATHLETE END
+
 
   // BOOST AWARD
   $scope.addRow = function (formData) {
@@ -568,7 +574,10 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
   // SCHOOL
   $scope.getOneSchoolById = function () {
     $scope.url = 'registration/search';
-    NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+    $scope.constraints = {}
+    $scope.constraints.input = ''
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      console.log(data, 'registerred school')
       $scope.school = data.data.results;
       $scope.schoolData = data.data.results;
       _.each($scope.school, function (n) {

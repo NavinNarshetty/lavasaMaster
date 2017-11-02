@@ -1101,10 +1101,11 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 method: 'POST'
             }).then(callback);
         },
-        getSchoolRegistration: function (callback) {
+        getSchoolRegistration: function (formData, callback) {
             $http({
                 url: adminUrl2 + 'registration/search',
                 method: 'POST',
+                data: formData
             }).then(callback);
         },
     };

@@ -45,7 +45,7 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
       $scope.athlete = true;
     }
     $scope.constraints = {};
-    $scope.constraints.schoolId = data;
+    $scope.constraints.schoolName = data;
     $scope.constraints.input = ''
     $scope.url = 'EventBib/getAllAthleteBySchoolId'
     NavigationService.apiCallWithData($scope.url, $scope.constraints, function (data) {
@@ -62,10 +62,19 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
 
   }
 
-  $scope.playerChange = function (data) {
-    console.log(data, 'ng-change');
-    $scope.formData.athlete = data;
+  $scope.selectSchoolAthlete = function (data, school) {
+    $scope.schoolAthleteData = {};
+    $scope.schoolAthleteData.input = data;
+    $scope.schoolAthleteData.schoolName = school;
+    // console.log(data, 'select athlete from selected school')
+    $scope.url = 'EventBib/getAllAthleteBySchoolId'
+    NavigationService.apiCallWithData($scope.url, $scope.schoolAthleteData, function (data) {
+      console.log(data, 'selected school athlete data in refresh')
+    });
+
   }
+
+
 
   $scope.playerRefresh = function (data) {
     console.log(data, 'refresh player')
@@ -98,18 +107,30 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
 
   // GET ALL SCHOOL
 
+  $scope.schoolParameter = {}
+  $scope.schoolParameter.input = '';
+  $scope.getSchoolreg = function (input) {
+    if (input != undefined) {
+      NavigationService.getSchoolRegistration(input, function (data) {
+        console.log(data, "get all school");
+        // if (data.value) {
+        $scope.schoolData = data.data.data.results;
+        console.log($scope.schoolData, "check this")
+        // }
+      });
+    }
 
-  $scope.getSchoolreg = function () {
-    NavigationService.getSchoolRegistration(function (data) {
-      console.log(data, "get all school");
-      $scope.schoolData = data.data.data.results;
-      console.log($scope.schoolData, "check this")
-    });
   }
   $scope.getSchoolreg();
 
+  // REFRESH SEARCH
+
+  // REFRESH SEARCH END
   $scope.schoolRefresh = function (data) {
+    $scope.refreshParameter = {};
+    $scope.refreshParameter.input = data;
     console.log(data, "in refresh")
+    $scope.getSchoolreg($scope.refreshParameter);
   }
 
   // GET ALL SCHOOL END

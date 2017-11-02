@@ -21,9 +21,10 @@
                   <!-- LABEL END -->
                   <!-- UI SELECT -->
                   <div class="display-inline event-attendance-dropdown override-glyp">
-                    <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" ng-change="playerChange($select.selected.fullName)"
-                      required>
-                      <ui-select-match placeholder="search by Sfa ID and Name" allow-clear="true" title="{{$select.selected.fullName}}"> {{$select.selected.fullName}}</ui-select-match>
+                    <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" required>
+                      <ui-select-match placeholder="search by Sfa ID and Name" allow-clear="true" title="{{$select.selected.fullName}}">
+                        {{$select.selected.fullName}}
+                      </ui-select-match>
                       <ui-select-choices refresh-delay="0" repeat="player._id as player in athleteData | filter: $select.search" refresh="playerRefresh($select.search)">
                         <div>
                           <span class="text-capitalize" ng-bind-html="player.fullName"></span>
@@ -53,7 +54,7 @@
                     <ui-select name="schoolname" ng-model="formData.schoolName" theme="bootstrap" on-select='selectSchool(formData.schoolName)'
                       ng-change="searchSchool($select.selected.schoolName)">
                       <ui-select-match placeholder="School Name" allow-clear="true" title="{{$select.selected.schoolName}}"> {{$select.selected.schoolName}}</ui-select-match>
-                      <ui-select-choices refresh-delay="0" repeat="school._id as school in schoolData | filter: $select.search" refresh="schoolRefresh($select.search)">
+                      <ui-select-choices refresh-delay="0" repeat="school.schoolName as school in schoolData | filter: $select.search" refresh="schoolRefresh($select.search)">
                         <div>
                           <p>{{school.schoolName}}</p>
                           <!-- <span class="text-capitalize" ng-bind-html="school.name"></span> -->
@@ -77,7 +78,7 @@
                   <div class="display-inline event-attendance-dropdown override-glyp">
                     <ui-select name="playersfaid" ng-model="formData.athlete" theme="bootstrap" required>
                       <ui-select-match placeholder="Search by SfaID or Name" allow-clear="true" title="{{$select.selected.fullName}}"> {{$select.selected.fullName}}</ui-select-match>
-                      <ui-select-choices repeat="player._id as player in selectAthleteData | filter: $select.search">
+                      <ui-select-choices refresh-delay='0' repeat="player._id as player in selectAthleteData | filter: $select.search" refresh="selectSchoolAthlete($select.search,formData.schoolName)">
                         <div>
                           <span class="text-capitalize" ng-bind-html="player.fullName"></span>
                         </div>
