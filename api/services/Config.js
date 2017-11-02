@@ -691,17 +691,5 @@ var model = {
         }
     },
 
-    rotateImageMy: function (filename, angle, callback) {
-        Jimp.read("http://wohlig.io:1337/api/upload/readFile?file=59facfb5f54957310c222ef2.jpg").then(function (image) {
-            console.log("before", image);
-            image.rotate(180) // resize 
-                .write("http://wohlig.io:1337/api/upload/readFile?file=" + filename); // save
-            console.log("image", image);
-            callback(null, filename);
-        }).catch(function (err) {
-            console.error(err);
-        });
-    }
-
 };
 module.exports = _.assign(module.exports, exports, model);

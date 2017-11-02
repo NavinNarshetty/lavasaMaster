@@ -1033,406 +1033,90 @@ var model = {
     },
 
     getAthleteStats: function (data, callback) {
+        var match = [];
         var stats = {};
-        async.waterfall([
-                function (callback) {
-                    SportsListSubCategory.findOne({
-                        _id: data.sportsListSubCategory,
-                    }).lean().exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(found)) {
-                                callback(null, found);
-                            } else {
-                                callback(null, found);
-                            }
-                        }
-                    });
-                },
-                function (found, callback) {
-                    if (found.isTeam == false) {
-                        console.log("found", found);
-                        var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push(
-                            // Stage 6
-                            {
-                                $lookup: {
-                                    "from": "individualsports",
-                                    "localField": "opponentsSingle",
-                                    "foreignField": "_id",
-                                    "as": "opponentsSingle"
-                                }
-                            },
-
-                            // Stage 7
-                            {
-                                $match: {
-                                    "opponentsSingle.athleteId": objectid(data.athleteId),
-                                }
-                            },
-                            // Stage 8
-                            {
-                                $lookup: {
-                                    "from": "agegroups",
-                                    "localField": "sport.ageGroup",
-                                    "foreignField": "_id",
-                                    "as": "sport.ageGroup"
-                                }
-                            },
-
-                            // Stage 9
-                            {
-                                $unwind: {
-                                    path: "$sport.ageGroup",
-
-                                }
-                            },
-
-                            // Stage 10
-                            {
-                                $lookup: {
-                                    "from": "weights",
-                                    "localField": "sport.weight",
-                                    "foreignField": "_id",
-                                    "as": "sport.weight"
-                                }
-                            },
-
-                            // Stage 11
-                            {
-                                $unwind: {
-                                    path: "$sport.weight",
-                                    preserveNullAndEmptyArrays: true // optional
-                                }
-                            }
-                        );
-                        Match.aggregate(newPipeLine, function (err, matchData) {
-                            // console.log("match", matchData);
+        async.each(data.sportsListSubCategory, function (sportName, callback) {
+            async.waterfall([
+                    function (callback) {
+                        SportsListSubCategory.findOne({
+                            _id: sportName,
+                        }).lean().exec(function (err, found) {
                             if (err) {
-                                callback(err, "error in mongoose");
+                                callback(err, null);
                             } else {
-                                var match = [];
-                                async.each(matchData, function (singleData, callback) {
-                                    var stats = {};
-                                    stats.year = new Date(singleData.createdAt).getFullYear();
-                                    stats.ageGroup = singleData.sport.ageGroup.name;
-                                    stats.sportslist = singleData.sport.sportslist.name;
-                                    stats.gender = singleData.sport.gender;
-                                    if (singleData.sport.weight) {
-                                        stats.weight = singleData.sport.weight.name;
-                                    }
-                                    stats.round = singleData.round;
-
-                                    stats.video = singleData.video;
-                                    stats.videoType = singleData.videoType;
-                                    if (singleData.resultsCombat) {
-                                        var i = 0;
-                                        var result;
-                                        async.each(singleData.opponentsSingle, function (n, callback) {
-                                            if (singleData.opponentsSingle.length == 1 && n.athleteId === data.athleteId) {
-                                                var length = singleData.resultsCombat.players[0].sets.length;
-                                                while (i < length) {
-                                                    console.log("players", singleData.resultsCombat.players[0].sets[i]);
-                                                    if (i == 0) {
-                                                        result = singleData.resultsCombat.players[0].sets[i].point;
-                                                    } else {
-                                                        result = result + "," + singleData.resultsCombat.players[0].sets[i].point;
-                                                    }
-                                                    i++;
-                                                    // console.log("i", result);
-                                                }
-                                                stats.score = result;
-                                                stats.isAthleteWinner = true;
-                                                match.push(stats);
-                                                callback(null, match);
-                                            } else if (!n.athleteId.equals(data.athleteId)) {
-                                                console.log("inside match else ", singleData.opponentsSingle.length, "matched id", n.athleteId, "matching", data.athleteId);
-                                                Athelete.findOne({
-                                                    _id: n.athleteId
-                                                }).lean().deepPopulate("school").exec(function (err, found) {
-                                                    if (found.middleName) {
-                                                        stats.opponentName = found.firstName + " " + found.middleName + " " + found.surname;
-                                                    } else {
-                                                        stats.opponentName = found.firstName + " " + found.surname;
-                                                    }
-                                                    if (found.atheleteSchoolName) {
-                                                        stats.school = found.atheleteSchoolName;
-                                                    } else {
-                                                        stats.school = found.school.name;
-                                                    }
-                                                    var length = singleData.resultsCombat.players[0].sets.length;
-                                                    while (i < length) {
-                                                        console.log("players", singleData.resultsCombat.players[0].sets[i]);
-                                                        if (i == 0) {
-                                                            result = singleData.resultsCombat.players[0].sets[i].point + "-" + singleData.resultsCombat.players[1].sets[i].point;
-                                                        } else {
-                                                            result = result + "," + singleData.resultsCombat.players[0].sets[i].point + "-" + singleData.resultsCombat.players[1].sets[i].point;
-                                                        }
-                                                        i++;
-                                                        console.log("i", result);
-                                                    }
-                                                    stats.score = result;
-                                                    if (singleData.resultsCombat.winner.player === n.athleteId) {
-                                                        stats.isAthleteWinner = false;
-                                                    } else {
-                                                        stats.isAthleteWinner = true;
-                                                    }
-                                                    match.push(stats);
-                                                    callback(null, match);
-                                                });
-                                            } else {
-                                                callback(null, match);
-                                            }
-                                        }, function (err) {
-                                            callback(null, match);
-                                        });
-                                    } else if (singleData.resultRacquet) {
-                                        var i = 0;
-                                        var result;
-                                        async.each(singleData.opponentsSingle, function (n, callback) {
-                                            if (singleData.opponentsSingle.length == 1 && n.athleteId === data.athleteId) {
-                                                var length = singleData.resultRacquet.players[0].sets.length;
-                                                while (i < length) {
-                                                    if (i == 0) {
-                                                        result = singleData.resultRacquet.players[0].sets[i].point;
-                                                    } else {
-                                                        result = result + "," + singleData.resultRacquet.players[0].sets[i].point;
-                                                    }
-                                                    i++;
-                                                }
-                                                stats.score = result;
-                                                stats.isAthleteWinner = true;
-                                                match.push(stats);
-                                                callback(null, match);
-                                            } else if (!n.athleteId.equals(data.athleteId)) {
-                                                Athelete.findOne({
-                                                    _id: n.athleteId
-                                                }).lean().deepPopulate("school").exec(function (err, found) {
-                                                    if (found.middleName) {
-                                                        stats.opponentName = found.firstName + " " + found.middleName + " " + found.surname;
-                                                    } else {
-                                                        stats.opponentName = found.firstName + " " + found.surname;
-                                                    }
-                                                    if (found.atheleteSchoolName) {
-                                                        stats.school = found.atheleteSchoolName;
-                                                    } else {
-                                                        stats.school = found.school.name;
-                                                    }
-                                                    var length = singleData.resultRacquet.players[0].sets.length;
-                                                    while (i < length) {
-                                                        if (i == 0) {
-                                                            result = singleData.resultRacquet.players[0].sets[i].point + "-" + singleData.resultRacquet.players[1].sets[i].point;
-                                                        } else {
-                                                            result = result + "," + singleData.resultRacquet.players[0].sets[i].point + "-" + singleData.resultRacquet.players[1].sets[i].point;
-                                                        }
-                                                        i++;
-                                                    }
-                                                    stats.score = result;
-                                                    if (singleData.resultRacquet.winner.player === n.athleteId) {
-                                                        stats.isAthleteWinner = false;
-                                                    } else {
-                                                        stats.isAthleteWinner = true;
-                                                    }
-                                                    match.push(stats);
-                                                    callback(null, match);
-                                                });
-                                            } else {
-                                                callback(null, match);
-                                            }
-                                        }, function (err) {
-                                            callback(null, match);
-                                        });
-                                    } else if (singleData.resultHeat) {
-                                        var i = 0;
-                                        var result;
-                                        async.each(singleData.resultHeat.players, function (n, callback) {
-                                            if (n._id === data.athleteId) {
-                                                stats.score = n.time;
-                                                stats.result = n.result;
-                                                match.push(stats);
-                                                callback(null, match);
-                                            } else {
-                                                callback(null, match);
-                                            }
-                                        }, function (err) {
-                                            callback(null, match);
-                                        });
-                                    } else if (singleData.resultQualifyingRound) {
-                                        stats.score = singleData.resultQualifyingRound.player.bestAttempt;
-                                        stats.result = singleData.resultQualifyingRound.player.result;
-                                        match.push(stats);
-                                        callback(null, match);
-                                    } else if (singleData.resultSwiss) {
-                                        var result;
-                                        async.each(singleData.resultSwiss.players, function (n, callback) {
-                                            if (n.athleteId === data.athleteId) {
-                                                stats.score = n.score;
-                                                stats.rank = n.rank;
-                                                match.push(stats);
-                                                callback(null, match);
-                                            } else if (!n.athleteId.equals(data.athleteId)) {
-                                                Athelete.findOne({
-                                                    _id: n.athleteId
-                                                }).lean().deepPopulate("school").exec(function (err, found) {
-                                                    if (found.middleName) {
-                                                        stats.opponentName = found.firstName + " " + found.middleName + " " + found.surname;
-                                                    } else {
-                                                        stats.opponentName = found.firstName + " " + found.surname;
-                                                    }
-                                                    if (found.atheleteSchoolName) {
-                                                        stats.school = found.atheleteSchoolName;
-                                                    } else {
-                                                        stats.school = found.school.name;
-                                                    }
-                                                    if (singleData.resultSwiss.winner.player === n.athleteId) {
-                                                        stats.isAthleteWinner = false;
-                                                    } else {
-                                                        stats.isAthleteWinner = true;
-                                                    }
-                                                    match.push(stats);
-                                                    callback(null, match);
-                                                });
-                                            } else {
-                                                callback(null, match);
-                                            }
-                                        }, function (err) {
-                                            callback(null, match);
-                                        });
-                                    } else if (singleData.resultKnockout) {
-                                        var result;
-                                        async.each(singleData.resultKnockout.players, function (n, callback) {
-                                            if (n.athleteId === data.athleteId) {
-                                                stats.score = n.score;
-                                                stats.rank = n.rank;
-
-                                                match.push(stats);
-                                                callback(null, match);
-                                            } else if (!n.athleteId.equals(data.athleteId)) {
-
-                                                Athelete.findOne({
-                                                    _id: n.athleteId
-                                                }).lean().deepPopulate("school").exec(function (err, found) {
-                                                    if (found.middleName) {
-                                                        stats.opponentName = found.firstName + " " + found.middleName + " " + found.surname;
-                                                    } else {
-                                                        stats.opponentName = found.firstName + " " + found.surname;
-                                                    }
-                                                    if (found.atheleteSchoolName) {
-                                                        stats.school = found.atheleteSchoolName;
-                                                    } else {
-                                                        stats.school = found.school.name;
-                                                    }
-                                                    if (singleData.resultKnockout.winner.player === n.athleteId) {
-                                                        stats.isAthleteWinner = false;
-                                                    } else {
-                                                        stats.isAthleteWinner = true;
-                                                    }
-                                                    match.push(stats);
-                                                    callback(null, match);
-                                                });
-                                            } else {
-                                                callback(null, match);
-                                            }
-                                        }, function (err) {
-                                            callback(null, match);
-                                        });
-                                    } else if (singleData.resultShooting) {
-                                        stats.score = singleData.resultShooting.finalScore;
-                                        stats.result = singleData.resultShooting.result;
-                                        match.push(stats);
-                                        callback(null, match);
-
-                                    } else {
-                                        callback(null, match);
-                                    }
-                                }, function (err) {
-                                    callback(null, match);
-                                });
+                                if (_.isEmpty(found)) {
+                                    callback(null, found);
+                                } else {
+                                    callback(null, found);
+                                }
                             }
                         });
-                    } else {
-                        console.log("found in else", found);
-                        var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push(
-                            // Stage 7
-                            {
-                                $lookup: {
-                                    "from": "teamsports",
-                                    "localField": "opponentsTeam",
-                                    "foreignField": "_id",
-                                    "as": "opponentsTeam"
-                                }
-                            },
+                    },
+                    function (found, callback) {
+                        if (found.isTeam == false) {
+                            console.log("found", found);
+                            var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
+                            var newPipeLine = _.cloneDeep(pipeLine);
+                            newPipeLine.push(
+                                // Stage 6
+                                {
+                                    $lookup: {
+                                        "from": "individualsports",
+                                        "localField": "opponentsSingle",
+                                        "foreignField": "_id",
+                                        "as": "opponentsSingle"
+                                    }
+                                },
 
-                            // Stage 8
-                            {
-                                $unwind: {
-                                    path: "$opponentsTeam",
-                                    preserveNullAndEmptyArrays: true // optional
-                                }
-                            },
+                                // Stage 7
+                                {
+                                    $match: {
+                                        "opponentsSingle.athleteId": objectid(data.athleteId),
+                                    }
+                                },
+                                // Stage 8
+                                {
+                                    $lookup: {
+                                        "from": "agegroups",
+                                        "localField": "sport.ageGroup",
+                                        "foreignField": "_id",
+                                        "as": "sport.ageGroup"
+                                    }
+                                },
 
-                            // Stage 9
-                            {
-                                $lookup: {
-                                    "from": "studentteams",
-                                    "localField": "opponentsTeam.studentTeam",
-                                    "foreignField": "_id",
-                                    "as": "opponentsTeam.studentTeam"
-                                }
-                            },
-                            // Stage 10
-                            {
-                                $match: {
-                                    "opponentsTeam.studentTeam.studentId": data.athleteId
-                                }
-                            },
-                            // Stage 8
-                            {
-                                $lookup: {
-                                    "from": "agegroups",
-                                    "localField": "sport.ageGroup",
-                                    "foreignField": "_id",
-                                    "as": "sport.ageGroup"
-                                }
-                            },
+                                // Stage 9
+                                {
+                                    $unwind: {
+                                        path: "$sport.ageGroup",
 
-                            // Stage 9
-                            {
-                                $unwind: {
-                                    path: "$sport.ageGroup",
+                                    }
+                                },
 
-                                }
-                            },
+                                // Stage 10
+                                {
+                                    $lookup: {
+                                        "from": "weights",
+                                        "localField": "sport.weight",
+                                        "foreignField": "_id",
+                                        "as": "sport.weight"
+                                    }
+                                },
 
-                            // Stage 10
-                            {
-                                $lookup: {
-                                    "from": "weights",
-                                    "localField": "sport.weight",
-                                    "foreignField": "_id",
-                                    "as": "sport.weight"
+                                // Stage 11
+                                {
+                                    $unwind: {
+                                        path: "$sport.weight",
+                                        preserveNullAndEmptyArrays: true // optional
+                                    }
                                 }
-                            },
-
-                            // Stage 11
-                            {
-                                $unwind: {
-                                    path: "$sport.weight",
-                                    preserveNullAndEmptyArrays: true // optional
-                                }
-                            }
-                        );
-                        Match.aggregate(newPipeLine, function (err, matchData) {
-                            console.log("matchData", matchData);
-                            if (err) {
-                                callback(err, "error in mongoose");
-                            } else {
-                                var match = [];
-                                async.each(matchData, function (singleData, callback) {
+                            );
+                            Match.aggregate(newPipeLine, function (err, matchData) {
+                                // console.log("match", matchData);
+                                if (err) {
+                                    callback(err, "error in mongoose");
+                                } else {
+                                    // var match = [];
+                                    async.each(matchData, function (singleData, callback) {
                                         var stats = {};
                                         stats.year = new Date(singleData.createdAt).getFullYear();
                                         stats.ageGroup = singleData.sport.ageGroup.name;
@@ -1448,21 +1132,396 @@ var model = {
                                         if (singleData.resultsCombat) {
                                             var i = 0;
                                             var result;
-                                            async.each(singleData.opponentsTeam, function (n, callback) {
-                                                    if (singleData.opponentsTeam.length == 1) {
-                                                        var length = singleData.resultsCombat.teams[0].sets.length;
+                                            async.each(singleData.opponentsSingle, function (n, callback) {
+                                                if (singleData.opponentsSingle.length == 1 && n.athleteId === data.athleteId) {
+                                                    var length = singleData.resultsCombat.players[0].sets.length;
+                                                    while (i < length) {
+                                                        console.log("players", singleData.resultsCombat.players[0].sets[i]);
+                                                        if (i == 0) {
+                                                            result = singleData.resultsCombat.players[0].sets[i].point;
+                                                        } else {
+                                                            result = result + "," + singleData.resultsCombat.players[0].sets[i].point;
+                                                        }
+                                                        i++;
+                                                        // console.log("i", result);
+                                                    }
+                                                    stats.score = result;
+                                                    stats.isAthleteWinner = true;
+                                                    match.push(stats);
+                                                    callback(null, match);
+                                                } else if (!n.athleteId.equals(data.athleteId)) {
+                                                    console.log("inside match else ", singleData.opponentsSingle.length, "matched id", n.athleteId, "matching", data.athleteId);
+                                                    Athelete.findOne({
+                                                        _id: n.athleteId
+                                                    }).lean().deepPopulate("school").exec(function (err, found) {
+                                                        if (found.middleName) {
+                                                            stats.opponentName = found.firstName + " " + found.middleName + " " + found.surname;
+                                                        } else {
+                                                            stats.opponentName = found.firstName + " " + found.surname;
+                                                        }
+                                                        if (found.atheleteSchoolName) {
+                                                            stats.school = found.atheleteSchoolName;
+                                                        } else {
+                                                            stats.school = found.school.name;
+                                                        }
+                                                        var length = singleData.resultsCombat.players[0].sets.length;
                                                         while (i < length) {
-                                                            console.log("players", singleData.resultsCombat.teams[0].sets[i]);
+                                                            console.log("players", singleData.resultsCombat.players[0].sets[i]);
                                                             if (i == 0) {
-                                                                result = singleData.resultsCombat.teams[0].sets[i].point;
+                                                                result = singleData.resultsCombat.players[0].sets[i].point + "-" + singleData.resultsCombat.players[1].sets[i].point;
                                                             } else {
-                                                                result = result + "," + singleData.resultsCombat.teams[0].sets[i].point;
+                                                                result = result + "," + singleData.resultsCombat.players[0].sets[i].point + "-" + singleData.resultsCombat.players[1].sets[i].point;
+                                                            }
+                                                            i++;
+                                                            console.log("i", result);
+                                                        }
+                                                        stats.score = result;
+                                                        if (singleData.resultsCombat.winner.player === n.athleteId) {
+                                                            stats.isAthleteWinner = false;
+                                                        } else {
+                                                            stats.isAthleteWinner = true;
+                                                        }
+                                                        match.push(stats);
+                                                        callback(null, match);
+                                                    });
+                                                } else {
+                                                    callback(null, match);
+                                                }
+                                            }, function (err) {
+                                                callback(null, match);
+                                            });
+                                        } else if (singleData.resultRacquet) {
+                                            var i = 0;
+                                            var result;
+                                            async.each(singleData.opponentsSingle, function (n, callback) {
+                                                if (singleData.opponentsSingle.length == 1 && n.athleteId === data.athleteId) {
+                                                    var length = singleData.resultRacquet.players[0].sets.length;
+                                                    while (i < length) {
+                                                        if (i == 0) {
+                                                            result = singleData.resultRacquet.players[0].sets[i].point;
+                                                        } else {
+                                                            result = result + "," + singleData.resultRacquet.players[0].sets[i].point;
+                                                        }
+                                                        i++;
+                                                    }
+                                                    stats.score = result;
+                                                    stats.isAthleteWinner = true;
+                                                    match.push(stats);
+                                                    callback(null, match);
+                                                } else if (!n.athleteId.equals(data.athleteId)) {
+                                                    Athelete.findOne({
+                                                        _id: n.athleteId
+                                                    }).lean().deepPopulate("school").exec(function (err, found) {
+                                                        if (found.middleName) {
+                                                            stats.opponentName = found.firstName + " " + found.middleName + " " + found.surname;
+                                                        } else {
+                                                            stats.opponentName = found.firstName + " " + found.surname;
+                                                        }
+                                                        if (found.atheleteSchoolName) {
+                                                            stats.school = found.atheleteSchoolName;
+                                                        } else {
+                                                            stats.school = found.school.name;
+                                                        }
+                                                        var length = singleData.resultRacquet.players[0].sets.length;
+                                                        while (i < length) {
+                                                            if (i == 0) {
+                                                                result = singleData.resultRacquet.players[0].sets[i].point + "-" + singleData.resultRacquet.players[1].sets[i].point;
+                                                            } else {
+                                                                result = result + "," + singleData.resultRacquet.players[0].sets[i].point + "-" + singleData.resultRacquet.players[1].sets[i].point;
                                                             }
                                                             i++;
                                                         }
-                                                        console.log("i", result);
                                                         stats.score = result;
+                                                        if (singleData.resultRacquet.winner.player === n.athleteId) {
+                                                            stats.isAthleteWinner = false;
+                                                        } else {
+                                                            stats.isAthleteWinner = true;
+                                                        }
+                                                        match.push(stats);
+                                                        callback(null, match);
+                                                    });
+                                                } else {
+                                                    callback(null, match);
+                                                }
+                                            }, function (err) {
+                                                callback(null, match);
+                                            });
+                                        } else if (singleData.resultHeat) {
+                                            var i = 0;
+                                            var result;
+                                            async.each(singleData.resultHeat.players, function (n, callback) {
+                                                if (n._id === data.athleteId) {
+                                                    stats.score = n.time;
+                                                    stats.result = n.result;
+                                                    match.push(stats);
+                                                    callback(null, match);
+                                                } else {
+                                                    callback(null, match);
+                                                }
+                                            }, function (err) {
+                                                callback(null, match);
+                                            });
+                                        } else if (singleData.resultQualifyingRound) {
+                                            stats.score = singleData.resultQualifyingRound.player.bestAttempt;
+                                            stats.result = singleData.resultQualifyingRound.player.result;
+                                            match.push(stats);
+                                            callback(null, match);
+                                        } else if (singleData.resultSwiss) {
+                                            var result;
+                                            async.each(singleData.resultSwiss.players, function (n, callback) {
+                                                if (n.athleteId === data.athleteId) {
+                                                    stats.score = n.score;
+                                                    stats.rank = n.rank;
+                                                    match.push(stats);
+                                                    callback(null, match);
+                                                } else if (!n.athleteId.equals(data.athleteId)) {
+                                                    Athelete.findOne({
+                                                        _id: n.athleteId
+                                                    }).lean().deepPopulate("school").exec(function (err, found) {
+                                                        if (found.middleName) {
+                                                            stats.opponentName = found.firstName + " " + found.middleName + " " + found.surname;
+                                                        } else {
+                                                            stats.opponentName = found.firstName + " " + found.surname;
+                                                        }
+                                                        if (found.atheleteSchoolName) {
+                                                            stats.school = found.atheleteSchoolName;
+                                                        } else {
+                                                            stats.school = found.school.name;
+                                                        }
+                                                        if (singleData.resultSwiss.winner.player === n.athleteId) {
+                                                            stats.isAthleteWinner = false;
+                                                        } else {
+                                                            stats.isAthleteWinner = true;
+                                                        }
+                                                        match.push(stats);
+                                                        callback(null, match);
+                                                    });
+                                                } else {
+                                                    callback(null, match);
+                                                }
+                                            }, function (err) {
+                                                callback(null, match);
+                                            });
+                                        } else if (singleData.resultKnockout) {
+                                            var result;
+                                            async.each(singleData.resultKnockout.players, function (n, callback) {
+                                                if (n.athleteId === data.athleteId) {
+                                                    stats.score = n.score;
+                                                    stats.rank = n.rank;
 
+                                                    match.push(stats);
+                                                    callback(null, match);
+                                                } else if (!n.athleteId.equals(data.athleteId)) {
+
+                                                    Athelete.findOne({
+                                                        _id: n.athleteId
+                                                    }).lean().deepPopulate("school").exec(function (err, found) {
+                                                        if (found.middleName) {
+                                                            stats.opponentName = found.firstName + " " + found.middleName + " " + found.surname;
+                                                        } else {
+                                                            stats.opponentName = found.firstName + " " + found.surname;
+                                                        }
+                                                        if (found.atheleteSchoolName) {
+                                                            stats.school = found.atheleteSchoolName;
+                                                        } else {
+                                                            stats.school = found.school.name;
+                                                        }
+                                                        if (singleData.resultKnockout.winner.player === n.athleteId) {
+                                                            stats.isAthleteWinner = false;
+                                                        } else {
+                                                            stats.isAthleteWinner = true;
+                                                        }
+                                                        match.push(stats);
+                                                        callback(null, match);
+                                                    });
+                                                } else {
+                                                    callback(null, match);
+                                                }
+                                            }, function (err) {
+                                                callback(null, match);
+                                            });
+                                        } else if (singleData.resultShooting) {
+                                            stats.score = singleData.resultShooting.finalScore;
+                                            stats.result = singleData.resultShooting.result;
+                                            match.push(stats);
+                                            callback(null, match);
+
+                                        } else {
+                                            callback(null, match);
+                                        }
+                                    }, function (err) {
+                                        callback(null, match);
+                                    });
+                                }
+                            });
+                        } else {
+                            console.log("found in else", found);
+                            var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
+                            var newPipeLine = _.cloneDeep(pipeLine);
+                            newPipeLine.push(
+                                // Stage 7
+                                {
+                                    $lookup: {
+                                        "from": "teamsports",
+                                        "localField": "opponentsTeam",
+                                        "foreignField": "_id",
+                                        "as": "opponentsTeam"
+                                    }
+                                },
+
+                                // Stage 8
+                                {
+                                    $unwind: {
+                                        path: "$opponentsTeam",
+                                        preserveNullAndEmptyArrays: true // optional
+                                    }
+                                },
+
+                                // Stage 9
+                                {
+                                    $lookup: {
+                                        "from": "studentteams",
+                                        "localField": "opponentsTeam.studentTeam",
+                                        "foreignField": "_id",
+                                        "as": "opponentsTeam.studentTeam"
+                                    }
+                                },
+                                // Stage 10
+                                {
+                                    $match: {
+                                        "opponentsTeam.studentTeam.studentId": data.athleteId
+                                    }
+                                },
+                                // Stage 8
+                                {
+                                    $lookup: {
+                                        "from": "agegroups",
+                                        "localField": "sport.ageGroup",
+                                        "foreignField": "_id",
+                                        "as": "sport.ageGroup"
+                                    }
+                                },
+
+                                // Stage 9
+                                {
+                                    $unwind: {
+                                        path: "$sport.ageGroup",
+
+                                    }
+                                },
+
+                                // Stage 10
+                                {
+                                    $lookup: {
+                                        "from": "weights",
+                                        "localField": "sport.weight",
+                                        "foreignField": "_id",
+                                        "as": "sport.weight"
+                                    }
+                                },
+
+                                // Stage 11
+                                {
+                                    $unwind: {
+                                        path: "$sport.weight",
+                                        preserveNullAndEmptyArrays: true // optional
+                                    }
+                                }
+                            );
+                            Match.aggregate(newPipeLine, function (err, matchData) {
+                                console.log("matchData", matchData);
+                                if (err) {
+                                    callback(err, "error in mongoose");
+                                } else {
+                                    var match = [];
+                                    async.each(matchData, function (singleData, callback) {
+                                            var stats = {};
+                                            stats.year = new Date(singleData.createdAt).getFullYear();
+                                            stats.ageGroup = singleData.sport.ageGroup.name;
+                                            stats.sportslist = singleData.sport.sportslist.name;
+                                            stats.gender = singleData.sport.gender;
+                                            if (singleData.sport.weight) {
+                                                stats.weight = singleData.sport.weight.name;
+                                            }
+                                            stats.round = singleData.round;
+
+                                            stats.video = singleData.video;
+                                            stats.videoType = singleData.videoType;
+                                            if (singleData.resultsCombat) {
+                                                var i = 0;
+                                                var result;
+                                                async.each(singleData.opponentsTeam, function (n, callback) {
+                                                        if (singleData.opponentsTeam.length == 1) {
+                                                            var length = singleData.resultsCombat.teams[0].sets.length;
+                                                            while (i < length) {
+                                                                console.log("players", singleData.resultsCombat.teams[0].sets[i]);
+                                                                if (i == 0) {
+                                                                    result = singleData.resultsCombat.teams[0].sets[i].point;
+                                                                } else {
+                                                                    result = result + "," + singleData.resultsCombat.teams[0].sets[i].point;
+                                                                }
+                                                                i++;
+                                                            }
+                                                            console.log("i", result);
+                                                            stats.score = result;
+
+                                                            match.push(stats);
+                                                            callback(null, match);
+                                                        } else {
+                                                            StudentTeam.findOne({
+                                                                studentId: data.athleteId,
+                                                                teamId: n
+                                                            }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
+                                                                if (err) {
+                                                                    callback(null, err);
+                                                                } else if (_.isEmpty(found)) {
+                                                                    callback(null, match);
+                                                                } else {
+                                                                    stats.opponentName = found.teamId.name;
+                                                                    stats.school = found.teamId.schoolName;
+                                                                    stats.teamId = found.teamId.teamId;
+                                                                    if (singleData.resultsCombat.winner.player === n) {
+                                                                        stats.isAthleteWinner = false;
+                                                                        var length = singleData.resultsCombat.teams[0].sets.length;
+                                                                        while (i < length) {
+                                                                            console.log("teams", singleData.resultsCombat.teams[0].sets[i]);
+                                                                            if (i == 0) {
+                                                                                result = singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
+                                                                            } else {
+                                                                                result = result + "," + singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
+                                                                            }
+                                                                            i++;
+                                                                            console.log("i", result);
+                                                                        }
+                                                                        stats.score = result;
+                                                                    } else {
+                                                                        stats.isAthleteWinner = true;
+                                                                    }
+                                                                    match.push(stats);
+                                                                    callback(null, match);
+                                                                }
+
+                                                            });
+                                                        }
+                                                    },
+                                                    function (err) {
+                                                        callback(null, match);
+                                                    });
+                                            } else if (singleData.resultRacquet) {
+                                                var i = 0;
+                                                var result;
+                                                async.each(singleData.opponentsTeam, function (n, callback) {
+                                                    if (singleData.opponentsTeam.length == 1) {
+                                                        var length = singleData.resultRacquet.teams[0].sets.length;
+                                                        while (i < length) {
+                                                            if (i == 0) {
+                                                                result = singleData.resultRacquet.teams[0].sets[i].point;
+                                                            } else {
+                                                                result = result + "," + singleData.resultRacquet.teams[0].sets[i].point;
+                                                            }
+                                                            i++;
+                                                        }
+                                                        stats.score = result;
                                                         match.push(stats);
                                                         callback(null, match);
                                                     } else {
@@ -1478,15 +1537,15 @@ var model = {
                                                                 stats.opponentName = found.teamId.name;
                                                                 stats.school = found.teamId.schoolName;
                                                                 stats.teamId = found.teamId.teamId;
-                                                                if (singleData.resultsCombat.winner.player === n) {
+                                                                if (singleData.resultRacquet.winner.player === n) {
                                                                     stats.isAthleteWinner = false;
-                                                                    var length = singleData.resultsCombat.teams[0].sets.length;
+                                                                    var length = singleData.resultRacquet.teams[0].sets.length;
                                                                     while (i < length) {
-                                                                        console.log("teams", singleData.resultsCombat.teams[0].sets[i]);
+
                                                                         if (i == 0) {
-                                                                            result = singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
+                                                                            result = singleData.resultRacquet.teams[0].sets[i].point + "-" + singleData.resultRacquet.teams[1].sets[i].point;
                                                                         } else {
-                                                                            result = result + "," + singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
+                                                                            result = result + "," + singleData.resultRacquet.teams[0].sets[i].point + "-" + singleData.resultRacquet.teams[1].sets[i].point;
                                                                         }
                                                                         i++;
                                                                         console.log("i", result);
@@ -1501,434 +1560,381 @@ var model = {
 
                                                         });
                                                     }
-                                                },
-                                                function (err) {
+                                                }, function (err) {
                                                     callback(null, match);
                                                 });
-                                        } else if (singleData.resultRacquet) {
-                                            var i = 0;
-                                            var result;
-                                            async.each(singleData.opponentsTeam, function (n, callback) {
-                                                if (singleData.opponentsTeam.length == 1) {
-                                                    var length = singleData.resultRacquet.teams[0].sets.length;
-                                                    while (i < length) {
-                                                        if (i == 0) {
-                                                            result = singleData.resultRacquet.teams[0].sets[i].point;
-                                                        } else {
-                                                            result = result + "," + singleData.resultRacquet.teams[0].sets[i].point;
-                                                        }
-                                                        i++;
-                                                    }
-                                                    stats.score = result;
-                                                    match.push(stats);
-                                                    callback(null, match);
-                                                } else {
+                                            } else if (singleData.resultHeat) {
+                                                var i = 0;
+                                                var result;
+                                                async.each(singleData.resultHeat.teams, function (n, callback) {
                                                     StudentTeam.findOne({
                                                         studentId: data.athleteId,
-                                                        teamId: n
+                                                        teamId: n.team
                                                     }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
                                                         if (err) {
                                                             callback(null, err);
                                                         } else if (_.isEmpty(found)) {
                                                             callback(null, match);
                                                         } else {
-                                                            stats.opponentName = found.teamId.name;
-                                                            stats.school = found.teamId.schoolName;
-                                                            stats.teamId = found.teamId.teamId;
-                                                            if (singleData.resultRacquet.winner.player === n) {
-                                                                stats.isAthleteWinner = false;
-                                                                var length = singleData.resultRacquet.teams[0].sets.length;
-                                                                while (i < length) {
+                                                            stats.score = n.time;
+                                                            stats.result = n.result;
+                                                            match.push(stats);
+                                                            callback(null, match);
+                                                        }
+                                                    });
+                                                }, function (err) {
+                                                    callback(null, match);
+                                                });
+                                            } else if (singleData.resultBasketball) {
+                                                var i = 0;
+                                                var result;
+                                                async.each(singleData.opponentsTeam, function (n, callback) {
+                                                    if (singleData.opponentsTeam.length == 1) {
+                                                        stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints;
+                                                        stats.isAthleteWinner = true;
+                                                        match.push(stats);
+                                                        callback(null, match);
+                                                    } else {
+                                                        StudentTeam.findOne({
+                                                            studentId: data.athleteId,
+                                                            teamId: n
+                                                        }).lean().deepPopulate("studentId.school").exec(function (err, found) {
+                                                            if (err) {
+                                                                callback(null, err);
+                                                            } else if (_.isEmpty(found)) {
+                                                                callback(null, match);
+                                                            } else {
+                                                                if (found.studentId.middleName) {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                } else {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
+                                                                }
+                                                                if (found.studentId.atheleteSchoolName) {
+                                                                    stats.school = found.studentId.atheleteSchoolName;
+                                                                } else {
+                                                                    stats.school = found.studentId.school.name;
+                                                                }
+                                                                stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultBasketball.teams[1].teamResults.finalGoalPoints;
+                                                                if (singleData.resultBasketball.winner.player === n) {
+                                                                    stats.isAthleteWinner = false;
+                                                                } else {
+                                                                    stats.isAthleteWinner = true;
+                                                                }
+                                                                match.push(stats);
+                                                                callback(null, match);
+                                                            }
 
+                                                        });
+                                                    }
+                                                }, function (err) {
+                                                    callback(null, match);
+                                                });
+                                            } else if (singleData.resultFootball) {
+                                                var i = 0;
+                                                var result;
+                                                async.each(singleData.opponentsTeam, function (n, callback) {
+                                                    if (singleData.opponentsTeam.length == 1) {
+                                                        stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints;
+                                                        stats.isAthleteWinner = true;
+                                                        match.push(stats);
+                                                        callback(null, match);
+                                                    } else {
+                                                        StudentTeam.findOne({
+                                                            studentId: data.athleteId,
+                                                            teamId: n
+                                                        }).lean().deepPopulate("studentId.school").exec(function (err, found) {
+                                                            if (err) {
+                                                                callback(null, err);
+                                                            } else if (_.isEmpty(found)) {
+                                                                callback(null, match);
+                                                            } else {
+                                                                if (found.studentId.middleName) {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                } else {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
+                                                                }
+                                                                if (found.studentId.atheleteSchoolName) {
+                                                                    stats.school = found.studentId.atheleteSchoolName;
+                                                                } else {
+                                                                    stats.school = found.studentId.school.name;
+                                                                }
+                                                                stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
+                                                                if (singleData.resultFootball.winner.player === n) {
+                                                                    stats.isAthleteWinner = false;
+                                                                } else {
+                                                                    stats.isAthleteWinner = true;
+                                                                }
+                                                                match.push(stats);
+                                                                callback(null, match);
+                                                            }
+
+                                                        });
+                                                    }
+                                                }, function (err) {
+                                                    callback(null, match);
+                                                });
+                                            } else if (singleData.resultVolleyball) {
+                                                var i = 0;
+                                                var result;
+                                                async.each(singleData.opponentsTeam, function (n, callback) {
+                                                    if (singleData.opponentsTeam.length == 1) {
+                                                        var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
+                                                        while (i < length) {
+                                                            if (i == 0) {
+                                                                result = singleData.resultVolleyball.teams[0].teamResults.sets[i].point;
+                                                            } else {
+                                                                result = result + "," + singleData.resultVolleyball.teams[0].teamResults.sets[i].point;
+                                                            }
+                                                            i++;
+                                                            console.log("i", result);
+                                                        }
+                                                        stats.score = result;
+                                                        stats.isAthleteWinner = true;
+                                                        match.push(stats);
+                                                        callback(null, match);
+                                                    } else {
+                                                        StudentTeam.findOne({
+                                                            studentId: data.athleteId,
+                                                            teamId: n
+                                                        }).lean().deepPopulate("studentId.school").exec(function (err, found) {
+                                                            if (err) {
+                                                                callback(null, err);
+                                                            } else if (_.isEmpty(found)) {
+                                                                callback(null, match);
+                                                            } else {
+                                                                if (found.studentId.middleName) {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                } else {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
+                                                                }
+                                                                if (found.studentId.atheleteSchoolName) {
+                                                                    stats.school = found.studentId.atheleteSchoolName;
+                                                                } else {
+                                                                    stats.school = found.studentId.school.name;
+                                                                }
+                                                                var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
+                                                                while (i < length) {
+                                                                    console.log("players", singleData.resultVolleyball.teams[0].teamResults.sets[i]);
                                                                     if (i == 0) {
-                                                                        result = singleData.resultRacquet.teams[0].sets[i].point + "-" + singleData.resultRacquet.teams[1].sets[i].point;
+                                                                        result = singleData.resultVolleyball.teams[0].teamResults.sets[i].point + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].point;
                                                                     } else {
-                                                                        result = result + "," + singleData.resultRacquet.teams[0].sets[i].point + "-" + singleData.resultRacquet.teams[1].sets[i].point;
+                                                                        result = result + "," + singleData.resultVolleyball.teams[0].teamResults.sets[i].point + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].point;
                                                                     }
                                                                     i++;
                                                                     console.log("i", result);
                                                                 }
                                                                 stats.score = result;
-                                                            } else {
-                                                                stats.isAthleteWinner = true;
+                                                                if (singleData.resultVolleyball.winner.player === n) {
+                                                                    stats.isAthleteWinner = false;
+                                                                } else {
+                                                                    stats.isAthleteWinner = true;
+                                                                }
+                                                                match.push(stats);
+                                                                callback(null, match);
                                                             }
-                                                            match.push(stats);
-                                                            callback(null, match);
-                                                        }
 
-                                                    });
-                                                }
-                                            }, function (err) {
-                                                callback(null, match);
-                                            });
-                                        } else if (singleData.resultHeat) {
-                                            var i = 0;
-                                            var result;
-                                            async.each(singleData.resultHeat.teams, function (n, callback) {
-                                                StudentTeam.findOne({
-                                                    studentId: data.athleteId,
-                                                    teamId: n.team
-                                                }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
-                                                    if (err) {
-                                                        callback(null, err);
-                                                    } else if (_.isEmpty(found)) {
-                                                        callback(null, match);
-                                                    } else {
-                                                        stats.score = n.time;
-                                                        stats.result = n.result;
+                                                        });
+                                                    }
+                                                }, function (err) {
+                                                    callback(null, match);
+                                                });
+                                            } else if (singleData.resultHockey) {
+                                                var i = 0;
+                                                var result;
+                                                async.each(singleData.opponentsTeam, function (n, callback) {
+                                                    if (singleData.opponentsTeam.length == 1) {
+                                                        stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints;
+                                                        stats.isAthleteWinner = true;
                                                         match.push(stats);
                                                         callback(null, match);
-                                                    }
-                                                });
-                                            }, function (err) {
-                                                callback(null, match);
-                                            });
-                                        } else if (singleData.resultBasketball) {
-                                            var i = 0;
-                                            var result;
-                                            async.each(singleData.opponentsTeam, function (n, callback) {
-                                                if (singleData.opponentsTeam.length == 1) {
-                                                    stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints;
-                                                    stats.isAthleteWinner = true;
-                                                    match.push(stats);
-                                                    callback(null, match);
-                                                } else {
-                                                    StudentTeam.findOne({
-                                                        studentId: data.athleteId,
-                                                        teamId: n
-                                                    }).lean().deepPopulate("studentId.school").exec(function (err, found) {
-                                                        if (err) {
-                                                            callback(null, err);
-                                                        } else if (_.isEmpty(found)) {
-                                                            callback(null, match);
-                                                        } else {
-                                                            if (found.studentId.middleName) {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                    } else {
+                                                        StudentTeam.findOne({
+                                                            studentId: data.athleteId,
+                                                            teamId: n
+                                                        }).lean().deepPopulate("studentId.school").exec(function (err, found) {
+                                                            if (err) {
+                                                                callback(null, err);
+                                                            } else if (_.isEmpty(found)) {
+                                                                callback(null, match);
                                                             } else {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
-                                                            }
-                                                            if (found.studentId.atheleteSchoolName) {
-                                                                stats.school = found.studentId.atheleteSchoolName;
-                                                            } else {
-                                                                stats.school = found.studentId.school.name;
-                                                            }
-                                                            stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultBasketball.teams[1].teamResults.finalGoalPoints;
-                                                            if (singleData.resultBasketball.winner.player === n) {
-                                                                stats.isAthleteWinner = false;
-                                                            } else {
-                                                                stats.isAthleteWinner = true;
-                                                            }
-                                                            match.push(stats);
-                                                            callback(null, match);
-                                                        }
-
-                                                    });
-                                                }
-                                            }, function (err) {
-                                                callback(null, match);
-                                            });
-                                        } else if (singleData.resultFootball) {
-                                            var i = 0;
-                                            var result;
-                                            async.each(singleData.opponentsTeam, function (n, callback) {
-                                                if (singleData.opponentsTeam.length == 1) {
-                                                    stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints;
-                                                    stats.isAthleteWinner = true;
-                                                    match.push(stats);
-                                                    callback(null, match);
-                                                } else {
-                                                    StudentTeam.findOne({
-                                                        studentId: data.athleteId,
-                                                        teamId: n
-                                                    }).lean().deepPopulate("studentId.school").exec(function (err, found) {
-                                                        if (err) {
-                                                            callback(null, err);
-                                                        } else if (_.isEmpty(found)) {
-                                                            callback(null, match);
-                                                        } else {
-                                                            if (found.studentId.middleName) {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                            } else {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
-                                                            }
-                                                            if (found.studentId.atheleteSchoolName) {
-                                                                stats.school = found.studentId.atheleteSchoolName;
-                                                            } else {
-                                                                stats.school = found.studentId.school.name;
-                                                            }
-                                                            stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
-                                                            if (singleData.resultFootball.winner.player === n) {
-                                                                stats.isAthleteWinner = false;
-                                                            } else {
-                                                                stats.isAthleteWinner = true;
-                                                            }
-                                                            match.push(stats);
-                                                            callback(null, match);
-                                                        }
-
-                                                    });
-                                                }
-                                            }, function (err) {
-                                                callback(null, match);
-                                            });
-                                        } else if (singleData.resultVolleyball) {
-                                            var i = 0;
-                                            var result;
-                                            async.each(singleData.opponentsTeam, function (n, callback) {
-                                                if (singleData.opponentsTeam.length == 1) {
-                                                    var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
-                                                    while (i < length) {
-                                                        if (i == 0) {
-                                                            result = singleData.resultVolleyball.teams[0].teamResults.sets[i].point;
-                                                        } else {
-                                                            result = result + "," + singleData.resultVolleyball.teams[0].teamResults.sets[i].point;
-                                                        }
-                                                        i++;
-                                                        console.log("i", result);
-                                                    }
-                                                    stats.score = result;
-                                                    stats.isAthleteWinner = true;
-                                                    match.push(stats);
-                                                    callback(null, match);
-                                                } else {
-                                                    StudentTeam.findOne({
-                                                        studentId: data.athleteId,
-                                                        teamId: n
-                                                    }).lean().deepPopulate("studentId.school").exec(function (err, found) {
-                                                        if (err) {
-                                                            callback(null, err);
-                                                        } else if (_.isEmpty(found)) {
-                                                            callback(null, match);
-                                                        } else {
-                                                            if (found.studentId.middleName) {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                            } else {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
-                                                            }
-                                                            if (found.studentId.atheleteSchoolName) {
-                                                                stats.school = found.studentId.atheleteSchoolName;
-                                                            } else {
-                                                                stats.school = found.studentId.school.name;
-                                                            }
-                                                            var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
-                                                            while (i < length) {
-                                                                console.log("players", singleData.resultVolleyball.teams[0].teamResults.sets[i]);
-                                                                if (i == 0) {
-                                                                    result = singleData.resultVolleyball.teams[0].teamResults.sets[i].point + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].point;
+                                                                if (found.studentId.middleName) {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
                                                                 } else {
-                                                                    result = result + "," + singleData.resultVolleyball.teams[0].teamResults.sets[i].point + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].point;
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
                                                                 }
-                                                                i++;
-                                                                console.log("i", result);
+                                                                if (found.studentId.atheleteSchoolName) {
+                                                                    stats.school = found.studentId.atheleteSchoolName;
+                                                                } else {
+                                                                    stats.school = found.studentId.school.name;
+                                                                }
+                                                                stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[0].teamResults.finalPoints;;
+                                                                if (singleData.resultHockey.winner.player === n) {
+                                                                    stats.isAthleteWinner = false;
+                                                                } else {
+                                                                    stats.isAthleteWinner = true;
+                                                                }
+                                                                match.push(stats);
+                                                                callback(null, match);
                                                             }
-                                                            stats.score = result;
-                                                            if (singleData.resultVolleyball.winner.player === n) {
-                                                                stats.isAthleteWinner = false;
-                                                            } else {
-                                                                stats.isAthleteWinner = true;
-                                                            }
-                                                            match.push(stats);
-                                                            callback(null, match);
-                                                        }
 
-                                                    });
-                                                }
-                                            }, function (err) {
-                                                callback(null, match);
-                                            });
-                                        } else if (singleData.resultHockey) {
-                                            var i = 0;
-                                            var result;
-                                            async.each(singleData.opponentsTeam, function (n, callback) {
-                                                if (singleData.opponentsTeam.length == 1) {
-                                                    stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints;
-                                                    stats.isAthleteWinner = true;
-                                                    match.push(stats);
+                                                        });
+                                                    }
+                                                }, function (err) {
                                                     callback(null, match);
-                                                } else {
-                                                    StudentTeam.findOne({
-                                                        studentId: data.athleteId,
-                                                        teamId: n
-                                                    }).lean().deepPopulate("studentId.school").exec(function (err, found) {
-                                                        if (err) {
-                                                            callback(null, err);
-                                                        } else if (_.isEmpty(found)) {
-                                                            callback(null, match);
-                                                        } else {
-                                                            if (found.studentId.middleName) {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                });
+                                            } else if (singleData.resultWaterPolo) {
+                                                var i = 0;
+                                                var result;
+                                                async.each(singleData.opponentsTeam, function (n, callback) {
+                                                    if (singleData.opponentsTeam.length == 1) {
+                                                        stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;
+                                                        stats.isAthleteWinner = true;
+                                                        match.push(stats);
+                                                        callback(null, match);
+                                                    } else {
+                                                        StudentTeam.findOne({
+                                                            studentId: data.athleteId,
+                                                            teamId: n
+                                                        }).lean().deepPopulate("studentId.school").exec(function (err, found) {
+                                                            if (err) {
+                                                                callback(null, err);
+                                                            } else if (_.isEmpty(found)) {
+                                                                callback(null, match);
                                                             } else {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
+                                                                if (found.studentId.middleName) {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                } else {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
+                                                                }
+                                                                if (found.studentId.atheleteSchoolName) {
+                                                                    stats.school = found.studentId.atheleteSchoolName;
+                                                                } else {
+                                                                    stats.school = found.studentId.school.name;
+                                                                }
+                                                                stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;;
+                                                                if (singleData.resultWaterPolo.winner.player === n) {
+                                                                    stats.isAthleteWinner = false;
+                                                                } else {
+                                                                    stats.isAthleteWinner = true;
+                                                                }
+                                                                match.push(stats);
+                                                                callback(null, match);
                                                             }
-                                                            if (found.studentId.atheleteSchoolName) {
-                                                                stats.school = found.studentId.atheleteSchoolName;
-                                                            } else {
-                                                                stats.school = found.studentId.school.name;
-                                                            }
-                                                            stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[0].teamResults.finalPoints;;
-                                                            if (singleData.resultHockey.winner.player === n) {
-                                                                stats.isAthleteWinner = false;
-                                                            } else {
-                                                                stats.isAthleteWinner = true;
-                                                            }
-                                                            match.push(stats);
-                                                            callback(null, match);
-                                                        }
 
-                                                    });
-                                                }
-                                            }, function (err) {
-                                                callback(null, match);
-                                            });
-                                        } else if (singleData.resultWaterPolo) {
-                                            var i = 0;
-                                            var result;
-                                            async.each(singleData.opponentsTeam, function (n, callback) {
-                                                if (singleData.opponentsTeam.length == 1) {
-                                                    stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;
-                                                    stats.isAthleteWinner = true;
-                                                    match.push(stats);
+                                                        });
+                                                    }
+                                                }, function (err) {
                                                     callback(null, match);
-                                                } else {
-                                                    StudentTeam.findOne({
-                                                        studentId: data.athleteId,
-                                                        teamId: n
-                                                    }).lean().deepPopulate("studentId.school").exec(function (err, found) {
-                                                        if (err) {
-                                                            callback(null, err);
-                                                        } else if (_.isEmpty(found)) {
-                                                            callback(null, match);
-                                                        } else {
-                                                            if (found.studentId.middleName) {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                });
+                                            } else if (singleData.resultKabaddi) {
+                                                var i = 0;
+                                                var result;
+                                                async.each(singleData.opponentsTeam, function (n, callback) {
+                                                    if (singleData.opponentsTeam.length == 1) {
+                                                        stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints;
+                                                        stats.isAthleteWinner = true;
+                                                        match.push(stats);
+                                                        callback(null, match);
+                                                    } else {
+                                                        StudentTeam.findOne({
+                                                            studentId: data.athleteId,
+                                                            teamId: n
+                                                        }).lean().deepPopulate("studentId.school").exec(function (err, found) {
+                                                            if (err) {
+                                                                callback(null, err);
+                                                            } else if (_.isEmpty(found)) {
+                                                                callback(null, match);
                                                             } else {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
+                                                                if (found.studentId.middleName) {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                } else {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
+                                                                }
+                                                                if (found.studentId.atheleteSchoolName) {
+                                                                    stats.school = found.studentId.atheleteSchoolName;
+                                                                } else {
+                                                                    stats.school = found.studentId.school.name;
+                                                                }
+                                                                stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[0].teamResults.finalPoints;;
+                                                                if (singleData.resultKabaddi.winner.player === n) {
+                                                                    stats.isAthleteWinner = false;
+                                                                } else {
+                                                                    stats.isAthleteWinner = true;
+                                                                }
+                                                                match.push(stats);
+                                                                callback(null, match);
                                                             }
-                                                            if (found.studentId.atheleteSchoolName) {
-                                                                stats.school = found.studentId.atheleteSchoolName;
-                                                            } else {
-                                                                stats.school = found.studentId.school.name;
-                                                            }
-                                                            stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;;
-                                                            if (singleData.resultWaterPolo.winner.player === n) {
-                                                                stats.isAthleteWinner = false;
-                                                            } else {
-                                                                stats.isAthleteWinner = true;
-                                                            }
-                                                            match.push(stats);
-                                                            callback(null, match);
-                                                        }
 
-                                                    });
-                                                }
-                                            }, function (err) {
-                                                callback(null, match);
-                                            });
-                                        } else if (singleData.resultKabaddi) {
-                                            var i = 0;
-                                            var result;
-                                            async.each(singleData.opponentsTeam, function (n, callback) {
-                                                if (singleData.opponentsTeam.length == 1) {
-                                                    stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints;
-                                                    stats.isAthleteWinner = true;
-                                                    match.push(stats);
+                                                        });
+                                                    }
+                                                }, function (err) {
                                                     callback(null, match);
-                                                } else {
-                                                    StudentTeam.findOne({
-                                                        studentId: data.athleteId,
-                                                        teamId: n
-                                                    }).lean().deepPopulate("studentId.school").exec(function (err, found) {
-                                                        if (err) {
-                                                            callback(null, err);
-                                                        } else if (_.isEmpty(found)) {
-                                                            callback(null, match);
-                                                        } else {
-                                                            if (found.studentId.middleName) {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                });
+                                            } else if (singleData.resultHandball) {
+                                                var i = 0;
+                                                var result;
+                                                async.each(singleData.opponentsTeam, function (n, callback) {
+                                                    if (singleData.opponentsTeam.length == 1) {
+                                                        stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints;
+                                                        stats.isAthleteWinner = true;
+                                                        match.push(stats);
+                                                        callback(null, match);
+                                                    } else {
+                                                        StudentTeam.findOne({
+                                                            studentId: data.athleteId,
+                                                            teamId: n
+                                                        }).lean().deepPopulate("studentId.school").exec(function (err, found) {
+                                                            if (err) {
+                                                                callback(null, err);
+                                                            } else if (_.isEmpty(found)) {
+                                                                callback(null, match);
                                                             } else {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
+                                                                if (found.studentId.middleName) {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                } else {
+                                                                    stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
+                                                                }
+                                                                if (found.studentId.atheleteSchoolName) {
+                                                                    stats.school = found.studentId.atheleteSchoolName;
+                                                                } else {
+                                                                    stats.school = found.studentId.school.name;
+                                                                }
+                                                                stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[0].teamResults.finalPoints;;
+                                                                if (singleData.resultHandball.winner.player === n) {
+                                                                    stats.isAthleteWinner = false;
+                                                                } else {
+                                                                    stats.isAthleteWinner = true;
+                                                                }
+                                                                match.push(stats);
+                                                                callback(null, match);
                                                             }
-                                                            if (found.studentId.atheleteSchoolName) {
-                                                                stats.school = found.studentId.atheleteSchoolName;
-                                                            } else {
-                                                                stats.school = found.studentId.school.name;
-                                                            }
-                                                            stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[0].teamResults.finalPoints;;
-                                                            if (singleData.resultKabaddi.winner.player === n) {
-                                                                stats.isAthleteWinner = false;
-                                                            } else {
-                                                                stats.isAthleteWinner = true;
-                                                            }
-                                                            match.push(stats);
-                                                            callback(null, match);
-                                                        }
 
-                                                    });
-                                                }
-                                            }, function (err) {
-                                                callback(null, match);
-                                            });
-                                        } else if (singleData.resultHandball) {
-                                            var i = 0;
-                                            var result;
-                                            async.each(singleData.opponentsTeam, function (n, callback) {
-                                                if (singleData.opponentsTeam.length == 1) {
-                                                    stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints;
-                                                    stats.isAthleteWinner = true;
-                                                    match.push(stats);
+                                                        });
+                                                    }
+                                                }, function (err) {
                                                     callback(null, match);
-                                                } else {
-                                                    StudentTeam.findOne({
-                                                        studentId: data.athleteId,
-                                                        teamId: n
-                                                    }).lean().deepPopulate("studentId.school").exec(function (err, found) {
-                                                        if (err) {
-                                                            callback(null, err);
-                                                        } else if (_.isEmpty(found)) {
-                                                            callback(null, match);
-                                                        } else {
-                                                            if (found.studentId.middleName) {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                            } else {
-                                                                stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
-                                                            }
-                                                            if (found.studentId.atheleteSchoolName) {
-                                                                stats.school = found.studentId.atheleteSchoolName;
-                                                            } else {
-                                                                stats.school = found.studentId.school.name;
-                                                            }
-                                                            stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[0].teamResults.finalPoints;;
-                                                            if (singleData.resultHandball.winner.player === n) {
-                                                                stats.isAthleteWinner = false;
-                                                            } else {
-                                                                stats.isAthleteWinner = true;
-                                                            }
-                                                            match.push(stats);
-                                                            callback(null, match);
-                                                        }
-
-                                                    });
-                                                }
-                                            }, function (err) {
+                                                });
+                                            } else {
                                                 callback(null, match);
-                                            });
-                                        } else {
+                                            }
+                                        },
+                                        function (err) {
                                             callback(null, match);
-                                        }
-                                    },
-                                    function (err) {
-                                        callback(null, match);
-                                    });
-                                callback(null, match);
-                            }
-                        });
-                    }
-                },
+                                        });
+                                    callback(null, match);
+                                }
+                            });
+                        }
+                    },
 
-            ],
-            function (err, data2) {
-                callback(null, data2);
-            });
+                ],
+                function (err, data2) {
+                    callback(null, data2);
+                });
+        }, function (err) {
+            callback(null, match);
+        });
+
     },
 
     getTeamStats: function (data, callback) {
@@ -2426,601 +2432,144 @@ var model = {
         var profile = {};
         profile.match = [];
         profile.players = [];
-        async.waterfall([
-                function (callback) {
-                    SportsListSubCategory.findOne({
-                        _id: data.sportsListSubCategory,
-                    }).lean().exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(found)) {
-                                callback(null, found);
-                            } else {
-                                callback(null, found);
-                            }
-                        }
-                    });
-                },
-                function (found, callback) {
-                    if (found.isTeam == false) {
-                        console.log("found", found);
-                        var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push(
-                            // Stage 6
-                            {
-                                $lookup: {
-                                    "from": "individualsports",
-                                    "localField": "opponentsSingle",
-                                    "foreignField": "_id",
-                                    "as": "opponentsSingle"
-                                }
-                            },
-
-                            // Stage 7
-                            {
-                                $unwind: {
-                                    path: "$opponentsSingle",
-                                }
-                            },
-
-                            // Stage 8
-                            {
-                                $lookup: {
-                                    "from": "atheletes",
-                                    "localField": "opponentsSingle.athleteId",
-                                    "foreignField": "_id",
-                                    "as": "opponentsSingle.athleteId"
-                                }
-                            },
-
-                            // Stage 9
-                            {
-                                $unwind: {
-                                    path: "$opponentsSingle.athleteId",
-                                }
-                            },
-
-                            // Stage 10
-                            {
-                                $lookup: {
-                                    "from": "schools",
-                                    "localField": "opponentsSingle.athleteId.school",
-                                    "foreignField": "_id",
-                                    "as": "opponentsSingle.athleteId.school"
-                                }
-                            },
-
-                            // Stage 11
-                            {
-                                $unwind: {
-                                    path: "$opponentsSingle.athleteId.school",
-
-                                }
-                            },
-
-                            // Stage 12
-                            {
-                                $match: {
-                                    "opponentsSingle.athleteId.school.name": data.schoolName
-                                }
-                            },
-
-                            {
-                                $lookup: {
-                                    "from": "agegroups",
-                                    "localField": "sport.ageGroup",
-                                    "foreignField": "_id",
-                                    "as": "sport.ageGroup"
-                                }
-                            },
-
-                            {
-                                $unwind: {
-                                    path: "$sport.ageGroup",
-
-                                }
-                            },
-
-                            {
-                                $lookup: {
-                                    "from": "weights",
-                                    "localField": "sport.weight",
-                                    "foreignField": "_id",
-                                    "as": "sport.weight"
-                                }
-                            }, {
-                                $unwind: {
-                                    path: "$sport.weight",
-                                    preserveNullAndEmptyArrays: true // optional
-                                }
-                            }, {
-                                $sort: {
-                                    createdAt: 1
-                                }
-                            }
-                        );
-                        Match.aggregate(newPipeLine, function (err, matchData) {
+        async.each(data.sportsListSubCategory, function (sportName, callback) {
+            async.waterfall([
+                    function (callback) {
+                        SportsListSubCategory.findOne({
+                            _id: sportName,
+                        }).lean().exec(function (err, found) {
                             if (err) {
-                                callback(err, "error in mongoose");
+                                callback(err, null);
                             } else {
-                                async.each(matchData, function (singleData, callback) {
-                                        var stats = {};
-                                        stats.year = new Date(singleData.createdAt).getFullYear();
-                                        stats.ageGroup = singleData.sport.ageGroup.name;
-                                        stats.sportslist = singleData.sport.sportslist.name;
-                                        stats.gender = singleData.sport.gender;
-                                        if (singleData.sport.weight) {
-                                            stats.weight = singleData.sport.weight.name;
-                                        }
-                                        stats.round = singleData.round;
-                                        stats.video = singleData.video;
-                                        stats.videoType = singleData.videoType;
-                                        var player = {};
-                                        if (singleData.resultsCombat) {
-                                            var i = 0;
-                                            if (singleData.resultsCombat.players.length == 1) {
-                                                Athelete.findOne({
-                                                    _id: singleData.resultsCombat.players.player
-                                                }).lean().deepPopulate("school").exec(function (err, found) {
-                                                    if (found.middleName) {
-                                                        var name = found.firstName + " " + found.middleName + " " + found.surname;
-                                                    } else {
-                                                        var name = found.firstName + " " + found.surname;
-                                                    }
-                                                    if (found.atheleteSchoolName) {
-                                                        var school = found.atheleteSchoolName;
-                                                    } else {
-                                                        var school = found.school.name;
-                                                    }
-                                                    var player = {};
-                                                    player.name = name;
-                                                    player.school = school;
-                                                    player.sfaId = found.sfaId;
-                                                    player.profilePic = found.photograph;
-                                                    profile.player.push(player);
-                                                    while (i < singleData.resultsCombat.players[0].sets.length) {
-                                                        console.log("players", singleData.resultsCombat.players[0].sets[i]);
-                                                        if (i == 0) {
-                                                            result = singleData.resultsCombat.players[0].sets[i].point;
-                                                        } else {
-                                                            result = result + "," + singleData.resultsCombat.players[0].sets[i].point;
-                                                        }
-                                                        i++;
-                                                    }
-                                                    stats.isAthleteWinner = true;
-                                                    stats.score = result;
-                                                    profile.match.push(stats);
-                                                    callback(null, stats);
-                                                });
-                                            } else {
-                                                async.each(singleData.resultsCombat.players, function (player, callback) {
-                                                        Athelete.findOne({
-                                                            _id: player
-                                                        }).lean().deepPopulate("school").exec(function (err, found) {
-                                                            if (found.middleName) {
-                                                                var name = found.firstName + " " + found.middleName + " " + found.surname;
-                                                            } else {
-                                                                var name = found.firstName + " " + found.surname;
-                                                            }
-                                                            if (found.atheleteSchoolName) {
-                                                                var school = found.atheleteSchoolName;
-                                                            } else {
-                                                                var school = found.school.name;
-                                                            }
-                                                            if (!player.equals(singleData.opponentsSingle.athleteId)) {
-                                                                stats.opponentName = name;
-                                                                stats.school = school;
-                                                                if (singleData.resultsCombat.winner.player === player) {
-                                                                    stats.isAthleteWinner = false;
-                                                                } else {
-                                                                    stats.isAthleteWinner = true;
-                                                                }
-                                                                var player = {};
-                                                                player.name = name;
-                                                                player.school = school;
-                                                                player.sfaId = found.sfaId;
-                                                                player.profilePic = found.photograph;
-                                                                profile.match.push(stats);
-                                                                profile.player.push(player);
-                                                                callback(null, profile.match);
-                                                            } else {
-                                                                var player = {};
-                                                                player.name = name;
-                                                                player.school = school;
-                                                                player.sfaId = found.sfaId;
-                                                                player.profilePic = found.photograph;
-                                                                profile.player.push(player);
-                                                                while (i < singleData.resultsCombat.players[0].sets.length) {
-                                                                    if (i == 0) {
-                                                                        result = singleData.resultsCombat.players[0].sets[i].point + "-" + singleData.resultsCombat.players[1].sets[i].point;
-                                                                    } else {
-                                                                        result = result + "," + singleData.resultsCombat.players[0].sets[i].point + "-" + singleData.resultsCombat.players[1].sets[i].point;
-                                                                    }
-                                                                    i++;
-                                                                }
-                                                                stats.score = result;
-                                                                profile.match.push(stats);
-                                                                callback(null, stats);
-                                                            }
-                                                        });
-                                                    },
-                                                    function (err) {
-                                                        callback(null, stats);
-                                                    });
-                                            }
-                                        } else if (singleData.resultRacquets) {
-                                            var i = 0;
-                                            if (singleData.resultRacquets.players.length == 1) {
-                                                Athelete.findOne({
-                                                    _id: singleData.resultRacquets.players.player
-                                                }).lean().deepPopulate("school").exec(function (err, found) {
-                                                    if (found.middleName) {
-                                                        var name = found.firstName + " " + found.middleName + " " + found.surname;
-                                                    } else {
-                                                        var name = found.firstName + " " + found.surname;
-                                                    }
-                                                    if (found.atheleteSchoolName) {
-                                                        var school = found.atheleteSchoolName;
-                                                    } else {
-                                                        var school = found.school.name;
-                                                    }
-                                                    var player = {};
-                                                    player.name = name;
-                                                    player.school = school;
-                                                    player.sfaId = found.sfaId;
-                                                    player.profilePic = found.photograph;
-                                                    profile.player.push(player);
-                                                    while (i < singleData.resultRacquets.players[0].sets.length) {
-                                                        console.log("players", singleData.resultRacquets.players[0].sets[i]);
-                                                        if (i == 0) {
-                                                            result = singleData.resultRacquets.players[0].sets[i].point;
-                                                        } else {
-                                                            result = result + "," + singleData.resultRacquets.players[0].sets[i].point;
-                                                        }
-                                                        i++;
-                                                    }
-                                                    stats.isAthleteWinner = true;
-                                                    stats.score = result;
-                                                    profile.match.push(stats);
-                                                    callback(null, stats);
-                                                });
-                                            } else {
-                                                async.each(singleData.resultRacquets.players, function (player, callback) {
-                                                        Athelete.findOne({
-                                                            _id: player
-                                                        }).lean().deepPopulate("school").exec(function (err, found) {
-                                                            if (found.middleName) {
-                                                                var name = found.firstName + " " + found.middleName + " " + found.surname;
-                                                            } else {
-                                                                var name = found.firstName + " " + found.surname;
-                                                            }
-                                                            if (found.atheleteSchoolName) {
-                                                                var school = found.atheleteSchoolName;
-                                                            } else {
-                                                                var school = found.school.name;
-                                                            }
-                                                            if (!player.equals(singleData.opponentsSingle.athleteId)) {
-                                                                stats.opponentName = name;
-                                                                stats.school = school;
-                                                                if (singleData.resultRacquets.winner.player === player) {
-                                                                    stats.isAthleteWinner = false;
-                                                                } else {
-                                                                    stats.isAthleteWinner = true;
-                                                                }
-                                                                var player = {};
-                                                                player.name = name;
-                                                                player.school = school;
-                                                                player.sfaId = found.sfaId;
-                                                                player.profilePic = found.photograph;
-                                                                profile.player.push(player);
-                                                                profile.match.push(stats);
-                                                            } else {
-                                                                var player = {};
-                                                                player.name = name;
-                                                                player.school = school;
-                                                                player.sfaId = found.sfaId;
-                                                                player.profilePic = found.photograph;
-                                                                profile.player.push(player);
-                                                                while (i < singleData.resultRacquets.players[0].sets.length) {
-                                                                    if (i == 0) {
-                                                                        result = singleData.resultRacquets.players[0].sets[i].point + "-" + singleData.resultRacquets.players[1].sets[i].point;
-                                                                    } else {
-                                                                        result = result + "," + singleData.resultRacquets.players[0].sets[i].point + "-" + singleData.resultRacquets.players[1].sets[i].point;
-                                                                    }
-                                                                    i++;
-                                                                }
-                                                                stats.score = result;
-                                                            }
-                                                            profile.match.push(stats);
-                                                            callback(null, profile);
-                                                        });
-                                                    },
-                                                    function (err) {
-                                                        callback(null, stats);
-                                                    });
-                                            }
-                                        } else if (singleData.resultHeat) {
-                                            var i = 0;
-                                            var result;
-                                            async.each(singleData.resultHeat.players, function (n, callback) {
-                                                if (n._id) {
-                                                    Athelete.findOne({
-                                                        _id: n._id
-                                                    }).lean().deepPopulate("school").exec(function (err, found) {
-                                                        if (found.middleName) {
-                                                            var name = found.firstName + " " + found.middleName + " " + found.surname;
-                                                        } else {
-                                                            var name = found.firstName + " " + found.surname;
-                                                        }
-                                                        if (found.atheleteSchoolName) {
-                                                            var school = found.atheleteSchoolName;
-                                                        } else {
-                                                            var school = found.school.name;
-                                                        }
-                                                        if (n._id === singleData.opponentsSingle.athleteId) {
-                                                            var player = {};
-                                                            player.name = name;
-                                                            player.school = school;
-                                                            player.sfaId = found.sfaId;
-                                                            player.profilePic = found.photograph;
-                                                            profile.player.push(player);
-                                                            stats.score = n.time;
-                                                            stats.result = n.result;
-                                                            profile.match.push(stats);
-                                                            callback(null, profile);
-                                                        } else {
-                                                            var player = {};
-                                                            player.name = name;
-                                                            player.school = school;
-                                                            player.sfaId = found.sfaId;
-                                                            player.profilePic = found.photograph;
-                                                            profile.player.push(player);
-                                                            callback(null, profile);
-                                                        }
-                                                    });
-                                                } else {
-                                                    callback(null, profile);
-                                                }
-                                            }, function (err) {
-                                                callback(null, profile.match);
-                                            });
-                                        } else if (singleData.resultQualifyingRound) {
-                                            Athelete.findOne({
-                                                _id: singleData.opponentsSingle.athleteId
-                                            }).lean().deepPopulate("school").exec(function (err, found) {
-                                                if (found.middleName) {
-                                                    var name = found.firstName + " " + found.middleName + " " + found.surname;
-                                                } else {
-                                                    var name = found.firstName + " " + found.surname;
-                                                }
-                                                if (found.atheleteSchoolName) {
-                                                    var school = found.atheleteSchoolName;
-                                                } else {
-                                                    var school = found.school.name;
-                                                }
-                                                var player = {};
-                                                player.name = name;
-                                                player.school = school;
-                                                player.sfaId = found.sfaId;
-                                                player.profilePic = found.photograph;
-                                                profile.player.push(player);
-                                                stats.score = n.time;
-                                                stats.result = n.result;
-                                                profile.match.push(stats);
-                                                stats.score = singleData.resultQualifyingRound.player.bestAttempt;
-                                                stats.result = singleData.resultQualifyingRound.player.result;
-                                                profile.match.push(stats);
-                                                callback(null, profile.match);
-                                            });
-                                        } else if (singleData.resultSwiss) {
-                                            var result;
-                                            var name;
-                                            var school;
-                                            Athelete.findOne({
-                                                _id: singleData.opponentsSingle.athleteId
-                                            }).lean().deepPopulate("school").exec(function (err, found) {
-                                                if (found.middleName) {
-                                                    name = found.firstName + " " + found.middleName + " " + found.surname;
-                                                } else {
-                                                    name = found.firstName + " " + found.surname;
-                                                }
-                                                if (found.atheleteSchoolName) {
-                                                    school = found.atheleteSchoolName;
-                                                } else {
-                                                    school = found.school.name;
-                                                }
-                                                var player = {};
-                                                player.name = name;
-                                                player.school = school;
-                                                player.sfaId = found.sfaId;
-                                                player.profilePic = found.photograph;
-                                                profile.player.push(player);
-                                            });
-                                            async.each(singleData.resultSwiss.players, function (n, callback) {
-                                                if (n.id === singleData.opponentsSingle._id) {
-                                                    stats.score = n.score;
-                                                    stats.rank = n.rank;
-                                                    profile.match.push(stats);
-                                                    callback(null, profile.match);
-                                                } else if (!n.id.equals(singleData.opponentsSingle._id)) {
-                                                    if (singleData.resultSwiss.winner.player === n.athleteId) {
-                                                        stats.isAthleteWinner = false;
-                                                    } else {
-                                                        stats.isAthleteWinner = true;
-                                                    }
-                                                    profile.match.push(stats);
-                                                    callback(null, profile);
-                                                }
-                                            }, function (err) {
-                                                callback(null, profile);
-                                            });
-                                        } else if (singleData.resultKnockout) {
-                                            var result;
-                                            var name;
-                                            var school;
-                                            Athelete.findOne({
-                                                _id: singleData.opponentsSingle.athleteId
-                                            }).lean().deepPopulate("school").exec(function (err, found) {
-                                                if (found.middleName) {
-                                                    name = found.firstName + " " + found.middleName + " " + found.surname;
-                                                } else {
-                                                    name = found.firstName + " " + found.surname;
-                                                }
-                                                if (found.atheleteSchoolName) {
-                                                    school = found.atheleteSchoolName;
-                                                } else {
-                                                    school = found.school.name;
-                                                }
-                                                var player = {};
-                                                player.name = name;
-                                                player.school = school;
-                                                player.sfaId = found.sfaId;
-                                                player.profilePic = found.photograph;
-                                                profile.player.push(player);
-                                            });
-                                            async.each(singleData.resultKnockout.players, function (n, callback) {
-                                                if (n.playerId === singleData.opponentsSingle._id) {
-                                                    stats.score = n.score;
-                                                    stats.rank = n.rank;
-                                                    profile.match.push(stats);
-                                                    callback(null, profile.match);
-                                                } else if (!n.playerId.equals(singleData.opponentsSingle._id)) {
-                                                    if (singleData.resultKnockout.winner.player === n.athleteId) {
-                                                        stats.isAthleteWinner = false;
-                                                    } else {
-                                                        stats.isAthleteWinner = true;
-                                                    }
-                                                    stats.opponentName = name;
-                                                    stats.school = school;
-                                                    profile.match.push(stats);
-                                                    callback(null, profile.match);
-                                                }
-                                            }, function (err) {
-                                                callback(null, profile.match);
-                                            });
-                                        } else if (singleData.resultShooting) {
-                                            Athelete.findOne({
-                                                _id: singleData.opponentsSingle.athleteId
-                                            }).lean().deepPopulate("school").exec(function (err, found) {
-                                                if (found.middleName) {
-                                                    var name = found.firstName + " " + found.middleName + " " + found.surname;
-                                                } else {
-                                                    var name = found.firstName + " " + found.surname;
-                                                }
-                                                if (found.atheleteSchoolName) {
-                                                    var school = found.atheleteSchoolName;
-                                                } else {
-                                                    var school = found.school.name;
-                                                }
-                                                var player = {};
-                                                player.name = name;
-                                                player.school = school;
-                                                player.sfaId = found.sfaId;
-                                                player.profilePic = found.photograph;
-                                                profile.player.push(player);
-                                                stats.score = singleData.resultShooting.finalScore;
-                                                stats.result = singleData.resultShooting.result;
-                                                profile.match.push(stats);
-                                                callback(null, profile);
-                                            });
-                                        } else {
-                                            callback(null, profile);
-                                        }
-                                    },
-                                    function (err) {
-                                        callback(null, profile);
-                                    });
+                                if (_.isEmpty(found)) {
+                                    callback(null, found);
+                                } else {
+                                    callback(null, found);
+                                }
                             }
                         });
-                    } else {
-                        console.log("found in else", found);
-                        var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push(
-                            // Stage 7
-                            {
-                                $lookup: {
-                                    "from": "teamsports",
-                                    "localField": "opponentsTeam",
-                                    "foreignField": "_id",
-                                    "as": "opponentsTeam"
-                                }
-                            },
-                            // Stage 7
-                            {
-                                $unwind: {
-                                    path: "$opponentsTeam"
-                                }
-                            },
+                    },
+                    function (found, callback) {
+                        if (found.isTeam == false) {
+                            console.log("found", found);
+                            var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
+                            var newPipeLine = _.cloneDeep(pipeLine);
+                            newPipeLine.push(
+                                // Stage 6
+                                {
+                                    $lookup: {
+                                        "from": "individualsports",
+                                        "localField": "opponentsSingle",
+                                        "foreignField": "_id",
+                                        "as": "opponentsSingle"
+                                    }
+                                },
 
-                            {
-                                $match: {
-                                    "$opponentsTeam.schoolName": data.schoolName
-                                }
-                            },
+                                // Stage 7
+                                {
+                                    $unwind: {
+                                        path: "$opponentsSingle",
+                                    }
+                                },
 
-                            {
-                                $lookup: {
-                                    "from": "agegroups",
-                                    "localField": "sport.ageGroup",
-                                    "foreignField": "_id",
-                                    "as": "sport.ageGroup"
-                                }
-                            },
+                                // Stage 8
+                                {
+                                    $lookup: {
+                                        "from": "atheletes",
+                                        "localField": "opponentsSingle.athleteId",
+                                        "foreignField": "_id",
+                                        "as": "opponentsSingle.athleteId"
+                                    }
+                                },
 
-                            {
-                                $unwind: {
-                                    path: "$sport.ageGroup",
+                                // Stage 9
+                                {
+                                    $unwind: {
+                                        path: "$opponentsSingle.athleteId",
+                                    }
+                                },
 
-                                }
-                            },
+                                // Stage 10
+                                {
+                                    $lookup: {
+                                        "from": "schools",
+                                        "localField": "opponentsSingle.athleteId.school",
+                                        "foreignField": "_id",
+                                        "as": "opponentsSingle.athleteId.school"
+                                    }
+                                },
 
-                            {
-                                $lookup: {
-                                    "from": "weights",
-                                    "localField": "sport.weight",
-                                    "foreignField": "_id",
-                                    "as": "sport.weight"
+                                // Stage 11
+                                {
+                                    $unwind: {
+                                        path: "$opponentsSingle.athleteId.school",
+
+                                    }
+                                },
+
+                                // Stage 12
+                                {
+                                    $match: {
+                                        "opponentsSingle.athleteId.school.name": data.schoolName
+                                    }
+                                },
+
+                                {
+                                    $lookup: {
+                                        "from": "agegroups",
+                                        "localField": "sport.ageGroup",
+                                        "foreignField": "_id",
+                                        "as": "sport.ageGroup"
+                                    }
+                                },
+
+                                {
+                                    $unwind: {
+                                        path: "$sport.ageGroup",
+
+                                    }
+                                },
+
+                                {
+                                    $lookup: {
+                                        "from": "weights",
+                                        "localField": "sport.weight",
+                                        "foreignField": "_id",
+                                        "as": "sport.weight"
+                                    }
+                                }, {
+                                    $unwind: {
+                                        path: "$sport.weight",
+                                        preserveNullAndEmptyArrays: true // optional
+                                    }
+                                }, {
+                                    $sort: {
+                                        createdAt: 1
+                                    }
                                 }
-                            }, {
-                                $unwind: {
-                                    path: "$sport.weight",
-                                    preserveNullAndEmptyArrays: true // optional
-                                }
-                            }, {
-                                $sort: {
-                                    createdAt: 1
-                                }
-                            }
-                        );
-                        Match.aggregate(newPipeLine, function (err, matchData) {
-                            console.log("matchData", matchData);
-                            if (err) {
-                                callback(err, "error in mongoose");
-                            } else {
-                                // var match = [];
-                                async.each(matchData, function (singleData, callback) {
-                                        var stats = {};
-                                        stats.year = new Date(singleData.createdAt).getFullYear();
-                                        stats.ageGroup = singleData.sport.ageGroup.name;
-                                        stats.sportslist = singleData.sport.sportslist.name;
-                                        stats.gender = singleData.sport.gender;
-                                        if (singleData.sport.weight) {
-                                            stats.weight = singleData.sport.weight.name;
-                                        }
-                                        stats.round = singleData.round;
-                                        stats.video = singleData.video;
-                                        stats.videoType = singleData.videoType;
-                                        if (singleData.resultsCombat) {
-                                            var i = 0;
-                                            var result;
-                                            if (singleData.resultsCombat.teams.length == 1) {
-                                                var p = 0;
-                                                while (p < singleData.resultsCombat.teams[0].players.length) {
+                            );
+                            Match.aggregate(newPipeLine, function (err, matchData) {
+                                if (err) {
+                                    callback(err, "error in mongoose");
+                                } else {
+                                    async.each(matchData, function (singleData, callback) {
+                                            var stats = {};
+                                            stats.year = new Date(singleData.createdAt).getFullYear();
+                                            stats.ageGroup = singleData.sport.ageGroup.name;
+                                            stats.sportslist = singleData.sport.sportslist.name;
+                                            stats.gender = singleData.sport.gender;
+                                            if (singleData.sport.weight) {
+                                                stats.weight = singleData.sport.weight.name;
+                                            }
+                                            stats.round = singleData.round;
+                                            stats.video = singleData.video;
+                                            stats.videoType = singleData.videoType;
+                                            var player = {};
+                                            if (singleData.resultsCombat) {
+                                                var i = 0;
+                                                if (singleData.resultsCombat.players.length == 1) {
                                                     Athelete.findOne({
-                                                        _id: singleData.resultsCombat.teams[0].players[p].player
+                                                        _id: singleData.resultsCombat.players.player
                                                     }).lean().deepPopulate("school").exec(function (err, found) {
                                                         if (found.middleName) {
                                                             var name = found.firstName + " " + found.middleName + " " + found.surname;
@@ -3038,28 +2587,24 @@ var model = {
                                                         player.sfaId = found.sfaId;
                                                         player.profilePic = found.photograph;
                                                         profile.player.push(player);
+                                                        while (i < singleData.resultsCombat.players[0].sets.length) {
+                                                            console.log("players", singleData.resultsCombat.players[0].sets[i]);
+                                                            if (i == 0) {
+                                                                result = singleData.resultsCombat.players[0].sets[i].point;
+                                                            } else {
+                                                                result = result + "," + singleData.resultsCombat.players[0].sets[i].point;
+                                                            }
+                                                            i++;
+                                                        }
+                                                        stats.isAthleteWinner = true;
+                                                        stats.score = result;
+                                                        profile.match.push(stats);
+                                                        callback(null, stats);
                                                     });
-                                                    p++;
-                                                }
-                                                while (i < singleData.resultsCombat.teams[0].sets.length) {
-                                                    if (i == 0) {
-                                                        result = singleData.resultsCombat.teams[0].sets[i].point;
-                                                    } else {
-                                                        result = result + "," + singleData.resultsCombat.teams[0].sets[i].point;
-                                                    }
-                                                    i++;
-                                                    console.log("i", result);
-                                                }
-                                                stats.score = result;
-                                                stats.isAthleteWinner = true;
-                                                profile.match.push(stats);
-                                                callback(null, profile);
-                                            } else {
-                                                async.each(singleData.resultsCombat.teams, function (n, callback) {
-                                                        var p = 0;
-                                                        while (p < n.players.length) {
+                                                } else {
+                                                    async.each(singleData.resultsCombat.players, function (player, callback) {
                                                             Athelete.findOne({
-                                                                _id: n.players[p].player
+                                                                _id: player
                                                             }).lean().deepPopulate("school").exec(function (err, found) {
                                                                 if (found.middleName) {
                                                                     var name = found.firstName + " " + found.middleName + " " + found.surname;
@@ -3071,64 +2616,52 @@ var model = {
                                                                 } else {
                                                                     var school = found.school.name;
                                                                 }
-                                                                var player = {};
-                                                                player.name = name;
-                                                                player.school = school;
-                                                                player.sfaId = found.sfaId;
-                                                                player.profilePic = found.photograph;
-                                                                profile.player.push(player);
-                                                            });
-                                                            p++;
-                                                        }
-                                                        if (n.team !== opponentsTeam._id) {
-                                                            TeamSport.findOne({
-                                                                teamId: n.team
-                                                            }).lean().exec(function (err, found) {
-                                                                if (err) {
-                                                                    callback(null, err);
-                                                                } else if (_.isEmpty(found)) {
-                                                                    callback(null, profile.match);
-                                                                } else {
-                                                                    opponentName = found.teamId;
-                                                                    opponentSchool = found.schoolName;
-                                                                    if (singleData.resultsCombat.winner.player === n) {
+                                                                if (!player.equals(singleData.opponentsSingle.athleteId)) {
+                                                                    stats.opponentName = name;
+                                                                    stats.school = school;
+                                                                    if (singleData.resultsCombat.winner.player === player) {
                                                                         stats.isAthleteWinner = false;
                                                                     } else {
                                                                         stats.isAthleteWinner = true;
                                                                     }
+                                                                    var player = {};
+                                                                    player.name = name;
+                                                                    player.school = school;
+                                                                    player.sfaId = found.sfaId;
+                                                                    player.profilePic = found.photograph;
                                                                     profile.match.push(stats);
-                                                                    callback(null, profile);
+                                                                    profile.player.push(player);
+                                                                    callback(null, profile.match);
+                                                                } else {
+                                                                    var player = {};
+                                                                    player.name = name;
+                                                                    player.school = school;
+                                                                    player.sfaId = found.sfaId;
+                                                                    player.profilePic = found.photograph;
+                                                                    profile.player.push(player);
+                                                                    while (i < singleData.resultsCombat.players[0].sets.length) {
+                                                                        if (i == 0) {
+                                                                            result = singleData.resultsCombat.players[0].sets[i].point + "-" + singleData.resultsCombat.players[1].sets[i].point;
+                                                                        } else {
+                                                                            result = result + "," + singleData.resultsCombat.players[0].sets[i].point + "-" + singleData.resultsCombat.players[1].sets[i].point;
+                                                                        }
+                                                                        i++;
+                                                                    }
+                                                                    stats.score = result;
+                                                                    profile.match.push(stats);
+                                                                    callback(null, stats);
                                                                 }
                                                             });
-                                                        } else {
-                                                            while (i < singleData.resultsCombat.teams[0].sets.length) {
-                                                                if (i == 0) {
-                                                                    result = singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
-                                                                } else {
-                                                                    result = result + "," + singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
-                                                                }
-                                                                i++;
-                                                                console.log("i", result);
-                                                            }
-                                                            stats.score = result;
-                                                            stats.isAthleteWinner = true;
-                                                            profile.match.push(stats);
-                                                            callback(null, profile);
-                                                        }
-
-                                                    },
-                                                    function (err) {
-                                                        callback(null, profile);
-                                                    });
-                                            }
-                                        } else if (singleData.resultRacquets) {
-                                            var i = 0;
-                                            var result;
-                                            if (singleData.resultRacquets.teams.length == 1) {
-                                                var p = 0;
-                                                while (p < singleData.resultRacquets.teams[0].players.length) {
+                                                        },
+                                                        function (err) {
+                                                            callback(null, stats);
+                                                        });
+                                                }
+                                            } else if (singleData.resultRacquets) {
+                                                var i = 0;
+                                                if (singleData.resultRacquets.players.length == 1) {
                                                     Athelete.findOne({
-                                                        _id: singleData.resultRacquets.teams[0].players[p].player
+                                                        _id: singleData.resultRacquets.players.player
                                                     }).lean().deepPopulate("school").exec(function (err, found) {
                                                         if (found.middleName) {
                                                             var name = found.firstName + " " + found.middleName + " " + found.surname;
@@ -3146,63 +2679,24 @@ var model = {
                                                         player.sfaId = found.sfaId;
                                                         player.profilePic = found.photograph;
                                                         profile.player.push(player);
-                                                    });
-                                                    p++;
-                                                }
-                                                while (i < singleData.resultRacquets.teams[0].sets.length) {
-                                                    if (i == 0) {
-                                                        result = singleData.resultRacquets.teams[0].sets[i].point;
-                                                    } else {
-                                                        result = result + "," + singleData.resultRacquets.teams[0].sets[i].point;
-                                                    }
-                                                    i++;
-                                                    console.log("i", result);
-                                                }
-                                                stats.score = result;
-                                                stats.isAthleteWinner = true;
-                                                profile.match.push(stats);
-                                                callback(null, profile);
-                                            } else {
-                                                async.each(singleData.resultRacquets.teams, function (n, callback) {
-                                                        if (n.team !== opponentsTeam._id) {
-                                                            TeamSport.findOne({
-                                                                teamId: n.team
-                                                            }).lean().exec(function (err, found) {
-                                                                if (err) {
-                                                                    callback(null, err);
-                                                                } else if (_.isEmpty(found)) {
-                                                                    callback(null, profile.match);
-                                                                } else {
-                                                                    opponentName = found.teamId;
-                                                                    opponentSchool = found.schoolName;
-                                                                    if (singleData.resultsCombat.winner.player === n) {
-                                                                        stats.isAthleteWinner = false;
-                                                                    } else {
-                                                                        stats.isAthleteWinner = true;
-                                                                    }
-                                                                    profile.match.push(stats);
-                                                                    callback(null, profile.match);
-                                                                }
-                                                            });
-                                                        } else {
-                                                            while (i < singleData.resultRacquets.teams[0].sets.length) {
-                                                                if (i == 0) {
-                                                                    result = singleData.resultRacquets.teams[0].sets[i].point + "-" + singleData.resultRacquets.teams[1].sets[i].point;
-                                                                } else {
-                                                                    result = result + "," + singleData.resultRacquets.teams[0].sets[i].point + "-" + singleData.resultRacquets.teams[1].sets[i].point;
-                                                                }
-                                                                i++;
-                                                                console.log("i", result);
+                                                        while (i < singleData.resultRacquets.players[0].sets.length) {
+                                                            console.log("players", singleData.resultRacquets.players[0].sets[i]);
+                                                            if (i == 0) {
+                                                                result = singleData.resultRacquets.players[0].sets[i].point;
+                                                            } else {
+                                                                result = result + "," + singleData.resultRacquets.players[0].sets[i].point;
                                                             }
-                                                            stats.score = result;
-                                                            stats.isAthleteWinner = true;
-                                                            profile.match.push(stats);
-                                                            callback(null, profile.match);
+                                                            i++;
                                                         }
-                                                        var p = 0;
-                                                        while (p < n.players.length) {
+                                                        stats.isAthleteWinner = true;
+                                                        stats.score = result;
+                                                        profile.match.push(stats);
+                                                        callback(null, stats);
+                                                    });
+                                                } else {
+                                                    async.each(singleData.resultRacquets.players, function (player, callback) {
                                                             Athelete.findOne({
-                                                                _id: n.players[p].player
+                                                                _id: player
                                                             }).lean().deepPopulate("school").exec(function (err, found) {
                                                                 if (found.middleName) {
                                                                     var name = found.firstName + " " + found.middleName + " " + found.surname;
@@ -3214,227 +2708,351 @@ var model = {
                                                                 } else {
                                                                     var school = found.school.name;
                                                                 }
+                                                                if (!player.equals(singleData.opponentsSingle.athleteId)) {
+                                                                    stats.opponentName = name;
+                                                                    stats.school = school;
+                                                                    if (singleData.resultRacquets.winner.player === player) {
+                                                                        stats.isAthleteWinner = false;
+                                                                    } else {
+                                                                        stats.isAthleteWinner = true;
+                                                                    }
+                                                                    var player = {};
+                                                                    player.name = name;
+                                                                    player.school = school;
+                                                                    player.sfaId = found.sfaId;
+                                                                    player.profilePic = found.photograph;
+                                                                    profile.player.push(player);
+                                                                    profile.match.push(stats);
+                                                                } else {
+                                                                    var player = {};
+                                                                    player.name = name;
+                                                                    player.school = school;
+                                                                    player.sfaId = found.sfaId;
+                                                                    player.profilePic = found.photograph;
+                                                                    profile.player.push(player);
+                                                                    while (i < singleData.resultRacquets.players[0].sets.length) {
+                                                                        if (i == 0) {
+                                                                            result = singleData.resultRacquets.players[0].sets[i].point + "-" + singleData.resultRacquets.players[1].sets[i].point;
+                                                                        } else {
+                                                                            result = result + "," + singleData.resultRacquets.players[0].sets[i].point + "-" + singleData.resultRacquets.players[1].sets[i].point;
+                                                                        }
+                                                                        i++;
+                                                                    }
+                                                                    stats.score = result;
+                                                                }
+                                                                profile.match.push(stats);
+                                                                callback(null, profile);
+                                                            });
+                                                        },
+                                                        function (err) {
+                                                            callback(null, stats);
+                                                        });
+                                                }
+                                            } else if (singleData.resultHeat) {
+                                                var i = 0;
+                                                var result;
+                                                async.each(singleData.resultHeat.players, function (n, callback) {
+                                                    if (n._id) {
+                                                        Athelete.findOne({
+                                                            _id: n._id
+                                                        }).lean().deepPopulate("school").exec(function (err, found) {
+                                                            if (found.middleName) {
+                                                                var name = found.firstName + " " + found.middleName + " " + found.surname;
+                                                            } else {
+                                                                var name = found.firstName + " " + found.surname;
+                                                            }
+                                                            if (found.atheleteSchoolName) {
+                                                                var school = found.atheleteSchoolName;
+                                                            } else {
+                                                                var school = found.school.name;
+                                                            }
+                                                            if (n._id === singleData.opponentsSingle.athleteId) {
                                                                 var player = {};
                                                                 player.name = name;
                                                                 player.school = school;
                                                                 player.sfaId = found.sfaId;
                                                                 player.profilePic = found.photograph;
                                                                 profile.player.push(player);
-                                                            });
-                                                            p++;
-                                                        }
-                                                    },
-                                                    function (err) {
+                                                                stats.score = n.time;
+                                                                stats.result = n.result;
+                                                                profile.match.push(stats);
+                                                                callback(null, profile);
+                                                            } else {
+                                                                var player = {};
+                                                                player.name = name;
+                                                                player.school = school;
+                                                                player.sfaId = found.sfaId;
+                                                                player.profilePic = found.photograph;
+                                                                profile.player.push(player);
+                                                                callback(null, profile);
+                                                            }
+                                                        });
+                                                    } else {
                                                         callback(null, profile);
-                                                    });
-                                            }
-                                        } else if (singleData.resultHeat) {
-                                            var i = 0;
-                                            var result;
-                                            async.each(singleData.resultHeat.players, function (n, callback) {
-                                                StudentTeam.findOne({
-                                                    teamId: n.id
-                                                }).lean().deepPopulate('studentId.school').exec(function (err, found) {
-                                                    if (found.studentId.middleName) {
-                                                        var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                    } else {
-                                                        var name = found.studentId.firstName + " " + found.studentId.surname;
                                                     }
-                                                    if (found.studentId.atheleteSchoolName) {
-                                                        var school = found.studentId.atheleteSchoolName;
+                                                }, function (err) {
+                                                    callback(null, profile.match);
+                                                });
+                                            } else if (singleData.resultQualifyingRound) {
+                                                Athelete.findOne({
+                                                    _id: singleData.opponentsSingle.athleteId
+                                                }).lean().deepPopulate("school").exec(function (err, found) {
+                                                    if (found.middleName) {
+                                                        var name = found.firstName + " " + found.middleName + " " + found.surname;
                                                     } else {
-                                                        var school = found.studentId.school.name;
+                                                        var name = found.firstName + " " + found.surname;
+                                                    }
+                                                    if (found.atheleteSchoolName) {
+                                                        var school = found.atheleteSchoolName;
+                                                    } else {
+                                                        var school = found.school.name;
                                                     }
                                                     var player = {};
                                                     player.name = name;
                                                     player.school = school;
-                                                    player.sfaId = found.studentId.sfaId;
-                                                    player.profilePic = found.studentId.photograph;
+                                                    player.sfaId = found.sfaId;
+                                                    player.profilePic = found.photograph;
                                                     profile.player.push(player);
-                                                });
-                                                if (singleData.winner.player === n.player) {
                                                     stats.score = n.time;
                                                     stats.result = n.result;
                                                     profile.match.push(stats);
+                                                    stats.score = singleData.resultQualifyingRound.player.bestAttempt;
+                                                    stats.result = singleData.resultQualifyingRound.player.result;
+                                                    profile.match.push(stats);
+                                                    callback(null, profile.match);
+                                                });
+                                            } else if (singleData.resultSwiss) {
+                                                var result;
+                                                var name;
+                                                var school;
+                                                Athelete.findOne({
+                                                    _id: singleData.opponentsSingle.athleteId
+                                                }).lean().deepPopulate("school").exec(function (err, found) {
+                                                    if (found.middleName) {
+                                                        name = found.firstName + " " + found.middleName + " " + found.surname;
+                                                    } else {
+                                                        name = found.firstName + " " + found.surname;
+                                                    }
+                                                    if (found.atheleteSchoolName) {
+                                                        school = found.atheleteSchoolName;
+                                                    } else {
+                                                        school = found.school.name;
+                                                    }
+                                                    var player = {};
+                                                    player.name = name;
+                                                    player.school = school;
+                                                    player.sfaId = found.sfaId;
+                                                    player.profilePic = found.photograph;
+                                                    profile.player.push(player);
+                                                });
+                                                async.each(singleData.resultSwiss.players, function (n, callback) {
+                                                    if (n.id === singleData.opponentsSingle._id) {
+                                                        stats.score = n.score;
+                                                        stats.rank = n.rank;
+                                                        profile.match.push(stats);
+                                                        callback(null, profile.match);
+                                                    } else if (!n.id.equals(singleData.opponentsSingle._id)) {
+                                                        if (singleData.resultSwiss.winner.player === n.athleteId) {
+                                                            stats.isAthleteWinner = false;
+                                                        } else {
+                                                            stats.isAthleteWinner = true;
+                                                        }
+                                                        profile.match.push(stats);
+                                                        callback(null, profile);
+                                                    }
+                                                }, function (err) {
                                                     callback(null, profile);
-                                                } else {
+                                                });
+                                            } else if (singleData.resultKnockout) {
+                                                var result;
+                                                var name;
+                                                var school;
+                                                Athelete.findOne({
+                                                    _id: singleData.opponentsSingle.athleteId
+                                                }).lean().deepPopulate("school").exec(function (err, found) {
+                                                    if (found.middleName) {
+                                                        name = found.firstName + " " + found.middleName + " " + found.surname;
+                                                    } else {
+                                                        name = found.firstName + " " + found.surname;
+                                                    }
+                                                    if (found.atheleteSchoolName) {
+                                                        school = found.atheleteSchoolName;
+                                                    } else {
+                                                        school = found.school.name;
+                                                    }
+                                                    var player = {};
+                                                    player.name = name;
+                                                    player.school = school;
+                                                    player.sfaId = found.sfaId;
+                                                    player.profilePic = found.photograph;
+                                                    profile.player.push(player);
+                                                });
+                                                async.each(singleData.resultKnockout.players, function (n, callback) {
+                                                    if (n.playerId === singleData.opponentsSingle._id) {
+                                                        stats.score = n.score;
+                                                        stats.rank = n.rank;
+                                                        profile.match.push(stats);
+                                                        callback(null, profile.match);
+                                                    } else if (!n.playerId.equals(singleData.opponentsSingle._id)) {
+                                                        if (singleData.resultKnockout.winner.player === n.athleteId) {
+                                                            stats.isAthleteWinner = false;
+                                                        } else {
+                                                            stats.isAthleteWinner = true;
+                                                        }
+                                                        stats.opponentName = name;
+                                                        stats.school = school;
+                                                        profile.match.push(stats);
+                                                        callback(null, profile.match);
+                                                    }
+                                                }, function (err) {
+                                                    callback(null, profile.match);
+                                                });
+                                            } else if (singleData.resultShooting) {
+                                                Athelete.findOne({
+                                                    _id: singleData.opponentsSingle.athleteId
+                                                }).lean().deepPopulate("school").exec(function (err, found) {
+                                                    if (found.middleName) {
+                                                        var name = found.firstName + " " + found.middleName + " " + found.surname;
+                                                    } else {
+                                                        var name = found.firstName + " " + found.surname;
+                                                    }
+                                                    if (found.atheleteSchoolName) {
+                                                        var school = found.atheleteSchoolName;
+                                                    } else {
+                                                        var school = found.school.name;
+                                                    }
+                                                    var player = {};
+                                                    player.name = name;
+                                                    player.school = school;
+                                                    player.sfaId = found.sfaId;
+                                                    player.profilePic = found.photograph;
+                                                    profile.player.push(player);
+                                                    stats.score = singleData.resultShooting.finalScore;
+                                                    stats.result = singleData.resultShooting.result;
+                                                    profile.match.push(stats);
                                                     callback(null, profile);
-                                                }
-                                            }, function (err) {
+                                                });
+                                            } else {
                                                 callback(null, profile);
-                                            });
-                                        } else if (singleData.resultBasketball) {
-                                            var i = 0;
-                                            var result;
-                                            if (singleData.resultBasketball.teams.length == 1) {
-                                                StudentTeam.findOne({
-                                                    teamId: singleData.resultBasketball.teams[0].team
-                                                }).lean().deepPopulate('studentId.school').exec(function (err, found) {
-                                                    if (found.studentId.middleName) {
-                                                        var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                    } else {
-                                                        var name = found.studentId.firstName + " " + found.studentId.surname;
-                                                    }
-                                                    if (found.studentId.atheleteSchoolName) {
-                                                        var school = found.studentId.atheleteSchoolName;
-                                                    } else {
-                                                        var school = found.studentId.school.name;
-                                                    }
-                                                    var player = {};
-                                                    player.name = name;
-                                                    player.school = school;
-                                                    player.sfaId = found.studentId.sfaId;
-                                                    player.profilePic = found.studentId.photograph;
-                                                    profile.player.push(player);
-                                                    stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints;
-                                                    stats.isAthleteWinner = true;
-                                                    profile.match.push(stats);
-                                                    callback(null, profile);
-                                                });
-                                            } else {
-                                                async.each(singleData.resultBasketball.teams, function (n, callback) {
-                                                    StudentTeam.findOne({
-                                                        teamId: n.team
-                                                    }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
-                                                        if (err) {
-                                                            callback(null, err);
-                                                        } else if (_.isEmpty(found)) {
-                                                            callback(null, profile.match);
-                                                        } else {
-                                                            if (found.studentId.middleName) {
-                                                                var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                            }
+                                        },
+                                        function (err) {
+                                            callback(null, profile);
+                                        });
+                                }
+                            });
+                        } else {
+                            console.log("found in else", found);
+                            var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
+                            var newPipeLine = _.cloneDeep(pipeLine);
+                            newPipeLine.push(
+                                // Stage 7
+                                {
+                                    $lookup: {
+                                        "from": "teamsports",
+                                        "localField": "opponentsTeam",
+                                        "foreignField": "_id",
+                                        "as": "opponentsTeam"
+                                    }
+                                },
+                                // Stage 7
+                                {
+                                    $unwind: {
+                                        path: "$opponentsTeam"
+                                    }
+                                },
+
+                                {
+                                    $match: {
+                                        "$opponentsTeam.schoolName": data.schoolName
+                                    }
+                                },
+
+                                {
+                                    $lookup: {
+                                        "from": "agegroups",
+                                        "localField": "sport.ageGroup",
+                                        "foreignField": "_id",
+                                        "as": "sport.ageGroup"
+                                    }
+                                },
+
+                                {
+                                    $unwind: {
+                                        path: "$sport.ageGroup",
+
+                                    }
+                                },
+
+                                {
+                                    $lookup: {
+                                        "from": "weights",
+                                        "localField": "sport.weight",
+                                        "foreignField": "_id",
+                                        "as": "sport.weight"
+                                    }
+                                }, {
+                                    $unwind: {
+                                        path: "$sport.weight",
+                                        preserveNullAndEmptyArrays: true // optional
+                                    }
+                                }, {
+                                    $sort: {
+                                        createdAt: 1
+                                    }
+                                }
+                            );
+                            Match.aggregate(newPipeLine, function (err, matchData) {
+                                console.log("matchData", matchData);
+                                if (err) {
+                                    callback(err, "error in mongoose");
+                                } else {
+                                    // var match = [];
+                                    async.each(matchData, function (singleData, callback) {
+                                            var stats = {};
+                                            stats.year = new Date(singleData.createdAt).getFullYear();
+                                            stats.ageGroup = singleData.sport.ageGroup.name;
+                                            stats.sportslist = singleData.sport.sportslist.name;
+                                            stats.gender = singleData.sport.gender;
+                                            if (singleData.sport.weight) {
+                                                stats.weight = singleData.sport.weight.name;
+                                            }
+                                            stats.round = singleData.round;
+                                            stats.video = singleData.video;
+                                            stats.videoType = singleData.videoType;
+                                            if (singleData.resultsCombat) {
+                                                var i = 0;
+                                                var result;
+                                                if (singleData.resultsCombat.teams.length == 1) {
+                                                    var p = 0;
+                                                    while (p < singleData.resultsCombat.teams[0].players.length) {
+                                                        Athelete.findOne({
+                                                            _id: singleData.resultsCombat.teams[0].players[p].player
+                                                        }).lean().deepPopulate("school").exec(function (err, found) {
+                                                            if (found.middleName) {
+                                                                var name = found.firstName + " " + found.middleName + " " + found.surname;
                                                             } else {
-                                                                var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                                var name = found.firstName + " " + found.surname;
                                                             }
-                                                            if (found.studentId.atheleteSchoolName) {
-                                                                var school = found.studentId.atheleteSchoolName;
+                                                            if (found.atheleteSchoolName) {
+                                                                var school = found.atheleteSchoolName;
                                                             } else {
-                                                                var school = found.studentId.school.name;
+                                                                var school = found.school.name;
                                                             }
                                                             var player = {};
                                                             player.name = name;
                                                             player.school = school;
-                                                            player.sfaId = found.studentId.sfaId;
-                                                            player.profilePic = found.studentId.photograph;
+                                                            player.sfaId = found.sfaId;
+                                                            player.profilePic = found.photograph;
                                                             profile.player.push(player);
-                                                            stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultBasketball.teams[1].teamResults.finalGoalPoints;
-                                                            if (singleData.resultBasketball.winner.player === n.team) {
-                                                                stats.isAthleteWinner = true;
-                                                            } else {
-                                                                stats.opponentName = found.teamId.name;
-                                                                stats.school = found.teamId.schoolName;
-                                                                stats.teamId = found.teamId.teamId;
-                                                            }
-                                                            profile.match.push(stats);
-                                                            callback(null, profile);
-                                                        }
-                                                    });
-
-                                                }, function (err) {
-                                                    callback(null, profile.match);
-                                                });
-                                            }
-                                        } else if (singleData.resultFootball) {
-                                            var i = 0;
-                                            var result;
-                                            if (singleData.resultFootball.teams.length == 1) {
-                                                StudentTeam.findOne({
-                                                    teamId: singleData.resultFootball.teams[0].team
-                                                }).lean().deepPopulate('studentId.school').exec(function (err, found) {
-                                                    if (found.studentId.middleName) {
-                                                        var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                    } else {
-                                                        var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                        });
+                                                        p++;
                                                     }
-                                                    if (found.studentId.atheleteSchoolName) {
-                                                        var school = found.studentId.atheleteSchoolName;
-                                                    } else {
-                                                        var school = found.studentId.school.name;
-                                                    }
-                                                    var player = {};
-                                                    player.name = name;
-                                                    player.school = school;
-                                                    player.sfaId = found.studentId.sfaId;
-                                                    player.profilePic = found.studentId.photograph;
-                                                    profile.player.push(player);
-                                                    stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints;
-                                                    stats.isAthleteWinner = true;
-                                                    profile.match.push(stats);
-                                                    callback(null, profile);
-                                                });
-                                            } else {
-                                                async.each(singleData.resultFootball.teams, function (n, callback) {
-                                                    StudentTeam.findOne({
-                                                        teamId: n.team
-                                                    }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
-                                                        if (err) {
-                                                            callback(null, err);
-                                                        } else if (_.isEmpty(found)) {
-                                                            callback(null, profile.match);
-                                                        } else {
-                                                            if (found.studentId.middleName) {
-                                                                var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                            } else {
-                                                                var name = found.studentId.firstName + " " + found.studentId.surname;
-                                                            }
-                                                            if (found.studentId.atheleteSchoolName) {
-                                                                var school = found.studentId.atheleteSchoolName;
-                                                            } else {
-                                                                var school = found.studentId.school.name;
-                                                            }
-                                                            var player = {};
-                                                            player.name = name;
-                                                            player.school = school;
-                                                            player.sfaId = found.studentId.sfaId;
-                                                            player.profilePic = found.studentId.photograph;
-                                                            profile.player.push(player);
-                                                            stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
-                                                            if (singleData.resultFootball.winner.player === n.team) {
-                                                                stats.isAthleteWinner = true;
-                                                            } else {
-                                                                stats.opponentName = found.teamId.name
-                                                                stats.school = found.teamId.schoolName;
-                                                                stats.teamId = found.teamId.teamId;
-                                                            }
-                                                            profile.match.push(stats);
-                                                            callback(null, profile);
-                                                        }
-
-                                                    });
-
-                                                }, function (err) {
-                                                    callback(null, profile.match);
-                                                });
-                                            }
-                                        } else if (singleData.resultVolleyball) {
-                                            var i = 0;
-                                            var result;
-                                            if (singleData.resultVolleyball.teams.length == 1) {
-                                                StudentTeam.findOne({
-                                                    teamId: singleData.resultVolleyball.teams[0].team
-                                                }).lean().deepPopulate('studentId.school').exec(function (err, found) {
-                                                    if (found.studentId.middleName) {
-                                                        var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                    } else {
-                                                        var name = found.studentId.firstName + " " + found.studentId.surname;
-                                                    }
-                                                    if (found.studentId.atheleteSchoolName) {
-                                                        var school = found.studentId.atheleteSchoolName;
-                                                    } else {
-                                                        var school = found.studentId.school.name;
-                                                    }
-                                                    var player = {};
-                                                    player.name = name;
-                                                    player.school = school;
-                                                    player.sfaId = found.studentId.sfaId;
-                                                    player.profilePic = found.studentId.photograph;
-                                                    profile.player.push(player);
-                                                    var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
-                                                    while (i < length) {
+                                                    while (i < singleData.resultsCombat.teams[0].sets.length) {
                                                         if (i == 0) {
-                                                            result = singleData.resultVolleyball.teams[0].teamResults.sets[i].point;
+                                                            result = singleData.resultsCombat.teams[0].sets[i].point;
                                                         } else {
-                                                            result = result + "," + singleData.resultVolleyball.teams[0].teamResults.sets[i].point;
+                                                            result = result + "," + singleData.resultsCombat.teams[0].sets[i].point;
                                                         }
                                                         i++;
                                                         console.log("i", result);
@@ -3443,222 +3061,245 @@ var model = {
                                                     stats.isAthleteWinner = true;
                                                     profile.match.push(stats);
                                                     callback(null, profile);
-                                                });
-                                            } else {
-                                                async.each(singleData.resultVolleyball.teams, function (n, callback) {
-                                                    StudentTeam.findOne({
-                                                        teamId: n.team
-                                                    }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
-                                                        if (err) {
-                                                            callback(null, err);
-                                                        } else if (_.isEmpty(found)) {
-                                                            callback(null, profile.match);
-                                                        } else {
-                                                            if (found.studentId.middleName) {
-                                                                var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                            } else {
-                                                                var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                } else {
+                                                    async.each(singleData.resultsCombat.teams, function (n, callback) {
+                                                            var p = 0;
+                                                            while (p < n.players.length) {
+                                                                Athelete.findOne({
+                                                                    _id: n.players[p].player
+                                                                }).lean().deepPopulate("school").exec(function (err, found) {
+                                                                    if (found.middleName) {
+                                                                        var name = found.firstName + " " + found.middleName + " " + found.surname;
+                                                                    } else {
+                                                                        var name = found.firstName + " " + found.surname;
+                                                                    }
+                                                                    if (found.atheleteSchoolName) {
+                                                                        var school = found.atheleteSchoolName;
+                                                                    } else {
+                                                                        var school = found.school.name;
+                                                                    }
+                                                                    var player = {};
+                                                                    player.name = name;
+                                                                    player.school = school;
+                                                                    player.sfaId = found.sfaId;
+                                                                    player.profilePic = found.photograph;
+                                                                    profile.player.push(player);
+                                                                });
+                                                                p++;
                                                             }
-                                                            if (found.studentId.atheleteSchoolName) {
-                                                                var school = found.studentId.atheleteSchoolName;
+                                                            if (n.team !== opponentsTeam._id) {
+                                                                TeamSport.findOne({
+                                                                    teamId: n.team
+                                                                }).lean().exec(function (err, found) {
+                                                                    if (err) {
+                                                                        callback(null, err);
+                                                                    } else if (_.isEmpty(found)) {
+                                                                        callback(null, profile.match);
+                                                                    } else {
+                                                                        opponentName = found.teamId;
+                                                                        opponentSchool = found.schoolName;
+                                                                        if (singleData.resultsCombat.winner.player === n) {
+                                                                            stats.isAthleteWinner = false;
+                                                                        } else {
+                                                                            stats.isAthleteWinner = true;
+                                                                        }
+                                                                        profile.match.push(stats);
+                                                                        callback(null, profile);
+                                                                    }
+                                                                });
                                                             } else {
-                                                                var school = found.studentId.school.name;
-                                                            }
-                                                            var player = {};
-                                                            player.name = name;
-                                                            player.school = school;
-                                                            player.sfaId = found.studentId.sfaId;
-                                                            player.profilePic = found.studentId.photograph;
-                                                            profile.player.push(player);
-                                                            var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
-                                                            while (i < length) {
-                                                                console.log("players", singleData.resultVolleyball.teams[0].teamResults.sets[i]);
-                                                                if (i == 0) {
-                                                                    result = singleData.resultVolleyball.teams[0].teamResults.sets[i].point + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].point;
-                                                                } else {
-                                                                    result = result + "," + singleData.resultVolleyball.teams[0].teamResults.sets[i].point + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].point;
+                                                                while (i < singleData.resultsCombat.teams[0].sets.length) {
+                                                                    if (i == 0) {
+                                                                        result = singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
+                                                                    } else {
+                                                                        result = result + "," + singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
+                                                                    }
+                                                                    i++;
+                                                                    console.log("i", result);
                                                                 }
-                                                                i++;
-                                                                console.log("i", result);
-                                                            }
-                                                            stats.score = result;
-                                                            if (singleData.resultVolleyball.winner.player === n.team) {
+                                                                stats.score = result;
                                                                 stats.isAthleteWinner = true;
-                                                            } else {
-                                                                stats.opponentName = found.teamId.name
-                                                                stats.school = found.teamId.schoolName;
-                                                                stats.teamId = found.teamId.teamId;
+                                                                profile.match.push(stats);
+                                                                callback(null, profile);
                                                             }
-                                                            profile.match.push(stats);
+
+                                                        },
+                                                        function (err) {
                                                             callback(null, profile);
-                                                        }
-                                                    });
-                                                }, function (err) {
-                                                    callback(null, profile);
-                                                });
-                                            }
-                                        } else if (singleData.resultHockey) {
-                                            var i = 0;
-                                            var result;
-                                            if (singleData.resultHockey.teams.length == 1) {
-                                                StudentTeam.findOne({
-                                                    teamId: singleData.resultHockey.teams[0].team
-                                                }).lean().deepPopulate('studentId.school').exec(function (err, found) {
-                                                    if (found.studentId.middleName) {
-                                                        var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                    } else {
-                                                        var name = found.studentId.firstName + " " + found.studentId.surname;
-                                                    }
-                                                    if (found.studentId.atheleteSchoolName) {
-                                                        var school = found.studentId.atheleteSchoolName;
-                                                    } else {
-                                                        var school = found.studentId.school.name;
-                                                    }
-                                                    var player = {};
-                                                    player.name = name;
-                                                    player.school = school;
-                                                    player.sfaId = found.studentId.sfaId;
-                                                    player.profilePic = found.studentId.photograph;
-                                                    profile.player.push(player);
-                                                    stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints;
-                                                    stats.isAthleteWinner = true;
-                                                    profile.match.push(stats);
-                                                    callback(null, profile);
-                                                });
-                                            } else {
-                                                async.each(singleData.resultHockey.teams, function (n, callback) {
-                                                    StudentTeam.findOne({
-                                                        teamId: n.team
-                                                    }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
-                                                        if (err) {
-                                                            callback(null, err);
-                                                        } else if (_.isEmpty(found)) {
-                                                            callback(null, profile.match);
-                                                        } else {
-                                                            if (found.studentId.middleName) {
-                                                                var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                        });
+                                                }
+                                            } else if (singleData.resultRacquets) {
+                                                var i = 0;
+                                                var result;
+                                                if (singleData.resultRacquets.teams.length == 1) {
+                                                    var p = 0;
+                                                    while (p < singleData.resultRacquets.teams[0].players.length) {
+                                                        Athelete.findOne({
+                                                            _id: singleData.resultRacquets.teams[0].players[p].player
+                                                        }).lean().deepPopulate("school").exec(function (err, found) {
+                                                            if (found.middleName) {
+                                                                var name = found.firstName + " " + found.middleName + " " + found.surname;
                                                             } else {
-                                                                var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                                var name = found.firstName + " " + found.surname;
                                                             }
-                                                            if (found.studentId.atheleteSchoolName) {
-                                                                var school = found.studentId.atheleteSchoolName;
+                                                            if (found.atheleteSchoolName) {
+                                                                var school = found.atheleteSchoolName;
                                                             } else {
-                                                                var school = found.studentId.school.name;
+                                                                var school = found.school.name;
                                                             }
                                                             var player = {};
                                                             player.name = name;
                                                             player.school = school;
-                                                            player.sfaId = found.studentId.sfaId;
-                                                            player.profilePic = found.studentId.photograph;
+                                                            player.sfaId = found.sfaId;
+                                                            player.profilePic = found.photograph;
                                                             profile.player.push(player);
-                                                            stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[0].teamResults.finalPoints;;
-                                                            if (singleData.resultHockey.winner.player === n.team) {
-                                                                stats.isAthleteWinner = true;
-                                                            } else {
-                                                                stats.opponentName = found.teamId.name
-                                                                stats.school = found.teamId.schoolName;
-                                                                stats.teamId = found.teamId.teamId;
-                                                            }
-                                                            profile.match.push(stats);
-                                                            callback(null, profile);
-                                                        }
-                                                    });
-                                                }, function (err) {
-                                                    callback(null, profile);
-                                                });
-                                            }
-                                        } else if (singleData.resultWaterPolo) {
-                                            var i = 0;
-                                            var result;
-                                            if (singleData.resultWaterPolo.teams.length == 1) {
-                                                StudentTeam.findOne({
-                                                    teamId: singleData.resultWaterPolo.teams[0].team
-                                                }).lean().deepPopulate('studentId.school').exec(function (err, found) {
-                                                    if (found.studentId.middleName) {
-                                                        var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                    } else {
-                                                        var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                        });
+                                                        p++;
                                                     }
-                                                    if (found.studentId.atheleteSchoolName) {
-                                                        var school = found.studentId.atheleteSchoolName;
-                                                    } else {
-                                                        var school = found.studentId.school.name;
-                                                    }
-                                                    var player = {};
-                                                    player.name = name;
-                                                    player.school = school;
-                                                    player.sfaId = found.studentId.sfaId;
-                                                    player.profilePic = found.studentId.photograph;
-                                                    profile.player.push(player);
-                                                    stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;
-                                                    stats.isAthleteWinner = true;
-                                                    profile.match.push(stats);
-                                                    callback(null, profile);
-                                                });
-                                            } else {
-                                                async.each(singleData.resultWaterPolo.teams, function (n, callback) {
-                                                    StudentTeam.findOne({
-                                                        teamId: n.team
-                                                    }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
-                                                        if (err) {
-                                                            callback(null, err);
-                                                        } else if (_.isEmpty(found)) {
-                                                            callback(null, profile);
+                                                    while (i < singleData.resultRacquets.teams[0].sets.length) {
+                                                        if (i == 0) {
+                                                            result = singleData.resultRacquets.teams[0].sets[i].point;
                                                         } else {
-                                                            var player = {};
-                                                            player.name = name;
-                                                            player.school = school;
-                                                            player.sfaId = found.studentId.sfaId;
-                                                            player.profilePic = found.studentId.photograph;
-                                                            profile.player.push(player);
-                                                            stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;;
-                                                            if (singleData.resultWaterPolo.winner.player === n.team) {
-                                                                stats.isAthleteWinner = true;
-                                                            } else {
-                                                                stats.opponentName = found.teamId.name;
-                                                                stats.school = found.teamId.schoolName;
-                                                                stats.teamId = found.teamId.teamId;
-                                                            }
-                                                            profile.match.push(stats);
-                                                            callback(null, profile);
+                                                            result = result + "," + singleData.resultRacquets.teams[0].sets[i].point;
                                                         }
-
-                                                    });
-
-                                                }, function (err) {
-                                                    callback(null, profile.match);
-                                                });
-                                            }
-                                        } else if (singleData.resultKabaddi) {
-                                            var i = 0;
-                                            var result;
-                                            if (singleData.opponentsTeam.length == 1) {
-                                                StudentTeam.findOne({
-                                                    teamId: singleData.resultKabaddi.teams[0].team
-                                                }).lean().deepPopulate('studentId.school').exec(function (err, found) {
-                                                    if (found.studentId.middleName) {
-                                                        var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                    } else {
-                                                        var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                        i++;
+                                                        console.log("i", result);
                                                     }
-                                                    if (found.studentId.atheleteSchoolName) {
-                                                        var school = found.studentId.atheleteSchoolName;
-                                                    } else {
-                                                        var school = found.studentId.school.name;
-                                                    }
-                                                    var player = {};
-                                                    player.name = name;
-                                                    player.school = school;
-                                                    player.sfaId = found.studentId.sfaId;
-                                                    player.profilePic = found.studentId.photograph;
-                                                    profile.player.push(player);
-                                                    stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints;
+                                                    stats.score = result;
                                                     stats.isAthleteWinner = true;
                                                     profile.match.push(stats);
-                                                    callback(null, profile.match);
+                                                    callback(null, profile);
+                                                } else {
+                                                    async.each(singleData.resultRacquets.teams, function (n, callback) {
+                                                            if (n.team !== opponentsTeam._id) {
+                                                                TeamSport.findOne({
+                                                                    teamId: n.team
+                                                                }).lean().exec(function (err, found) {
+                                                                    if (err) {
+                                                                        callback(null, err);
+                                                                    } else if (_.isEmpty(found)) {
+                                                                        callback(null, profile.match);
+                                                                    } else {
+                                                                        opponentName = found.teamId;
+                                                                        opponentSchool = found.schoolName;
+                                                                        if (singleData.resultsCombat.winner.player === n) {
+                                                                            stats.isAthleteWinner = false;
+                                                                        } else {
+                                                                            stats.isAthleteWinner = true;
+                                                                        }
+                                                                        profile.match.push(stats);
+                                                                        callback(null, profile.match);
+                                                                    }
+                                                                });
+                                                            } else {
+                                                                while (i < singleData.resultRacquets.teams[0].sets.length) {
+                                                                    if (i == 0) {
+                                                                        result = singleData.resultRacquets.teams[0].sets[i].point + "-" + singleData.resultRacquets.teams[1].sets[i].point;
+                                                                    } else {
+                                                                        result = result + "," + singleData.resultRacquets.teams[0].sets[i].point + "-" + singleData.resultRacquets.teams[1].sets[i].point;
+                                                                    }
+                                                                    i++;
+                                                                    console.log("i", result);
+                                                                }
+                                                                stats.score = result;
+                                                                stats.isAthleteWinner = true;
+                                                                profile.match.push(stats);
+                                                                callback(null, profile.match);
+                                                            }
+                                                            var p = 0;
+                                                            while (p < n.players.length) {
+                                                                Athelete.findOne({
+                                                                    _id: n.players[p].player
+                                                                }).lean().deepPopulate("school").exec(function (err, found) {
+                                                                    if (found.middleName) {
+                                                                        var name = found.firstName + " " + found.middleName + " " + found.surname;
+                                                                    } else {
+                                                                        var name = found.firstName + " " + found.surname;
+                                                                    }
+                                                                    if (found.atheleteSchoolName) {
+                                                                        var school = found.atheleteSchoolName;
+                                                                    } else {
+                                                                        var school = found.school.name;
+                                                                    }
+                                                                    var player = {};
+                                                                    player.name = name;
+                                                                    player.school = school;
+                                                                    player.sfaId = found.sfaId;
+                                                                    player.profilePic = found.photograph;
+                                                                    profile.player.push(player);
+                                                                });
+                                                                p++;
+                                                            }
+                                                        },
+                                                        function (err) {
+                                                            callback(null, profile);
+                                                        });
+                                                }
+                                            } else if (singleData.resultHeat) {
+                                                var i = 0;
+                                                var result;
+                                                async.each(singleData.resultHeat.players, function (n, callback) {
+                                                    StudentTeam.findOne({
+                                                        teamId: n.id
+                                                    }).lean().deepPopulate('studentId.school').exec(function (err, found) {
+                                                        if (found.studentId.middleName) {
+                                                            var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                        } else {
+                                                            var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                        }
+                                                        if (found.studentId.atheleteSchoolName) {
+                                                            var school = found.studentId.atheleteSchoolName;
+                                                        } else {
+                                                            var school = found.studentId.school.name;
+                                                        }
+                                                        var player = {};
+                                                        player.name = name;
+                                                        player.school = school;
+                                                        player.sfaId = found.studentId.sfaId;
+                                                        player.profilePic = found.studentId.photograph;
+                                                        profile.player.push(player);
+                                                    });
+                                                    if (singleData.winner.player === n.player) {
+                                                        stats.score = n.time;
+                                                        stats.result = n.result;
+                                                        profile.match.push(stats);
+                                                        callback(null, profile);
+                                                    } else {
+                                                        callback(null, profile);
+                                                    }
+                                                }, function (err) {
+                                                    callback(null, profile);
                                                 });
-                                            } else {
-                                                async.each(singleData.resultKabaddi.teams, function (n, callback) {
+                                            } else if (singleData.resultBasketball) {
+                                                var i = 0;
+                                                var result;
+                                                if (singleData.resultBasketball.teams.length == 1) {
+                                                    StudentTeam.findOne({
+                                                        teamId: singleData.resultBasketball.teams[0].team
+                                                    }).lean().deepPopulate('studentId.school').exec(function (err, found) {
+                                                        if (found.studentId.middleName) {
+                                                            var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                        } else {
+                                                            var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                        }
+                                                        if (found.studentId.atheleteSchoolName) {
+                                                            var school = found.studentId.atheleteSchoolName;
+                                                        } else {
+                                                            var school = found.studentId.school.name;
+                                                        }
+                                                        var player = {};
+                                                        player.name = name;
+                                                        player.school = school;
+                                                        player.sfaId = found.studentId.sfaId;
+                                                        player.profilePic = found.studentId.photograph;
+                                                        profile.player.push(player);
+                                                        stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints;
+                                                        stats.isAthleteWinner = true;
+                                                        profile.match.push(stats);
+                                                        callback(null, profile);
+                                                    });
+                                                } else {
+                                                    async.each(singleData.resultBasketball.teams, function (n, callback) {
                                                         StudentTeam.findOne({
                                                             teamId: n.team
                                                         }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
@@ -3683,62 +3324,135 @@ var model = {
                                                                 player.sfaId = found.studentId.sfaId;
                                                                 player.profilePic = found.studentId.photograph;
                                                                 profile.player.push(player);
-                                                                stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[0].teamResults.finalPoints;;
-                                                                if (singleData.resultKabaddi.winner.player === n.team) {
+                                                                stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultBasketball.teams[1].teamResults.finalGoalPoints;
+                                                                if (singleData.resultBasketball.winner.player === n.team) {
                                                                     stats.isAthleteWinner = true;
                                                                 } else {
-                                                                    if (found.studentId.middleName) {
-                                                                        stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                                    } else {
-                                                                        stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
-                                                                    }
-                                                                    if (found.studentId.atheleteSchoolName) {
-                                                                        stats.school = found.studentId.atheleteSchoolName;
-                                                                    } else {
-                                                                        stats.school = found.studentId.school.name;
-                                                                    }
+                                                                    stats.opponentName = found.teamId.name;
+                                                                    stats.school = found.teamId.schoolName;
+                                                                    stats.teamId = found.teamId.teamId;
                                                                 }
                                                                 profile.match.push(stats);
+                                                                callback(null, profile);
+                                                            }
+                                                        });
+
+                                                    }, function (err) {
+                                                        callback(null, profile.match);
+                                                    });
+                                                }
+                                            } else if (singleData.resultFootball) {
+                                                var i = 0;
+                                                var result;
+                                                if (singleData.resultFootball.teams.length == 1) {
+                                                    StudentTeam.findOne({
+                                                        teamId: singleData.resultFootball.teams[0].team
+                                                    }).lean().deepPopulate('studentId.school').exec(function (err, found) {
+                                                        if (found.studentId.middleName) {
+                                                            var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                        } else {
+                                                            var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                        }
+                                                        if (found.studentId.atheleteSchoolName) {
+                                                            var school = found.studentId.atheleteSchoolName;
+                                                        } else {
+                                                            var school = found.studentId.school.name;
+                                                        }
+                                                        var player = {};
+                                                        player.name = name;
+                                                        player.school = school;
+                                                        player.sfaId = found.studentId.sfaId;
+                                                        player.profilePic = found.studentId.photograph;
+                                                        profile.player.push(player);
+                                                        stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints;
+                                                        stats.isAthleteWinner = true;
+                                                        profile.match.push(stats);
+                                                        callback(null, profile);
+                                                    });
+                                                } else {
+                                                    async.each(singleData.resultFootball.teams, function (n, callback) {
+                                                        StudentTeam.findOne({
+                                                            teamId: n.team
+                                                        }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
+                                                            if (err) {
+                                                                callback(null, err);
+                                                            } else if (_.isEmpty(found)) {
                                                                 callback(null, profile.match);
+                                                            } else {
+                                                                if (found.studentId.middleName) {
+                                                                    var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                } else {
+                                                                    var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                                }
+                                                                if (found.studentId.atheleteSchoolName) {
+                                                                    var school = found.studentId.atheleteSchoolName;
+                                                                } else {
+                                                                    var school = found.studentId.school.name;
+                                                                }
+                                                                var player = {};
+                                                                player.name = name;
+                                                                player.school = school;
+                                                                player.sfaId = found.studentId.sfaId;
+                                                                player.profilePic = found.studentId.photograph;
+                                                                profile.player.push(player);
+                                                                stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
+                                                                if (singleData.resultFootball.winner.player === n.team) {
+                                                                    stats.isAthleteWinner = true;
+                                                                } else {
+                                                                    stats.opponentName = found.teamId.name
+                                                                    stats.school = found.teamId.schoolName;
+                                                                    stats.teamId = found.teamId.teamId;
+                                                                }
+                                                                profile.match.push(stats);
+                                                                callback(null, profile);
                                                             }
 
                                                         });
 
-                                                    },
-                                                    function (err) {
+                                                    }, function (err) {
                                                         callback(null, profile.match);
                                                     });
-                                            }
-                                        } else if (singleData.resultHandball) {
-                                            var i = 0;
-                                            var result;
-                                            if (singleData.resultHandball.teams.length == 1) {
-                                                StudentTeam.findOne({
-                                                    teamId: singleData.resultHandball.teams[0].team
-                                                }).lean().deepPopulate('studentId.school').exec(function (err, found) {
-                                                    if (found.studentId.middleName) {
-                                                        var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                    } else {
-                                                        var name = found.studentId.firstName + " " + found.studentId.surname;
-                                                    }
-                                                    if (found.studentId.atheleteSchoolName) {
-                                                        var school = found.studentId.atheleteSchoolName;
-                                                    } else {
-                                                        var school = found.studentId.school.name;
-                                                    }
-                                                    var player = {};
-                                                    player.name = name;
-                                                    player.school = school;
-                                                    player.sfaId = found.studentId.sfaId;
-                                                    player.profilePic = found.studentId.photograph;
-                                                    profile.player.push(player);
-                                                    stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints;
-                                                    stats.isAthleteWinner = true;
-                                                    profile.match.push(stats);
-                                                    callback(null, profile);
-                                                });
-                                            } else {
-                                                async.each(singleData.resultHandball.teams, function (n, callback) {
+                                                }
+                                            } else if (singleData.resultVolleyball) {
+                                                var i = 0;
+                                                var result;
+                                                if (singleData.resultVolleyball.teams.length == 1) {
+                                                    StudentTeam.findOne({
+                                                        teamId: singleData.resultVolleyball.teams[0].team
+                                                    }).lean().deepPopulate('studentId.school').exec(function (err, found) {
+                                                        if (found.studentId.middleName) {
+                                                            var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                        } else {
+                                                            var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                        }
+                                                        if (found.studentId.atheleteSchoolName) {
+                                                            var school = found.studentId.atheleteSchoolName;
+                                                        } else {
+                                                            var school = found.studentId.school.name;
+                                                        }
+                                                        var player = {};
+                                                        player.name = name;
+                                                        player.school = school;
+                                                        player.sfaId = found.studentId.sfaId;
+                                                        player.profilePic = found.studentId.photograph;
+                                                        profile.player.push(player);
+                                                        var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
+                                                        while (i < length) {
+                                                            if (i == 0) {
+                                                                result = singleData.resultVolleyball.teams[0].teamResults.sets[i].point;
+                                                            } else {
+                                                                result = result + "," + singleData.resultVolleyball.teams[0].teamResults.sets[i].point;
+                                                            }
+                                                            i++;
+                                                            console.log("i", result);
+                                                        }
+                                                        stats.score = result;
+                                                        stats.isAthleteWinner = true;
+                                                        profile.match.push(stats);
+                                                        callback(null, profile);
+                                                    });
+                                                } else {
+                                                    async.each(singleData.resultVolleyball.teams, function (n, callback) {
                                                         StudentTeam.findOne({
                                                             teamId: n.team
                                                         }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
@@ -3763,8 +3477,149 @@ var model = {
                                                                 player.sfaId = found.studentId.sfaId;
                                                                 player.profilePic = found.studentId.photograph;
                                                                 profile.player.push(player);
-                                                                stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[0].teamResults.finalPoints;;
-                                                                if (singleData.resultHandball.winner.player === n) {
+                                                                var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
+                                                                while (i < length) {
+                                                                    console.log("players", singleData.resultVolleyball.teams[0].teamResults.sets[i]);
+                                                                    if (i == 0) {
+                                                                        result = singleData.resultVolleyball.teams[0].teamResults.sets[i].point + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].point;
+                                                                    } else {
+                                                                        result = result + "," + singleData.resultVolleyball.teams[0].teamResults.sets[i].point + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].point;
+                                                                    }
+                                                                    i++;
+                                                                    console.log("i", result);
+                                                                }
+                                                                stats.score = result;
+                                                                if (singleData.resultVolleyball.winner.player === n.team) {
+                                                                    stats.isAthleteWinner = true;
+                                                                } else {
+                                                                    stats.opponentName = found.teamId.name
+                                                                    stats.school = found.teamId.schoolName;
+                                                                    stats.teamId = found.teamId.teamId;
+                                                                }
+                                                                profile.match.push(stats);
+                                                                callback(null, profile);
+                                                            }
+                                                        });
+                                                    }, function (err) {
+                                                        callback(null, profile);
+                                                    });
+                                                }
+                                            } else if (singleData.resultHockey) {
+                                                var i = 0;
+                                                var result;
+                                                if (singleData.resultHockey.teams.length == 1) {
+                                                    StudentTeam.findOne({
+                                                        teamId: singleData.resultHockey.teams[0].team
+                                                    }).lean().deepPopulate('studentId.school').exec(function (err, found) {
+                                                        if (found.studentId.middleName) {
+                                                            var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                        } else {
+                                                            var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                        }
+                                                        if (found.studentId.atheleteSchoolName) {
+                                                            var school = found.studentId.atheleteSchoolName;
+                                                        } else {
+                                                            var school = found.studentId.school.name;
+                                                        }
+                                                        var player = {};
+                                                        player.name = name;
+                                                        player.school = school;
+                                                        player.sfaId = found.studentId.sfaId;
+                                                        player.profilePic = found.studentId.photograph;
+                                                        profile.player.push(player);
+                                                        stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints;
+                                                        stats.isAthleteWinner = true;
+                                                        profile.match.push(stats);
+                                                        callback(null, profile);
+                                                    });
+                                                } else {
+                                                    async.each(singleData.resultHockey.teams, function (n, callback) {
+                                                        StudentTeam.findOne({
+                                                            teamId: n.team
+                                                        }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
+                                                            if (err) {
+                                                                callback(null, err);
+                                                            } else if (_.isEmpty(found)) {
+                                                                callback(null, profile.match);
+                                                            } else {
+                                                                if (found.studentId.middleName) {
+                                                                    var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                } else {
+                                                                    var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                                }
+                                                                if (found.studentId.atheleteSchoolName) {
+                                                                    var school = found.studentId.atheleteSchoolName;
+                                                                } else {
+                                                                    var school = found.studentId.school.name;
+                                                                }
+                                                                var player = {};
+                                                                player.name = name;
+                                                                player.school = school;
+                                                                player.sfaId = found.studentId.sfaId;
+                                                                player.profilePic = found.studentId.photograph;
+                                                                profile.player.push(player);
+                                                                stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[0].teamResults.finalPoints;;
+                                                                if (singleData.resultHockey.winner.player === n.team) {
+                                                                    stats.isAthleteWinner = true;
+                                                                } else {
+                                                                    stats.opponentName = found.teamId.name
+                                                                    stats.school = found.teamId.schoolName;
+                                                                    stats.teamId = found.teamId.teamId;
+                                                                }
+                                                                profile.match.push(stats);
+                                                                callback(null, profile);
+                                                            }
+                                                        });
+                                                    }, function (err) {
+                                                        callback(null, profile);
+                                                    });
+                                                }
+                                            } else if (singleData.resultWaterPolo) {
+                                                var i = 0;
+                                                var result;
+                                                if (singleData.resultWaterPolo.teams.length == 1) {
+                                                    StudentTeam.findOne({
+                                                        teamId: singleData.resultWaterPolo.teams[0].team
+                                                    }).lean().deepPopulate('studentId.school').exec(function (err, found) {
+                                                        if (found.studentId.middleName) {
+                                                            var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                        } else {
+                                                            var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                        }
+                                                        if (found.studentId.atheleteSchoolName) {
+                                                            var school = found.studentId.atheleteSchoolName;
+                                                        } else {
+                                                            var school = found.studentId.school.name;
+                                                        }
+                                                        var player = {};
+                                                        player.name = name;
+                                                        player.school = school;
+                                                        player.sfaId = found.studentId.sfaId;
+                                                        player.profilePic = found.studentId.photograph;
+                                                        profile.player.push(player);
+                                                        stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;
+                                                        stats.isAthleteWinner = true;
+                                                        profile.match.push(stats);
+                                                        callback(null, profile);
+                                                    });
+                                                } else {
+                                                    async.each(singleData.resultWaterPolo.teams, function (n, callback) {
+                                                        StudentTeam.findOne({
+                                                            teamId: n.team
+                                                        }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
+                                                            if (err) {
+                                                                callback(null, err);
+                                                            } else if (_.isEmpty(found)) {
+                                                                callback(null, profile);
+                                                            } else {
+                                                                var player = {};
+                                                                player.name = name;
+                                                                player.school = school;
+                                                                player.sfaId = found.studentId.sfaId;
+                                                                player.profilePic = found.studentId.photograph;
+                                                                profile.player.push(player);
+                                                                stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;;
+                                                                if (singleData.resultWaterPolo.winner.player === n.team) {
                                                                     stats.isAthleteWinner = true;
                                                                 } else {
                                                                     stats.opponentName = found.teamId.name;
@@ -3777,28 +3632,183 @@ var model = {
 
                                                         });
 
-                                                    },
-                                                    function (err) {
+                                                    }, function (err) {
+                                                        callback(null, profile.match);
+                                                    });
+                                                }
+                                            } else if (singleData.resultKabaddi) {
+                                                var i = 0;
+                                                var result;
+                                                if (singleData.opponentsTeam.length == 1) {
+                                                    StudentTeam.findOne({
+                                                        teamId: singleData.resultKabaddi.teams[0].team
+                                                    }).lean().deepPopulate('studentId.school').exec(function (err, found) {
+                                                        if (found.studentId.middleName) {
+                                                            var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                        } else {
+                                                            var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                        }
+                                                        if (found.studentId.atheleteSchoolName) {
+                                                            var school = found.studentId.atheleteSchoolName;
+                                                        } else {
+                                                            var school = found.studentId.school.name;
+                                                        }
+                                                        var player = {};
+                                                        player.name = name;
+                                                        player.school = school;
+                                                        player.sfaId = found.studentId.sfaId;
+                                                        player.profilePic = found.studentId.photograph;
+                                                        profile.player.push(player);
+                                                        stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints;
+                                                        stats.isAthleteWinner = true;
+                                                        profile.match.push(stats);
+                                                        callback(null, profile.match);
+                                                    });
+                                                } else {
+                                                    async.each(singleData.resultKabaddi.teams, function (n, callback) {
+                                                            StudentTeam.findOne({
+                                                                teamId: n.team
+                                                            }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
+                                                                if (err) {
+                                                                    callback(null, err);
+                                                                } else if (_.isEmpty(found)) {
+                                                                    callback(null, profile.match);
+                                                                } else {
+                                                                    if (found.studentId.middleName) {
+                                                                        var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                    } else {
+                                                                        var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                                    }
+                                                                    if (found.studentId.atheleteSchoolName) {
+                                                                        var school = found.studentId.atheleteSchoolName;
+                                                                    } else {
+                                                                        var school = found.studentId.school.name;
+                                                                    }
+                                                                    var player = {};
+                                                                    player.name = name;
+                                                                    player.school = school;
+                                                                    player.sfaId = found.studentId.sfaId;
+                                                                    player.profilePic = found.studentId.photograph;
+                                                                    profile.player.push(player);
+                                                                    stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[0].teamResults.finalPoints;;
+                                                                    if (singleData.resultKabaddi.winner.player === n.team) {
+                                                                        stats.isAthleteWinner = true;
+                                                                    } else {
+                                                                        if (found.studentId.middleName) {
+                                                                            stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                        } else {
+                                                                            stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
+                                                                        }
+                                                                        if (found.studentId.atheleteSchoolName) {
+                                                                            stats.school = found.studentId.atheleteSchoolName;
+                                                                        } else {
+                                                                            stats.school = found.studentId.school.name;
+                                                                        }
+                                                                    }
+                                                                    profile.match.push(stats);
+                                                                    callback(null, profile.match);
+                                                                }
+
+                                                            });
+
+                                                        },
+                                                        function (err) {
+                                                            callback(null, profile.match);
+                                                        });
+                                                }
+                                            } else if (singleData.resultHandball) {
+                                                var i = 0;
+                                                var result;
+                                                if (singleData.resultHandball.teams.length == 1) {
+                                                    StudentTeam.findOne({
+                                                        teamId: singleData.resultHandball.teams[0].team
+                                                    }).lean().deepPopulate('studentId.school').exec(function (err, found) {
+                                                        if (found.studentId.middleName) {
+                                                            var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                        } else {
+                                                            var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                        }
+                                                        if (found.studentId.atheleteSchoolName) {
+                                                            var school = found.studentId.atheleteSchoolName;
+                                                        } else {
+                                                            var school = found.studentId.school.name;
+                                                        }
+                                                        var player = {};
+                                                        player.name = name;
+                                                        player.school = school;
+                                                        player.sfaId = found.studentId.sfaId;
+                                                        player.profilePic = found.studentId.photograph;
+                                                        profile.player.push(player);
+                                                        stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints;
+                                                        stats.isAthleteWinner = true;
+                                                        profile.match.push(stats);
                                                         callback(null, profile);
                                                     });
-                                            }
-                                        } else {
-                                            callback(null, profile);
-                                        }
-                                    },
-                                    function (err) {
-                                        callback(null, profile);
-                                    });
-                                callback(null, profile);
-                            }
-                        });
-                    }
-                },
+                                                } else {
+                                                    async.each(singleData.resultHandball.teams, function (n, callback) {
+                                                            StudentTeam.findOne({
+                                                                teamId: n.team
+                                                            }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
+                                                                if (err) {
+                                                                    callback(null, err);
+                                                                } else if (_.isEmpty(found)) {
+                                                                    callback(null, profile.match);
+                                                                } else {
+                                                                    if (found.studentId.middleName) {
+                                                                        var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                    } else {
+                                                                        var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                                    }
+                                                                    if (found.studentId.atheleteSchoolName) {
+                                                                        var school = found.studentId.atheleteSchoolName;
+                                                                    } else {
+                                                                        var school = found.studentId.school.name;
+                                                                    }
+                                                                    var player = {};
+                                                                    player.name = name;
+                                                                    player.school = school;
+                                                                    player.sfaId = found.studentId.sfaId;
+                                                                    player.profilePic = found.studentId.photograph;
+                                                                    profile.player.push(player);
+                                                                    stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[0].teamResults.finalPoints;;
+                                                                    if (singleData.resultHandball.winner.player === n) {
+                                                                        stats.isAthleteWinner = true;
+                                                                    } else {
+                                                                        stats.opponentName = found.teamId.name;
+                                                                        stats.school = found.teamId.schoolName;
+                                                                        stats.teamId = found.teamId.teamId;
+                                                                    }
+                                                                    profile.match.push(stats);
+                                                                    callback(null, profile);
+                                                                }
 
-            ],
-            function (err, data2) {
-                callback(null, data2);
-            });
+                                                            });
+
+                                                        },
+                                                        function (err) {
+                                                            callback(null, profile);
+                                                        });
+                                                }
+                                            } else {
+                                                callback(null, profile);
+                                            }
+                                        },
+                                        function (err) {
+                                            callback(null, profile);
+                                        });
+                                    callback(null, profile);
+                                }
+                            });
+                        }
+                    },
+
+                ],
+                function (err, data2) {
+                    callback(null, data2);
+                });
+        }, function (err) {
+            callback(null, profile);
+        });
     },
 
 };
