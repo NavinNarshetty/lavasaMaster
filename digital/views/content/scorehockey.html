@@ -16,7 +16,7 @@
                 <div class="col-md-6 col-sm-6" ng-repeat="team in match.teams track by $index">
                     <div class="teamcard mainteamcard">
                         <div class="teamcard-header text-uppercase">
-                            <p>{{team.schoolName}}</p>
+                            <p title="{{team.schoolName}}">{{team.schoolName}}</p>
                             <p>Team ID: <span> {{team.teamId}} </span></p>
                         </div>
                     </div>
@@ -40,7 +40,7 @@
                             <div class="team-playing" ng-repeat="player in match.resultHockey.teams[0].players track by $index">
                                 <!-- <p ng-if="$index==0">Players</p> -->
                                 <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="modalPlayerPoints(player,0,$index)">
-                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
+                                    <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                                 <!-- <p ng-if="$index==0">Substitues</p> -->
                                 <div class="teamplayer" ng-if="player.isPlaying==false" >
                                   <!-- ng-click="addPlayerPoints(player,$index)" -->
-                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
+                                    <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -129,7 +129,7 @@
                             </div>
                             <div class="team-playing" ng-repeat="player in match.resultHockey.teams[1].players track by $index">
                                 <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="modalPlayerPoints(player,1,$index)">
-                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
+                                    <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -140,7 +140,7 @@
                             <div class="team-substitute" ng-repeat="player in match.resultHockey.teams[1].players track by $index">
                                 <div class="teamplayer" ng-if="player.isPlaying==false" >
                                   <!-- ng-click="addPlayerPoints(player,$index)" -->
-                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
+                                    <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.firstName}} {{player.surname}}</span></p>
                                 </div>
                             </div>
                         </div>

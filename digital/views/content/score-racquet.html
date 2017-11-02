@@ -25,8 +25,8 @@
                         <img ng-src="{{player.photograph|serverimage}}" alt="{player.firstName}} {{player.surname}}" class="img-responsive">
                     </div>
                     <div class="matchplayer-details">
-                        <p class="matchplayer-name"><span> {{player.firstName}} </span> <span> {{player.surname}} </span></p>
-                        <p class="matchplayer-school">{{player.school.name | truncate:'22'}}</p>
+                        <p class="matchplayer-name" title="{{player.firstName}} {{player.surname}}"><span> {{player.firstName}} </span> <span> {{player.surname}} </span></p>
+                        <p class="matchplayer-school" title="{{player.school.name}}">{{player.school.name | truncate:'22'}}</p>
                     </div>
                 </div>
             </div>

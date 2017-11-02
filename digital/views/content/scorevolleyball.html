@@ -16,7 +16,7 @@
                 <div class="col-md-6 col-sm-6" ng-repeat="team in match.teams track by $index">
                     <div class="teamcard mainteamcard">
                         <div class="teamcard-header text-uppercase">
-                            <p>{{team.schoolName}}</p>
+                            <p title="{{team.schoolName}}">{{team.schoolName}}</p>
                             <p>Team ID: <span> {{team.teamId}} </span></p>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
                             <div class="team-playing" ng-repeat="player in match.resultVolleyball.teams[0].players track by $index">
                                 <!-- <p ng-if="$index==0">Players</p> -->
                                 <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="addPlayerPoints(player,$index, 0)">
-                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}</span></p>
+                                    <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -48,7 +48,7 @@
                                 <!-- <p ng-if="$index==0">Substitues</p> -->
                                 <div class="teamplayer" ng-if="player.isPlaying==false" >
                                   <!-- ng-click="addPlayerPoints(player,$index)" -->
-                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}</span></p>
+                                    <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                             </div>
                             <div class="team-playing" ng-repeat="player in match.resultVolleyball.teams[1].players track by $index">
                                 <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="addPlayerPoints(player,$index, 1)">
-                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].studentTeam[$index].studentId.firstName}} {{match.teams[1].studentTeam[$index].studentId.surname}}</span></p>
+                                    <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].studentTeam[$index].studentId.firstName}} {{match.teams[1].studentTeam[$index].studentId.surname}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
                             <div class="team-substitute" ng-repeat="player in match.resultVolleyball.teams[1].players track by $index">
                                 <div class="teamplayer" ng-if="player.isPlaying==false" >
                                   <!-- ng-click="addPlayerPoints(player,$index)" -->
-                                    <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].studentTeam[$index].studentId.firstName}} {{match.teams[1].studentTeam[$index].studentId.surname}}</span></p>
+                                    <p class="clearfix m-clear" title="{{player.firstName}} {{player.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].studentTeam[$index].studentId.firstName}} {{match.teams[1].studentTeam[$index].studentId.surname}}</span></p>
                                 </div>
                             </div>
                         </div>
