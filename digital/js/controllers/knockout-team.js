@@ -4,7 +4,7 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
   $scope.navigation = NavigationService.getNavigation();
   $scope.resultVar = {};
   // SWIPER
-  $scope.$on('$viewContentLoaded', function (event) {
+  $scope.initSwiper = function(){
     $scope.matchDetails = {};
     $timeout(function () {
       mySwiper = new Swiper('.swiper-container', {
@@ -30,8 +30,12 @@ myApp.controller('KnockoutTeamCtrl', function ($scope, TemplateService, $state, 
           }
         }
       });
-    }, 300);
-  });
+    }, 600);
+  };
+  // $scope.$on('$viewContentLoaded', function (event) {
+  //   $scope.initSwiper();
+  // });
+  $scope.initSwiper();
   // END SWIPER
 
   // START SCORING FUNCTION
