@@ -15,6 +15,10 @@ $brand-green: #0eda85 !default; //green
     height: 100%;
 }
 
+.pad-clear{
+  padding: 0 !important;
+}
+
 .pointer {
     cursor: pointer;
 }
@@ -469,6 +473,7 @@ $brand-green: #0eda85 !default; //green
 
 .result-schooltableholder {
     .table {
+      margin-bottom: 20px;
         >thead>tr {
             background-color: #10259c;
             color: #fff;
@@ -571,9 +576,13 @@ $brand-green: #0eda85 !default; //green
 }
 
 .result-tablemedal {
-    width: 20px;
+    width: 18px;
     margin: 0 auto;
-} // RESULTS PAGE END
+}
+.result-tablemedal + p{
+  font-size: 12px;
+}
+// RESULTS PAGE END
 // DROPDOWN
 .result-dropdown {
     position: relative;
@@ -597,7 +606,25 @@ $brand-green: #0eda85 !default; //green
             }
         }
     }
-} // DROPDOWN END
+}
+// DROPDOWN TABLE
+.schoolrank-details{
+  .table{
+    margin: 0;
+    tbody {
+      tr{
+        border: 1px solid #ccc;
+      }
+    }
+    .dd-sportname{
+      text-align: right;
+      text-transform: uppercase;
+    }
+  }
+}
+
+// DROPDOWN TABLE END
+// DROPDOWN END
 .custom-toggle {
     .switch {
         position: relative;

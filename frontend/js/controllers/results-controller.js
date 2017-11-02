@@ -34,6 +34,14 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       }
     }
     // VIEW MEDAL WINNER END
+    $scope.closeAllOpen = function(index, detail){
+      _.each($scope.rankTable, function(n, nindex){
+        if(n.rowDetail == true && nindex != index){
+          $scope.addMedalDetail(nindex, n);
+        }
+      });
+      $scope.addMedalDetail(index, detail);
+    };
 
     $scope.addMedalDetail = function(index, detail){
       console.log(detail, 'detail');
@@ -47,9 +55,12 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         detail.rowDetail = false;
         // $(id).after(demo);
       } else {
-        detail.detailTable = "'views/template/ranktable-detail.html'";
+        var detailTable = "";
+        _.each(detail.details, function(n){
+          detailTable = detailTable  + '<tr> <td colspan="4"> <div> </div> </td>   <td colspan="2" class="dd-sportname">'+ n.name+' </td> <td colspan="1"> ' + n.gold + ' </td> <td colspan="1">' + n.silver + ' </td> <td colspan="1">' + n.bronze + ' </td> <td colspan="1">' + n.total + ' </td> </tr>';
+        });
         $scope.rankDetail = detail;
-         demo = '<tr id="rankDetail'+ detail.rank + index +'"> <td colspan = "6"> <div ng-include="rankDetail.detailTable"> </div> </td> </tr>'
+         demo = '<tr id="rankDetail'+ detail.rank + index +'"> <td class = "pad-clear" colspan = "6"> <div class="schoolrank-details"> <table class = "table"> '+ detailTable +'</table> </div> </td> </tr>'
         detail.rowDetail = true;
         $(id).after(demo);
       }
@@ -71,17 +82,20 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         name: 'Athletics',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       },{
         name: 'Archery ',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       },{
         name: 'Badminton',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       }]
     },{
       rank: 2,
@@ -94,17 +108,20 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         name: 'Athletics',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       },{
         name: 'Archery ',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       },{
         name: 'Badminton',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       }]
     },{
       rank: 3,
@@ -117,17 +134,20 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         name: 'Athletics',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       },{
         name: 'Archery ',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       },{
         name: 'Badminton',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       }]
     },{
       rank: 4,
@@ -140,17 +160,20 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         name: 'Athletics',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       },{
         name: 'Archery ',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       },{
         name: 'Badminton',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       }]
     },{
       rank: 5,
@@ -163,17 +186,20 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         name: 'Athletics',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       },{
         name: 'Archery ',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       },{
         name: 'Badminton',
         gold: 2,
         silver: 2,
-        bronze: 2
+        bronze: 2,
+        total: 2
       }]
     }];
 
