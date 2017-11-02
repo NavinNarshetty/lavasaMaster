@@ -370,11 +370,12 @@ var model = {
         })
     },
 
-    getSchool: function (data, fcallback) {
+    getSchool: function (data, callback) {
         //get all medals deepPopulate sport->sportslist->sportsListSubCategory
         //for each school get schoolname,sport,and all medaldata
         async.waterfall([
 
+            //calculate medals won ,group by school
             function (callback) {
                 Result.getMedalsSchool({}, function (err, totalMedals) {
                     var medalRank = totalMedals.medalRank;
@@ -383,6 +384,7 @@ var model = {
                 });
             },
 
+            // calculate totalMatches group by school
             function (medalRank, medals, callback) {
                 Result.getMatchesBySchool(function (err, totalMatches) {
                     if (err) {
@@ -393,6 +395,7 @@ var model = {
                 });
             },
 
+            // calculate medals won group by sports and further group by school
             function (medalRank, totalMatches, medals, callback) {
                 var medalRanksBySport = _(medals)
                     .groupBy('school')
@@ -435,6 +438,7 @@ var model = {
                 callback(null,medalRank, totalMatches,medalRanksBySport);
             },
 
+            // merge above 3 arrays into single arr and then again group by school
             function (medalRank, totalMatches,medalRanksBySport, callback){
                 var totalLength= medalRank.length + totalMatches.length + medalRanksBySport.length;
                 var finalArr=_.concat(medalRank, totalMatches,medalRanksBySport);
@@ -444,16 +448,27 @@ var model = {
                 .groupBy('name')
                 .map(function(items,name){
                     return  _.assign.apply(_, items)
-                })
+                }).value();
 
-                fcallback(null,tp);
+                callback(null,tp);
             }
 
         ], function (err,result) {
             if (err) {
-
+                callback(err,null);
             } else {
-
+                console.log("result",result);
+                async.concatSeries(result,function(singleData,callback){
+                    Rank.saveData(singleData,function(err,data){
+                        if(err){
+                            callback(null,err)
+                        }else{
+                            callback(null,data);
+                        }
+                    });
+                },function(err,finalCallback){
+                    callback(null,finalCallback);
+                });
             }
         })
     },
@@ -461,7 +476,7 @@ var model = {
     getMedalsPerSport: function (data, callback) {
         //group by school->parallel groupBy medalType and groupBy (sportsListSubCategory.name and medalType)
 
-    },
+    }, 
 
 
 
