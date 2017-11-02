@@ -153,7 +153,7 @@ var model = {
                                 // var result = _.sortBy(gender, item => parseFloat(item[1]));
                                 return {
                                     name: name,
-                                    medal: gender,
+                                    medal: _.keyBy(gender,'name'),
                                     totalCount: totalCount,
                                     totalPoints: totalPoints
                                 };
@@ -424,7 +424,7 @@ var model = {
                                 var totalPoints = _.sum(pointsArr);
                                 return {
                                     name: name,
-                                    medals: qwerty,
+                                    medals: _.keyBy(qwerty,'name'),
                                     count: values.length,
                                     totalCount: totalCount,
                                     totalPoints: totalPoints
