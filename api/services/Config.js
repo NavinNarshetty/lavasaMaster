@@ -640,9 +640,7 @@ var model = {
         var readstream = gfs.createReadStream({
             filename: filename
         });
-        // console.log("readstream", readstream);
         readstream.on('error', function (err) {
-            // console.log("error", err);
             callback({
                 value: false,
                 error: err
@@ -655,11 +653,9 @@ var model = {
         var wi;
         var he;
         readstream.on('data', function (d) {
-            // console.log("data in readstream", d);
             bufs.push(d);
         });
         readstream.on('end', function () {
-            // console.log("end in readstream", bufs);
             buf = Buffer.concat(bufs);
             proceed();
         });
@@ -687,10 +683,9 @@ var model = {
             bufferStream.end(imageBuf);
             bufferStream.pipe(writestream2);
             writestream2.on('err', function (err) {
-                console.log(err);
+                callback(err, null);
             });
             writestream2.on('finish', function () {
-                console.log("inside writestream", writestream2);
                 callback(null, filename);
             });
         }
