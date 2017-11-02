@@ -299,9 +299,11 @@ var model = {
                                 } else {
                                     if (schoolData.status == "Verified") {
                                         profile.isSchoolRegistered = true;
+
                                     } else {
                                         profile.isSchoolRegistered = false;
                                     }
+                                    profile.isSponsered = false;
                                     console.log("profile", profile);
                                     callback(null, profile);
                                 }
@@ -310,8 +312,18 @@ var model = {
                     }
                 },
                 function (profile, callback) {
+                    if (profile.isSponsered == false && profile.isSchoolRegistered == false) {
+                        if (profile.athlete.registrationFee == 'Sponsor') {
+                            profile.isSponsered = true;
+                        }
+                        callback(null, profile);
+                    } else {
+                        callback(null, profile);
+                    }
+                },
+                function (profile, callback) {
                     var athleteProfile = {};
-                    if (profile.isSchoolRegistered == false) {
+                    if (profile.isSchoolRegistered == false && profile.isSponsered == false) {
                         console.log("inside if");
                         AdditionalPayment.find({
                             athleteId: data.athleteId

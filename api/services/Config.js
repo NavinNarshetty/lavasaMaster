@@ -636,11 +636,21 @@ var model = {
     },
 
     rotateImage: function (filename, angle, callback) {
+        // var id = mongoose.Types.ObjectId();
+        // var extension = filename.split(".").pop();
+        // extension = extension.toLowerCase();
+        // if (extension == "jpeg") {
+        //     extension = "jpg";
+        // }
+        // var newFilename = id + "." + extension;
+        // console.log("file", filename);
+        var athlete = '599d72f6c26d2074468b4d81';
 
         var readstream = gfs.createReadStream({
             filename: filename
         });
         readstream.on('error', function (err) {
+            console.log("error", err);
             callback({
                 value: false,
                 error: err
@@ -653,18 +663,20 @@ var model = {
         var wi;
         var he;
         readstream.on('data', function (d) {
+            // console.log("data in readstream", d);
             bufs.push(d);
         });
         readstream.on('end', function () {
+            // console.log("end in readstream", bufs);
             buf = Buffer.concat(bufs);
             proceed();
         });
 
         function proceed() {
             proceedI++;
-            if (proceedI === 2) {
+            if (proceedI === 1) {
                 Jimp.read(buf, function (err, image) {
-                    image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
+                    image.rotate(180, false).getBuffer(Jimp.AUTO, writer2);
                 });
             }
         }
@@ -673,16 +685,33 @@ var model = {
             var writestream2 = gfs.createWriteStream({
                 filename: filename,
             });
+            // console.log("writestream2", writestream2);
             var bufferStream = new stream.PassThrough();
             bufferStream.end(imageBuf);
             bufferStream.pipe(writestream2);
-            writestream2.on('end', function () {
-                callback(null, {
-                    name: filename
-                });
+            console.log("bufferStream", bufferStream);
+            writestream2.on('finish', function () {
+                // console.log("inside writestream", filename);
+                var matchObj = {
+                    $set: {
+                        atheleteSchoolIdImage: imageBuf
+                    }
+                };
+                Athelete.update({
+                    _id: athlete
+                }, matchObj).exec(
+                    function (err, data3) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, null);
+                        } else if (data3) {
+                            console.log("data3", data3);
+                            callback(null, filename);
+                        }
+                    });
             });
         }
-
     }
+
 };
 module.exports = _.assign(module.exports, exports, model);

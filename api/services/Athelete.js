@@ -3371,6 +3371,7 @@ var model = {
                 obj.SCHOOL = athleteData.atheleteSchoolName;
             }
             obj["STATUS"] = athleteData.status;
+            obj["PAYMENT MODE"]=athleteData.registrationFee;
             singleData.push(obj);
         });
         callback(null, singleData);
