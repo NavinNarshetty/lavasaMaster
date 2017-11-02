@@ -686,11 +686,10 @@ var model = {
 
     getSchoolProfile: function (data, callback) {
         var profile = {};
-        // profile.medals = [];
         async.waterfall([
                 function (callback) {
                     Registration.findOne({
-                        _id: data.school
+                        sfaID: "MS16" + data.sfaId
                     }).lean().exec(function (err, found) {
                         if (err) {
                             callback(err, null);
@@ -698,13 +697,13 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
+                                data.school = found.schoolName;
                                 callback(null, found);
                             }
                         }
                     });
                 },
                 function (found, callback) {
-                    data.school = found.schoolName;
                     var pipeLine = Profile.getIndivivualAggregatePipeline(data);
                     IndividualSport.aggregate(pipeLine, function (err, matchData) {
                         if (err) {

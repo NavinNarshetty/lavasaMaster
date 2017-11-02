@@ -36,7 +36,36 @@ var controller = {
 
     getAthleteProfile: function (req, res) {
         if (req.body) {
-            Profile.getAthleteProfile(req.body, res.callback);
+            async.waterfall([
+                    function (callback) {
+                        Athelete.findOne({
+                            sfaId: "MA16" + data.sfaId
+                        }).lean().exec(function (err, athlete) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(athlete)) {
+                                    callback(null, []);
+                                } else {
+                                    callback(null, athlete);
+                                }
+                            }
+                        });
+                    },
+                    function (property, callback) {
+                        req.body.athleteId = athlete._id;
+                        Profile.getAthleteProfile(req.body, res.callback);
+                    }
+                ],
+                function (err, data2) {
+                    if (err) {
+                        console.log(err);
+                        callback(err, null);
+                    } else {
+                        callback(null, data2);
+                    }
+
+                });
         } else {
             res.json({
                 "data": "Body not Found",
