@@ -367,6 +367,9 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
   $scope.navigation = NavigationService.getnav();
   $scope.formData = {};
   $scope.formData.boostDetail = [];
+  $scope.foundSchool = {}
+  $scope.foundSchool.school = {};
+
   $scope.flag = false;
 
   if ($stateParams.id) {
@@ -379,6 +382,14 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
         console.log(data, "in edit awards");
         $scope.formData = data.data.data[0];
         $scope.typeData = $scope.formData.type
+        if (data.data.data[0].type === 'athlete') {
+          if (data.data.data[0].athlete.school.sfaid) {
+            $scope.foundSchool.school.name = data.data.data[0].athlete.school.sfaid + ' ' + data.data.data[0].athlete.school.name;
+          } else {
+            $scope.foundSchool.school.name = data.data.data[0].athlete.school.name;
+          }
+        }
+
         console.log($scope.typeData, "type ")
         // FOR ATHLETE TYPE
         if ($scope.typeData === 'athlete') {
@@ -426,17 +437,27 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
     }
     // BOOST AWARD END
 
-    // SEARCH ATHLETE
-    $scope.searchAthlete = function (gender) {
-      console.log(gender, "in search athlete");
+    // REMOVE SPORT
+    $scope.awardPlayerchange = function (data) {
+      if (data) {
+        $scope.sportitems = [];
+        $scope.formData.sports = '';
 
-
+      }
     }
-    // SEARCH ATHLETE END
+    // REMOVE SPORT END
 
 
   }
 
+  // REMOVE SPORT
+  $scope.awardPlayerchange = function (data) {
+    if (data) {
+      $scope.sportitems = [];
+      $scope.formData.sports = '';
+    }
+  }
+  // REMOVE SPORT END
   // FOR INSTITUTE TYPE
   $scope.getConfig = function () {
     NavigationService.getConfigDetail(function (data) {
@@ -569,25 +590,31 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
 
     });
   }
+  $scope.searchSportList = function (data) {
+    $scope.draws = data;
+  }
   // SPORTS END
 
   // SCHOOL
-  $scope.getOneSchoolById = function () {
+  $scope.schoolConstraints = {}
+  $scope.schoolConstraints.input = ''
+  $scope.getOneSchoolById = function (input) {
     $scope.url = 'registration/search';
-    $scope.constraints = {}
-    $scope.constraints.input = ''
-    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
-      console.log(data, 'registerred school')
-      $scope.school = data.data.results;
-      $scope.schoolData = data.data.results;
-      _.each($scope.school, function (n) {
-        if (n.status == 'Verified') {
-          n.schoolsfaId = n.sfaID + '-' + n.schoolName;
-        } else {
-          n.schoolsfaId = n.schoolName;
-        }
+    if (input) {
+      NavigationService.apiCall($scope.url, input, function (data) {
+        console.log(data, 'registerred school')
+        $scope.school = data.data.results;
+        $scope.schoolData = data.data.results;
+        _.each($scope.school, function (n) {
+          if (n.status == 'Verified') {
+            n.schoolsfaId = n.sfaID + '-' + n.schoolName;
+          } else {
+            n.schoolsfaId = n.schoolName;
+          }
+        });
       });
-    });
+    }
+
   };
   $scope.getOneSchoolById();
 
@@ -595,6 +622,18 @@ myApp.controller('DetailAwardSpecialCtrl', function ($scope, TemplateService, Na
     $scope.draws = data;
   }
 
+  $scope.removeSport = function (data) {
+    console.log('in remove')
+    $scope.formData.sports = ''
+    $scope.sportitems = [];
+  }
+  $scope.schoolAward = function (data) {
+    console.log(data, 'refresh school')
+    $scope.refreshSchoolData = {};
+    $scope.refreshSchoolData.input = data;
+    $scope.getOneSchoolById($scope.refreshSchoolData)
+
+  }
   // SCHOOL END
 
   // SAVE

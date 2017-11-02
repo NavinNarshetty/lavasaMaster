@@ -21,7 +21,7 @@
                   <!-- TYPE -->
                   <div class="special-award-type">
                     <div class="form-group">
-                      <label> Type</label>{{formData.type}}
+                      <label> Type</label>
                       <select name="selecttype" class="form-control" ng-model="formData.type" placeholder="Enter Type" ng-disabled="flag" ng-change="getList(formData)"
                         required>
                         <option value="athlete">Athlete</option>
@@ -59,7 +59,7 @@
                 <div class="row">
                   <div class="col-md-12">
                     <div class="form-group">
-                      <label>Certificate Name</label>{{formData.award}}
+                      <label>Certificate Name</label>
                       <ui-select name="certificatename" ng-model="formData.award" theme="bootstrap" ng-disabled="flag" required>
                         <ui-select-match placeholder="Select Certificate Name" allow-clear="true"> {{$select.selected.name}}</ui-select-match>
                         <ui-select-choices repeat="certificate in certificateType |  filter: $select.search track by $index">
@@ -86,8 +86,9 @@
                 <div class="row">
                   <div class="col-md-6">
                     <div class="form-group">
-                      <label> Player</label>{{formData.athlete}}
-                      <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" on-select="selectSchool($item)" required>
+                      <label> Player</label>
+                      <ui-select name="playername" ng-model="formData.athlete" theme="bootstrap" on-select="selectSchool($item)" ng-change="awardPlayerchange($select.selected.fullName)"
+                        required>
                         <ui-select-match placeholder="Select Certificate Name"> {{$select.selected.fullName}}</ui-select-match>
                         <ui-select-choices refresh-delay='0' repeat="player._id as player in playerData | filter: $select.search" refresh="refreshChange($select.search,formData.gender)">
                           <div>
@@ -118,9 +119,10 @@
                   <div class="col-md-12">
                     <div class="form-group">
                       <label> School</label>
-                      <ui-select name="schoolname" ng-model="formData.school" theme="bootstrap" required>
+                      <ui-select name="schoolname" ng-model="formData.school" theme="bootstrap" ng-change="removeSport($select.selected.schoolsfaId)"
+                        required>
                         <ui-select-match placeholder="Select School" allow-clear="true"> {{$select.selected.schoolsfaId}}</ui-select-match>
-                        <ui-select-choices repeat="school in schoolData | filter: $select.search">
+                        <ui-select-choices repeat="school in schoolData | filter: $select.search" refresh="schoolAward($select.search)">
                           <div>
                             <span class="text-capitalize" ng-bind-html="school.schoolsfaId"></span>
                           </div>
