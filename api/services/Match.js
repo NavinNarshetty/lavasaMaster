@@ -11443,10 +11443,14 @@ var model = {
                                     }
                                 } else if (found[0].opponentsTeam.length == 2) {
                                     if (data._id.equals(found[0].prevMatch[1])) {
+                                        console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
                                         var playerId = found[0].opponentsTeam[1];
+                                        console.log("playerId", playerId);
                                         winPlayer.push(playerId);
                                     } else {
+                                        console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
                                         var playerId = found[0].opponentsTeam[0];
+                                        console.log("playerId", playerId);
                                         winPlayer.push(playerId);
                                     }
                                     if (data.found.resultsRacquet && data.found.resultsRacquet.status == "IsCompleted" && data.found.resultsRacquet.isNoMatch == false) {
