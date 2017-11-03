@@ -146,12 +146,6 @@ myApp.factory('NavigationService', function ($http) {
             icon: "phone",
         },
         {
-            name: "Gallery",
-            classis: "activeColor",
-            sref: "#/gallery",
-            icon: "phone"
-        },
-        {
             name: "Calender",
             classis: "activeColor",
             sref: "#/calender",
@@ -682,11 +676,11 @@ myApp.factory('NavigationService', function ($http) {
         },
         rotateImage: function (data, callback) {
             $http({
-              url: adminurl + 'upload/rotateImage',
-              data: data,
-              method: 'POST'
-            }).then(function(data){
-              callback(data.data);
+                url: adminurl + 'upload/rotateImage',
+                data: data,
+                method: 'POST'
+            }).then(function (data) {
+                callback(data.data);
             });
         },
 
