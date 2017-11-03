@@ -1151,7 +1151,7 @@
                                 <label for=""> 2Points</label>
                                 <div class="row">
                                   <div class="col-md-3" ng-repeat="twopoint in player.playerPoints.Points2 track by $index" ng-init="point2=$index">
-                                    <label for=""> Points2-{{$index+1}}</label>
+                                    <label for=""> 2Pointer-{{$index+1}}</label>
                                     <div class="input-group">
                                       <span class="cross-team" ng-click="removeField('Points2','resultBasketball',teamIndex,playerIndex,throwIndex)"><i class="fa fa-times" aria-hidden="true"></i></span>
                                       <span class="input-group-addon">Time</span>
@@ -1169,7 +1169,7 @@
                                 <label for=""> 3Points</label>
                                 <div class="row">
                                   <div class="col-md-3" ng-repeat="threepoint in player.playerPoints.Points3 track by $index" ng-init="point3=$index">
-                                    <label for=""> Points3-{{$index+1}}</label>
+                                    <label for=""> 3Pointer-{{$index+1}}</label>
                                     <div class="input-group">
                                       <span class="cross-team" ng-click="removeField('Points3','resultBasketball',teamIndex,playerIndex,point3)"><i class="fa fa-times" aria-hidden="true"></i></span>
                                       <span class="input-group-addon">Time</span>
