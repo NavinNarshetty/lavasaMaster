@@ -294,7 +294,13 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
         $scope.constraints.athlete = athleteId;
         NavigationService.getAwardsCertificate($scope.constraints, function (data) {
             console.log(data);
-            // window.open(adminUrl2 + 'pdf' + data, '_blank');
+            if (data.value) {
+                _.each(data.data, function (key) {
+                    window.open($scope.url + '/pdf/' + key.url, '_blank');
+                    //   window.open(adminUrl2 + 'pdf' + data, '_blank');
+                });
+            }
+
         });
     };
     $scope.sportStats = function (data) {
