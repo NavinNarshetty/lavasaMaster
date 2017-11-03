@@ -76,6 +76,97 @@ myApp.controller('RegisterCtrl', function ($scope, $uibModal, TemplateService, N
         $(".side-menu1").addClass("menu-out");
         $scope.closeAge = false;
     };
+
+    $scope.endEntries = [{
+        sport: 'Archery',
+        date: '6th'
+    }, {
+        sport: 'Athletics',
+        date: '3rd'
+    }, {
+        sport: 'Badminton',
+        date: '2nd'
+    }, {
+        sport: 'Basketball',
+        date: '3rd'
+    }, {
+        sport: 'Boxing',
+        date: '8th'
+    }, {
+        sport: 'Carrom',
+        date: '6th'
+    }, {
+        sport: 'Chess',
+        date: '6th'
+    }, {
+        sport: 'Fencing',
+        date: '6th'
+    }, {
+        sport: 'Football',
+        date: '4th'
+    }, {
+        sport: 'Handball',
+        date: '5th'
+    }, {
+        sport: 'Hockey',
+        date: '7th'
+    }, {
+        sport: 'Judo',
+        date: '8th'
+    }]
+
+    $scope.endEntries1 = [{
+        sport: 'Kabaddi',
+        date: '3rd'
+    }, {
+        sport: 'Karate',
+        date: '8th'
+    }, {
+        sport: 'Kho Kho',
+        date: '6th'
+    }, {
+        sport: 'Shooting',
+        date: '6th'
+    }, {
+        sport: 'Swimming',
+        date: '4th'
+    }, {
+        sport: 'Table Tennis',
+        date: '5th'
+    }, {
+        sport: 'Taekwondo',
+        date: '8th'
+    }, {
+        sport: 'Tennis',
+        date: '2nd'
+    }, {
+        sport: 'Throwball',
+        date: '6th'
+    }, {
+        sport: 'Volleyball',
+        date: '6th'
+    }, {
+        sport: 'Water Polo ',
+        date: '13th'
+    }]
+
+    // FINAL REGISTRATION MODAL
+    $scope.endReg = function () {
+        console.log($scope.endEntries, 'insode modal')
+        $scope.modalInstance = $uibModal.open({
+            animation: true,
+            scope: $scope,
+            // backdrop: 'static',
+            keyboard: false,
+            templateUrl: 'views/modal/endregistration.html',
+            size: 'lg',
+            windowClass: 'endregistration-modal'
+        });
+    };
+    // FINAL REGISTRATION MODAL END
+
+
+
 });
 
 myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, configService) {

@@ -1614,3 +1614,15 @@ $sport-table-grey:#efeeee !default;
 }
 
 // EVENT ATTENDANCE PROFILE END
+// END REGISTRATION MODAL
+.endregistration-modal {
+  .endregistration-table {
+    border: 1px solid gray;
+  }
+  .endregistration-header {
+    background-color: $sport-primary;
+    color: #fff;
+  }
+}
+
+// END REGISTRATION MODAL END

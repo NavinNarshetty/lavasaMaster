@@ -7768,8 +7768,7 @@ h1.forgot-space {
 
 .modal-dialog {
     margin-top: 0;
-    margin-bottom: 0;
-    height: 100vh;
+    margin-bottom: 0; // height: 100vh;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
