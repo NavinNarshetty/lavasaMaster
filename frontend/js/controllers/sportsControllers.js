@@ -188,18 +188,48 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                 }
             } else {
                 console.log("Not eligible for registering sport");
-                $scope.particularSport = val.name;
-                $scope.registrationEnd = $uibModal.open({
-                    animation: true,
-                    scope: $scope,
-                    backdrop: 'static',
-                    keyboard: false,
-                    // size: 'sm',
-                    templateUrl: "views/modal/registrationend.html"
-                });
-                $timeout(function () {
-                    $scope.registrationEnd.close();
-                }, 8000);
+                var tempData = $.jStorage.get('userDetails');
+                if (!tempData.mixAccess) {
+                    $scope.particularSport = val.name;
+                    $scope.registrationEnd = $uibModal.open({
+                        animation: true,
+                        scope: $scope,
+                        backdrop: 'static',
+                        keyboard: false,
+                        // size: 'sm',
+                        templateUrl: "views/modal/registrationend.html"
+                    });
+                    $timeout(function () {
+                        $scope.registrationEnd.close();
+                    }, 8000);
+                } else {
+                    console.log("eligible for registering sport");
+                    $.jStorage.set("confirmPageKey", val.sportType);
+                    selectService.redirectTo = val.sportType;
+                    console.log(selectService.redirectTo);
+                    if ($.jStorage.get('userType') == 'athlete') {
+                        NavigationService.getIndividualAthlete({
+                            'athleteToken': $.jStorage.get('userDetails').accessToken,
+                            '_id': val._id,
+                            'age': '',
+                            'gender': '',
+                            'page': 1
+                        }, function (data) {
+                            console.log(data);
+                            if (data.data.data._id) {
+                                $state.go('sports-rules', {
+                                    id: val._id
+                                });
+                            } else {
+                                toastr.error("You are already selected for this sport");
+                            }
+                        });
+                    } else {
+                        $state.go('sports-rules', {
+                            id: val._id
+                        });
+                    }
+                }
             }
         }
     };
@@ -221,18 +251,27 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
 
                 } else {
                     console.log("Not eligible for registering sport");
-                    $scope.particularSport = val.name;
-                    $scope.registrationEnd = $uibModal.open({
-                        animation: true,
-                        scope: $scope,
-                        backdrop: 'static',
-                        keyboard: false,
-                        // size: 'sm',
-                        templateUrl: "views/modal/registrationend.html"
-                    });
-                    $timeout(function () {
-                        $scope.registrationEnd.close();
-                    }, 8000);
+                    var tempData = $.jStorage.get('userDetails');
+                    if (!tempData.mixAccess) {
+                        $scope.particularSport = val.name;
+                        $scope.registrationEnd = $uibModal.open({
+                            animation: true,
+                            scope: $scope,
+                            backdrop: 'static',
+                            keyboard: false,
+                            // size: 'sm',
+                            templateUrl: "views/modal/registrationend.html"
+                        });
+                        $timeout(function () {
+                            $scope.registrationEnd.close();
+                        }, 8000);
+                    } else {
+                        console.log("eligible for registering sport");
+                        $state.go('sports-rules', {
+                            id: val._id
+                        });
+                    }
+
                 }
             }
         }
