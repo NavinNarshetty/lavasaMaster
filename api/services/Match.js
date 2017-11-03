@@ -11294,18 +11294,13 @@ var model = {
                                         };
                                     } else if (data.found.resultsRacquet && data.found.resultsRacquet.status == "IsCompleted" && data.found.resultsRacquet.isNoMatch == false) {
                                         if (data._id.equals(found[0].prevMatch[1]._id)) {
-                                            // console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
-                                            var playerId = found[0].prevMatch[0].resultsRacquet.winner.player;
-                                            // console.log("playerId", playerId);
+                                            var playerId = found[0].prevMatch[0].resultsRacquet.winner.opponentsSingle;
                                             winPlayer.push(playerId);
                                         } else {
-                                            // console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
-                                            var playerId = found[0].prevMatch[1].resultsRacquet.winner.player;
-                                            // console.log("playerId", playerId);
+                                            var playerId = found[0].prevMatch[1].resultsRacquet.winner.opponentsSingle;
                                             winPlayer.push(playerId);
                                         }
                                         winPlayer.push(data.found.resultsRacquet.winner.opponentsSingle);
-                                        // console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
                                                 opponentsSingle: winPlayer
