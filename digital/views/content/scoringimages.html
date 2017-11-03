@@ -12,6 +12,64 @@
   <!-- MATCH HEADER END -->
   <div class="scoringimages-section">
     <div class="container">
+      <div class="qualifying-tableholder table-responsive">
+        <table class="table digitalscore-table">
+          <thead>
+            <tr>
+              <th>
+                <div>
+                  <p class="m-clear">Sr. No</p>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <p class="m-clear">Sfa ID</p>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <p class="m-clear">name</p>
+                </div>
+              </th>
+              <th>
+                <div>
+                  <p class="m-clear">
+                    school
+                  </p>
+                </div>
+              </th>
+              <th>
+                <div class="">
+                  <p class="m-clear">Present</p>
+                </div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="player in match.resultImages.players track by $index">
+              <td>
+                <div class="text-capitalize text-left">{{$index + 1}} </div>
+              </td>
+              <td>
+                <div class="text-capitalize text-left">{{player.sfaId}} </div>
+              </td>
+              <td>
+                <div class="text-capitalize text-left" title="{{match.opponentsSingle[0].athleteId.firstName}} {{match.opponentsSingle[0].athleteId.surname}}">{{player.firstName}} {{player.surname}} </div>
+              </td>
+              <td>
+                <div class="text-capitalize text-left">
+                  {{player.schoolName}}
+                </div>
+              </td>
+              <td >
+                <div class="form-group text-center">
+                  <input type="checkbox" ng-model="player.attendance" class="form-control">
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
       <div class="combatscore-uploads text-center">
         <div class="combatscore-pics">
           <div class="row">
@@ -50,6 +108,9 @@
           <div class="col-md-4 col-sm-6">
               <button class="btn btn-green-outline btn-scoring" ng-click="completePopup();">complete</button>
           </div>
+          <!-- <div class="col-md-4 col-sm-6">
+              <button class="btn btn-green-outline btn-scoring" ng-click="log();">log</button>
+          </div> -->
         </div>
         </div>
 
