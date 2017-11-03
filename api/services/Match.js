@@ -11448,12 +11448,13 @@ var model = {
                                 } else if (found[0].opponentsTeam.length == 2) {
                                     if (data._id.equals(found[0].prevMatch[1]._id)) {
                                         console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
-                                        var playerId = found[0].opponentsTeam[1];
+                                        if (found[0])
+                                            var playerId = found[0].opponentsTeam[0];
                                         console.log("playerId", playerId);
                                         winPlayer.push(playerId);
                                     } else {
                                         console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
-                                        var playerId = found[0].opponentsTeam[0];
+                                        var playerId = found[0].opponentsTeam[1];
                                         console.log("playerId", playerId);
                                         winPlayer.push(playerId);
                                     }
@@ -12015,7 +12016,7 @@ var model = {
                                                             if (matchData[0].resultQualifyingRound.player.bestAttempt) {
                                                                 result.result = matchData[0].resultQualifyingRound.player.bestAttempt;
                                                             } else {
-                                                                var height = matchData[0].resultQualifyingRound.round.substr(7, 8);
+                                                                var height = matchData[0].round;
                                                                 result.result = height;
                                                             }
                                                             callback(null, result);
@@ -12096,9 +12097,6 @@ var model = {
                                 });
 
                             } else {
-
-
-
                                 async.eachSeries(singleData.team, function (n, callback) {
                                     data.team = n._id;
                                     var pipeLine = Match.getTeamAggregatePipeline(data);
@@ -12147,7 +12145,7 @@ var model = {
                                                             if (matchData[0].resultQualifyingRound.player.bestAttempt) {
                                                                 result.result = matchData[0].resultQualifyingRound.player.bestAttempt;
                                                             } else {
-                                                                var height = matchData[0].resultQualifyingRound.round.substring(7, 8);
+                                                                var height = matchData[0].round;
                                                                 result.result = height;
                                                             }
                                                             callback(null, result);
