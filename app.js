@@ -27,8 +27,8 @@ mongoose = require('mongoose');
 // global["database"] = "sfanew";
 // global["database"] = "sfa1";
 // global["database"] = "live-sfa";
-// global["database"] = "test-sfa";
-global["database"] = "digitalScoring";
+global["database"] = "test-sfa";
+// global["database"] = "digitalScoring";
 // global["database"] = "sfa";
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/' + database, function (err) {
