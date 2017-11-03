@@ -116,7 +116,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
 
         .state('results', {
-            url: "/wohlig/results",
+            url: "/results",
             templateUrl: tempateURL,
             controller: 'ResultsCtrl'
         })

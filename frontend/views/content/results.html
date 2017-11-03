@@ -69,30 +69,30 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="school in rankTable track by $index" id="rank{{school.rank}}{{$index}}">
+            <tr ng-repeat="school in rankTable track by $index" id="rank{{$index}}">
               <td>
                 <div class="">
-                  {{school.rank}}
+                  {{$index + 1}}
                 </div>
               </td>
               <td>
                 <div class="text-left">
-                  {{school.school}}
+                  {{school.name}}
                 </div>
               </td>
               <td>
                 <div class="">
-                  {{school.goldPoints}}
+                  {{school.medal.gold.points}}
                 </div>
               </td>
               <td>
                 <div class="">
-                  {{school.silverPoints}}
+                  {{school.medal.silver.points}}
                 </div>
               </td>
               <td>
                 <div class="">
-                  {{school.bronzePoints}}
+                  {{school.medal.bronze.points}}
                 </div>
               </td>
               <td  class="">

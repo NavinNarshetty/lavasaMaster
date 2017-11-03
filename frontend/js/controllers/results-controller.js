@@ -46,27 +46,80 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     $scope.addMedalDetail = function(index, detail){
       console.log(detail, 'detail');
       console.log(index, 'indexS');
-      var id = "#rank" + detail.rank + index;
+      var id = "#rank" + index;
       var demo = "";
       if (detail.rowDetail == true) {
-        detailId = "#rankDetail" + detail.rank + index;
+        detailId = "#rankDetail" + index;
         console.log(detailId, 'det');
         $(detailId).remove();
         detail.rowDetail = false;
         // $(id).after(demo);
       } else {
         var detailTable = "";
-        _.each(detail.details, function(n){
-          detailTable = detailTable  + '<tr> <td colspan="4"> <div> </div> </td>   <td colspan="2" class="dd-sportname">'+ n.name+' </td> <td colspan="1"> ' + n.gold + ' </td> <td colspan="1">' + n.silver + ' </td> <td colspan="1">' + n.bronze + ' </td> <td colspan="1">' + n.total + ' </td> </tr>';
+        _.each(detail.sportData, function(n){
+          n.goldMedal = "-";
+          n.silverMedal = "-";
+          n.bronzeMedal = "-";
+          if (n.medals) {
+            if (n.medals.gold) {
+              n.goldMedal = n.medals.gold.points;
+            }
+            if (n.medals.silver) {
+              n.silverMedal = n.medals.silver.points;
+            }
+            if (n.medals.bronze) {
+              n.bronzeMedal = n.medals.bronze.points;
+            }
+          }
+          console.log('sport', n);
+          detailTable = detailTable  + '<tr> <td colspan="3"> <div> </div> </td>   <td colspan="1" class="dd-sportname">'+ n.name+' </td> <td colspan="1"> ' + n.goldMedal + ' </td> <td colspan="1">' + n.silverMedal + ' </td> <td colspan="1">' + n.bronzeMedal + ' </td> <td colspan="1">' + n.totalPoints + ' </td> </tr>';
         });
         $scope.rankDetail = detail;
-         demo = '<tr id="rankDetail'+ detail.rank + index +'"> <td class = "pad-clear" colspan = "6"> <div class="schoolrank-details"> <table class = "table"> '+ detailTable +'</table> </div> </td> </tr>'
+         demo = '<tr id="rankDetail' + index +'"> <td class = "pad-clear" colspan = "6"> <div class="schoolrank-details"> <table class = "table"> '+ detailTable +'</table> </div> </td> </tr>'
         detail.rowDetail = true;
         $(id).after(demo);
       }
     };
 
     // FUNCTIONS END
+
+    // // SCROLLDOWN
+    // .directive('scrolldown', function ($compile, $parse) {
+    //     return {
+    //         restrict: 'EA',
+    //         replace: false,
+    //         link: function ($scope, element, destination, type,  attrs) {
+    //             var $element = $(element);
+    //             if(type == 'id'){
+    //               var destination = '#' + destination;
+    //             } else if(type == 'class') {
+    //               var destination = '.' + destination;
+    //             }
+    //             $scope.scrollDown = function () {
+    //                 $('html,body').animate({
+    //                         scrollTop: $(destination).offset().top
+    //                     },
+    //                     'slow');
+    //             };
+    //         }
+    //     };
+    // });
+    // // SCROLLDOWN END
+
+    // APIS
+    NavigationService.getSchoolByRanks(function(data){
+      console.log('rankingTable',data);
+      if (data.value == true) {
+        $scope.rankTable = data.data
+        _.each($scope.rankTable, function(n){
+          n.rowDetail = false;
+        });
+      } else {
+        toastr.error('Ranking Table Error','Error');
+      }
+    })
+
+    // APIS END
 
     // JSONS
     $scope.eventList = ['sfa mumbai 2015-16', 'sfa ahmedabad 2015-16', 'sfa hyderabad 2015-16'];
@@ -202,10 +255,6 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         total: 2
       }]
     }];
-
-    _.each($scope.rankTable, function(n){
-      n.rowDetail = false;
-    });
     // SCHOOL RANKING TABLE END
 
     // ALL MEDAL WINNERS
