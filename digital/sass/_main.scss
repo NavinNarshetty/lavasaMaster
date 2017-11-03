@@ -1177,7 +1177,7 @@ header {
 // COMBAT TEAM END
 // SCORING IMAGES
 .scoringimages-section{
-  height: calc(100vh - 140px);
+  min-height: calc(100vh - 140px);
   position: relative;
 }
 .scoreimage-btns{

@@ -50,7 +50,19 @@ myApp.controller('ScoringImagestCtrl', function($scope, TemplateService, Navigat
                   $scope.match.resultImages = {
                     "matchPhoto": [],
                     "scoreSheet": [],
+                    "players" : []
                   }
+                  _.each($scope.match.players, function(n, nindex){
+                    console.log('player',n);
+                    $scope.match.resultImages.players[nindex] = {
+                      "player": n._id,
+                      "firstName": n.firstName,
+                      "surname": n.surname,
+                      "sfaId": n.sfaId,
+                      "schoolName": n.school.name,
+                      "attendance": false
+                    }
+                  });
                 }
                 console.log($scope.match, 'Match');
             } else {
@@ -78,6 +90,9 @@ myApp.controller('ScoringImagestCtrl', function($scope, TemplateService, Navigat
         })
       }
     };
+    $scope.log = function(){
+      console.log("matchLOG", $scope.match);
+    }
     $scope.matchComplete = function(){
       if ($scope.match.resultImages) {
         if (!$scope.match.resultImages.status) {
