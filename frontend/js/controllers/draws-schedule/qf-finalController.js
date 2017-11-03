@@ -169,7 +169,22 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
 
                       if (value.resultQualifyingRound !== undefined) {
                         obj.result = value.resultQualifyingRound.player.result;
-                        obj.noOfJumps = value.resultQualifyingRound.player.attempt.length;
+                        if (value.resultQualifyingRound.player.attempt) {
+                          var countLength = 0;
+                          _.each(value.resultQualifyingRound.player.attempt, function (n) {
+                            if (!_.isEmpty(n)) {
+                              ++countLength;
+                            }
+                          });
+                          if (countLength > 0) {
+                            obj.noOfJumps = countLength;
+                          } else {
+                            obj.noOfJumps = '-';
+                          }
+                          // obj.noOfJumps = value.resultQualifyingRound.player.attempt.length;
+
+                        }
+
                         obj.score = value.resultQualifyingRound.player.attempt[index1];
                         if (value.resultQualifyingRound.player.attempt.length > 0) {
                           obj.bestAttempt = value.resultQualifyingRound.player.bestAttempt;
