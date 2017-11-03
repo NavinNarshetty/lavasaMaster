@@ -396,13 +396,15 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             }).success(callback);
         },
 
-        getStatsForStudent: function (request, callback) {
+        getAthleteStats: function (request, callback) {
             $http({
-                url: adminUrl + 'studentstats/getStudentStatByFilters',
+                url: adminUrl2 + 'profile/getAthleteStats',
                 method: 'POST',
                 withCredentials: true,
                 data: request
-            }).success(callback);
+            }).then(function (data) {
+                callback(data.data);
+            });
         },
 
         getStatsForSchool: function (request, callback) {
@@ -414,13 +416,15 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             }).success(callback);
         },
 
-        getStatsForTeam: function (request, callback) {
+        getTeamStats: function (request, callback) {
             $http({
-                url: adminUrl + 'studentstats/getTeamStatByFilters',
+                url: adminUrl2 + 'profile/getTeamStats',
                 method: 'POST',
                 withCredentials: true,
                 data: request
-            }).success(callback);
+            }).then(function (data) {
+                callback(data.data);
+            });
         },
 
         getAgegroup: function (callback) {
