@@ -3716,13 +3716,14 @@ var model = {
                         var sNo = 1;
                         for (i = 0; i < mainData.resultBasketball.teams[0].teamResults.quarterPoints.length; i++) {
                             if (i == 0) {
-                                obj["QUARTER SCORE 1"] = "Q" + sNo + "-" + mainData.resultBasketball.teams[0].teamResults.quarterPoints[i].basket;
+                                obj["SCORE 1"] = "Q" + sNo + "-" + mainData.resultBasketball.teams[0].teamResults.quarterPoints[i].basket;
                                 sNo++;
                             } else {
-                                obj["QUARTER SCORE 1"] = obj["QUARTER SCORE 1"] + "," + "Q" + sNo + "-" + mainData.resultBasketball.teams[0].teamResults.quarterPoints[i].basket;
+                                obj["SCORE 1"] = obj["QUARTER SCORE 1"] + "," + "Q" + sNo + "-" + mainData.resultBasketball.teams[0].teamResults.quarterPoints[i].basket;
                                 sNo++;
                             }
                         }
+                        obj["DATA POINTS 1"];
                     } else if (mainData.resultWaterPolo) {
                         if (mainData.opponentsTeam[0]._id === mainData.resultWaterPolo.winner.player) {
                             if (mainData.resultWaterPolo.teams[0].walkover == true) {
@@ -11054,17 +11055,17 @@ var model = {
                                         callback(null, data.found);
                                     }
                                 } else if (found[0].opponentsTeam.length == 2 && found[1].opponentsTeam.length == 2) {
-                                    if (data._id == found[0].prevMatch[1]) {
-                                        var playerId = found[0].opponentsTeam[1];
-                                        var playerId1 = found[1].opponentsTeam[1];
-                                        winPlayer.push(playerId);
-                                        lostPlayer.push(playerId1);
-                                    } else {
-                                        var playerId = found[0].opponentsTeam[0];
-                                        var playerId1 = found[1].opponentsTeam[0];
-                                        winPlayer.push(playerId);
-                                        lostPlayer.push(playerId1);
-                                    }
+                                    // if (data._id == found[0].prevMatch[1]) {
+                                    //     var playerId = found[0].opponentsTeam[1];
+                                    //     var playerId1 = found[1].opponentsTeam[1];
+                                    //     winPlayer.push(playerId);
+                                    //     lostPlayer.push(playerId1);
+                                    // } else {
+                                    //     var playerId = found[0].opponentsTeam[0];
+                                    //     var playerId1 = found[1].opponentsTeam[0];
+                                    //     winPlayer.push(playerId);
+                                    //     lostPlayer.push(playerId1);
+                                    // }
                                     if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted' && data.found.resultsRacquet.isNoMatch == false) {
                                         if (data.found.opponentsTeam[0].equals(data.found.resultsRacquet.winner.player)) {
                                             lostPlayer.push(data.found.opponentsTeam[1]);
@@ -11254,7 +11255,6 @@ var model = {
                                     // callback(null, found);
                                 }
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle)) {
-                                // console.log("updating match", data.found);
                                 if (found[0].opponentsSingle.length == 1) {
                                     // var playerId = found[0].opponentsSingle[0];
                                     // winPlayer.push(playerId);
@@ -11278,21 +11278,15 @@ var model = {
                                         // callback(null, data.found);
                                     }
                                 } else if (found[0].opponentsSingle.length == 2) {
-
                                     if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
                                         if (data._id.equals(found[0].prevMatch[1]._id)) {
-                                            // console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
-                                            var playerId = found[0].prevMatch[0].resultsCombat.winner.player;
-                                            // console.log("playerId", playerId);
+                                            var playerId = found[0].prevMatch[0].resultsCombat.winner.opponentsSingle;
                                             winPlayer.push(playerId);
                                         } else {
-                                            // console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
-                                            var playerId = found[0].prevMatch[1].resultsCombat.winner.player;
-                                            // console.log("playerId", playerId);
+                                            var playerId = found[0].prevMatch[1].resultsCombat.winner.opponentsSingle;
                                             winPlayer.push(playerId);
                                         }
                                         winPlayer.push(data.found.resultsCombat.winner.opponentsSingle);
-                                        // console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
                                                 opponentsSingle: winPlayer
@@ -11390,13 +11384,9 @@ var model = {
                                     // callback(null, found);
                                 }
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam)) {
-                                // console.log("updating match", data.found);
                                 if (found[0].opponentsTeam.length == 1) {
-                                    // var playerId = found[0].opponentsTeam[0];
-                                    // winPlayer.push(playerId);
                                     if (data.found.resultsRacquet && data.found.resultsRacquet.status == "IsCompleted" && data.found.resultsRacquet.isNoMatch == false) {
                                         winPlayer.push(data.found.resultsRacquet.winner.player);
-                                        console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
                                                 opponentsTeam: winPlayer
@@ -11464,18 +11454,13 @@ var model = {
                                 } else if (found[0].opponentsTeam.length == 2) {
                                     if (data.found.resultsRacquet && data.found.resultsRacquet.status == "IsCompleted" && data.found.resultsRacquet.isNoMatch == false) {
                                         if (data._id.equals(found[0].prevMatch[1]._id)) {
-                                            // console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[0].resultsRacquet.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         } else {
-                                            // console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[1].resultsRacquet.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         }
                                         winPlayer.push(data.found.resultsRacquet.winner.player);
-                                        // console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
                                                 opponentsTeam: winPlayer
@@ -11483,18 +11468,13 @@ var model = {
                                         };
                                     } else if (data.found.resultVolleyball && data.found.resultVolleyball.status == "IsCompleted" && data.found.resultVolleyball.isNoMatch == false) {
                                         if (data._id.equals(found[0].prevMatch[1]._id)) {
-                                            // console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[0].resultVolleyball.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         } else {
-                                            // console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[1].resultVolleyball.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         }
                                         winPlayer.push(data.found.resultVolleyball.winner.player);
-                                        // console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
                                                 opponentsTeam: winPlayer
@@ -11502,18 +11482,13 @@ var model = {
                                         };
                                     } else if (data.found.resultBasketball && data.found.resultBasketball.status == "IsCompleted" && data.found.resultBasketball.isNoMatch == false) {
                                         if (data._id.equals(found[0].prevMatch[1]._id)) {
-                                            // console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[0].resultBasketball.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         } else {
-                                            // console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[1].resultBasketball.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         }
                                         winPlayer.push(data.found.resultBasketball.winner.player);
-                                        // console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
                                                 opponentsTeam: winPlayer
@@ -11521,18 +11496,13 @@ var model = {
                                         };
                                     } else if (data.found.resultHockey && data.found.resultHockey.status == "IsCompleted" && data.found.resultHockey.isNoMatch == false) {
                                         if (data._id.equals(found[0].prevMatch[1]._id)) {
-                                            // console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[0].resultHockey.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         } else {
-                                            // console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[1].resultHockey.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         }
                                         winPlayer.push(data.found.resultHockey.winner.player);
-                                        // console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
                                                 opponentsTeam: winPlayer
@@ -11540,18 +11510,13 @@ var model = {
                                         };
                                     } else if (data.found.resultWaterPolo && data.found.resultWaterPolo.status == "IsCompleted" && data.found.resultWaterPolo.isNoMatch == false) {
                                         if (data._id.equals(found[0].prevMatch[1]._id)) {
-                                            // console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[0].resultWaterPolo.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         } else {
-                                            // console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[1].resultWaterPolo.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         }
                                         winPlayer.push(data.found.resultWaterPolo.winner.player);
-                                        // console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
                                                 opponentsTeam: winPlayer
@@ -11559,18 +11524,13 @@ var model = {
                                         };
                                     } else if (data.found.resultKabaddi && data.found.resultKabaddi.status == "IsCompleted" && data.found.resultKabaddi.isNoMatch == false) {
                                         if (data._id.equals(found[0].prevMatch[1]._id)) {
-                                            // console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[0].resultKabaddi.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         } else {
-                                            // console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[1].resultKabaddi.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         }
                                         winPlayer.push(data.found.resultKabaddi.winner.player);
-                                        console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
                                                 opponentsTeam: winPlayer
@@ -11578,18 +11538,13 @@ var model = {
                                         };
                                     } else if (data.found.resultHandball && data.found.resultHandball.status == "IsCompleted" && data.found.resultHandball.isNoMatch == false) {
                                         if (data._id.equals(found[0].prevMatch[1]._id)) {
-                                            // console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[0].resultHandball.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         } else {
-                                            // console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[1].resultHandball.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         }
                                         winPlayer.push(data.found.resultHandball.winner.player);
-                                        // console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
                                                 opponentsTeam: winPlayer
@@ -11597,18 +11552,13 @@ var model = {
                                         };
                                     } else if (data.found.resultsCombat && data.found.resultsCombat.status == "IsCompleted" && data.found.resultsCombat.isNoMatch == false) {
                                         if (data._id.equals(found[0].prevMatch[1]._id)) {
-                                            // console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[0].resultsCombat.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         } else {
-                                            // console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
                                             var playerId = found[0].prevMatch[1].resultsCombat.winner.player;
-                                            // console.log("playerId", playerId);
                                             winPlayer.push(playerId);
                                         }
                                         winPlayer.push(data.found.resultsCombat.winner.player);
-                                        // console.log("player", winPlayer);
                                         updateObj = {
                                             $set: {
                                                 opponentsTeam: winPlayer
@@ -12357,7 +12307,6 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else {
-
                                 callback(null, finalData);
                             }
                         });
