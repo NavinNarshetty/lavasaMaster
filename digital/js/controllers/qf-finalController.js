@@ -1,4 +1,4 @@
-myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope) {
+myApp.controller('qfFinalCtrl', function ($scope, knockoutService, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, $rootScope) {
   $scope.template = TemplateService.getHTML("content/qf-final.html");
   TemplateService.title = "Qualifying Rounds"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -203,20 +203,22 @@ myApp.controller('qfFinalCtrl', function ($scope, TemplateService, $state, Navig
     } else {
       $scope.roundsList[index].limitValue = 8;
       $scope.roundsList[index].showMore = true;
+      $scope.scrollID = 'qftable' + index;
+      knockoutService.scrollTo($scope.scrollID, 'id');
     }
   };
 
   // START SCORING FUNCTION
   $scope.startScoring = function (data, editFlag) {
     console.log(data, 'startScoring');
-      $state.go("scorequalifying", {
-        flag: editFlag,
-        sportName: $stateParams.name,
-        sport: $stateParams.id,
-        drawFormat: $stateParams.drawFormat,
-        roundName: data.name,
-        sportId: data.match[0].sport._id
-      });
+    $state.go("scorequalifying", {
+      flag: editFlag,
+      sportName: $stateParams.name,
+      sport: $stateParams.id,
+      drawFormat: $stateParams.drawFormat,
+      roundName: data.name,
+      sportId: data.match[0].sport._id
+    });
   }
   // START SCORING FUNCTION END
 

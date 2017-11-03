@@ -1,4 +1,4 @@
-<div class="qualifying-knockout-round">
+<div class="qualifying-knockout-round" scrollto>
   <div class="container">
     <!--SPORT NAME-->
     <div class="qf-knockout-sportname text-center">
@@ -100,7 +100,7 @@
       </div>
       <!--END KNOCKOUT TABLE-->
       <!--QUALIFYING HEAD-->
-      <div class="qf-knockout-qualifyinghead">
+      <div class="qf-knockout-qualifyinghead" id='qfknockout'>
         <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">Qualifying</h3>
         <p class="sport-color-primary" ng-if="qualifying[0].match[0].scheduleDate"><span>{{qualifying[0].match[0].scheduleDate |englishNumeralDate}}</span>
           <span> |</span>

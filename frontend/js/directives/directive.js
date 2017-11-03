@@ -818,8 +818,32 @@ myApp.directive('img', function ($compile, $parse) {
                 $($element).height($width);
             }
         }
+    })
+    // SET HEIGHT OF TILE END
+    // SCROLLTO
+    .directive('scrollto', function ($compile, $parse) {
+        return {
+            restrict: 'EA',
+            replace: false,
+            link: function ($scope, element, attrs) {
+                var $element = $(element);
+                $scope.scrollDown = function (destination, type) {
+                    if (type == 'id') {
+                        var destination = '#' + destination;
+                    } else if (type == 'class') {
+                        var destination = '.' + destination;
+                    }
+                    console.log(destination, type, 'in dir')
+                    $('html,body').animate({
+                            scrollTop: $(destination).offset().top
+                        },
+                        'slow');
+                };
+            }
+        };
     });
-// SET HEIGHT OF TILE END
+// SCROLLDOWN END
+
 // .directive('onlyDigits', function () {
 //     return {
 //         require: 'ngModel',

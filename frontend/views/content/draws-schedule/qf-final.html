@@ -1,4 +1,4 @@
-<div class="qualifying-final-round">
+<div class="qualifying-final-round" scrollto>
   <div class="container">
     <!--SPORT NAME-->
     <div class="qf-final-sportname text-center">
@@ -103,7 +103,7 @@
         </div> -->
         <!--END FINAL HEAD-->
         <!--FINAL TABLE-->
-        <div class="qf-final-finaltable table-responsive" ng-repeat="data in roundsList track by $index" ng-if="roundsList.length>0 && data">
+        <div class="qf-final-finaltable table-responsive" id="qftable{{$index}}" ng-repeat="data in roundsList track by $index" ng-if="roundsList.length>0 && data">
           <div class="qf-final-finalround-head">
             <h3 class="d-fjalla-one text-uppercase sport-color-primary m-clear">{{data.name}}</h3>
             <p class="sport-color-primary"><span>{{data.match[0].scheduleDate |englishNumeralDate}}</span>

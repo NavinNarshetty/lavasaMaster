@@ -1,4 +1,4 @@
-myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, NavigationService, $filter, $sce, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
+myApp.controller('QfKnockoutCtrl', function ($scope, knockoutService, TemplateService, $state, NavigationService, $filter, $sce, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope) {
   $scope.template = TemplateService.getHTML("content/draws-schedule/qf-knockout.html");
   TemplateService.title = "QuaterFinal Knockout"; //This is the Title of the Website
   $scope.navigation = NavigationService.getNavigation();
@@ -54,7 +54,7 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
     round: "final",
     score: "1-5",
     qscore: "11"
-  },];
+  }, ];
 
   // END TABLE JSON
 
@@ -142,6 +142,8 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
       } else {
         $scope.limitKnockout = 8;
         $scope.showKnockout = false;
+        $scope.scrollID = 'qfknockout';
+        knockoutService.scrollTo($scope.scrollID, 'id');
       }
     } else {
       if (type === 'qualifying') {
@@ -152,6 +154,8 @@ myApp.controller('QfKnockoutCtrl', function ($scope, TemplateService, $state, Na
         } else {
           $scope.showMore = false;
           $scope.limitValue = 8;
+          $scope.scrollID = 'qfknockout';
+          knockoutService.scrollTo($scope.scrollID, 'id');
         }
       }
     }

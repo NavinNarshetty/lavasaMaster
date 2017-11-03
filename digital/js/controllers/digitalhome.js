@@ -302,10 +302,11 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                     case 'Target Sports':
                                         switch ($scope.drawDetails.drawFormat) {
                                             case 'Qualifying Knockout':
-                                                $state.go('qf-knockout', {
-                                                    id: $scope.drawDetails.sport,
-                                                    drawFormat: $scope.drawDetails.drawFormat,
-                                                });
+                                                // $state.go('qf-knockout', {
+                                                //     id: $scope.drawDetails.sport,
+                                                //     drawFormat: $scope.drawDetails.drawFormat,
+                                                // });
+                                                toastr.error('Digital Scoring Not Available for this sport', 'Error');
                                                 break;
                                             case 'Qualifying Round':
                                                 $state.go('qf-final', {

@@ -1,4 +1,4 @@
-<div class="qualifying-final-round">
+<div class="qualifying-final-round" scrollto>
   <div class="container">
     <!--SPORT NAME-->
     <div class="qf-final-sportname text-center">
@@ -101,7 +101,7 @@
         </div> -->
         <!--END FINAL HEAD-->
         <!--FINAL TABLE-->
-        <div class="qf-final-finaltable table-responsive" ng-repeat="data in roundsList track by $index" ng-if="roundsList.length>0 && data">
+        <div class="qf-final-finaltable table-responsive" id="qftable{{$index}}" ng-repeat="data in roundsList track by $index" ng-if="roundsList.length>0 && data">
           <div class="qf-final-finalround-head">
             <div class="pull-right" ng-if="roundsList[0].match[0].sport.sportslist.sportsListSubCategory.name != 'Shooting'">
               <button class="btn text-uppercase btn-green-outline mlr-10" ng-click="startScoring(data, 'image');">Upload Image</button>
