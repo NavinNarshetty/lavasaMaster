@@ -603,7 +603,7 @@ var model = {
                                             "sportsListSubCategory": sport.sportslist.sportsListSubCategory._id
                                         }
                                         CertificateDetails.find(certificateDetailsObj).lean().exec(function (err, detail) {
-                                            console.log("--------------", certificateDetailsObj, detail);
+                                            // console.log("--------------", certificateDetailsObj, detail);
                                             if (err) {
                                                 callback(err, null);
                                             } else if (!_.isEmpty(detail)) {

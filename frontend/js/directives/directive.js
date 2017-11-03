@@ -303,7 +303,6 @@ myApp.directive('img', function ($compile, $parse) {
 
                 var ishover;
                 var $element = $(element);
-                console.log(scope.game);
                 if (scope.game.grey) {
                     $element.addClass("grey");
                 } else {

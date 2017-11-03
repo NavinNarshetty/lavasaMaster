@@ -694,7 +694,7 @@ var model = {
                         };
                     } else {
                         var matchObj = {
-                            _id: data.athleteId
+                            _id: data.school
                         };
                     }
                     Registration.findOne(matchObj).lean().exec(function (err, found) {

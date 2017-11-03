@@ -186,8 +186,8 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                 $scope.getSchoolProfile = data.data;
                 $scope.athletes = data.data.athletes;
                 $scope.schoolSports = data.data.registerSport;
+                var schoolSport = 0;
                 _.each($scope.schoolSports, function (n) {
-
                     if ((n.gender).length > 1) {
                         if (n.gender[0].name == 'male') {
                             if (n.gender[0].count) {
@@ -243,7 +243,15 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                         n.image = n.gender[0].individual[0].image;
                         n._id = n.gender[0].individual[0].sportsListSubCategoryId;
                     }
+                    schoolSport = schoolSport + 1;
                 });
+
+                if (schoolSport == $scope.schoolSports.length) {
+
+                }
+
+
+
                 $scope.athletesCount = data.data.athletesCount;
                 _.each($scope.athletesCount, function (n) {
                     if (n.name == 'male') {
