@@ -5940,7 +5940,7 @@ var model = {
                 }
                 obj["ROUND NAME"] = mainData.round;
                 // obj.TIME = mainData.scheduleTime;
-                if (mainData.opponentsSingle.length > 0) {
+                if (mainData.opponentsSingle.length == 1) {
                     obj["SFAID 1"] = mainData.opponentsSingle[0].athleteId.sfaId;
                     var firstName = mainData.opponentsSingle[0].athleteId.firstName.charAt(0);
                     if (mainData.opponentsSingle[0].athleteId.middleName) {
@@ -6010,14 +6010,18 @@ var model = {
                     if (mainData.resultsCombat) {
                         var i;
                         var sNo = 1;
-                        for (i = 0; i < mainData.resultsCombat.players[1].sets.length; i++) {
-                            if (i == 0) {
-                                obj["ATHLETE 2 SCORE"] = mainData.resultsCombat.players[1].sets[i].point;
-                            } else {
-                                obj["ATHLETE 2 SCORE"] = obj["ATHLETE 2 SCORE"] + mainData.resultsCombat.players[1].sets[i].point;
+                        if (mainData.resultsCombat.players && mainData.resultsCombat.players.length > 1) {
+                            for (i = 0; i < mainData.resultsCombat.players[1].sets.length; i++) {
+                                if (i == 0) {
+                                    obj["ATHLETE 2 SCORE"] = mainData.resultsCombat.players[1].sets[i].point;
+                                } else {
+                                    obj["ATHLETE 2 SCORE"] = obj["ATHLETE 2 SCORE"] + mainData.resultsCombat.players[1].sets[i].point;
+                                }
                             }
+                        } else {
+                            obj["ATHLETE 2 SCORE"] = "";
                         }
-                        if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsCombat.winner.player) {
+                        if (mainData.resultsCombat.winner && mainData.opponentsSingle[1].athleteId._id === mainData.resultsCombat.winner.player) {
                             obj["WINNER NAME"] = obj["SCREEN NAME ATHLETE 2"];
                             obj["WINNER SFA ID"] = obj["SFAID 2"];
                             obj["WINNER SCHOOL"] = obj["SCREEN NAME SCHOOL 2"];
@@ -6555,7 +6559,7 @@ var model = {
                 }
 
                 // obj.TIME = mainData.scheduleTime;
-                console.log(JSON.stringify(mainData.opponentsTeam, null, "    "), "-------------");
+                // console.log(JSON.stringify(mainData.opponentsTeam, null, "    "), "-------------");
                 if (mainData.opponentsTeam.length > 0) {
                     obj["TEAM ID 1"] = mainData.opponentsTeam[0].teamId;
                     obj["SCREEN SCHOOL NAME 1"] = matchData.opponentsTeam[i].studentTeam.studentId.school.screenName;
@@ -11444,12 +11448,13 @@ var model = {
                                 } else if (found[0].opponentsTeam.length == 2) {
                                     if (data._id.equals(found[0].prevMatch[1]._id)) {
                                         console.log("inside equal", data._id, "prev", found[0].prevMatch[1]);
-                                        var playerId = found[0].opponentsTeam[1];
+                                        if (found[0])
+                                            var playerId = found[0].opponentsTeam[0];
                                         console.log("playerId", playerId);
                                         winPlayer.push(playerId);
                                     } else {
                                         console.log("inside else", data._id, "prev", found[0].prevMatch[1]);
-                                        var playerId = found[0].opponentsTeam[0];
+                                        var playerId = found[0].opponentsTeam[1];
                                         console.log("playerId", playerId);
                                         winPlayer.push(playerId);
                                     }
@@ -12011,7 +12016,7 @@ var model = {
                                                             if (matchData[0].resultQualifyingRound.player.bestAttempt) {
                                                                 result.result = matchData[0].resultQualifyingRound.player.bestAttempt;
                                                             } else {
-                                                                var height = matchData[0].resultQualifyingRound.round.substring(7, 8);
+                                                                var height = matchData[0].round;
                                                                 result.result = height;
                                                             }
                                                             callback(null, result);
@@ -12092,9 +12097,6 @@ var model = {
                                 });
 
                             } else {
-
-
-
                                 async.eachSeries(singleData.team, function (n, callback) {
                                     data.team = n._id;
                                     var pipeLine = Match.getTeamAggregatePipeline(data);
@@ -12143,7 +12145,7 @@ var model = {
                                                             if (matchData[0].resultQualifyingRound.player.bestAttempt) {
                                                                 result.result = matchData[0].resultQualifyingRound.player.bestAttempt;
                                                             } else {
-                                                                var height = matchData[0].resultQualifyingRound.round.substring(7, 8);
+                                                                var height = matchData[0].round;
                                                                 result.result = height;
                                                             }
                                                             callback(null, result);

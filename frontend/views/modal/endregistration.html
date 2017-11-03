@@ -1,0 +1,40 @@
+<div class="endregistration-modal">
+  <!-- MODAL HEADER -->
+  <div class="modal-header endregistration-header">
+    <h3 class="modal-title text-center text-capitalize">last date of Sport registration</h3>
+  </div>
+  <!-- MODAL END -->
+
+  <!-- MODAL BODY TABLE -->
+  <div class="modal-body">
+    <div class="endregistration-table">
+      <div class="modal-container">
+        <div class="row">
+          <div class="col-md-6 col-sm-6 col-xs-12 ver-line">
+            <div class="form-group" ng-repeat="item in endEntries track by $index">
+              <label for="">
+                <span>{{item.sport}}</span> <span>:</span> <span>{{item.date}}</span> <span>November</span> 
+              </label>
+            </div>
+          </div>
+          <div class="col-md-6 col-sm-6 col-xs-12 ">
+            <div class="form-group" ng-repeat="item1 in endEntries1 track by $index">
+              <label for="">
+                    <span>{{item1.sport}}</span> <span>:</span> <span>{{item1.date}}</span> <span>November</span> 
+              </label>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <!-- MODAL BODY TABLE -->
+
+  <div class="modal-footer">
+    <a ui-sref="formathlete">
+      <button class="btn btn-primary" type="button">OK</button>
+    </a>
+    <button class="btn btn-warning" type="button" ng-click="$dismiss()">Cancel</button>
+  </div>
+</div>
