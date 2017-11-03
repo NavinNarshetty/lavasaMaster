@@ -185,9 +185,13 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             if (data.value) {
                 $scope.getSchoolProfile = data.data;
                 $scope.athletes = data.data.athletes;
-                $scope.schoolSports = data.data.registerSport;
+                // $scope.schoolSports = data.data.registerSport;
                 var schoolSport = 0;
-                _.each($scope.schoolSports, function (n) {
+                var subArrLength = 0;
+
+                //Count of male and female from sport array and image active and inactive placement in upperlayer of json.
+                _.each($scope.getSchoolProfile.registerSport, function (n) {
+                    n.subCategory = [];
                     if ((n.gender).length > 1) {
                         if (n.gender[0].name == 'male') {
                             if (n.gender[0].count) {
@@ -232,24 +236,68 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                             n.maleCount = 0;
                         }
                     }
-
-
                     if (!_.isEmpty(n.gender[0].team)) {
                         n.inactiveimage = n.gender[0].team[0].inactiveimage;
                         n.image = n.gender[0].team[0].image;
-                        n._id = n.gender[0].team[0].sportsListSubCategoryId;
+                        if (n.inactiveimage === undefined) {
+                            n.inactiveimage = '';
+                        }
+                        if (n.image === undefined) {
+                            n.image = '';
+                        }
+                        n.subCategory.push(n.gender[0].team[0].sportsListSubCategoryId);
                     } else if (!_.isEmpty(n.gender[0].individual)) {
                         n.inactiveimage = n.gender[0].individual[0].inactiveimage;
                         n.image = n.gender[0].individual[0].image;
-                        n._id = n.gender[0].individual[0].sportsListSubCategoryId;
+                        if (n.inactiveimage === undefined) {
+                            n.inactiveimage = '';
+                        }
+                        if (n.image === undefined) {
+                            n.image = '';
+                        }
+                        n.subCategory.push(n.gender[0].individual[0].sportsListSubCategoryId);
                     }
                     schoolSport = schoolSport + 1;
                 });
 
-                if (schoolSport == $scope.schoolSports.length) {
 
+                if (schoolSport == $scope.getSchoolProfile.registerSport.length) {
+                    _.each($scope.getSchoolProfile.registerSport, function (n, key) {
+                        var sportArr = [];
+                        var sportName = [];
+                        if (n.name == 'Kho Kho' || n.name == 'Water Polo' || n.name == 'Table Tennis' || n.name == 'Sport MMA') {
+                            sportArr[0] = n.name;
+                            sportName = sportArr;
+                        } else {
+                            sportName = _.split(n.name, " ");
+                        }
+                        if (n.name == 'Table Tennis Doubles') {
+                            var bindName = sportName[0] + ' ' +
+                                sportName[1];
+                            $scope.sportObj = _.findIndex($scope.getSchoolProfile.registerSport, ['name', bindName]);
+                        } else {
+                            $scope.sportObj = _.findIndex($scope.getSchoolProfile.registerSport, ['name', sportName[0]]);
+                        }
+                        if ($scope.sportObj != key && $scope.sportObj != -1) {
+                            $scope.getSchoolProfile.registerSport[$scope.sportObj].subCategory.push(n.subCategory[0]);
+                            n.removeElement = true;
+                        } else if ($scope.sportObj != key && $scope.sportObj == -1) {
+                            if (n.name == 'Table Tennis Doubles') {
+                                n.name = sportName[0] + ' ' +
+                                    sportName[1];
+                            } else {
+                                n.name = sportName[0];
+                            }
+                        }
+                        subArrLength = subArrLength + 1;
+                    });
+                    $scope.getSchoolProfile.registerSport = _.filter($scope.getSchoolProfile.registerSport, function (n) {
+                        return !n.removeElement;
+                    });
                 }
-
+                if (subArrLength >= $scope.getSchoolProfile.registerSport.length) {
+                    $scope.schoolSports = $scope.getSchoolProfile.registerSport;
+                }
 
 
                 $scope.athletesCount = data.data.athletesCount;
