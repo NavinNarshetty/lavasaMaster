@@ -202,8 +202,6 @@ myApp.controller('SportsSelectionCtrl', function ($scope, $stateParams, $locatio
                 }, 8000);
             }
         }
-
-
     };
     //for Tennis Mixed Doubles
     $scope.redirectForTennis = function (val) {
@@ -486,7 +484,7 @@ myApp.controller('SportTeamCtrl', function ($scope, TemplateService, toastr, Nav
     });
     $scope.setTeamid = function (id) {
         NavigationService.setTeamid(id);
-        NavigationService.setVariable(null);
+        NavigationService.setVariable(true);
     };
 
     if ($.jStorage.get("userDetails") === null) {

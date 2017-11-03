@@ -37,26 +37,31 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="value in medias | filter:search">
-                  <td>{{$index+1}}</td>
+                <tr ng-repeat="value in items | filter:search">
+                  <td>{{($index + 1)+((formData.page-1)*maxRow)}}</td>
                   <td>{{value.order}}</td>
                   <td>{{value.folder}}</td>
                   <td>{{value.mediatype}}</td>
                   <td>{{value.medialink}}</td>
                   <td class="text-center">
-                    <a ng-click="deleteFunc(value._id)" class="btn btn-primary">
+                    <a ng-click="confDel(value._id)" class="btn btn-primary">
                                           <i class="fa fa-trash"></i>
                                       </a>
                   </td>
                 </tr>
               </tbody>
             </table>
-            <div class="text-center" ng-if="medias.length==0">
-              <h5>No results found</h5>
+
+            <div class="tableData" ng-if="totalItems===0 || items.length === 0">
+              <h5>No data found</h5>
+            </div>
+            <div class="tableData" ng-if="totalItems===undefined ">
+              <h5>Loading Data</h5>
             </div>
           </div>
           <div class="">
-            <uib-pagination total-items="media.total" ng-model="pagination.pagenumber" items-per-page="20"></uib-pagination>
+            <ul ng-if="totalItems" ng-change="viewTable();" uib-pagination total-items="totalItems" items-per-page="maxRow" ng-model="formData.page"
+              max-size="template.pageMax" class="pagination-sm" boundary-links="true " force-ellipses="true "></ul>
             <!-- <uib-pagination ng-show="medias.length > 0" ng-change="reload();" total-items="media.total" ng-model="pagination.pagenumber"
                 items-per-page="20"></uib-pagination> -->
           </div>

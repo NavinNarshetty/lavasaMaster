@@ -1,15 +1,15 @@
 // JavaScript Document
 myApp.filter('myFilter', function () {
-        // In the return function, we must pass in a single parameter which will be the data we will work on.
-        // We have the ability to support multiple other parameters that can be passed into the filter optionally
-        return function (input, optional1, optional2) {
+    // In the return function, we must pass in a single parameter which will be the data we will work on.
+    // We have the ability to support multiple other parameters that can be passed into the filter optionally
+    return function (input, optional1, optional2) {
 
-            var output;
+        var output;
 
-            // Do filter work here
-            return output;
-        };
-    })
+        // Do filter work here
+        return output;
+    };
+})
 
     .filter('ageYearFilter', function () {
         function calculateAge(birthday) { // birthday is a date
@@ -363,7 +363,7 @@ myApp.filter('myFilter', function () {
             var medalImg = "";
             medalImg = "img/medal-icon/" + input + "-" + type + ".png";
             return medalImg;
-        }
+        };
     })
     // FILTER MEDALS;
     // VIDEO
@@ -376,8 +376,21 @@ myApp.filter('myFilter', function () {
                 videourl = "https://player.vimeo.com/video/" + input + "?autoplay=1&loop=1&autopause=0";
             }
             return videourl;
-        }
+        };
     })
+
+    .filter('videothumbnail', function () {
+        return function (value) {
+            console.log('valu', value);
+            if (value) {
+                return "http://img.youtube.com/vi/" + value + "/hqdefault.jpg";
+            } else {
+                return "";
+            }
+        };
+    })
+
+
     // VIDEO END
     // FILTER FOR SPORT ICON AND HEADER IMG
     .filter('sporticon', function () {

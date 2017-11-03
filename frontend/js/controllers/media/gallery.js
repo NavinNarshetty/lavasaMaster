@@ -1,4 +1,4 @@
-myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams) {
+myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $http, $log, $stateParams) {
     //Used to name the .html file
 
     $scope.template = TemplateService.getHTML("content/media-gallery.html");
@@ -91,27 +91,35 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
     };
     $scope.getMediaFolders = function () {
         $scope.folders = undefined;
-        // NavigationService.getFolders($scope.filter, function (response) {
-        //     if (response) {
-        //         console.log(response);
-        //         $scope.folders = response.data;
-        //     } else {
-        //         // console.log("No data found");
-        //         $scope.folders = [];
-        //     }
-        // });
+        NavigationService.getFolders($scope.filter, function (response) {
+            if (response) {
+                console.log(response);
+                $scope.folders = response.data;
+                _.each($scope.folders, function (key) {
+                    key.medialink = key.media;
+                });
+                NavigationService.getVideoThumbnail($scope.folders);
+            } else {
+                // console.log("No data found");
+                $scope.folders = [];
+            }
+        });
     };
     $scope.loadMedia = function () {
         $scope.mediaArr = undefined;
-        // NavigationService.getLimitedMedia($scope.filter, function (response) {
-        //     if (response) {
-        //         console.log("get limited media : ", response);
-        //         $scope.mediaArr = response.data;
-        //     } else {
-        //         console.log("No data found");
-        //         $scope.mediaArr.data = [];
-        //     }
-        // });
+        NavigationService.getLimitedMedia($scope.filter, function (response) {
+            if (response.value) {
+                console.log("get limited media : ", response);
+                $scope.mediaArr = response.data;
+                $scope.totalCount = response.data.options.count;
+                if ($scope.filter.mediatype == 'video') {
+                    NavigationService.getVideoThumbnail($scope.mediaArr.results);
+                }
+            } else {
+                console.log("No data found");
+                $scope.mediaArr.results = [];
+            }
+        });
     };
     //console.log($stateParams);
     if (!$stateParams.type && !$stateParams.folder) {
@@ -123,9 +131,9 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
         if ($stateParams.type && $stateParams.folder) {
             $scope.filter.mediatype = $stateParams.type;
             $scope.filter.folder = $stateParams.folder;
-            $scope.filter.year = "2016";
-            $scope.filter.pagenumber = 1;
-
+            $scope.filter.year = "2017";
+            // $scope.filter.pagenumber = 1;
+            $scope.filter.page = 1;
             $scope.loadMedia();
             $scope.tabchanges($scope.filter.mediatype, 1);
             $scope.flags.openGallery = true;
@@ -152,4 +160,7 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
         'img/m3.jpg'
 
     ];
+
+
+
 });

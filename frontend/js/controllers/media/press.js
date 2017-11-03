@@ -43,46 +43,49 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
         }
 
     };
-    $scope.getMediaFolders = function () {
-        $scope.folders = undefined;
-        // NavigationService.getFolders($scope.filter, function (response) {
-        //     if (response) {
-        //         console.log(response);
-        //         $scope.folders = response.data;
-        //     } else {
-        //         // console.log("No data found");
-        //         $scope.folders = [];
-        //     }
-        // });
-    };
+    // $scope.getMediaFolders = function () {
+    //     $scope.folders = undefined;
+    //     NavigationService.getFolders($scope.filter, function (response) {
+    //         if (response) {
+    //             console.log(response);
+    //             $scope.folders = response.data;
+    //         } else {
+    //             // console.log("No data found");
+    //             $scope.folders = [];
+    //         }
+    //     });
+    // };
     $scope.loadMedia = function () {
         $scope.mediaArr = undefined;
-        // NavigationService.getLimitedMedia($scope.filter, function (response) {
-        //     if (response) {
-        //         console.log("get limited media : ", response);
-        //         $scope.mediaArr = response.data;
-        //     } else {
-        //         console.log("No data found");
-        //         $scope.mediaArr.data = [];
-        //     }
-        // });
+        NavigationService.getLimitedMedia($scope.filter, function (response) {
+            if (response) {
+                console.log("get limited media : ", response);
+                $scope.mediaArr = response.data;
+                $scope.totalCount = response.data.options.count;
+                if ($scope.filter.mediatype == 'press-video') {
+                    NavigationService.getVideoThumbnail($scope.mediaArr.results);
+                }
+            } else {
+                console.log("No data found");
+                $scope.mediaArr.results = [];
+            }
+        });
     };
     //console.log($stateParams);
     if (!$stateParams.type && !$stateParams.folder) {
         $scope.filter.mediatype = "press-photo";
         $scope.flags.openGallery = true;
-        $scope.filter.year = "2016";
+        $scope.filter.year = "2017";
         $scope.filter.folder = "press-coverage";
-        $scope.filter.pagenumber = 1;
+        $scope.filter.page = 1;
         $scope.loadMedia();
         $scope.tabchanges('press-photo', 1);
     } else {
         if ($stateParams.type && $stateParams.folder) {
             $scope.filter.mediatype = $stateParams.type;
             $scope.filter.folder = $stateParams.folder;
-            $scope.filter.year = "2016";
-            $scope.filter.pagenumber = 1;
-
+            $scope.filter.year = "2017";
+            $scope.filter.page = 1;
             $scope.loadMedia();
             $scope.tabchanges($scope.filter.mediatype, 1);
             $scope.flags.openGallery = true;

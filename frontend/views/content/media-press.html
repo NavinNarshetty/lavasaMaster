@@ -36,23 +36,21 @@
                                 <div class="tab-list sf-list text-up">
                                     <ul class="padding0 margin0">
                                         <li>
-                                            <a href="" ui-sref="media-press-inside({type:'press-photo',folder:'press-coverage'})"
-                                                class="{{classes.classpcp}}">
+                                            <a href="" ui-sref="media-press-inside({type:'press-photo',folder:'press-coverage'})" class="{{classes.classpcp}}">
                                                 photos
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="" ui-sref="media-press-inside({type:'press-video',folder:'press-coverage'})"
-                                                class="{{classes.classpcv}}">videos
+                                            <a href="" ui-sref="media-press-inside({type:'press-video',folder:'press-coverage'})" class="{{classes.classpcv}}">videos
                                             </a>
                                         </li>
                                     </ul>
                                 </div>
-                                <hr class="hr-padding" ng-if="mediaArr.data.length > 0">
+                                <hr class="hr-padding" ng-if="mediaArr.results.length > 0">
                             </div>
                         </div>
                         <div class="row" ng-if="filter.mediatype=='press-photo'">
-                            <div class="col-md-3 mt15 col-sm-6 col-xs-12" ng-repeat="item in mediaArr.data track by $index">
+                            <div class="col-md-3 mt15 col-sm-6 col-xs-12" ng-repeat="item in mediaArr.results track by $index">
                                 <a href="{{item.medialink | mediapath}}" fancybox-box rel="gallery">
                                     <div class="folder-box sf-relative">
                                         <img ng-src="{{item.medialink | mediapath}}" alt="Sports For All" class="img-responsive width100 hover-min">
@@ -63,14 +61,16 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="row text-center" ng-if="filter.mediatype=='press-photo' && !(mediaArr.data.length > 0)">
-                            {{mediaArr.data === undefined && 'Loading ..' || 'No Photos Found.'}}
+                        <div class="row text-center" ng-if="filter.mediatype=='press-photo' && !(mediaArr.results.length > 0)">
+                            {{mediaArr.results === undefined && 'Loading ..' || 'No Photos Found.'}}
                         </div>
+
                         <div class="row" ng-if="filter.mediatype=='press-video'">
-                            <div class="col-md-3 mt15 col-sm-6 col-xs-12" ng-repeat="item in mediaArr.data track by $index">
-                                <a class="various fancybox.iframe" rel="gallery1" fancybox href="https://www.youtube.com/embed/{{item.medialink}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
+                            <div class="col-md-3 mt15 col-sm-6 col-xs-12" ng-repeat="item in mediaArr.results track by $index">
+                                <!-- <a class="various fancybox.iframe" rel="gallery1" fancybox href="https://www.youtube.com/embed/{{item.medialink}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"> -->
+                                <a class="various fancybox.iframe" rel="gallery1" fancybox href="{{item.medialink |linkvideo:item.videotype}}">
                                     <div class="folder-box sf-relative">
-                                        <img ng-src="{{item.medialink | videothumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min">
+                                        <img ng-src="{{item.thumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min">
                                         <div class="over-layer sf-absulate">
                                             <h4 class="banner-set sf-absulate ">{{ item.mediatitle}}</h4>
                                         </div>
@@ -78,11 +78,11 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="row text-center" ng-if="filter.mediatype=='press-video' && !(mediaArr.data.length > 0)">
-                            {{mediaArr.data === undefined && 'Loading ..' || 'No Videos Found.'}}
+                        <div class="row text-center" ng-if="filter.mediatype=='press-video' && !(mediaArr.results.length > 0)">
+                            {{mediaArr.results === undefined && 'Loading ..' || 'No Videos Found.'}}
                         </div>
-                        <uib-pagination ng-if="mediaArr.data.length > 0" ng-change="loadMedia();" total-items="mediaArr.total" ng-model="filter.pagenumber"
-                            items-per-page="12">
+                        <uib-pagination ng-if="mediaArr.total > 0" ng-change="loadMedia();" total-items="mediaArr.total" ng-model="filter.page" items-per-page="totalCount"
+                            max-size="template.pageMax">
                         </uib-pagination>
                     </div>
                 </div>

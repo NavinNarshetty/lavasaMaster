@@ -476,13 +476,13 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             }).success(callback);
         },
 
-        getFolders: function (request, callback) {
-            $http({
-                url: adminUrl + 'media/getFolders',
-                method: 'POST',
-                data: request
-            }).success(callback);
-        },
+        // getFolders: function (request, callback) {
+        //     $http({
+        //         url: adminUrl + 'media/getFolders',
+        //         method: 'POST',
+        //         data: request
+        //     }).success(callback);
+        // },
 
         getSportRoundKnockout: function (request, callback) {
             $http({
@@ -532,13 +532,13 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             //   $window.open(data.url);
         },
 
-        getLimitedMedia: function (request, callback) {
-            $http({
-                url: adminUrl + 'media/getLimitedMedia',
-                method: 'POST',
-                data: request
-            }).success(callback);
-        },
+        // getLimitedMedia: function (request, callback) {
+        //     $http({
+        //         url: adminUrl + 'media/getLimitedMedia',
+        //         method: 'POST',
+        //         data: request
+        //     }).success(callback);
+        // },
 
         //**********NEW MODULE Form Registration***********//
 
@@ -548,6 +548,49 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 method: 'POST',
                 data: request
             }).success(callback);
+        },
+
+        getFolders: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'media/getFolders',
+                method: 'POST',
+                data: request
+            }).success(callback);
+        },
+
+        getLimitedMedia: function (request, callback) {
+            $http({
+                // url: adminUrl2 + 'media/getLimitedMedia',
+                url: adminUrl2 + 'media/getMedias',
+                method: 'POST',
+                data: request
+            }).success(callback);
+        },
+
+
+
+        getVideoThumbnail: function (mediaArr) {
+            _.each(mediaArr, function (key) {
+                if (key.videotype === 'youtube') {
+                    key.thumbnail = "http://img.youtube.com/vi/" + key.medialink + "/hqdefault.jpg";
+
+                } else if (key.videotype === 'vimeo') {
+                    $http.jsonp('http://vimeo.com/api/v2/video/' + key.medialink + '.json?callback=JSON_CALLBACK&_=')
+                        .success(function (res) {
+                            if (res) {
+                                // key.thumbnail = res[0].thumbnail_large;
+                                key.thumbnail = res[0].thumbnail_medium;
+                                // key.thumbnail = res[0].thumbnail_small;
+                            }
+                        })
+                        .error(function (err) {
+                            console.log('error', err);
+
+                        });
+                }
+                return mediaArr;
+            });
+
         },
 
         getSchoolSFA: function (request, callback) {

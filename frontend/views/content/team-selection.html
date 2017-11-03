@@ -227,7 +227,7 @@
                                                                     <h4 class="">Female Player is already Selected</h4>
                                                                 </div>
                                                                 <div class="stu-img">
-                                                                    <img ng-src="{{checked.photograph | serverimage2:70:70:'cover' }}" class="img-responsive" alt="">
+                                                                    <!-- <img ng-src="{{checked.photograph | serverimage2:70:70:'cover' }}" class="img-responsive" alt=""> -->
                                                                 </div>
                                                                 <div class="stu-check">
                                                                     <div class="checkbox-custom">
@@ -235,7 +235,7 @@
                                                                             ng-model="checked.checked" ng-disabled="checked.setDisabled"
                                                                         />-->
 
-                                                                        <input type="checkbox" name="checkIhav" value="option{{$index+1}}" id="option{{$index+1}}" ng-click="pushToTeam(checked, checked.checked, listOfAthelete,$index);maxPlayerAllow($index);"
+                                                                        <input type="checkbox" name="checkIhav" value="option{{$index+1}}" id="option{{$index+1}}" ng-click="pushToTeam(checked, checked.checked, listOfAthelete,$index,'true');maxPlayerAllow($index);"
                                                                             ng-model="checked.checked" ng-disabled="checked.setDisabled"
                                                                         />
 
@@ -302,7 +302,8 @@
 
 
                                                             <td>
-                                                                <div ng-if="!athlete.setDisabled" ng-click="selectService.pushToTeam(athlete, athelete.checked, listOfAthelete);deselectCheckbx();">
+                                                                <!-- <div ng-if="!athlete.setDisabled" ng-click="selectService.pushToTeam(athlete, athelete.checked, listOfAthelete);deselectCheckbx();"> -->
+                                                                <div ng-if="!athlete.setDisabled" ng-click="pushToTeam(athlete, athelete.checked, listOfAthelete,'','true');deselectCheckbx();">
                                                                     <i class="fa fa-lg fa-times-circle pointer"></i>
                                                                     <!--<img src="img/icon/cross.png" alt="logo" class="img-responsive myicon">-->
                                                                 </div>

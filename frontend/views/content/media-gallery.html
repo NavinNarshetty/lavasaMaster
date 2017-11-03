@@ -36,7 +36,7 @@ Press release
         <div class="row">
             <div class="col-md-12">
                 <div class="box-content bx-mob pad-m-main pad-m-main">
-                    <div class="pht" ng-if="filter.mediatype=='photo'">
+                    <div class="pht" ng-if="filter.mediatype=='photo' && folders">
                         <div class="row" ng-if="!flags.openGallery">
                             <div class="row text-center" ng-if="!(folders.length > 0)">
                                 {{folders === undefined && 'Loading ..' || 'No Photos Found.'}}
@@ -82,7 +82,7 @@ Press release
                             </div>
                             <hr>
                             <div class="row mt15">
-                                <div class="col-md-3 mb15" ng-repeat="item in mediaArr.data track by $index">
+                                <div class="col-md-3 mb15" ng-repeat="item in mediaArr.results  track by $index">
                                     <a href="{{item.medialink | mediapath}}" rel="gallery1" fancybox-box>
                                         <div class="folder-box sf-relative">
                                             <img ng-src="{{item.medialink | mediapath}}" alt="Sports For All" class="img-responsive width100 hover-min">
@@ -93,11 +93,11 @@ Press release
                                     </a>
                                 </div>
                             </div>
-                            <div class="row text-center" ng-if="!(mediaArr.data.length > 0)">
-                                {{mediaArr.data === undefined && 'Loading ..' || 'No Photos Found.'}}
+                            <div class="row text-center" ng-if="!(mediaArr.results.length > 0)">
+                                {{mediaArr.results === undefined && 'Loading ..' || 'No Photos Found.'}}
                             </div>
-                            <uib-pagination ng-if="mediaArr.data.length > 0" ng-change="loadMedia();" total-items="mediaArr.total" ng-model="filter.pagenumber"
-                                items-per-page="12">
+                            <uib-pagination ng-if="mediaArr.total > 0" ng-change="loadMedia();" total-items="mediaArr.total" ng-model="filter.page" items-per-page="totalCount"
+                                max-size="template.pageMax">
                             </uib-pagination>
                         </div>
                     </div>
@@ -109,7 +109,8 @@ Press release
                             <div class="col-md-4 mb15 col-xs-12 col-sm-6" ng-repeat="item in folders track by $index" ui-sref="media-gallery-inside({type:'video',folder:item._id})">
                                 <a href="">
                                     <div class="folder-box sf-relative h226">
-                                        <img ng-src="{{item.media | videothumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h">
+                                        <!-- <img ng-src="{{'YWdQ9ByptFE' | videothumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h"> -->
+                                        <img ng-src="{{item.thumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h">
                                         <div class="over-layer sf-absulate">
                                             <h4 class="banner-set sf-absulate text-uppercase">{{item._id }}</h4>
                                         </div>
@@ -147,11 +148,14 @@ Press release
                             </div>
                             <hr>
                             <div class="row mt15">
-                                <div class="col-md-3 mb15 col-sm-6 col-xs-12" ng-repeat="item in mediaArr.data track by $index">
-                                    <a class="various fancybox.iframe" href="https://www.youtube.com/embed/{{item.medialink}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
-                                        rel="gallery1" fancybox>
+                                <div class="col-md-3 mb15 col-sm-6 col-xs-12" ng-repeat="item in mediaArr.results  track by $index">
+                                    <!-- <a class="various fancybox.iframe" href="https://www.youtube.com/embed/{{item.medialink}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
+                                        rel="gallery1" fancybox> -->
+                                    <a class="various fancybox.iframe" href="{{item.medialink | linkvideo :item.videotype}}" rel="gallery1" fancybox>
                                         <div class="folder-box sf-relative h186">
-                                            <img ng-src="{{item.medialink | videothumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h">
+                                            <!-- <img ng-src="{{item.medialink | newlinkvideo:item.videotype}}" alt="Sports For All" class="img-responsive width100 hover-min m-h"> -->
+                                            <img ng-src="{{item.thumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h">
+                                            <!-- <img ng-src="{{vimeoThumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h"> -->
                                             <div class="over-layer sf-absulate">
                                                 <h4 class="banner-set sf-absulate">{{ item.mediatitle}}</h4>
                                             </div>
@@ -159,11 +163,11 @@ Press release
                                     </a>
                                 </div>
                             </div>
-                            <div class="row text-center" ng-if="!(mediaArr.data.length > 0)">
-                                {{mediaArr.data === undefined && 'Loading ..' || 'No Videos Found.'}}
+                            <div class="row text-center" ng-if="!(mediaArr.results.length > 0)">
+                                {{mediaArr.results === undefined && 'Loading ..' || 'No Videos Found.'}}
                             </div>
-                            <uib-pagination ng-if="mediaArr.data.length > 0" ng-change="loadMedia();" total-items="mediaArr.total" ng-model="filter.pagenumber"
-                                items-per-page="12">
+                            <uib-pagination ng-if="mediaArr.total > 0" ng-change="loadMedia();" total-items="mediaArr.total" ng-model="filter.page" items-per-page="totalCount"
+                                max-size="template.pageMax">
                             </uib-pagination>
                         </div>
                     </div>

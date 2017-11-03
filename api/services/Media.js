@@ -100,17 +100,17 @@ var model = {
         function populatedExcel(matchObj) {
             Media.find(matchObj).lean().exec(function (err, medias) {
                 async.concatSeries(medias, function (singleMedia, callback) {
-                        var obj = {};
-                        obj.year = singleMedia.year;
-                        obj.folder = singleMedia.folder;
-                        obj.order = singleMedia.order;
-                        obj.imageorder = singleMedia.imageorder;
-                        obj.date = moment(singleMedia.date).format('DD-MM-YY');
-                        obj.mediatitle = singleMedia.mediatitle;
-                        obj.mediatype = singleMedia.mediatype;
-                        obj.medialink = singleMedia.medialink;
-                        callback(null, obj);
-                    },
+                    var obj = {};
+                    obj.year = singleMedia.year;
+                    obj.folder = singleMedia.folder;
+                    obj.order = singleMedia.order;
+                    obj.imageorder = singleMedia.imageorder;
+                    obj.date = moment(singleMedia.date).format('DD-MM-YY');
+                    obj.mediatitle = singleMedia.mediatitle;
+                    obj.mediatype = singleMedia.mediatype;
+                    obj.medialink = singleMedia.medialink;
+                    callback(null, obj);
+                },
                     function (err, allMedias) {
                         Config.generateExcel(name, allMedias, res);
                     });
@@ -133,29 +133,29 @@ var model = {
                 obj.mediatype = mediatype;
                 obj.medialink = medialink;
                 obj.videotype = videotype;
-                
+
                 arrJsonExcel.push(obj);
             }
             if (data.press == 'true') {
                 // "sampleMediaPress"
                 // "press-coverage"
-                name="sampleMediaPress";
-                initObj("press-coverage","press-photo","qwerty.jpg","NA");
-                initObj("press-coverage","press-video","58fe4jfkls849","youtube");
-                initObj("press-coverage","press-video","12345678","vimeo");
-                Config.generateExcel(name, arrJsonExcel, res);               
+                name = "sampleMediaPress";
+                initObj("press-coverage", "press-photo", "qwerty.jpg", "NA");
+                initObj("press-coverage", "press-video", "58fe4jfkls849", "youtube");
+                initObj("press-coverage", "press-video", "12345678", "vimeo");
+                Config.generateExcel(name, arrJsonExcel, res);
 
             } else {
                 // "sampleMediaGallery"
                 // "Tennis"
-                name="sampleMediaGallery";
-                initObj("TENNIS","photo","qwerty.jpg","NA");
-                initObj("TENNIS","video","58fe4jfkls849","youtube");
-                initObj("TENNIS","video","12345678","vimeo");
-                Config.generateExcel(name, arrJsonExcel, res); 
+                name = "sampleMediaGallery";
+                initObj("TENNIS", "photo", "qwerty.jpg", "NA");
+                initObj("TENNIS", "video", "58fe4jfkls849", "youtube");
+                initObj("TENNIS", "video", "12345678", "vimeo");
+                Config.generateExcel(name, arrJsonExcel, res);
             }
 
-            
+
         }
 
         if (data.sample == 'true') {
@@ -195,6 +195,9 @@ var model = {
                 "_id": '$folder',
                 "media": {
                     "$push": "$medialink"
+                },
+                "videotype": {
+                    "$push": "$videotype"
                 }
             }
         }];
@@ -203,15 +206,18 @@ var model = {
             if (err || _.isEmpty(mediaFolders)) {
                 callback(err, "Folders Not Found");
             } else {
+                console.log(mediaFolders);
                 _.each(mediaFolders, function (n, key) {
                     n.media = n.media[0];
+                    n.videotype = n.videotype[0];
                     if (key == mediaFolders.length - 1)
                         callback(null, mediaFolders);
                 });
             }
-        })
+        });
 
     },
+
 
     getMedias: function (data, callback) {
         var sendObj = {};
@@ -244,17 +250,18 @@ var model = {
 
         sendObj.options = options;
         Media.count(matchObj, function (err, count) {
-            sendObj.total = count
-        })
-
-        Media.find(matchObj).lean().exec(function (err, medias) {
-            if (err || _.isEmpty(data)) {
-                callback(err, "Medias Not Found");
-            } else {
-                sendObj.results = medias;
-                callback(null, sendObj);
-            }
+            sendObj.total = count;
         });
+
+        Media.find(matchObj).limit(options.count).skip(options.start)
+            .lean().exec(function (err, medias) {
+                if (err || _.isEmpty(data)) {
+                    callback(err, "Medias Not Found");
+                } else {
+                    sendObj.results = medias;
+                    callback(null, sendObj);
+                }
+            });
     }
 };
 module.exports = _.assign(module.exports, exports, model);
