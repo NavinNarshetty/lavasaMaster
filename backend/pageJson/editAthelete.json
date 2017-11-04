@@ -187,7 +187,7 @@
             "dropDown": [" ", "AB+", "AB-", "A+", "A-", "O+", "O-", "B+", "B-"]
         }, {
             "name": "Photograph",
-            "type": "image",
+            "type": "rotate",
             "size": "250 x 250",
             "view": true,
             "disabled": true,
@@ -209,7 +209,7 @@
         },
         {
             "name": "Photo ID",
-            "type": "image",
+            "type": "rotate",
             "size": "250 x 250",
             "view": true,
             "disabled": true,
@@ -218,7 +218,7 @@
             "id": "ageProof"
         }, {
             "name": "Age Proof",
-            "type": "image",
+            "type": "rotate",
             "size": "250 x 250",
             "view": true,
             "disabled": true,

@@ -559,7 +559,7 @@ myApp.directive('touppercase', function () {
     };
 })
 // ROTATE IMAGE
-myApp.directive('rotateImage', function ($http, $filter, $timeout, NavigationService) {
+myApp.directive('rotateImage', function ($http, $filter, $timeout, NavigationService, toastr) {
     return {
         templateUrl: 'views/directive/rotateImage.html',
         restrict: 'E',
@@ -581,7 +581,12 @@ myApp.directive('rotateImage', function ($http, $filter, $timeout, NavigationSer
                 console.log("form", $scope.formData);
                 NavigationService.rotateImage($scope.formData, function (data) {
                     console.log(data);
-                    $scope.model = data.data;
+                    if (data.value == true) {
+                      $scope.model = data.data;
+                      toastr.success("Rotate Success");
+                    } else {
+                      toastr.error("Rotate Failed", "Error");
+                    }
                 })
             }
             // UPLOAD IMAGE END
