@@ -261,7 +261,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
       if (err != null && err != 'Uploading') {
 
         $scope.errorMsgpan = err;
-        toastr.error('Please upload File size upto 5Mb Only opo', 'Error');
+        toastr.error('Please upload File size upto 5Mb Only', 'Error');
 
       } else if (!_.isEmpty(data)) {
         console.log('in else');
@@ -277,7 +277,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
 
       if (err != null && err != 'Uploading') {
         $scope.errorMsgpan = err;
-        toastr.error('Please upload File size upto 5Mb Only opo', 'Error');
+        toastr.error('Please upload File size upto 5Mb Only', 'Error');
       } else if (!_.isEmpty(data)) {
         console.log('in else');
         $scope.errorMsgpan = " ";
@@ -291,7 +291,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
     $scope.changeitBirthImage = function (err, data) {
       if (err != null && err != 'Uploading') {
         $scope.errorMsgpan = err;
-        toastr.error('Please upload File size upto 5Mb Only opo', 'Error');
+        toastr.error('Please upload File size upto 5Mb Only', 'Error');
       } else if (!_.isEmpty(data)) {
         console.log('in else');
         $scope.errorMsgpan = " ";
@@ -305,7 +305,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
     $scope.changeitPhotoImage = function (err, data) {
       if (err != null && err != 'Uploading') {
         $scope.errorMsgpan = err;
-        toastr.error('Please upload File size upto 5Mb Only opo', 'Error');
+        toastr.error('Please upload File size upto 5Mb Only', 'Error');
       } else if (!_.isEmpty(data)) {
         console.log('in else');
         $scope.errorMsgpan = " ";
