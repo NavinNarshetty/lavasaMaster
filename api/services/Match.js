@@ -10659,13 +10659,13 @@ var model = {
 
                                 } else if (found[0].opponentsSingle.length == 2 && found[1].opponentsSingle.length == 2) {
                                     if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
-                                        if (data.found.resultsCombat.winner.opponentsSingle.equals(found[1].opponentsSingle[0])) {
+                                        if (data.found.resultsCombat.winner.opponentsSingle === found[1].opponentsSingle[0].toString()) {
                                             playerId1 = found[1].opponentsSingle[1];
                                             playerId = found[0].opponentsSingle[1];
                                             lostPlayer.push(playerId1);
                                             lostPlayer.push(found[0].opponentsSingle[0]);
 
-                                        } else if (data.found.resultsCombat.winner.opponentsSingle.equals(found[1].opponentsSingle[1])) {
+                                        } else if (data.found.resultsCombat.winner.opponentsSingle === found[1].opponentsSingle[1].toString()) {
                                             playerId1 = found[1].opponentsSingle[0];
                                             playerId = found[0].opponentsSingle[0];
                                             lostPlayer.push(playerId1);
@@ -10684,13 +10684,13 @@ var model = {
                                             }
                                         };
                                     } else if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted' && data.found.resultsRacquet.isNoMatch == false) {
-                                        if (data.found.resultsRacquet.winner.opponentsSingle.equals(found[1].opponentsSingle[0])) {
+                                        if (data.found.resultsRacquet.winner.opponentsSingle === found[1].opponentsSingle[0].toString()) {
                                             playerId1 = found[1].opponentsSingle[1];
                                             playerId = found[0].opponentsSingle[1];
                                             lostPlayer.push(playerId1);
                                             lostPlayer.push(found[0].opponentsSingle[0]);
 
-                                        } else if (data.found.resultsRacquet.winner.opponentsSingle.equals(found[1].opponentsSingle[1])) {
+                                        } else if (data.found.resultsRacquet.winner.opponentsSingle === found[1].opponentsSingle[1].toString()) {
                                             playerId1 = found[1].opponentsSingle[0];
                                             playerId = found[0].opponentsSingle[0];
                                             lostPlayer.push(playerId1);
@@ -11050,13 +11050,12 @@ var model = {
                                     }
                                 } else if (found[0].opponentsTeam.length == 2 && found[1].opponentsTeam.length == 2) {
                                     if (data.found.resultsRacquet && data.found.resultsRacquet.status == 'IsCompleted' && data.found.resultsRacquet.isNoMatch == false) {
-                                        if (data.found.resultsRacquet.winner.player.equals(found[1].opponentsTeam[0])) {
+                                        if (data.found.resultsRacquet.winner.player === found[1].opponentsTeam[0].toString()) {
                                             playerId1 = found[1].opponentsTeam[1];
                                             playerId = found[0].opponentsTeam[1];
                                             lostPlayer.push(playerId1);
                                             lostPlayer.push(found[0].opponentsTeam[0]);
-
-                                        } else if (data.found.resultsRacquet.winner.player.equals(found[1].opponentsTeam[1])) {
+                                        } else if (data.found.resultsRacquet.winner.player === found[1].opponentsTeam[1].toString()) {
                                             playerId1 = found[1].opponentsTeam[0];
                                             playerId = found[0].opponentsTeam[0];
                                             lostPlayer.push(playerId1);
@@ -11075,13 +11074,13 @@ var model = {
                                             }
                                         };
                                     } else if (data.found.resultVolleyball && data.found.resultVolleyball.status == 'IsCompleted' && data.found.resultVolleyball.isNoMatch == false) {
-                                        if (data.found.resultVolleyball.winner.player.equals(found[1].opponentsTeam[0])) {
+                                        if (data.found.resultVolleyball.winner.player === found[1].opponentsTeam[0].toString()) {
                                             playerId1 = found[1].opponentsTeam[1];
                                             playerId = found[0].opponentsTeam[1];
                                             lostPlayer.push(playerId1);
                                             lostPlayer.push(found[0].opponentsTeam[0]);
 
-                                        } else if (data.found.resultVolleyball.winner.player.equals(found[1].opponentsTeam[1])) {
+                                        } else if (data.found.resultVolleyball.winner.player === found[1].opponentsTeam[1].toString()) {
                                             playerId1 = found[1].opponentsTeam[0];
                                             playerId = found[0].opponentsTeam[0];
                                             lostPlayer.push(playerId1);
@@ -11101,13 +11100,14 @@ var model = {
                                             }
                                         };
                                     } else if (data.found.resultBasketball && data.found.resultBasketball.status == 'IsCompleted' && data.found.resultBasketball.isNoMatch == false) {
-                                        if (data.found.resultBasketball.winner.player.equals(found[1].opponentsTeam[0])) {
+                                        var winner = data.found.resultBasketball.winner.player;
+                                        if (winner === found[1].opponentsTeam[0].toString()) {
                                             playerId1 = found[1].opponentsTeam[1];
                                             playerId = found[0].opponentsTeam[1];
                                             lostPlayer.push(playerId1);
                                             lostPlayer.push(found[0].opponentsTeam[0]);
 
-                                        } else if (data.found.resultBasketball.winner.player.equals(found[1].opponentsTeam[1])) {
+                                        } else if (winner === found[1].opponentsTeam[1].toString()) {
                                             playerId1 = found[1].opponentsTeam[0];
                                             playerId = found[0].opponentsTeam[0];
                                             lostPlayer.push(playerId1);
@@ -11127,13 +11127,13 @@ var model = {
                                             }
                                         };
                                     } else if (data.found.resultHockey && data.found.resultHockey.status == 'IsCompleted' && data.found.resultHockey.isNoMatch == false) {
-                                        if (data.found.resultHockey.winner.player.equals(found[1].opponentsTeam[0])) {
+                                        if (data.found.resultHockey.winner.player === found[1].opponentsTeam[0].toString()) {
                                             playerId1 = found[1].opponentsTeam[1];
                                             playerId = found[0].opponentsTeam[1];
                                             lostPlayer.push(playerId1);
                                             lostPlayer.push(found[0].opponentsTeam[0]);
 
-                                        } else if (data.found.resultHockey.winner.player.equals(found[1].opponentsTeam[1])) {
+                                        } else if (data.found.resultHockey.winner.player === found[1].opponentsTeam[1].toString()) {
                                             playerId1 = found[1].opponentsTeam[0];
                                             playerId = found[0].opponentsTeam[0];
                                             lostPlayer.push(playerId1);
@@ -11153,13 +11153,13 @@ var model = {
                                             }
                                         };
                                     } else if (data.found.resultWaterPolo && data.found.resultWaterPolo.status == 'IsCompleted' && data.found.resultWaterPolo.isNoMatch == false) {
-                                        if (data.found.resultWaterPolo.winner.player.equals(found[1].opponentsTeam[0])) {
+                                        if (data.found.resultWaterPolo.winner.player === found[1].opponentsTeam[0].toString()) {
                                             playerId1 = found[1].opponentsTeam[1];
                                             playerId = found[0].opponentsTeam[1];
                                             lostPlayer.push(playerId1);
                                             lostPlayer.push(found[0].opponentsTeam[0]);
 
-                                        } else if (data.found.resultWaterPolo.winner.player.equals(found[1].opponentsTeam[1])) {
+                                        } else if (data.found.resultWaterPolo.winner.player === found[1].opponentsTeam[1].toString()) {
                                             playerId1 = found[1].opponentsTeam[0];
                                             playerId = found[0].opponentsTeam[0];
                                             lostPlayer.push(playerId1);
@@ -11178,13 +11178,13 @@ var model = {
                                             }
                                         };
                                     } else if (data.found.resultKabaddi && data.found.resultKabaddi.status == 'IsCompleted' && data.found.resultKabaddi.isNoMatch == false) {
-                                        if (data.found.resultKabaddi.winner.player.equals(found[1].opponentsTeam[0])) {
+                                        if (data.found.resultKabaddi.winner.player === found[1].opponentsTeam[0].toString()) {
                                             playerId1 = found[1].opponentsTeam[1];
                                             playerId = found[0].opponentsTeam[1];
                                             lostPlayer.push(playerId1);
                                             lostPlayer.push(found[0].opponentsTeam[0]);
 
-                                        } else if (data.found.resultKabaddi.winner.player.equals(found[1].opponentsTeam[1])) {
+                                        } else if (data.found.resultKabaddi.winner.player === found[1].opponentsTeam[1].toString()) {
                                             playerId1 = found[1].opponentsTeam[0];
                                             playerId = found[0].opponentsTeam[0];
                                             lostPlayer.push(playerId1);
@@ -11203,13 +11203,13 @@ var model = {
                                             }
                                         };
                                     } else if (data.found.resultHandball && data.found.resultHandball.status == 'IsCompleted' && data.found.resultHandball.isNoMatch == false) {
-                                        if (data.found.resultHandball.winner.player.equals(found[1].opponentsTeam[0])) {
+                                        if (data.found.resultHandball.winner.player === found[1].opponentsTeam[0].toString()) {
                                             playerId1 = found[1].opponentsTeam[1];
                                             playerId = found[0].opponentsTeam[1];
                                             lostPlayer.push(playerId1);
                                             lostPlayer.push(found[0].opponentsTeam[0]);
 
-                                        } else if (data.found.resultHandball.winner.player.equals(found[1].opponentsTeam[1])) {
+                                        } else if (data.found.resultHandball.winner.player === found[1].opponentsTeam[1].toString()) {
                                             playerId1 = found[1].opponentsTeam[0];
                                             playerId = found[0].opponentsTeam[0];
                                             lostPlayer.push(playerId1);
@@ -11228,13 +11228,13 @@ var model = {
                                             }
                                         };
                                     } else if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
-                                        if (data.found.resultsCombat.winner.player.equals(found[1].opponentsTeam[0])) {
+                                        if (data.found.resultsCombat.winner.player === found[1].opponentsTeam[0].toString()) {
                                             playerId1 = found[1].opponentsTeam[1];
                                             playerId = found[0].opponentsTeam[1];
                                             lostPlayer.push(playerId1);
                                             lostPlayer.push(found[0].opponentsTeam[0]);
 
-                                        } else if (data.found.resultsCombat.winner.player.equals(found[1].opponentsTeam[1])) {
+                                        } else if (data.found.resultsCombat.winner.player === found[1].opponentsTeam[1].toString()) {
                                             playerId1 = found[1].opponentsTeam[0];
                                             playerId = found[0].opponentsTeam[0];
                                             lostPlayer.push(playerId1);
