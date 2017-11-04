@@ -78,8 +78,8 @@
                     <!-- <label for="">PHOTO ID:</label> -->
                     <div class="matchstart-uploadholder display-inline text-uppercase ">
                       <button class="btn btn-green-outline btn-scoring">Photo ID Upload</button>
-                      <upload-image2 ng-model="playerDetail.photograph" ng-callback="changeitPhotograph" file-types="'image/jpeg,image/png'" no-view
-                        class="pointer upload-scorecard"></upload-image2>
+                      <upload-image2 ng-model="playerDetail.photograph" ng-callback="changeitProfilePhoto" file-types="'image/jpeg,image/png'"
+                        no-view class="pointer upload-scorecard"></upload-image2>
                     </div>
                     <div class="event-bib-photo-image">
                       <img ng-src="{{playerDetail.photograph | serverimage2:250:250:'cover'}} " class="img-responsive">
@@ -102,7 +102,7 @@
                     <!-- <label for="">PHOTO ID:</label> -->
                     <div class="matchstart-uploadholder display-inline text-uppercase ">
                       <button class="btn btn-green-outline btn-scoring">School Upload </button>
-                      <upload-image2 ng-model="playerDetail.atheleteSchoolIdImage" ng-callback="changeitPhotograph" file-types="'image/jpeg,image/png'"
+                      <upload-image2 ng-model="playerDetail.atheleteSchoolIdImage" ng-callback="changeitSchoolPhoto" file-types="'image/jpeg,image/png'"
                         no-view class="pointer upload-scorecard"></upload-image2>
                     </div>
                     <div class="event-bib-photo-image">
@@ -148,7 +148,7 @@
                     <!-- <label for="">PHOTO ID:</label> -->
                     <div class="matchstart-uploadholder display-inline text-uppercase ">
                       <button class="btn btn-green-outline btn-scoring">Upload </button>
-                      <upload-image2 ng-model="playerDetail.birthImage" ng-callback="changeitPhotograph" file-types="'image/jpeg,image/png'" no-view
+                      <upload-image2 ng-model="playerDetail.birthImage" ng-callback="changeitBirthImage" file-types="'image/jpeg,image/png'" no-view
                         class="pointer upload-scorecard"></upload-image2>
                     </div>
                     <div class="event-bib-photo-image">
@@ -170,7 +170,7 @@
                     <!-- <label for="">PHOTO ID:</label> -->
                     <div class="matchstart-uploadholder display-inline text-uppercase ">
                       <button class="btn btn-green-outline btn-scoring">Upload </button>
-                      <upload-image2 ng-model="playerDetail.photoImage" ng-callback="changeitPhotograph" file-types="'image/jpeg,image/png'" no-view
+                      <upload-image2 ng-model="playerDetail.photoImage" ng-callback="changeitPhotoImage" file-types="'image/jpeg,image/png'" no-view
                         class="pointer upload-scorecard"></upload-image2>
                     </div>
                     <div class="event-bib-photo-image">

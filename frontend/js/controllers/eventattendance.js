@@ -249,23 +249,71 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
       $scope.url = 'Athelete/Save'
       NavigationService.apiCallWithData($scope.url, $scope.saveDetail, function (data) {
         console.log(data, 'savedata');
-        if (data.data.nModified === 1) {
+        if (data.value) {
           $state.go('event-attendance')
         }
       })
     }
 
-    $scope.changeitPhotograph = function (err, data) {
-      console.log(err, data);
-      if (err) {
+    // PHOTO ID
+    $scope.changeitProfilePhoto = function (err, data) {
+      console.log(err, data, 'upload path');
+      if (err != null && err != 'Uploading') {
+
         $scope.errorMsgpan = err;
-        toastr.error('Please upload File size upto 5Mb Only', 'Error');
+        toastr.error('Please upload File size upto 5Mb Only opo', 'Error');
 
       } else {
+        console.log('in else');
         $scope.errorMsgpan = " ";
         $scope.errorMsgpan = "Successfully uploaded";
+        toastr.success('Successfully Uploaded', 'Save')
       }
     };
+    // PHOTO ID END
+
+    // SCHOOL ID
+    $scope.changeitSchoolPhoto = function (err, data) {
+
+      if (err != null && err != 'Uploading') {
+        $scope.errorMsgpan = err;
+        toastr.error('Please upload File size upto 5Mb Only opo', 'Error');
+      } else {
+        console.log('in else');
+        $scope.errorMsgpan = " ";
+        $scope.errorMsgpan = "Successfully uploaded";
+        toastr.success('Successfully Uploaded', 'Save')
+      }
+    }
+    // SCHOOL ID END
+
+    // BIRTH IMAGE
+    $scope.changeitBirthImage = function (err, data) {
+      if (err != null && err != 'Uploading') {
+        $scope.errorMsgpan = err;
+        toastr.error('Please upload File size upto 5Mb Only opo', 'Error');
+      } else {
+        console.log('in else');
+        $scope.errorMsgpan = " ";
+        $scope.errorMsgpan = "Successfully uploaded";
+        toastr.success('Successfully Uploaded', 'Save')
+      }
+    }
+    // BIRTH IMAGE END
+
+    // AGE PHOTO IMAGE
+    $scope.changeitPhotoImage = function (err, data) {
+      if (err != null && err != 'Uploading') {
+        $scope.errorMsgpan = err;
+        toastr.error('Please upload File size upto 5Mb Only opo', 'Error');
+      } else {
+        console.log('in else');
+        $scope.errorMsgpan = " ";
+        $scope.errorMsgpan = "Successfully uploaded";
+        toastr.success('Successfully Uploaded', 'Save')
+      }
+    }
+    // AGE PHOTO IMAGE END
   }
 });
 // EVENT ATTENDANCE PROFILE END

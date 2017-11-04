@@ -1575,7 +1575,8 @@ $sport-table-grey:#efeeee !default;
   }
   .event-athleteprofile-imageholder {
     width: 200px;
-    height: 200px; // border: 5px solid $sport-dark-grey;
+    height: 200px;
+    border: 5px solid $sport-dark-grey;
     border-radius: 100%;
     overflow: hidden;
   }
