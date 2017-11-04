@@ -3814,6 +3814,7 @@ var model = {
                             }
                         }
                         obj["DATA POINTS 1"] = "Penality:" + mainData.resultHockey.teams[0].teamResults.penality + ",penaltyPoints:" + mainData.resultHockey.teams[0].teamResults.penaltyPoints + ",penaltyCorners:" + mainData.resultHockey.teams[0].teamResults.penaltyCorners + ",penaltyStroke:" + mainData.resultHockey.teams[0].teamResults.penaltyStroke + ",saves:" + mainData.resultHockey.teams[0].teamResults.saves + ",fouls:" + mainData.resultHockey.teams[0].teamResults.fouls;
+                        obj["SCORE 1"] = "HalfPoints: " + mainData.resultHockey.teams[0].teamResults.halfPoints + "," + "FinalPoints: " + mainData.resultHockey.teams[0].teamResults.finalPoints;
                     } else if (mainData.resultHandball) {
                         if (mainData.opponentsTeam[0]._id === mainData.resultHandball.winner.player) {
                             if (mainData.resultHandball.teams[0].walkover == true) {
@@ -4042,6 +4043,7 @@ var model = {
                             }
                         }
                         obj["DATA POINTS 2"] = "Penality:" + mainData.resultHockey.teams[1].teamResults.penality + ",penaltyPoints:" + mainData.resultHockey.teams[1].teamResults.penaltyPoints + ",penaltyCorners:" + mainData.resultHockey.teams[1].teamResults.penaltyCorners + ",penaltyStroke:" + mainData.resultHockey.teams[1].teamResults.penaltyStroke + ",saves:" + mainData.resultHockey.teams[1].teamResults.saves + ",fouls:" + mainData.resultHockey.teams[1].teamResults.fouls;
+                        obj["SCORE 2"] = "HalfPoints: " + mainData.resultHockey.teams[1].teamResults.halfPoints + "," + "FinalPoints: " + mainData.resultHockey.teams[1].teamResults.finalPoints;
                     } else if (mainData.resultVolleyball) {
                         if (mainData.opponentsTeam[1]._id === mainData.resultVolleyball.winner.player) {
                             if (mainData.resultVolleyball.teams[1].walkover == true) {
