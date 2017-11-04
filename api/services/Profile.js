@@ -1949,7 +1949,7 @@ var model = {
         var newPipeLine = _.cloneDeep(pipeLine);
         newPipeLine.push({
                 $match: {
-                    "opponentsTeam": data.teamId
+                    "opponentsTeam": objectid(data.teamId)
                 }
             },
             // Stage 8
@@ -1993,6 +1993,7 @@ var model = {
             } else {
                 var match = [];
                 async.each(matchData, function (singleData, callback) {
+
                         var stats = {};
                         stats.year = new Date(singleData.createdAt).getFullYear();
                         stats.ageGroup = singleData.sport.ageGroup.name;
@@ -2428,7 +2429,6 @@ var model = {
                     function (err) {
                         callback(null, match);
                     });
-                // callback(null, match);
             }
         });
 
