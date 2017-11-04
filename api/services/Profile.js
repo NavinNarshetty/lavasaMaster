@@ -624,7 +624,7 @@ var model = {
         profile.players = [];
         async.waterfall([
                 function (callback) {
-                    var deepSearch = "studentTeam.studentId school";
+                    var deepSearch = "studentTeam.studentId school sport sport.sportslist sport.sportslist.sportsListSubCategory sport.sportslist.drawFormat";
                     TeamSport.findOne({
                         _id: data.teamId
                     }).lean().deepPopulate(deepSearch).exec(function (err, found) {
@@ -634,10 +634,12 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
+                                // console.log(found)
                                 profile.teamName = found.name;
                                 profile.teamId = found.teamId;
                                 profile.school = found.schoolName;
-                                console.log(found);
+                                profile.sportsListSubCategory = found.sport.sportslist.sportsListSubCategory._id;
+                                profile.drawFormat = found.sport.sportslist.drawFormat;
                                 if (found.school) {
                                     profile.schoolLogo = found.school.schoolLogo;
                                 } else {
@@ -650,18 +652,23 @@ var model = {
                 },
                 function (found, callback) {
                     async.concatSeries(found.studentTeam, function (n, callback) {
+                            console.log(n);
                             var player = {};
-                            if (n.studentId.middleName) {
-                                player.playerName = n.studentId.firstName + " " + n.studentId.middleName + " " + n.studentId.surname;
+                            if (n.studentId !== null) {
+                                if (n.studentId.middleName) {
+                                    player.playerName = n.studentId.firstName + " " + n.studentId.middleName + " " + n.studentId.surname;
+                                } else {
+                                    player.playerName = n.studentId.firstName + " " + n.studentId.surname;
+                                }
+                                player.sfaId = n.studentId.sfaId;
+                                player.profilePic = n.studentId.photograph;
+                                player.isCaptain = n.isCaptain;
+                                player.isGoalKeeper = n.isGoalKeeper;
+                                player._id = n.studentId._id;
+                                callback(null, player);
                             } else {
-                                player.playerName = n.studentId.firstName + " " + n.studentId.surname;
+                                callback(null, player);
                             }
-                            player.sfaId = n.studentId.sfaId;
-                            player.profilePic = n.studentId.photograph;
-                            player.isCaptain = n.isCaptain;
-                            player.isGoalKeeper = n.isGoalKeeper;
-                            player._id = n.studentId._id;
-                            callback(null, player);
                         },
                         function (err, playerData) {
                             if (err) {
@@ -1988,6 +1995,7 @@ var model = {
                 }
             });
         Match.aggregate(newPipeLine, function (err, matchData) {
+            console.log('matchData', matchData);
             if (err) {
                 callback(err, "error in mongoose");
             } else {
@@ -2423,6 +2431,7 @@ var model = {
                                 callback(null, match);
                             });
                         } else {
+                            console.log('else', match);
                             callback(null, match);
                         }
                     },

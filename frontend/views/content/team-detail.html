@@ -68,9 +68,7 @@
                                     statistics
                                 </a>
                             </li>
-                            <!-- <li><a href="" ng-click="tabchange('gallery',3)" class="{{classc}}">
-    gallery
-    </a></li> -->
+                            <!-- <li><a href="" ng-click="tabchange('gallery',3)" class="{{classc}}">gallery</a></li> -->
                         </ul>
                     </div>
                 </div>
@@ -105,6 +103,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="record " ng-show="tab=='statistic'">
                 <div class="row over-fl">
                     <div class="col-md-12 mt25 over-fl">
@@ -182,19 +181,12 @@
                                                             == "Qualifying Round" && stat.qualifyinground.result) || ""}}</span>
                                                     </div>
                                                     <div class="replay-img " ng-if="stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyingknockout.video">
-                                                        <!-- <a ng-if="stat.knockout.video != 'YTU' && stat.heat.video != 'YTU' && stat.league.video != 'YTU' && stat.leagueknockout.video != 'YTU' && stat.qualifyinground.video != 'YTU' && stat.qualifyingknockout.video != 'YTU' && stat.knockout.video != 'NA' && stat.heat.video != 'NA' && stat.league.video != 'NA' && stat.leagueknockout.video != 'NA' && stat.qualifyinground.video != 'NA' && stat.qualifyingknockout.video != 'NA'"
+                                                        <a ng-if="stat.knockout.video != 'YTU' && stat.heat.video != 'YTU' && stat.league.video != 'YTU' && stat.leagueknockout.video != 'YTU' && stat.qualifyinground.video != 'YTU' && stat.qualifyingknockout.video != 'YTU' && stat.knockout.video != 'NA' && stat.heat.video != 'NA' && stat.league.video != 'NA' && stat.leagueknockout.video != 'NA' && stat.qualifyinground.video != 'NA' && stat.qualifyingknockout.video != 'NA'"
                                                             class="various fancybox.iframe" href="https://www.youtube.com/embed/{{stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyingknockout.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
-                                                            rel="gallery1" fancybox><img src="img/sf-play.png" alt=""></a> -->
-                                                        <a class="various fancybox.iframe" ng-if="stat.year == '2015' && stat.knockout.video != 'YTU' && stat.heat.video != 'YTU' && stat.league.video != 'YTU' && stat.leagueknockout.video != 'YTU' && stat.qualifyinground.video != 'YTU' && stat.qualifyingknockout.video != 'YTU' && stat.knockout.video != 'NA' && stat.heat.video != 'NA' && stat.league.video != 'NA' && stat.leagueknockout.video != 'NA' && stat.qualifyinground.video != 'NA' && stat.qualifyingknockout.video != 'NA'"
-                                                            href="https://www.youtube.com/embed/{{stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyinground.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
                                                             rel="gallery1" fancybox>
                                                             <img src="img/sf-play.png" alt="">
                                                         </a>
-                                                        <a class="various fancybox.iframe" ng-if="stat.year == '2016' && stat.knockout.video != 'YTU' && stat.heat.video != 'YTU' && stat.league.video != 'YTU' && stat.leagueknockout.video != 'YTU' && stat.qualifyinground.video != 'YTU' && stat.qualifyingknockout.video != 'YTU' && stat.knockout.video != 'NA' && stat.heat.video != 'NA' && stat.league.video != 'NA' && stat.leagueknockout.video != 'NA' && stat.qualifyinground.video != 'NA' && stat.qualifyingknockout.video != 'NA'"
-                                                            href="https://player.vimeo.com/video/{{stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyinground.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1 frameborder='0' webkitallowfullscreen mozallowfullscreen allowfullscreen"
-                                                            rel="gallery1" fancybox>
-                                                            <img src="img/sf-play.png" alt="">
-                                                        </a>
+
                                                         <a ng-if="stat.knockout.video == 'NA' || stat.heat.video == 'NA' || stat.league.video == 'NA' || stat.leagueknockout.video == 'NA' || stat.qualifyinground.video == 'NA' || stat.qualifyingknockout.video == 'NA'"
                                                             ng-click="videoNA()">
                                                             <img src="img/sf-play.png" alt="">
@@ -207,7 +199,6 @@
                                                 </div>
                                             </td>
                                     </tr>
-
                                 </tbody>
                             </table>
                             <div ng-if="!(teamStats.length > 0) " class="text-center">
@@ -217,44 +208,6 @@
                     </div>
                 </div>
             </div>
-            <!-- <div class="gallery"  ng-show="tab=='gallery'">
-            <div class="row">
-                <div class="text-center mt25">
-                    <div class="tab-list sf-list text-up">
-                        <ul class="padding0 margin0">
-                            <li><a href="" ng-click="tabchanges('photos',1)" class="{{classp}}">
-photos
-</a></li>
-                            <li><a href="" ng-click="tabchanges('videos',2)" class="{{classv}}">
-match videos
-</a></li>
-
-                        </ul>
-                    </div>
-                    <hr class="hr-padding">
-                </div>
-                <div class="row" ng-show="tabs=='photos'">
-                    <div class="col-md-3 mt15 col-sm-4 col-xs-6" ng-repeat="data in photos track by $index">
-                        <a href="{{data}}" fancybox-box rel="gallery"><img ng-src="{{data}}" alt="" class="img-responsive width100"></a>
-                    </div>
-                </div>
-
-                <div class="row " ng-show="tabs=='videos'">
-                    <div class="col-md-3 mt15" ng-repeat="data in video track by $index">
-                        <a class="various fancybox.iframe" fancybox rel="gallery" href="https://www.youtube.com/embed/pIPashZ8S2Q?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
-                            <div class="videow-box">
-                                <div class="video-img">
-                                    <img ng-src="{{data.icon}}" alt="" class="img-responsive width100">
-                                </div>
-                                <div class="video-name">
-                                    <h5 class="text-up color-blue font-semi">{{data.name}}</h5>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-          </div> -->
         </div>
     </div>
 </section>

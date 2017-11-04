@@ -98,6 +98,7 @@ myApp.controller('TeamDetailCtrl', function ($scope, TemplateService, Navigation
             console.log(data);
             if (data.value) {
                 $scope.teamDetails = data.data;
+                $scope.sportsListSubCategoryId = data.data.sportsListSubCategory;
                 console.log($scope.teamDetails);
             } else {
                 $scope.teamDetails = {};
@@ -108,8 +109,11 @@ myApp.controller('TeamDetailCtrl', function ($scope, TemplateService, Navigation
     $scope.teamDetail();
     $scope.getStats = function () {
         $scope.filterStatistics.teamId = $stateParams.id;
+        $scope.filterStatistics.sportsListSubCategory = $scope.sportsListSubCategoryId;
+        // $scope.teamStats = undefined;
         NavigationService.getTeamStats($scope.filterStatistics, function (data) {
             console.log('getStats', data);
+            $scope.teamStats = data.data;
         });
     };
     // $scope.getStats = function () {
