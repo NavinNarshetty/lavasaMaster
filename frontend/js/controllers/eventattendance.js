@@ -263,7 +263,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
         $scope.errorMsgpan = err;
         toastr.error('Please upload File size upto 5Mb Only opo', 'Error');
 
-      } else {
+      } else if (!_.isEmpty(data)) {
         console.log('in else');
         $scope.errorMsgpan = " ";
         $scope.errorMsgpan = "Successfully uploaded";
@@ -278,7 +278,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
       if (err != null && err != 'Uploading') {
         $scope.errorMsgpan = err;
         toastr.error('Please upload File size upto 5Mb Only opo', 'Error');
-      } else {
+      } else if (!_.isEmpty(data)) {
         console.log('in else');
         $scope.errorMsgpan = " ";
         $scope.errorMsgpan = "Successfully uploaded";
@@ -292,7 +292,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
       if (err != null && err != 'Uploading') {
         $scope.errorMsgpan = err;
         toastr.error('Please upload File size upto 5Mb Only opo', 'Error');
-      } else {
+      } else if (!_.isEmpty(data)) {
         console.log('in else');
         $scope.errorMsgpan = " ";
         $scope.errorMsgpan = "Successfully uploaded";
@@ -306,7 +306,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
       if (err != null && err != 'Uploading') {
         $scope.errorMsgpan = err;
         toastr.error('Please upload File size upto 5Mb Only opo', 'Error');
-      } else {
+      } else if (!_.isEmpty(data)) {
         console.log('in else');
         $scope.errorMsgpan = " ";
         $scope.errorMsgpan = "Successfully uploaded";
