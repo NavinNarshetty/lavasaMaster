@@ -117,11 +117,11 @@
     }
 
     .certificate {
-      width: 560px;
+      width: 600px;
       height: auto;
       margin: 0 auto;
       padding: 30px 0px 0px 0px;
-      border: 12px solid #0a1a72;
+      border: 10px solid #0a1a72;
     }
 
     .w70 {
@@ -129,7 +129,7 @@
     }
 
     .w36 {
-      width: 36%;
+      width: 30%;
     }
 
     .pt50 {
@@ -316,6 +316,19 @@
       background-position-y: 36px;
       height: 35px;
     }
+
+    .padding-clear {
+        padding: 0;
+    }
+
+    .disabled-input {
+        background-color: transparent;
+    }
+    .certificate-footerimg {
+      width: 95%;
+      margin: 0px auto;
+      display: block;
+    }
     /* .forGold {
       background: #83512e;
       background: -moz-linear-gradient(left, #83512e 0%, #cebe84 50%, #83512e 100%);
@@ -335,9 +348,9 @@
         <tr>
           <!--HEADER LOGO -->
           <th>
-            
+
             <div class="header-img">
-              <img src="<%=data.bannerImage%>" alt="" class="w36">
+              <img src="<%=data.bannerImage%>" alt="SFA Logo" class="w36">
             </div>
           </th>
           <!-- HEADER LOGO END -->
@@ -351,7 +364,7 @@
               <div class="fr-sec">
                 <div class="">
                   <div class="header-img">
-                    <img src="<%=data.hading%>" alt="" class="w70">
+                    <img src="<%=data.heading%>" alt="Certificate" class="w70">
                   </div>
                 </div>
               </div>
@@ -376,8 +389,8 @@
           <!-- ATHLETE NAME -->
           <td class="text-center">
             <div class="form-group">
-              <input type="text" class="form-control w60 font-tran text-center f-32  border-bg" value="<%=data.athlete.fullName%>"
-                style="color:#232d69">
+              <input type="text" class="form-control disabled-input w60 font-tran text-center f-32  border-bg" value="<%=data.athlete.fullName%>"
+                style="color:#232d69" disabled>
             </div>
           </td>
           <!--ATHLETE NAME END  -->
@@ -387,7 +400,7 @@
           <td class="text-center">
             <div class="form-group border-btm" style="margin-top: 6px;">
               <div class="sf-relative">
-                <input type="text" class="form-control w60 text-center font-os f-20" value="<%=data.athlete.school.name%>" style="text-transform: none;width: 83%;color:#666666;">
+                <input type="text" class="form-control disabled-input w60 text-center font-os f-20" value="<%=data.athlete.school.name%>" style="text-transform: none;width: 83%;color:#666666;" disabled>
               </div>
 
             </div>
@@ -402,7 +415,7 @@
                 <label class="color-blue font-os f-20" style="color:#232d69;">SFA ID</label>
               </div>
               <div class="display-inline">
-                <!-- <input type="text" class="form-control  text-center font-os" value="MA1728378" style="color:#666666;"> -->
+                <!-- <input type="text" class="form-control disabled-input text-center font-os" value="MA1728378" style="color:#666666;" disabled> -->
                 <label class="font-os f-20" style="color:#666666;"><%=data.athlete.sfaId%></label>
               </div>
             </div>
@@ -431,7 +444,7 @@
             <div class="form-group border-btm" style="margin-top: 6px; ">
               <!-- FOR SCHOOL -->
               <div>
-                <input type="text" class="form-control text-center font-os" value="<%=data.sports[0].name%>" style="color:#666666;width: 50%;">
+                <input type="text" class="form-control disabled-input text-center font-os" value="<%=data.sports[0].name%>" style="color:#666666;width: 50%;" disabled>
               </div>
               <!-- SCHOOL END -->
               <!-- <label class="font-os f-20" style="color:#666666;">20 Sports</label> -->
@@ -441,11 +454,11 @@
         </tr>
         <tr>
           <!-- FOOTER IMAGE -->
-          <td>
+          <td class="padding-clear">
             <div class="footer-img">
-              <div class="footer-c mnb5" style="width: 560px; height: auto;">
+              <div class="footer-c" style="width: 95%; height: auto; margin: 0px auto;">
 
-                <img src="<%=data.footerImage%>" alt="" class="width100">
+                <img src="<%=data.footerImage%>" alt="" class="width100  certificate-footerimg">
                 <!-- <img src="https://storage.googleapis.com/sfacertificate/<%=data.image%>" alt="" class="f-img"> -->
                 <!--            <img src="https://storage.googleapis.com/sfacertificate/cfswiminig.jpg" alt="" class="width100" ng-if="">
                     <img src="https://storage.googleapis.com/sfacertificate/cfswimming.jpg" alt="" class="width100" ng-if="">
@@ -458,7 +471,7 @@
                       <img src="img/cftabletennis.jpg" alt="" class="width100" ng-if="">
                       <img src="img/cfcarrom.jpg" alt="" class="width100" ng-if="">
                       <img src="img/cfchess.jpg" alt="" class="width100" ng-if="">
-                      <img src="img/cffencing.jpg" alt="" class="width100" ng-if="">  
+                      <img src="img/cffencing.jpg" alt="" class="width100" ng-if="">
                       <img src="img/cfjudo.jpg" alt="" class="width100" ng-if="">
                       <img src="img/cfsquash.jpg" alt="" class="width100" ng-if="">
                       <img src="img/cftennis.jpg" alt="" class="width100" ng-if="">
