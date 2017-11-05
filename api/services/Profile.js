@@ -2310,12 +2310,12 @@ var model = {
                                             stats.opponentName = found.name;
                                             stats.school = found.schoolName;
                                             stats.teamId = found.teamId;
-                                            _.each(singleData.resultHockey.teams, function (n, key) {
-                                                if (n.teamResults.finalPoints !== '') {
+                                            _.each(singleData.resultHockey.teams, function (h, key) {
+                                                if (h.teamResults.finalPoints !== '') {
                                                     if (key == 0) {
-                                                        finalPoint1 = n.teamResults.finalPoints;
+                                                        finalPoint1 = h.teamResults.finalPoints;
                                                     } else {
-                                                        finalPoint2 = n.teamResults.finalPoints;
+                                                        finalPoint2 = h.teamResults.finalPoints;
                                                     }
                                                 } else {
                                                     if (key == 0) {
@@ -2331,6 +2331,9 @@ var model = {
                                             // } else {
                                             //     stats.score = '-';
                                             // }
+                                            console.log(singleData.resultHockey.winner.player);
+                                            console.log('status', singleData.resultHockey.winner.player === n);
+                                            console.log('N', n);
                                             if (singleData.resultHockey.winner.player === n) {
                                                 stats.isAthleteWinner = false;
                                             } else {
