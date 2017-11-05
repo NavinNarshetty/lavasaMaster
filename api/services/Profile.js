@@ -2332,11 +2332,16 @@ var model = {
                                             //     stats.score = '-';
                                             // }
                                             if (!_.isEmpty(singleData.resultHockey.winner)) {
-                                                var m = singleData.resultHockey.winner.player;
+                                                var m1 = (singleData.resultHockey.winner.player).toString();
+                                                var m2 = n.toString();
                                                 console.log(singleData.resultHockey.winner.player);
-                                                console.log('status', singleData.resultHockey.winner.player === n);
-                                                console.log('status with m n', _.isEqual(m, n));
                                                 console.log('N', n);
+                                                console.log('m1', m1);
+                                                console.log('m2', m2);
+                                                console.log('status', singleData.resultHockey.winner.player === n);
+                                                // console.log('status with m n', m.equals(n));
+                                                console.log('status with m n', m.equals(n));
+
                                                 if (m.equals(n)) {
                                                     stats.isAthleteWinner = false;
                                                 } else {
