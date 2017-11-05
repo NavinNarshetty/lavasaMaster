@@ -2331,12 +2331,13 @@ var model = {
                                             // } else {
                                             //     stats.score = '-';
                                             // }
-                                            console.log(singleData.resultHockey.winner.player);
-                                            console.log('status', singleData.resultHockey.winner.player === n);
-                                            console.log('N', n);
                                             if (singleData.resultHockey.winner.player) {
                                                 var m = singleData.resultHockey.winner.player;
-                                                if (m.equals(n)) {
+                                                console.log(singleData.resultHockey.winner.player);
+                                                console.log('status', singleData.resultHockey.winner.player === n);
+                                                console.log('status with m n', _.isEqual(m, n));
+                                                console.log('N', n);
+                                                if (_.isEqual(m, n)) {
                                                     stats.isAthleteWinner = false;
                                                 } else {
                                                     stats.isAthleteWinner = true;
