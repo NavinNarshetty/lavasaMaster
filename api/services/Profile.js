@@ -2334,10 +2334,12 @@ var model = {
                                             console.log(singleData.resultHockey.winner.player);
                                             console.log('status', singleData.resultHockey.winner.player === n);
                                             console.log('N', n);
-                                            if (singleData.resultHockey.winner.player === n) {
-                                                stats.isAthleteWinner = false;
-                                            } else {
-                                                stats.isAthleteWinner = true;
+                                            if (singleData.resultHockey.winner.player) {
+                                                if (singleData.resultHockey.winner.player.equals(n)) {
+                                                    stats.isAthleteWinner = false;
+                                                } else {
+                                                    stats.isAthleteWinner = true;
+                                                }
                                             }
                                             match.push(stats);
                                             callback(null, match);
