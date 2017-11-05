@@ -2326,11 +2326,11 @@ var model = {
                                                 }
                                             })
                                             stats.score = finalPoint1 + ' - ' + finalPoint2;
-                                            if (!_.isEmpty(singleData.resultHockey.teams[0].teamResults.finalPoints) && !_.isEmpty(singleData.resultHockey.teams[1].teamResults.finalPoints)) {
-                                                stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[1].teamResults.finalPoints;
-                                            } else {
-                                                stats.score = '-';
-                                            }
+                                            // if (!_.isEmpty(singleData.resultHockey.teams[0].teamResults.finalPoints) && !_.isEmpty(singleData.resultHockey.teams[1].teamResults.finalPoints)) {
+                                            //     stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[1].teamResults.finalPoints;
+                                            // } else {
+                                            //     stats.score = '-';
+                                            // }
                                             if (singleData.resultHockey.winner.player === n) {
                                                 stats.isAthleteWinner = false;
                                             } else {
