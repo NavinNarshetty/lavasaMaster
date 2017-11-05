@@ -2335,7 +2335,8 @@ var model = {
                                             console.log('status', singleData.resultHockey.winner.player === n);
                                             console.log('N', n);
                                             if (singleData.resultHockey.winner.player) {
-                                                if (singleData.resultHockey.winner.player.equals(n)) {
+                                                var m = singleData.resultHockey.winner.player;
+                                                if (m.equals(n)) {
                                                     stats.isAthleteWinner = false;
                                                 } else {
                                                     stats.isAthleteWinner = true;
