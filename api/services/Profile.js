@@ -2340,9 +2340,9 @@ var model = {
                                                 console.log('m2', m2);
                                                 console.log('status', singleData.resultHockey.winner.player === n);
                                                 // console.log('status with m n', m.equals(n));
-                                                console.log('status with m1 m2', m1.equals(m2));
+                                                console.log('status with m1 m2', m1 === m2);
 
-                                                if (m1.equals(m2)) {
+                                                if (m1 === m2) {
                                                     stats.isAthleteWinner = false;
                                                 } else {
                                                     stats.isAthleteWinner = true;
