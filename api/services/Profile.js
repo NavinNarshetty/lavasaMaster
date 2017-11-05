@@ -2308,7 +2308,7 @@ var model = {
                                             stats.opponentName = found.name;
                                             stats.school = found.schoolName;
                                             stats.teamId = found.teamId;
-                                            if (singleData.resultHockey.teams[0].teamResults.finalPoints != '' && singleData.resultHockey.teams[1].teamResults.finalPoints != '') {
+                                            if (!_.isEmpty(singleData.resultHockey.teams[0].teamResults.finalPoints) && !_.isEmpty(singleData.resultHockey.teams[1].teamResults.finalPoints)) {
                                                 stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[1].teamResults.finalPoints;
                                             } else {
                                                 stats.score = '-';
