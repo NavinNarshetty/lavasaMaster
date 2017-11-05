@@ -2331,7 +2331,7 @@ var model = {
                                             // } else {
                                             //     stats.score = '-';
                                             // }
-                                            if (singleData.resultHockey.winner.player) {
+                                            if (singleData.resultHockey.winner != {}) {
                                                 var m = singleData.resultHockey.winner.player;
                                                 console.log(singleData.resultHockey.winner.player);
                                                 console.log('status', singleData.resultHockey.winner.player === n);
