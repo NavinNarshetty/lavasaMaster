@@ -2308,7 +2308,13 @@ var model = {
                                             stats.opponentName = found.name;
                                             stats.school = found.schoolName;
                                             stats.teamId = found.teamId;
-                                            stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[0].teamResults.finalPoints;;
+                                            console.log('team wise 0', singleData.resultHockey.teams[0]);
+                                            console.log('team wise 1', singleData.resultHockey.teams[1]);
+                                            console.log('team wise 0 teamResults', singleData.resultHockey.teams[0].teamResults);
+                                            console.log('team wise 1 teamResults', singleData.resultHockey.teams[1].teamResults);
+                                            console.log('team wise 0 fp', singleData.resultHockey.teams[0].teamResults.finalPoints);
+                                            console.log('team wise 1 fp', singleData.resultHockey.teams[1].teamResults.finalPoints);
+                                            stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[1].teamResults.finalPoints;
                                             if (singleData.resultHockey.winner.player === n) {
                                                 stats.isAthleteWinner = false;
                                             } else {
