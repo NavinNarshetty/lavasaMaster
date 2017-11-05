@@ -347,52 +347,25 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
                 "href": "",
                 "game": "Health & Togetherness Partner"
             }
-            //  {
-            //     "img": "img/footer/p7.jpg",
-            //     "href": "",
-            //     "game": "Media Partner "
-            // }, {
-            //     "img": "img/footer/n4.jpg",
-            //     "href": "https://www.facebook.com/sportsillustratedindia/",
-            //     "game": "Magazine Partner"
-            // }
         ];
     $scope.partner = // JavaScript Document
         [{
-                "img": "img/footer/p1.jpg",
-                "href": "",
-                "game": "Venue Partner"
-            }, {
-                "img": "img/footer/p6.jpg",
-                "href": "",
-                "game": "Hospital Partner"
-            }, {
-                "img": "img/footer/n10.png",
-                "href": "",
-                "game": "Digital Parenting Partner"
-            }
-            // {
-            //     "img": "img/footer/na3.jpg",
-            //     "href": "",
-            //     "game": "Sports Surface Partner"
-            // }, {
-            //     "img": "img/footer/na6.jpg",
-            //     "href": "",
-            //     "game": "Sports Mentorship Partner"
-            // }, {
-            //     "img": "img/footer/na4.jpg",
-            //     "href": "",
-            //     "game": "Shooting Range Partner"
-            // }, {
-            //     "img": "img/footer/p5.jpg",
-            //     "href": "",
-            //     "game": "Medical Partner"
-            // }, {
-            //     "img": "img/footer/na5.jpg",
-            //     "href": "",
-            //     "game": "Event Partner"
-            // }
-        ];
+            "img": "img/footer/p1.jpg",
+            "href": "",
+            "game": "Venue Partner"
+        }, {
+            "img": "img/footer/p6.jpg",
+            "href": "",
+            "game": "Hospital Partner"
+        }, {
+            "img": "img/footer/n10.png",
+            "href": "",
+            "game": "Digital Parenting Partner"
+        }, {
+            "img": "img/footer/n12.png",
+            "href": "",
+            "game": "Sports Development Partner"
+        }];
 
 
     //  {
@@ -404,6 +377,37 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
     //             "href": "",
     //             "game": "Apparel Partner"
     //         },
+    // {
+    //     "img": "img/footer/na3.jpg",
+    //     "href": "",
+    //     "game": "Sports Surface Partner"
+    // }, {
+    //     "img": "img/footer/na6.jpg",
+    //     "href": "",
+    //     "game": "Sports Mentorship Partner"
+    // }, {
+    //     "img": "img/footer/na4.jpg",
+    //     "href": "",
+    //     "game": "Shooting Range Partner"
+    // }, {
+    //     "img": "img/footer/p5.jpg",
+    //     "href": "",
+    //     "game": "Medical Partner"
+    // }, {
+    //     "img": "img/footer/na5.jpg",
+    //     "href": "",
+    //     "game": "Event Partner"
+    // }
+
+    //  {
+    //     "img": "img/footer/p7.jpg",
+    //     "href": "",
+    //     "game": "Media Partner "
+    // }, {
+    //     "img": "img/footer/n4.jpg",
+    //     "href": "https://www.facebook.com/sportsillustratedindia/",
+    //     "game": "Magazine Partner"
+    // }
     $scope.supportedBy = [{
         "img": "img/footer/hyd/government.png",
         "href": "",
@@ -433,6 +437,10 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
         "img": "img/footer/hyd/wizcraft.png",
         "href": "",
         "game": "Event Partner"
+    }, {
+        "img": "img/footer/n12.png",
+        "href": "",
+        "game": "Sports Development Partner"
     }];
     // TV Support Partner
 });
