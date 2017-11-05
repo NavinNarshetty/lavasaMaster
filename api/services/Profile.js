@@ -2287,6 +2287,7 @@ var model = {
                                 callback(null, match);
                             });
                         } else if (singleData.resultHockey) {
+                            console.log('Hockey', singleData.resultHockey);
                             var i = 0;
                             var result;
                             async.each(singleData.opponentsTeam, function (n, callback) {

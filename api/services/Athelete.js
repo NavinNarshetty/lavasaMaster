@@ -2765,7 +2765,7 @@ var model = {
 
     generateExcel: function (data, res) {
         // console.log('generate req', data.body);
-        console.log('generate req data', data);
+        // console.log('generate req data', data);
         // console.log('generate req data', data);
         async.waterfall([
                 function (callback) {
@@ -2784,7 +2784,7 @@ var model = {
 
                 },
                 function (complete, callback) {
-                    console.log('logs for excel', complete.length);
+                    //  console.log('logs for excel', complete.length);
                     var excelData = [];
                     var schoolData;
                     async.eachSeries(complete, function (n, callback) {
@@ -2801,7 +2801,7 @@ var model = {
                                         _id: n.school
                                     }).lean().exec(function (err, found) {
                                         if (_.isEmpty(found)) {
-                                            console.log("name is null");
+                                            //     console.log("name is null");
                                             schoolData = "";
                                             callback(null, schoolData);
                                         } else {
@@ -2947,7 +2947,7 @@ var model = {
                             if (err) {
                                 callback(err, null);
                             } else {
-                                console.log("length", excelData.length);
+                                //     console.log("length", excelData.length);
                                 callback(null, excelData);
                             }
                         });
@@ -2961,7 +2961,7 @@ var model = {
             ],
             function (err, data2) {
                 if (err) {
-                    console.log(err);
+                    //  console.log(err);
                     callback(null, []);
                 } else if (data2) {
                     if (_.isEmpty(data2)) {
@@ -3371,8 +3371,8 @@ var model = {
                 obj.SCHOOL = athleteData.atheleteSchoolName;
             }
             obj["STATUS"] = athleteData.status;
-            obj["PAYMENT MODE"]=athleteData.registrationFee;
-            obj["PAYMENT STATUS"]=athleteData.paymentStatus;
+            obj["PAYMENT MODE"] = athleteData.registrationFee;
+            obj["PAYMENT STATUS"] = athleteData.paymentStatus;
             singleData.push(obj);
         });
         callback(null, singleData);
