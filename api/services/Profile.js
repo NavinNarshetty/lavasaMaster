@@ -2326,28 +2326,25 @@ var model = {
                                                 }
                                             })
                                             stats.score = finalPoint1 + ' - ' + finalPoint2;
-                                            // if (!_.isEmpty(singleData.resultHockey.teams[0].teamResults.finalPoints) && !_.isEmpty(singleData.resultHockey.teams[1].teamResults.finalPoints)) {
-                                            //     stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[1].teamResults.finalPoints;
-                                            // } else {
-                                            //     stats.score = '-';
-                                            // }
                                             if (!_.isEmpty(singleData.resultHockey.winner)) {
                                                 var m1 = (singleData.resultHockey.winner.player).toString();
                                                 var m2 = n.toString();
-                                                console.log(singleData.resultHockey.winner.player);
-                                                console.log('N', n);
-                                                console.log('m1', m1);
-                                                console.log('m2', m2);
-                                                console.log('status', singleData.resultHockey.winner.player === n);
-                                                // console.log('status with m n', m.equals(n));
-                                                console.log('status with m1 m2', m1 === m2);
-
                                                 if (m1 === m2) {
                                                     stats.isAthleteWinner = false;
                                                 } else {
                                                     stats.isAthleteWinner = true;
                                                 }
                                             }
+                                            // if (!_.isEmpty(singleData.resultHockey.teams[0].teamResults.finalPoints) && !_.isEmpty(singleData.resultHockey.teams[1].teamResults.finalPoints)) {
+                                            //     stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[1].teamResults.finalPoints;
+                                            // } else {
+                                            //     stats.score = '-';
+                                            // }
+                                            // if (singleData.resultHockey.winner.player === n) {
+                                            //     stats.isAthleteWinner = false;
+                                            // } else {
+                                            //     stats.isAthleteWinner = true;
+                                            // }
                                             match.push(stats);
                                             callback(null, match);
                                         }
