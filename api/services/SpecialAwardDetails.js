@@ -577,6 +577,7 @@ var model = {
                                                     pdfObj.bronzeCount = 0;
                                                 }
                                                 pdfObj.generate = true;
+                                                callback(null, pdfObj);
                                             } else {
                                                 pdfObj.generate = false;
                                                 callback(null, pdfObj);
