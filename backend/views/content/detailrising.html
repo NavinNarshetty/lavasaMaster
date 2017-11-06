@@ -102,6 +102,7 @@
               <!-- ATHLETE HOLDER END -->
               <!-- ATHLETE SELECTION END -->
 
+              <!-- SPORTS -->
               <div class="row">
                 <div class="col-md-12">
                   <div class="form-group">
@@ -120,7 +121,21 @@
                   </div>
                 </div>
               </div>
+              <!-- SPORTS END -->
 
+              <!-- FOOTER IMAGE -->
+              <div class="row" ng-if="formData.type">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label>Footer Image
+                       <span style="color:#ea5249;">(Note:image size should be 600x220 only in PNG*)</span>
+                        <span ng-show="type.required">*</span>
+                    </label>
+                    <upload-image ng-model="formData.footerImage" inobj></upload-image>
+                  </div>
+                </div>
+              </div>
+              <!-- FOOTER IMAGE END -->
               <div class="text-center mt20 odd-even-button">
                 <button class="btn btn-default" type="submit" ng-click="saveAwardDetail(formData)">Save</button>
                 <button class="btn btn-default" ui-sref='risingstar'>Cancel</button>

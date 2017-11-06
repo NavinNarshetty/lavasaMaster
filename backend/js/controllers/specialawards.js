@@ -773,6 +773,7 @@ myApp.controller('DetailRisingCtrl', function ($scope, TemplateService, Navigati
         console.log(data, 'detail rising edit');
         $scope.getData = data.data.data[0];
         $scope.formData.athlete = $scope.getData.athlete;
+        $scope.formData.footerImage = $scope.getData.footerImage;
         $scope.playerData.push($scope.formData.athlete);
         $scope.foundSchool.school.name = $scope.getData.athlete.school.name;
         $scope.formData.gender = $scope.getData.athlete.gender;
