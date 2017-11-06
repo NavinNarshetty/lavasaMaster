@@ -93,8 +93,7 @@
                             </ul>
                             <p class="f-16">Successful registration will enable all athletes from your {{type}} to participate in all
                                 <span ng-if="isCollege == false">26+</span>
-                                <span ng-if="isCollege == true">17+</span> disciplines of sport at a subsidized registration
-                                fee.
+                                <span ng-if="isCollege == true">17+</span> disciplines of sport at a subsidized registration fee.
                             </p>
                             <p class="custom-a">
                                 <a ng-click="regisBenModal(type, sfaCity, year, eventYear)">
@@ -135,10 +134,9 @@
                                     <span class="f-14">*In the event that your {{type}} does not register for SFA {{sfaCity}} {{eventYear}}
                                         by the
                                         <span ng-if="isCollege == false"> 15th of October</span>
-                                    <span ng-if="isCollege == true"> 15th of October</span>, an additional fee of INR
-                                    <span ng-if="isCollege == false">400</span>
-                                    <span ng-if="isCollege == true">200</span>/- (Inclusive of all applicable taxes) will
-                                    be levied.</span>
+                                        <span ng-if="isCollege == true"> 15th of October</span>, an additional fee of INR
+                                        <span ng-if="isCollege == false">400</span>
+                                        <span ng-if="isCollege == true">200</span>/- (Inclusive of all applicable taxes) will be levied.</span>
                                 </li>
                                 <!-- <li ng-if="isCollege == true">Fill out the athlete registration form & pay the athlete registration fees.</li>
                                 <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 300 will be charged to each athlete registering
@@ -877,8 +875,7 @@
                             </ul>
                             <p class="f-16">Successful registration will enable all athletes from your {{type}} to participate in all
                                 <span ng-if="isCollege == false">20+</span>
-                                <span ng-if="isCollege == true">15+</span> disciplines of sport at a subsidized registration
-                                fee.
+                                <span ng-if="isCollege == true">15+</span> disciplines of sport at a subsidized registration fee.
                             </p>
                             <p class="custom-a">
                                 <a ng-click="regisBenModal(type, sfaCity, year, eventYear)">
@@ -947,8 +944,9 @@
                             </p>
                         </div>
                         <div class="text-center mb-20 ">
-                            <a ng-click="endReg()">
-                                <button class="btn-category orange "> Click here for Athlete Registration Form</button>
+                            <button class="btn-category orange">Athlete Registration has ended</button>
+                            <a hidden ng-click="endReg()">
+                                <button class="btn-category orange"> Click here for Athlete Registration Form</button>
                             </a>
                         </div>
                     </div>
@@ -994,7 +992,7 @@
                                 <p>Once the athlete / {{type}} registration is complete, log in using your SFA ID and password
                                     to register for your sport/sports of interest.
                                 </p>
-                                <p ng-if="isCollege==false">
+                                <p ng-if="isCollege==false" style="visibility:hidden">
                                     If you do not have an SFA ID and Password, kindly register yourself as an athlete by clicking the relevant option.
                                 </p>
                                 <!-- <p class="custom-a " ng-if="isCollege==false"><a href="http://{{sfaCity}}school.sfanow.in/formregis
@@ -1004,24 +1002,25 @@
                             " target="_new "><strong>Click here for Athlete Registration Form</strong></a>
                             </p> -->
 
-                                <p class="custom-a" ng-if="isCollege==false">For Athlete:
-                                    <br>
-                                    <a ng-click="endReg()">
-                                        <strong>http://hyderabadschool.sfanow.in/formathlete</strong>
-                                    </a>
-                                </p>
-                                <p style="visibility:hidden" class="mb25 custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:
+                                <p style="visibility:hidden" class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:
                                     <br>
                                     <a href="http://hyderabadschool.sfanow.in/formregis " target="_new ">http://hyderabadschool.sfanow.in/formregis</a>
+                                </p>
+                                <p class="mb25 custom-a" style="visibility:hidden" ng-if="isCollege==false">For Athlete:
+                                    <br>
+                                    <!-- <a ng-click="endReg()"> -->
+                                    <strong>http://hyderabadschool.sfanow.in/formathlete</strong>
+                                    <!-- </a> -->
                                 </p>
                                 <p class="mb-33" ng-if="isCollege==true">All registered {{type}}s and athletes will be notified when registration for sports will
                                     be open!
                                 </p>
                             </div>
                             <div class="text-center mb-20">
-                                <a ui-sref="sports-registration">
+                                <a hidden ui-sref="sports-registration">
                                     <button class="btn-category blue-light">Click here for Sports Registration</button>
                                 </a>
+                                <button class="btn-category blue-light">Sports Registration has ended</button>
                             </div>
                             <!-- ng-if="isCollege==true" -->
                             <!-- <div class="text-center mb-20"><button class="com-category blue-light">Opening shortly</button></div> -->

@@ -4,12 +4,12 @@ var eventYear = '2017-18';
 
 // For Test
 var serverType = 'test';
-// var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
-// var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
-// var globalLinkForAll = "http://testmumbai.sfanow.in/";
-var globalLinkSchoolRegister = "http://testhyderabadschool.sfanow.in";
-var globalLinkCollegeRegister = "http://testhyderabadcollege.sfanow.in";
-var globalLinkForAll = "http://testhyderabad.sfanow.in/";
+var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
+var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
+var globalLinkForAll = "http://testmumbai.sfanow.in/";
+// var globalLinkSchoolRegister = "http://testhyderabadschool.sfanow.in";
+// var globalLinkCollegeRegister = "http://testhyderabadcollege.sfanow.in";
+// var globalLinkForAll = "http://testhyderabad.sfanow.in/";
 // var globalLinkSchoolRegister = "http://testahmedabadschool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testahmedabadcollege.sfanow.in";
 // var globalLinkForAll = "http://testahmedabad.sfanow.in/";
@@ -285,6 +285,7 @@ myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, Na
     } else if (window.location.origin != globalLinkCollegeRegister) {
         $scope.registerCollege = globalLinkCollegeRegister;
     }
+    $scope.specialLink = globalLinkSchoolRegister;
     $scope.linkForAll = globalLinkForAll;
     $scope.linkForAllSports = globalLinkForAll + "sport/";
     $scope.eventYear = eventYear;

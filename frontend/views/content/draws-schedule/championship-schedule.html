@@ -7,10 +7,11 @@
                     <div class="col-md-offset-3 col-md-6">
                         <div class="championship-drawstitle">
                             <h3 class="sport-type-head d-fjalla-one">SFA Championship 2017-18</h3>
-                            <p>To view Draws & Schedules of your match kindly select the relevent categories to get results.
+                            <p hidden>To view Draws & Schedules of your match kindly select the relevent categories to get results.
                             </p>
+                            <p>Draws and Schedules will be published on 8th November 2017.</p>
                         </div>
-                        <div class="championshipdraw-card">
+                        <div class="championshipdraw-card hide">
                             <form name=championshipDrawsForm class="championshipdraw-card-form">
                                 <!-- SPORT -->
                                 <div class="form-group">
@@ -240,10 +241,15 @@
                                                 </td>
                                                 <td>
                                                     <div class="schedulesport-dates">
-                                                        <span ng-if="schedule.date1 && schedule.date2">  {{schedule.date1}}<sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup><sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup> <span>-</span>                                                        {{schedule.date2}}<sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                        {{schedule.month}}
+                                                        <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
+                                                            <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
+                                                            <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
+                                                            <span>-</span> {{schedule.date2}}
+                                                            <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                            <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
                                                         </span>
-                                                        <span ng-if="schedule.date">{{schedule.date}}<sup>th</sup> {{schedule.month}}  </span>
+                                                        <span ng-if="schedule.date">{{schedule.date}}
+                                                            <sup>th</sup> {{schedule.month}} </span>
                                                         <span ng-if="!schedule.date && !schedule.date1 && !schedule.date2">TBA</span>
                                                     </div>
                                                 </td>
@@ -271,10 +277,15 @@
                                                 <td>
                                                     <div class="schedulesport-dates">
                                                         <span ng-if="schedule.sport == ''" style="opacity:0;">dummy</span>
-                                                        <span ng-if="schedule.date1 && schedule.date2">  {{schedule.date1}}<sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup><sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup> <span>-</span>                                                        {{schedule.date2}}<sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                        {{schedule.month}}
+                                                        <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
+                                                            <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
+                                                            <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
+                                                            <span>-</span> {{schedule.date2}}
+                                                            <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                            <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
                                                         </span>
-                                                        <span ng-if="schedule.date">{{schedule.date}}<sup>th</sup> {{schedule.month}}  </span>
+                                                        <span ng-if="schedule.date">{{schedule.date}}
+                                                            <sup>th</sup> {{schedule.month}} </span>
                                                     </div>
                                                 </td>
                                             </tr>

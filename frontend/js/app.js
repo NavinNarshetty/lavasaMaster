@@ -152,7 +152,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
 
         .state('specialevents', {
-            url: "/wohlig/specialevents",
+            url: "/specialevents",
             templateUrl: tempateURL,
             controller: 'SpecialEventCtrl'
         })

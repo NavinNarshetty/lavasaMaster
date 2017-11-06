@@ -26,10 +26,15 @@
                                             </td>
                                             <td>
                                                 <div class="schedulesport-dates">
-                                                    <span ng-if="schedule.date1 && schedule.date2">  {{schedule.date1}}<sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup><sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup> <span>-</span>                                                    {{schedule.date2}}<sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                    <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                    {{schedule.month}}
+                                                    <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
+                                                        <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
+                                                        <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
+                                                        <span>-</span> {{schedule.date2}}
+                                                        <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
                                                     </span>
-                                                    <span ng-if="schedule.date">{{schedule.date}}<sup>th</sup> {{schedule.month}}  </span>
+                                                    <span ng-if="schedule.date">{{schedule.date}}
+                                                        <sup>th</sup> {{schedule.month}} </span>
                                                     <span ng-if="!schedule.date && !schedule.date1 && !schedule.date2">TBA</span>
                                                 </div>
                                             </td>
@@ -57,10 +62,15 @@
                                             <td>
                                                 <div class="schedulesport-dates">
                                                     <span ng-if="schedule.sport == ''" style="opacity:0;">dummy</span>
-                                                    <span ng-if="schedule.date1 && schedule.date2">  {{schedule.date1}}<sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup><sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup> <span>-</span>                                                    {{schedule.date2}}<sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                    <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                    {{schedule.month}}
+                                                    <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
+                                                        <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
+                                                        <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
+                                                        <span>-</span> {{schedule.date2}}
+                                                        <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
                                                     </span>
-                                                    <span ng-if="schedule.date">{{schedule.date}}<sup>th</sup> {{schedule.month}}  </span>
+                                                    <span ng-if="schedule.date">{{schedule.date}}
+                                                        <sup>th</sup> {{schedule.month}} </span>
                                                 </div>
                                             </td>
                                         </tr>
@@ -76,6 +86,7 @@
                                     *SFA shall keep you informed in-case there is any change of dates.
                                 </p>
                                 <p class="m-clear" ng-if="isCollege == false &&sfaCity == 'Mumbai'">*Football qualifiers will be held in November. Dates will be announced soon.</p>
+                                <p class="m-clear">*The final draws and schedules for all sports will be published on the 8th November 2017.</p>
                             </div>
                         </div>
                     </div>
