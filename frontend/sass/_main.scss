@@ -7881,3 +7881,30 @@ h1.forgot-space {
     min-height: 52px !important;
     display: block;
 }
+
+// HEADER CSS
+.header-name-top {
+    color: #000072;
+    a {
+        color: #000072;
+    }
+}
+
+.new-header-sfa {
+    ul.dropdown-menu.sf-absulate.blue-menus {
+        padding: 10px 30px; // text-align: center;
+    }
+    ul.dropdown-menu.sf-absulate.blue-menus li a {
+        padding: 10px 25px;
+        border-bottom: none;
+    }
+    .header-profile {
+        white-space: nowrap;
+    }
+    .profile-sub-header {
+        color: #fff;
+        border-bottom: 1px solid #00a9ff;
+    }
+}
+
+// HEADER CSS END

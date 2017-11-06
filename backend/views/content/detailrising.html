@@ -131,7 +131,13 @@
                        <span style="color:#ea5249;">(Note:image size should be 600x220 only in PNG*)</span>
                         <span ng-show="type.required">*</span>
                     </label>
-                    <upload-image ng-model="formData.footerImage" inobj></upload-image>
+                    <div class="img-box" ng-show="editGender">
+                      <a href="{{formData.footerImage|uploadpath}}" fancybox-box>
+                        <img ng-src="{{formData.footerImage|uploadpath}}"
+                                class="img-responsive uploadingImage img-thumbnail">
+                                </a>
+                    </div>
+                    <upload-image ng-disabled="editGender" ng-model="formData.footerImage" inobj></upload-image>
                   </div>
                 </div>
               </div>

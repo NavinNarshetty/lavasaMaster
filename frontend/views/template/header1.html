@@ -17,7 +17,7 @@
         </div>
         <!-- NAVIGATION HEADER -->
         <div class="col-md-6 col-sm-10">
-          <div class="collapse navbar-collapse" id="nav-collapse">
+          <div class="collapse navbar-collapse new-header-sfa" id="nav-collapse">
             <!-- LARGER SCREEN HEADER -->
             <ul class="margin0 padding0 prs hidden-xs ls">
               <!-- ABOUT US -->
@@ -31,20 +31,43 @@
               <!-- ABOUT US END -->
 
               <!-- PROFILE -->
-              <li class="sf-relative hide-op2">
+              <li class=" sf-relative hide-op2">
                 <!-- PROFILE HEADER -->
-                <div class="header-name-top">
+                <div class="header-name-top " ng-mouseenter="options=false">
                   PROFILES
                 </div>
                 <!-- PROFILE HEADER END -->
                 <!-- PROFILE DROPDOWN -->
-                <ul class="dropdown-menu sf-absulate blue-menus">
+                <ul class="dropdown-menu sf-absulate blue-menus header-profile">
                   <li>
-                    <a href="{{linkForAll}}students" target="_blank">ATHLETES</a>
-                    <a href="{{linkForAll}}school" target="_blank">SCHOOLS</a>
-                    <a href="{{linkForAll}}team" target="_blank">TEAMS</a>
-
+                    <div class="profile-sub-header text-uppercase text-center">
+                      <label for="">School</label>
+                    </div>
+                    <a href="{{linkForAll}}students" target="_blank"> 
+                      <span>2017</span> <span>ATHLETES</span>   
+                    </a>
+                    <a href="{{linkForAll}}school" target="_blank">
+                      <span>2017</span> <span>SCHOOLS</span>
+                    </a>
+                    <a href="{{linkForAll}}team" target="_blank">
+                      <span>2017</span> <span>TEAMS</span>
+                    </a>
                   </li>
+                  <li>
+                    <div class="profile-sub-header text-uppercase text-center">
+                      <label for="">College</label>
+                    </div>
+                    <a href="{{linkForAll}}students" target="_blank"> 
+                        <span>2017</span> <span>ATHLETES</span>   
+                      </a>
+                    <a href="{{linkForAll}}school" target="_blank">
+                        <span>2017</span> <span>COLLEGE</span>
+                      </a>
+                    <a href="{{linkForAll}}team" target="_blank">
+                        <span>2017</span> <span>TEAMS</span>
+                      </a>
+                  </li>
+
                 </ul>
                 <!-- PROFILE DROPDOWN END -->
               </li>
@@ -52,7 +75,7 @@
 
               <!-- SPORTS -->
               <li class="sports-hover">
-                <div class="header-name-top">
+                <div class="header-name-top header-sport-caret">
                   <a ng-mouseenter="options=!options" ng-model="checkbox">
                     SPORTS
                   </a>
@@ -62,7 +85,7 @@
               <!-- SPORTS END -->
 
               <!-- RESULTS -->
-              <li class="sf-relative hide-op2" ng-mouseenter="options=false">
+              <li class="sf-relative hide-op2 header-result" ng-mouseenter="options=false">
                 <!-- RESULT HEADER -->
                 <div class="header-name-top">
                   RESULTS
@@ -71,9 +94,19 @@
 
                 <!-- RESULT DROPDOWN -->
                 <ul class="dropdown-menu sf-absulate blue-menus">
-                  <li>
-                    <a href="{{linkForAll}}school-ranking" target="_blank" ui-sref="school-ranking">SCHOOL RANKING</a>
-                    <a href="{{linkForAll}}champions" target="_blank" ui-sref="champions">CHAMPIONS OF SFA</a>
+                  <li class="padding0">
+                    <a href="{{linkForAll}}school-ranking" target="_blank" ui-sref="school-ranking">
+                     <span>2017</span> <span>SCHOOL RANKING</span>
+                    </a>
+                    <a href="{{linkForAll}}" target="_blank" ng-if="selectedCity !== 'hyderabad'">
+                      <span>2017</span> <span>COLLEGE RANKING</span>
+                    </a>
+                    <a href="{{linkForAll}}" target="_blank" ng-if="selectedCity !== 'hyderabad'">
+                        <span>PREVIOUS SCHOOL RANKING</span>
+                    </a>
+                    <a href="{{linkForAll}}champions" target="_blank" ng-if="selectedCity !== 'hyderabad'" ui-sref="champions">
+                       <span>PREVIOUS CHAMPIONS OF SFA</span>
+                    </a>
 
                   </li>
                 </ul>
@@ -82,31 +115,52 @@
               <!-- RESULTS END -->
 
               <!-- GALLERY -->
-              <li>
+              <li class="sf-relative hide-op2" ng-mouseenter="options=false">
                 <div class="header-name-top">
-                  <a href="{{linkForAll}}media-gallery" target="_blank">
-                        GALLERY
-                  </a>
+                  GALLERY
                 </div>
+                <ul class="dropdown-menu sf-absulate blue-menus">
+                  <li>
+                    <a href="{{linkForAll}}media-gallery" target="_blank">
+                       <span>SCHOOL</span>
+                    </a>
+                    <a href="{{linkForAll}}media-gallery" target="_blank" ng-if="selectedCity !== 'hyderabad'">
+                        <span>COLLEGE</span>
+                    </a>
+                  </li>
+                </ul>
               </li>
               <!-- GALLERY END -->
 
               <!-- PRESS AND MEDIA -->
-              <li>
-                <a href="{{linkForAll}}" target="_blank">
-                                  PRESS &amp; MEDIA
-                </a>
+              <li class="sf-relative hide-op2" ng-mouseenter="options=false">
+                <div class="header-name-top">
+                  PRESS &amp; MEDIA
+                </div>
+                <ul class="dropdown-menu sf-absulate blue-menus">
+                  <li>
+                    <a href="{{linkForAll}}media-gallery" target="_blank">
+                         <span>SCHOOL</span>
+                      </a>
+                    <a href="{{linkForAll}}media-gallery" target="_blank" ng-if="selectedCity !== 'hyderabad'">
+                          <span>COLLEGE</span>
+                      </a>
+                  </li>
+                </ul>
               </li>
               <!-- PRESS AND MEDIA END -->
 
               <!-- SPONSORS AND PARTNERS -->
               <li>
-                <a href="{{linkForAll}}" target="_blank">
-                  SPONSORS &amp; PARTNERS
-                </a>
+                <div class="header-name-top">
+                  <a href="{{linkForAll}}" target="_blank">
+                        SPONSORS &amp; PARTNERS
+                  </a>
+                </div>
               </li>
               <!-- SPONSORS AND PARTNERS END -->
 
+              <!-- SFA BUTTON -->
               <li class="hidden-md hidden-lg dropdown">
                 <div class="display-inline forCityPlacingSm">
                   <div class="citySelect sfa-select">
@@ -156,7 +210,7 @@
                                         <li><a ui-sref="faq">FAQs</a></li> -->
                 </ul>
               </li>
-              <!--</li>-->
+              <!-- SFA BUTTON END -->
             </ul>
             <!-- LARGER SCREEN HEADER END -->
 
@@ -206,11 +260,7 @@
                                  GALLERY
                                 </a>
               </li>
-              <!-- <li>
-                <a href="{{linkForAll}}training-development" target="_blank">
-                                TRAINING &amp; DEVELOPMENT
-                                </a>
-              </li> -->
+
             </ul>
             <!-- MOBILE HEADER END -->
           </div>
@@ -327,7 +377,9 @@
         </div>
       </div>
 
-      <div class="on-mouse-hover" ng-mouseenter="options=true" ng-mouseleave="options=false">
+
+      <!-- SPORTS DROPDOWN -->
+      <div class="on-mouse-hover custom-on-mouse-over" ng-mouseenter="options=true" ng-mouseleave="options=false">
         <div class="bg-head curve-head1 no-after mt-0" ng-show="options || checkbox">
           <div class="container">
             <div class="row">
@@ -511,6 +563,7 @@
           </div>
         </div>
       </div>
+      <!-- SPORTS DROPDOWN END -->
     </div>
   </nav>
 </header>
