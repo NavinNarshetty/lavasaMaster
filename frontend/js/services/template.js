@@ -23,6 +23,24 @@ myApp.service('TemplateService', function () {
         return data;
     };
 
+    // SCROLL FUNCTION FROM CONTROLLER
+    this.scrollTo = function (destination, type) {
+      // "type" is either class or id written in string;
+      // "destination" is the CLASS  or ID  you want to scroll to without '#' or '.'
+      // E.G :CLASS:  scrollTo('hello', 'class');     :ID:  scrollTo('rankTable1', 'id');
+      if (type == 'id') {
+        var destination = '#' + destination;
+      } else if (type == 'class') {
+        var destination = '.' + destination;
+      }
+      console.log(destination, type, 'in dir')
+      $('html,body').animate({
+          scrollTop: $(destination).offset().top
+        },
+        'slow');
+    };
+    // SCROLL FUNCTION FROM CONTROLLER END
+
     this.init();
 
 });

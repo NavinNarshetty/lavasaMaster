@@ -1,4 +1,4 @@
-myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout) {
+myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout, knockoutService) {
     $scope.template = TemplateService.getHTML("content/results.html");
     TemplateService.title = "Direct Final"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
@@ -72,7 +72,8 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
             }
           }
           console.log('sport', n);
-          detailTable = detailTable  + '<tr> <td colspan="3"> <div> </div> </td>   <td colspan="1" class="dd-sportname">'+ n.name+' </td> <td colspan="1"> ' + n.goldMedal + ' </td> <td colspan="1">' + n.silverMedal + ' </td> <td colspan="1">' + n.bronzeMedal + ' </td> <td colspan="1">' + n.totalPoints + ' </td> </tr>';
+          // <td colspan="3"> <div> </div> </td>
+          detailTable = detailTable  + '<tr>   <td  class="dd-sportname">'+ n.name+' </td> <td > <div class="detail-resultholder"> ' + n.goldMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.silverMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.bronzeMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.totalPoints + ' </div> </td> </tr>';
         });
         $scope.rankDetail = detail;
          demo = '<tr id="rankDetail' + index +'"> <td class = "pad-clear" colspan = "6"> <div class="schoolrank-details"> <table class = "table"> '+ detailTable +'</table> </div> </td> </tr>'
@@ -81,36 +82,29 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       }
     };
 
+    // VIEW MORE / LESS FUNCTIONS
+    // SCHOOL RANKING TABLE
+    $scope.viewMoreRanking = function(bool){
+      if (bool) {
+        $scope.rankTable.showTable = false;
+        $scope.rankTable.tableLimit = $scope.rankTable.length;
+      } else {
+        $scope.rankTable.showTable = true;
+        $scope.rankTable.tableLimit = 20;
+        TemplateService.scrollTo('schoolRankTable', 'id');
+      }
+    }
+    // SCHOOL RANKING TABLE END
+    // VIEW MORE / LESS FUNCTIONS END
     // FUNCTIONS END
-
-    // // SCROLLDOWN
-    // .directive('scrolldown', function ($compile, $parse) {
-    //     return {
-    //         restrict: 'EA',
-    //         replace: false,
-    //         link: function ($scope, element, destination, type,  attrs) {
-    //             var $element = $(element);
-    //             if(type == 'id'){
-    //               var destination = '#' + destination;
-    //             } else if(type == 'class') {
-    //               var destination = '.' + destination;
-    //             }
-    //             $scope.scrollDown = function () {
-    //                 $('html,body').animate({
-    //                         scrollTop: $(destination).offset().top
-    //                     },
-    //                     'slow');
-    //             };
-    //         }
-    //     };
-    // });
-    // // SCROLLDOWN END
 
     // APIS
     NavigationService.getSchoolByRanks(function(data){
       console.log('rankingTable',data);
       if (data.value == true) {
-        $scope.rankTable = data.data
+        $scope.rankTable = data.data;
+        $scope.rankTable.tableLimit = 20;
+        $scope.rankTable.showTable = true;
         _.each($scope.rankTable, function(n){
           n.rowDetail = false;
         });
@@ -124,7 +118,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     // JSONS
     $scope.eventList = ['sfa mumbai 2015-16', 'sfa ahmedabad 2015-16', 'sfa hyderabad 2015-16'];
     // SCHOOL RANKING TABLE
-    $scope.rankTable = [{
+    $scope.sportTable = [{
       rank: 1,
       school: 'jamnabai high school jamnabai high school',
       goldPoints: 20,

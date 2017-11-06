@@ -69,7 +69,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr ng-repeat="school in rankTable track by $index" id="rank{{$index}}">
+            <tr ng-repeat="school in rankTable| limitTo:rankTable.tableLimit track by $index" id="rank{{$index}}">
               <td>
                 <div class="">
                   {{$index + 1}}
@@ -106,7 +106,7 @@
       </div>
       <!-- RESULT SCHOOL TABLE END -->
       <div class="viewmore">
-        <a type="button" class="btn btn-viewmore">View More</a>
+        <a type="button" class="btn btn-viewmore" ng-click="viewMoreRanking(rankTable.showTable);">View <span ng-if="rankTable.showTable == true">More</span> <span ng-if="rankTable.showTable == false">Less</span></a>
       </div>
     </div>
     <!-- SCHOOL RANKING SECTION END -->
@@ -180,7 +180,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="item in rankTable track by $index">
+                      <tr ng-repeat="item in sportTable track by $index">
                         <td>
                           <div class="">
                             {{item.rank}}
