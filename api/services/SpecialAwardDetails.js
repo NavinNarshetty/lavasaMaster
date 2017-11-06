@@ -553,7 +553,7 @@ var model = {
                                         if (err) {
                                             callback(err, null);
                                         } else {
-                                            data = _.find(data, ['name', pdfObj.school.schoolName]);
+                                            data = _.find(data.medalRank, ['name', pdfObj.school.schoolName]);
                                             console.log("data", data);
                                             if (!_.isEmpty(data)) {
                                                 pdfObj.totalCount = data.totalCount;
