@@ -37,10 +37,10 @@ var model = {
                 if (_.isEmpty(found)) {
                     callback(null, []);
                 } else {
-                    if (found[0].weight === null) {
+                    var age = _.uniqBy(found, "weight.name");
+                    if (age.length <= 1) {
                         callback(null, []);
                     } else {
-                        var age = _.uniqBy(found, "weight.name");
                         callback(null, age);
                     }
                 }
