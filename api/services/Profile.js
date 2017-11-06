@@ -2305,46 +2305,16 @@ var model = {
                                         } else if (_.isEmpty(found)) {
                                             callback(null, match);
                                         } else {
-                                            var finalPoint1 = '';
-                                            var finalPoint2 = '';
                                             stats.opponentName = found.name;
                                             stats.school = found.schoolName;
                                             stats.teamId = found.teamId;
-                                            _.each(singleData.resultHockey.teams, function (h, key) {
-                                                if (h.teamResults.finalPoints !== '') {
-                                                    if (key == 0) {
-                                                        finalPoint1 = h.teamResults.finalPoints;
-                                                    } else {
-                                                        finalPoint2 = h.teamResults.finalPoints;
-                                                    }
-                                                } else {
-                                                    if (key == 0) {
-                                                        finalPoint1 = '';
-                                                    } else {
-                                                        finalPoint2 = '';
-                                                    }
-                                                }
-                                            })
-                                            stats.score = finalPoint1 + ' - ' + finalPoint2;
-                                            if (!_.isEmpty(singleData.resultHockey.winner)) {
-                                                var m1 = (singleData.resultHockey.winner.player).toString();
-                                                var m2 = n.toString();
-                                                if (m1 === m2) {
-                                                    stats.isAthleteWinner = false;
-                                                } else {
-                                                    stats.isAthleteWinner = true;
-                                                }
+                                            stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[1].teamResults.finalPoints;
+
+                                            if (singleData.resultHockey.winner.player === n) {
+                                                stats.isAthleteWinner = false;
+                                            } else {
+                                                stats.isAthleteWinner = true;
                                             }
-                                            // if (!_.isEmpty(singleData.resultHockey.teams[0].teamResults.finalPoints) && !_.isEmpty(singleData.resultHockey.teams[1].teamResults.finalPoints)) {
-                                            //     stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[1].teamResults.finalPoints;
-                                            // } else {
-                                            //     stats.score = '-';
-                                            // }
-                                            // if (singleData.resultHockey.winner.player === n) {
-                                            //     stats.isAthleteWinner = false;
-                                            // } else {
-                                            //     stats.isAthleteWinner = true;
-                                            // }
                                             match.push(stats);
                                             callback(null, match);
                                         }
