@@ -24,7 +24,7 @@
               <li>
                 <div class="header-name-top">
                   <a href="{{linkForAll}}about-us" target="_blank">
-                        ABOUT US
+                        ABOUT 
                   </a>
                 </div>
               </li>
@@ -50,38 +50,63 @@
               </li>
               <!-- PROFILE END -->
 
+              <!-- SPORTS -->
               <li class="sports-hover">
-                <!-- <a ng-click="options=!options" ng-model="checkbox">
-                                SPORTS
-                                </a> -->
-                <a ng-mouseenter="options=!options" ng-model="checkbox">
-                                SPORTS
-                                </a>
+                <div class="header-name-top">
+                  <a ng-mouseenter="options=!options" ng-model="checkbox">
+                    SPORTS
+                  </a>
+                </div>
                 <div class="caret-custom" ng-mouseenter="options=true" ng-mouseleave="options=false" ng-show="options || checkbox"></div>
               </li>
+              <!-- SPORTS END -->
+
+              <!-- RESULTS -->
               <li class="sf-relative hide-op2" ng-mouseenter="options=false">
+                <!-- RESULT HEADER -->
+                <div class="header-name-top">
+                  RESULTS
+                </div>
+                <!-- RESULT HEADER END -->
 
-                RESULTS
-
+                <!-- RESULT DROPDOWN -->
                 <ul class="dropdown-menu sf-absulate blue-menus">
                   <li>
                     <a href="{{linkForAll}}school-ranking" target="_blank" ui-sref="school-ranking">SCHOOL RANKING</a>
                     <a href="{{linkForAll}}champions" target="_blank" ui-sref="champions">CHAMPIONS OF SFA</a>
-                    <!-- <a ui-sref="result">sport result</a> -->
 
                   </li>
                 </ul>
+                <!-- RESULT DROPDOWN END -->
               </li>
+              <!-- RESULTS END -->
+
+              <!-- GALLERY -->
               <li>
-                <a href="{{linkForAll}}media-gallery" target="_blank">
-                                 GALLERY
-                                </a>
+                <div class="header-name-top">
+                  <a href="{{linkForAll}}media-gallery" target="_blank">
+                        GALLERY
+                  </a>
+                </div>
               </li>
-              <!-- <li>
-                <a href="{{linkForAll}}training-development" target="_blank">
-                                TRAINING &amp; DEVELOPMENT
-                                </a>
-              </li> -->
+              <!-- GALLERY END -->
+
+              <!-- PRESS AND MEDIA -->
+              <li>
+                <a href="{{linkForAll}}" target="_blank">
+                                  PRESS &amp; MEDIA
+                </a>
+              </li>
+              <!-- PRESS AND MEDIA END -->
+
+              <!-- SPONSORS AND PARTNERS -->
+              <li>
+                <a href="{{linkForAll}}" target="_blank">
+                  SPONSORS &amp; PARTNERS
+                </a>
+              </li>
+              <!-- SPONSORS AND PARTNERS END -->
+
               <li class="hidden-md hidden-lg dropdown">
                 <div class="display-inline forCityPlacingSm">
                   <div class="citySelect sfa-select">
