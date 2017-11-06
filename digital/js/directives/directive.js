@@ -252,15 +252,42 @@ myApp.directive('img', function ($compile, $parse) {
         link: function($scope, element, attrs){
           var img = null;
           var  canvas = null;
+          var imgId = 'rotateInput.'+ $scope.model;
+          var canvasId = 'rotateCanvas.'+ $scope.model;
           $scope.resultImage = "";
           // UPLOAD IMAGE
-          $scope.rotateUpload = function(){
-            console.log('UPLOAD');
-          }
+          // $scope.rotateUpload = function(){
+          //   console.log('UPLOAD');
+          // }
+          $scope.uploadNow = function (image) {
+              $scope.uploadStatus = "uploading";
+
+              var Template = this;
+              image.hide = true;
+              var formData = new FormData();
+              formData.append('file', image.file, image.name);
+              $http.post(uploadurl, formData, {
+                  headers: {
+                      'Content-Type': undefined
+                  },
+                  transformRequest: angular.identity
+              }).then(function (data) {
+                  data = data.data;
+                  console.log(data);
+                  $scope.uploadStatus = "uploaded";
+                  $scope.model = data.data[0];
+                  console.log($scope.model, 'model means blob')
+                  $timeout(function () {
+                      $scope.callback({
+                          'data': data.data[0]
+                      });
+                  }, 100);
+              });
+          };
           // UPLOAD IMAGE END
           // ROTATE FUNCTION
           $scope.rotateImage = function(degree) {
-              if (document.getElementById('rotateCanvas')) {
+              if (document.getElementById(canvasId)) {
                   var cContext = canvas.getContext('2d');
                   // TAKE WIDTH AND HEIGHT YOU WANT TO SET FOR IMAGE
                   var imgWidth, imgHeight;
@@ -303,8 +330,10 @@ myApp.directive('img', function ($compile, $parse) {
           // $scope.$on('$viewContentLoaded', function () {
             $timeout(function () {
               //  Initialize image and canvas
-              img = document.getElementById('rotateInput');
-              canvas = document.getElementById('rotateCanvas');
+
+              console.log("img", imgId, 'canvaa', canvasId);
+              img = document.getElementById(imgId);
+              canvas = document.getElementById(canvasId);
 
               if (!canvas || !canvas.getContext) {
                   canvas.parentNode.removeChild(canvas);

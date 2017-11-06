@@ -96,6 +96,7 @@ myApp.controller('HomeCtrl', function($scope, TemplateService, NavigationService
         // DEMO STUFF END
         // ROTATE FUNCTION
         $scope.image = 'img/demo300x600.jpg';
+        $scope.image2 = 'img/dishapatani1.jpg';
 })
 
 .controller('FormCtrl', function($scope, TemplateService, NavigationService, $timeout, toastr, $http) {

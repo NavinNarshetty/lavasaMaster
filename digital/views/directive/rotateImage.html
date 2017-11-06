@@ -5,10 +5,11 @@
         <button class="btn btn-rotateimage" ng-click="rotateImage(180)" >180&deg;</button>
         <button class="btn btn-rotateimage" ng-click="rotateImage(270)" >270&deg;</button>
         <button class="btn btn-rotateimage" ng-click="rotateImage(0)" >Reset Image</button>
-        <button class="btn btn-rotateimage" ng-click="rotateUpload();">Save</button>
+        <button class="btn btn-rotateimage" ng-click="uploadNow(resultImage);">Save</button>
+        <!-- <button class="btn btn-rotateimage" ng-click="rotateUpload();">Save</button> -->
     </div>
     <div class="relate" style="max-width:100%; width: auto; max-height:auto; border: 2px solid red;">
-        <img ng-src="{{model}}" id="rotateInput" class="img-responsive" />
-        <canvas id="rotateCanvas"></canvas>
+        <img ng-src="{{model}}" id="rotateInput.{{model}}" class="img-responsive" />
+        <canvas id="rotateCanvas.{{model}}"></canvas>
     </div>
 </div>

@@ -569,6 +569,8 @@ myApp.directive('rotateImage', function ($http, $filter, $timeout, NavigationSer
         link: function ($scope, element, attrs) {
             var img = null;
             var canvas = null;
+            var imgId = 'rotateInput.'+ $scope.model;
+            var canvasId = 'rotateCanvas.'+ $scope.model;
             $scope.resultImage = "";
             $scope.formData = {
                 file: $scope.model,
@@ -612,7 +614,7 @@ myApp.directive('rotateImage', function ($http, $filter, $timeout, NavigationSer
             };
             // ROTATE CANVAS FUNCTION
             $scope.rotateImage = function (degree) {
-                if (document.getElementById('rotateCanvas')) {
+                if (document.getElementById(canvasId)) {
                     var cContext = canvas.getContext('2d');
                     // TAKE WIDTH AND HEIGHT YOU WANT TO SET FOR IMAGE
                     var imgWidth, imgHeight;
@@ -706,7 +708,7 @@ myApp.directive('rotateImage', function ($http, $filter, $timeout, NavigationSer
             // ROTATE TRANSFORM FUNCTION END
             $timeout(function () {
                 //  Initialize image and canvas
-                img = document.getElementById('rotateInput');
+                img = document.getElementById(imgId);
                 // canvas = document.getElementById('rotateCanvas');
 
                 // if (!canvas || !canvas.getContext) {
