@@ -587,6 +587,41 @@ var model = {
             }
         });
     },
+
+    getEventSportslistSubCategory: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+                SportsListSubCategory.find().exec(function (err, sportsData) {
+                    if (_.isEmpty(sportsData)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, sportsData);
+                    }
+                });
+            },
+            function (sportsData, callback) {
+                var sportsListSubCategory = [];
+                _.each(sportsData, function (key) {
+                    if (key.name === 'Judo' || key.name === 'Karate' || key.name === 'Taekwondo' || key.name === 'Athletics' || key.name === 'Swimming' || key.name === 'Shooting' || key.name === 'Sport MMA') {
+                        sportsListSubCategory.push(key);
+                    }
+
+                });
+                callback(null, sportsListSubCategory);
+            }
+        ], function (err, data2) {
+            if (err) {
+                console.log(err);
+                callback(err, null);
+            } else if (data2) {
+                if (_.isEmpty(data2)) {
+                    callback("Sports Category Not Found", null);
+                } else {
+                    callback(null, data2);
+                }
+            }
+        });
+    },
     // --------------------------------------EDIT------------------------------------------
 
     editOneSport: function (data, callback) {
