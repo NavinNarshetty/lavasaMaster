@@ -119,13 +119,13 @@ myApp.controller('FormatTableTeamCtrl', function ($scope, TemplateService, Navig
     NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
       if (data.value) {
         console.log(data.value, "in modal")
-        toastr.success('Successfully Deleted', 'Age Group Message');
+        toastr.success('Successfully Deleted', 'Team');
         $scope.modalInstance.close();
         $state.reload();
         // console.log($scope.viewTable());
         // $scope.viewTable();
       } else {
-        toastr.error('Something Went Wrong while Deleting', 'Age Group Message');
+        toastr.error('Something Went Wrong while Deleting', 'Team');
       }
 
     });
