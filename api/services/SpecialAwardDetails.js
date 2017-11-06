@@ -549,6 +549,7 @@ var model = {
                                     break;
                                 case "champion":
                                     Result.getMedalsSchool(" ", function (err, data) {
+                                        console.log("getMedalsSchool data",data);
                                         if (err) {
                                             callback(err, null);
                                         } else {
