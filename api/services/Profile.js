@@ -206,7 +206,7 @@ var model = {
             // Stage 3
             {
                 $match: {
-                    "school.schoolName": data.school
+                    "school": objecid(data.school)
                 }
             },
         ];
@@ -931,8 +931,10 @@ var model = {
                     });
                 },
                 function (profile, callback) {
-                    var pipeLine = Profile.getSchoolSpecialAwardsAggregatePipeline(data);
-                    SpecialAwardDetails.aggregate(pipeLine, function (err, awardData) {
+                    // var pipeLine = Profile.getSchoolSpecialAwardsAggregatePipeline(data);
+                    SpecialAwardDetails.findOne({
+                        school: data.school
+                    }).lean().exec(function (err, awardData) {
                         if (err) {
                             callback(err, "error in mongoose");
                         } else if (_.isEmpty(awardData)) {
