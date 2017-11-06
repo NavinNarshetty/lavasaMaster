@@ -638,6 +638,7 @@ var model = {
                                 profile.teamName = found.name;
                                 profile.teamId = found.teamId;
                                 profile.school = found.schoolName;
+                                profile.sportName = found.sport.sportslist.sportsListSubCategory.name;
                                 profile.sportsListSubCategory = found.sport.sportslist.sportsListSubCategory._id;
                                 profile.drawFormat = found.sport.sportslist.drawFormat;
                                 if (found.school) {
