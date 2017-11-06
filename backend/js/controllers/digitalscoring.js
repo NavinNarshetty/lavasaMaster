@@ -171,13 +171,18 @@ myApp.controller('DetailPdfCtrl', function ($scope, TemplateService, NavigationS
   $scope.saveDataMatch = function (formData) {
     console.log(formData, "check this");
     var paramValue = {};
-    paramValue.sportslist = formData.sportslist;
-    paramValue.gender = formData.gender;
-    paramValue.ageGroup = formData.ageGroup._id;
-    paramValue.eventPdf = formData.eventPdf;
-    if (formData.weight) {
-      paramValue.weight = formData.weight._id;
+    if (formData.sportsListSubCategory) {
+      paramValue.sportsListSubCategory = formData.sportsListSubCategory;
+    } else {
+      paramValue.sportslist = formData.sportslist;
+      paramValue.gender = formData.gender;
+      paramValue.ageGroup = formData.ageGroup._id;
+      if (formData.weight) {
+        paramValue.weight = formData.weight._id;
+      }
     }
+    paramValue.eventPdf = formData.eventPdf;
+
 
     // $scope.formData.matchId = $stateParams.id;
     console.log(paramValue, "save");
@@ -207,5 +212,43 @@ myApp.controller('DetailPdfCtrl', function ($scope, TemplateService, NavigationS
   }
 
   // SAVE-END
+  $scope.getAllSportListSubCategory = function (data) {
+    $scope.url = "SportsListSubCategory/getEventSportslistSubCategory";
+    console.log(data);
+    $scope.constraints = {};
+    $scope.constraints.keyword = data;
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      console.log("dataa", data);
+      if (data.value) {
+        $scope.sportlistSubCat = data.data;
+        console.log("data.value sportlist", $scope.sportlistSubCat);
+
+      }
+
+
+    });
+  };
+  $scope.getAllSportListSubCategory();
+  //
+  $scope.gotoFun = function (id, data) {
+    console.log(data, "data");
+    console.log("id", id);
+    if (id && id != undefined || id != null) {
+      if (data === 'sportListSubCat') {
+        $scope.hideDetails = true;
+      } else if (data === 'sportslist' || data === 'ageGroup' || data === 'weight' || data === 'gender') {
+        $scope.hideSportListSubCat = true;
+      } else {
+
+      }
+    } else {
+      if (data === 'sportListSubCat') {
+        $scope.hideDetails = false;
+      } else if (data === 'sportslist' || data === 'ageGroup' || data === 'weight' || data === 'gender') {
+        $scope.hideSportListSubCat = false;
+      }
+
+    }
+  };
 
 });
