@@ -55,7 +55,7 @@ var model = {
             // Stage 5
             {
                 $match: {
-                    "athleteId.school.name": data.school
+                    "athleteId.school.name": data.schoolName
                 }
             },
 
@@ -711,7 +711,7 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
-                                data.school = found.schoolName;
+                                data.schoolName = found.schoolName;
                                 callback(null, found);
                             }
                         }
