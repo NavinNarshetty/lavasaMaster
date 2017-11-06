@@ -33,6 +33,7 @@ var model = {
             if (err) {
                 callback(err, null);
             } else {
+                console.log(found);
                 if (_.isEmpty(found)) {
                     callback(null, []);
                 } else {

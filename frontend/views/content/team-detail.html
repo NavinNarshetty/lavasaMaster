@@ -155,7 +155,7 @@
                                                 : stat.leagueknockout.leagueknockoutround) || '-'}}</span> -->
                                         </td>
                                         <td class="text-up">
-                                            <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.isAthleteWinner">{{stat.opponentName || '-' | removeSchoolWithDash:stat.school}}
+                                            <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.isAthleteWinner == false">{{stat.opponentName || '-' | removeSchoolWithDash:stat.school}}
                                             <p>{{stat.school}}</p>
                                         </td>
                                         <!-- <td class="text-up" ng-if="teamDetails.sport.drawFormat == 'Qualifying Knockout' || teamDetails.sport.drawFormat == 'Knockout' || teamDetails.sport.drawFormat == 'League cum Knockout'">
@@ -178,6 +178,7 @@
                                                 <div class="sf-play">
                                                     <span ng-if="stat.isAthleteWinner == true">Won</span>
                                                     <span ng-if="stat.isAthleteWinner == false">Loss</span>
+                                                    <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true">-</span>
                                                 </div>
                                                 <!-- <div class="sf-play">
                                                     <span>{{teamDetails.sport.drawFormat == 'Knockout'&& stat.self.result || (teamDetails.sport.drawFormat
