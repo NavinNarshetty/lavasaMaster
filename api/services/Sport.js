@@ -59,7 +59,7 @@ module.exports = mongoose.model('Sport', schema);
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema, "sportslist", "ageGroup", "weight", "sportslist", "ageGroup", "weight"));
 var model = {
 
-    getAllSportsByAthlete: function (athlete,callback) {
+    getAllSportsByAthlete: function (athlete, callback) {
         async.waterfall([
 
             //getAthlete Details
@@ -115,10 +115,10 @@ var model = {
             }
 
         ], function (err, result) {
-            if(err){
-                callback(err,null);
-            }else{  
-                callback(null,result);
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, result);
             }
         });
 
@@ -3420,6 +3420,88 @@ var model = {
                             function (err, match) {
                                 callback(null, match);
                             });
+                    }
+                }
+            ],
+            function (err, data2) {
+                if (err) {
+                    callback(err, null);
+                } else if (data2) {
+                    if (_.isEmpty(data2)) {
+                        callback(null, data2);
+                    } else {
+                        callback(null, data2);
+                    }
+                }
+            });
+    },
+
+    getEventAggregatePipeLine: function (data) {
+
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sportslist",
+                    "foreignField": "_id",
+                    "as": "sportslist"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sportslist",
+
+                }
+            },
+
+            // Stage 3
+            {
+                $match: {
+                    "sportslist.sportsListSubCategory": objectid(data.sportsListSubCategory)
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
+    setEventPdfViaSportsListSubCategory: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    var pipeLine = Sport.getEventAggregatePipeLine(data);
+                    Sport.aggregate(pipeLine, function (err, found) {
+                        if (err) {
+                            console.log(err);
+                            callback(err, "error in mongoose");
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (_.isEmpty(found)) {
+                        callback(null, found);
+                    } else {
+                        async.concatSeries(found, function (n, callback) {
+                            console.log(n, "inside");
+                            var updateObj = {
+                                $set: {
+                                    eventPdf: data.eventPdf
+                                }
+                            };
+                            Sport.update({
+                                _id: n._id
+                            }, updateObj).exec(
+                                function (err, match) {
+                                    callback(null, match);
+                                });
+
+                        }, function (err, complete) {
+                            callback(null, complete);
+                        });
                     }
                 }
             ],

@@ -104,7 +104,11 @@ var controller = {
 
     setEventPdf: function (req, res) {
         if (req.body) {
-            Sport.setEventPdf(req.body, res.callback);
+            if (req.body.sportsListSubCategory) {
+                Sport.setEventPdfViaSportsListSubCategory(req.body, res.callback);
+            } else {
+                Sport.setEventPdf(req.body, res.callback);
+            }
         } else {
             res.json({
                 "data": "Body not Found",
