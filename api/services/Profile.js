@@ -2169,19 +2169,20 @@ var model = {
                                                     stats.school = found.schoolName;
                                                     stats.teamId = found.teamId;
                                                     if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == false) {
-                                                        if (singleData.resultsRacquet.teams[0].team.equals(n.toString())) {
-                                                            if (singleData.resultsRacquet.teams[0].noShow == true && singleData.resultsRacquet.isNoMatch == false) {
+                                                        if (singleData.resultsRacquet.teams[0].team === n.toString()) {
+                                                            console.log("nn", singleData.resultsRacquet.teams[0].noShow);
+                                                            if (singleData.resultsRacquet.teams[0].noShow == true && singleData.resultsRacquet.teams[0].walkover == false) {
                                                                 stats.reason = "walkover";
-                                                            } else if (singleData.resultsRacquet.teams[0].walkover == true) {
+                                                            } else if (singleData.resultsRacquet.teams[0].noShow == false && singleData.resultsRacquet.teams[0].walkover == true) {
                                                                 stats.reason = "noShow";
                                                             } else {
                                                                 stats.reason = "";
                                                             }
                                                         } else {
-                                                            if (singleData.resultsRacquet.teams[1].noShow == true && singleData.resultsRacquet.isNoMatch == false) {
-                                                                stats.reason = "walkover";
-                                                            } else if (singleData.resultsRacquet.teams[1].walkover == true) {
+                                                            if (singleData.resultsRacquet.teams[1].noShow == true && singleData.resultsRacquet.teams[1].walkover == false) {
                                                                 stats.reason = "noShow";
+                                                            } else if (singleData.resultsRacquet.teams[1].noShow == false && singleData.resultsRacquet.teams[1].walkover == true) {
+                                                                stats.reason = "walkover";
                                                             } else {
                                                                 stats.reason = "";
                                                             }
