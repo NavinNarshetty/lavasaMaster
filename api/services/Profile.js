@@ -2081,18 +2081,18 @@ var model = {
                                                     stats.school = found.schoolName;
                                                     stats.teamId = found.teamId;
                                                     if (singleData.resultsCombat.status == 'IsCompleted' && singleData.resultsCombat.isNoMatch == false) {
-                                                        if (singleData.resultsCombat.teams[0].team.equals(n.toString())) {
-                                                            if (singleData.resultsCombat.teams[0].noShow == true && singleData.resultsCombat.isNoMatch == false) {
+                                                        if (singleData.resultsCombat.teams[0].team === n.toString()) {
+                                                            if (singleData.resultsCombat.teams[0].noShow == true && singleData.resultsCombat.teams[0].walkover == false) {
                                                                 stats.reason = "walkover";
-                                                            } else if (singleData.resultsCombat.teams[0].walkover == true) {
+                                                            } else if (singleData.resultsCombat.teams[0].noShow == false && singleData.resultsCombat.teams[0].walkover == true) {
                                                                 stats.reason = "noShow";
                                                             } else {
                                                                 stats.reason = "";
                                                             }
                                                         } else {
-                                                            if (singleData.resultsCombat.teams[1].noShow == true && singleData.resultsCombat.isNoMatch == false) {
+                                                            if (singleData.resultsCombat.teams[1].noShow == true && singleData.resultsCombat.teams[1].walkover == false) {
                                                                 stats.reason = "walkover";
-                                                            } else if (singleData.resultsCombat.teams[1].walkover == true) {
+                                                            } else if (singleData.resultsCombat.teams[1].noShow == false && singleData.resultsCombat.teams[1].walkover == true) {
                                                                 stats.reason = "noShow";
                                                             } else {
                                                                 stats.reason = "";
@@ -2285,18 +2285,18 @@ var model = {
                                                     stats.school = found.schoolName;
                                                     stats.teamId = found.teamId;
                                                     if (singleData.resultBasketball.status == "IsCompleted" && singleData.resultBasketball.isNoMatch == false) {
-                                                        if (singleData.resultBasketball.teams[0].team.equals(n.toString())) {
-                                                            if (singleData.resultBasketball.teams[0].noShow == true && singleData.resultBasketball.isNoMatch == false) {
+                                                        if (singleData.resultBasketball.teams[0].team === n.toString()) {
+                                                            if (singleData.resultBasketball.teams[0].noShow == true && singleData.resultBasketball.teams[0].walkover == false) {
                                                                 stats.reason = "walkover";
-                                                            } else if (singleData.resultBasketball.teams[0].walkover == true) {
+                                                            } else if (singleData.resultBasketball.teams[0].noShow == false && singleData.resultBasketball.teams[0].walkover == true) {
                                                                 stats.reason = "noShow";
                                                             } else {
                                                                 stats.reason = "";
                                                             }
                                                         } else {
-                                                            if (singleData.resultBasketball.teams[1].noShow == true && singleData.resultBasketball.isNoMatch == false) {
+                                                            if (singleData.resultBasketball.teams[1].noShow == true && singleData.resultBasketball.teams[1].walkover == false) {
                                                                 stats.reason = "walkover";
-                                                            } else if (singleData.resultBasketball.teams[1].walkover == true) {
+                                                            } else if (singleData.resultBasketball.teams[1].noShow == false && singleData.resultBasketball.teams[1].walkover == true) {
                                                                 stats.reason = "noShow";
                                                             } else {
                                                                 stats.reason = "";
@@ -2361,9 +2361,9 @@ var model = {
                                                 if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
                                                     stats.status = singleData.resultFootball.status;
                                                     if (singleData.resultBasketball.teams[0].team.equals(n.toString())) {
-                                                        if (singleData.resultFootball.teams[0].noShow == true && singleData.resultFootball.isNoMatch == false) {
+                                                        if (singleData.resultFootball.teams[0].noShow == true && singleData.resultFootball.teams[0].walkover == false) {
                                                             stats.reason = "walkover";
-                                                        } else if (singleData.resultFootball.teams[0].walkover == true) {
+                                                        } else if (singleData.resultFootball.teams[0].noShow == false && singleData.resultFootball.teams[0].walkover == true) {
                                                             stats.reason = "noShow";
                                                         } else {
                                                             stats.reason = "";
@@ -2434,9 +2434,9 @@ var model = {
                                             if (singleData.resultVolleyball.teams[0].team === n.toString()) {
                                                 var i = 0;
                                                 var result;
-                                                if (singleData.resultFootball.teams[0].noShow == true) {
+                                                if (singleData.resultFootball.teams[0].noShow == true && singleData.resultFootball.teams[0].walkover == false) {
                                                     stats.reason = "noShow";
-                                                } else if (singleData.resultFootball.teams[0].walkover == true) {
+                                                } else if (singleData.resultFootball.teams[0].noShow == false && singleData.resultFootball.teams[0].walkover == true) {
                                                     stats.reason = "walkover";
                                                 } else {
                                                     stats.reason = "";
@@ -2546,9 +2546,9 @@ var model = {
                                                 stats.teamId = found.teamId;
                                                 if (singleData.resultHockey.status == "IsCompleted" && singleData.resultHockey.isNoMatch == false) {
                                                     if (singleData.resultHockey.teams[0].team.equals(n.toString())) {
-                                                        if (singleData.resultHockey.teams[0].noShow == true && singleData.resultHockey.isNoMatch == false) {
+                                                        if (singleData.resultHockey.teams[0].noShow == true && singleData.resultHockey.teams[0].walkover == false) {
                                                             stats.reason = "walkover";
-                                                        } else if (singleData.resultHockey.teams[0].walkover == true) {
+                                                        } else if (singleData.resultHockey.teams[0].noShow == false && singleData.resultHockey.teams[0].walkover == true) {
                                                             stats.reason = "noShow";
                                                         } else {
                                                             stats.reason = "";
@@ -2613,18 +2613,18 @@ var model = {
                                                 stats.school = found.schoolName;
                                                 stats.teamId = found.teamId;
                                                 if (singleData.resultWaterPolo.status = "IsCompleted" && singleData.resultWaterPolo.isNoMatch == false) {
-                                                    if (singleData.resultWaterPolo.teams[0].team.equals(n.toString())) {
-                                                        if (singleData.resultWaterPolo.teams[0].noShow == true && singleData.resultWaterPolo.isNoMatch == false) {
+                                                    if (singleData.resultWaterPolo.teams[0].team === n.toString()) {
+                                                        if (singleData.resultWaterPolo.teams[0].noShow == true && singleData.resultWaterPolo.teams[0].walkover == false) {
                                                             stats.reason = "walkover";
-                                                        } else if (singleData.resultWaterPolo.teams[0].walkover == true) {
+                                                        } else if (singleData.resultWaterPolo.teams[0].noShow == false && singleData.resultWaterPolo.teams[0].walkover == true) {
                                                             stats.reason = "noShow";
                                                         } else {
                                                             stats.reason = "";
                                                         }
                                                     } else {
-                                                        if (singleData.resultWaterPolo.teams[1].noShow == true && singleData.resultWaterPolo.isNoMatch == false) {
+                                                        if (singleData.resultWaterPolo.teams[1].noShow == true && singleData.resultWaterPolo.teams[1].walkover == false) {
                                                             stats.reason = "walkover";
-                                                        } else if (singleData.resultWaterPolo.teams[1].walkover == true) {
+                                                        } else if (singleData.resultWaterPolo.teams[1].noShow == false && singleData.resultWaterPolo.teams[1].walkover == true) {
                                                             stats.reason = "noShow";
                                                         } else {
                                                             stats.reason = "";
@@ -2680,18 +2680,18 @@ var model = {
                                                 stats.school = found.schoolName;
                                                 stats.teamId = found.teamId;
                                                 if (singleData.resultKabaddi.status == 'IsCompleted' && singleData.resultKabaddi.isNoMatch == false) {
-                                                    if (singleData.resultKabaddi.teams[0].team.equals(n.toString())) {
-                                                        if (singleData.resultKabaddi.teams[0].noShow == true && singleData.resultKabaddi.isNoMatch == false) {
+                                                    if (singleData.resultKabaddi.teams[0].team === n.toString()) {
+                                                        if (singleData.resultKabaddi.teams[0].noShow == true && singleData.resultKabaddi.teams[0].walkover == false) {
                                                             stats.reason = "walkover";
-                                                        } else if (singleData.resultKabaddi.teams[0].walkover == true) {
+                                                        } else if (singleData.resultKabaddi.teams[0].noShow == false && singleData.resultKabaddi.teams[0].walkover == true) {
                                                             stats.reason = "noShow";
                                                         } else {
                                                             stats.reason = "";
                                                         }
                                                     } else {
-                                                        if (singleData.resultKabaddi.teams[1].noShow == true && singleData.resultKabaddi.isNoMatch == false) {
+                                                        if (singleData.resultKabaddi.teams[1].noShow == true && singleData.resultKabaddi.teams[1].walkover == false) {
                                                             stats.reason = "walkover";
-                                                        } else if (singleData.resultKabaddi.teams[1].walkover == true) {
+                                                        } else if (singleData.resultKabaddi.teams[1].noShow == false && singleData.resultKabaddi.teams[1].walkover == true) {
                                                             stats.reason = "noShow";
                                                         } else {
                                                             stats.reason = "";
@@ -2748,17 +2748,17 @@ var model = {
                                                 stats.teamId = found.teamId;
                                                 if (singleData.resultHandball.status == 'IsCompleted' && singleData.resultHandball.isNoMatch == false) {
                                                     if (singleData.resultHandball.teams[0].team.equals(n.toString())) {
-                                                        if (singleData.resultHandball.teams[0].noShow == true && singleData.resultHandball.isNoMatch == false) {
+                                                        if (singleData.resultHandball.teams[0].noShow == true && singleData.resultHandball.teams[0].walkover == false) {
                                                             stats.reason = "walkover";
-                                                        } else if (singleData.resultHandball.teams[0].walkover == true) {
+                                                        } else if (singleData.resultHandball.teams[0].noShow == false && singleData.resultHandball.teams[0].walkover == true) {
                                                             stats.reason = "noShow";
                                                         } else {
                                                             stats.reason = "";
                                                         }
                                                     } else {
-                                                        if (singleData.resultHandball.teams[1].noShow == true && singleData.resultHandball.isNoMatch == false) {
+                                                        if (singleData.resultHandball.teams[1].noShow == true && singleData.resultHandball.teams[1].walkover == false) {
                                                             stats.reason = "walkover";
-                                                        } else if (singleData.resultHandball.teams[1].walkover == true) {
+                                                        } else if (singleData.resultHandball.teams[1].noShow == false && singleData.resultHandball.teams[1].walkover == true) {
                                                             stats.reason = "noShow";
                                                         } else {
                                                             stats.reason = "";
