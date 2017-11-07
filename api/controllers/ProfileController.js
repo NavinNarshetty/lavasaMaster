@@ -136,5 +136,55 @@ var controller = {
         }
     },
 
+    getSchoolRank: function (req, res) {
+        if (req.body) {
+            Profile.getSchoolRank(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            });
+        }
+    },
+
+    getSchoolPerChoice: function (req, res) {
+        if (req.body.choice == "top20") {
+            Profile.getTop20School(req.body, res.callback);
+        } else if (req.body.choice == "all") {
+            Profile.getTop20School(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            });
+        }
+    },
+
+    getDrawFormats: function (req, res) {
+        if (req.body) {
+            async.concatSeries(req.body.sportsListSubCategory, function (sportName, callback) {
+                SportsList.find({
+                    sportsListSubCategory: sportName
+                }).lean().deepPopulate("sportsListCategory drawFormat").exec(function (err, found) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(found)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, found);
+                    }
+                });
+            }, function (err, complete) {
+                res.callback(null, complete);
+            });
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            });
+        }
+    },
+
+
 };
 module.exports = _.assign(module.exports, controller);

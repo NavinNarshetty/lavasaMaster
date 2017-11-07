@@ -946,6 +946,19 @@ var model = {
                             callback(null, profile);
                         }
                     });
+                },
+                function (profile, callback) {
+                    Profile.getSchoolRank(data, function (err, rankData) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(rankData)) {
+                            profile.rank = "";
+                            callback(null, profile);
+                        } else {
+                            profile.rank = rankData.rank;
+                            callback(null, profile);
+                        }
+                    });
                 }
             ],
             function (err, data2) {
@@ -3915,6 +3928,70 @@ var model = {
             callback(null, profile);
         });
     },
+
+    getSchoolRank: function (data, callback) {
+        Rank.getSchoolByRanks(function (err, rankData) {
+            if (err) {
+                callback(err, null);
+            } else if (_.isEmpty(rankData)) {
+                callback(null, []);
+            } else {
+                var rank = _.findIndex(rankData, {
+                    'name': data.schoolName,
+                });
+                rank++;
+                var profile = {};
+                profile.rank = rank;
+                callback(null, profile);
+            }
+        });
+    },
+
+    getTop20School: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Rank.getSchoolByRanks(function (err, rankData) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(rankData)) {
+                            callback(null, []);
+                        } else {
+                            var rankschool = rankData.slice(0, 20);
+                            callback(null, rankschool);
+                        }
+                    });
+                },
+                function (rankschool, callback) {
+                    var final = [];
+                    var count = 1;
+                    async.concatSeries(rankschool, function (n, callback) {
+                            var profile = {};
+                            Registration.findOne({
+                                schoolName: n.name
+                            }).lean().exec(function (err, found) {
+                                console.log("found", found);
+                                if (found.schoolLogo) {
+                                    profile.schoolLogo = "";
+                                } else {
+                                    profile.schoolLogo = found.schoolLogo;
+                                }
+                                profile.status = found.status;
+                                profile.schoolName = n.name;
+                                profile.totalPoints = n.totalPoints;
+                                profile.medals = n.medal;
+                                callback(null, profile);
+                            });
+                        },
+                        function (err, profile) {
+                            callback(null, profile);
+                        });
+                }
+            ],
+            function (err, data2) {
+                callback(null, data2);
+            });
+    },
+
 
 };
 module.exports = _.assign(module.exports, exports, model);
