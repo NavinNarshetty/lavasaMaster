@@ -445,4 +445,156 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
         "game": "Sports Development Partner"
     }];
     // TV Support Partner
+
+    // FOOTER SPORTS MUMBAI
+    $scope.hyderabadFooter = [{
+        name: 'archery'
+    }, {
+        name: 'athletics'
+    }, {
+        name: 'badminton'
+    }, {
+        name: 'basketball'
+    }, {
+        name: 'boxing'
+    }, {
+        name: 'carrom'
+    }, {
+        name: 'chess'
+    }, {
+        name: 'fencing'
+    }, {
+        name: 'football'
+    }, {
+        name: 'handball'
+    }, {
+        name: 'hockey'
+    }, {
+        name: 'judo'
+    }, {
+        name: 'kabaddi'
+    }, {
+        name: 'karate'
+    }, {
+        name: 'kho kho'
+    }, {
+        name: 'shooting'
+    }, {
+        name: 'swimming'
+    }, {
+        name: 'table tennis'
+    }, {
+        name: 'taekwondo'
+    }, {
+        name: 'tennis'
+    }, {
+        name: 'throwball'
+    }, {
+        name: 'volleyball'
+    }, {
+        name: 'water polo'
+    }]
+
+    $scope.mumbaiFooter = [{
+        name: 'archery'
+    }, {
+        name: 'athletics'
+    }, {
+        name: 'badminton'
+    }, {
+        name: 'basketball'
+    }, {
+        name: 'boxing'
+    }, {
+        name: 'carrom'
+    }, {
+        name: 'chess'
+    }, {
+        name: 'fencing'
+    }, {
+        name: 'football'
+    }, {
+        name: 'handball'
+    }, {
+        name: 'hockey'
+    }, {
+        name: 'judo'
+    }, {
+        name: 'kabaddi'
+    }, {
+        name: 'karate'
+    }, {
+        name: 'kho kho'
+    }, {
+        name: 'sport mma'
+    }, {
+        name: 'shooting'
+    }, {
+        name: 'squash'
+    }, {
+        name: 'swimming'
+    }, {
+        name: 'table tennis'
+    }, {
+        name: 'taekwondo'
+    }, {
+        name: 'tennis'
+    }, {
+        name: 'throwball'
+    }, {
+        name: 'volleyball'
+    }, {
+        name: 'water polo'
+    }, {
+        name: 'wrestling'
+    }]
+    // FOOTER SPORTS END
+
+
+    // CHAMPIONS JOSN
+    $scope.mumbaiChampion = [{
+        name: 'school championship',
+        champDetail: [{
+            name: 'about championship',
+            link: ''
+        }, {
+            name: 'register',
+            link: ''
+        }, {
+            name: 'championship schedule',
+            link: ''
+        }, {
+            name: 'faqs',
+            link: ''
+        }]
+    }, {
+        name: 'college championship',
+        champDetail: [{
+            name: 'register',
+            link: ''
+        }, {
+            name: 'championship schedule',
+            link: ''
+        }, {
+            name: 'faqs',
+            link: ''
+        }]
+    }]
+    // CHAMPIONS JOSN END
+
+    // MUMBAI PROFILE
+    $scope.sfaProfile = [{
+        name: 'athletes',
+        link: 'students'
+    }, {
+        name: 'school',
+        link: 'school'
+    }, {
+        name: 'college',
+        link: 'school'
+    }, {
+        name: 'teams',
+        link: 'team'
+    }]
+    // MUMBAI PROFILE END
 });

@@ -1,7 +1,8 @@
 myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, $uibModal, configService) {
     $scope.template = TemplateService.getHTML("content/draws-schedule/championship-schedule.html");
     TemplateService.title = "Draws & Schedules"; //This is the Title of the Website
-    TemplateService.header = "views/template/header1.html";
+    // TemplateService.header = "views/template/header1.html";
+    // TemplateService.footer = "views/template/footer1.html";
     $scope.navigation = NavigationService.getNavigation();
 
     $scope.sportList = ['football', 'Basketball', 'tennis', 'chess'];
