@@ -66,7 +66,7 @@ var model = {
     getSchoolByRanks: function (callback) {
         Rank.find().sort(Rank.sortingOrder).lean().exec(function (err, data) {
 
-            var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis', 'Athletics']
+            var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis', 'Athletics','Swimming']
             var sportsFound = [];
             var arr = [];
 
@@ -164,12 +164,12 @@ var model = {
     },
 
     getSchoolBySport: function (data, callback) {
-        console.log("data",data);
-        var str='^'+data.name;
+        console.log("data", data);
+        var str = '^' + data.name;
         var re = new RegExp(str, 'i');
 
-        var pipeline = [{
-            $match:  {
+        var sportRankipeline = [{
+            $match: {
                 "sportData.name": re
             }
         }, {
@@ -221,20 +221,87 @@ var model = {
                     "$sum": "$sportData.medals.gold.points"
                 },
             }
-        },{
-            $sort:{
-                "totalPoints":-1,
-                "goldPoints":-1,
-                "silverPoints":-1,
-                "bronzePoints":-1
+        }, {
+            $sort: {
+                "totalPoints": -1,
+                "goldPoints": -1,
+                "silverPoints": -1,
+                "bronzePoints": -1
             }
         }];
 
-        Rank.aggregate(pipeline, function (err, result) {
-            if(err){
-                callback(err,null);
-            }else{
-                callback(null, result);
+        var risingAwardPipeline = [{
+            $lookup: {
+                "from": "awards",
+                "localField": "award",
+                "foreignField": "_id",
+                "as": "award"
+            }
+        }, {
+            $unwind: {
+                path: "$award",
+                includeArrayIndex: "arrayIndex", // optional
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }, {
+            $match: {
+                "award.awardType": "rising"
+            }
+        }, {
+            $unwind: {
+                path: "$sports",
+                includeArrayIndex: "arrayIndex", // optional
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }, {
+            $lookup: {
+                "from": "sportslistsubcategories",
+                "localField": "sports",
+                "foreignField": "_id",
+                "as": "sports"
+            }
+        }, {
+            $unwind: {
+                path: "$sports",
+                includeArrayIndex: "arrayIndex", // optional
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }, {
+            $match: {
+                "sports.name": data.name
+            }
+        }];
+
+        var demo=[{
+            $lookup: {
+                "from": "awards",
+                "localField": "award",
+                "foreignField": "_id",
+                "as": "award"
+            }
+        }];
+
+
+        var sendObj={
+            table:[],
+            risingAthletes:[]
+        }
+
+        Rank.aggregate(sportRankipeline, function (err, result) {
+            if (err) {
+                callback(err, null);
+            } else {
+                sendObj.table=result;
+                SpecialAwardDetails.aggregate(risingAwardPipeline,function(err,risingAwards){
+                    sendObj.risingAthletes=risingAwards;
+                    console.log("risingAwards",risingAwards);
+                    if(err){
+                        callback(err,null);
+                    }else{
+                        result.risingAthletes=risingAwards;
+                        callback(null, sendObj);                
+                    }
+                })
             }
         })
     }
