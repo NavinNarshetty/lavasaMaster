@@ -9,7 +9,8 @@
                             <h3 class="sport-type-head d-fjalla-one">SFA Championship 2017-18</h3>
                             <p hidden>To view Draws & Schedules of your match kindly select the relevent categories to get results.
                             </p>
-                            <p>Draws and Schedules will be published on 8th November 2017.</p>
+                            <p ng-if="sfaCity == 'Mumbai'">Draws and Schedules publishing date will be announced soon.</p>
+                            <p ng-if="sfaCity == 'Hyderabad'">Draws and Schedules will be published on 8th November 2017.</p>
                         </div>
                         <div class="championshipdraw-card">
                             <form name=championshipDrawsForm class="championshipdraw-card-form">
@@ -245,9 +246,9 @@
                                                         <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
                                                             <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
                                                             <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
-                                                            <span>-</span>                                                        {{schedule.date2}}
-                                                        <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                        {{schedule.month}}
+                                                            <span>-</span> {{schedule.date2}}
+                                                            <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                            <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
                                                         </span>
                                                         <span ng-if="schedule.date">{{schedule.date}}
                                                             <sup>th</sup> {{schedule.month}} </span>
@@ -281,9 +282,9 @@
                                                         <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
                                                             <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
                                                             <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
-                                                            <span>-</span>                                                        {{schedule.date2}}
-                                                        <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                        {{schedule.month}}
+                                                            <span>-</span> {{schedule.date2}}
+                                                            <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                            <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
                                                         </span>
                                                         <span ng-if="schedule.date">{{schedule.date}}
                                                             <sup>th</sup> {{schedule.month}} </span>
@@ -301,7 +302,7 @@
                                     <p class="m-clear">
                                         *SFA shall keep you informed in-case there is any change of dates.
                                     </p>
-                                    <p class="m-clear" ng-if="isCollege == false &&sfaCity == 'Mumbai'">*Football qualifiers will be held in November. Dates will be announced soon.</p>
+                                    <p class="m-clear" ng-if="isCollege == false && sfaCity == 'Mumbai'">*Football qualifiers will be held in November. Dates will be announced soon.</p>
                                 </div>
                             </div>
                         </div>

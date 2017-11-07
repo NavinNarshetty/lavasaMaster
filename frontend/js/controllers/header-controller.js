@@ -6,25 +6,25 @@ var eventYear = '2017-18';
 // var eventYear = '2017';
 
 // For Test
-var serverType = 'test';
+// var serverType = 'test';
 // var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
 // var globalLinkForAll = "http://testmumbai.sfanow.in/";
-var globalLinkSchoolRegister = "http://testhyderabadschool.sfanow.in";
-var globalLinkCollegeRegister = "http://testhyderabadcollege.sfanow.in";
-var globalLinkForAll = "http://testhyderabad.sfanow.in/";
+// var globalLinkSchoolRegister = "http://testhyderabadschool.sfanow.in";
+// var globalLinkCollegeRegister = "http://testhyderabadcollege.sfanow.in";
+// var globalLinkForAll = "http://testhyderabad.sfanow.in/";
 // var globalLinkSchoolRegister = "http://testahmedabadschool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testahmedabadcollege.sfanow.in";
 // var globalLinkForAll = "http://testahmedabad.sfanow.in/";
 
 //For Live
-// var serverType = 'live';
+var serverType = 'live';
 // var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in";
 // var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
 // var globalLinkForAll = "https://mumbai.sfanow.in/";
-// var globalLinkSchoolRegister = "http://hyderabadschool.sfanow.in";
-// var globalLinkCollegeRegister = "http://hyderabadcollege.sfanow.in";
-// var globalLinkForAll = "https://hyderabad.sfanow.in/";
+var globalLinkSchoolRegister = "http://hyderabadschool.sfanow.in";
+var globalLinkCollegeRegister = "http://hyderabadcollege.sfanow.in";
+var globalLinkForAll = "https://hyderabad.sfanow.in/";
 
 
 myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr) {
