@@ -2777,23 +2777,18 @@ var model = {
                     callback(null, complete);
                 } else {
                     var excelData = [];
-                    console.log(complete[0]);
-                    console.log('=================================');
-                    console.log('=================================');
-                    console.log('=================================');
-                    console.log('=================================');
-                    console.log('=================================');
-                    console.log('=================================');
-                    console.log('=================================');
                     _.each(complete, function (n) {
-                        console.log('=================================', n);
                         var obj = {};
                         obj.sfaID = n.sfaId;
                         obj.receiptNo = "SFA" + n.receiptId;
                         if (n.atheleteSchoolName) {
                             obj.school = n.atheleteSchoolName;
                         } else {
-                            obj.school = n.school.name;
+                            if (n.school !== null) {
+                                obj.school = n.school.name;
+                            } else {
+                                obj.school = "";
+                            }
                         }
                         if (n.university) {
                             obj.university = n.university;
@@ -2925,22 +2920,17 @@ var model = {
             createdAt: -1
         }).lean().deepPopulate("school").exec(function (err, data) {
             var excelData = [];
-            console.log(data[0]);
-            console.log('=================================');
-            console.log('=================================');
-            console.log('=================================');
-            console.log('=================================');
-            console.log('=================================');
-            console.log('=================================');
-            console.log('=================================');
             _.each(data, function (n) {
-                console.log('=================================', n);
                 var obj = {};
                 obj.sfaID = n.sfaId;
                 if (n.atheleteSchoolName) {
                     obj.school = n.atheleteSchoolName;
                 } else {
-                    obj.school = n.school.name;
+                    if (n.school !== null) {
+                        obj.school = n.school.name;
+                    } else {
+                        obj.school = "";
+                    }
                 }
                 if (n.university) {
                     obj.university = n.university;
