@@ -2018,7 +2018,6 @@ var model = {
                 }
             });
         Match.aggregate(newPipeLine, function (err, matchData) {
-            // console.log('matchData', matchData);
             if (err) {
                 callback(err, "error in mongoose");
             } else {
@@ -2041,14 +2040,18 @@ var model = {
                             var result;
                             if (singleData.opponentsTeam.length == 1) {
                                 if (singleData.resultsCombat.status == "IsCompleted") {
-                                    while (i < singleData.resultsCombat.teams[0].sets.length) {
+                                    var result;
+                                    async.each(singleData.resultsCombat.teams[0].teamResults.sets, function (n, callback) {
+                                        console.log("n", n, "i", i);
                                         if (i == 0) {
-                                            result = singleData.resultsCombat.teams[0].sets[i].point;
+                                            result = n.points;
                                         } else {
-                                            result = result + "," + singleData.resultsCombat.teams[0].sets[i].point;
+                                            result = result + "," + n.points;
                                         }
                                         i++;
-                                    }
+                                    }, function (err) {
+                                        callback(null, result);
+                                    });
                                     stats.score = result;
                                     stats.status = singleData.resultsCombat.status;
                                 } else {
@@ -2073,7 +2076,7 @@ var model = {
                                                     stats.school = found.schoolName;
                                                     stats.teamId = found.teamId;
                                                     if (singleData.resultsCombat.status == 'IsCompleted') {
-                                                        while (i < singleData.resultsCombat.players[0].sets.length) {
+                                                        while (i < singleData.resultsCombat.teams[0].sets.length) {
                                                             if (i == 0) {
                                                                 result = singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
                                                             } else {
@@ -2101,24 +2104,24 @@ var model = {
                                         callback(null, match);
                                     });
                             }
-                        } else if (singleData.resultRacquet) {
+                        } else if (singleData.resultsRacquet) {
                             var i = 0;
                             var result;
                             if (singleData.opponentsTeam.length == 1) {
-                                if (singleData.resultRacquets.status == "IsCompleted") {
+                                if (singleData.resultsRacquet.status == "IsCompleted") {
                                     while (i < singleData.resultRacquet.teams[0].sets.length) {
                                         if (i == 0) {
-                                            result = singleData.resultRacquet.teams[0].sets[i].point;
+                                            result = singleData.resultsRacquet.teams[0].sets[i].point;
                                         } else {
-                                            result = result + "," + singleData.resultRacquet.teams[0].sets[i].point;
+                                            result = result + "," + singleData.resultsRacquet.teams[0].sets[i].point;
                                         }
                                         i++;
                                     }
                                     console.log("i", result);
                                     stats.score = result;
-                                    stats.status = singleData.resultRacquets.status;
+                                    stats.status = singleData.resultsRacquet.status;
                                 } else {
-                                    stats.status = singleData.resultRacquets.status;
+                                    stats.status = singleData.resultsRacquet.status;
                                 }
                                 match.push(stats);
                                 callback(null, match);
@@ -2138,26 +2141,26 @@ var model = {
                                                     stats.opponentName = found.name;
                                                     stats.school = found.schoolName;
                                                     stats.teamId = found.teamId;
-                                                    if (singleData.resultRacquets.status == "IsCompleted") {
-                                                        while (i < singleData.resultRacquets.teams[0].sets.length) {
+                                                    if (singleData.resultsRacquet.status == "IsCompleted") {
+                                                        while (i < singleData.resultsRacquet.teams[0].sets.length) {
 
                                                             if (i == 0) {
-                                                                result = singleData.resultRacquets.teams[0].sets[i].point + "-" + singleData.resultRacquets.teams[1].sets[i].point;
+                                                                result = singleData.resultsRacquet.teams[0].sets[i].point + "-" + singleData.resultsRacquet.teams[1].sets[i].point;
                                                             } else {
-                                                                result = result + "," + singleData.resultRacquets.teams[0].sets[i].point + "-" + singleData.resultRacquets.teams[1].sets[i].point;
+                                                                result = result + "," + singleData.resultsRacquet.teams[0].sets[i].point + "-" + singleData.resultsRacquet.teams[1].sets[i].point;
                                                             }
                                                             i++;
                                                             console.log("i", result);
                                                         }
                                                         stats.score = result;
-                                                        if (singleData.resultRacquets.winner.player === n) {
+                                                        if (singleData.resultsRacquet.winner.player === n) {
                                                             stats.isAthleteWinner = false;
                                                         } else {
                                                             stats.isAthleteWinner = true;
                                                         }
-                                                        stats.status = singleData.resultRacquets.status;
+                                                        stats.status = singleData.resultsRacquet.status;
                                                     } else {
-                                                        stats.status = singleData.resultRacquets.status;
+                                                        stats.status = singleData.resultsRacquet.status;
                                                     }
                                                     match.push(stats);
                                                     callback(null, match);
@@ -2465,7 +2468,7 @@ var model = {
                                                 stats.school = found.schoolName;
                                                 stats.teamId = found.teamId;
                                                 if (singleData.resultWaterPolo.status = "IsCompleted") {
-                                                    stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;;
+                                                    stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints;;
                                                     if (singleData.resultWaterPolo.winner.player === n) {
                                                         stats.isAthleteWinner = false;
                                                     } else {
@@ -2509,8 +2512,8 @@ var model = {
                                                 stats.opponentName = found.name;
                                                 stats.school = found.schoolName;
                                                 stats.teamId = found.teamId;
-                                                if (singleData.resultHockey.status == "IsCompleted") {
-                                                    stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[0].teamResults.finalPoints;;
+                                                if (singleData.resultKabaddi.status == 'IsCompleted') {
+                                                    stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[0].teamResults.finalPoints;
                                                     if (singleData.resultKabaddi.winner.player === n.toString()) {
                                                         stats.isAthleteWinner = false;
                                                     } else {
@@ -4061,6 +4064,7 @@ var model = {
                         async.concatSeries(found, function (n, callback) {
                                 var profile = {};
                                 profile.name = n.schoolName;
+                                profile.schoolId = n._id;
                                 callback(null, profile);
                             },
                             function (err, profile) {
