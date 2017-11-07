@@ -2312,9 +2312,9 @@ var model = {
                                     async.each(singleData.resultVolleyball.teams[0].teamResults.sets, function (n, callback) {
                                         console.log("n", n, "i", i);
                                         if (i == 0) {
-                                            result = n.points;
+                                            result = n.points + "-" + singleData.resultVolleyball.teams[0].teamResults.sets[i].points;
                                         } else {
-                                            result = result + "," + n.points;
+                                            result = result + "," + n.points + "-" + singleData.resultVolleyball.teams[0].teamResults.sets[i].points;
                                         }
                                         i++;
                                     }, function (err) {
@@ -2337,9 +2337,9 @@ var model = {
                                             var result;
                                             async.each(singleData.resultVolleyball.teams[0].teamResults.sets, function (n, callback) {
                                                 if (i == 0) {
-                                                    result = n.points;
+                                                    result = n.points + "-" + singleData.resultVolleyball.teams[0].teamResults.sets[i].points;
                                                 } else {
-                                                    result = result + "," + n.points;
+                                                    result = result + "," + n.points + "-" + singleData.resultVolleyball.teams[0].teamResults.sets[i].points;
                                                 }
                                                 i++;
                                             }, function (err) {
