@@ -1174,6 +1174,6 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 url: adminUrl2 + 'rank/getSchoolByRanks',
                 method: 'POST',
             }).success(callback);
-        }
+        },
     };
 });
