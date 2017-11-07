@@ -62,10 +62,11 @@ var model = {
         "medal.bronze.points": -1,
         "totalMatches": -1
     },
+
     getSchoolByRanks: function (callback) {
         Rank.find().sort(Rank.sortingOrder).lean().exec(function (err, data) {
 
-            var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis']
+            var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis', 'Athletics']
             var sportsFound = [];
             var arr = [];
 
@@ -84,8 +85,8 @@ var model = {
 
                     if (!_.isEmpty(singleData[sportName])) {
                         var obj = {
-                            _ids:{},
-                            name : sportName,
+                            _ids: {},
+                            name: sportName,
                             count: 0,
                             totalCount: 0,
                             totalPoints: 0,
@@ -108,27 +109,27 @@ var model = {
                             }
                         }
                         _.each(singleData[sportName], function (n) {
-                            obj.count+=n.count;
-                            obj.totalCount+=n.totalCount;
-                            obj.totalPoints+=n.totalPoints;
-                            var o={};
-                            o[n.name]=n._id;
-                            console.log("o",o);
-                            obj._ids=_.assign(obj._ids,o);
-                            console.log("obj",obj);
-                            if(n && n.medals && n.medals['bronze']){
-                                obj.medals['bronze'].count +=n.medals['bronze'].count;
-                                obj.medals['bronze'].points +=n.medals['bronze'].points;
+                            obj.count += n.count;
+                            obj.totalCount += n.totalCount;
+                            obj.totalPoints += n.totalPoints;
+                            var o = {};
+                            o[n.name] = n._id;
+                            console.log("o", o);
+                            obj._ids = _.assign(obj._ids, o);
+                            console.log("obj", obj);
+                            if (n && n.medals && n.medals['bronze']) {
+                                obj.medals['bronze'].count += n.medals['bronze'].count;
+                                obj.medals['bronze'].points += n.medals['bronze'].points;
                             }
 
-                            if(n && n.medals && n.medals['silver']){
-                                obj.medals['silver'].count +=n.medals['silver'].count;
-                                obj.medals['silver'].points +=n.medals['silver'].points;
+                            if (n && n.medals && n.medals['silver']) {
+                                obj.medals['silver'].count += n.medals['silver'].count;
+                                obj.medals['silver'].points += n.medals['silver'].points;
                             }
 
-                            if(n && n.medals && n.medals['gold']){
-                                obj.medals['gold'].count +=n.medals['gold'].count;
-                                obj.medals['gold'].points +=n.medals['gold'].points;   
+                            if (n && n.medals && n.medals['gold']) {
+                                obj.medals['gold'].count += n.medals['gold'].count;
+                                obj.medals['gold'].points += n.medals['gold'].points;
                             }
 
                             n.removeElement = true;
@@ -140,7 +141,7 @@ var model = {
 
                     }
                     delete singleData[sportName];
-                    singleData.sportData= _.filter(singleData.sportData, function (n) {
+                    singleData.sportData = _.filter(singleData.sportData, function (n) {
                         return !n.removeElement;
                     });
                     if (sportsToMerge.length - 1 == key) {
@@ -160,6 +161,82 @@ var model = {
             //     callback(null,data);
             // }
         });
+    },
+
+    getSchoolBySport: function (data, callback) {
+        console.log("data",data);
+        var str='^'+data.name;
+        var re = new RegExp(str, 'i');
+
+        var pipeline = [{
+            $match:  {
+                "sportData.name": re
+            }
+        }, {
+            $project: {
+                "name": 1,
+                "sportData": 1
+            }
+        }, {
+            $unwind: {
+                path: "$sportData",
+                includeArrayIndex: "arrayIndex", // optional
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }, {
+            $match: {
+                "sportData.name": re
+            }
+        }, {
+            $group: {
+                "_id": "$name",
+                "sportData": {
+                    $push: "$sportData"
+                },
+                "count": {
+                    "$sum": "$sportData.count"
+                },
+                "totalCount": {
+                    "$sum": "$sportData.totalCount"
+                },
+                "totalPoints": {
+                    "$sum": "$sportData.totalPoints"
+                },
+                "bronzeCount": {
+                    "$sum": "$sportData.medals.bronze.count"
+                },
+                "bronzePoints": {
+                    "$sum": "$sportData.medals.bronze.points"
+                },
+                "silverCount": {
+                    "$sum": "$sportData.medals.silver.count"
+                },
+                "silverPoints": {
+                    "$sum": "$sportData.medals.silver.points"
+                },
+                "goldCount": {
+                    "$sum": "$sportData.medals.gold.count"
+                },
+                "goldPoints": {
+                    "$sum": "$sportData.medals.gold.points"
+                },
+            }
+        },{
+            $sort:{
+                "totalPoints":-1,
+                "goldPoints":-1,
+                "silverPoints":-1,
+                "bronzePoints":-1
+            }
+        }];
+
+        Rank.aggregate(pipeline, function (err, result) {
+            if(err){
+                callback(err,null);
+            }else{
+                callback(null, result);
+            }
+        })
     }
 };
 module.exports = _.assign(module.exports, exports, model);
