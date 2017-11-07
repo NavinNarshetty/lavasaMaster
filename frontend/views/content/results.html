@@ -3,6 +3,7 @@
 
     <!-- RESULT TITLE SECTION -->
     <div class="result-titlesection">
+      <!-- <button class="btn btn-primary" ng-click="generateTable();">Generate Table</button> -->
       <div class="result-title">School Result
          <span class="result-dropdown resulttitle-dropdown" ng-click="viewEvent();"> {{defaultEvent}} <span  class="fa " ng-class = " { 'fa-angle-up' : showEventFilter == true , 'fa-angle-down' :  showEventFilter == false } "></span>
            <div class="landingschool-schoolfilter" ng-show="showEventFilter">
@@ -126,7 +127,7 @@
         <label >Sport</label>
       </div>
       <!--SCHOOL TABLE-->
-      <div class="schoolrank-table">
+      <div class="schoolrank-table" ng-repeat = "sport in medalWinners track by $index">
         <div class="row">
           <div class="col-md-7 col-sm-12 col-xs-12">
             <div class="schoolranktable-head">
@@ -180,30 +181,30 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="item in sportTable track by $index">
+                      <tr ng-repeat="item in sportTable | limitTo:5 track by $index">
                         <td>
                           <div class="">
-                            {{item.rank}}
+                            {{$index + 1}}
                           </div>
                         </td>
                         <td>
                           <div class="schoolranktable-sportwise">
-                            {{item.school}}
+                            {{item.name}}
                           </div>
                         </td>
                         <td>
                           <div class="">
-                            {{item.goldPoints}}
+                            {{item.medals.gold.points}}
                           </div>
                         </td>
                         <td>
                           <div class="">
-                            {{item.silverPoints}}
+                            {{item.medals.silver.points}}
                           </div>
                         </td>
                         <td>
                           <div class="">
-                            {{item.bronzePoints}}
+                            {{item.medals.bronze.points}}
                           </div>
                         </td>
                         <td>
@@ -233,6 +234,7 @@
           </div>
         </div>
         <div class="resultsport-viewmedalwinner">
+          <a class="btn-viewmore" ng-click="showMoreSport($index);">View <span>Full</span><span ng-if="">Less</span> Ranking Table</a>
           <a class="btn-viewmore" ng-click="showMedalWinner();">View All Medal Winners</a>
           <div class="result-viewall-medalwinners" ng-show="showAllMedalWinner">
             <!-- FILTER -->

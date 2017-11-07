@@ -66,6 +66,7 @@ $brand-green: #0eda85 !default; //green
 
 .btn-viewmore {
     border: none;
+    margin: 0px 5px;
     background-color: transparent;
     color: $sport-primary;
     text-decoration: underline;
@@ -617,7 +618,7 @@ $brand-green: #0eda85 !default; //green
       }
     }
     .dd-sportname{
-      text-align: right;
+      text-align: left;
       text-transform: uppercase;
     }
   }

@@ -73,7 +73,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
           }
           console.log('sport', n);
           // <td colspan="3"> <div> </div> </td>
-          detailTable = detailTable  + '<tr>   <td  class="dd-sportname">'+ n.name+' </td> <td > <div class="detail-resultholder"> ' + n.goldMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.silverMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.bronzeMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.totalPoints + ' </div> </td> </tr>';
+          detailTable = detailTable  + '<tr>   <td class="dd-sportname">'+ n.name+' </td> <td > <div class="detail-resultholder"> ' + n.goldMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.silverMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.bronzeMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.totalPoints + ' </div> </td> </tr>';
         });
         $scope.rankDetail = detail;
          demo = '<tr id="rankDetail' + index +'"> <td class = "pad-clear" colspan = "6"> <div class="schoolrank-details"> <table class = "table"> '+ detailTable +'</table> </div> </td> </tr>'
@@ -99,6 +99,16 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     // FUNCTIONS END
 
     // APIS
+    // GENERATE RANKING TABLE
+    // $scope.generateTable = function(){
+    //   NavigationService.getSchoolRank(function(data){
+    //     if (data.data = true) {
+    //       console.log("table GENERATED");
+    //     }
+    //   });
+    // };
+    // GENERATE RANKING TABLE END
+    // GET RANKING TABLE
     NavigationService.getSchoolByRanks(function(data){
       console.log('rankingTable',data);
       if (data.value == true) {
@@ -112,6 +122,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         toastr.error('Ranking Table Error','Error');
       }
     })
+    // GET RANKING TABLE END
 
     // APIS END
 
@@ -120,10 +131,18 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     // SCHOOL RANKING TABLE
     $scope.sportTable = [{
       rank: 1,
-      school: 'jamnabai high school jamnabai high school',
-      goldPoints: 20,
-      silverPoints: 20,
-      bronzePoints: 20,
+      name: 'jamnabai high school jamnabai high school',
+      medals: {
+        gold: {
+          points: 20
+        },
+        silver: {
+          points: 20
+        },
+        bronze: {
+          points: 20
+        }
+      },
       totalPoints: 200,
       details: [{
         name: 'Athletics',
@@ -146,10 +165,18 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       }]
     },{
       rank: 2,
-      school: 'jamnabai high school',
-      goldPoints: 20,
-      silverPoints: 20,
-      bronzePoints: 20,
+      name: 'jamnabai high school',
+      medals: {
+        gold: {
+          points: 20
+        },
+        silver: {
+          points: 20
+        },
+        bronze: {
+          points: 20
+        }
+      },
       totalPoints: 200,
       details: [{
         name: 'Athletics',
@@ -172,10 +199,18 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       }]
     },{
       rank: 3,
-      school: 'jamnabai high school',
-      goldPoints: 20,
-      silverPoints: 20,
-      bronzePoints: 20,
+      name: 'jamnabai high school',
+      medals: {
+        gold: {
+          points: 20
+        },
+        silver: {
+          points: 20
+        },
+        bronze: {
+          points: 20
+        }
+      },
       totalPoints: 200,
       details: [{
         name: 'Athletics',
@@ -198,10 +233,18 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       }]
     },{
       rank: 4,
-      school: 'jamnabai high school',
-      goldPoints: 20,
-      silverPoints: 20,
-      bronzePoints: 20,
+      name: 'jamnabai high school',
+      medals: {
+        gold: {
+          points: 20
+        },
+        silver: {
+          points: 20
+        },
+        bronze: {
+          points: 20
+        }
+      },
       totalPoints: 200,
       details: [{
         name: 'Athletics',
@@ -224,10 +267,18 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       }]
     },{
       rank: 5,
-      school: 'jamnabai high school',
-      goldPoints: 20,
-      silverPoints: 20,
-      bronzePoints: 20,
+      name: 'jamnabai high school',
+      medals: {
+        gold: {
+          points: 20
+        },
+        silver: {
+          points: 20
+        },
+        bronze: {
+          points: 20
+        }
+      },
       totalPoints: 200,
       details: [{
         name: 'Athletics',
