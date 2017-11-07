@@ -2964,7 +2964,7 @@ var model = {
                                                         player.school = school;
                                                         player.sfaId = found.sfaId;
                                                         player.profilePic = found.photograph;
-                                                        profile.player.push(player);
+                                                        profile.players.push(player);
                                                         while (i < singleData.resultsCombat.players[0].sets.length) {
                                                             console.log("players", singleData.resultsCombat.players[0].sets[i]);
                                                             if (i == 0) {
@@ -3008,7 +3008,7 @@ var model = {
                                                                     player.sfaId = found.sfaId;
                                                                     player.profilePic = found.photograph;
                                                                     profile.match.push(stats);
-                                                                    profile.player.push(player);
+                                                                    profile.players.push(player);
                                                                     callback(null, profile.match);
                                                                 } else {
                                                                     var player = {};
@@ -3016,7 +3016,7 @@ var model = {
                                                                     player.school = school;
                                                                     player.sfaId = found.sfaId;
                                                                     player.profilePic = found.photograph;
-                                                                    profile.player.push(player);
+                                                                    profile.players.push(player);
                                                                     while (i < singleData.resultsCombat.players[0].sets.length) {
                                                                         if (i == 0) {
                                                                             result = singleData.resultsCombat.players[0].sets[i].point + "-" + singleData.resultsCombat.players[1].sets[i].point;
@@ -3056,7 +3056,7 @@ var model = {
                                                         player.school = school;
                                                         player.sfaId = found.sfaId;
                                                         player.profilePic = found.photograph;
-                                                        profile.player.push(player);
+                                                        profile.players.push(player);
                                                         while (i < singleData.resultRacquets.players[0].sets.length) {
                                                             console.log("players", singleData.resultRacquets.players[0].sets[i]);
                                                             if (i == 0) {
@@ -3099,7 +3099,7 @@ var model = {
                                                                     player.school = school;
                                                                     player.sfaId = found.sfaId;
                                                                     player.profilePic = found.photograph;
-                                                                    profile.player.push(player);
+                                                                    profile.players.push(player);
                                                                     profile.match.push(stats);
                                                                 } else {
                                                                     var player = {};
@@ -3107,7 +3107,7 @@ var model = {
                                                                     player.school = school;
                                                                     player.sfaId = found.sfaId;
                                                                     player.profilePic = found.photograph;
-                                                                    profile.player.push(player);
+                                                                    profile.players.push(player);
                                                                     while (i < singleData.resultRacquets.players[0].sets.length) {
                                                                         if (i == 0) {
                                                                             result = singleData.resultRacquets.players[0].sets[i].point + "-" + singleData.resultRacquets.players[1].sets[i].point;
@@ -3150,7 +3150,7 @@ var model = {
                                                                 player.school = school;
                                                                 player.sfaId = found.sfaId;
                                                                 player.profilePic = found.photograph;
-                                                                profile.player.push(player);
+                                                                profile.players.push(player);
                                                                 stats.score = n.time;
                                                                 stats.result = n.result;
                                                                 profile.match.push(stats);
@@ -3161,7 +3161,7 @@ var model = {
                                                                 player.school = school;
                                                                 player.sfaId = found.sfaId;
                                                                 player.profilePic = found.photograph;
-                                                                profile.player.push(player);
+                                                                profile.players.push(player);
                                                                 callback(null, profile);
                                                             }
                                                         });
@@ -3190,7 +3190,7 @@ var model = {
                                                     player.school = school;
                                                     player.sfaId = found.sfaId;
                                                     player.profilePic = found.photograph;
-                                                    profile.player.push(player);
+                                                    profile.players.push(player);
                                                     stats.score = n.time;
                                                     stats.result = n.result;
                                                     profile.match.push(stats);
@@ -3221,7 +3221,7 @@ var model = {
                                                     player.school = school;
                                                     player.sfaId = found.sfaId;
                                                     player.profilePic = found.photograph;
-                                                    profile.player.push(player);
+                                                    profile.players.push(player);
                                                 });
                                                 async.each(singleData.resultSwiss.players, function (n, callback) {
                                                     if (n.id === singleData.opponentsSingle._id) {
@@ -3263,7 +3263,7 @@ var model = {
                                                     player.school = school;
                                                     player.sfaId = found.sfaId;
                                                     player.profilePic = found.photograph;
-                                                    profile.player.push(player);
+                                                    profile.players.push(player);
                                                 });
                                                 async.each(singleData.resultKnockout.players, function (n, callback) {
                                                     if (n.playerId === singleData.opponentsSingle._id) {
@@ -3304,7 +3304,7 @@ var model = {
                                                     player.school = school;
                                                     player.sfaId = found.sfaId;
                                                     player.profilePic = found.photograph;
-                                                    profile.player.push(player);
+                                                    profile.players.push(player);
                                                     stats.score = singleData.resultShooting.finalScore;
                                                     stats.result = singleData.resultShooting.result;
                                                     profile.match.push(stats);
@@ -3422,7 +3422,7 @@ var model = {
                                                             player.school = school;
                                                             player.sfaId = found.sfaId;
                                                             player.profilePic = found.photograph;
-                                                            profile.player.push(player);
+                                                            profile.players.push(player);
                                                         });
                                                         p++;
                                                     }
@@ -3461,7 +3461,7 @@ var model = {
                                                                     player.school = school;
                                                                     player.sfaId = found.sfaId;
                                                                     player.profilePic = found.photograph;
-                                                                    profile.player.push(player);
+                                                                    profile.players.push(player);
                                                                 });
                                                                 p++;
                                                             }
@@ -3530,7 +3530,7 @@ var model = {
                                                             player.school = school;
                                                             player.sfaId = found.sfaId;
                                                             player.profilePic = found.photograph;
-                                                            profile.player.push(player);
+                                                            profile.players.push(player);
                                                         });
                                                         p++;
                                                     }
@@ -3604,7 +3604,7 @@ var model = {
                                                                     player.school = school;
                                                                     player.sfaId = found.sfaId;
                                                                     player.profilePic = found.photograph;
-                                                                    profile.player.push(player);
+                                                                    profile.players.push(player);
                                                                 });
                                                                 p++;
                                                             }
@@ -3635,7 +3635,7 @@ var model = {
                                                         player.school = school;
                                                         player.sfaId = found.studentId.sfaId;
                                                         player.profilePic = found.studentId.photograph;
-                                                        profile.player.push(player);
+                                                        profile.players.push(player);
                                                     });
                                                     if (singleData.winner.player === n.player) {
                                                         stats.score = n.time;
@@ -3670,7 +3670,7 @@ var model = {
                                                         player.school = school;
                                                         player.sfaId = found.studentId.sfaId;
                                                         player.profilePic = found.studentId.photograph;
-                                                        profile.player.push(player);
+                                                        profile.players.push(player);
                                                         stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints;
                                                         stats.isAthleteWinner = true;
                                                         profile.match.push(stats);
@@ -3701,7 +3701,7 @@ var model = {
                                                                 player.school = school;
                                                                 player.sfaId = found.studentId.sfaId;
                                                                 player.profilePic = found.studentId.photograph;
-                                                                profile.player.push(player);
+                                                                profile.players.push(player);
                                                                 stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultBasketball.teams[1].teamResults.finalGoalPoints;
                                                                 if (singleData.resultBasketball.winner.player === n.team) {
                                                                     stats.isAthleteWinner = true;
@@ -3741,7 +3741,7 @@ var model = {
                                                         player.school = school;
                                                         player.sfaId = found.studentId.sfaId;
                                                         player.profilePic = found.studentId.photograph;
-                                                        profile.player.push(player);
+                                                        profile.players.push(player);
                                                         stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints;
                                                         stats.isAthleteWinner = true;
                                                         profile.match.push(stats);
@@ -3772,7 +3772,7 @@ var model = {
                                                                 player.school = school;
                                                                 player.sfaId = found.studentId.sfaId;
                                                                 player.profilePic = found.studentId.photograph;
-                                                                profile.player.push(player);
+                                                                profile.players.push(player);
                                                                 stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
                                                                 if (singleData.resultFootball.winner.player === n.team) {
                                                                     stats.isAthleteWinner = true;
@@ -3813,7 +3813,7 @@ var model = {
                                                         player.school = school;
                                                         player.sfaId = found.studentId.sfaId;
                                                         player.profilePic = found.studentId.photograph;
-                                                        profile.player.push(player);
+                                                        profile.players.push(player);
                                                         var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
                                                         while (i < length) {
                                                             if (i == 0) {
@@ -3854,7 +3854,7 @@ var model = {
                                                                 player.school = school;
                                                                 player.sfaId = found.studentId.sfaId;
                                                                 player.profilePic = found.studentId.photograph;
-                                                                profile.player.push(player);
+                                                                profile.players.push(player);
                                                                 var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
                                                                 while (i < length) {
                                                                     console.log("players", singleData.resultVolleyball.teams[0].teamResults.sets[i]);
@@ -3904,7 +3904,7 @@ var model = {
                                                         player.school = school;
                                                         player.sfaId = found.studentId.sfaId;
                                                         player.profilePic = found.studentId.photograph;
-                                                        profile.player.push(player);
+                                                        profile.players.push(player);
                                                         stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints;
                                                         stats.isAthleteWinner = true;
                                                         profile.match.push(stats);
@@ -3935,7 +3935,7 @@ var model = {
                                                                 player.school = school;
                                                                 player.sfaId = found.studentId.sfaId;
                                                                 player.profilePic = found.studentId.photograph;
-                                                                profile.player.push(player);
+                                                                profile.players.push(player);
                                                                 stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints + "-" + singleData.resultHockey.teams[0].teamResults.finalPoints;;
                                                                 if (singleData.resultHockey.winner.player === n.team) {
                                                                     stats.isAthleteWinner = true;
@@ -3974,7 +3974,7 @@ var model = {
                                                         player.school = school;
                                                         player.sfaId = found.studentId.sfaId;
                                                         player.profilePic = found.studentId.photograph;
-                                                        profile.player.push(player);
+                                                        profile.players.push(player);
                                                         stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;
                                                         stats.isAthleteWinner = true;
                                                         profile.match.push(stats);
@@ -3995,7 +3995,7 @@ var model = {
                                                                 player.school = school;
                                                                 player.sfaId = found.studentId.sfaId;
                                                                 player.profilePic = found.studentId.photograph;
-                                                                profile.player.push(player);
+                                                                profile.players.push(player);
                                                                 stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;;
                                                                 if (singleData.resultWaterPolo.winner.player === n.team) {
                                                                     stats.isAthleteWinner = true;
@@ -4036,7 +4036,7 @@ var model = {
                                                         player.school = school;
                                                         player.sfaId = found.studentId.sfaId;
                                                         player.profilePic = found.studentId.photograph;
-                                                        profile.player.push(player);
+                                                        profile.players.push(player);
                                                         stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints;
                                                         stats.isAthleteWinner = true;
                                                         profile.match.push(stats);
@@ -4067,7 +4067,7 @@ var model = {
                                                                     player.school = school;
                                                                     player.sfaId = found.studentId.sfaId;
                                                                     player.profilePic = found.studentId.photograph;
-                                                                    profile.player.push(player);
+                                                                    profile.players.push(player);
                                                                     stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints + "-" + singleData.resultKabaddi.teams[0].teamResults.finalPoints;;
                                                                     if (singleData.resultKabaddi.winner.player === n.team) {
                                                                         stats.isAthleteWinner = true;
@@ -4116,7 +4116,7 @@ var model = {
                                                         player.school = school;
                                                         player.sfaId = found.studentId.sfaId;
                                                         player.profilePic = found.studentId.photograph;
-                                                        profile.player.push(player);
+                                                        profile.players.push(player);
                                                         stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints;
                                                         stats.isAthleteWinner = true;
                                                         profile.match.push(stats);
@@ -4147,7 +4147,7 @@ var model = {
                                                                     player.school = school;
                                                                     player.sfaId = found.studentId.sfaId;
                                                                     player.profilePic = found.studentId.photograph;
-                                                                    profile.player.push(player);
+                                                                    profile.players.push(player);
                                                                     stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints + "-" + singleData.resultHandball.teams[0].teamResults.finalPoints;;
                                                                     if (singleData.resultHandball.winner.player === n) {
                                                                         stats.isAthleteWinner = true;
