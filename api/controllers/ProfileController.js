@@ -151,7 +151,7 @@ var controller = {
         if (req.body.choice == "top20") {
             Profile.getTop20School(req.body, res.callback);
         } else if (req.body.choice == "all") {
-            Profile.getTop20School(req.body, res.callback);
+            Profile.getAllRegisteredSchool(req.body, res.callback);
         } else {
             res.json({
                 "data": "Body not Found",

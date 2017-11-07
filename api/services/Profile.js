@@ -3962,8 +3962,6 @@ var model = {
                     });
                 },
                 function (rankschool, callback) {
-                    var final = [];
-                    var count = 1;
                     async.concatSeries(rankschool, function (n, callback) {
                             var profile = {};
                             Registration.findOne({
@@ -3971,9 +3969,9 @@ var model = {
                             }).lean().exec(function (err, found) {
                                 console.log("found", found);
                                 if (found.schoolLogo) {
-                                    profile.schoolLogo = "";
-                                } else {
                                     profile.schoolLogo = found.schoolLogo;
+                                } else {
+                                    profile.schoolLogo = "";
                                 }
                                 profile.status = found.status;
                                 profile.schoolName = n.name;
@@ -3991,6 +3989,41 @@ var model = {
                 callback(null, data2);
             });
     },
+
+    getAllRegisteredSchool: function (data, callback) {
+        async.waterfall([
+                function (callback) {
+                    Registration.find({
+                        status: "Verified"
+                    }).lean().exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else if (_.isEmpty(found)) {
+                            callback(null, []);
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (_.isEmpty(found)) {
+                        callback(null, found);
+                    } else {
+                        async.concatSeries(found, function (n, callback) {
+                                var profile = {};
+                                profile.name = n.schoolName;
+                                callback(null, profile);
+                            },
+                            function (err, profile) {
+                                callback(null, profile);
+                            });
+                    }
+                }
+            ],
+            function (err, data2) {
+                callback(null, data2);
+            });
+    }
 
 
 };
