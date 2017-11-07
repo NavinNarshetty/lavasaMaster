@@ -407,13 +407,26 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
             });
         },
 
-        getStatsForSchool: function (request, callback) {
+        getSchoolStats: function (request, callback) {
             $http({
-                url: adminUrl + 'studentstats/getSchoolStatByFilters',
+                url: adminUrl2 + 'profile/getSchoolStats',
                 method: 'POST',
                 withCredentials: true,
                 data: request
-            }).success(callback);
+            }).then(function (data) {
+                callback(data.data);
+            });
+        },
+
+        getDrawFormats: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'profile/getDrawFormats',
+                method: 'POST',
+                withCredentials: true,
+                data: request
+            }).then(function (data) {
+                callback(data.data);
+            });
         },
 
         getTeamStats: function (request, callback) {
