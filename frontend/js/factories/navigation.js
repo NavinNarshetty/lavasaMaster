@@ -1051,9 +1051,23 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 method: 'POST'
             }).then(callback);
         },
+        getAllAgeGroupsByEvent: function (req, callback) {
+            $http({
+                url: adminUrl2 + 'AgeGroup/getperSportslist',
+                data: req,
+                method: 'POST'
+            }).then(callback);
+        },
         getAllWeights: function (callback) {
             $http({
                 url: adminUrl2 + 'Weight/getAll',
+                method: 'POST'
+            }).then(callback);
+        },
+        getAllWeightsByEvent: function (req, callback) {
+            $http({
+                url: adminUrl2 + 'Weight/getWeightPerSportslist',
+                data: req,
                 method: 'POST'
             }).then(callback);
         },

@@ -11,7 +11,7 @@
                             </p>
                             <p>Draws and Schedules will be published on 8th November 2017.</p>
                         </div>
-                        <div class="championshipdraw-card hide">
+                        <div class="championshipdraw-card">
                             <form name=championshipDrawsForm class="championshipdraw-card-form">
                                 <!-- SPORT -->
                                 <div class="form-group">
@@ -40,8 +40,9 @@
                                     </div>
 
                                     <div class="display-inline championshipdraw-card-dropdown">
-                                        <ui-select name="eventBySport" ng-model="formData.sportslist" theme="bootstrap" ng-change="sportName($select.selected.name)"
+                                        <ui-select name="eventBySport" ng-model="formData.sportslist" theme="bootstrap" ng-change="sportName($select.selected.name);getAgeOrWeightsByEvent($select.selected)"
                                             required>
+
                                             <ui-select-match placeholder="Select Event">{{$select.selected.name}}</ui-select-match>
                                             <ui-select-choices repeat="sport._id as sport in getAllBySport | filter: $select.search">
                                                 <div>
@@ -74,17 +75,17 @@
                                 </div>
                                 <!-- GENDER END -->
                                 <!-- AGE GROUP -->
-                                <div class="form-group">
+                                <div class="form-group" ng-if="ageGroups.length>0">
                                     <div class="display-inline championshipdraw-card-lable">
                                         <label for="">Age Group</label>
                                     </div>
 
                                     <div class="display-inline championshipdraw-card-dropdown">
                                         <ui-select name="agegroup" ng-model="formData.ageGroup" theme="bootstrap" required>
-                                            <ui-select-match placeholder="Select Age Group">{{$select.selected.name}}</ui-select-match>
-                                            <ui-select-choices repeat="age._id  as age in ageGroups | filter: $select.search">
+                                            <ui-select-match placeholder="Select Age Group">{{$select.selected.ageGroupName}}</ui-select-match>
+                                            <ui-select-choices repeat="age.ageGroupId  as age in ageGroups | filter: $select.search">
                                                 <div>
-                                                    <p>{{age.name}}</p>
+                                                    <p>{{age.ageGroupName}}</p>
 
                                                 </div>
 
@@ -96,16 +97,16 @@
                                 </div>
                                 <!-- AGE GROUP END -->
                                 <!-- EVENT -->
-                                <div class="form-group" ng-if="showWeight">
+                                <div class="form-group" ng-if="showWeight && allWeights.length>0">
                                     <div class="display-inline championshipdraw-card-lable">
                                         <label for="">Weight</label>
                                     </div>
                                     <div class="display-inline championshipdraw-card-dropdown">
                                         <ui-select name="weight" ng-model="formData.weight" theme="bootstrap" required>
-                                            <ui-select-match placeholder="Select Weight">{{$select.selected.name}}</ui-select-match>
-                                            <ui-select-choices repeat="weight._id as weight in allWeights | filter: $select.search">
+                                            <ui-select-match placeholder="Select Weight">{{$select.selected.weightName}}</ui-select-match>
+                                            <ui-select-choices repeat="weight.weightId as weight in allWeights | filter: $select.search">
                                                 <div>
-                                                    <p>{{weight.name}}</p>
+                                                    <p>{{weight.weightName}}</p>
                                                 </div>
                                             </ui-select-choices>
                                         </ui-select>
@@ -244,9 +245,9 @@
                                                         <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
                                                             <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
                                                             <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
-                                                            <span>-</span> {{schedule.date2}}
-                                                            <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                            <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
+                                                            <span>-</span>                                                        {{schedule.date2}}
+                                                        <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                        {{schedule.month}}
                                                         </span>
                                                         <span ng-if="schedule.date">{{schedule.date}}
                                                             <sup>th</sup> {{schedule.month}} </span>
@@ -280,9 +281,9 @@
                                                         <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
                                                             <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
                                                             <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
-                                                            <span>-</span> {{schedule.date2}}
-                                                            <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                            <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
+                                                            <span>-</span>                                                        {{schedule.date2}}
+                                                        <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                        {{schedule.month}}
                                                         </span>
                                                         <span ng-if="schedule.date">{{schedule.date}}
                                                             <sup>th</sup> {{schedule.month}} </span>

@@ -505,28 +505,47 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
             }
         });
     });
-    NavigationService.getAllAgeGroups(function (data) {
-        errorService.errorCode(data, function (allData) {
-            if (!allData.message) {
-                if (allData.value) {
-                    $scope.ageGroups = allData.data;
+    $scope.getAllAgeGroupsByEvent = function (sportlist) {
+        NavigationService.getAllAgeGroupsByEvent(sportlist, function (data) {
+            errorService.errorCode(data, function (allData) {
+                if (!allData.message) {
+                    if (allData.value) {
+
+                        $scope.ageGroups = allData.data;
+                        _.each($scope.ageGroups, function (n) {
+                            n.ageGroupId = n.ageGroup._id;
+                            n.ageGroupName = n.ageGroup.name;
+                        })
+                        console.log($scope.ageGroups, "allData");
+                    }
+                } else {
+                    toastr.error(allData.message, 'Error Message');
                 }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
+            });
         });
-    });
-    NavigationService.getAllWeights(function (data) {
-        errorService.errorCode(data, function (allData) {
-            if (!allData.message) {
-                if (allData.value) {
-                    $scope.allWeights = allData.data;
+    };
+
+    $scope.getAllWeightsByEvent = function (sportlist) {
+        NavigationService.getAllWeightsByEvent(sportlist, function (data) {
+            errorService.errorCode(data, function (allData) {
+                if (!allData.message) {
+                    if (allData.value) {
+                        console.log("WEight", allData);
+                        $scope.allWeights = allData.data;
+                        if ($scope.allWeights.length > 0) {
+                            _.each($scope.allWeights, function (n) {
+                                n.weightId = n.weight._id;
+                                n.weightName = n.weight.name;
+                            });
+                        }
+
+                    }
+                } else {
+                    toastr.error(allData.message, 'Error Message');
                 }
-            } else {
-                toastr.error(allData.message, 'Error Message');
-            }
+            });
         });
-    });
+    }
     $scope.nameOfSport = {};
     $scope.requestObj = {};
     $scope.sportName = function (sportName, sportId) {
@@ -555,6 +574,16 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
         });
 
     };
+    //get weight and age by Event
+    $scope.getAgeOrWeightsByEvent = function (sportlistId) {
+        console.log("sportlistId", sportlistId);
+        $scope.constraintsObj = {};
+        $scope.constraintsObj.sportslist = sportlistId._id;
+        $scope.getAllWeightsByEvent($scope.constraintsObj);
+        $scope.getAllAgeGroupsByEvent($scope.constraintsObj);
+
+
+    }
     //view Draw Schedule 
     $scope.viewDraw = function (formData) {
         console.log("$scope.viewDraw", $scope.nameOfSport);
