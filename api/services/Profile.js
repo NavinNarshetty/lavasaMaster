@@ -1292,7 +1292,13 @@ var model = {
                                                 callback(null, match);
                                             });
                                         } else if (singleData.resultQualifyingRound) {
-                                            stats.score = singleData.resultQualifyingRound.player.bestAttempt;
+                                            if (singleData.resultQualifyingRound.player.bestAttempt) {
+                                                stats.score = singleData.resultQualifyingRound.player.bestAttempt;
+                                            } else if (singleData.resultQualifyingRound.player.finalScore) {
+                                                stats.score = singleData.resultQualifyingRound.player.finalScore;
+                                            } else {
+                                                stats.score = singleData.resultQualifyingRound.player.attempt;
+                                            }
                                             stats.result = singleData.resultQualifyingRound.player.result;
                                             match.push(stats);
                                             callback(null, match);
@@ -3243,6 +3249,8 @@ var model = {
                                                     profile.match.push(stats);
                                                     if (singleData.resultQualifyingRound.player.bestAttempt) {
                                                         stats.score = singleData.resultQualifyingRound.player.bestAttempt;
+                                                    } else if (singleData.resultQualifyingRound.player.finalScore) {
+                                                        stats.score = singleData.resultQualifyingRound.player.finalScore;
                                                     } else {
                                                         stats.score = singleData.resultQualifyingRound.player.attempt;
                                                     }
@@ -3337,6 +3345,8 @@ var model = {
                                                     callback(null, profile.match);
                                                 });
                                             } else if (singleData.resultShooting) {
+                                                stats.score = singleData.resultShooting.finalScore;
+                                                stats.result = singleData.resultShooting.result;
                                                 Athelete.findOne({
                                                     _id: singleData.opponentsSingle.athleteId
                                                 }).lean().deepPopulate("school").exec(function (err, found) {
@@ -3356,11 +3366,10 @@ var model = {
                                                     player.sfaId = found.sfaId;
                                                     player.profilePic = found.photograph;
                                                     profile.players.push(player);
-                                                    stats.score = singleData.resultShooting.finalScore;
-                                                    stats.result = singleData.resultShooting.result;
-                                                    profile.match.push(stats);
-                                                    callback(null, profile);
                                                 });
+                                                profile.match.push(stats);
+                                                callback(null, profile);
+
                                             } else {
                                                 callback(null, profile);
                                             }
