@@ -10,9 +10,15 @@
                             <p hidden>To view Draws & Schedules of your match kindly select the relevent categories to get results.
                             </p>
                             <p ng-if="sfaCity == 'Mumbai'">Draws and Schedules publishing date will be announced soon.</p>
-                            <p ng-if="sfaCity == 'Hyderabad'">Draws and Schedules will be published on 8th November 2017.</p>
+                            <a ng-if="sfaCity == 'Hyderabad'" ng-click="downloadPdf('badminton')">
+                                <p>Click here to download Badminton Draws & Schedule.</p>
+                            </a>
+                            <a ng-if="sfaCity == 'Hyderabad'" ng-click="downloadPdf('kabaddi')">
+                                <p>Click here to download Kabaddi Draws & Schedule.</p>
+                            </a>
+                            <p ng-if="sfaCity == 'Hyderabad'">Draws & Schedule for other sports will be available shortly.</p>
                         </div>
-                        <div class="championshipdraw-card">
+                        <div class="championshipdraw-card hide">
                             <form name=championshipDrawsForm class="championshipdraw-card-form">
                                 <!-- SPORT -->
                                 <div class="form-group">

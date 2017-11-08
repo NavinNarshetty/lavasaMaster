@@ -493,6 +493,16 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
     // }];
     $scope.formData = {};
 
+    $scope.downloadPdf = function (data) {
+        console.log(data);
+        if (data == 'badminton') {
+            window.open("img/pdf/badminton.pdf", "_blank");
+            window.open("img/pdf/badminton1.pdf", "_blank");
+            window.open("img/pdf/badminton2.pdf", "_blank");
+        } else {
+            window.open("img/pdf/kabaddi.pdf", "_blank");
+        }
+    };
 
     NavigationService.getAllSpotsList(function (data) {
         errorService.errorCode(data, function (allData) {
