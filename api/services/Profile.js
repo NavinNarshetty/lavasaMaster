@@ -55,7 +55,11 @@ var model = {
             // Stage 5
             {
                 $match: {
-                    "athleteId.school.name": data.schoolName
+                    $or: [{
+                        "athleteId.school.name": data.schoolName
+                    }, {
+                        "athleteId.atheleteSchoolName": data.schoolName
+                    }]
                 }
             },
 
@@ -85,7 +89,7 @@ var model = {
             // Stage 1
             {
                 $match: {
-                    schoolName: data.school
+                    schoolName: data.schoolName
                 }
             },
 
@@ -2857,6 +2861,7 @@ var model = {
         profile.match = [];
         profile.players = [];
         async.each(data.sportsListSubCategory, function (sportName, callback) {
+            console.log("data", data);
             async.waterfall([
                     function (callback) {
                         SportsListSubCategory.findOne({
@@ -2979,6 +2984,7 @@ var model = {
                                 }
                             );
                             Match.aggregate(newPipeLine, function (err, matchData) {
+                                console.log("matchData", matchData);
                                 if (err) {
                                     callback(err, "error in mongoose");
                                 } else {
@@ -2995,6 +3001,7 @@ var model = {
                                             stats.video = singleData.video;
                                             stats.videoType = singleData.videoType;
                                             var player = {};
+                                            console.log("singleData", singleData);
                                             if (singleData.resultsCombat) {
                                                 var i = 0;
                                                 if (singleData.resultsCombat.players.length == 1) {
@@ -3345,6 +3352,7 @@ var model = {
                                                     callback(null, profile.match);
                                                 });
                                             } else if (singleData.resultShooting) {
+                                                console.log("inside resultShooting");
                                                 stats.score = singleData.resultShooting.finalScore;
                                                 stats.result = singleData.resultShooting.result;
                                                 Athelete.findOne({
