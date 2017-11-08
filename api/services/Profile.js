@@ -2945,7 +2945,11 @@ var model = {
                                     // Stage 12
                                     {
                                         $match: {
-                                            "opponentsSingle.athleteId.school.name": data.schoolName
+                                            $or: [{
+                                                "opponentsSingle.athleteId.school.name": data.schoolName
+                                            }, {
+                                                "opponentsSingle.athleteId.atheleteSchoolName": data.schoolName
+                                            }]
                                         }
                                     },
 
@@ -2984,7 +2988,7 @@ var model = {
                                     }
                                 );
                                 Match.aggregate(newPipeLine, function (err, matchData) {
-                                    // console.log("matchData", matchData);
+                                    console.log("matchData", matchData);
                                     if (err) {
                                         callback(err, "error in mongoose");
                                     } else {
@@ -3256,6 +3260,7 @@ var model = {
                                                         callback(null, profile.match);
                                                     });
                                                 } else if (singleData.resultSwiss) {
+                                                    console.log("singleData", singleData.resultSwiss);
                                                     var result;
                                                     var name;
                                                     var school;
