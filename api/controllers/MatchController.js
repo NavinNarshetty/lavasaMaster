@@ -799,6 +799,17 @@ var controller = {
         }
     },
 
+    updateFencing: function (req, res) {
+        if (req.body) {
+            Match.updateFencing(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
     updateBackend: function (req, res) {
         if (req.body) {
             Match.updateBackend(req.body, res.callback);
