@@ -434,6 +434,29 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             console.log('STATS AND PLAYERS:', response);
             if (response.value) {
                 $scope.schoolStats = response.data;
+                _.each($scope.schoolStats.match, function (n) {
+
+                    console.log(n.score);
+                    if (n.sportslist == 'High jump' || n.sportslist == 'high jump' || n.sportslist == 'high jump' || n.sportslist == 'High Jump') {
+                        if (n.score.length === undefined) {
+                            n.score = n.score;
+                        } else {
+                            var count = 0;
+                            _.each(n.score, function (m) {
+                                if (m !== '') {
+                                    count++;
+                                }
+                                if (count === 0) {
+                                    n.score = '-';
+                                } else {
+                                    n.score = count;
+                                }
+                            });
+                        }
+                    } else {
+                        n.score = n.score;
+                    }
+                });
             } else {
                 $scope.schoolStats = [];
             }
