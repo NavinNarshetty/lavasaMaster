@@ -72,6 +72,15 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 callback(data)
             });
         },
+        saveFencing: function (formData, callback) {
+            $http({
+                url: adminurl + "match/updateFencing",
+                method: "POST",
+                data: formData
+            }).success(function (data) {
+                callback(data)
+            });
+        },
         getAllSportsList: function (callback) {
             $http({
                 url: adminurl + 'SportsList/getAll',

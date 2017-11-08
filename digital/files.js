@@ -79,4 +79,5 @@ module.exports = [
   'digital/js/controllers/heats-Controller.js',
   'digital/js/controllers/scoringimages-controller.js',
   'digital/js/controllers/scorequalifying-controller.js',
+  'digital/js/controllers/scoreleague-controller.js',
 ];
