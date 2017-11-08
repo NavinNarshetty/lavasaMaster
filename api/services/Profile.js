@@ -3241,7 +3241,11 @@ var model = {
                                                     player.profilePic = found.photograph;
                                                     profile.players.push(player);
                                                     profile.match.push(stats);
-                                                    stats.score = singleData.resultQualifyingRound.player.bestAttempt;
+                                                    if (singleData.resultQualifyingRound.player.bestAttempt) {
+                                                        stats.score = singleData.resultQualifyingRound.player.bestAttempt;
+                                                    } else {
+                                                        stats.score = singleData.resultQualifyingRound.player.attempt;
+                                                    }
                                                     stats.result = singleData.resultQualifyingRound.player.result;
                                                     profile.match.push(stats);
                                                     callback(null, profile.match);
