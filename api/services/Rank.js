@@ -66,7 +66,7 @@ var model = {
     getSchoolByRanks: function (callback) {
         Rank.find().sort(Rank.sortingOrder).lean().exec(function (err, data) {
 
-            var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis', 'Athletics','Swimming']
+            var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis', 'Athletics', 'Swimming']
             var sportsFound = [];
             var arr = [];
 
@@ -270,40 +270,87 @@ var model = {
             $match: {
                 "sports.name": data.name
             }
-        }];
-
-        var demo=[{
-            $lookup: {
-                "from": "awards",
-                "localField": "award",
-                "foreignField": "_id",
-                "as": "award"
+        },{
+            $project: {
+                "award": 1,
+                "gender": 1,
+                "athlete":1
             }
         }];
 
 
-        var sendObj={
-            table:[],
-            risingAthletes:[]
+        var sendObj = {
+            table: [],
+            risingAthletes: []
         }
 
-        Rank.aggregate(sportRankipeline, function (err, result) {
-            if (err) {
-                callback(err, null);
-            } else {
-                sendObj.table=result;
-                SpecialAwardDetails.aggregate(risingAwardPipeline,function(err,risingAwards){
-                    sendObj.risingAthletes=risingAwards;
-                    console.log("risingAwards",risingAwards);
-                    if(err){
-                        callback(err,null);
-                    }else{
-                        result.risingAthletes=risingAwards;
-                        callback(null, sendObj);                
+        // Rank.aggregate(sportRankipeline, function (err, result) {
+        //     if (err) {
+        //         callback(err, null);
+        //     } else {
+        //         sendObj.table = result;
+        //         SpecialAwardDetails.aggregate(risingAwardPipeline, function (err, risingAwards) {
+        //             sendObj.risingAthletes = risingAwards;
+        //             console.log("risingAwards", risingAwards);
+        //             if (err) {
+        //                 callback(err, null);
+        //             } else {
+        //                 result.risingAthletes = risingAwards;
+        //                 callback(null, sendObj);
+        //             }
+        //         })
+        //     }
+        // })
+
+        async.waterfall([
+            function (callback) {
+                Rank.aggregate(sportRankipeline, function (err, result) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        var sendObj = {};
+                        sendObj.table = result;
+                        callback(null, sendObj);
+                    }
+                });
+            },
+            function(sendObj,callback){
+                SpecialAwardDetails.aggregate(risingAwardPipeline, function (err, risingAwards) {
+                    sendObj.risingAthletes = risingAwards;
+                    console.log("risingAwards", risingAwards);
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        sendObj.risingAthletes = risingAwards;
+                        callback(null, sendObj);
                     }
                 })
+            },
+            function(sendObj,callback){
+                async.concatSeries(sendObj.risingAthletes,function(singleData,callback){
+                    var matchObj={
+                        "athleteId":singleData.athlete
+                    }
+                    Profile.getAthleteProfile(matchObj,function(err,profile){
+                        if(err){
+                            callback(null,"");
+                        }else{
+                            singleData.medalData=_.groupBy(profile.medalData,'name'); 
+                            singleData.sportsPlayed=_.map(profile.sport,'sportslist.sportsListSubCategory.name');
+                            singleData.athleteProfile=profile.athlete;
+                            callback(null,singleData);
+                        }
+                    })
+                },function(err,result){
+                    sendObj.risingAthletes=result;
+                    callback(null,sendObj);
+                })
             }
+
+        ], function (err, finalData) {
+            callback(null,finalData);
         })
+
     }
 };
 module.exports = _.assign(module.exports, exports, model);
