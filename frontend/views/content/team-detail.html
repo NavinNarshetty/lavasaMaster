@@ -120,13 +120,12 @@
                                         <th>
                                             <span>ROUND</span>
                                         </th>
-                                        <th ng-if="teamDetails.drawFormat.name == 'Knockout' || teamDetails.drawFormat.name == 'League' || teamDetails.drawFormat.name == 'League cum Knockout' || teamDetails.drawFormat.name == 'Qualifying Knockout'">
+                                        <th ng-if="teamDetails.drawFormat.name == 'Knockout' || teamDetails.drawFormat.name == 'League' || teamDetails.drawFormat.name == 'League cum Knockout'">
                                             <span>OPPONENT NAME</span>
                                         </th>
                                         <th>
                                             <span>{{teamDetails.drawFormat.name == 'Heats' ?(teamDetails.sportName == 'Athletics'
                                                 ? 'Timing/Distance/Height' : 'Timing') : 'Score'}}</span>
-
                                         </th>
                                         <th>
                                             <span>{{teamDetails.drawFormat.name == 'Heats' ? 'Result' : 'Match Video'}}</span>
@@ -154,7 +153,7 @@
                                                 cum Knockout' && stat.leagueknockout.leagueknockoutround == 'Final' ? stat.leagueknockout.round
                                                 : stat.leagueknockout.leagueknockoutround) || '-'}}</span> -->
                                         </td>
-                                        <td class="text-up">
+                                        <td class="text-up" ng-if="teamDetails.drawFormat.name == 'Knockout' || teamDetails.drawFormat.name == 'League' || teamDetails.drawFormat.name == 'League cum Knockout'">
                                             <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.isAthleteWinner == false">{{stat.opponentName || '-' | removeSchoolWithDash:stat.school}}
                                             <p>{{stat.school}}</p>
                                         </td>
@@ -175,7 +174,15 @@
                                         </td>
                                         <td>
                                             <div class="text-center display-inline ver-mid ">
-                                                <div class="sf-play">
+                                                <div class="sf-play" ng-if="teamDetails.drawFormat.name == 'Knockout' || teamDetails.drawFormat.name == 'League' || teamDetails.drawFormat.name == 'League cum Knockout'">
+                                                    <span ng-if="stat.isAthleteWinner == true && !stat.reason">Won</span>
+                                                    <span ng-if="stat.isAthleteWinner == false">Loss</span>
+                                                    <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && !stat.reason">-</span>
+                                                    <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && stat.reason">{{stat.reason}}</span>
+                                                    <span ng-if="stat.isAthleteWinner == true && stat.reason">{{stat.reason}}</span>
+                                                    <span ng-if="stat.isAthleteWinner == true && !stat.reason && !stat.opponentName">Bye</span>
+                                                </div>
+                                                <div class="sf-play" ng-if="teamDetails.drawFormat.name !== 'Knockout' &&teamDetails.drawFormat.name !== 'League' && teamDetails.drawFormat.name !== 'League cum Knockout'">
                                                     <span ng-if="stat.isAthleteWinner == true">Won</span>
                                                     <span ng-if="stat.isAthleteWinner == false">Loss</span>
                                                     <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true">-</span>

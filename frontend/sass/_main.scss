@@ -401,6 +401,10 @@ a {
     font-weight: 700;
 }
 
+.mt5 {
+    margin-top: 5px;
+}
+
 .mt15 {
     margin-top: 15px;
 }
@@ -1075,6 +1079,10 @@ hr {
 .table-img {
     vertical-align: baseline;
     margin-right: 5px;
+}
+
+.ver-top {
+    vertical-align: top;
 }
 
 .ver-mid {
@@ -7681,7 +7689,7 @@ h1.forgot-space {
         border: none;
         text-transform: uppercase;
         font-size: 11px;
-        padding: 3px 18px 0 0;
+        padding: 3px 8px 0 0;
         width: 100%;
         background-color: transparent;
         outline: 0;
@@ -7697,7 +7705,7 @@ h1.forgot-space {
         color: #091a71;
         position: absolute;
         top: -5px;
-        left: 82%;
+        right: 0px;
         text-align: center;
         line-height: 22px;
         font-size: 22px;
@@ -7908,3 +7916,20 @@ h1.forgot-space {
 }
 
 // HEADER CSS END
+// FOOTER CSS
+.footer-champ-header {
+    border-bottom: 1px solid #fff;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 400;
+}
+
+.footer-header-color {
+    color: #27b465;
+}
+
+.footer-logos {
+    -webkit-padding-start: 0px;
+}
+
+// FOOTER CSS END

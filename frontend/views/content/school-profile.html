@@ -137,7 +137,7 @@
                             </ul>
                         </div>
                         <div class="btn-common m40-main">
-                            <button type="button" name="button" class="text-up btn-orange padd-btn" ui-sref="school-bio({id:callObject._id})">school bio</button>
+                            <!-- <button type="button" name="button" class="text-up btn-orange padd-btn" ui-sref="school-bio({id:callObject._id})">school bio</button> -->
                             <button ng-if="getSchoolProfile.isSpecialAward" type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-click="getSpecialAward(schoolData.school)">Special Award</button>
                         </div>
                     </div>
@@ -187,10 +187,10 @@
                     <flex-slider class="carousel" flex-slide="sportDetails in schoolSports | orderBy:'name' track by $index" animation="slide"
                         item-width="140" item-margin="60">
                         <li>
-                            <a>
+                            <a ng-click="selectSport(sportDetails)">
                                 <div class="sports-participate text-center">
                                     <!-- sportDetails.image  | serverimage2 -->
-                                    <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails._id)">
+                                    <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width">
                                     <span class="color-base text-up f16 mt10 equalSpacing">{{sportDetails.name}}</span>
                                     <div class="combine mt10">
                                         <div class="boy-sec display-inline color-base icon-right">
@@ -211,8 +211,8 @@
             </div>
         </div>
         <hr>
-        <!-- <div class="row mt40" ng-if="!filterStatistics.sport"> -->
-        <div class="row mt40">
+        <div class="row mt40" ng-if="!statsDetail">
+            <!-- <div class="row mt40"> -->
             <div class="col-md-12">
                 <div class=" text-center">
                     <h3 class="font-semi color-blue margin0">CONTINGENT STRENGTH {{eventYear}}</h3>
@@ -253,7 +253,7 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <div class="row" ng-if="!statsDetail">
             <div class="col-md-3 mt15" ng-repeat="data in athletes track by $index">
                 <a href="">
                     <div class="school-sec" ui-sref="student-profile({id:data._id})">
@@ -278,7 +278,7 @@
             </div>
         </div>
         <!-- </ui> -->
-        <div class="row">
+        <div class="row" ng-if="!statsDetail">
             <div class="col-md-12">
                 <div class="float-right sf-list">
                     <nav aria-label="Page navigation" ng-if="totalCount > 1">
@@ -290,7 +290,7 @@
         </div>
     </div>
     <!-- when user select any sports -->
-    <section ng-if="filterStatistics.sport">
+    <section ng-if="statsDetail">
         <div class="container">
             <div class="row">
                 <div class="col-md-12">
@@ -349,12 +349,12 @@
                                 </div>
                             </div>
                             <div class="row mt25">
-                                <div class="col-md-3 mt15" ng-repeat="data in students.student" ng-if="students.student.length > 0">
+                                <div class="col-md-3 mt15" ng-repeat="data in schoolStats.players" ng-if="schoolStats.players.length > 0">
                                     <a ui-sref="student-profile({id:data._id})">
                                         <div class="school-sec">
                                             <img ng-src="img/sf-cl.png" alt="" class="mt-min-18" ng-if="data.isCl">
                                             <div class="stu-img text-center sf-relative specialSetting">
-                                                <img ng-src="{{data.profilePic | uploadpath}}" alt="">
+                                                <img ng-src="{{data.profilePic | serverimage2}}" alt="">
                                                 <!-- <div class="sigh-pro sf-absulate">
                                                     <img src="img/sf-right.png" alt="">
                                                 </div> -->
@@ -363,75 +363,16 @@
                                                 <h4 class="color-orange text-up font-semi">{{data.name | shorten:20}}</h4>
                                             </div>
                                             <div class="stu-id text-center">
-                                                <h4 class="color-blue">SFA ID: {{data.sfaid}}</h4>
+                                                <h4 class="color-blue">SFA ID: {{data.sfaId}}</h4>
                                             </div>
                                         </div>
                                     </a>
                                 </div>
-                                <div class="text-center" ng-if="!(students.student.length > 0)">
-                                    <h5>{{students.student === undefined && 'Loading ..' || 'No Students Found.'}}</h5>
+                                <div class="text-center" ng-if="!(schoolStats.players.length > 0)">
+                                    <h5>{{schoolStats.players === undefined && 'Loading ..' || 'No Students Found.'}}</h5>
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="match-video" ng-show="tab=='match'">
-                            <div class="row">
-                                <div class="col-md-offset-2 col-md-3 col-sm-4 col-xs-12 text-c-m">
-                                    <h4 class="text-up color-blue display-inline">Year</h4>
-                                    <div class="display-inline">
-                                        <div class="sfa-select">
-                                            <select class="select">
-                                                <option value="">All</option>
-                                                <option value="2015">{{year15}}</option>
-                                                <option value="2016">{{year16}}</option>
-                                            </select>
-                                            <span class="only-border"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
-                                    <h4 class="text-up color-blue display-inline">gender</h4>
-                                    <div class="display-inline">
-                                        <div class="sfa-select">
-                                            <select class="select">
-                                                <option value=""></option>
-                                                <option value="Boys">Boys</option>
-                                                <option value="Girls">Girls</option>
-
-                                            </select>
-                                            <span class="only-border"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
-                                    <h4 class="text-up color-blue display-inline">age group</h4>
-                                    <div class="display-inline">
-                                        <div class="sfa-select">
-                                            <select class="select">
-                                                <option value=""></option>
-                                                <option value="U-16">U-16</option>
-                                                <option value="U-19">U-19</option>
-                                                <option value="U-21">U-21</option>
-                                            </select>
-                                            <span class="only-border"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mt25">
-                                <div class="col-md-3 mt25" ng-repeat="data in video track by $index">
-                                    <a class="various fancybox.iframe" rel="gallery1" fancybox href="https://www.youtube.com/embed/pIPashZ8S2Q?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1">
-                                        <div class="videow-box">
-                                            <div class="video-img">
-                                                <img ng-src="{{data.icon}}" alt="" class="img-responsive width100">
-                                            </div>
-                                            <div class="video-name">
-                                                <h5 class="text-up color-blue font-semi">{{data.name}}</h5>
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div> -->
                         <div class="statistics " ng-show="tab=='statistics'">
                             <div class="row">
                                 <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
@@ -480,7 +421,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="row mt25 main-over" ng-if="filterStatistics.sport">
+                            <div class="row mt25 main-over" ng-if="statsDetail">
                                 <div class="col-md-12 mt25">
                                     <div class="table-statistics w700">
                                         <table class="table">
@@ -495,7 +436,7 @@
                                                     <th>
                                                         <span>ROUND</span>
                                                     </th>
-                                                    <th ng-if="table.layout == 'Knockout' || table.layout == 'Swiss League' || table.layout == 'League' || table.layout == 'League cum Knockout' || table.layout == 'Qualifying Knockout'">
+                                                    <th ng-if="table.layout == 'Knockout' || table.layout == 'Swiss League' || table.layout == 'League' || table.layout == 'League cum Knockout'">
                                                         <span>OPPONENT NAME</span>
                                                     </th>
                                                     <th ng-if="table.layout != 'Swiss League'">
@@ -512,46 +453,34 @@
                                                 <!-- DO NOT DELETE -->
                                                 <!-- <tr  ng-repeat="stat in schoolStats"> -->
                                                 <!-- DO NOT DELETE -->
-                                                <tr class="other-bg" ng-repeat="stat in schoolStats">
+                                                <tr class="other-bg" ng-repeat="stat in schoolStats.match">
                                                     <td>
                                                         <span>{{stat.year}}</span>
                                                     </td>
                                                     <td>
-                                                        <span class="text-up">{{stat.sport.agegroup.name}}
-                                                            <br> {{stat.sport.gender}}
-                                                            <br> {{stat.sport.firstcategory.name}}</span>
+                                                        <span class="text-up">{{stat.ageGroup}}
+                                                            <br> {{stat.gender}}
+                                                            <br> {{stat.sportslist}}</span>
                                                     </td>
                                                     <!--<td><span class="text-up" ng-if="table.layout == 'Knockout'">{{stat.knockout.round}}</span></td>-->
-                                                    <td class="text-up">{{(table.layout == 'Qualifying Knockout' && stat.qualifyingknockout.round)
-                                                        || (table.layout == 'Qualifying Round' && stat.qualifyinground.round)
-                                                        || (table.layout == 'Knockout' && stat.knockout.round) || (table.layout
-                                                        == 'Swiss League' && stat.swissleague.round) || (table.layout ==
-                                                        'Heats' && stat.heat.round) || (table.layout == 'League' && stat.league.round)
-                                                        || (table.layout == 'League cum Knockout' && stat.leagueknockout.leagueknockoutround
-                                                        == 'Final' ? stat.leagueknockout.round : stat.leagueknockout.leagueknockoutround)
-                                                        || '-'}}</td>
+                                                    <td class="text-up" ng-if="(table.layout=='Qualifying Knockout') || (table.layout=='Qualifying Round') || (table.layout=='Knockout') || (table.layout=='Swiss League') || (table.layout=='Heats') || (table.layout=='Leagues') || (table.layout=='League cum Knockout')">
+                                                        {{stat.round || '-'}}</td>
                                                     <!-- <td class="text-up" ng-if="table.layout == 'Knockout'"><img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.self.result == 'Won' || stat.self.result == 'Bye' || stat.self.result == 'Walkover'">{{stat.student.name}}</td> -->
-                                                    <td class="text-up" ng-if="table.layout == 'Knockout' || table.layout == 'Swiss League' || table.layout == 'League' || table.layout == 'League cum Knockout' || table.layout == 'Qualifying Knockout'">
-                                                        <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.opponent.result == 'Won' || stat.opponent.result == 'Bye' || stat.opponent.result == 'Walkover'">{{stat.opponent.detail.name || '-' | removeSchool:stat.opponent.detail.school.name
+                                                    <td class="text-up" ng-if="table.layout == 'Knockout' || table.layout == 'Swiss League' || table.layout == 'Leagues' || table.layout == 'League cum Knockout'">
+                                                        <!-- <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.opponent.result == 'Won' || stat.opponent.result == 'Bye' || stat.opponent.result == 'Walkover'">{{stat.opponentName.detail.name || '-' | removeSchool:stat.opponent.detail.school.name
                                                         }}
-                                                        <p>{{stat.opponent.detail.school.name}}</p>
+                                                        <p>{{stat.opponent.detail.school.name}}</p> -->
+                                                        <img src="img/sf-cup-mini.png" alt="" class="table-img" ng-if="stat.isAthleteWinner == false">{{stat.opponentName || '-' | removeSchoolWithDash:stat.school}}
+                                                        <p>{{stat.school}}</p>
                                                     </td>
                                                     <td ng-if="table.layout != 'Swiss League'">
-                                                        <!-- score -->
-                                                        <div ng-if="table.layout == 'Knockout'">{{stat.knockout.score || '-'}}</div>
-                                                        <div ng-if="table.layout == 'League'">{{stat.league.score || '-'}}</div>
-                                                        <div ng-if="table.layout == 'League cum Knockout'">{{stat.leagueknockout.score || '-'}}</div>
-                                                        <div ng-if="table.layout == 'Heats'">{{stat.self.timing || '-'}}</div>
-                                                        <div ng-if="table.layout == 'Qualifying Knockout'">{{stat.qualifyingknockout.heats.length == 0 ? stat.qualifyingknockout.score
-                                                            : stat.self.score || '-'}} </div>
-
-                                                        <div ng-if="stat.qualifyinground.score">{{stat.qualifyinground.score}}</div>
+                                                        <div>{{stat.score || '-'}}</div>
                                                     </td>
                                                     <td class="sf-relative">
                                                         <div class="text-center display-inline ver-mid main-pos sf-absulate">
                                                             <div class="sf-play">
-                                                                <!-- (table.layout == 'Qualifying Knockout'&& (stat.qualifyingknockout.heats.length == 0 ? stat.self.result : ((stat.self.position || ordinal) ?(stat.self.result?(stat.self.position || ordinal)+' / '+stat.self.result:(stat.self.position || ordinal)):stat.self.result))) -->
-                                                                <span>{{(table.layout == 'Qualifying Knockout'&& (stat.qualifyingknockout.heats.length
+                                                                {{stat.result || '-'}}
+                                                                <!-- <span>{{(table.layout == 'Qualifying Knockout'&& (stat.qualifyingknockout.heats.length
                                                                     == 0 ? stat.self.result : ((stat.self.position || ordinal)+'
                                                                     / '+stat.self.result))) || (table.layout == 'Knockout'&&
                                                                     stat.self.result) || (table.layout == 'Swiss League'&&
@@ -561,14 +490,27 @@
                                                                     ordinal)):stat.self.result)) || (table.layout == 'League'
                                                                     && stat.self.result) || (table.layout == 'League cum
                                                                     Knockout' && stat.self.result) || (table.layout == "Qualifying
-                                                                    Round" && stat.qualifyinground.result) || ""}}</span>
+                                                                    Round" && stat.qualifyinground.result) || ""}}</span> -->
                                                             </div>
-                                                            <div class="replay-img " ng-if="stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyingknockout.video">
-                                                                <!-- <a class="various fancybox.iframe" ng-if="stat.knockout.video != 'YTU' && stat.heat.video != 'YTU' && stat.league.video != 'YTU' && stat.leagueknockout.video != 'YTU' && stat.qualifyinground.video != 'YTU' && stat.qualifyingknockout.video != 'YTU' && stat.knockout.video != 'NA' && stat.heat.video != 'NA' && stat.league.video != 'NA' && stat.leagueknockout.video != 'NA' && stat.qualifyinground.video != 'NA' && stat.qualifyingknockout.video != 'NA'"
-                                                                    href="https://www.youtube.com/embed/{{stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyinground.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
+                                                            <div class="replay-img " ng-if="stat.video">
+                                                                <!-- <a ng-if="stat.video != 'YTU' && stat.video != 'NA'" class="various fancybox.iframe" href="https://www.youtube.com/embed/{{stat.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
+                                                                            rel="gallery1" fancybox>
+                                                                            <img src="img/sf-play.png" alt="">
+                                                                        </a> -->
+                                                                <a ng-if="stat.video != 'YTU' && stat.video != 'NA'" class="various fancybox.iframe" href="{{stat.video | linkvideo :stat.videoType}}"
                                                                     rel="gallery1" fancybox>
+
                                                                     <img src="img/sf-play.png" alt="">
-                                                                </a> -->
+                                                                </a>
+
+                                                                <a ng-if="stat.video == 'NA'" ng-click="videoNA()">
+                                                                    <img src="img/sf-play.png" alt="">
+                                                                </a>
+                                                                <a ng-if="stat.video == 'YTU'" ng-click="videoYTU()">
+                                                                    <img src="img/sf-play.png" alt="">
+                                                                </a>
+                                                            </div>
+                                                            <!-- <div class="replay-img " ng-if="stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyingknockout.video">
                                                                 <a class="various fancybox.iframe" ng-if="stat.year == '2015' && stat.knockout.video != 'YTU' && stat.heat.video != 'YTU' && stat.league.video != 'YTU' && stat.leagueknockout.video != 'YTU' && stat.qualifyinground.video != 'YTU' && stat.qualifyingknockout.video != 'YTU' && stat.knockout.video != 'NA' && stat.heat.video != 'NA' && stat.league.video != 'NA' && stat.leagueknockout.video != 'NA' && stat.qualifyinground.video != 'NA' && stat.qualifyingknockout.video != 'NA'"
                                                                     href="https://www.youtube.com/embed/{{stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyinground.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
                                                                     rel="gallery1" fancybox>
@@ -587,7 +529,7 @@
                                                                     ng-click="videoYTU()">
                                                                     <img src="img/sf-play.png" alt="">
                                                                 </a>
-                                                            </div>
+                                                            </div> -->
                                                         </div>
 
                                                         <!--  DO NOT DELETE -->
@@ -600,8 +542,8 @@
 
                                             </tbody>
                                         </table>
-                                        <div ng-if="!(schoolStats.length > 0) " class="text-center">
-                                            {{schoolStats == undefined && 'Loading ..' || teamDetails.layout && 'No'+table.layout+'found.' || 'No Data Found.'}}
+                                        <div ng-if="!(schoolStats.match.length > 0) " class="text-center">
+                                            {{schoolStats.match == undefined && 'Loading ..' || teamDetails.layout && 'No'+table.layout+'found.' || 'No Data Found.'}}
                                         </div>
                                     </div>
                                 </div>

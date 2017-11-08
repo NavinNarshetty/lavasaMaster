@@ -1,7 +1,8 @@
 myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $timeout, errorService, loginService, selectService, $rootScope, $uibModal, configService) {
     $scope.template = TemplateService.getHTML("content/draws-schedule/championship-schedule.html");
     TemplateService.title = "Draws & Schedules"; //This is the Title of the Website
-    TemplateService.header = "views/template/header1.html";
+    // TemplateService.header = "views/template/header1.html";
+    // TemplateService.footer = "views/template/footer1.html";
     $scope.navigation = NavigationService.getNavigation();
 
     $scope.sportList = ['football', 'Basketball', 'tennis', 'chess'];
@@ -492,6 +493,16 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
     // }];
     $scope.formData = {};
 
+    $scope.downloadPdf = function (data) {
+        console.log(data);
+        if (data == 'badminton') {
+            window.open("img/pdf/allbadminton.pdf", "_blank");
+            // window.open("img/pdf/badminton1.pdf", "_blank");
+            // window.open("img/pdf/badminton2.pdf", "_blank");
+        } else {
+            window.open("img/pdf/kabaddi.pdf", "_blank");
+        }
+    };
 
     NavigationService.getAllSpotsList(function (data) {
         errorService.errorCode(data, function (allData) {

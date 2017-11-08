@@ -143,17 +143,15 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     $scope.template = TemplateService.getHTML("content/school-profile.html");
     TemplateService.title = "School Profile"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
-    $scope.callObject = {};
+    // $scope.callObject = {};
+    // $scope.callObject._id = $stateParams.id;
+    // $scope.callObject.year = year.getFullYear().toString();
+    // $scope.callObject.gender = "All";
+    // $scope.callObject.agegroup = "All";
+    // console.log($scope.callObject);
     var year = new Date();
     $scope.filter = {};
-    $scope.callObject._id = $stateParams.id;
-    $scope.callObject.year = year.getFullYear().toString();
-    $scope.callObject.gender = "All";
-    $scope.callObject.agegroup = "All";
-    console.log($scope.callObject);
     $scope.schooldata = {};
-    $scope.schooldata['Boys'] = 0;
-    $scope.schooldata['Girls'] = 0;
     $scope.sportsStudentGender = {};
     $scope.dropdowns = {};
     $scope.dropdowns.category = [];
@@ -162,9 +160,8 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     $scope.filterStatistics.pagesize = 8;
     $scope.filterStatistics.school = $stateParams.id;
     $scope.table = {};
-    $scope.state = $state;
     $scope.students = {};
-
+    // $scope.state = $state;
     $scope.schoolData = {};
     $scope.schoolData.page = 1;
     $scope.schoolData.school = $stateParams.id;
@@ -185,6 +182,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             if (data.value) {
                 $scope.getSchoolProfile = data.data;
                 $scope.athletes = data.data.athletes;
+                $scope.schoolName = data.data.schoolName;
                 // $scope.schoolSports = data.data.registerSport;
                 var schoolSport = 0;
                 var subArrLength = 0;
@@ -350,7 +348,6 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             if (data.value) {
                 _.each(data.data, function (key) {
                     window.open($scope.url + '/pdf/' + key.url, '_blank');
-                    //   window.open(adminUrl2 + 'pdf' + data, '_blank');
                 });
             }
         });
@@ -359,51 +356,22 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     //     $scope.currentPage = pageNo;
     // };
 
-    // $scope.maxSize = 20;
-    // $scope.gender = [{
-    //     value: "",
-    //     name: "All"
-    // }, {
-    //     value: "Boys",
-    //     name: "Boys"
-    // }, {
-    //     value: "Girls",
-    //     name: "Girls"
-    // }];
-    // $scope.sportContingent = {};
-    // // $scope.schooldata.boys
-    // $scope.callReload = function () {
-    //     if ($scope.filterStatistics.sport) {
-    //         $scope.callObject.sport = $scope.filterStatistics.sport;
-    //     }
-    //     $scope.students.student = undefined;
-    //     NavigationService.filterStud($scope.callObject, function (data) {
-    //         console.log(data.data);
-    //         if (data.value !== false) {
-    //             $scope.students = data.data;
-    //             if ($scope.students.student && $scope.students.student.length > 0 && $scope.students.school.contingentLeader && $scope.students.school.contingentLeader.length > 0) {
-    //                 _.each($scope.students.student, function (z) {
-    //                     _.each($scope.students.school.contingentLeader, function (n) {
-    //                         if (n.student._id == z._id && n.year == $scope.callObject.year) {
-    //                             z.isCl = true;
-    //                         }
-    //                     });
-    //                 });
-    //             }
-    //         } else {
-    //             $scope.students = {};
-    //             $scope.students.student = [];
-    //             $scope.students.school = {};
-    //         }
-    //     });
-    // };
+    $scope.gender = [{
+        value: "",
+        name: "All"
+    }, {
+        value: "Boys",
+        name: "Boys"
+    }, {
+        value: "Girls",
+        name: "Girls"
+    }];
     $scope.tabchange = function (tab, a) {
         $scope.tab = tab;
         if (a == 1) {
             $scope.classa = "active-list";
             $scope.classb = '';
             $scope.classc = '';
-            $scope.callReload();
 
         } else if (a == 2) {
             $scope.classa = '';
@@ -414,38 +382,10 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             $scope.classa = '';
             $scope.classb = '';
             $scope.classc = "active-list";
-            // NavigationService.filterCategoryBySport({
-            //     sportList: $scope.filterStatistics.sport
-            // }, function (response) {
-            //     if (response.value) {
-            //         $scope.dropdowns.category = response.data;
-            //         $scope.dropdowns.category.unshift({
-            //             name: ""
-            //         });
-            //         $scope.filterStatistics.category = $scope.dropdowns.category[0].name;
-
-            //     } else {
-            //         $scope.dropdowns.category = [];
-            //     }
-            //     NavigationService.filterAgegroupBySport({
-            //         sportList: $scope.filterStatistics.sport
-            //     }, function (response) {
-            //         if (response.value) {
-            //             console.log(response);
-            //             $scope.dropdowns.agegroup = response.data;
-            //             $scope.dropdowns.agegroup.unshift({
-            //                 name: ""
-            //             });
-            //             $scope.filterStatistics.agegroup = $scope.dropdowns.agegroup[0].name;
-            //         } else {
-            //             $scope.dropdowns.agegroup = [];
-            //         }
-            //         $scope.getStats();
-            //     });
-            // });
         }
     };
-    // $scope.contingent = {};
+    $scope.sportContingent = {};
+
     // $scope.onChangeContingentYear = function () {
     //     $scope.filterStatistics.pagenumber = 1;
     //     $scope.contingent = {};
@@ -470,27 +410,6 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     //         }
     //     });
     // };
-    // $scope.video = [{
-    //     icon: "img/m1.jpg",
-    //     name: "girls | u-14 | semi final- Harshit shah VS Manav mehta"
-
-    // }, {
-    //     icon: "img/m2.jpg",
-    //     name: "girls | u-14 | semi final- Harshit shah VS Manav mehta"
-    // }, {
-    //     icon: "img/m3.jpg",
-    //     name: "girls | u-14 | semi final- Harshit shah VS Manav mehta"
-    // }, {
-    //     icon: "img/m2.jpg",
-    //     name: "girls | u-14 | semi final- Harshit shah VS Manav mehta"
-    // }, {
-    //     icon: "img/m1.jpg",
-    //     name: "girls | u-14 | semi final- Harshit shah VS Manav mehta"
-    // }, {
-    //     icon: "img/m3.jpg",
-    //     name: "girls | u-14 | semi final- Harshit shah VS Manav mehta"
-    // }];
-
     // $scope.changeYear = function () {
     //     $scope.schooldata.Boys = 0;
     //     $scope.schooldata.Girls = 0;
@@ -508,124 +427,51 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
 
     // };
 
-    // $scope.selectSport = function (selected) {
-    //     $scope.filterStatistics = {};
-    //     $scope.schoolStats = [];
-    //     $scope.sportContingent.showContingent = true;
-    //     $scope.filter.sport = selected;
-    //     $scope.filterStatistics.sport = selected._id;
-    //     $scope.table.layout = selected.drawFormat;
-    //     $scope.tabchange('player', 1);
-    //     $scope.agegroup = [];
-    //     $scope.filterStatistics.year = _.clone($scope.filter.year);
-    //     $scope.callObject.year = _.clone($scope.filter.year);
-    //     $scope.getSportAgeGroup();
-    // };
-    // $scope.getStats = function () {
-    //     $scope.filterStatistics.school = $stateParams.id;
-    //     $scope.schoolStats = undefined;
-    //     NavigationService.getStatsForSchool($scope.filterStatistics, function (response) {
-    //         if (response.value) {
-    //             $scope.schoolStats = response.data;
-    //             // console.log($scope.schoolStats);
-    //             var drawF = "";
-    //             if ($scope.schoolStats[0].drawFormat == 'Knockout') {
-    //                 drawF = "knockout";
-    //             } else if ($scope.schoolStats[0].drawFormat == "Swiss League") {
-    //                 drawF = "swissleague"
-    //             } else {
-    //                 drawF = "leagueknockout"
-    //             }
-    //             if ($scope.schoolStats) {
-    //                 if ($scope.schoolStats[0].drawFormat == 'Knockout' || $scope.schoolStats[0].drawFormat == 'League cum Knockout' || $scope.schoolStats[0].drawFormat == 'Swiss League') {
-    //                     _.each($scope.schoolStats, function (key) {
-    //                         key.opponent = {};
-    //                         key.self = {};
-    //                         if (key[drawF].participantType == 'player') {
-    //                             if (key[drawF][key[drawF].participantType + '1'] && key[drawF][key[drawF].participantType + '1'].school._id == $stateParams.id) {
-    //                                 key.opponent.detail = key[drawF][key[drawF].participantType + '2'];
-    //                                 key.self.detail = key[drawF][key[drawF].participantType + '1'];
-    //                                 key.opponent.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '2'] : key[drawF]["result2"];
-    //                                 key.self.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '1'] : key[drawF]["result1"];
-    //                             } else {
-    //                                 key.opponent.detail = key[drawF][key[drawF].participantType + '1'];
-    //                                 key.self.detail = key[drawF][key[drawF].participantType + '2'];
-    //                                 key.opponent.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '1'] : key[drawF]["result1"];
-    //                                 key.self.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '2'] : key[drawF]["result2"];
-    //                             }
-    //                         } else {
-    //                             if (key[drawF][key[drawF].participantType + '1'] && key[drawF][key[drawF].participantType + '1'].school._id == key.team.school._id) {
-    //                                 key.opponent.detail = key[drawF][key[drawF].participantType + '2'];
-    //                                 key.self.detail = key[drawF][key[drawF].participantType + '1'];
-    //                                 key.opponent.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '2'] : key[drawF]["result2"];
-    //                                 key.self.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '1'] : key[drawF]["result1"];
-    //                             } else {
-    //                                 key.opponent.detail = key[drawF][key[drawF].participantType + '1'];
-    //                                 key.self.detail = key[drawF][key[drawF].participantType + '2'];
-    //                                 key.opponent.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '1'] : key[drawF]["result1"];
-    //                                 key.self.result = drawF == "knockout" ? key[drawF]["result" + key[drawF].participantType + '2'] : key[drawF]["result2"];
-    //                             }
-    //                         }
-
-    //                     });
-
-    //                 } else if ($scope.schoolStats[0].drawFormat == 'Heats') {
-    //                     _.each($scope.schoolStats, function (key) {
-    //                         key.self = {};
-    //                         _.each(key.heat.heats, function (single) {
-    //                             var schoolid = single.player ? single.player.school._id : single.team.school._id;
-    //                             if (schoolid == $stateParams.id) {
-    //                                 key.self = single;
-    //                             }
-    //                         });
-    //                     });
-    //                 } else if ($scope.schoolStats[0].drawFormat == 'Qualifying Knockout') {
-    //                     _.each($scope.schoolStats, function (key) {
-    //                         key.opponent = {};
-    //                         key.self = {};
-    //                         if (key.qualifyingknockout.heats.length == 0) {
-    //                             if (key.qualifyingknockout.participantType == 'player') {
-    //                                 console.log("");
-    //                                 if (key.qualifyingknockout[key.qualifyingknockout.participantType + '1']._id == $stateParams.id) {
-    //                                     console.log("here");
-    //                                     key.opponent.detail = key.qualifyingknockout[key.qualifyingknockout.participantType + '2'];
-    //                                     key.opponent.result = key.qualifyingknockout["result2"];
-    //                                     key.self.result = key.qualifyingknockout["result1"];
-    //                                 } else {
-    //                                     key.opponent.detail = key.qualifyingknockout[key.qualifyingknockout.participantType + '1'];
-    //                                     key.opponent.result = key.qualifyingknockout["result1"];
-    //                                     key.self.result = key.qualifyingknockout["result2"];
-    //                                 }
-    //                             } else {
-    //                                 if (key.qualifyingknockout[key.qualifyingknockout.participantType + '1']._id == key.team._id) {
-    //                                     key.opponent.detail = key.qualifyingknockout[key.qualifyingknockout.participantType + '2'];
-    //                                     key.opponent.result = key.qualifyingknockout["result2"];
-    //                                     key.self.result = key.qualifyingknockout["result1"];
-    //                                 } else {
-    //                                     key.opponent.detail = key.qualifyingknockout[key.qualifyingknockout.participantType + '1'];
-    //                                     key.opponent.result = key.qualifyingknockout["result1"];
-    //                                     key.self.result = key.qualifyingknockout["result2"];
-    //                                 }
-    //                             }
-    //                         } else {
-
-    //                             _.each(key.qualifyingknockout.heats, function (single) {
-    //                                 var schoolid = single.player ? single.player.school._id : single.team.school._id;
-    //                                 if (schoolid == $stateParams.id) {
-    //                                     key.self = single;
-    //                                 }
-    //                             });
-
-    //                         }
-    //                     });
-    //                 }
-    //                 console.log($scope.schoolStats);
-    //             }
-    //         } else {
-    //             $scope.schoolStats = [];
-    //         }
-    //     });
-    // };
+    $scope.getSchoolStats = function () {
+        $scope.filterStatistics.schoolName = $scope.schoolName;
+        $scope.schoolStats = undefined;
+        NavigationService.getSchoolStats($scope.filterStatistics, function (response) {
+            console.log('STATS AND PLAYERS:', response);
+            if (response.value) {
+                $scope.schoolStats = response.data;
+            } else {
+                $scope.schoolStats = [];
+            }
+        });
+    };
+    $scope.getDrawFormats = function () {
+        $scope.schoolStats = undefined;
+        NavigationService.getDrawFormats($scope.filterStatistics, function (response) {
+            console.log('DRAW FORMATS:', response);
+            if (response.value) {
+                $scope.formats = response.data;
+                if ($scope.formats[0].drawFormat.name == 'Qualifying Round' || $scope.formats[0].drawFormat.name == 'Heats') {
+                    $scope.table.layout = 'Heats';
+                } else {
+                    $scope.table.layout = $scope.formats[0].drawFormat.name;
+                }
+            } else {
+                $scope.schoolStats = [];
+            }
+        });
+    };
+    $scope.selectSport = function (selected) {
+        console.log(selected);
+        $scope.filterStatistics = {};
+        $scope.schoolStats = [];
+        $scope.sportContingent.showContingent = true;
+        $scope.statsDetail = selected;
+        $scope.filter.sport = selected;
+        $scope.filterStatistics.sportsListSubCategory = selected.subCategory;
+        $scope.tabchange('player', 1);
+        $scope.getSchoolStats();
+        $scope.getDrawFormats();
+        // $scope.filter.sport = selected;
+        // $scope.agegroup = [];
+        // $scope.filterStatistics.year = _.clone($scope.filter.year);
+        // $scope.callObject.year = _.clone($scope.filter.year);
+        // $scope.getSportAgeGroup();
+    };
     // $scope.schoolMedalCount = function (constraints) {
     //     NavigationService.getSchoolMedalCount(constraints, function (data) {
     //         if (data.value) {

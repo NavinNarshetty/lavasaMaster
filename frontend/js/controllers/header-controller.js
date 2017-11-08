@@ -6,25 +6,25 @@ var eventYear = '2017-18';
 // var eventYear = '2017';
 
 // For Test
-var serverType = 'test';
+// var serverType = 'test';
 // var globalLinkSchoolRegister = "http://testmumbaischool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testmumbaicollege.sfanow.in";
 // var globalLinkForAll = "http://testmumbai.sfanow.in/";
-var globalLinkSchoolRegister = "http://testhyderabadschool.sfanow.in";
-var globalLinkCollegeRegister = "http://testhyderabadcollege.sfanow.in";
-var globalLinkForAll = "http://testhyderabad.sfanow.in/";
+// var globalLinkSchoolRegister = "http://testhyderabadschool.sfanow.in";
+// var globalLinkCollegeRegister = "http://testhyderabadcollege.sfanow.in";
+// var globalLinkForAll = "http://testhyderabad.sfanow.in/";
 // var globalLinkSchoolRegister = "http://testahmedabadschool.sfanow.in";
 // var globalLinkCollegeRegister = "http://testahmedabadcollege.sfanow.in";
 // var globalLinkForAll = "http://testahmedabad.sfanow.in/";
 
 //For Live
-// var serverType = 'live';
+var serverType = 'live';
 // var globalLinkSchoolRegister = "http://mumbaischool.sfanow.in";
 // var globalLinkCollegeRegister = "http://mumbaicollege.sfanow.in";
 // var globalLinkForAll = "https://mumbai.sfanow.in/";
-// var globalLinkSchoolRegister = "http://hyderabadschool.sfanow.in";
-// var globalLinkCollegeRegister = "http://hyderabadcollege.sfanow.in";
-// var globalLinkForAll = "https://hyderabad.sfanow.in/";
+var globalLinkSchoolRegister = "http://hyderabadschool.sfanow.in";
+var globalLinkCollegeRegister = "http://hyderabadcollege.sfanow.in";
+var globalLinkForAll = "https://hyderabad.sfanow.in/";
 
 
 myApp.controller('headerCtrl', function ($scope, TemplateService, $rootScope, NavigationService, errorService, toastr) {
@@ -445,4 +445,156 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
         "game": "Sports Development Partner"
     }];
     // TV Support Partner
+
+    // FOOTER SPORTS MUMBAI
+    $scope.hyderabadFooter = [{
+        name: 'archery'
+    }, {
+        name: 'athletics'
+    }, {
+        name: 'badminton'
+    }, {
+        name: 'basketball'
+    }, {
+        name: 'boxing'
+    }, {
+        name: 'carrom'
+    }, {
+        name: 'chess'
+    }, {
+        name: 'fencing'
+    }, {
+        name: 'football'
+    }, {
+        name: 'handball'
+    }, {
+        name: 'hockey'
+    }, {
+        name: 'judo'
+    }, {
+        name: 'kabaddi'
+    }, {
+        name: 'karate'
+    }, {
+        name: 'kho kho'
+    }, {
+        name: 'shooting'
+    }, {
+        name: 'swimming'
+    }, {
+        name: 'table tennis'
+    }, {
+        name: 'taekwondo'
+    }, {
+        name: 'tennis'
+    }, {
+        name: 'throwball'
+    }, {
+        name: 'volleyball'
+    }, {
+        name: 'water polo'
+    }]
+
+    $scope.mumbaiFooter = [{
+        name: 'archery'
+    }, {
+        name: 'athletics'
+    }, {
+        name: 'badminton'
+    }, {
+        name: 'basketball'
+    }, {
+        name: 'boxing'
+    }, {
+        name: 'carrom'
+    }, {
+        name: 'chess'
+    }, {
+        name: 'fencing'
+    }, {
+        name: 'football'
+    }, {
+        name: 'handball'
+    }, {
+        name: 'hockey'
+    }, {
+        name: 'judo'
+    }, {
+        name: 'kabaddi'
+    }, {
+        name: 'karate'
+    }, {
+        name: 'kho kho'
+    }, {
+        name: 'sport mma'
+    }, {
+        name: 'shooting'
+    }, {
+        name: 'squash'
+    }, {
+        name: 'swimming'
+    }, {
+        name: 'table tennis'
+    }, {
+        name: 'taekwondo'
+    }, {
+        name: 'tennis'
+    }, {
+        name: 'throwball'
+    }, {
+        name: 'volleyball'
+    }, {
+        name: 'water polo'
+    }, {
+        name: 'wrestling'
+    }]
+    // FOOTER SPORTS END
+
+
+    // CHAMPIONS JOSN
+    $scope.mumbaiChampion = [{
+        name: 'school championship',
+        champDetail: [{
+            name: 'about championship',
+            link: ''
+        }, {
+            name: 'register',
+            link: ''
+        }, {
+            name: 'championship schedule',
+            link: ''
+        }, {
+            name: 'faqs',
+            link: ''
+        }]
+    }, {
+        name: 'college championship',
+        champDetail: [{
+            name: 'register',
+            link: ''
+        }, {
+            name: 'championship schedule',
+            link: ''
+        }, {
+            name: 'faqs',
+            link: ''
+        }]
+    }]
+    // CHAMPIONS JOSN END
+
+    // MUMBAI PROFILE
+    $scope.sfaProfile = [{
+        name: 'athletes',
+        link: 'students'
+    }, {
+        name: 'school',
+        link: 'school'
+    }, {
+        name: 'college',
+        link: 'school'
+    }, {
+        name: 'teams',
+        link: 'team'
+    }]
+    // MUMBAI PROFILE END
 });

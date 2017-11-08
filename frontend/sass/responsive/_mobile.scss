@@ -2549,4 +2549,11 @@
           font-size: 4.6px;
         }
       }
+      .citySelect.sfa-select:after {
+        font-size: 16px;
+      }
+      .citySelect.sfa-select select {
+        padding: 3px 5px 0px 0px;
+        font-size: 10px;
+      }
     }
