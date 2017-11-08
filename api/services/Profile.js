@@ -174,10 +174,10 @@ var model = {
             {
                 $match: {
                     $or: [{
-                            "school.name": data.school
+                            "school.name": data.schoolName
                         },
                         {
-                            atheleteSchoolName: data.school
+                            atheleteSchoolName: data.schoolName
                         }
                     ]
                 }
