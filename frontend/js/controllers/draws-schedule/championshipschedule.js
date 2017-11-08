@@ -155,72 +155,77 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date1: '11',
                     date2: '12',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '9th Nov 8 p.m.'
                 }, {
                     sport: 'Athletics',
                     date1: '13',
                     date2: '15',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '9th Nov 8 p.m.'
                 }, {
                     sport: 'Badminton',
                     date1: '10',
                     date2: '14',
                     month: 'Nov',
-                    link: ''
+                    link: 'img/event/badminton.pdf'
                 }, {
                     sport: 'Basketball',
                     date1: '11',
                     date2: '17',
                     month: 'Nov',
-                    link: ''
+                    link: 'img/event/basketball.pdf'
                 }, {
                     sport: 'Boxing',
                     date1: '16',
                     date2: '17',
                     month: 'Nov',
-                    link: ''
+                    link: 'img/event/boxing.pdf'
                 }, {
                     sport: 'Carrom',
                     date1: '14',
                     date2: '17',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '9th Nov 8 p.m.'
                 }, {
                     sport: 'Chess',
                     date1: '11',
                     date2: '13',
                     month: 'Nov',
-                    link: ''
+                    link: 'img/event/chess.pdf'
                 }, {
                     sport: 'Fencing',
                     date1: '16',
                     date2: '17',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '10th Nov 8 p.m.'
                 }, {
                     sport: 'Football',
                     date1: '11',
                     date2: '17',
                     month: 'Nov',
-                    link: ''
+                    link: 'img/event/football.pdf'
                 }, {
                     sport: 'Handball',
                     date1: '16',
                     date2: '17',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '9th Nov 8 p.m.'
                 }, {
                     sport: 'Hockey',
                     date1: '11',
                     date2: '12',
                     month: 'Nov',
-                    link: ''
+                    link: 'img/event/hockey.pdf'
                 }, {
                     sport: 'Judo',
                     date: '15',
                     month: 'Nov',
-                    link: ''
+                    link: 'img/event/judo.pdf'
                 }];
 
                 $scope.schedulelist2 = [{
@@ -228,63 +233,71 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date1: '10',
                     date2: '14',
                     month: 'Nov',
-                    link: ''
+                    link: 'img/event/kabaddi.pdf'
                 }, {
                     sport: 'Karate',
                     date: '15',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '9th Nov 8 p.m.'
                 }, {
                     sport: 'Kho Kho',
                     date1: '14',
                     date2: '17',
                     month: 'Nov',
-                    link: ''
+                    link: 'img/event/khokho.pdf'
                 }, {
                     sport: 'Shooting',
                     date: '12',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '9th Nov 8 p.m.'
                 }, {
                     sport: 'Swimming',
                     date1: '11',
                     date2: '12',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '9th Nov 8 p.m.'
                 }, {
                     sport: 'Table Tennis',
                     date1: '15',
                     date2: '17',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '9th Nov 8 p.m.'
                 }, {
                     sport: 'Taekwondo',
                     date: '15',
                     month: 'Nov',
-                    link: ''
+                    link: 'img/event/taekwondo.pdf'
                 }, {
                     sport: 'Tennis',
                     date1: '15',
                     date2: '17',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '9th Nov 8 p.m.'
                 }, {
                     sport: 'Throwball',
                     date1: '14',
                     date2: '17',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '9th Nov 8 p.m.'
                 }, {
                     sport: 'Volleyball',
                     date1: '12',
                     date2: '17',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '9th Nov 11 a.m.'
                 }, {
                     sport: 'Water Polo',
                     date: '13',
                     month: 'Nov',
-                    link: ''
+                    link: '',
+                    detail: '13th Nov 8 p.m.'
                 }, {
                     sport: '',
                     date: '',

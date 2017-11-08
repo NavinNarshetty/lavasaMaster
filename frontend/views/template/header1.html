@@ -1,4 +1,4 @@
-<!-- <header hide-on-scrol> -->
+<!-- < NEW header hide-on-scrol> -->
 <header ng-controller="headerCtrl">
   <nav class="navbar navbar-default navbar-fixed-top pos-mobile sf-relative mob-navbar">
     <div class="container-fluid">
@@ -6,13 +6,15 @@
         <div class="col-md-2 col-sm-2">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed btn-togle" data-toggle="collapse" data-target="#nav-collapse" aria-expanded="false">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-            <a class="" href="{{linkForAll}}" target="_blank"><img src="img/cl-logo.png" alt="logo" class="mr-min hidden-xs hidden-sm"> </a>
-            <a class="" href="{{linkForAll}}" target="_blank"><img src="img/cl-logo2.png" alt="logo" class="mr-min hidden-lg hidden-md w800 mLogoPlacing"> </a>
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="" href="{{linkForAll}}" target="_blank">
+              <img src="img/cl-logo.png" alt="logo" class="mr-min hidden-xs hidden-sm"> </a>
+            <a class="" href="{{linkForAll}}" target="_blank">
+              <img src="img/cl-logo2.png" alt="logo" class="mr-min hidden-lg hidden-md w800 mLogoPlacing"> </a>
           </div>
         </div>
         <!-- NAVIGATION HEADER -->
@@ -24,7 +26,7 @@
               <li>
                 <div class="header-name-top">
                   <a href="{{linkForAll}}about-us" target="_blank">
-                        ABOUT 
+                    ABOUT
                   </a>
                 </div>
               </li>
@@ -43,14 +45,17 @@
                     <div class="profile-sub-header text-uppercase text-center">
                       <label for="">School</label>
                     </div>
-                    <a href="{{linkForAll}}students" target="_blank"> 
-                      <span>2017</span> <span>ATHLETES</span>   
+                    <a href="{{linkForAll}}students" target="_blank">
+                      <span>2017</span>
+                      <span>ATHLETES</span>
                     </a>
                     <a href="{{linkForAll}}school" target="_blank">
-                      <span>2017</span> <span>SCHOOLS</span>
+                      <span>2017</span>
+                      <span>SCHOOLS</span>
                     </a>
                     <a href="{{linkForAll}}team" target="_blank">
-                      <span>2017</span> <span>TEAMS</span>
+                      <span>2017</span>
+                      <span>TEAMS</span>
                     </a>
                     <a href="{{linkForAll}}team" target="_blank" ng-if="selectedCity !== 'hyderabad'">
                       <p class="m-clear" style="font-size:12px;">VIEW PROFILE FROM</p>
@@ -61,15 +66,18 @@
                     <div class="profile-sub-header text-uppercase text-center">
                       <label for="">College</label>
                     </div>
-                    <a href="{{linkForAll}}students" target="_blank"> 
-                        <span>2017</span> <span>ATHLETES</span>   
-                      </a>
+                    <a href="{{linkForAll}}students" target="_blank">
+                      <span>2017</span>
+                      <span>ATHLETES</span>
+                    </a>
                     <a href="{{linkForAll}}school" target="_blank">
-                        <span>2017</span> <span>COLLEGE</span>
-                      </a>
+                      <span>2017</span>
+                      <span>COLLEGE</span>
+                    </a>
                     <a href="{{linkForAll}}team" target="_blank">
-                        <span>2017</span> <span>TEAMS</span>
-                      </a>
+                      <span>2017</span>
+                      <span>TEAMS</span>
+                    </a>
                   </li>
 
                 </ul>
@@ -101,16 +109,18 @@
                 <ul class="dropdown-menu sf-absulate blue-menus ">
                   <li class="padding0 ">
                     <a href="{{linkForAll}}school-ranking " target="_blank " ui-sref="school-ranking ">
-                     <span>2017</span> <span>SCHOOL RANKING</span>
+                      <span>2017</span>
+                      <span>SCHOOL RANKING</span>
                     </a>
                     <a href="{{linkForAll}} " target="_blank ">
-                      <span>2017</span> <span>COLLEGE RANKING</span>
+                      <span>2017</span>
+                      <span>COLLEGE RANKING</span>
                     </a>
                     <a href="{{linkForAll}} " target="_blank ">
-                        <span>PREVIOUS SCHOOL RANKING</span>
+                      <span>PREVIOUS SCHOOL RANKING</span>
                     </a>
                     <a href="{{linkForAll}}champions " target="_blank " ui-sref="champions ">
-                       <span>PREVIOUS CHAMPIONS OF SFA</span>
+                      <span>PREVIOUS CHAMPIONS OF SFA</span>
                     </a>
 
                   </li>
@@ -123,7 +133,7 @@
               <li ng-if="selectedCity === 'hyderabad'">
                 <div class="header-name-top ">
                   <a href="{{linkForAll}} " target="_blank ">
-                          RESULTS
+                    RESULTS
                   </a>
                 </div>
               </li>
@@ -139,10 +149,10 @@
                 <ul class="dropdown-menu sf-absulate blue-menus ">
                   <li>
                     <a href="{{linkForAll}}media-gallery " target="_blank ">
-                       <span>SCHOOL</span>
+                      <span>SCHOOL</span>
                     </a>
                     <a href="{{linkForAll}}media-gallery " target="_blank ">
-                        <span>COLLEGE</span>
+                      <span>COLLEGE</span>
                     </a>
                   </li>
                 </ul>
@@ -152,8 +162,8 @@
               <li ng-if="selectedCity==='hyderabad'">
                 <div class="header-name-top ">
                   <a href="{{linkForAll}} " target="_blank ">
-                          GALLERY
-                    </a>
+                    GALLERY
+                  </a>
                 </div>
               </li>
               <!-- HYDERABAD -->
@@ -169,11 +179,11 @@
                 <ul class="dropdown-menu sf-absulate blue-menus ">
                   <li>
                     <a href="{{linkForAll}}media-gallery " target="_blank ">
-                         <span>SCHOOL</span>
-                      </a>
+                      <span>SCHOOL</span>
+                    </a>
                     <a href="{{linkForAll}}media-gallery " target="_blank ">
-                          <span>COLLEGE</span>
-                      </a>
+                      <span>COLLEGE</span>
+                    </a>
                   </li>
                 </ul>
               </li>
@@ -182,8 +192,8 @@
               <li ng-if="selectedCity==='hyderabad'">
                 <div class="header-name-top ">
                   <a href="{{linkForAll}} " target="_blank ">
-                          PRESS &amp; MEDIA
-                    </a>
+                    PRESS &amp; MEDIA
+                  </a>
                 </div>
               </li>
               <!-- HYDERABAD END -->
@@ -194,7 +204,7 @@
               <li>
                 <div class="header-name-top ">
                   <a href="{{linkForAll}} " target="_blank ">
-                        SPONSORS &amp; PARTNERS
+                    SPONSORS &amp; PARTNERS
                   </a>
                 </div>
               </li>
@@ -205,45 +215,75 @@
                 <div class="display-inline forCityPlacingSm ">
                   <div class="citySelect sfa-select ">
                     <select name="city " id="city " ng-model="selectedCity " ng-change="changeUrl(selectedCity) ">
-                                                <option value="mumbai ">Mumbai</option>
-                                                <option value="hyderabad ">Hyderabad</option>
-                                                <!-- <option value="ahmedabad ">Ahmedabad</option> -->
-                                            </select>
+                      <option value="mumbai ">Mumbai</option>
+                      <option value="hyderabad ">Hyderabad</option>
+                      <!-- <option value="ahmedabad ">Ahmedabad</option> -->
+                    </select>
                     <span class="only-border "></span>
                   </div>
                 </div>
                 <a class="dropdown-toggle mb25 " data-toggle="dropdown " ng-mouseenter="optionss=!optionss " ng-model="checkboxs ">
-                                SFA {{selectedCity | capitalize}} {{eventYear}}
-                                </a>
+                  SFA {{selectedCity | capitalize}} {{eventYear}}
+                </a>
                 <ul class="dropdown-menu cl-pr forSm typePlace ">
                   <ul class="display-inline typeList ">
                     <li>
-                      <a>SCHOOL CHAMPIONSHIP</a></li>
-                    <li ng-if="!registerSchool "><a ui-sref="championship "> ABOUT CHAMPIONSHIP</a></li>
-                    <li ng-if="registerSchool "><a href="{{registerSchool}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a></li>
-                    <li ng-if="!registerSchool "><a ui-sref="register "> REGISTER</a></li>
-                    <li ng-if="registerSchool "><a href="{{registerSchool}}/register " target="_blank "> REGISTER</a></li>
-                    <li ng-if="!registerSchool "><a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a></li>
-                    <li ng-if="registerSchool "><a href="{{registerSchool}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a></li>
+                      <a>SCHOOL CHAMPIONSHIP</a>
+                    </li>
+                    <li ng-if="!registerSchool ">
+                      <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
+                    </li>
+                    <li ng-if="registerSchool ">
+                      <a href="{{registerSchool}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a>
+                    </li>
+                    <li ng-if="!registerSchool ">
+                      <a ui-sref="register "> REGISTER</a>
+                    </li>
+                    <li ng-if="registerSchool ">
+                      <a href="{{registerSchool}}/register " target="_blank "> REGISTER</a>
+                    </li>
+                    <li ng-if="!registerSchool ">
+                      <a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a>
+                    </li>
+                    <li ng-if="registerSchool ">
+                      <a href="{{registerSchool}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a>
+                    </li>
                     <!-- <li><a ui-sref="faq ">SPECIAL EVENTS</a></li>
                                             <li><a ui-sref="faq ">VENUE</a></li>  -->
-                    <li ng-if="!registerSchool "><a ui-sref="faq ">FAQs</a></li>
-                    <li ng-if="registerSchool "><a href="{{registerSchool}}/faq " target="_blank ">FAQs</a></li>
+                    <li ng-if="!registerSchool ">
+                      <a ui-sref="faq ">FAQs</a>
+                    </li>
+                    <li ng-if="registerSchool ">
+                      <a href="{{registerSchool}}/faq " target="_blank ">FAQs</a>
+                    </li>
                   </ul>
                   <ul class="display-inline typeList " ng-if="selectedCity !='hyderabad' ">
                     <li>
-                      <a>COLLEGE CHAMPIONSHIP</a></li>
+                      <a>COLLEGE CHAMPIONSHIP</a>
+                    </li>
                     <!-- <li ng-if="!registerCollege "><a ui-sref="championship "> ABOUT CHAMPIONSHIP</a></li>
                                                 <li ng-if="registerCollege "><a href="{{registerCollege}}/championship
                 " target="_blank "> ABOUT CHAMPIONSHIP</a></li> -->
-                    <li ng-if="!registerCollege "><a ui-sref="register "> REGISTER</a></li>
-                    <li ng-if="registerCollege "><a href="{{registerCollege}}/register " target="_blank "> REGISTER</a></li>
-                    <li ng-if="!registerCollege "><a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a></li>
-                    <li ng-if="registerCollege "><a href="{{registerCollege}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a></li>
+                    <li ng-if="!registerCollege ">
+                      <a ui-sref="register "> REGISTER</a>
+                    </li>
+                    <li ng-if="registerCollege ">
+                      <a href="{{registerCollege}}/register " target="_blank "> REGISTER</a>
+                    </li>
+                    <li ng-if="!registerCollege ">
+                      <a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a>
+                    </li>
+                    <li ng-if="registerCollege ">
+                      <a href="{{registerCollege}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a>
+                    </li>
                     <!-- <li><a ui-sref="faq ">SPECIAL EVENTS</a></li>
                                                 <li><a ui-sref="faq ">VENUE</a></li> -->
-                    <li ng-if="!registerCollege "><a ui-sref="faq ">FAQs</a></li>
-                    <li ng-if="registerCollege "><a href="{{registerCollege}}/faq " target="_blank ">FAQs</a></li>
+                    <li ng-if="!registerCollege ">
+                      <a ui-sref="faq ">FAQs</a>
+                    </li>
+                    <li ng-if="registerCollege ">
+                      <a href="{{registerCollege}}/faq " target="_blank ">FAQs</a>
+                    </li>
                   </ul>
                   <!-- <li>
                                             <a ui-sref="championship ">ABOUT CHAMPIONSHIP</a></li>
@@ -260,7 +300,7 @@
               <!-- ABOUT US -->
               <li>
                 <a href="{{linkForAll}}about-us " target="_blank ">
-                                        ABOUT
+                  ABOUT
                 </a>
               </li>
               <!-- ABOUT US END -->
@@ -268,8 +308,8 @@
               <!-- MUMBAI -->
               <li class="dropdown" ng-if="selectedCity==='mumbai'">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                             PROFILES
-                <span class="caret"></span>
+                  PROFILES
+                  <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu text-center cl-pr">
                   <li>
@@ -298,8 +338,8 @@
                   </li>
                   <li>
                     <a href="{{linkForAll}}team " target="_blank ">
-                        <span>VIEW PROFILE FROM PREVIOUS CHAMPIONSHIP</span>
-                      </a>
+                      <span>VIEW PROFILE FROM PREVIOUS CHAMPIONSHIP</span>
+                    </a>
                   </li>
                 </ul>
               </li>
@@ -307,8 +347,8 @@
               <!-- HYDERABAD -->
               <li ng-if="selectedCity==='hyderabad'">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                      PROFILES
-                    <span class="caret"></span>
+                  PROFILES
+                  <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu text-center cl-pr">
                   <li>
@@ -328,7 +368,8 @@
               <!-- RESULT -->
               <li class="dropdown" ng-if="selectedCity==='mumbai'">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                RESULTS <span class="caret "></span>
+                  RESULTS
+                  <span class="caret "></span>
                 </a>
                 <ul class="dropdown-menu text-center cl-pr ">
                   <li>
@@ -348,8 +389,8 @@
               <!-- HYDERABAD -->
               <li ng-if="selectedCity==='hyderabad'">
                 <a href="{{linkForAll}}" target="_blank ">
-                       RESULTS 
-                  </a>
+                  RESULTS
+                </a>
               </li>
               <!-- HYDERABAD END -->
               <!-- RESULT -->
@@ -357,8 +398,9 @@
               <!-- MUMBAI -->
               <li class="dropdown" ng-if="selectedCity==='mumbai'">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                      GALLERY <span class="caret"></span>
-                  </a>
+                  GALLERY
+                  <span class="caret"></span>
+                </a>
                 <ul class="dropdown-menu text-center cl-pr ">
                   <li>
                     <a href="{{linkForAll}}school" target="_blank " ui-sref="school-ranking">SCHOOL</a>
@@ -373,7 +415,7 @@
               <!-- HYDERABAD -->
               <li ng-if="selectedCity==='hyderabad'">
                 <a href="{{linkForAll}}" target="_blank ">
-                      GALLERY
+                  GALLERY
                 </a>
               </li>
               <!-- HYDERABAD END -->
@@ -383,7 +425,8 @@
               <!-- MUMBAI -->
               <li class="dropdown" ng-if="selectedCity==='mumbai'">
                 <a class="dropdown-toggle" data-toggle="dropdown">
-                        MEDIA<span class="caret"></span>
+                  MEDIA
+                  <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu text-center cl-pr ">
                   <li>
@@ -398,14 +441,14 @@
               <!-- HYDERABAD -->
               <li ng-if="selectedCity==='hyderabad'">
                 <a href="{{linkForAll}}" target="_blank ">
-                                          MEDIA
+                  MEDIA
                 </a>
               </li>
               <!-- HYDERABAD -->
               <!-- MEDIA END -->
               <li>
                 <a href="{{linkForAll}}" target="_blank ">
-                                          SPONSORS &amp; PARTNERS
+                  SPONSORS &amp; PARTNERS
                 </a>
               </li>
             </ul>
@@ -418,10 +461,10 @@
           <div class="display-inline ">
             <div class="citySelect sfa-select ">
               <select name="city " id="city " ng-model="selectedCity " ng-change="changeUrl(selectedCity) ">
-                                    <option value="mumbai">Mumbai</option>
-                                    <option value="hyderabad">Hyderabad</option>
-                                    <!-- <option value="ahmedabad ">Ahmedabad</option> -->
-                                </select>
+                <option value="mumbai">Mumbai</option>
+                <option value="hyderabad">Hyderabad</option>
+                <!-- <option value="ahmedabad ">Ahmedabad</option> -->
+              </select>
               <span class="only-border "></span>
             </div>
           </div>
@@ -440,42 +483,72 @@
             <ul class="dropdown-menu text-center cl-pr placingDrop typePlacing ">
               <ul class="typeList ">
                 <li>
-                  <a>SCHOOL CHAMPIONSHIP</a></li>
-                <li ng-if="!registerSchool "><a ui-sref="championship "> ABOUT CHAMPIONSHIP</a></li>
-                <li ng-if="registerSchool "><a href="{{registerSchool}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a></li>
-                <li ng-if="!registerSchool "><a ui-sref="register "> REGISTER</a></li>
-                <li ng-if="registerSchool "><a href="{{registerSchool}}/register " target="_blank "> REGISTER</a></li>
-                <li ng-if="!registerSchool "><a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a></li>
-                <li ng-if="registerSchool "><a href="{{registerSchool}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a></li>
+                  <a>SCHOOL CHAMPIONSHIP</a>
+                </li>
+                <li ng-if="!registerSchool ">
+                  <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
+                </li>
+                <li ng-if="registerSchool ">
+                  <a href="{{registerSchool}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a>
+                </li>
+                <li ng-if="!registerSchool ">
+                  <a ui-sref="register "> REGISTER</a>
+                </li>
+                <li ng-if="registerSchool ">
+                  <a href="{{registerSchool}}/register " target="_blank "> REGISTER</a>
+                </li>
+                <li ng-if="!registerSchool ">
+                  <a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a>
+                </li>
+                <li ng-if="registerSchool ">
+                  <a href="{{registerSchool}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a>
+                </li>
                 <!--    <li><a ui-sref="faq ">SPECIAL EVENTS</a></li>
                                             <li><a ui-sref="faq ">VENUE</a></li> -->
-                <li ng-if="!registerSchool "><a ui-sref="faq ">FAQs</a></li>
-                <li ng-if="registerSchool "><a href="{{registerSchool}}/faq " target="_blank ">FAQs</a></li>
+                <li ng-if="!registerSchool ">
+                  <a ui-sref="faq ">FAQs</a>
+                </li>
+                <li ng-if="registerSchool ">
+                  <a href="{{registerSchool}}/faq " target="_blank ">FAQs</a>
+                </li>
               </ul>
               <ul class="typeList " ng-if="selectedCity !='hyderabad' ">
                 <li>
-                  <a>COLLEGE CHAMPIONSHIP</a></li>
+                  <a>COLLEGE CHAMPIONSHIP</a>
+                </li>
                 <!-- <li ng-if="!registerCollege "><a ui-sref="championship "> ABOUT CHAMPIONSHIP</a></li>
                                     <li ng-if="registerCollege "><a href="{{registerCollege}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a></li> -->
-                <li ng-if="!registerCollege "><a ui-sref="register "> REGISTER</a></li>
-                <li ng-if="registerCollege "><a href="{{registerCollege}}/register " target="_blank "> REGISTER</a></li>
+                <li ng-if="!registerCollege ">
+                  <a ui-sref="register "> REGISTER</a>
+                </li>
+                <li ng-if="registerCollege ">
+                  <a href="{{registerCollege}}/register " target="_blank "> REGISTER</a>
+                </li>
 
-                <li ng-if="!registerCollege "><a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a></li>
-                <li ng-if="registerCollege "><a href="{{registerCollege}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a></li>
+                <li ng-if="!registerCollege ">
+                  <a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a>
+                </li>
+                <li ng-if="registerCollege ">
+                  <a href="{{registerCollege}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a>
+                </li>
                 <!-- <li><a ui-sref="faq ">SPECIAL EVENTS</a></li>
                                     <li><a ui-sref="faq ">VENUE</a></li> -->
-                <li ng-if="!registerCollege "><a ui-sref="faq ">FAQs</a></li>
-                <li ng-if="registerCollege "><a href="{{registerCollege}}/faq " target="_blank ">FAQs</a></li>
+                <li ng-if="!registerCollege ">
+                  <a ui-sref="faq ">FAQs</a>
+                </li>
+                <li ng-if="registerCollege ">
+                  <a href="{{registerCollege}}/faq " target="_blank ">FAQs</a>
+                </li>
               </ul>
             </ul>
           </div>
           <div class="display-inline forCityPlacing ">
             <div class="citySelect sfa-select ">
               <select name="city " id="city " ng-model="selectedCity " ng-change="changeUrl(selectedCity) ">
-                                    <option value="mumbai">Mumbai</option>
-                                    <option value="hyderabad">Hyderabad</option>
-                                    <!-- <option value="ahmedabad ">Ahmedabad</option> -->
-                                </select>
+                <option value="mumbai">Mumbai</option>
+                <option value="hyderabad">Hyderabad</option>
+                <!-- <option value="ahmedabad ">Ahmedabad</option> -->
+              </select>
               <span class="only-border "></span>
             </div>
           </div>
@@ -495,16 +568,32 @@
               <li>
                 <p>SCHOOL CHAMPIONSHIP</p>
               </li>
-              <li ng-if="!registerSchool "><a ui-sref="championship "> ABOUT CHAMPIONSHIP</a></li>
-              <li ng-if="registerSchool "><a href="{{registerSchool}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a></li>
-              <li ng-if="!registerSchool "><a ui-sref="register "> REGISTER</a></li>
-              <li ng-if="registerSchool "><a href="{{registerSchool}}/register " target="_blank "> REGISTER</a></li>
-              <li ng-if="!registerSchool "><a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a></li>
-              <li ng-if="registerSchool "><a href="{{registerSchool}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a></li>
+              <li ng-if="!registerSchool ">
+                <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
+              </li>
+              <li ng-if="registerSchool ">
+                <a href="{{registerSchool}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a>
+              </li>
+              <li ng-if="!registerSchool ">
+                <a ui-sref="register "> REGISTER</a>
+              </li>
+              <li ng-if="registerSchool ">
+                <a href="{{registerSchool}}/register " target="_blank "> REGISTER</a>
+              </li>
+              <li ng-if="!registerSchool ">
+                <a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a>
+              </li>
+              <li ng-if="registerSchool ">
+                <a href="{{registerSchool}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a>
+              </li>
               <!-- <li><a ui-sref="faq ">SPECIAL EVENTS</a></li>
                                             <li><a ui-sref="faq ">VENUE</a></li> -->
-              <li ng-if="!registerSchool "><a ui-sref="faq ">FAQs</a></li>
-              <li ng-if="registerSchool "><a href="{{registerSchool}}/faq " target="_blank ">FAQs</a></li>
+              <li ng-if="!registerSchool ">
+                <a ui-sref="faq ">FAQs</a>
+              </li>
+              <li ng-if="registerSchool ">
+                <a href="{{registerSchool}}/faq " target="_blank ">FAQs</a>
+              </li>
             </ul>
             <ul class="display-inline typeList " ng-if="selectedCity !='hyderabad' ">
               <li>
@@ -512,14 +601,26 @@
               </li>
               <!-- <li ng-if="!registerCollege "><a ui-sref="championship "> ABOUT CHAMPIONSHIP</a></li>
                                 <li ng-if="registerCollege "><a href="{{registerCollege}}/championship " target="_blank "> ABOUT CHAMPIONSHIP</a></li> -->
-              <li ng-if="!registerCollege "><a ui-sref="register "> REGISTER</a></li>
-              <li ng-if="registerCollege "><a href="{{registerCollege}}/register " target="_blank "> REGISTER</a></li>
-              <li ng-if="!registerCollege "><a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a></li>
-              <li ng-if="registerCollege "><a href="{{registerCollege}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a></li>
+              <li ng-if="!registerCollege ">
+                <a ui-sref="register "> REGISTER</a>
+              </li>
+              <li ng-if="registerCollege ">
+                <a href="{{registerCollege}}/register " target="_blank "> REGISTER</a>
+              </li>
+              <li ng-if="!registerCollege ">
+                <a ui-sref="championshipschedules ">CHAMPIONSHIP SCHEDULE</a>
+              </li>
+              <li ng-if="registerCollege ">
+                <a href="{{registerCollege}}/championship-schedule " target="_blank ">CHAMPIONSHIP SCHEDULE</a>
+              </li>
               <!-- <li><a ui-sref="faq ">SPECIAL EVENTS</a></li>
                                 <li><a ui-sref="faq ">VENUE</a></li> -->
-              <li ng-if="!registerCollege "><a ui-sref="faq ">FAQs</a></li>
-              <li ng-if="registerCollege "><a href="{{registerCollege}}/faq " target="_blank ">FAQs</a></li>
+              <li ng-if="!registerCollege ">
+                <a ui-sref="faq ">FAQs</a>
+              </li>
+              <li ng-if="registerCollege ">
+                <a href="{{registerCollege}}/faq " target="_blank ">FAQs</a>
+              </li>
             </ul>
           </div>
 
@@ -539,43 +640,43 @@
                     <ul class="padding0 ">
                       <li>
                         <a href="{{linkForAllSports}}Basketball " target="_blank ">
-                                                        Basketball
-                                                    </a>
+                          Basketball
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Football " target="_blank ">
-                                                        Football
-                                                    </a>
+                          Football
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Handball " target="_blank ">
-                                                        Handball
-                                                    </a>
+                          Handball
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Hockey " target="_blank ">
-                                                        Hockey
-                                                    </a>
+                          Hockey
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Kabaddi " target="_blank ">
-                                                        Kabaddi
-                                                    </a>
+                          Kabaddi
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Kho Kho " target="_blank ">
-                                                        Kho Kho
-                                                    </a>
+                          Kho Kho
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Throwball " target="_blank ">
-                                                        Throwball
-                                                    </a>
+                          Throwball
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Volleyball " target="_blank ">
-                                                        Volleyball
-                                                    </a>
+                          Volleyball
+                        </a>
                       </li>
                     </ul>
                   </div>
@@ -586,23 +687,23 @@
                     <ul class="padding0 ">
                       <li>
                         <a href="{{linkForAllSports}}Badminton " target="_blank ">
-                                                        Badminton
-                                                    </a>
+                          Badminton
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Table Tennis " target="_blank ">
-                                                        Table Tennis
-                                                    </a>
+                          Table Tennis
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Tennis " target="_blank ">
-                                                        Tennis
-                                                    </a>
+                          Tennis
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Squash " target="_blank ">
-                                                        Squash
-                                                    </a>
+                          Squash
+                        </a>
                       </li>
 
                     </ul>
@@ -614,38 +715,38 @@
                     <ul class="padding0 ">
                       <li>
                         <a href="{{linkForAllSports}}Boxing " target="_blank ">
-                                                        Boxing
-                                                    </a>
+                          Boxing
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Fencing " target="_blank ">
-                                                        Fencing
-                                                    </a>
+                          Fencing
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Judo " target="_blank ">
-                                                        Judo
-                                                    </a>
+                          Judo
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Karate " target="_blank ">
-                                                        Karate
-                                                    </a>
+                          Karate
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Sport MMA " target="_blank ">
-                                                       Sport MMA
-                                                </a>
+                          Sport MMA
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Taekwondo " target="_blank ">
-                                                       Taekwondo
-                                              </a>
+                          Taekwondo
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Wrestling " target="_blank ">
-                                                       Wrestling
-                                              </a>
+                          Wrestling
+                        </a>
                       </li>
                     </ul>
                   </div>
@@ -656,13 +757,13 @@
                     <ul class="padding0 ">
                       <li>
                         <a href="{{linkForAllSports}}Archery " target="_blank ">
-                                                        Archery
-                                                    </a>
+                          Archery
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Shooting " target="_blank ">
-                                                        Shooting
-                                                    </a>
+                          Shooting
+                        </a>
                       </li>
                     </ul>
                   </div>
@@ -673,13 +774,13 @@
                     <ul class="padding0 ">
                       <li>
                         <a href="{{linkForAllSports}}Swimming " target="_blank ">
-                                                        Swimming
-                                                    </a>
+                          Swimming
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Water Polo " target="_blank ">
-                                                       Water Polo
-                                                    </a>
+                          Water Polo
+                        </a>
                       </li>
 
                     </ul>
@@ -691,18 +792,18 @@
                     <ul class="padding0 ">
                       <li>
                         <a href="{{linkForAllSports}}Athletics " target="_blank ">
-                                                        Athletics
-                                                    </a>
+                          Athletics
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Carrom " target="_blank ">
-                                                        Carrom
-                                                    </a>
+                          Carrom
+                        </a>
                       </li>
                       <li>
                         <a href="{{linkForAllSports}}Chess " target="_blank ">
-                                                        Chess
-                                                    </a>
+                          Chess
+                        </a>
                       </li>
                     </ul>
                   </div>
@@ -713,6 +814,711 @@
         </div>
       </div>
       <!-- SPORTS DROPDOWN END -->
+    </div>
+  </nav>
+</header>
+<!-- </header> -->
+
+<!-- <header hide-on-scrol> -->
+<header ng-controller="headerCtrl">
+  <nav class="navbar navbar-default navbar-fixed-top pos-mobile sf-relative mob-navbar">
+    <div class="container-fluid">
+      <div class="row new-h">
+        <div class="col-md-2 col-sm-2">
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed btn-togle" data-toggle="collapse" data-target="#nav-collapse" aria-expanded="false">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="" href="{{linkForAll}}" target="_blank">
+              <img src="img/cl-logo.png" alt="logo" class="mr-min hidden-xs hidden-sm"> </a>
+            <a class="" href="{{linkForAll}}" target="_blank">
+              <img src="img/cl-logo2.png" alt="logo" class="mr-min hidden-lg hidden-md w800 mLogoPlacing"> </a>
+          </div>
+        </div>
+        <div class="col-md-6 col-sm-10">
+          <div class="collapse navbar-collapse" id="nav-collapse">
+            <ul class="margin0 padding0 prs hidden-xs ls">
+              <li>
+                <a href="{{linkForAll}}about-us" target="_blank">
+                  ABOUT US
+                </a>
+              </li>
+              <li class="sf-relative hide-op2" ng-mouseenter="options=false">
+
+                PROFILES
+
+                <ul class="dropdown-menu sf-absulate blue-menus">
+                  <li>
+                    <a href="{{linkForAll}}students" target="_blank">ATHLETES</a>
+                    <a href="{{linkForAll}}school" target="_blank">SCHOOLS</a>
+                    <a href="{{linkForAll}}team" target="_blank">TEAMS</a>
+
+                  </li>
+                </ul>
+              </li>
+              <li class="sports-hover">
+                <!-- <a ng-click="options=!options" ng-model="checkbox">
+                                SPORTS
+                                </a> -->
+                <a ng-mouseenter="options=!options" ng-model="checkbox">
+                  SPORTS
+                </a>
+                <div class="caret-custom" ng-mouseenter="options=true" ng-mouseleave="options=false" ng-show="options || checkbox"></div>
+              </li>
+              <li class="sf-relative hide-op2" ng-mouseenter="options=false">
+
+                RESULTS
+
+                <ul class="dropdown-menu sf-absulate blue-menus">
+                  <li>
+                    <a href="{{linkForAll}}school-ranking" target="_blank" ui-sref="school-ranking">SCHOOL RANKING</a>
+                    <a href="{{linkForAll}}champions" target="_blank" ui-sref="champions">CHAMPIONS OF SFA</a>
+                    <!-- <a ui-sref="result">sport result</a> -->
+
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <a href="{{linkForAll}}media-gallery" target="_blank">
+                  MEDIA &amp; GALLERY
+                </a>
+              </li>
+              <li ng-if="!registerSchool">
+                <a href="{{specialLink}}/sponsors-partner" target="_self">SPONSORS &amp; PARTNERS</a>
+              </li>
+              <li ng-if="registerSchool">
+                <a href="{{registerSchool}}/sponsors-partner" target="_self">SPONSORS &amp; PARTNERS</a>
+              </li>
+              <!--<li class="hidden-md hidden-lg">-->
+              <!--<a ng-mouseenter="optionss=!optionss" ng-model="checkboxs">
+                                SFA {{selectedCity | capitalize}} {{eventYear}}
+                                </a>-->
+              <li class="hidden-md hidden-lg dropdown">
+                <div class="display-inline forCityPlacingSm">
+                  <div class="citySelect sfa-select">
+                    <select name="city" id="city" ng-model="selectedCity" ng-change="changeUrl(selectedCity)">
+                      <option value="mumbai">Mumbai</option>
+                      <option value="hyderabad">Hyderabad</option>
+                      <!-- <option value="ahmedabad">Ahmedabad</option> -->
+                    </select>
+                    <span class="only-border"></span>
+                  </div>
+                </div>
+                <a class="dropdown-toggle mb25" data-toggle="dropdown" ng-mouseenter="optionss=!optionss" ng-model="checkboxs">
+                  SFA {{selectedCity | capitalize}} {{eventYear}}
+                </a>
+                <ul class="dropdown-menu cl-pr forSm typePlace">
+                  <ul class="display-inline typeList">
+                    <li>
+                      <a>SCHOOL CHAMPIONSHIP</a>
+                    </li>
+                    <li ng-if="!registerSchool">
+                      <a ui-sref="championship"> ABOUT CHAMPIONSHIP</a>
+                    </li>
+                    <li ng-if="registerSchool">
+                      <a href="{{registerSchool}}/championship" target="_blank"> ABOUT CHAMPIONSHIP</a>
+                    </li>
+                    <li ng-if="!registerSchool">
+                      <a ui-sref="register"> REGISTER</a>
+                    </li>
+                    <li ng-if="registerSchool">
+                      <a href="{{registerSchool}}/register" target="_blank"> REGISTER</a>
+                    </li>
+                    <li ng-if="!registerSchool">
+                      <a ui-sref="championshipschedules">CHAMPIONSHIP SCHEDULE</a>
+                    </li>
+                    <li ng-if="registerSchool">
+                      <a href="{{registerSchool}}/championship-schedule" target="_blank">CHAMPIONSHIP SCHEDULE</a>
+                    </li>
+                    <!-- <li><a ui-sref="faq">SPECIAL EVENTS</a></li>
+                                            <li><a ui-sref="faq">VENUE</a></li>  -->
+                    <li ng-if="!registerSchool">
+                      <a ui-sref="faq">FAQs</a>
+                    </li>
+                    <li ng-if="registerSchool">
+                      <a href="{{registerSchool}}/faq" target="_blank">FAQs</a>
+                    </li>
+                    <li ng-if="!registerSchool">
+                      <a ui-sref="championshipschedule">DRAWS &amp; SCHEDULES</a>
+                    </li>
+                    <li ng-if="registerSchool">
+                      <a href="{{registerSchool}}/draws-schedule" target="_blank">DRAWS &amp; SCHEDULES</a>
+                    </li>
+                    <li ng-if="!registerSchool">
+                      <a ui-sref="specialevents">SPECIAL EVENTS</a>
+                    </li>
+                    <li ng-if="registerSchool">
+                      <a href="{{registerSchool}}/specialevents" target="_blank">SPECIAL EVENTS</a>
+                    </li>
+                  </ul>
+                  <ul class="display-inline typeList" ng-if="selectedCity != 'hyderabad'">
+                    <li>
+                      <a>COLLEGE CHAMPIONSHIP</a>
+                    </li>
+                    <!-- <li ng-if="!registerCollege"><a ui-sref="championship"> ABOUT CHAMPIONSHIP</a></li>
+                                                <li ng-if="registerCollege"><a href="{{registerCollege}}/championship" target="_blank"> ABOUT CHAMPIONSHIP</a></li> -->
+                    <li ng-if="!registerCollege">
+                      <a ui-sref="register"> REGISTER</a>
+                    </li>
+                    <li ng-if="registerCollege">
+                      <a href="{{registerCollege}}/register" target="_blank"> REGISTER</a>
+                    </li>
+                    <li ng-if="!registerCollege">
+                      <a ui-sref="championshipschedules">CHAMPIONSHIP SCHEDULE</a>
+                    </li>
+                    <li ng-if="registerCollege">
+                      <a href="{{registerCollege}}/championship-schedule" target="_blank">CHAMPIONSHIP SCHEDULE</a>
+                    </li>
+                    <!-- <li><a ui-sref="faq">SPECIAL EVENTS</a></li>
+                                                <li><a ui-sref="faq">VENUE</a></li> -->
+                    <li ng-if="!registerCollege">
+                      <a ui-sref="faq">FAQs</a>
+                    </li>
+                    <li ng-if="registerCollege">
+                      <a href="{{registerCollege}}/faq" target="_blank">FAQs</a>
+                    </li>
+                    <li ng-if="!registerCollege">
+                      <a ui-sref="championshipschedule">DRAWS &amp; SCHEDULES</a>
+                    </li>
+                    <li ng-if="registerCollege">
+                      <a href="{{registerCollege}}/draws-schedule" target="_blank">DRAWS &amp; SCHEDULES</a>
+                    </li>
+                    <li ng-if="!registerCollege">
+                      <a ui-sref="specialevents">SPECIAL EVENTS</a>
+                    </li>
+                    <li ng-if="registerCollege">
+                      <a href="{{registerCollege}}/specialevents" target="_blank">SPECIAL EVENTS</a>
+                    </li>
+                  </ul>
+                  <!-- <li>
+                                            <a ui-sref="championship">ABOUT CHAMPIONSHIP</a></li>
+                                        <li><a ui-sref="register"> REGISTER</a></li>
+                                        <li><a ui-sref="faq">FAQs</a></li> -->
+                </ul>
+              </li>
+              <!--</li>-->
+            </ul>
+
+            <ul class="margin0 padding0 prs hidden-lg hidden-md hidden-sm mn-list nav navbar-nav">
+              <li>
+                <a href="{{linkForAll}}about-us" target="_blank">
+                  ABOUT US
+                </a>
+              </li>
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                  PROFILES
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu text-center cl-pr">
+                  <li>
+                    <a href="{{linkForAll}}students" target="_blank">ATHLETES</a>
+                  </li>
+                  <li>
+                    <a href="{{linkForAll}}school" target="_blank">SCHOOLS</a>
+                  </li>
+                  <li>
+                    <a href="{{linkForAll}}team" target="_blank">TEAMS</a>
+                  </li>
+                </ul>
+              </li>
+
+              <!--</li>-->
+              <li class="dropdown">
+                <a class="dropdown-toggle" data-toggle="dropdown">
+                  RESULTS
+                  <span class="caret"></span>
+                </a>
+                <ul class="dropdown-menu text-center cl-pr">
+                  <li>
+                    <a href="{{linkForAll}}school-ranking" target="_blank" ui-sref="school-ranking">SCHOOL RANKING</a>
+                  </li>
+                  <li>
+                    <a href="{{linkForAll}}champions" target="_blank" ui-sref="champions">CHAMPIONS OF SFA</a>
+                  </li>
+                  <!-- <li>
+                                            <a ui-sref="result">sport result</a>
+                                        </li> -->
+                </ul>
+              </li>
+              <li>
+                <a href="{{linkForAll}}media-gallery" target="_blank">
+                  MEDIA &amp; GALLERY
+                </a>
+              </li>
+              <li ng-if="!registerSchool">
+                <a href="{{specialLink}}/sponsors-partner" target="_self">SPONSORS &amp; PARTNERS</a>
+              </li>
+              <li ng-if="registerSchool">
+                <a href="{{registerSchool}}/sponsors-partner" target="_self">SPONSORS &amp; PARTNERS</a>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+        <div class="col-md-2 hidden-xs hidden-sm">
+          <div class="display-inline">
+            <div class="citySelect sfa-select">
+              <select name="city" id="city" ng-model="selectedCity" ng-change="changeUrl(selectedCity)">
+                <option value="mumbai">Mumbai</option>
+                <option value="hyderabad">Hyderabad</option>
+                <!-- <option value="ahmedabad">Ahmedabad</option> -->
+              </select>
+              <span class="only-border"></span>
+            </div>
+          </div>
+          <div class="sfa-mum">
+            <button type="button" name="button" class="btn btn-sfatop" ng-mouseenter="optionss=!optionss" ng-model="checkboxs">SFA {{selectedCity | capitalize}} {{eventYear}}</button>
+          </div>
+        </div>
+        <div class="visible-xs">
+          <div class="">
+            <a class="dropdown-toggle mb25" data-toggle="dropdown">
+              <div class="sfa-mum sfa-mum-m">
+                <button type="button" name="button" class="btn btn-sfatop margin0" ng-mouseenter="optionss=!optionss">SFA {{selectedCity | capitalize}} {{eventYear}}</button>
+              </div>
+            </a>
+            <ul class="dropdown-menu text-center cl-pr placingDrop typePlacing">
+              <ul class="typeList">
+                <li>
+                  <a>SCHOOL CHAMPIONSHIP</a>
+                </li>
+                <li ng-if="!registerSchool">
+                  <a ui-sref="championship"> ABOUT CHAMPIONSHIP</a>
+                </li>
+                <li ng-if="registerSchool">
+                  <a href="{{registerSchool}}/championship" target="_blank"> ABOUT CHAMPIONSHIP</a>
+                </li>
+                <li ng-if="!registerSchool">
+                  <a ui-sref="register"> REGISTER</a>
+                </li>
+                <li ng-if="registerSchool">
+                  <a href="{{registerSchool}}/register" target="_blank"> REGISTER</a>
+                </li>
+                <li ng-if="!registerSchool">
+                  <a ui-sref="championshipschedules">CHAMPIONSHIP SCHEDULE</a>
+                </li>
+                <li ng-if="registerSchool">
+                  <a href="{{registerSchool}}/championship-schedule" target="_blank">CHAMPIONSHIP SCHEDULE</a>
+                </li>
+                <!--    <li><a ui-sref="faq">SPECIAL EVENTS</a></li>
+                                            <li><a ui-sref="faq">VENUE</a></li> -->
+                <li ng-if="!registerSchool">
+                  <a ui-sref="faq">FAQs</a>
+                </li>
+                <li ng-if="registerSchool">
+                  <a href="{{registerSchool}}/faq" target="_blank">FAQs</a>
+                </li>
+                <li ng-if="!registerSchool">
+                  <a ui-sref="championshipschedule">DRAWS &amp; SCHEDULES</a>
+                </li>
+                <li ng-if="registerSchool">
+                  <a href="{{registerSchool}}/draws-schedule" target="_blank">DRAWS &amp; SCHEDULES</a>
+                </li>
+                <li ng-if="!registerSchool">
+                  <a ui-sref="specialevents">SPECIAL EVENTS</a>
+                </li>
+                <li ng-if="registerSchool">
+                  <a href="{{registerSchool}}/specialevents" target="_blank">SPECIAL EVENTS</a>
+                </li>
+              </ul>
+              <ul class="typeList" ng-if="selectedCity != 'hyderabad'">
+                <li>
+                  <a>COLLEGE CHAMPIONSHIP</a>
+                </li>
+                <!-- <li ng-if="!registerCollege"><a ui-sref="championship"> ABOUT CHAMPIONSHIP</a></li>
+                                    <li ng-if="registerCollege"><a href="{{registerCollege}}/championship" target="_blank"> ABOUT CHAMPIONSHIP</a></li> -->
+                <li ng-if="!registerCollege">
+                  <a ui-sref="register"> REGISTER</a>
+                </li>
+                <li ng-if="registerCollege">
+                  <a href="{{registerCollege}}/register" target="_blank"> REGISTER</a>
+                </li>
+
+                <li ng-if="!registerCollege">
+                  <a ui-sref="championshipschedules">CHAMPIONSHIP SCHEDULE</a>
+                </li>
+                <li ng-if="registerCollege">
+                  <a href="{{registerCollege}}/championship-schedule" target="_blank">CHAMPIONSHIP SCHEDULE</a>
+                </li>
+                <!-- <li><a ui-sref="faq">SPECIAL EVENTS</a></li>
+                                    <li><a ui-sref="faq">VENUE</a></li> -->
+                <li ng-if="!registerCollege">
+                  <a ui-sref="faq">FAQs</a>
+                </li>
+                <li ng-if="registerCollege">
+                  <a href="{{registerCollege}}/faq" target="_blank">FAQs</a>
+                </li>
+                <li ng-if="!registerCollege">
+                  <a ui-sref="championshipschedule">DRAWS &amp; SCHEDULES</a>
+                </li>
+                <li ng-if="registerCollege">
+                  <a href="{{registerCollege}}/draws-schedule" target="_blank">DRAWS &amp; SCHEDULES</a>
+                </li>
+                <li ng-if="!registerCollege">
+                  <a ui-sref="specialevents">SPECIAL EVENTS</a>
+                </li>
+                <li ng-if="registerCollege">
+                  <a href="{{registerCollege}}/specialevents" target="_blank">SPECIAL EVENTS</a>
+                </li>
+              </ul>
+            </ul>
+          </div>
+          <div class="display-inline forCityPlacing">
+            <div class="citySelect sfa-select">
+              <select name="city" id="city" ng-model="selectedCity" ng-change="changeUrl(selectedCity)">
+                <option value="mumbai">Mumbai</option>
+                <option value="hyderabad">Hyderabad</option>
+                <!-- <option value="ahmedabad">Ahmedabad</option> -->
+              </select>
+              <span class="only-border"></span>
+            </div>
+          </div>
+          <div class="sfa-mum sfa-mum-m hide">
+            <button type="button" name="button" class="btn btn-sfatop" ng-mouseenter="optionss=!optionss" ng-model="checkboxs">SFA {{selectedCity | capitalize}} {{eventYear}}</button>
+          </div>
+        </div>
+        <div class="on-mouse-hover hidden-xs hidden-sm specialCase" ng-mouseenter="optionss=true" ng-mouseleave="optionss=false"
+          ng-show="optionss || checkboxs">
+          <!-- <div class="on-mouse-hover"> -->
+
+          <div class="bg-head curve-head-mum after2 newList hidden-xs hidden-sm">
+
+            <!-- <ul class="list-unstyled ls"> -->
+            <ul class="display-inline typeList">
+              <li>
+                <p>SCHOOL CHAMPIONSHIP</p>
+              </li>
+              <li ng-if="!registerSchool">
+                <a ui-sref="championship"> ABOUT CHAMPIONSHIP</a>
+              </li>
+              <li ng-if="registerSchool">
+                <a href="{{registerSchool}}/championship" target="_blank"> ABOUT CHAMPIONSHIP</a>
+              </li>
+              <li ng-if="!registerSchool">
+                <a ui-sref="register"> REGISTER</a>
+              </li>
+              <li ng-if="registerSchool">
+                <a href="{{registerSchool}}/register" target="_blank"> REGISTER</a>
+              </li>
+              <li ng-if="!registerSchool">
+                <a ui-sref="championshipschedules">CHAMPIONSHIP SCHEDULE</a>
+              </li>
+              <li ng-if="registerSchool">
+                <a href="{{registerSchool}}/championship-schedule" target="_blank">CHAMPIONSHIP SCHEDULE</a>
+              </li>
+              <!-- <li><a ui-sref="faq">SPECIAL EVENTS</a></li>
+                                            <li><a ui-sref="faq">VENUE</a></li> -->
+              <li ng-if="!registerSchool">
+                <a ui-sref="faq">FAQs</a>
+              </li>
+              <li ng-if="registerSchool">
+                <a href="{{registerSchool}}/faq" target="_blank">FAQs</a>
+              </li>
+              <li ng-if="!registerSchool">
+                <a ui-sref="championshipschedule">DRAWS &amp; SCHEDULES</a>
+              </li>
+              <li ng-if="registerSchool">
+                <a href="{{registerSchool}}/draws-schedule" target="_blank">DRAWS &amp; SCHEDULES</a>
+              </li>
+              <li ng-if="!registerSchool">
+                <a ui-sref="specialevents">SPECIAL EVENTS</a>
+              </li>
+              <li ng-if="registerSchool">
+                <a href="{{registerSchool}}/specialevents" target="_blank">SPECIAL EVENTS</a>
+              </li>
+            </ul>
+            <ul class="display-inline typeList" ng-if="selectedCity != 'hyderabad'">
+              <li>
+                <p>COLLEGE CHAMPIONSHIP</p>
+              </li>
+              <!-- <li ng-if="!registerCollege"><a ui-sref="championship"> ABOUT CHAMPIONSHIP</a></li>
+                                <li ng-if="registerCollege"><a href="{{registerCollege}}/championship" target="_blank"> ABOUT CHAMPIONSHIP</a></li> -->
+              <li ng-if="!registerCollege">
+                <a ui-sref="register"> REGISTER</a>
+              </li>
+              <li ng-if="registerCollege">
+                <a href="{{registerCollege}}/register" target="_blank"> REGISTER</a>
+              </li>
+              <li ng-if="!registerCollege">
+                <a ui-sref="championshipschedules">CHAMPIONSHIP SCHEDULE</a>
+              </li>
+              <li ng-if="registerCollege">
+                <a href="{{registerCollege}}/championship-schedule" target="_blank">CHAMPIONSHIP SCHEDULE</a>
+              </li>
+              <!-- <li><a ui-sref="faq">SPECIAL EVENTS</a></li>
+                                <li><a ui-sref="faq">VENUE</a></li> -->
+              <li ng-if="!registerCollege">
+                <a ui-sref="faq">FAQs</a>
+              </li>
+              <li ng-if="registerCollege">
+                <a href="{{registerCollege}}/faq" target="_blank">FAQs</a>
+              </li>
+              <li ng-if="!registerCollege">
+                <a ui-sref="championshipschedule">DRAWS &amp; SCHEDULES</a>
+              </li>
+              <li ng-if="registerCollege">
+                <a href="{{registerCollege}}/draws-schedule" target="_blank">DRAWS &amp; SCHEDULES</a>
+              </li>
+              <li ng-if="!registerCollege">
+                <a ui-sref="specialevents">SPECIAL EVENTS</a>
+              </li>
+              <li ng-if="registerCollege">
+                <a href="{{registerCollege}}/specialevents" target="_blank">SPECIAL EVENTS</a>
+              </li>
+            </ul>
+            <!-- <li>
+                                    <a ui-sref="championship">ABOUT CHAMPIONSHIP</a>
+                                    <a ui-sref="register"> REGISTER</a>
+                                    <a ui-sref="faq">  FAQs</a>
+                                </li> -->
+            <!-- </ul> -->
+
+            <!--<div class="container">
+                                <div class="row dn">
+                                    <div class="head-table">
+                                        <div class="col-md-3">
+                                            <a ui-sref="draw-schedule">draws & schedule</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a ui-sref="special-days">special days</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a ui-sref="medical-aid">medical aid</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a ui-sref="sponser-partner">sponsors & partners</a>
+                                        </div>
+    
+                                    </div>
+    
+                                </div>
+                                <div class="row dn">
+                                    <div class="head-table">
+                                        <div class="col-md-3">
+                                            <a ui-sref="registration">Registration</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a ui-sref="special-awards">special awards</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a ui-sref="food-and-entertainment">food & entertainment</a>
+                                        </div>
+    
+                                        <div class="col-md-3">
+                                            <a ui-sref="faq">faq’s</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row dn">
+                                    <div class="head-table">
+                                        <div class="col-md-3">
+                                            <a ui-sref="venue">venue</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a ui-sref="workshop-clinic">workshop & clinics</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a ui-sref="merchandise-apparels">merchandise & apparels</a>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <a href="img/pdf/EventSchedule.pdf" target="_blank">download schedule program</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>-->
+          </div>
+
+        </div>
+      </div>
+
+      <div class="on-mouse-hover" ng-mouseenter="options=true" ng-mouseleave="options=false">
+        <div class="bg-head curve-head1 no-after mt-0" ng-show="options || checkbox">
+          <div class="container">
+            <div class="row">
+              <div class="head-table">
+                <div class="col-md-2 col-xs-2 padding0">
+                  <div class="menu-list-hover">
+                    <h5 class="text-up " style="color:#f67012">team sports</h5>
+                    <ul class="padding0">
+                      <li>
+                        <a href="{{linkForAllSports}}Basketball" target="_blank">
+                          Basketball
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Football" target="_blank">
+                          Football
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Handball" target="_blank">
+                          Handball
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Hockey" target="_blank">
+                          Hockey
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Kabaddi" target="_blank">
+                          Kabaddi
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Kho Kho" target="_blank">
+                          Kho Kho
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Throwball" target="_blank">
+                          Throwball
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Volleyball" target="_blank">
+                          Volleyball
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-2 col-xs-2 padding0">
+                  <div class="menu-list-hover">
+                    <h5 class="text-up" style="color:#c9e000">racquet sports</h5>
+                    <ul class="padding0">
+                      <li>
+                        <a href="{{linkForAllSports}}Badminton" target="_blank">
+                          Badminton
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Table Tennis" target="_blank">
+                          Table Tennis
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Tennis" target="_blank">
+                          Tennis
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Squash" target="_blank">
+                          Squash
+                        </a>
+                      </li>
+
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-2 col-xs-2 padding0">
+                  <div class="menu-list-hover">
+                    <h5 class="text-up" style="color:#aa33ff">combat sports</h5>
+                    <ul class="padding0">
+                      <li>
+                        <a href="{{linkForAllSports}}Boxing" target="_blank">
+                          Boxing
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Fencing" target="_blank">
+                          Fencing
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Judo" target="_blank">
+                          Judo
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Karate" target="_blank">
+                          Karate
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Sport MMA" target="_blank">
+                          Sport MMA
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Taekwondo" target="_blank">
+                          Taekwondo
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Wrestling" target="_blank">
+                          Wrestling
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-2 col-xs-2 padding0">
+                  <div class="menu-list-hover">
+                    <h5 class="text-up" style="color:#d8485a">target sports</h5>
+                    <ul class="padding0">
+                      <li>
+                        <a href="{{linkForAllSports}}Archery" target="_blank">
+                          Archery
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Shooting" target="_blank">
+                          Shooting
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-2 col-xs-2 padding0">
+                  <div class="menu-list-hover">
+                    <h5 class="text-up" style="color:#00aaff">aquatics</h5>
+                    <ul class="padding0">
+                      <li>
+                        <a href="{{linkForAllSports}}Swimming" target="_blank">
+                          Swimming
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Water Polo" target="_blank">
+                          Water Polo
+                        </a>
+                      </li>
+
+                    </ul>
+                  </div>
+                </div>
+                <div class="col-md-2 col-xs-2  padding0">
+                  <div class="menu-list-hover">
+                    <h5 class="text-up" style="color:#0edb87">individual sports</h5>
+                    <ul class="padding0">
+                      <li>
+                        <a href="{{linkForAllSports}}Athletics" target="_blank">
+                          Athletics
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Carrom" target="_blank">
+                          Carrom
+                        </a>
+                      </li>
+                      <li>
+                        <a href="{{linkForAllSports}}Chess" target="_blank">
+                          Chess
+                        </a>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </nav>
 </header>
