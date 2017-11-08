@@ -151,6 +151,10 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
           $scope.risingAthletes = data.data.risingAthletes;
           $scope.sportTable.tableLimit = 5;
           $scope.sportTable.showTable = true;
+          _.each($scope.risingAthletes,function(n){
+            n.fullName = n.athleteProfile.firstName + n.athleteProfile.surname;
+            // n.goldCount = n.medalData
+          });
           console.log('School Table', $scope.sportTable);
           console.log('rising', $scope.risingAthletes);
         } else {
