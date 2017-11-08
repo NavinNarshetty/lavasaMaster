@@ -3736,7 +3736,7 @@ var model = {
             obj["SCHOOL 2"] = "";
             finalData.push(obj);
             Config.generateExcel("KnockoutIndividual", finalData, res);
-        } else if (data.resultType == 'league-cum-knockout') {
+        } else if (data.resultType == 'league-cum-knockout' && data.playerType == 'team') {
             var obj = {};
             obj.DATE = "";
             obj.TIME = "";
@@ -3754,6 +3754,28 @@ var model = {
             obj["COACH NAME 1"] = "";
             obj["TEAM 2"] = "";
             obj["TEAM NAME 2"] = "";
+            obj["SCHOOL 2"] = "";
+            obj["COACH NAME 2"] = "";
+            finalData.push(obj);
+            Config.generateExcel("KnockoutIndividual", finalData, res);
+        } else if (data.resultType == 'league-cum-knockout' && data.playerType == 'individual') {
+            var obj = {};
+            obj.DATE = "";
+            obj.TIME = "";
+            obj["SPORT"] = "";
+            obj.GENDER = ""
+            obj["AGE GROUP"] = "";
+            obj["EVENT"] = "";
+            obj["WEIGHT CATEGORIES"] = "";
+            obj["STAGE"] = "";
+            obj["ROUND"] = "";
+            obj["MATCH NO"] = "";
+            obj["SFAID 1"] = "";
+            obj["NAME 1"] = "";
+            obj["SCHOOL 1"] = "";
+            obj["COACH NAME 1"] = "";
+            obj["SFAID 2"] = "";
+            obj["NAME 2"] = "";
             obj["SCHOOL 2"] = "";
             obj["COACH NAME 2"] = "";
             finalData.push(obj);
