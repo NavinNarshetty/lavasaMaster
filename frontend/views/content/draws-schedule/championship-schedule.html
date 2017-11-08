@@ -11,10 +11,10 @@
                             </p>
                             <p ng-if="sfaCity == 'Mumbai'">Draws and Schedules publishing date will be announced soon.</p>
                             <a ng-if="sfaCity == 'Hyderabad'" ng-click="downloadPdf('badminton')">
-                                <p>Click here to download Badminton Draws & Schedule.</p>
+                                <p class="champions-bold">Click here to download <span class="text-uppercase">Badminton Draws & Schedule</span>.</p>
                             </a>
                             <a ng-if="sfaCity == 'Hyderabad'" ng-click="downloadPdf('kabaddi')">
-                                <p>Click here to download Kabaddi Draws & Schedule.</p>
+                                <p class="champions-bold">Click here to download <span class="text-uppercase">Kabaddi Draws & Schedule</span>.</p>
                             </a>
                             <p ng-if="sfaCity == 'Hyderabad'">Draws & Schedule for other sports will be available shortly.</p>
                         </div>
@@ -252,13 +252,24 @@
                                                         <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
                                                             <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
                                                             <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
-                                                            <span>-</span> {{schedule.date2}}
-                                                            <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                            <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
+                                                            <span>-</span>                                                        {{schedule.date2}}
+                                                        <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                        {{schedule.month}}
                                                         </span>
                                                         <span ng-if="schedule.date">{{schedule.date}}
                                                             <sup>th</sup> {{schedule.month}} </span>
                                                         <span ng-if="!schedule.date && !schedule.date1 && !schedule.date2">TBA</span>
+                                                    </div>
+                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.link">
+                                                        <a href="{{schedule.link}}" target="_blank">
+                                                            <span class="champions-viewdraws">
+                                                              View Draws-Schedule      
+                                                            </span>  
+                                                            <span class="pdf-champions">
+                                                                <i class="fa fa-file-pdf-o"></i>
+                                                            </span>
+                                                            </a>
+
                                                     </div>
                                                 </td>
                                             </tr>
@@ -288,12 +299,23 @@
                                                         <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
                                                             <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
                                                             <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
-                                                            <span>-</span> {{schedule.date2}}
-                                                            <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                            <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
+                                                            <span>-</span>                                                        {{schedule.date2}}
+                                                        <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                        {{schedule.month}}
                                                         </span>
                                                         <span ng-if="schedule.date">{{schedule.date}}
                                                             <sup>th</sup> {{schedule.month}} </span>
+                                                    </div>
+                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.link">
+                                                        <a href="{{schedule.link}}" target="_blank">
+                                                        <span class="champions-viewdraws">
+                                                            View Draws-Schedule      
+                                                        </span>  
+                                                        <span class="pdf-champions">
+                                                            <i class="fa fa-file-pdf-o"></i>
+                                                        </span>
+                                                        </a>
+
                                                     </div>
                                                 </td>
                                             </tr>

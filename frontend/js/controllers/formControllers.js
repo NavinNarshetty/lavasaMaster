@@ -342,8 +342,8 @@ myApp.controller('ChampionshipSchedulesCtrl', function ($scope, TemplateService,
                     month: 'Nov'
                 }, {
                     sport: 'Carrom',
-                    date1: '11',
-                    date2: '14',
+                    date1: '14',
+                    date2: '17',
                     month: 'Nov'
                 }, {
                     sport: 'Chess',

@@ -154,118 +154,142 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     sport: 'Archery',
                     date1: '11',
                     date2: '12',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Athletics',
                     date1: '13',
                     date2: '15',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Badminton',
                     date1: '10',
                     date2: '14',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Basketball',
                     date1: '11',
                     date2: '17',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Boxing',
                     date1: '16',
                     date2: '17',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Carrom',
-                    date1: '11',
-                    date2: '14',
-                    month: 'Nov'
+                    date1: '14',
+                    date2: '17',
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Chess',
                     date1: '11',
                     date2: '13',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Fencing',
                     date1: '16',
                     date2: '17',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Football',
                     date1: '11',
                     date2: '17',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Handball',
                     date1: '16',
                     date2: '17',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Hockey',
                     date1: '11',
                     date2: '12',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Judo',
                     date: '15',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }];
 
                 $scope.schedulelist2 = [{
                     sport: 'Kabaddi',
                     date1: '10',
                     date2: '14',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Karate',
                     date: '15',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Kho Kho',
                     date1: '14',
                     date2: '17',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Shooting',
                     date: '12',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Swimming',
                     date1: '11',
                     date2: '12',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Table Tennis',
                     date1: '15',
                     date2: '17',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Taekwondo',
                     date: '15',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Tennis',
                     date1: '15',
                     date2: '17',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Throwball',
                     date1: '14',
                     date2: '17',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Volleyball',
                     date1: '12',
                     date2: '17',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: 'Water Polo',
                     date: '13',
-                    month: 'Nov'
+                    month: 'Nov',
+                    link: ''
                 }, {
                     sport: '',
                     date: '',
-                    month: ''
+                    month: '',
+                    link: ''
                 }];
             }
         } else {

@@ -506,6 +506,23 @@ $sport-table-grey:#efeeee !default;
   padding-left: 70px;
 }
 
+.championsschdule-pdfbutton {
+  font-size: 12px;
+}
+
+.pdf-champions {
+  color: red;
+}
+
+.champions-bold {
+  font-weight: bold;
+}
+
+.champions-viewdraws {
+  color: $brand-warning;
+  font-weight: bold;
+}
+
 // CHAMPIONS TABLE
 .championshipschedule-tableholder {
   table {
