@@ -249,13 +249,13 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
 
         //Form Registration
 
-        .state('formathlete', {
+        .state('formathleteS', {
             url: "/formathleteS",
             templateUrl: tempateURL,
             controller: 'FormathleteCtrl'
         })
 
-        .state('formregis', {
+        .state('formregisS', {
             url: "/formregisS",
             templateUrl: tempateURL,
             controller: 'FormregisCtrl'
