@@ -3023,7 +3023,7 @@ var model = {
                                     } else {
                                         console.log("singleData1", singleData);
                                         var paramData = {};
-                                        paramData.team = singleData["SFAID 1"];
+                                        paramData.participant = singleData["SFAID 1"];
                                         paramData.sport = singleData.SPORT;
                                         Match.getAthleteId(paramData, function (err, complete) {
                                             if (err || _.isEmpty(complete)) {
@@ -3053,9 +3053,9 @@ var model = {
                                         callback(null, singleData);
                                     } else {
                                         var paramData = {};
-                                        paramData.team = singleData["SFAID 2"];
+                                        paramData.participant = singleData["SFAID 2"];
                                         paramData.sport = singleData.SPORT;
-                                        Match.getTeamId(paramData, function (err, complete) {
+                                        Match.getAthleteId(paramData, function (err, complete) {
                                             if (err || _.isEmpty(complete)) {
                                                 singleData["NAME 2"] = null;
                                                 err = "NAME 2 may have wrong values";
