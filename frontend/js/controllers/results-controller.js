@@ -7,9 +7,15 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     $scope.showEventFilter = false;
     $scope.defaultEvent = "sfa mumbai 2015-16";
     $scope.showAllMedalWinner = false;
+    $scope.sportFilter = {
+      name: "Basketball"
+    };
     // VARIABLE INITITALISE END
 
     // FUNCTIONS
+    $scope.log = function(){
+      console.log($scope.sportFilter, 'filter');
+    };
     // SELECT CITY FILTER
     $scope.viewEvent = function(){
       if($scope.showEventFilter == false){
@@ -95,6 +101,18 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       }
     }
     // SCHOOL RANKING TABLE END
+    // SPORT RANKING TABLE
+    $scope.viewMoreSport = function(bool){
+      if (bool) {
+        $scope.sportTable.showTable = false;
+        $scope.sportTable.tableLimit = $scope.sportTable.length;
+      } else {
+        $scope.sportTable.showTable = true;
+        $scope.sportTable.tableLimit = 5;
+        TemplateService.scrollTo('sportRankingTable', 'id');
+      }
+    }
+    // SPORT RANKING TABLE END
     // VIEW MORE / LESS FUNCTIONS END
     // FUNCTIONS END
 
@@ -121,186 +139,87 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       } else {
         toastr.error('Ranking Table Error','Error');
       }
-    })
+    });
     // GET RANKING TABLE END
-
+    // GET SPORT RANKING TABLE
+    $scope.getSchoolBySport = function(){
+      NavigationService.getSchoolBySport($scope.sportFilter, function(data){
+        var data = data.data;
+        console.log('Data', data);
+        if (data.value == true) {
+          $scope.sportTable = data.data.table;
+          $scope.risingAthletes = data.data.risingAthletes;
+          $scope.sportTable.tableLimit = 5;
+          $scope.sportTable.showTable = true;
+          console.log('School Table', $scope.sportTable);
+          console.log('rising', $scope.risingAthletes);
+        } else {
+          toastr.error('Sport Ranking Error', 'Error');
+        }
+      });
+    };
+    $scope.getSchoolBySport();
+    // GET SPORT RANKING TABLE END
     // APIS END
 
     // JSONS
     $scope.eventList = ['sfa mumbai 2015-16', 'sfa ahmedabad 2015-16', 'sfa hyderabad 2015-16'];
-    // SCHOOL RANKING TABLE
-    $scope.sportTable = [{
-      rank: 1,
-      name: 'jamnabai high school jamnabai high school',
-      medals: {
-        gold: {
-          points: 20
-        },
-        silver: {
-          points: 20
-        },
-        bronze: {
-          points: 20
-        }
-      },
-      totalPoints: 200,
-      details: [{
-        name: 'Athletics',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      },{
-        name: 'Archery ',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      },{
-        name: 'Badminton',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      }]
-    },{
-      rank: 2,
-      name: 'jamnabai high school',
-      medals: {
-        gold: {
-          points: 20
-        },
-        silver: {
-          points: 20
-        },
-        bronze: {
-          points: 20
-        }
-      },
-      totalPoints: 200,
-      details: [{
-        name: 'Athletics',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      },{
-        name: 'Archery ',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      },{
-        name: 'Badminton',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      }]
-    },{
-      rank: 3,
-      name: 'jamnabai high school',
-      medals: {
-        gold: {
-          points: 20
-        },
-        silver: {
-          points: 20
-        },
-        bronze: {
-          points: 20
-        }
-      },
-      totalPoints: 200,
-      details: [{
-        name: 'Athletics',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      },{
-        name: 'Archery ',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      },{
-        name: 'Badminton',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      }]
-    },{
-      rank: 4,
-      name: 'jamnabai high school',
-      medals: {
-        gold: {
-          points: 20
-        },
-        silver: {
-          points: 20
-        },
-        bronze: {
-          points: 20
-        }
-      },
-      totalPoints: 200,
-      details: [{
-        name: 'Athletics',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      },{
-        name: 'Archery ',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      },{
-        name: 'Badminton',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      }]
-    },{
-      rank: 5,
-      name: 'jamnabai high school',
-      medals: {
-        gold: {
-          points: 20
-        },
-        silver: {
-          points: 20
-        },
-        bronze: {
-          points: 20
-        }
-      },
-      totalPoints: 200,
-      details: [{
-        name: 'Athletics',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      },{
-        name: 'Archery ',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      },{
-        name: 'Badminton',
-        gold: 2,
-        silver: 2,
-        bronze: 2,
-        total: 2
-      }]
-    }];
-    // SCHOOL RANKING TABLE END
+
+    // FILTER OPTIONS
+    $scope.filterOptions = [{
+        name: 'Archery'
+    }, {
+        name: 'Athletics'
+    }, {
+        name: 'Badminton'
+    }, {
+        name: 'Basketball'
+    }, {
+        name: 'Boxing'
+    }, {
+        name: 'Carrom'
+    }, {
+        name: 'Chess'
+    }, {
+        name: 'Fencing'
+    }, {
+        name: 'Football'
+    }, {
+        name: 'Handball'
+    }, {
+        name: 'Hockey'
+    }, {
+        name: 'Judo'
+    }, {
+        name: 'Kabaddi'
+    }, {
+        name: 'Karate'
+    }, {
+        name: 'Kho Kho'
+    }, {
+        name: 'Sport MMA'
+    }, {
+        name: 'Shooting'
+    }, {
+        name: 'Squash'
+    }, {
+        name: 'Swimming'
+    }, {
+        name: 'Table Tennis'
+    }, {
+        name: 'Taekwondo'
+    }, {
+        name: 'Tennis'
+    }, {
+        name: 'Throwball'
+    }, {
+        name: 'Volleyball'
+    }, {
+        name: 'Water Polo'
+    }, {
+        name: 'Wrestling'
+    }]
+    // FILTER OPTIONS END
 
     // ALL MEDAL WINNERS
     $scope.medalWinners = [{

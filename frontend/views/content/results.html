@@ -5,7 +5,7 @@
     <div class="result-titlesection">
       <!-- <button class="btn btn-primary" ng-click="generateTable();">Generate Table</button> -->
       <div class="result-title">School Result
-         <span class="result-dropdown resulttitle-dropdown" ng-click="viewEvent();"> {{defaultEvent}} <span  class="fa " ng-class = " { 'fa-angle-up' : showEventFilter == true , 'fa-angle-down' :  showEventFilter == false } "></span>
+         <span class="result-dropdown resulttitle-dropdown hide" ng-click="viewEvent();"> {{defaultEvent}} <span  class="fa " ng-class = " { 'fa-angle-up' : showEventFilter == true , 'fa-angle-down' :  showEventFilter == false } "></span>
            <div class="landingschool-schoolfilter" ng-show="showEventFilter">
              <ul class="list-unstyled">
                <li ng-repeat="event in eventList track by $index" ng-click="selectEvent(event);"> {{event}}</li>
@@ -98,7 +98,7 @@
               </td>
               <td  class="">
                 <div class="">
-                  {{school.totalPoints}} <span ng-click="closeAllOpen($index, school);" class="pointer fa " ng-class="{'fa-angle-down': school.rowDetail == false, 'fa-angle-up':school.rowDetail == true }" ></span>
+                  {{school.totalPoints}} <span ng-if="school.sportData.length>0" ng-click="closeAllOpen($index, school);" class="pointer fa " ng-class="{'fa-angle-down': school.rowDetail == false, 'fa-angle-up':school.rowDetail == true }" ></span>
                 </div>
               </td>
             </tr>
@@ -106,8 +106,8 @@
         </table>
       </div>
       <!-- RESULT SCHOOL TABLE END -->
-      <div class="viewmore">
-        <a type="button" class="btn btn-viewmore" ng-click="viewMoreRanking(rankTable.showTable);">View <span ng-if="rankTable.showTable == true">More</span> <span ng-if="rankTable.showTable == false">Less</span></a>
+      <div class="viewmore" ng-if="rankTable.length>20">
+        <a type="button" class="btn btn-viewmore" ng-click="viewMoreRanking(rankTable.showTable);" >View <span ng-if="rankTable.showTable == true">More</span> <span ng-if="rankTable.showTable == false">Less</span></a>
       </div>
     </div>
     <!-- SCHOOL RANKING SECTION END -->
@@ -124,21 +124,41 @@
         <h3>school ranking basis specific sport</h3>
       </div>
       <div class="result-sportfilter">
-        <label >Sport</label>
-      </div>
-      <!--SCHOOL TABLE-->
-      <div class="schoolrank-table" ng-repeat = "sport in medalWinners track by $index">
         <div class="row">
+          <div class="col-md-4">
+            <label class="sportfilter-label">Sport</label>
+            <div class="sportfilter-select">
+              <ui-select name="selectsporttype" ng-model="sportFilter.name" theme="bootstrap" on-select="getSchoolBySport();">
+                  <ui-select-match placeholder="Select Sport">{{$select.selected.name}}</ui-select-match>
+                  <ui-select-choices repeat="sport.name as sport in filterOptions | filter: $select.search">
+                      <div>
+                          <p class="m-clear">{{sport.name}}</p>
+                      </div>
+                  </ui-select-choices>
+              </ui-select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!--SCHOOL TABLE-->
+      <div class="schoolrank-table">
+        <div class="schoolranktable-head text-center" ng-if="sportTable.length == 0">
+          <h3 class="text-uppercase color-sport-lightblue fjalla-one">
+            No Data Found For This Sport
+          </h3>
+        </div>
+        <div class="row" ng-if="sportTable.length > 0">
           <div class="col-md-7 col-sm-12 col-xs-12">
-            <div class="schoolranktable-head">
+            <div class="schoolranktable-head" id="sportRankingTable">
               <h3 class="text-uppercase color-sport-lightblue fjalla-one">
-                Archery
+                {{sportFilter.name}}
               </h3>
             </div>
             <div class="schooltable-bg">
               <div class="schooltable-holder">
                 <div class="schooltable-content table-responsive">
-                  <table class=" table ">
+                  <table class="table" >
                     <thead>
                       <tr class="bag-blue">
                         <th>
@@ -181,7 +201,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="item in sportTable | limitTo:5 track by $index">
+                      <tr ng-repeat="item in sportTable | limitTo:sportTable.tableLimit track by $index">
                         <td>
                           <div class="">
                             {{$index + 1}}
@@ -189,22 +209,22 @@
                         </td>
                         <td>
                           <div class="schoolranktable-sportwise">
-                            {{item.name}}
+                            {{item._id}}
                           </div>
                         </td>
                         <td>
                           <div class="">
-                            {{item.medals.gold.points}}
+                            {{item.goldPoints}}
                           </div>
                         </td>
                         <td>
                           <div class="">
-                            {{item.medals.silver.points}}
+                            {{item.silverPoints}}
                           </div>
                         </td>
                         <td>
                           <div class="">
-                            {{item.medals.bronze.points}}
+                            {{item.bronzePoints}}
                           </div>
                         </td>
                         <td>
@@ -217,6 +237,10 @@
                   </table>
                 </div>
               </div>
+            </div>
+            <div class="resultsport-viewmedalwinner">
+              <a class="btn-viewmore" ng-click="viewMoreSport(sportTable.showTable);" ng-if="sportTable.length>5">View <span ng-if="sportTable.showTable == true">Full</span><span ng-if="sportTable.showTable == false">Less</span> Ranking Table</a>
+              <a class="btn-viewmore" ng-click="showMedalWinner();">View All Medal Winners</a>
             </div>
           </div>
           <div class="col-md-5 col-sm-12 col-xs-12">
@@ -234,8 +258,8 @@
           </div>
         </div>
         <div class="resultsport-viewmedalwinner">
-          <a class="btn-viewmore" ng-click="showMoreSport($index);">View <span>Full</span><span ng-if="">Less</span> Ranking Table</a>
-          <a class="btn-viewmore" ng-click="showMedalWinner();">View All Medal Winners</a>
+          <!-- <a class="btn-viewmore" ng-click="showMoreSport($index);" ng-if="sportTable.length>5">View <span>Full</span><span ng-if="">Less</span> Ranking Table</a>
+          <a class="btn-viewmore" ng-click="showMedalWinner();">View All Medal Winners</a> -->
           <div class="result-viewall-medalwinners" ng-show="showAllMedalWinner">
             <!-- FILTER -->
             <div class="allmedals-filterholder">

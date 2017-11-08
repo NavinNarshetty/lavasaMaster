@@ -1595,3 +1595,74 @@ $tickerDuration: 60s;
 // **************************************************************************
 // CUSTOM TICKER END
 // LIVE UPDATES PAGE END
+
+// RESULTS PAGE
+.result-sportfilter{
+  margin: 30px 0;
+}
+.sportfilter-label{
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.sportfilter-select {
+  width: 250px;
+  padding: 0 10px;
+  display: inline-block;
+  vertical-align: middle;
+  text-transform: uppercase;
+
+  // CUSTOM FILTER UI SELECT
+  .ui-select-bootstrap{
+    ::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+    }
+    ::-webkit-scrollbar-track {
+        background-color: transparent;
+    }
+    input[type="search"]{
+      border: 2px solid #ccc;
+    }
+    .ui-select-toggle{
+      border: 2px solid #ccc;
+    }
+    .ui-select-choices{
+      border: 1px solid #ccc;
+      border-radius: 0;
+      left: 0;
+    }
+    .ui-select-choices-row > span{
+      padding: 5px 15px;
+    }
+    .ui-select-choices-row.active > span{
+        background-color: #a0a0a0;
+    }
+    .ui-select-toggle > .caret{
+      width: 30px;
+      height: 100%;
+      border: none;
+      border-left: 2px solid #ccc;
+      margin: 0;
+      top: 0;
+      right: 0;
+      font: normal normal normal 14px/1 FontAwesome;
+      text-rendering: auto;
+      font-size: 24px;
+      line-height: 1;
+      text-align: center;
+      &:before{
+        content: "\f0d7";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        color: #ccc;
+        @include transform(translate(-50%, -50%));
+      }
+    }
+  }
+  // CUSTOM FILTER UI SELECT END
+}
+// RESULTS PAGE END

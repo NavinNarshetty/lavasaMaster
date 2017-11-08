@@ -1175,5 +1175,12 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 method: 'POST',
             }).success(callback);
         },
+        getSchoolBySport: function (formData, callback) {
+            $http({
+                url: adminUrl2 + 'rank/getSchoolBySport',
+                method: 'POST',
+                data: formData
+            }).then(callback);
+        },
     };
 });
