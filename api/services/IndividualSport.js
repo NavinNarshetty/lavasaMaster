@@ -2423,6 +2423,7 @@ var model = {
                             } else {
                                 obj.SchoolName = n.school;
                             }
+                            obj.Mobile = n.mobile;
                             obj.Gender = n.gender;
                             obj.Sport = n.sportName;
                             if (count == 0) {
