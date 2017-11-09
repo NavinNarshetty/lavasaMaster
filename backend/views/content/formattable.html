@@ -455,7 +455,10 @@
                       <td>
                         <span>{{item.opponentsSingle[1].athleteId.firstName}}</span> <span ng-if="item.opponentsSingle[0].athleteId.middleName">{{item.opponentsSingle[1].athleteId.middleName}}</span>                        <span>{{item.opponentsSingle[1].athleteId.surname}}</span>
                       </td>
-                      <td>{{item.set}}</td>
+                      <td>
+                        <span>{{item.resultFencing.players[0].finalPoints}}</span> <span>-</span><span>{{item.resultFencing.players[1].finalPoints}}</span>
+
+                      </td>
                       <td>
                         <a class="btn btn-primary" target="_blank" ng-click="specificFormat(item)">
                                                               <i class="fa fa-pencil"></i> Edit

@@ -336,6 +336,53 @@
                 </div>
                 <!-- PLAYER RAQUET -->
 
+                <!-- FENCING -->
+                <div class="test" ng-if="formData.sport.sportslist.sportsListSubCategory.name ==='Fencing'" ng-repeat="player in formData.resultFencing.players track by $index">
+                  <div class="form-group">
+                    <h6 class="text-center">Player {{$index+1}}.</h6>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-4">
+                      <!-- PLAYER NAME -->
+                      <div class="form-group">
+                        <label for="">Name</label>
+                        <input type="text" name="playername" ng-model="player.fullName" class="form-control" placeholder="Enter Name" readonly>
+                        <div class="error-msg" ng-if="detailForm.playername.$invalid && detailForm.playername.$touched">Please Enter Valid Name *</div>
+                      </div>
+                      <!-- PLAYER NAME ENDs -->
+                    </div>
+                    <div class="col-md-4">
+                      <!-- SCHOOL NAME -->
+                      <div class="form-group">
+                        <label for="">School Name</label>
+                        <input type="text" name="schoolname" ng-model="player.schoolName" class="form-control" placeholder="Enter Name School Name"
+                          readonly>
+                        <div class="error-msg" ng-if="detailForm.schoolname.$invalid && detailForm.schoolname.$touched">Please Enter Valid School Name *</div>
+                      </div>
+                      <!-- SCHOOL NAME END -->
+                    </div>
+                    <div class="col-md-4">
+                      <!-- POINTS NAME -->
+                      <div class="form-group">
+                        <label for="">Final-Points</label>
+                        <input type="number" name="schoolname" ng-model="player.finalPoints" class="form-control" placeholder="Enter Score">
+                      </div>
+                      <!-- POINTS  END -->
+                    </div>
+                  </div>
+                  <div class="checkbox form-group">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <label><input type="checkbox" ng-model="player.noShow"> noShow</label>
+                      </div>
+                      <div class="col-md-6">
+                        <label><input type="checkbox" ng-model="player.walkover"> walkover</label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- FENCING END -->
+
 
                 <div class="text-center mt20 odd-even-button">
                   <button class="btn btn-default" type="submit" ng-click="saveDataMatch(formData)">Save</button>

@@ -620,8 +620,13 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
         $scope.sportName = $scope.formData.sport.sportslist.sportsListSubCategory.sportsListCategory.name;
         switch ($scope.sportName) {
           case "Combat Sports":
-            console.log("in switch")
-            $scope.formData.result = $scope.formData.resultsCombat;
+            if ($scope.formData.sport.sportslist.sportsListSubCategory.name === 'Fencing') {
+              console.log("in switch fencing")
+              $scope.formData.result = $scope.formData.resultFencing;
+            } else {
+              console.log("in switch")
+              $scope.formData.result = $scope.formData.resultsCombat;
+            }
             break;
           case "Racquet Sports":
             console.log("in racquet")
@@ -657,6 +662,11 @@ myApp.controller('DetailPlayerCtrl', function ($scope, TemplateService, Navigati
               $scope.formData.resultSwiss.players[index].schoolName = key.athleteId.school.name;
             }
 
+          } else if ($scope.formData.resultFencing) {
+            console.log("in fencing")
+            if (key.athleteId.school) {
+              $scope.formData.resultFencing.players[index].schoolName = key.athleteId.school.name;
+            }
           }
 
         })
