@@ -284,24 +284,6 @@ var model = {
             risingAthletes: []
         }
 
-        // Rank.aggregate(sportRankipeline, function (err, result) {
-        //     if (err) {
-        //         callback(err, null);
-        //     } else {
-        //         sendObj.table = result;
-        //         SpecialAwardDetails.aggregate(risingAwardPipeline, function (err, risingAwards) {
-        //             sendObj.risingAthletes = risingAwards;
-        //             console.log("risingAwards", risingAwards);
-        //             if (err) {
-        //                 callback(err, null);
-        //             } else {
-        //                 result.risingAthletes = risingAwards;
-        //                 callback(null, sendObj);
-        //             }
-        //         })
-        //     }
-        // })
-
         async.waterfall([
             function (callback) {
                 Rank.aggregate(sportRankipeline, function (err, result) {
