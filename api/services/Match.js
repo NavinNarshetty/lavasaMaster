@@ -406,6 +406,11 @@ var model = {
                         } else {
                             finalData.resultImages = found.resultImages;
                         }
+                        if (_.isEmpty(found.resultFencing)) {
+                            finalData.resultFencing = "";
+                        } else {
+                            finalData.resultFencing = found.resultFencing;
+                        }
                         callback(null, finalData);
                     }
 
@@ -10967,6 +10972,12 @@ var model = {
             var matchObj = {
                 $set: {
                     resultSwiss: data.resultSwiss
+                }
+            };
+        } else if (data.resultFencing) {
+            var matchObj = {
+                $set: {
+                    resultFencing: data.resultFencing
                 }
             };
         }
