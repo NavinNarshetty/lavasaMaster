@@ -667,14 +667,17 @@ var model = {
                     gfs.find({
                         filename: filename,
                     }).lean().exec(function (err, found) {
-                        if (err) {} else {
+                        if (err) {
+                            callback(err, null);
+                        } else {
                             _.each(found, function (n) {
                                 gfs.remove({
                                     filename: n,
                                 }, function () {
-                                    image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
+
                                 });
                             });
+                            image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
                         }
                     });
                 });
