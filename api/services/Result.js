@@ -498,15 +498,5 @@ var model = {
             }
         })
     },
-
-    getMedalsPerSport: function (data, callback) {
-        //group by school->parallel groupBy medalType and groupBy (sportsListSubCategory.name and medalType)
-
-    },
-
-
-
-
-
 };
 module.exports = _.assign(module.exports, exports, model);
