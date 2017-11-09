@@ -97,7 +97,7 @@ var model = {
                                     length: 8,
                                     numbers: true
                                 });
-                                if (mainData.gender == "Boys" || mainData.gender = "boys") {
+                                if (mainData.gender == "Boys" || mainData.gender == "boys") {
                                     final.gender = "male";
                                 } else if (mainData.gender == "Girls" || mainData.gender == "girls") {
                                     final.gender = "female"
