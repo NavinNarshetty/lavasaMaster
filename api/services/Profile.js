@@ -3450,7 +3450,6 @@ var model = {
                                     if (err) {
                                         callback(err, "error in mongoose");
                                     } else {
-                                        // var match = [];
                                         async.each(matchData, function (singleData, callback) {
                                                 var stats = {};
                                                 stats.year = new Date(singleData.createdAt).getFullYear();
@@ -3536,28 +3535,28 @@ var model = {
                                                                         function (profile, callback) {
                                                                             if (n.team !== singleData.opponentsTeam._id.toString()) {
                                                                                 console.log("not equal", n.team, "opponentName", singleData.opponentsTeam._id);
+                                                                                var object = new objectid(n.team);
                                                                                 TeamSport.findOne({
-                                                                                    teamId: n.team
+                                                                                    _id: object
                                                                                 }).lean().exec(function (err, found) {
                                                                                     if (err) {
                                                                                         callback(null, err);
                                                                                     } else if (_.isEmpty(found)) {
+                                                                                        console.log("empty");
                                                                                         callback(null, profile.match);
                                                                                     } else {
                                                                                         console.log("found", found);
-                                                                                        opponentName = found.teamId;
-                                                                                        opponentSchool = found.schoolName;
-                                                                                        if (singleData.resultsCombat.winner.player === n) {
+                                                                                        stats.opponentName = found.teamId;
+                                                                                        stats.opponentSchool = found.schoolName;
+                                                                                        if (singleData.resultsCombat.winner.player === n.team) {
                                                                                             stats.isAthleteWinner = false;
                                                                                         } else {
                                                                                             stats.isAthleteWinner = true;
                                                                                         }
-                                                                                        profile.match.push(stats);
-                                                                                        callback(null, profile);
+                                                                                        callback(null, profile.match);
                                                                                     }
                                                                                 });
                                                                             } else {
-                                                                                console.log("equal", n.team, "opponentName", singleData.opponentsTeam._id);
                                                                                 while (i < singleData.resultsCombat.teams[0].sets.length) {
                                                                                     if (i == 0) {
                                                                                         result = singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
@@ -3565,10 +3564,8 @@ var model = {
                                                                                         result = result + "," + singleData.resultsCombat.teams[0].sets[i].point + "-" + singleData.resultsCombat.teams[1].sets[i].point;
                                                                                     }
                                                                                     i++;
-                                                                                    console.log("i", result);
                                                                                 }
                                                                                 stats.score = result;
-                                                                                stats.isAthleteWinner = true;
                                                                                 profile.match.push(stats);
                                                                                 callback(null, profile);
                                                                             }
