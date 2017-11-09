@@ -153,7 +153,7 @@ var model = {
                                 // var result = _.sortBy(gender, item => parseFloat(item[1]));
                                 return {
                                     name: name,
-                                    medal: _.keyBy(gender,'name'),
+                                    medal: _.keyBy(gender, 'name'),
                                     totalCount: totalCount,
                                     totalPoints: totalPoints
                                 };
@@ -424,7 +424,7 @@ var model = {
                                 var totalPoints = _.sum(pointsArr);
                                 return {
                                     name: name,
-                                    medals: _.keyBy(qwerty,'name'),
+                                    medals: _.keyBy(qwerty, 'name'),
                                     count: values.length,
                                     totalCount: totalCount,
                                     totalPoints: totalPoints
@@ -435,39 +435,65 @@ var model = {
                             sportData: gender,
                         };
                     }).value();
-                callback(null,medalRank, totalMatches,medalRanksBySport);
+                callback(null, medalRank, totalMatches, medalRanksBySport);
             },
 
             // merge above 3 arrays into single arr and then again group by school
-            function (medalRank, totalMatches,medalRanksBySport, callback){
-                var totalLength= medalRank.length + totalMatches.length + medalRanksBySport.length;
-                var finalArr=_.concat(medalRank, totalMatches,medalRanksBySport);
-                var finalArrLength=finalArr.length;
+            function (medalRank, totalMatches, medalRanksBySport, callback) {
+                var totalLength = medalRank.length + totalMatches.length + medalRanksBySport.length;
+                var finalArr = _.concat(medalRank, totalMatches, medalRanksBySport);
+                var finalArrLength = finalArr.length;
 
-                var tp=_(finalArr)
-                .groupBy('name')
-                .map(function(items,name){
-                    return  _.assign.apply(_, items)
-                }).value();
+                var tp = _(finalArr)
+                    .groupBy('name')
+                    .map(function (items, name) {
+                        return _.assign.apply(_, items)
+                    }).value();
 
-                callback(null,tp);
+                callback(null, tp);
             }
 
-        ], function (err,result) {
+        ], function (err, result) {
             if (err) {
-                callback(err,null);
+                callback(err, null);
             } else {
-                console.log("result",result);
-                async.concatSeries(result,function(singleData,callback){
-                    Rank.saveData(singleData,function(err,data){
-                        if(err){
-                            callback(null,err)
-                        }else{
-                            callback(null,data);
+                console.log("result", result);
+                async.concatSeries(result, function (singleData, callback) {
+                    var matchObj = {
+                        "name": singleData.name
+                    }
+                    Rank.findOne(matchObj).lean().exec(function (err, result) {
+                        console.log(err, result);
+                        if (err) {
+                            callback(err, null);
+                        } else if (!_.isEmpty(result)) {
+                            singleData._id = result._id;
+                            Rank.saveData(singleData, function (err, data) {
+                                if (err) {
+                                    callback(null, err)
+                                } else {
+                                    callback(null, data);
+                                }
+                            });
+                        } else {
+                            Rank.saveData(singleData, function (err, data) {
+                                if (err) {
+                                    callback(null, err)
+                                } else {
+                                    callback(null, data);
+                                }
+                            });
                         }
                     });
-                },function(err,finalCallback){
-                    callback(null,finalCallback);
+                    // Rank.saveData(singleData,function(err,data){
+                    //     if(err){
+                    //         callback(null,err)
+                    //     }else{
+                    //         callback(null,data);
+                    //     }
+                    // });
+                }, function (err, finalCallback) {
+                    callback(null, finalCallback);
                 });
             }
         })
@@ -476,7 +502,7 @@ var model = {
     getMedalsPerSport: function (data, callback) {
         //group by school->parallel groupBy medalType and groupBy (sportsListSubCategory.name and medalType)
 
-    }, 
+    },
 
 
 
