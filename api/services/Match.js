@@ -11288,6 +11288,26 @@ var model = {
                                             opponentsSingle: lostPlayer
                                         }
                                     };
+                                } else if (data.found.resultFencing && data.found.resultFencing.status == 'IsCompleted' && data.found.resultFencing.isNoMatch == false) {
+                                    if (data.found.opponentsSingle[0].equals(data.found.resultFencing.winner.opponentsSingle)) {
+                                        lostPlayer.push(data.found.opponentsSingle[1]);
+                                        winPlayer.push(data.found.resultFencing.winner.opponentsSingle);
+                                        console.log("player", winPlayer);
+                                    } else {
+                                        lostPlayer.push(data.found.opponentsSingle[0]);
+                                        winPlayer.push(data.found.resultFencing.winner.opponentsSingle);
+                                        console.log("player", winPlayer);
+                                    }
+                                    updateObj = {
+                                        $set: {
+                                            opponentsSingle: winPlayer
+                                        }
+                                    };
+                                    updateObj1 = {
+                                        $set: {
+                                            opponentsSingle: lostPlayer
+                                        }
+                                    };
                                 }
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle) && !_.isEmpty(found[1].opponentsSingle)) {
                                 if (found[0].opponentsSingle.length == 1 && found[1].opponentsSingle.length == 1) {
@@ -11331,10 +11351,27 @@ var model = {
                                                 opponentsSingle: lostPlayer
                                             }
                                         };
-                                    } else {
-                                        callback(null, data.found);
+                                    } else if (data.found.resultFencing && data.found.resultFencing.status == 'IsCompleted' && data.found.resultFencing.isNoMatch == false) {
+                                        if (data.found.opponentsSingle[0].equals(data.found.resultFencing.winner.opponentsSingle)) {
+                                            lostPlayer.push(data.found.opponentsSingle[1]);
+                                            winPlayer.push(data.found.resultFencing.winner.opponentsSingle);
+                                            console.log("player", winPlayer);
+                                        } else {
+                                            lostPlayer.push(data.found.opponentsSingle[0]);
+                                            winPlayer.push(data.found.resultFencing.winner.opponentsSingle);
+                                            console.log("player", winPlayer);
+                                        }
+                                        updateObj = {
+                                            $set: {
+                                                opponentsSingle: winPlayer
+                                            }
+                                        };
+                                        updateObj1 = {
+                                            $set: {
+                                                opponentsSingle: lostPlayer
+                                            }
+                                        };
                                     }
-
                                 } else if (found[0].opponentsSingle.length == 2 && found[1].opponentsSingle.length == 2) {
                                     if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
                                         if (data.found.resultsCombat.winner.opponentsSingle === found[1].opponentsSingle[0].toString()) {
@@ -11386,8 +11423,31 @@ var model = {
                                                 opponentsSingle: lostPlayer
                                             }
                                         };
-                                    } else {
-                                        callback(null, data.found);
+                                    } else if (data.found.resultFencing && data.found.resultFencing.status == 'IsCompleted' && data.found.resultFencing.isNoMatch == false) {
+                                        if (data.found.resultFencing.winner.opponentsSingle === found[1].opponentsSingle[0].toString()) {
+                                            playerId1 = found[1].opponentsSingle[1];
+                                            playerId = found[0].opponentsSingle[1];
+                                            lostPlayer.push(playerId1);
+                                            lostPlayer.push(found[0].opponentsSingle[0]);
+
+                                        } else if (data.found.resultFencing.winner.opponentsSingle === found[1].opponentsSingle[1].toString()) {
+                                            playerId1 = found[1].opponentsSingle[0];
+                                            playerId = found[0].opponentsSingle[0];
+                                            lostPlayer.push(playerId1);
+                                            lostPlayer.push(found[0].opponentsSingle[1]);
+                                        }
+                                        winPlayer.push(playerId);
+                                        winPlayer.push(data.found.resultFencing.winner.opponentsSingle);
+                                        updateObj = {
+                                            $set: {
+                                                opponentsSingle: winPlayer
+                                            }
+                                        };
+                                        updateObj1 = {
+                                            $set: {
+                                                opponentsSingle: lostPlayer
+                                            }
+                                        };
                                     }
                                 } else {
                                     updateObj = {};
@@ -11955,13 +12015,17 @@ var model = {
                                             opponentsSingle: winPlayer
                                         }
                                     };
-                                } else {
-                                    // callback(null, found);
+                                } else if (data.found.resultFencing && data.found.resultFencing.status == 'IsCompleted' && data.found.resultFencing.isNoMatch == false) {
+                                    winPlayer.push(data.found.resultFencing.winner.opponentsSingle);
+                                    console.log("player", winPlayer);
+                                    updateObj = {
+                                        $set: {
+                                            opponentsSingle: winPlayer
+                                        }
+                                    };
                                 }
                             } else if (data.isTeam == false && !_.isEmpty(found[0].opponentsSingle)) {
                                 if (found[0].opponentsSingle.length == 1) {
-                                    // var playerId = found[0].opponentsSingle[0];
-                                    // winPlayer.push(playerId);
                                     if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
                                         winPlayer.push(data.found.resultsCombat.winner.opponentsSingle);
                                         console.log("player", winPlayer);
@@ -11978,8 +12042,14 @@ var model = {
                                                 opponentsSingle: winPlayer
                                             }
                                         };
-                                    } else {
-                                        // callback(null, data.found);
+                                    } else if (data.found.resultFencing && data.found.resultFencing.status == "IsCompleted" && data.found.resultFencing.isNoMatch == false) {
+                                        winPlayer.push(data.found.resultFencing.winner.opponentsSingle);
+                                        console.log("player", winPlayer);
+                                        updateObj = {
+                                            $set: {
+                                                opponentsSingle: winPlayer
+                                            }
+                                        };
                                     }
                                 } else if (found[0].opponentsSingle.length == 2) {
                                     if (data.found.resultsCombat && data.found.resultsCombat.status == 'IsCompleted' && data.found.resultsCombat.isNoMatch == false) {
@@ -12005,6 +12075,20 @@ var model = {
                                             winPlayer.push(playerId);
                                         }
                                         winPlayer.push(data.found.resultsRacquet.winner.opponentsSingle);
+                                        updateObj = {
+                                            $set: {
+                                                opponentsSingle: winPlayer
+                                            }
+                                        };
+                                    } else if (data.found.resultFencing && data.found.resultFencing.status == "IsCompleted" && data.found.resultFencing.isNoMatch == false) {
+                                        if (data._id.equals(found[0].prevMatch[1]._id)) {
+                                            var playerId = found[0].prevMatch[0].resultFencing.winner.opponentsSingle;
+                                            winPlayer.push(playerId);
+                                        } else {
+                                            var playerId = found[0].prevMatch[1].resultFencing.winner.opponentsSingle;
+                                            winPlayer.push(playerId);
+                                        }
+                                        winPlayer.push(data.found.resultFencing.winner.opponentsSingle);
                                         updateObj = {
                                             $set: {
                                                 opponentsSingle: winPlayer
