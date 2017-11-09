@@ -5210,7 +5210,6 @@ var model = {
                     var stage;
                     async.concatSeries(match, function (mainData, callback) {
                             var obj = {};
-                            console.log("mainData*************", mainData.excelType);
                             obj["MATCH ID"] = mainData.matchId;
                             var dateTime = moment(mainData.scheduleDate).format('DD-MM-YYYY');
                             obj.DATE = dateTime;
@@ -5227,26 +5226,19 @@ var model = {
                             obj.EVENT = mainData.sport.sportslist.name;
                             obj["STAGE"] = mainData.excelType;
                             stage = mainData.excelType.toLowerCase();
-                            console.log("stage", stage);
                             obj["ROUND"] = mainData.round;
-                            console.log("i----", i);
                             if (stage == "league") {
                                 if (i == 1) {
                                     prevRound = mainData.round;
                                     obj["MATCH NO"] = "MATCH " + i++;
-                                    console.log("i-1", i);
                                 } else {
-                                    console.log("prevRound", prevRound);
                                     if (prevRound == mainData.round) {
                                         obj["MATCH NO"] = "MATCH " + i++;
-                                        // i = i++;
-                                        console.log("i-2", i);
+
                                     } else {
                                         i = 1;
                                         prevRound = mainData.round;
                                         obj["MATCH NO"] = "MATCH " + i++;
-                                        // i = i++;
-                                        console.log("i-3", i);
                                     }
                                 }
                             } else {
@@ -5256,17 +5248,14 @@ var model = {
                                 obj["SFAID 1"] = mainData.opponentsSingle[0].teamId;
                                 obj["NAME 1"] = mainData.opponentsSingle[0].name;
                                 obj["SCHOOL 1"] = mainData.opponentsSingle[0].schoolName;
-                                // console.log(JSON.stringify(mainData.resultsCombat, null, "    "),"-------------");                                    
                                 if (mainData.resultFencing) {
-                                    obj["COACH NAME 1"] = "";
-                                    obj["DATA POINTS 1"] = "";
+                                    obj["SCORE 1"] = mainData.resultFencing.players[0].finalPoints;
                                 }
                             } else {
                                 obj["SFAID 1"] = "";
                                 obj["NAME 1"] = "";
                                 obj["SCHOOL 1"] = "";
-                                obj["COACH NAME 1"] = "";
-                                obj["DATA POINTS 1"] = "";
+                                obj["SCORE 1"] = "";
 
                             }
 
@@ -5274,14 +5263,10 @@ var model = {
                                 obj["SFAID 2"] = mainData.opponentsSingle[1].teamId;
                                 obj["NAME 2"] = mainData.opponentsSingle[0].name;
                                 obj["SCHOOL 2"] = mainData.opponentsSingle[1].schoolName;
-                                if (mainData.resultFootball) {
-                                    console.log("opponentsSingle", mainData.opponentsSingle[0]);
-                                    obj["COACH NAME 2"] = "";
-                                    obj["DATA POINTS 2"] = "";
-                                    obj["FINAL SCORE"] = "";
-
+                                if (mainData.resultFencing) {
+                                    obj["SCORE 2"] = mainData.resultFencing.players[1].finalPoints;
                                     if (!_.isEmpty(mainData.resultFencing.winner) && mainData.resultFencing.isNoMatch == false || mainData.resultFencing.isDraw == false) {
-                                        if (mainData.opponentsSingle[0]._id.equals(mainData.resultFencing.winner.player)) {
+                                        if (mainData.opponentsSingle[0]._id.equals(mainData.resultFencing.winner.opponentsSingle)) {
                                             if (opponentsSingle[0].athleteId.middleName) {
                                                 obj["WINNER NAME"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.middleName + " " + mainData.opponentsSingle[0].athleteId.surname;
                                             } else {

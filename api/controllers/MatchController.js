@@ -555,8 +555,10 @@ var controller = {
                             Match.generateExcelQualifying(req.body, res);
                         } else if (req.body.resultType == "qualifying-knockout" && req.body.excelType == "knockout") {
                             Match.generateExcelQualifyingKnockout(req.body, res);
-                        } else if (req.body.resultType == "league-cum-knockout") {
+                        } else if (req.body.resultType == "league-cum-knockout" && data.playerType == "team") {
                             Match.generateLeagueKnockout(req.body, res);
+                        } else if (req.body.resultType == "league-cum-knockout" && data.playerType == "individual") {
+                            Match.generateLeagueKnockoutFencing(req.body, res);
                         } else if (req.body.resultType == "swiss-league") {
                             Match.generateExcelSwiss(req.body, res);
                         } else {
