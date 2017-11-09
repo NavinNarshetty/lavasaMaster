@@ -1,345 +1,439 @@
-myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout, knockoutService) {
-    $scope.template = TemplateService.getHTML("content/results.html");
-    TemplateService.title = "Direct Final"; //This is the Title of the Website
-    $scope.navigation = NavigationService.getNavigation();
+myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, NavigationService, $stateParams, toastr, $rootScope, $uibModal, $timeout, knockoutService, configService) {
+  $scope.template = TemplateService.getHTML("content/results.html");
+  TemplateService.title = "Direct Final"; //This is the Title of the Website
+  $scope.navigation = NavigationService.getNavigation();
 
-    // VARIABLE INITITALISE
-    $scope.showEventFilter = false;
-    $scope.defaultEvent = "sfa mumbai 2015-16";
-    $scope.showAllMedalWinner = false;
-    $scope.sportFilter = {
-      name: "Basketball"
-    };
-    // VARIABLE INITITALISE END
+  // FILTER OPTIONS
+  $scope.getFilterOptions = function (n) {
+    if (n.type == 'school') {
+      if (n.sfaCity == 'Mumbai') {
+        $scope.filterOptions = [{
+          name: 'Archery'
+        }, {
+          name: 'Athletics'
+        }, {
+          name: 'Badminton'
+        }, {
+          name: 'Basketball'
+        }, {
+          name: 'Boxing'
+        }, {
+          name: 'Carrom'
+        }, {
+          name: 'Chess'
+        }, {
+          name: 'Fencing'
+        }, {
+          name: 'Football'
+        }, {
+          name: 'Handball'
+        }, {
+          name: 'Hockey'
+        }, {
+          name: 'Judo'
+        }, {
+          name: 'Kabaddi'
+        }, {
+          name: 'Karate'
+        }, {
+          name: 'Kho Kho'
+        }, {
+          name: 'Sport MMA'
+        }, {
+          name: 'Shooting'
+        }, {
+          name: 'Squash'
+        }, {
+          name: 'Swimming'
+        }, {
+          name: 'Table Tennis'
+        }, {
+          name: 'Taekwondo'
+        }, {
+          name: 'Tennis'
+        }, {
+          name: 'Throwball'
+        }, {
+          name: 'Volleyball'
+        }, {
+          name: 'Water Polo'
+        }, {
+          name: 'Wrestling'
+        }];
+      } else {
+        $scope.filterOptions = [{
+          name: 'Archery'
+        }, {
+          name: 'Athletics'
+        }, {
+          name: 'Badminton'
+        }, {
+          name: 'Basketball'
+        }, {
+          name: 'Boxing'
+        }, {
+          name: 'Carrom'
+        }, {
+          name: 'Chess'
+        }, {
+          name: 'Fencing'
+        }, {
+          name: 'Football'
+        }, {
+          name: 'Handball'
+        }, {
+          name: 'Hockey'
+        }, {
+          name: 'Judo'
+        }, {
+          name: 'Kabaddi'
+        }, {
+          name: 'Karate'
+        }, {
+          name: 'Kho Kho'
+        }, {
+          name: 'Shooting'
+        }, {
+          name: 'Swimming'
+        }, {
+          name: 'Table Tennis'
+        }, {
+          name: 'Taekwondo'
+        }, {
+          name: 'Tennis'
+        }, {
+          name: 'Throwball'
+        }, {
+          name: 'Volleyball'
+        }, {
+          name: 'Water Polo'
+        }];
+      }
+    } else {
+      $scope.filterOptions = [{
+        name: 'Archery'
+      }, {
+        name: 'Basketball'
+      }, {
+        name: 'Boxing'
+      }, {
+        name: 'Carrom'
+      }, {
+        name: 'Chess'
+      }, {
+        name: 'Fencing'
+      }, {
+        name: 'Handball'
+      }, {
+        name: 'Hockey'
+      }, {
+        name: 'Judo'
+      }, {
+        name: 'Kabaddi'
+      }, {
+        name: 'Shooting'
+      }, {
+        name: 'Swimming'
+      }, {
+        name: 'Taekwondo'
+      }, {
+        name: 'Tennis'
+      }, {
+        name: 'Volleyball'
+      }, {
+        name: 'Water Polo'
+      }, {
+        name: 'Wrestling'
+      }];
+    }
+  };
+  // FILTER OPTIONS END
 
-    // FUNCTIONS
-    $scope.log = function(){
-      console.log($scope.sportFilter, 'filter');
-    };
-    // SELECT CITY FILTER
-    $scope.viewEvent = function(){
-      if($scope.showEventFilter == false){
-        $scope.showEventFilter = true;
-      } else {
-        $scope.showEventFilter = false;
-      }
-    }
-    $scope.selectEvent = function(event){
-      $scope.selectEvent = event;
-      $scope.defaultEvent = event;
-      $scope.viewEvent();
-      console.log($scope.selectEvent, 'selected event');
-    }
-    // SELECT CITY FILTER END
-    // VIEW MEDAL WINNER
-    $scope.showMedalWinner = function(){
-      if ($scope.showAllMedalWinner == true) {
-        $scope.showAllMedalWinner = false;
-      } else {
-        $scope.showAllMedalWinner = true;
-      }
-    }
-    // VIEW MEDAL WINNER END
-    $scope.closeAllOpen = function(index, detail){
-      _.each($scope.rankTable, function(n, nindex){
-        if(n.rowDetail == true && nindex != index){
-          $scope.addMedalDetail(nindex, n);
-        }
-      });
-      $scope.addMedalDetail(index, detail);
-    };
+  configService.getDetail(function (data) {
+    $scope.state = data.state;
+    $scope.year = data.year;
+    $scope.eventYear = data.eventYear;
+    $scope.sfaCity = data.sfaCity;
+    $scope.isCollege = data.isCollege;
+    $scope.type = data.type;
+    $scope.getFilterOptions(data);
+  });
 
-    $scope.addMedalDetail = function(index, detail){
-      console.log(detail, 'detail');
-      console.log(index, 'indexS');
-      var id = "#rank" + index;
-      var demo = "";
-      if (detail.rowDetail == true) {
-        detailId = "#rankDetail" + index;
-        console.log(detailId, 'det');
-        $(detailId).remove();
-        detail.rowDetail = false;
-        // $(id).after(demo);
-      } else {
-        var detailTable = "";
-        _.each(detail.sportData, function(n){
-          n.goldMedal = "-";
-          n.silverMedal = "-";
-          n.bronzeMedal = "-";
-          if (n.medals) {
-            if (n.medals.gold) {
-              n.goldMedal = n.medals.gold.points;
-            }
-            if (n.medals.silver) {
-              n.silverMedal = n.medals.silver.points;
-            }
-            if (n.medals.bronze) {
-              n.bronzeMedal = n.medals.bronze.points;
-            }
-          }
-          console.log('sport', n);
-          // <td colspan="3"> <div> </div> </td>
-          detailTable = detailTable  + '<tr>   <td class="dd-sportname">'+ n.name+' </td> <td > <div class="detail-resultholder"> ' + n.goldMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.silverMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.bronzeMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.totalPoints + ' </div> </td> </tr>';
-        });
-        $scope.rankDetail = detail;
-         demo = '<tr id="rankDetail' + index +'"> <td class = "pad-clear" colspan = "6"> <div class="schoolrank-details"> <table class = "table"> '+ detailTable +'</table> </div> </td> </tr>'
-        detail.rowDetail = true;
-        $(id).after(demo);
-      }
-    };
+  // VARIABLE INITITALISE
+  $scope.showEventFilter = false;
+  $scope.defaultEvent = "sfa mumbai 2015-16";
+  $scope.showAllMedalWinner = false;
+  $scope.sportFilter = {
+    name: "Archery"
+  };
+  // VARIABLE INITITALISE END
 
-    // VIEW MORE / LESS FUNCTIONS
-    // SCHOOL RANKING TABLE
-    $scope.viewMoreRanking = function(bool){
-      if (bool) {
-        $scope.rankTable.showTable = false;
-        $scope.rankTable.tableLimit = $scope.rankTable.length;
-      } else {
-        $scope.rankTable.showTable = true;
-        $scope.rankTable.tableLimit = 20;
-        TemplateService.scrollTo('schoolRankTable', 'id');
-      }
+  // FUNCTIONS
+  $scope.log = function () {
+    console.log($scope.sportFilter, 'filter');
+  };
+  // SELECT CITY FILTER
+  $scope.viewEvent = function () {
+    if ($scope.showEventFilter == false) {
+      $scope.showEventFilter = true;
+    } else {
+      $scope.showEventFilter = false;
     }
-    // SCHOOL RANKING TABLE END
-    // SPORT RANKING TABLE
-    $scope.viewMoreSport = function(bool){
-      if (bool) {
-        $scope.sportTable.showTable = false;
-        $scope.sportTable.tableLimit = $scope.sportTable.length;
-      } else {
-        $scope.sportTable.showTable = true;
-        $scope.sportTable.tableLimit = 5;
-        TemplateService.scrollTo('sportRankingTable', 'id');
-      }
+  }
+  $scope.selectEvent = function (event) {
+    $scope.selectEvent = event;
+    $scope.defaultEvent = event;
+    $scope.viewEvent();
+    console.log($scope.selectEvent, 'selected event');
+  }
+  // SELECT CITY FILTER END
+  // VIEW MEDAL WINNER
+  $scope.showMedalWinner = function () {
+    if ($scope.showAllMedalWinner == true) {
+      $scope.showAllMedalWinner = false;
+    } else {
+      $scope.showAllMedalWinner = true;
     }
-    // SPORT RANKING TABLE END
-    // VIEW MORE / LESS FUNCTIONS END
-    // FUNCTIONS END
-
-    // APIS
-    // GENERATE RANKING TABLE
-    // $scope.generateTable = function(){
-    //   NavigationService.getSchoolRank(function(data){
-    //     if (data.data = true) {
-    //       console.log("table GENERATED");
-    //     }
-    //   });
-    // };
-    // GENERATE RANKING TABLE END
-    // GET RANKING TABLE
-    NavigationService.getSchoolByRanks(function(data){
-      console.log('rankingTable',data);
-      if (data.value == true) {
-        $scope.rankTable = data.data;
-        $scope.rankTable.tableLimit = 20;
-        $scope.rankTable.showTable = true;
-        _.each($scope.rankTable, function(n){
-          n.rowDetail = false;
-        });
-      } else {
-        toastr.error('Ranking Table Error','Error');
+  }
+  // VIEW MEDAL WINNER END
+  $scope.closeAllOpen = function (index, detail) {
+    _.each($scope.rankTable, function (n, nindex) {
+      if (n.rowDetail == true && nindex != index) {
+        $scope.addMedalDetail(nindex, n);
       }
     });
-    // GET RANKING TABLE END
-    // GET SPORT RANKING TABLE
-    $scope.getSchoolBySport = function(){
-      NavigationService.getSchoolBySport($scope.sportFilter, function(data){
-        var data = data.data;
-        console.log('Data', data);
-        if (data.value == true) {
-          $scope.sportTable = data.data.table;
-          $scope.risingAthletes = data.data.risingAthletes;
-          $scope.sportTable.tableLimit = 5;
-          $scope.sportTable.showTable = true;
-          _.each($scope.risingAthletes,function(n){
-            n.fullName = n.athleteProfile.firstName + n.athleteProfile.surname;
-            // n.goldCount = n.medalData
-          });
-          console.log('School Table', $scope.sportTable);
-          console.log('rising', $scope.risingAthletes);
-        } else {
-          toastr.error('Sport Ranking Error', 'Error');
+    $scope.addMedalDetail(index, detail);
+  };
+
+  $scope.addMedalDetail = function (index, detail) {
+    console.log(detail, 'detail');
+    console.log(index, 'indexS');
+    var id = "#rank" + index;
+    var demo = "";
+    if (detail.rowDetail == true) {
+      detailId = "#rankDetail" + index;
+      console.log(detailId, 'det');
+      $(detailId).remove();
+      detail.rowDetail = false;
+      // $(id).after(demo);
+    } else {
+      var detailTable = "";
+      _.each(detail.sportData, function (n) {
+        n.goldMedal = "-";
+        n.silverMedal = "-";
+        n.bronzeMedal = "-";
+        if (n.medals) {
+          if (n.medals.gold) {
+            n.goldMedal = n.medals.gold.points;
+          }
+          if (n.medals.silver) {
+            n.silverMedal = n.medals.silver.points;
+          }
+          if (n.medals.bronze) {
+            n.bronzeMedal = n.medals.bronze.points;
+          }
         }
+        console.log('sport', n);
+        // <td colspan="3"> <div> </div> </td>
+        detailTable = detailTable + '<tr>   <td class="dd-sportname">' + n.name + ' </td> <td > <div class="detail-resultholder"> ' + n.goldMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.silverMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.bronzeMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.totalPoints + ' </div> </td> </tr>';
       });
-    };
-    $scope.getSchoolBySport();
-    // GET SPORT RANKING TABLE END
-    // APIS END
+      $scope.rankDetail = detail;
+      demo = '<tr id="rankDetail' + index + '"> <td class = "pad-clear" colspan = "6"> <div class="schoolrank-details"> <table class = "table"> ' + detailTable + '</table> </div> </td> </tr>'
+      detail.rowDetail = true;
+      $(id).after(demo);
+    }
+  };
 
-    // JSONS
-    $scope.eventList = ['sfa mumbai 2015-16', 'sfa ahmedabad 2015-16', 'sfa hyderabad 2015-16'];
+  // VIEW MORE / LESS FUNCTIONS
+  // SCHOOL RANKING TABLE
+  $scope.viewMoreRanking = function (bool) {
+    if (bool) {
+      $scope.rankTable.showTable = false;
+      $scope.rankTable.tableLimit = $scope.rankTable.length;
+    } else {
+      $scope.rankTable.showTable = true;
+      $scope.rankTable.tableLimit = 20;
+      TemplateService.scrollTo('schoolRankTable', 'id');
+    }
+  }
+  // SCHOOL RANKING TABLE END
+  // SPORT RANKING TABLE
+  $scope.viewMoreSport = function (bool) {
+    if (bool) {
+      $scope.sportTable.showTable = false;
+      $scope.sportTable.tableLimit = $scope.sportTable.length;
+    } else {
+      $scope.sportTable.showTable = true;
+      $scope.sportTable.tableLimit = 5;
+      TemplateService.scrollTo('sportRankingTable', 'id');
+    }
+  }
+  // SPORT RANKING TABLE END
+  // VIEW MORE / LESS FUNCTIONS END
+  // FUNCTIONS END
 
-    // FILTER OPTIONS
-    $scope.filterOptions = [{
-        name: 'Archery'
+  // APIS
+  // GENERATE RANKING TABLE
+  // $scope.generateTable = function(){
+  //   NavigationService.getSchoolRank(function(data){
+  //     if (data.data = true) {
+  //       console.log("table GENERATED");
+  //     }
+  //   });
+  // };
+  // GENERATE RANKING TABLE END
+  // GET RANKING TABLE
+  NavigationService.getSchoolByRanks(function (data) {
+    console.log('rankingTable', data);
+    if (data.value == true) {
+      $scope.rankTable = data.data;
+      $scope.rankTable.tableLimit = 20;
+      $scope.rankTable.showTable = true;
+      _.each($scope.rankTable, function (n) {
+        n.rowDetail = false;
+      });
+    } else {
+      toastr.error('Ranking Table Error', 'Error');
+    }
+  });
+  // GET RANKING TABLE END
+  // GET SPORT RANKING TABLE
+  $scope.getSchoolBySport = function () {
+    NavigationService.getSchoolBySport($scope.sportFilter, function (data) {
+      var data = data.data;
+      console.log('Data', data);
+      if (data.value == true) {
+        $scope.sportTable = data.data.table;
+        $scope.risingAthletes = data.data.risingAthletes;
+        $scope.sportTable.tableLimit = 5;
+        $scope.sportTable.showTable = true;
+        _.each($scope.risingAthletes, function (n) {
+          n.fullName = n.athleteProfile.firstName + n.athleteProfile.surname;
+          // n.goldCount = n.medalData
+        });
+        console.log('School Table', $scope.sportTable);
+        console.log('rising', $scope.risingAthletes);
+      } else {
+        toastr.error('Sport Ranking Error', 'Error');
+      }
+    });
+  };
+  $scope.getSchoolBySport();
+  // GET SPORT RANKING TABLE END
+  // APIS END
+
+  // JSONS
+  $scope.eventList = ['sfa mumbai 2015-16', 'sfa ahmedabad 2015-16', 'sfa hyderabad 2015-16'];
+
+  // ALL MEDAL WINNERS
+  $scope.medalWinners = [{
+    sport: "Athletics",
+    eventName: "50m",
+    age: "U-6",
+    winners: [{
+      gender: "male",
+      list: [{
+        name: "Anwar Hatela",
+        school: "jamnabai high school",
+        medal: 'gold'
+      }, {
+        name: "Dawood Ibrahim",
+        school: "jamnabai high school",
+        medal: 'silver'
+      }, {
+        name: "Chota Shakeel",
+        school: "jamnabai high school",
+        medal: 'bronze'
+      }]
     }, {
-        name: 'Athletics'
-    }, {
-        name: 'Badminton'
-    }, {
-        name: 'Basketball'
-    }, {
-        name: 'Boxing'
-    }, {
-        name: 'Carrom'
-    }, {
-        name: 'Chess'
-    }, {
-        name: 'Fencing'
-    }, {
-        name: 'Football'
-    }, {
-        name: 'Handball'
-    }, {
-        name: 'Hockey'
-    }, {
-        name: 'Judo'
-    }, {
-        name: 'Kabaddi'
-    }, {
-        name: 'Karate'
-    }, {
-        name: 'Kho Kho'
-    }, {
-        name: 'Sport MMA'
-    }, {
-        name: 'Shooting'
-    }, {
-        name: 'Squash'
-    }, {
-        name: 'Swimming'
-    }, {
-        name: 'Table Tennis'
-    }, {
-        name: 'Taekwondo'
-    }, {
-        name: 'Tennis'
-    }, {
-        name: 'Throwball'
-    }, {
-        name: 'Volleyball'
-    }, {
-        name: 'Water Polo'
-    }, {
-        name: 'Wrestling'
+      gender: "female",
+      list: [{
+        name: "Anwar Hatela",
+        school: "jamnabai high school",
+        medal: 'gold'
+      }, {
+        name: "Dawood Ibrahim",
+        school: "jamnabai high school",
+        medal: 'silver'
+      }, {
+        name: "Chota Shakeel",
+        school: "jamnabai high school",
+        medal: 'bronze'
+      }]
     }]
-    // FILTER OPTIONS END
-
-    // ALL MEDAL WINNERS
-    $scope.medalWinners = [{
-      sport: "Athletics",
-      eventName: "50m",
-      age: "U-6",
-      winners:[
-        {
-          gender: "male",
-          list: [{
-            name: "Anwar Hatela",
-            school: "jamnabai high school",
-            medal: 'gold'
-          },{
-            name: "Dawood Ibrahim",
-            school: "jamnabai high school",
-            medal: 'silver'
-          },{
-            name: "Chota Shakeel",
-            school: "jamnabai high school",
-            medal: 'bronze'
-          }]
-        },{
-          gender: "female",
-          list: [{
-            name: "Anwar Hatela",
-            school: "jamnabai high school",
-            medal: 'gold'
-          },{
-            name: "Dawood Ibrahim",
-            school: "jamnabai high school",
-            medal: 'silver'
-          },{
-            name: "Chota Shakeel",
-            school: "jamnabai high school",
-            medal: 'bronze'
-          }]
-        }
-      ]
-    },{
-      sport: "Athletics",
-      eventName: "100m",
-      age: "U-12",
-      winners:[
-        {
-          gender: "male",
-          list: [{
-            name: "Anwar Hatela",
-            school: "jamnabai high school",
-            medal: 'gold'
-          },{
-            name: "Dawood Ibrahim",
-            school: "jamnabai high school",
-            medal: 'silver'
-          },{
-            name: "Chota Shakeel",
-            school: "jamnabai high school",
-            medal: 'bronze'
-          }]
-        },{
-          gender: "female",
-          list: [{
-            name: "Anwar Hatela",
-            school: "jamnabai high school",
-            medal: 'gold'
-          },{
-            name: "Dawood Ibrahim",
-            school: "jamnabai high school",
-            medal: 'silver'
-          },{
-            name: "Chota Shakeel",
-            school: "jamnabai high school",
-            medal: 'bronze'
-          }]
-        }
-      ]
-    },{
-      sport: "Athletics",
-      eventName: "200m",
-      age: "U-16",
-      winners:[
-        {
-          gender: "male",
-          list: [{
-            name: "Anwar Hatela",
-            school: "jamnabai high school",
-            medal: 'gold'
-          },{
-            name: "Dawood Ibrahim",
-            school: "jamnabai high school",
-            medal: 'silver'
-          },{
-            name: "Chota Shakeel",
-            school: "jamnabai high school",
-            medal: 'bronze'
-          }]
-        },{
-          gender: "female",
-          list: [{
-            name: "Anwar Hatela",
-            school: "jamnabai high school",
-            medal: 'gold'
-          },{
-            name: "Dawood Ibrahim",
-            school: "jamnabai high school",
-            medal: 'silver'
-          },{
-            name: "Chota Shakeel",
-            school: "jamnabai high school",
-            medal: 'bronze'
-          }]
-        }
-      ]
-    }];
-    // ALL MEDAL WINNERS END
-    // JSONS END
+  }, {
+    sport: "Athletics",
+    eventName: "100m",
+    age: "U-12",
+    winners: [{
+      gender: "male",
+      list: [{
+        name: "Anwar Hatela",
+        school: "jamnabai high school",
+        medal: 'gold'
+      }, {
+        name: "Dawood Ibrahim",
+        school: "jamnabai high school",
+        medal: 'silver'
+      }, {
+        name: "Chota Shakeel",
+        school: "jamnabai high school",
+        medal: 'bronze'
+      }]
+    }, {
+      gender: "female",
+      list: [{
+        name: "Anwar Hatela",
+        school: "jamnabai high school",
+        medal: 'gold'
+      }, {
+        name: "Dawood Ibrahim",
+        school: "jamnabai high school",
+        medal: 'silver'
+      }, {
+        name: "Chota Shakeel",
+        school: "jamnabai high school",
+        medal: 'bronze'
+      }]
+    }]
+  }, {
+    sport: "Athletics",
+    eventName: "200m",
+    age: "U-16",
+    winners: [{
+      gender: "male",
+      list: [{
+        name: "Anwar Hatela",
+        school: "jamnabai high school",
+        medal: 'gold'
+      }, {
+        name: "Dawood Ibrahim",
+        school: "jamnabai high school",
+        medal: 'silver'
+      }, {
+        name: "Chota Shakeel",
+        school: "jamnabai high school",
+        medal: 'bronze'
+      }]
+    }, {
+      gender: "female",
+      list: [{
+        name: "Anwar Hatela",
+        school: "jamnabai high school",
+        medal: 'gold'
+      }, {
+        name: "Dawood Ibrahim",
+        school: "jamnabai high school",
+        medal: 'silver'
+      }, {
+        name: "Chota Shakeel",
+        school: "jamnabai high school",
+        medal: 'bronze'
+      }]
+    }]
+  }];
+  // ALL MEDAL WINNERS END
+  // JSONS END
 
   //
 })

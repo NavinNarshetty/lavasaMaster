@@ -16,12 +16,16 @@
                 <div class="text-center mt25">
                     <div class="tab-list sf-list text-up">
                         <ul class="padding0 margin0">
-                            <li><a href="" ui-sref="media-gallery-type({type:'photo'})" class="{{classes.classp}}">
-photos
-</a></li>
-                            <li><a href="" ui-sref="media-gallery-type({type:'video'})" class="{{classes.classv}}">
-videos
-</a></li>
+                            <li>
+                                <a href="" ui-sref="media-gallery-type({type:'photo'})" class="{{classes.classp}}">
+                                    photos
+                                </a>
+                            </li>
+                            <li>
+                                <a href="" ui-sref="media-gallery-type({type:'video'})" class="{{classes.classv}}">
+                                    videos
+                                </a>
+                            </li>
                             <!-- <li><a href="" ui-sref="media-gallery-inside({type:'press-photo',folder:'press-coverage'})" class="{{classes.classpc}}">
 press coverage
 </a></li> -->
@@ -57,12 +61,14 @@ Press release
                                 <div class="col-md-12">
                                     <div class="back-btn">
                                         <div class="float-left">
-                                            <a ui-sref="media-gallery-type({type:'photo'})"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                                            <a ui-sref="media-gallery-type({type:'photo'})">
+                                                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                                            </a>
                                         </div>
                                         <div class="text-center">
                                             <h4 class="color-orange text-up font-bold">{{filter.folder}}</h4>
                                         </div>
-                                        <div class="">
+                                        <div class="hide">
                                             <!--mt-min-30 mt-min-40-->
                                             <div class="float-right">
                                                 <h4 class="text-up color-blue display-inline">year</h4>
@@ -123,12 +129,14 @@ Press release
                                 <div class="col-md-12">
                                     <div class="back-btn">
                                         <div class="float-left">
-                                            <a ui-sref="media-gallery-type({type:'video'})"><i class="fa fa-angle-left" aria-hidden="true"></i></a>
+                                            <a ui-sref="media-gallery-type({type:'video'})">
+                                                <i class="fa fa-angle-left" aria-hidden="true"></i>
+                                            </a>
                                         </div>
                                         <div class="text-center">
                                             <h4 class="color-orange text-up font-bold">{{filter.folder}}</h4>
                                         </div>
-                                        <div class="">
+                                        <div class="hide">
                                             <!--mt-min-30 mt-min-40-->
                                             <div class="float-right">
                                                 <h4 class="text-up color-blue display-inline">year</h4>
@@ -238,12 +246,13 @@ Press release
                             items-per-page="12">
                         </uib-pagination>
                     </div> -->
-                    <div class="row" ng-if="tab=='release'">
+                    <!-- <div class="row" ng-if="tab=='release'">
                         <div class="col-md-8">
                             <div class="white-bg">
                                 <h4 class="color-blue">Lorem Ipsum is simply dummy text of the printing and typesetting industry
                                 </h4>
-                                <span class="color-grey">23 <sup>rd</sup> sept {{year15}}</span>
+                                <span class="color-grey">23
+                                    <sup>rd</sup> sept {{year15}}</span>
                                 <p class="mt15">
                                     Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy
                                     text ever since the 1500s, when an unknown printer took a galley of type and scrambled
@@ -280,62 +289,70 @@ Press release
                                         <div class="yedi-list">
                                             <h4 class="color-blue">Lorem Ipsum is simply dummy text of the printing and typesetting industry
                                             </h4>
-                                            <span class="color-grey">23 <sup>rd</sup> sept {{year15}}</span>
+                                            <span class="color-grey">23
+                                                <sup>rd</sup> sept {{year15}}</span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="yedi-list">
                                             <h4 class="color-blue">Lorem Ipsum is simply dummy text of the printing and typesetting industry
                                             </h4>
-                                            <span class="color-grey">23 <sup>rd</sup> sept {{year15}}</span>
+                                            <span class="color-grey">23
+                                                <sup>rd</sup> sept {{year15}}</span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="yedi-list">
                                             <h4 class="color-blue">Lorem Ipsum is simply dummy text of the printing and typesetting industry
                                             </h4>
-                                            <span class="color-grey">23 <sup>rd</sup> sept {{year15}}</span>
+                                            <span class="color-grey">23
+                                                <sup>rd</sup> sept {{year15}}</span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="yedi-list">
                                             <h4 class="color-blue">Lorem Ipsum is simply dummy text of the printing and typesetting industry
                                             </h4>
-                                            <span class="color-grey">23 <sup>rd</sup> sept {{year15}}</span>
+                                            <span class="color-grey">23
+                                                <sup>rd</sup> sept {{year15}}</span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="yedi-list">
                                             <h4 class="color-blue">Lorem Ipsum is simply dummy text of the printing and typesetting industry
                                             </h4>
-                                            <span class="color-grey">23 <sup>rd</sup> sept {{year15}}</span>
+                                            <span class="color-grey">23
+                                                <sup>rd</sup> sept {{year15}}</span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="yedi-list">
                                             <h4 class="color-blue">Lorem Ipsum is simply dummy text of the printing and typesetting industry
                                             </h4>
-                                            <span class="color-grey">23 <sup>rd</sup> sept {{year15}}</span>
+                                            <span class="color-grey">23
+                                                <sup>rd</sup> sept {{year15}}</span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="yedi-list">
                                             <h4 class="color-blue">Lorem Ipsum is simply dummy text of the printing and typesetting industry
                                             </h4>
-                                            <span class="color-grey">23 <sup>rd</sup> sept {{year15}}</span>
+                                            <span class="color-grey">23
+                                                <sup>rd</sup> sept {{year15}}</span>
                                         </div>
                                     </li>
                                     <li>
                                         <div class="yedi-list">
                                             <h4 class="color-blue">Lorem Ipsum is simply dummy text of the printing and typesetting industry
                                             </h4>
-                                            <span class="color-grey">23 <sup>rd</sup> sept {{year15}}</span>
+                                            <span class="color-grey">23
+                                                <sup>rd</sup> sept {{year15}}</span>
                                         </div>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>

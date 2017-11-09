@@ -4,24 +4,26 @@
     <!-- RESULT TITLE SECTION -->
     <div class="result-titlesection">
       <!-- <button class="btn btn-primary" ng-click="generateTable();">Generate Table</button> -->
-      <div class="result-title">School Result
-         <span class="result-dropdown resulttitle-dropdown hide" ng-click="viewEvent();"> {{defaultEvent}} <span  class="fa " ng-class = " { 'fa-angle-up' : showEventFilter == true , 'fa-angle-down' :  showEventFilter == false } "></span>
-           <div class="landingschool-schoolfilter" ng-show="showEventFilter">
-             <ul class="list-unstyled">
-               <li ng-repeat="event in eventList track by $index" ng-click="selectEvent(event);"> {{event}}</li>
-             </ul>
-           </div>
-         </span>
-       </div>
+      <div class="result-title">{{type | firstcapitalize}} Result
+        <span class="result-dropdown resulttitle-dropdown hide" ng-click="viewEvent();"> {{defaultEvent}}
+          <span class="fa " ng-class=" { 'fa-angle-up' : showEventFilter == true , 'fa-angle-down' :  showEventFilter == false } "></span>
+          <div class="landingschool-schoolfilter" ng-show="showEventFilter">
+            <ul class="list-unstyled">
+              <li ng-repeat="event in eventList track by $index" ng-click="selectEvent(event);"> {{event}}</li>
+            </ul>
+          </div>
+        </span>
+      </div>
     </div>
     <!-- RESULT TITLE SECTION END -->
     <!-- SCHOOL RANKING SECTION  -->
     <div class="result-schoolsection">
       <div class="result-schooltitle">
-        <h3>school ranking table</h3>
+        <h3>{{type}} ranking table</h3>
       </div>
-      <div class="result-schooldesc">
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam culpa in, inventore similique unde nesciunt odit sint impedit distinctio tenetur dolore maiores omnis alias, veniam quis facere dolores suscipit doloribus.</p>
+      <div class="result-schooldesc hide">
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam culpa in, inventore similique unde nesciunt odit
+          sint impedit distinctio tenetur dolore maiores omnis alias, veniam quis facere dolores suscipit doloribus.</p>
       </div>
       <!-- RESULT SCHOOL TABLE -->
       <div class="result-schooltableholder table-responsive">
@@ -35,7 +37,7 @@
               </th>
               <th>
                 <div class="text-uppercase">
-                  school name
+                  {{type}} name
                 </div>
               </th>
               <th>
@@ -96,9 +98,10 @@
                   {{school.medal.bronze.points}}
                 </div>
               </td>
-              <td  class="">
+              <td class="">
                 <div class="">
-                  {{school.totalPoints}} <span ng-if="school.sportData.length>0" ng-click="closeAllOpen($index, school);" class="pointer fa " ng-class="{'fa-angle-down': school.rowDetail == false, 'fa-angle-up':school.rowDetail == true }" ></span>
+                  {{school.totalPoints}}
+                  <span ng-if="school.sportData.length>0" ng-click="closeAllOpen($index, school);" class="pointer fa " ng-class="{'fa-angle-down': school.rowDetail == false, 'fa-angle-up':school.rowDetail == true }"></span>
                 </div>
               </td>
             </tr>
@@ -107,7 +110,10 @@
       </div>
       <!-- RESULT SCHOOL TABLE END -->
       <div class="viewmore" ng-if="rankTable.length>20">
-        <a type="button" class="btn btn-viewmore" ng-click="viewMoreRanking(rankTable.showTable);" >View <span ng-if="rankTable.showTable == true">More</span> <span ng-if="rankTable.showTable == false">Less</span></a>
+        <a type="button" class="btn btn-viewmore" ng-click="viewMoreRanking(rankTable.showTable);">View
+          <span ng-if="rankTable.showTable == true">More</span>
+          <span ng-if="rankTable.showTable == false">Less</span>
+        </a>
       </div>
     </div>
     <!-- SCHOOL RANKING SECTION END -->
@@ -121,7 +127,7 @@
     <!-- SPORT WISE SCHOOL RANKING -->
     <div class="result-sportwise">
       <div class="result-schooltitle">
-        <h3>school ranking basis specific sport</h3>
+        <h3>{{type}} ranking basis specific sport</h3>
       </div>
       <div class="result-sportfilter">
         <div class="row">
@@ -129,12 +135,12 @@
             <label class="sportfilter-label">Sport</label>
             <div class="sportfilter-select">
               <ui-select name="selectsporttype" ng-model="sportFilter.name" theme="bootstrap" on-select="getSchoolBySport();">
-                  <ui-select-match placeholder="Select Sport">{{$select.selected.name}}</ui-select-match>
-                  <ui-select-choices repeat="sport.name as sport in filterOptions | filter: $select.search">
-                      <div>
-                          <p class="m-clear">{{sport.name}}</p>
-                      </div>
-                  </ui-select-choices>
+                <ui-select-match placeholder="Select Sport">{{$select.selected.name}}</ui-select-match>
+                <ui-select-choices repeat="sport.name as sport in filterOptions | filter: $select.search">
+                  <div>
+                    <p class="m-clear">{{sport.name}}</p>
+                  </div>
+                </ui-select-choices>
               </ui-select>
             </div>
           </div>
@@ -158,7 +164,7 @@
             <div class="schooltable-bg">
               <div class="schooltable-holder">
                 <div class="schooltable-content table-responsive">
-                  <table class="table" >
+                  <table class="table">
                     <thead>
                       <tr class="bag-blue">
                         <th>
@@ -168,7 +174,7 @@
                         </th>
                         <th>
                           <div class="schooltable-head">
-                            School Name
+                            {{type | firstcapitalize}} Name
                           </div>
                         </th>
                         <th>
@@ -239,7 +245,9 @@
               </div>
             </div>
             <div class="resultsport-viewmedalwinner">
-              <a class="btn-viewmore" ng-click="viewMoreSport(sportTable.showTable);" ng-if="sportTable.length>5">View <span ng-if="sportTable.showTable == true">Full</span><span ng-if="sportTable.showTable == false">Less</span> Ranking Table</a>
+              <a class="btn-viewmore" ng-click="viewMoreSport(sportTable.showTable);" ng-if="sportTable.length>5">View
+                <span ng-if="sportTable.showTable == true">Full</span>
+                <span ng-if="sportTable.showTable == false">Less</span> Ranking Table</a>
               <!-- <a class="btn-viewmore" ng-click="showMedalWinner();">View All Medal Winners</a> -->
             </div>
           </div>
@@ -247,7 +255,7 @@
             <div class="resultsport-player">
               <p class="text-uppercase">Athlete of the season</p>
               <div class="topplayer-holder">
-                <div class="resultsport-topplayer" ng-repeat = "athlete in risingAthletes track by $index">
+                <div class="resultsport-topplayer" ng-repeat="athlete in risingAthletes track by $index">
                   <div class="profileathlete-card relate" ng-init="school.type='school'" ng-class="{'card-school':school.type=='school','card-college':school.type=='college'}">
                     <div class="inline-block v-top profileathlete-cardimgholder">
                       <div class="profileathleteimage-holder">
@@ -266,13 +274,20 @@
                       <p class="profileathlete-athletename m-clear" title="">{{athlete.fullName}}</p>
                       <p class="profileathlete-athleteschool" title="{{athlete.athletProfile.school.name}}">{{athlete.athleteProfile.school.name}}</p>
                       <div class="text-uppercase profileathlete-athletesports">
-                        <div class="profileathlete-athletesportslabel">sports</div> : <div class="profileathlete-athletesportslist"><span class="profileathlete-sportitem" ng-repeat="sport in athlete.sportsPlayed track by $index">{{sport}} <span class="separater"> | </span></span></div>
+                        <div class="profileathlete-athletesportslabel">sports</div> :
+                        <div class="profileathlete-athletesportslist">
+                          <span class="profileathlete-sportitem" ng-repeat="sport in athlete.sportsPlayed track by $index">{{sport}}
+                            <span class="separater"> | </span>
+                          </span>
+                        </div>
                       </div>
                       <div class="profileathletecard-medallist">
                         <ul class="list-inline">
                           <li>
                             <div class="inline-block">
-                              <div class="profile-bluemedals"><img ng-src="{{'gold' | medalicon:'blue'}}" alt="" class="img-responsive"></div>
+                              <div class="profile-bluemedals">
+                                <img ng-src="{{'gold' | medalicon:'blue'}}" alt="" class="img-responsive">
+                              </div>
                             </div>
                             <div class="inline-block text-center lh1">
                               <p class="m-clear color-primary">999</p>
@@ -281,7 +296,9 @@
                           </li>
                           <li>
                             <div class="inline-block">
-                              <div class="profile-bluemedals"><img ng-src="{{'silver' | medalicon:'blue'}}" alt="" class="img-responsive"></div>
+                              <div class="profile-bluemedals">
+                                <img ng-src="{{'silver' | medalicon:'blue'}}" alt="" class="img-responsive">
+                              </div>
                             </div>
                             <div class="inline-block text-center lh1">
                               <p class="m-clear color-primary">999</p>
@@ -290,7 +307,9 @@
                           </li>
                           <li>
                             <div class="inline-block">
-                              <div class="profile-bluemedals"><img ng-src="{{'bronze' | medalicon:'blue'}}" alt="" class="img-responsive"></div>
+                              <div class="profile-bluemedals">
+                                <img ng-src="{{'bronze' | medalicon:'blue'}}" alt="" class="img-responsive">
+                              </div>
                             </div>
                             <div class="inline-block  text-center lh1">
                               <p class="m-clear color-primary">999</p>
@@ -340,11 +359,13 @@
             <!-- FILTER END -->
             <div class="viewallmedal-winner">
               <!-- MEDAL WINNER -->
-              <div class="viewallmedal-winnerholder" ng-repeat = "medalWinner in medalWinners track by $index">
-                <p class="viewallmedal-winnertitle"><span>{{medalWinner.age}} {{medalWinner.eventName}}</span></p>
+              <div class="viewallmedal-winnerholder" ng-repeat="medalWinner in medalWinners track by $index">
+                <p class="viewallmedal-winnertitle">
+                  <span>{{medalWinner.age}} {{medalWinner.eventName}}</span>
+                </p>
                 <div class="viewall-winnerrow" ng-repeat="winnerList in medalWinner.winners track by $index">
                   <div class="row">
-                    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat = "winner in winnerList.list track by $index">
+                    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="winner in winnerList.list track by $index">
                       <div class="allmedal-winnercard">
                         <div class="allmedal-medalholder">
                           <img ng-src="{{winner.medal|medalicon:'blue'}}" alt="" class="img-responsive">

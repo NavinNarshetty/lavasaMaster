@@ -166,7 +166,7 @@
             <div class="text-center">
                 <h4 class="color-blue text-up font-semi">sports participated</h4>
             </div>
-            <div class="">
+            <div class="hide">
                 <!--mt-min-38-->
                 <div class="float-right">
                     <h4 class="text-up color-blue display-inline">Year</h4>
@@ -187,7 +187,7 @@
                     <flex-slider class="carousel" flex-slide="sportDetails in schoolSports | orderBy:'name' track by $index" animation="slide"
                         item-width="140" item-margin="60">
                         <li>
-                            <a ng-click="selectSport(sportDetails)">
+                            <a>
                                 <div class="sports-participate text-center">
                                     <!-- sportDetails.image  | serverimage2 -->
                                     <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width">
@@ -202,6 +202,20 @@
                                     </div>
                                 </div>
                             </a>
+                            <!-- <a ng-click="selectSport(sportDetails)">
+                                <div class="sports-participate text-center">
+                                    <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width">
+                                    <span class="color-base text-up f16 mt10 equalSpacing">{{sportDetails.name}}</span>
+                                    <div class="combine mt10">
+                                        <div class="boy-sec display-inline color-base icon-right">
+                                            <img ng-src="img/sf-boys-mini.png" alt="">{{ sportDetails.maleCount || 0 }}
+                                        </div>
+                                        <div class="boy-sec display-inline color-base icon-left">
+                                            <img ng-src="img/sf-girl-mini.png" alt="">{{ sportDetails.femaleCount || 0 }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </a> -->
                         </li>
                     </flex-slider>
                     <div class="text-center" ng-if="!(schoolSports.length > 0)">
@@ -236,7 +250,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="">
+                <div class="hide">
                     <div class="float-right">
                         <h4 class="text-up color-blue display-inline">Year</h4>
                         <div class="display-inline">

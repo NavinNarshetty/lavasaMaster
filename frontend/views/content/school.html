@@ -6,7 +6,7 @@
 <section>
     <div class="head-banner new-head-banner">
         <img src="img/sfa-ath-new.png" class="img-responsive img width100 margin-auto newMargin">
-        <h1 class="text-up font-FjallaOne font-semi newHeadStyle">SCHOOLS</h1>
+        <h1 class="text-up font-FjallaOne font-semi newHeadStyle">{{type | capitalize}}S</h1>
     </div>
 </section>
 <section class="bottom-padding mt40">
@@ -14,9 +14,9 @@
         <div class="row">
             <div class="col-md-12">
                 <div class="text-center">
-                    <h4 class="color-grey f-mn">All the schools that have participated in Sports For All’s inter-school tournaments in Mumbai are listed
-                        below. The sport profile of each school will give you all the necessary information about the school’s
-                        sports status. </h4>
+                    <h4 class="color-grey f-mn">All the {{type}}s that have participated in Sports For All’s inter-{{type}} tournaments in {{sfaCity}}
+                        are listed below. The sport profile of each {{type}} will give you all the necessary information
+                        about the {{type}}’s sports status. </h4>
                 </div>
             </div>
         </div>
@@ -24,9 +24,10 @@
             <div class="col-xs-12">
                 <div class="search-title text-center">
                     <h3 class="color-blue text-up font-semi f162">search from
-                        <span class="color-orange">{{total}}</span> schools</h3>
+                        <span class="color-orange">{{total}}</span> {{type}}s</h3>
                 </div>
-                <div class="mt15 text-center border-bottom">
+                <!-- border-bottom -->
+                <div class="mt15 text-center">
                     <form class="">
                         <input type="text" class="search-input" name="q" value="Type school name" placeholder="Type school name or ID" ng-change="searchInTable(inputs.search);"
                             ng-model="inputs.search">
@@ -35,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" ng-if="!inputs.search">
+        <div class="row" ng-if="!inputs.search hide">
             <div class="text-center mt40">
                 <h3 class="font-semi color-orange text-up f162">{{filterselected.title}}</h3>
             </div>
@@ -43,14 +44,14 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <!--mt-min-30 mt-min-40 mb-cell-->
                     <div class="float-right">
-                        <h4 class="text-up color-blue display-inline">schools</h4>
+                        <h4 class="text-up color-blue display-inline">{{type}}s</h4>
                         <div class="display-inline">
                             <div class="sfa-select">
                                 <select class="select" ng-model="filter.year" ng-change="changeYear()">
-                                    <option value="top20">Top 20 Schools</option>
-                                    <option value="2015">SFA MUMBAI {{year15}}</option>
-                                    <option value="2016">SFA MUMBAI {{year16}}</option>
-                                    <option value="">All schools</option>
+                                    <option value="top20">Top 20 {{type | firstcapitalize}}s</option>
+                                    <!-- <option value="2015">SFA MUMBAI {{year15}}</option>
+                                    <option value="2016">SFA MUMBAI {{year16}}</option> -->
+                                    <option value="">All {{type | firstcapitalize}}s</option>
                                 </select>
                                 <span class="only-border"></span>
                             </div>
