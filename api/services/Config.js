@@ -664,12 +664,19 @@ var model = {
             proceedI++;
             if (proceedI === 1) {
                 Jimp.read(buf, function (err, image) {
-                    gfs.remove({
+                    gfs.find({
                         filename: filename,
-                    }, function () {
-                        image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
+                    }).lean().exec(function (err, found) {
+                        if (err) {} else {
+                            _.each(found, function (n) {
+                                gfs.remove({
+                                    filename: n,
+                                }, function () {
+                                    image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
+                                });
+                            });
+                        }
                     });
-
                 });
             }
         }
