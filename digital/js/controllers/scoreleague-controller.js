@@ -27,34 +27,6 @@ myApp.controller('LeagueScoreCtrl', function($scope, TemplateService, Navigation
               }
                 $scope.match = data.data;
                 $scope.match.matchId = $scope.matchData.matchId;
-                // $scope.match.resultFencing = {
-                //   "players":[{
-                //     "player":"5927c073ca58e7532822f4e8",
-                //     "firstName":"Chris",
-                //     "surname":"Gayle",
-                //     "fullName":"Chris Gayle",
-                //     "sfaId":"MA1721",
-                //     "noShow":false,
-                //     "walkover":false,
-                //     "finalPoints": 2
-                //   },{
-                //     "player":"592814c7efc661782c07aca3",
-                //     "firstName":"Venky",
-                //     "surname":"Rathod",
-                //     "fullName":"Venky Rathod",
-                //     "sfaId":"MA1713",
-                //     "noShow":false,
-                //     "walkover":false,
-                //     "finalPoints": 3
-                //   }],
-                //   "matchPhoto":[{
-                //     "image":"5a03543c1b0d0a114f704154.jpg"
-                //   }],
-                //   "scoreSheet":[],
-                //   "winner":{},
-                //   "isNoMatch":false,
-                //   "status":"IsLive"
-                // }
             } else {
                 console.log("ERROR IN getOneMatch");
             }
@@ -70,7 +42,7 @@ myApp.controller('LeagueScoreCtrl', function($scope, TemplateService, Navigation
         resultFencing : formData.resultFencing,
         matchId: $scope.matchData.matchId
       }
-      NavigationService.saveMatch($scope.matchResult, function(data){
+      NavigationService.saveFencing($scope.matchResult, function(data){
         if(data.value == true){
           console.log('save success');
         } else{
@@ -87,7 +59,7 @@ myApp.controller('LeagueScoreCtrl', function($scope, TemplateService, Navigation
         }, 10000);
       })
     }
-    // $scope.autoSave();
+    $scope.autoSave();
     // AUTO SAVE FUNCTION END
     // DESTROY AUTO SAVE
     // $scope.destroyAutoSave = function(){
@@ -181,4 +153,36 @@ myApp.controller('LeagueScoreCtrl', function($scope, TemplateService, Navigation
       }
     }
     // REMOVE MATCH SCORESHEET END
+    // JSON
+    // DUMMY RESULT FENCING
+    $scope.resultDummy  = {
+        "players":[{
+          "player":"5927c073ca58e7532822f4e8",
+          "firstName":"Chris",
+          "surname":"Gayle",
+          "fullName":"Chris Gayle",
+          "sfaId":"MA1721",
+          "noShow":false,
+          "walkover":false,
+          "finalPoints": 2
+        },{
+          "player":"592814c7efc661782c07aca3",
+          "firstName":"Venky",
+          "surname":"Rathod",
+          "fullName":"Venky Rathod",
+          "sfaId":"MA1713",
+          "noShow":false,
+          "walkover":false,
+          "finalPoints": 3
+        }],
+        "matchPhoto":[{
+          "image":"5a03543c1b0d0a114f704154.jpg"
+        }],
+        "scoreSheet":[],
+        "winner":{},
+        "isNoMatch":false,
+        "status":"IsLive"
+      }
+      // DUMMY RESULT FENCING END
+    // JSON END
 })
