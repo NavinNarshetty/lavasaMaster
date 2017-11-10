@@ -118,6 +118,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
         if (!allData.message) {
           if (allData.value) {
             $scope.tablePoint = allData.data.tablePoint;
+            console.log("$scope.tablePoint ", $scope.tablePoint);
           }
         } else {
           toastr.error(allData.message, 'Error Message');

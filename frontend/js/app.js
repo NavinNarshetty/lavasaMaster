@@ -445,8 +445,8 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             },
             controller: 'LeagueKnockoutCtrl'
         })
-        .state('league-knockout', {
-            url: "/league-knockout/:id",
+        .state('league-knockoutTeam', {
+            url: "/league-knockoutteam/:id",
             templateUrl: tempateURL,
             params: {
                 'isTeam': true

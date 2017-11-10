@@ -69,7 +69,7 @@
                   <span ng-if="data.opponentsTeam[0].teamId === undefined && isTeam">TBD</span>
                   <p class="m-clear text-capitalize ">{{data.opponentsSingle[0].fullName | truncate:'30'}} </p>
                   <p class="m-clear text-capitalize ">{{data.opponentsSingle[0].schoolName | truncate:'30'}} </p>
-                  <span ng-if="data.opponentsSingle[0].athleteId === undefined || !data.opponentsSingle[0].athleteId && !isTeam">TBD</span>
+                  <span ng-if="!data.opponentsSingle[0].athleteId && !isTeam">TBD</span>
                 </div>
               </td>
               <td>
@@ -79,7 +79,7 @@
                   <span ng-if="data.opponentsTeam[1].teamId === undefined && isTeam">TBD</span>
                   <p class="m-clear text-capitalize ">{{data.opponentsSingle[1].fullName | truncate:'30'}} </p>
                   <p class="m-clear text-capitalize ">{{data.opponentsSingle[1].schoolName | truncate:'30'}} </p>
-                  <span ng-if="data.opponentsSingle[1].athleteId === undefined || !data.opponentsSingle[1].athleteId && !isTeam">TBD</span>
+                  <span ng-if="!data.opponentsSingle[1].athleteId && !isTeam">TBD</span>
                 </div>
               </td>
               <td>
@@ -321,7 +321,7 @@
                             <p class="m-clear text-capitalize ">{{content.opponentsSingle[0].fullName | truncate:'30'}} </p>
                             <p class="m-clear text-capitalize ">{{content.opponentsSingle[0].schoolName | truncate:'30'}} </p>
 
-                            <span ng-if="content.opponentsSingle[0].athleteId === undefined || !content.opponentsSingle[0].athleteId && !isTeam">-</span>
+                            <span ng-if="!content.opponentsSingle[0].athleteId && !isTeam">-</span>
                           </div>
                         </td>
                         <td>
@@ -332,7 +332,7 @@
                             <p class="m-clear text-capitalize ">{{content.opponentsSingle[1].fullName | truncate:'30'}} </p>
                             <p class="m-clear text-capitalize ">{{content.opponentsSingle[1].schoolName | truncate:'30'}} </p>
 
-                            <span ng-if="content.opponentsSingle[1].athleteId === undefined || !content.opponentsSingle[1].athleteId && !isTeam">-</span>
+                            <span ng-if="content.opponentsSingle[1].athleteId === undefined && !content.opponentsSingle[1].athleteId && !isTeam">-</span>
                           </div>
                         </td>
                         <td>
