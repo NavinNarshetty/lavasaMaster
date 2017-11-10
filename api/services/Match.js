@@ -1197,15 +1197,21 @@ var model = {
                         teamData.schoolName = team.schoolName;
                         teamData._id = team._id;
                         var teamid = team._id.toString();
-                        Match.find({
+                        var matchObj = {
                             sport: data.sport,
                             excelType: {
                                 $regex: "league",
                                 $options: "i"
                             },
-                            "resultFootball.teams.team": teamid,
+                            $or: [{
+                                "resultFootball.teams.team": teamid,
+                            }, {
+                                "resultHockey.teams.team": teamid,
+                            }],
+
                             round: standings.name
-                        }).lean().deepPopulate("opponentsTeam").sort({
+                        }
+                        Match.find().lean().deepPopulate("opponentsTeam").sort({
                             createdAt: 1
                         }).exec(function (err, found) {
                             if (err) {
