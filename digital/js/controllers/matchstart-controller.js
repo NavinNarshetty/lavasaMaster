@@ -650,7 +650,7 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
     if ($scope.drawFormat == "League cum Knockout") {
       NavigationService.saveFencing($scope.matchResult, function(data){
         if (data.value == true) {
-          $state.go('league-knockout', {
+          $state.go('league-knockoutIndividual', {
             drawFormat: $stateParams.drawFormat,
             id: $stateParams.sport
           });

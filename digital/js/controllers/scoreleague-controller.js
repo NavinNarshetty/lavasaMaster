@@ -97,7 +97,7 @@ myApp.controller('LeagueScoreCtrl', function($scope, TemplateService, Navigation
           }
           NavigationService.saveFencing($scope.matchResult, function(data){
             if(data.value == true){
-              $state.go('league-knockout', {
+              $state.go('league-knockoutIndividual', {
                 drawFormat: $stateParams.drawFormat,
                 id: $stateParams.sport
               });

@@ -401,7 +401,12 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
             case 'Water Polo':
                 NavigationService.saveMatch($scope.matchResult, function (data) {
                     if (data.value == true) {
-                        if ($stateParams.drawFormat === 'Knockout') {
+                      if ($stateParams.drawFormat === 'League cum Knockout') {
+                          $state.go('league-knockoutTeam', {
+                              drawFormat: $stateParams.drawFormat,
+                              id: $stateParams.sport
+                          });
+                      } else if ($stateParams.drawFormat === 'Knockout') {
                             $state.go('knockout-team', {
                                 drawFormat: $stateParams.drawFormat,
                                 id: $stateParams.sport
