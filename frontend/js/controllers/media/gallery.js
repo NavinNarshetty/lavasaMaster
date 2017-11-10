@@ -92,7 +92,7 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
     $scope.getMediaFolders = function () {
         $scope.folders = undefined;
         NavigationService.getFolders($scope.filter, function (response) {
-            if (response) {
+            if (response.data !== 'Folders Not Found') {
                 console.log(response);
                 $scope.folders = response.data;
                 _.each($scope.folders, function (key) {
