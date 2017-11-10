@@ -155,15 +155,13 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date1: '11',
                     date2: '12',
                     month: 'Nov',
-                    link: '',
-                    detail: '9th Nov 8 p.m.'
+                    link: 'img/event/archery.pdf'
                 }, {
                     sport: 'Athletics',
                     date1: '13',
                     date2: '15',
                     month: 'Nov',
-                    link: '',
-                    detail: '9th Nov 8 p.m.'
+                    link: 'img/event/athletics.pdf'
                 }, {
                     sport: 'Badminton',
                     date1: '10',
