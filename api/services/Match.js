@@ -1211,7 +1211,7 @@ var model = {
 
                             round: standings.name
                         }
-                        Match.find().lean().deepPopulate("opponentsTeam").sort({
+                        Match.find(matchObj).lean().deepPopulate("opponentsTeam").sort({
                             createdAt: 1
                         }).exec(function (err, found) {
                             if (err) {
