@@ -246,13 +246,19 @@
                                         <span class="only-border "></span>
                                     </div>
                                 </div>
-                                <a class="dropdown-toggle mb25 " data-toggle="dropdown " ng-mouseenter="optionss=!optionss " ng-model="checkboxs ">
+                                <a class="dropdown-toggle mb25 " data-toggle="dropdown " ng-mouseenter="optionss=!optionss " ng-model="checkboxs " ng-if="selectedCity == 'hyderabad'">
+                                    LIVE SFA {{selectedCity | capitalize}}
+                                </a>
+                                <a class="dropdown-toggle mb25 " data-toggle="dropdown " ng-mouseenter="optionss=!optionss " ng-model="checkboxs " ng-if="selectedCity != 'hyderabad'">
                                     SFA {{selectedCity | capitalize}} {{eventYear}}
                                 </a>
                                 <ul class="dropdown-menu cl-pr forSm typePlace ">
                                     <ul class="display-inline typeList ">
                                         <li>
                                             <a>SCHOOL CHAMPIONSHIP</a>
+                                        </li>
+                                        <li ng-if="selectedCity == 'hyderabad'">
+                                            <a style="color:#5bb95c" href="https://hyderabad.sfanow.in/liveupdates" target="_blank">LIVE UPDATES</a>
                                         </li>
                                         <li ng-if="!registerSchool ">
                                             <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
@@ -516,22 +522,34 @@
                             <span class="only-border "></span>
                         </div>
                     </div>
-                    <div class="sfa-mum ">
+                    <div class="sfa-mum " ng-if="selectedCity != 'hyderabad'">
                         <button type="button " name="button " class="btn btn-sfatop " ng-mouseenter="optionss=!optionss
                               " ng-model="checkboxs ">SFA {{selectedCity | capitalize}} {{eventYear}}</button>
+                    </div>
+                    <div class="sfa-mum " ng-if="selectedCity == 'hyderabad'">
+                        <button type="button " name="button " class="btn btn-sfatop " ng-mouseenter="optionss=!optionss
+                              " ng-model="checkboxs ">LIVE SFA {{selectedCity | capitalize}}</button>
                     </div>
                 </div>
                 <div class="visible-xs ">
                     <div class=" ">
-                        <a class="dropdown-toggle mb25 " data-toggle="dropdown ">
+                        <a class="dropdown-toggle mb25 " data-toggle="dropdown " ng-if="selectedCity != 'hyderabad'">
                             <div class="sfa-mum sfa-mum-m ">
                                 <button type="button " name="button " class="btn btn-sfatop margin0 " ng-mouseenter="optionss=!optionss ">SFA {{selectedCity | capitalize}} {{eventYear}}</button>
+                            </div>
+                        </a>
+                        <a class="dropdown-toggle mb25 " data-toggle="dropdown " ng-if="selectedCity == 'hyderabad'">
+                            <div class="sfa-mum sfa-mum-m ">
+                                <button type="button " name="button " class="btn btn-sfatop margin0 " ng-mouseenter="optionss=!optionss ">LIVE SFA {{selectedCity | capitalize}}</button>
                             </div>
                         </a>
                         <ul class="dropdown-menu text-center cl-pr placingDrop typePlacing ">
                             <ul class="typeList ">
                                 <li>
                                     <a>SCHOOL CHAMPIONSHIP</a>
+                                </li>
+                                <li ng-if="selectedCity == 'hyderabad'">
+                                    <a style="color:#5bb95c" href="https://hyderabad.sfanow.in/liveupdates" target="_blank">LIVE UPDATES</a>
                                 </li>
                                 <li ng-if="!registerSchool ">
                                     <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
@@ -639,6 +657,9 @@
                         <ul class="display-inline typeList ">
                             <li>
                                 <p>SCHOOL CHAMPIONSHIP</p>
+                            </li>
+                            <li ng-if="selectedCity == 'hyderabad'">
+                                <a style="color:#5bb95c" href="https://hyderabad.sfanow.in/liveupdates" target="_blank">LIVE UPDATES</a>
                             </li>
                             <li ng-if="!registerSchool ">
                                 <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
