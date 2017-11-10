@@ -1597,7 +1597,6 @@ var model = {
                                                                 match.push(stats);
                                                                 callback(null, match);
                                                             }
-
                                                         });
                                                     }
                                                 }, function (err) {
@@ -3583,9 +3582,10 @@ var model = {
                                         callback(err, "error in mongoose");
                                     } else {
                                         async.each(matchData, function (singleData, callback) {
+                                                // console.log("single", singleData);
                                                 var stats = {};
                                                 stats.year = new Date(singleData.createdAt).getFullYear();
-                                                stats.team = singleData.matchId;
+                                                stats.match = singleData.matchId;
                                                 stats.ageGroup = singleData.sport.ageGroup.name;
                                                 stats.sportslist = singleData.sport.sportslist.name;
                                                 stats.gender = singleData.sport.gender;
@@ -3926,7 +3926,7 @@ var model = {
                                                                     function (callback) {
                                                                         StudentTeam.findOne({
                                                                             teamId: n.team
-                                                                        }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
+                                                                        }).lean().deepPopulate("studentId.school teamId.school").exec(function (err, found) {
                                                                             if (err) {
                                                                                 callback(null, err);
                                                                             } else if (_.isEmpty(found)) {
@@ -3962,8 +3962,13 @@ var model = {
                                                                                 } else {
                                                                                     stats.isAthleteWinner = true;
                                                                                 }
+                                                                                console.log("team", found.teamId);
                                                                                 stats.opponentName = found.teamId.name;
-                                                                                stats.school = found.teamId.schoolName;
+                                                                                if (found.teamId.schoolName) {
+                                                                                    stats.school = found.teamId.schoolName;
+                                                                                } else {
+                                                                                    stats.school = found.teamId.school.schoolName;
+                                                                                }
                                                                                 stats.teamId = found.teamId.teamId;
                                                                                 profile.match.push(stats);
                                                                             }
@@ -3994,7 +3999,7 @@ var model = {
                                                     var result;
                                                     if (singleData.resultFootball.teams.length == 1) {
                                                         StudentTeam.findOne({
-                                                            teamId: singleData.resultFootball.teams[0].team
+                                                            teamId: new objectid(singleData.resultFootball.teams[0].team)
                                                         }).lean().deepPopulate('studentId.school').exec(function (err, found) {
                                                             if (found.studentId.middleName) {
                                                                 var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
@@ -4019,43 +4024,74 @@ var model = {
                                                         });
                                                     } else {
                                                         async.each(singleData.resultFootball.teams, function (n, callback) {
-                                                            StudentTeam.findOne({
-                                                                teamId: n.team
-                                                            }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
-                                                                if (err) {
-                                                                    callback(null, err);
-                                                                } else if (_.isEmpty(found)) {
-                                                                    callback(null, profile.match);
-                                                                } else {
-                                                                    if (found.studentId.middleName) {
-                                                                        var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
-                                                                    } else {
-                                                                        var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                            async.waterfall([
+                                                                    function (callback) {
+                                                                        StudentTeam.findOne({
+                                                                            teamId: n.team
+                                                                        }).lean().deepPopulate("studentId.school teamId.school").exec(function (err, found) {
+                                                                            if (err) {
+                                                                                callback(null, err);
+                                                                            } else if (_.isEmpty(found)) {
+                                                                                callback(null, profile.match);
+                                                                            } else {
+                                                                                if (found.studentId.middleName) {
+                                                                                    var name = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                                } else {
+                                                                                    var name = found.studentId.firstName + " " + found.studentId.surname;
+                                                                                }
+                                                                                if (found.studentId.atheleteSchoolName) {
+                                                                                    var school = found.studentId.atheleteSchoolName;
+                                                                                } else {
+                                                                                    var school = found.studentId.school.name;
+                                                                                }
+                                                                                var player = {};
+                                                                                player.name = name;
+                                                                                player.school = school;
+                                                                                player.sfaId = found.studentId.sfaId;
+                                                                                player.profilePic = found.studentId.photograph;
+                                                                                profile.players.push(player);
+                                                                                callback(null, found);
+                                                                            }
+                                                                        });
+                                                                    },
+                                                                    function (found, callback) {
+                                                                        if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == false) {
+                                                                            if (n.team === singleData.opponentsTeam._id.toString()) {
+                                                                                console.log("score");
+                                                                                stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
+                                                                            } else {
+                                                                                if (singleData.resultFootball.winner.player === n.team) {
+                                                                                    stats.isAthleteWinner = false;
+                                                                                } else {
+                                                                                    stats.isAthleteWinner = true;
+                                                                                }
+                                                                                // console.log("team", found.teamId);
+                                                                                stats.opponentName = found.teamId.name;
+                                                                                if (found.teamId.schoolName) {
+                                                                                    stats.school = found.teamId.schoolName;
+                                                                                } else {
+                                                                                    stats.school = found.teamId.school.schoolName;
+                                                                                }
+                                                                                stats.teamId = found.teamId.teamId;
+                                                                                profile.match.push(stats);
+                                                                            }
+                                                                            stats.status = singleData.resultFootball.status;
+                                                                        } else if (singleData.resultFootball.status == "IsCompleted" && singleData.resultFootball.isNoMatch == true) {
+                                                                            stats.status = singleData.resultFootball.status;
+                                                                            stats.reason = "NO Match";
+                                                                            profile.match.push(stats);
+                                                                        } else {
+                                                                            stats.status = singleData.resultFootball.status;
+                                                                            stats.reason = "";
+                                                                            profile.match.push(stats);
+                                                                        }
+                                                                        callback(null, profile);
                                                                     }
-                                                                    if (found.studentId.atheleteSchoolName) {
-                                                                        var school = found.studentId.atheleteSchoolName;
-                                                                    } else {
-                                                                        var school = found.studentId.school.name;
-                                                                    }
-                                                                    var player = {};
-                                                                    player.name = name;
-                                                                    player.school = school;
-                                                                    player.sfaId = found.studentId.sfaId;
-                                                                    player.profilePic = found.studentId.photograph;
-                                                                    profile.players.push(player);
-                                                                    stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints + "-" + singleData.resultFootball.teams[1].teamResults.finalPoints;
-                                                                    if (singleData.resultFootball.winner.player === n.team) {
-                                                                        stats.isAthleteWinner = true;
-                                                                    } else {
-                                                                        stats.opponentName = found.teamId.name
-                                                                        stats.school = found.teamId.schoolName;
-                                                                        stats.teamId = found.teamId.teamId;
-                                                                    }
-                                                                    profile.match.push(stats);
-                                                                    callback(null, profile);
-                                                                }
+                                                                ],
+                                                                function (err, data2) {
+                                                                    callback(null, data2);
+                                                                });
 
-                                                            });
 
                                                         }, function (err) {
                                                             callback(null, profile.match);
