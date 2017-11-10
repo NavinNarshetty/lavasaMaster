@@ -123,10 +123,23 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'KnockoutCtrl'
         })
-        .state('league-knockout', {
-            url: "/league-knockout/:drawFormat/:id",
+        .state('league-knockoutTeam', {
+            url: "/league-knockoutTeam/:drawFormat/:id",
             templateUrl: tempateURL,
-            controller: 'LeagueKnockoutCtrl'
+            controller: 'LeagueKnockoutCtrl',
+            params: {
+                isTeam: true
+            }
+
+        })
+        .state('league-knockoutIndividual', {
+            url: "/league-knockoutIndividual/:drawFormat/:id",
+            templateUrl: tempateURL,
+            controller: 'LeagueKnockoutCtrl',
+            params: {
+                isTeam: false
+            }
+
         })
         .state('heats', {
             url: "/heats/:drawFormat/:id/:sportName",

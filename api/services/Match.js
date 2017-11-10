@@ -952,7 +952,7 @@ var model = {
         var matchData2 = [];
         async.waterfall([
             function (callback) {
-                var deepSearch = "opponentsTeam.studentTeam.studentId opponentsSingle.athleteId";
+                var deepSearch = "opponentsTeam.studentTeam.studentId opponentsSingle.athleteId.school";
                 Match.find({
                     sport: data.sport,
                     excelType: {

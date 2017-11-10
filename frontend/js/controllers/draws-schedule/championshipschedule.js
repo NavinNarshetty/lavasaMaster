@@ -657,9 +657,15 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                                         break;
                                     case 'Combat Sports':
                                         if ($scope.drawDetails.drawFormat === 'League cum Knockout') {
-                                            $state.go('league-knockout', {
-                                                id: $scope.drawDetails.sport,
-                                            });
+                                            if ($scope.drawDetails.isTeam === true) {
+                                                $state.go('league-knockoutTeam', {
+                                                    id: $scope.drawDetails.sport,
+                                                });
+                                            } else {
+                                                $state.go('league-knockoutIndividual', {
+                                                    id: $scope.drawDetails.sport,
+                                                });
+                                            }
 
                                         } else {
                                             if ($scope.drawDetails.isTeam) {

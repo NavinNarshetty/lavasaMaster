@@ -417,6 +417,13 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 callback(data.data);
             });
         },
+        getSchoolPerChoice: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'Profile/getSchoolPerChoice',
+                method: 'POST',
+                data: request
+            }).success(callback);
+        },
 
         getDrawFormats: function (request, callback) {
             $http({

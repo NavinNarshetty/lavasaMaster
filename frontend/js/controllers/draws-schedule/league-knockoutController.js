@@ -14,6 +14,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
   $scope.limitValue = 8;
   $scope.pointsLimit = 3;
   $scope.knockoutArr = [];
+  $scope.isTeam = $stateParams.isTeam;
 
   $scope.getOneSport = function (id) {
     $scope.objId = {};
@@ -57,9 +58,9 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
               });
               $scope.knockout = _.flattenDeep($scope.knockoutArr);
               $scope.knockout.reverse();
-              console.log("  $scope.knockout", $scope.knockout);
               if ($scope.knockout.length > 0) {
                 _.each($scope.knockout, function (key) {
+                  //knockout service to sort result 
                   knockoutService.sortLeagueKnockoutResult(key);
                 });
               }
@@ -68,11 +69,11 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
                 $scope.getOneSport($scope.matches[0].match[0].sport);
                 _.each($scope.matches, function (data) {
                   _.each(data.match, function (key) {
+                    //knockout service to sort result 
                     knockoutService.sortLeagueKnockoutResult(key);
                   });
                 });
               }
-
               console.log($scope.knockout, "$scope.knockout");
               console.log($scope.matches, "$scope.matches ");
             }

@@ -14,10 +14,14 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
           var tempNoshow = _.find(value.finalResult.teams, ['noShow', true]);
           if (tempWakover) {
             value.walkover = tempWakover.walkover;
+          } else {
+            value.walkover = false;
           }
           if (tempNoshow) {
             value.noShow = tempNoshow.noShow;
 
+          } else {
+            value.noShow = false;
           }
           _.each(value.opponentsTeam, function (team) {
             if (team._id && value.finalResult && value.finalResult.winner) {
@@ -57,9 +61,13 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
               var tempNoshow = _.find(value.finalResult.players, ['noShow', true]);
               if (tempWakover) {
                 value.walkover = tempWakover.walkover;
+              } else {
+                value.walkover = false;
               }
               if (tempNoshow) {
                 value.noShow = tempNoshow.noShow;
+              } else {
+                value.noShow = false;
               }
               value.status = value.finalResult.status;
               value.isNoMatch = value.finalResult.isNoMatch;
@@ -87,7 +95,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
 
   //for league-knockout
   this.sortLeagueKnockoutResult = function (result) {
-    if (result.opponentsTeam) {
+    if (result.opponentsTeam.length > 0) {
       _.each(result.opponentsTeam, function (team, index) {
         if (result.resultFootball !== undefined) {
           if (team._id === result.resultFootball.winner.player) {
@@ -105,21 +113,71 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
           var tempNoshow = _.find(result.resultFootball.teams, ['noShow', true]);
           if (tempWakover) {
             result.walkover = tempWakover.walkover;
+          } else {
+            result.walkover = false;
           }
           if (tempNoshow) {
             result.noShow = tempNoshow.noShow;
+          } else {
+            result.noShow = false;
           }
 
         }
 
       });
+    } else if (result.opponentsSingle.length > 0) {
+      console.log(result.resultFencing, "result.resultFencing ");
+      _.each(result.opponentsSingle, function (player, index) {
+        if (player) {
+          player.fullName = player.athleteId.firstName + ' ' + player.athleteId.surname;
+          if (player.athleteId.school && player.athleteId.school != null) {
+            player.schoolName = player.athleteId.school.name;
+          } else {
+            player.schoolName = player.athleteId.atheleteSchoolName;
+          }
+
+        }
+        if (result.resultFencing !== undefined) {
+          if (player._id === result.resultFencing.winner.opponentsSingle) {
+            player.isWinner = true;
+          } else {
+            player.isWinner = false;
+          }
+        }
+        if (result.resultFencing !== undefined && result.resultFencing.players) {
+          _.each(result.resultFencing.players, function (n) {
+            n.walkover = NavigationService.Boolean(n.walkover);
+            n.noShow = NavigationService.Boolean(n.noShow);
+            player.finalPoint = result.resultFencing.players[index].finalPoints;
+
+          });
+          var tempWakover = _.find(result.resultFencing.players, ['walkover', true]);
+          var tempNoshow = _.find(result.resultFencing.players, ['noShow', true]);
+          if (tempWakover) {
+            result.walkover = tempWakover.walkover;
+          } else {
+            result.walkover = false;
+          }
+          if (tempNoshow) {
+            result.noShow = tempNoshow.noShow;
+          } else {
+            result.noShow = false;
+          }
+
+        }
+      });
     }
     if (result.resultFootball) {
+      console.log("im in resultfootball");
       result.isNoMatch = result.resultFootball.isNoMatch;
       result.isDraw = result.resultFootball.isDraw;
       result.status = result.resultFootball.status;
-    } else {
-      console.log("im in else");
+    } else if (result.resultFencing) {
+      console.log("im in result fencing");
+      result.isNoMatch = result.resultFencing.isNoMatch;
+      result.isDraw = result.resultFencing.isDraw;
+      result.status = result.resultFencing.status;
+
     }
 
     return result;
@@ -133,8 +191,8 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
     }
     console.log(destination, type, 'in dir')
     $('html,body').animate({
-        scrollTop: $(destination).offset().top
-      },
+      scrollTop: $(destination).offset().top
+    },
       'slow');
   };
 

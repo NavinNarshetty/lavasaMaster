@@ -232,10 +232,21 @@ myApp.controller('DigitalHomeCtrl', function ($scope, TemplateService, $state, N
                                         break;
                                     case 'Combat Sports':
                                         if ($scope.drawDetails.drawFormat === 'League cum Knockout') {
-                                            $state.go('league-knockout', {
-                                                drawFormat: $scope.drawDetails.drawFormat,
-                                                id: $scope.drawDetails.sport,
-                                            });
+                                            // $state.go('league-knockout', {
+                                            //     drawFormat: $scope.drawDetails.drawFormat,
+                                            //     id: $scope.drawDetails.sport,
+                                            // });
+                                            if ($scope.drawDetails.isTeam === true) {
+                                                $state.go('league-knockout', {
+                                                    drawFormat: $scope.drawDetails.drawFormat,
+                                                    id: $scope.drawDetails.sport,
+                                                });
+                                            } else {
+                                                $state.go('league-knockoutIndividual', {
+                                                    drawFormat: $scope.drawDetails.drawFormat,
+                                                    id: $scope.drawDetails.sport,
+                                                });
+                                            }
 
                                         } else {
                                             if ($scope.drawDetails.isTeam) {

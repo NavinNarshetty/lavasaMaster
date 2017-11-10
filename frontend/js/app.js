@@ -437,9 +437,20 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: tempateURL,
             controller: 'swissLeagueCtrl'
         })
+        .state('league-knockoutIndividual', {
+            url: "/league-knockout/:id",
+            templateUrl: tempateURL,
+            params: {
+                'isTeam': false
+            },
+            controller: 'LeagueKnockoutCtrl'
+        })
         .state('league-knockout', {
             url: "/league-knockout/:id",
             templateUrl: tempateURL,
+            params: {
+                'isTeam': true
+            },
             controller: 'LeagueKnockoutCtrl'
         })
         .state('qf-knockout', {
