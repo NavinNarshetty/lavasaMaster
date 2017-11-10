@@ -187,7 +187,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
       $scope.currentMatch.result = $scope.currentMatch.resultFootball;
     } else if($scope.currentMatch.resultHockey){
       $scope.currentMatch.result = $scope.currentMatch.resultHockey;
-    } else if {
+    } else if ($scope.currentMatch.resultFencing){
       $scope.currentMatch.result = $scope.currentMatch.resultFencing;
     }
     modal = $uibModal.open({
