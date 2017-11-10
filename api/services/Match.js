@@ -3424,7 +3424,12 @@ var model = {
                     } else {
                         obj["PARTICIPANT 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
                     }
-                    obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
+                    if(mainData.opponentsSingle[0].athleteId.school.name){
+                        obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
+                    }else{
+                        obj["SCHOOL 1"] = '';
+                    }
+                    // obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
                     if (mainData.resultsCombat) {
                         if (mainData.resultsCombat.winner) {
                             if (mainData.opponentsSingle[0].athleteId._id.equals(mainData.resultsCombat.winner.player)) {
