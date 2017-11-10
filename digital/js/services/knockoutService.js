@@ -93,6 +93,10 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
           if (team._id === result.resultFootball.winner.player) {
             team.isWinner = true;
           }
+        } else if(result.resultHockey !== undefined){
+          if (team._id === result.resultHockey.winner.player) {
+            team.isWinner = true;
+          }
         }
         if (result.resultFootball !== undefined && result.resultFootball.teams) {
           _.each(result.resultFootball.teams, function (n) {
@@ -103,6 +107,28 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
           });
           var tempWakover = _.find(result.resultFootball.teams, ['walkover', true]);
           var tempNoshow = _.find(result.resultFootball.teams, ['noShow', true]);
+          if (tempWakover) {
+            result.walkover = tempWakover.walkover;
+          } else {
+            result.walkover = false;
+          }
+          if (tempNoshow) {
+            result.noShow = tempNoshow.noShow;
+          } else {
+            result.noShow = false;
+          }
+
+        }
+
+        if (result.resultHockey !== undefined && result.resultHockey.teams) {
+          _.each(result.resultHockey.teams, function (n) {
+            n.walkover = NavigationService.Boolean(n.walkover);
+            n.noShow = NavigationService.Boolean(n.noShow);
+            team.finalPoint = result.resultHockey.teams[index].teamResults.finalPoints;
+
+          });
+          var tempWakover = _.find(result.resultHockey.teams, ['walkover', true]);
+          var tempNoshow = _.find(result.resultHockey.teams, ['noShow', true]);
           if (tempWakover) {
             result.walkover = tempWakover.walkover;
           } else {
@@ -170,6 +196,10 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
       result.isDraw = result.resultFencing.isDraw;
       result.status = result.resultFencing.status;
 
+    } else if(result.resultHockey) {
+      result.isNoMatch = result.resultHockey.isNoMatch;
+      result.isDraw = result.resultHockey.isDraw;
+      result.status = result.resultHockey.status;
     }
 
     return result;

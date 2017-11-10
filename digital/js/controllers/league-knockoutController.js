@@ -53,7 +53,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
               $scope.knockout.reverse();
               if ($scope.knockout.length > 0) {
                 _.each($scope.knockout, function (key) {
-                  //knockout service to sort result 
+                  //knockout service to sort result
                   knockoutService.sortLeagueKnockoutResult(key);
                 });
               }
@@ -62,7 +62,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
                 $scope.getOneSport($scope.matches[0].match[0].sport);
                 _.each($scope.matches, function (data) {
                   _.each(data.match, function (key) {
-                    //knockout service to sort result 
+                    //knockout service to sort result
                     knockoutService.sortLeagueKnockoutResult(key);
                   });
                 });
@@ -183,7 +183,13 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
     $scope.currentMatch.sport = {};
     $scope.currentMatch.sport = $scope.oneSportDetail;
     $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
-    $scope.currentMatch.result = $scope.currentMatch.resultFootball;
+    if($scope.currentMatch.resultFootball){
+      $scope.currentMatch.result = $scope.currentMatch.resultFootball;
+    } else if($scope.currentMatch.resultHockey){
+      $scope.currentMatch.result = $scope.currentMatch.resultHockey;
+    } else if {
+      $scope.currentMatch.result = $scope.currentMatch.resultFencing;
+    }
     modal = $uibModal.open({
       animation: true,
       scope: $scope,
