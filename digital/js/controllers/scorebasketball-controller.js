@@ -1,6 +1,7 @@
 myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationService, ResultSportInitialization, $timeout, $uibModal, $stateParams, $state, $interval, toastr) {
 
   $scope.matchData = {};
+  $scope.drawFormat = $stateParams.drawFormat;
   $scope.stateParam = {
     "id": $stateParams.id,
     "drawFormat": $stateParams.drawFormat,
@@ -300,10 +301,17 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
           } else if (flag == '2') {
             //Do Nothing
           } else if (flag == '3') {
-            $state.go('knockout-team', {
-              drawFormat: $stateParams.drawFormat,
-              id: $stateParams.sport
-            });
+            if ($scope.drawFormat == 'League cum Knockout') {
+              $state.go('league-knockoutTeam',{
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              })
+            } else {
+              $state.go('knockout-team', {
+                drawFormat: $stateParams.drawFormat,
+                id: $stateParams.sport
+              });
+            }
           }
         } else {
           toastr.error('Save Failed, Please Try Again');
