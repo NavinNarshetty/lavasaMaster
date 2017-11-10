@@ -3424,12 +3424,11 @@ var model = {
                     } else {
                         obj["PARTICIPANT 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
                     }
-                    if(mainData.opponentsSingle[0].athleteId.school.name){
+                    if (mainData.opponentsSingle[0].athleteId.atheleteSchoolName) {
+                        obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.atheleteSchoolName;
+                    } else {
                         obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
-                    }else{
-                        obj["SCHOOL 1"] = '';
                     }
-                    // obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
                     if (mainData.resultsCombat) {
                         if (mainData.resultsCombat.winner) {
                             if (mainData.opponentsSingle[0].athleteId._id.equals(mainData.resultsCombat.winner.player)) {
@@ -3532,7 +3531,11 @@ var model = {
                     } else {
                         obj["PARTICIPANT 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.surname;
                     }
-                    obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
+                    if (mainData.opponentsSingle[1].athleteId.atheleteSchoolName) {
+                        obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.atheleteSchoolName;
+                    } else {
+                        obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
+                    }
                     if (mainData.resultsCombat) {
 
                         if (mainData.opponentsSingle[1].athleteId._id === mainData.resultsCombat.winner.player) {
@@ -4475,7 +4478,11 @@ var model = {
                                 } else {
                                     obj["NAME"] = matchData.opponentsSingle[i].athleteId.firstName + " " + matchData.opponentsSingle[i].athleteId.surname;
                                 }
-                                obj["SCHOOL"] = matchData.opponentsSingle[i].athleteId.school.name;
+                                if (matchData.opponentsSingle[i].athleteId.atheleteSchoolName) {
+                                    obj["SCHOOL"] = matchData.opponentsSingle[i].athleteId.atheleteSchoolName;
+                                } else {
+                                    obj["SCHOOL"] = matchData.opponentsSingle[i].athleteId.school.name;
+                                }
                                 i++;
                             } else {
                                 obj["SFA ID"] = "";
@@ -4732,7 +4739,11 @@ var model = {
                     } else {
                         obj["NAME"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
                     }
-                    obj["SCHOOL"] = mainData.opponentsSingle[0].athleteId.school.name;
+                    if (mainData.opponentsSingle[0].athleteId.atheleteSchoolName) {
+                        obj["SCHOOL"] = mainData.opponentsSingle[0].athleteId.atheleteSchoolName;
+                    } else {
+                        obj["SCHOOL"] = mainData.opponentsSingle[0].athleteId.school.name;
+                    }
                     if (mainData.resultQualifyingRound) {
                         if (mainData.resultQualifyingRound.player.attempt[0]) {
                             obj["ATTEMPT 1"] = mainData.resultQualifyingRound.player.attempt[0];
@@ -4832,7 +4843,12 @@ var model = {
                                 } else {
                                     obj["NAME"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
                                 }
-                                obj["SCHOOL"] = mainData.opponentsSingle[0].athleteId.school.name;
+                                if (mainData.opponentsSingle[0].athleteId.atheleteSchoolName) {
+                                    obj["SCHOOL"] = mainData.opponentsSingle[0].athleteId.atheleteSchoolName;
+                                } else {
+                                    obj["SCHOOL"] = mainData.opponentsSingle[0].athleteId.school.name;
+
+                                }
 
                                 if (mainData.resultQualifyingRound) {
                                     obj["SCORE - ROUND 1"] = mainData.resultQualifyingRound.player.attempt[0];
@@ -4946,8 +4962,11 @@ var model = {
                                 } else {
                                     obj["PARTICIPANT 1"] = mainData.opponentsSingle[0].athleteId.firstName + " " + mainData.opponentsSingle[0].athleteId.surname;
                                 }
-                                obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
-
+                                if (mainData.opponentsSingle[0].athleteId.atheleteSchoolName) {
+                                    obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.atheleteSchoolName;
+                                } else {
+                                    obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
+                                }
                             } else {
                                 obj["SFAID 1"] = "";
                                 obj["PARTICIPANT 1"] = "";
@@ -4962,7 +4981,12 @@ var model = {
                                 } else {
                                     obj["PARTICIPANT 2"] = mainData.opponentsSingle[1].athleteId.firstName + " " + mainData.opponentsSingle[1].athleteId.surname;
                                 }
-                                obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
+                                if (mainData.opponentsSingle[1].athleteId.atheleteSchoolName) {
+                                    obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.atheleteSchoolName;
+                                } else {
+                                    obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
+                                }
+
                                 if (mainData.resultKnockout) {
                                     obj["FINAL SCORE "] = mainData.resultKnockout.finalScore;
                                     if (mainData.resultKnockout.shootOutScore) {
@@ -5252,7 +5276,11 @@ var model = {
                             if (mainData.opponentsSingle.length > 0) {
                                 obj["SFAID 1"] = mainData.opponentsSingle[0].teamId;
                                 obj["NAME 1"] = mainData.opponentsSingle[0].name;
-                                obj["SCHOOL 1"] = mainData.opponentsSingle[0].schoolName;
+                                if (mainData.opponentsSingle[0].athleteId.atheleteSchoolName) {
+                                    obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.atheleteSchoolName;
+                                } else {
+                                    obj["SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
+                                }
                                 if (mainData.resultFencing) {
                                     obj["SCORE 1"] = mainData.resultFencing.players[0].finalPoints;
                                 }
@@ -5261,13 +5289,17 @@ var model = {
                                 obj["NAME 1"] = "";
                                 obj["SCHOOL 1"] = "";
                                 obj["SCORE 1"] = "";
-
                             }
 
                             if (mainData.opponentsSingle.length > 1) {
                                 obj["SFAID 2"] = mainData.opponentsSingle[1].teamId;
                                 obj["NAME 2"] = mainData.opponentsSingle[0].name;
-                                obj["SCHOOL 2"] = mainData.opponentsSingle[1].schoolName;
+                                if (mainData.opponentsSingle[1].athleteId.atheleteSchoolName) {
+                                    obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.atheleteSchoolName;
+                                } else {
+                                    obj["SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
+                                }
+
                                 if (mainData.resultFencing) {
                                     obj["SCORE 2"] = mainData.resultFencing.players[1].finalPoints;
                                     if (!_.isEmpty(mainData.resultFencing.winner) && mainData.resultFencing.isNoMatch == false || mainData.resultFencing.isDraw == false) {
