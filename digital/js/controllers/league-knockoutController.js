@@ -133,6 +133,13 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
   // START SCORING
   $scope.startScoring = function (card) {
     console.log(card, 'startScoring');
+    if (card.resultFootball) {
+      card.status = card.resultFootball.status;
+    } else if (card.resultHockey) {
+      card.status = card.resultHockey.status;
+    } else if (card.resultFencing) {
+      card.status = card.resultFencing.status;
+    }
     if (card.opponentsTeam.length > 0) {
       if (_.isEmpty(card.opponentsTeam[0]) && _.isEmpty(card.opponentsTeam[1])) {
         toastr.error('No players found for match.', 'No match');
@@ -145,6 +152,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
             sport: $stateParams.id,
             id: card.matchId
           });
+          // console.log("YOOOOo");
         }
       }
     } else if (card.opponentsSingle.length > 0) {
@@ -154,6 +162,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
         if (card && card.status == 'IsCompleted') {
           toastr.warning("This match has already been scored.", 'Scoring Completed');
         } else {
+          // console.log("HAAAAAAAAAAAAAA");
           $state.go("matchstart", {
             drawFormat: $stateParams.drawFormat,
             sport: $stateParams.id,
