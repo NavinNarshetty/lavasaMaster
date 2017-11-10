@@ -511,9 +511,9 @@
 
                 </div>
                 <!-- NAVIGATION HEADER END -->
-                <div class="col-md-2 hidden-xs hidden-sm ">
-                    <div class="display-inline ">
-                        <div class="citySelect sfa-select ">
+                <div class="col-md-2 hidden-xs hidden-sm">
+                    <div class="display-inline">
+                        <div class="citySelect sfa-select">
                             <select name="city " id="city " ng-model="selectedCity " ng-change="changeUrl(selectedCity) ">
                                 <option value="mumbai">Mumbai</option>
                                 <option value="hyderabad">Hyderabad</option>
@@ -522,15 +522,14 @@
                             <span class="only-border "></span>
                         </div>
                     </div>
-                    <div class="sfa-mum " ng-if="selectedCity != 'hyderabad'">
-                        <button type="button" name="button " class="btn btn-sfatop " ng-mouseenter="optionss=!optionss
-                              " ng-model="checkboxs ">SFA {{selectedCity | capitalize}} {{eventYear}}</button>
+                    <div class="sfa-mum" ng-if="selectedCity != 'hyderabad'">
+                        <button type="button" name="button" class="btn btn-sfatop" ng-mouseenter="optionss=!optionss" ng-model="checkboxs">SFA {{selectedCity | capitalize}} {{eventYear}}</button>
                     </div>
                     <div class="sfa-mum" ng-if="selectedCity == 'hyderabad'">
                         <button type="button" name="button" class="btn btn-sfatop" ng-mouseenter="optionss=!optionss" ng-model="checkboxs">LIVE SFA {{selectedCity | capitalize}}</button>
                     </div>
                 </div>
-                <div class="visible-xs ">
+                <div class="visible-xs">
                     <div class=" ">
                         <a class="dropdown-toggle mb25 " data-toggle="dropdown " ng-if="selectedCity != 'hyderabad'">
                             <div class="sfa-mum sfa-mum-m ">
