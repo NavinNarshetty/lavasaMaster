@@ -1241,28 +1241,50 @@ var model = {
 
                         _.each(teamData.matches, function (match) {
                             scores.matchCount = teamData.matches.length;
-                            if (match.resultFootball.teams.length == 2) {
-                                if (teamData._id == match.resultFootball.teams[0].team && match.resultFootball.teams[0].noShow == true) {
-                                    scores.noShow = ++scores.noShow;
-                                } else if (teamData._id == match.resultFootball.teams[1].team && match.resultFootball.teams[1].noShow == true) {
-                                    scores.noShow = ++scores.noShow;
+                            if (match.resultFootball) {
+                                if (match.resultFootball.teams.length == 2) {
+                                    if (teamData._id == match.resultFootball.teams[0].team && match.resultFootball.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    } else if (teamData._id == match.resultFootball.teams[1].team && match.resultFootball.teams[1].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                } else {
+                                    if (teamData._id == match.resultFootball.teams[0].team && match.resultFootball.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                }
+                                if (teamData._id == match.resultFootball.winner.player) {
+                                    scores.win = ++scores.win;
+                                    scores.points = scores.points + 3;
+                                } else if (_.isEmpty(match.resultFootball.winner.player) && match.resultFootball.isDraw == true) {
+                                    scores.draw = ++scores.draw;
+                                    scores.points = scores.points + 1;
+                                } else {
+                                    scores.loss = ++scores.loss;
                                 }
                             } else {
-                                if (teamData._id == match.resultFootball.teams[0].team && match.resultFootball.teams[0].noShow == true) {
-                                    scores.noShow = ++scores.noShow;
+                                if (match.resultHockey.teams.length == 2) {
+                                    if (teamData._id == match.resultHockey.teams[0].team && match.resultHockey.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    } else if (teamData._id == match.resultHockey.teams[1].team && match.resultHockey.teams[1].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                } else {
+                                    if (teamData._id == match.resultHockey.teams[0].team && match.resultHockey.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
                                 }
-                            }
-                            if (teamData._id == match.resultFootball.winner.player) {
-                                scores.win = ++scores.win;
-                                scores.points = scores.points + 3;
-                            } else if (_.isEmpty(match.resultFootball.winner.player) && match.resultFootball.isDraw == true) {
-                                scores.draw = ++scores.draw;
-                                scores.points = scores.points + 1;
-                            } else {
-                                scores.loss = ++scores.loss;
+                                if (teamData._id == match.resultHockey.winner.player) {
+                                    scores.win = ++scores.win;
+                                    scores.points = scores.points + 3;
+                                } else if (_.isEmpty(match.resultHockey.winner.player) && match.resultHockey.isDraw == true) {
+                                    scores.draw = ++scores.draw;
+                                    scores.points = scores.points + 1;
+                                } else {
+                                    scores.loss = ++scores.loss;
+                                }
                             }
                         });
-                        // scores.teamData = teamData;
                         callback(null, scores);
                     },
                 ],
