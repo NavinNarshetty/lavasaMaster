@@ -834,6 +834,17 @@ var controller = {
         }
     },
 
+    getStandingsFencing: function (req, res) {
+        if (req.body) {
+            Match.getStandingsFencing(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
     getAllWinners: function (req, res) {
         if (req.body) {
             Match.getAllWinners(req.body, res.callback);

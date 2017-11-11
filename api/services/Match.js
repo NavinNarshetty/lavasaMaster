@@ -1189,6 +1189,95 @@ var model = {
             });
     },
 
+    getStandingsFencing: function (data, callback) {
+        var deepSearch = "opponentsSingle.athleteId.school";
+        var standings = [];
+        var teams = [];
+        var tablePoint = [];
+        var final = {};
+        async.waterfall([
+                function (callback) {
+                    Match.find({
+                        sport: data.sport,
+                        excelType: {
+                            $regex: "league",
+                            $options: "i"
+                        }
+                    }).lean().deepPopulate(deepSearch).sort({
+                        createdAt: 1
+                    }).exec(function (err, found) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(found)) {
+                                callback(null, []);
+                            } else {
+                                var matchesPerPool = _.groupBy(found, 'round');
+                                callback(null, matchesPerPool);
+                            }
+                        }
+                    });
+                },
+                function (matchesPerPool, callback) {
+                    var arr = _.keys(matchesPerPool);
+                    var i = 0;
+                    while (i < arr.length) {
+                        var match = {};
+                        var name = arr[i];
+                        match.name = arr[i];
+
+                        var n = matchesPerPool[name].length;
+                        _.each(matchesPerPool[name], function (match) {
+                            var team = {};
+                            var team1 = {};
+                            if (match.opponentsSingle[0]) {
+                                team = match.opponentsSingle[0];
+                                teams.push(team);
+                            }
+                            if (match.opponentsSingle[1]) {
+                                team1 = match.opponentsSingle[1];
+                                teams.push(team1);
+                            }
+                        });
+                        var t = _.uniq(teams, function (x) {
+                            return x;
+                        });
+                        match.teams = t;
+                        teams = [];
+                        standings.push(match);
+                        i++;
+                    }
+                    callback(null, standings);
+                },
+                function (standings, callback) {
+                    console.log("unique", standings);
+                    async.eachSeries(standings, function (n, callback) {
+                        Match.getPointsPerPoolFencing(n, data, function (err, complete) {
+                            if (err || _.isEmpty(complete)) {
+                                callback(err, null);
+                            } else {
+                                var dummy = {};
+                                dummy.name = n.name;
+                                dummy.points = complete;
+                                tablePoint.push(dummy);
+                                callback(null, tablePoint);
+                            }
+                        });
+                    }, function (err) {
+                        final.tablePoint = tablePoint;
+                        callback(null, final);
+                    });
+                }
+            ],
+            function (err, results) {
+                if (err || _.isEmpty(results)) {
+                    callback(null, results);
+                } else {
+                    callback(null, results);
+                }
+            });
+    },
+
     getPointsPerPool: function (standings, data, callback) {
         async.concatSeries(standings.teams, function (team, callback) {
             async.waterfall([
@@ -1285,6 +1374,102 @@ var model = {
                                     scores.loss = ++scores.loss;
                                 }
                             }
+                        });
+                        callback(null, scores);
+                    },
+                ],
+                function (err, results) {
+                    if (err || _.isEmpty(results)) {
+                        callback(null, results);
+                    } else {
+                        callback(null, results);
+                    }
+                });
+        }, function (err, result) {
+            callback(null, result);
+        });
+
+    },
+
+    getPointsPerPoolFencing: function (standings, data, callback) {
+        async.concatSeries(standings.teams, function (team, callback) {
+            async.waterfall([
+                    function (callback) {
+                        var teamData = {};
+                        teamData.teamId = team.athleteId.sfaId;
+                        if (team.athleteId.atheleteSchoolName) {
+                            teamData.schoolName = team.athleteId.atheleteSchoolName;
+                        } else {
+                            teamData.schoolName = team.athleteId.school.name;
+                        }
+                        teamData._id = team.athleteId._id;
+                        teamData.opponentsSingle = team._id;
+                        var teamid = team._id.toString();
+                        var matchObj = {
+                            sport: data.sport,
+                            excelType: {
+                                $regex: "league",
+                                $options: "i"
+                            },
+                            $or: [{
+                                "resultFencing.players.player": teamid,
+                            }],
+
+                            round: standings.name
+                        }
+                        Match.find(matchObj).lean().deepPopulate("opponentsSingle.athleteId.school").sort({
+                            createdAt: 1
+                        }).exec(function (err, found) {
+                            if (err) {
+                                callback(err, null);
+                            } else {
+                                if (_.isEmpty(found)) {
+                                    teamData.matches = found;
+                                    callback(null, teamData);
+                                } else {
+                                    teamData.matches = found;
+                                    callback(null, teamData);
+                                }
+                            }
+                        });
+                    },
+                    function (teamData, callback) {
+                        var scores = {};
+                        scores._id = teamData._id;
+                        scores.player = teamData.opponentsSingle;
+                        scores.sfaId = teamData.teamId;
+                        scores.schoolName = teamData.schoolName;
+                        scores.win = 0;
+                        scores.draw = 0;
+                        scores.points = 0;
+                        scores.loss = 0;
+                        scores.matchCount = 0;
+                        scores.noShow = 0;
+
+                        _.each(teamData.matches, function (match) {
+                            scores.matchCount = teamData.matches.length;
+                            // if (match.resultFencing) {
+                            if (match.resultFencing.players.length == 2) {
+                                if (teamData._id == match.resultFencing.players[0].player && match.resultFencing.players[0].noShow == true) {
+                                    scores.noShow = ++scores.noShow;
+                                } else if (teamData._id == match.resultFencing.players[1].player && match.resultFencing.players[1].noShow == true) {
+                                    scores.noShow = ++scores.noShow;
+                                }
+                            } else {
+                                if (teamData._id == match.resultFencing.players[0].player && match.resultFencing.players[0].noShow == true) {
+                                    scores.noShow = ++scores.noShow;
+                                }
+                            }
+                            if (teamData._id == match.resultFencing.winner.player) {
+                                scores.win = ++scores.win;
+                                scores.points = scores.points + 3;
+                            } else if (_.isEmpty(match.resultFencing.winner.player) && match.resultFencing.isDraw == true) {
+                                scores.draw = ++scores.draw;
+                                scores.points = scores.points + 1;
+                            } else {
+                                scores.loss = ++scores.loss;
+                            }
+                            // } 
                         });
                         callback(null, scores);
                     },
