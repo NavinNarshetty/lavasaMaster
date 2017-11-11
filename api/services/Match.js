@@ -1695,7 +1695,7 @@ var model = {
 
                 },
                 function (singleData, callback) {
-                    console.log("singleData", singleData);
+                    // console.log("singleData", singleData);
                     if (singleData.error) {
                         callback(null, singleData);
                     } else {
@@ -2797,13 +2797,13 @@ var model = {
                                     prevMatch: final.finalPrevious[i]
                                 }
                             };
-                            console.log("row", row, "rangeTotal", rangeTotal);
+                            // console.log("row", row, "rangeTotal", rangeTotal);
                             if (final.matchData[row].round != "Third Place") {
                                 Match.update({
                                     _id: id
                                 }, updateObj).exec(
                                     function (err, match) {
-                                        console.log("updated");
+                                        // console.log("updated");
                                     });
                             }
                             i++;
@@ -2816,7 +2816,7 @@ var model = {
                 },
                 function (final, callback) {
                     if (data.thirdPlace == "yes") {
-                        console.log("inside third place");
+                        // console.log("inside third place");
                         Match.findOne({
                             sport: data.sport,
                             $or: [{
@@ -2832,15 +2832,15 @@ var model = {
                             } else {
                                 if (_.isEmpty(found)) {
                                     callback(null, []);
-                                    console.log("empty");
+                                    // console.log("empty");
                                 } else {
-                                    console.log("final", found);
+                                    // console.log("final", found);
                                     var updateObj = {
                                         $set: {
                                             prevMatch: found.prevMatch
                                         }
                                     };
-                                    console.log("updateObj", updateObj)
+                                    // console.log("updateObj", updateObj)
                                     Match.update({
                                         sport: data.sport,
                                         round: {
@@ -2849,7 +2849,7 @@ var model = {
                                         }
                                     }, updateObj).exec(
                                         function (err, match) {
-                                            console.log("match", match);
+                                            // console.log("match", match);
                                             callback(null, final);
                                         });
                                 }
@@ -13065,6 +13065,7 @@ var model = {
                                                                 result.name = n.firstName + " " + n.surname;
                                                             }
                                                             result.sfaId = n.sfaId;
+                                                            result.gender = n.gender;
                                                             result.school = singleData.school[0].schoolName;
                                                             result.profile = n.photograph;
                                                             result.medaltype = singleData.medalType;
