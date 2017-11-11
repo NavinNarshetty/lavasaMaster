@@ -106,9 +106,9 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 data: request
             }).then(callback);
         },
-        getSportStandings: function (request, callback) {
+        getSportStandings: function (request, url, callback) {
             $http({
-                url: adminurl + 'match/getStandings',
+                url: adminurl + url,
                 method: 'POST',
                 data: request
             }).then(callback);

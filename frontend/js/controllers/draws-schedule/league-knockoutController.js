@@ -14,6 +14,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
   $scope.limitValue = 8;
   $scope.pointsLimit = 3;
   $scope.knockoutArr = [];
+  var Url = '';
   $scope.isTeam = $stateParams.isTeam;
 
   $scope.getOneSport = function (id) {
@@ -24,6 +25,15 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
         if (!allData.message) {
           if (allData.value) {
             $scope.oneSportDetail = allData.data;
+            $scope.sportsListSubCategoryName = $scope.oneSportDetail.sportslist.sportsListSubCategory.name;
+            console.log("  $scope.sportsListSubCategoryName", $scope.sportsListSubCategoryName);
+            if ($scope.sportsListSubCategoryName === 'Fencing') {
+              Url = 'match/getStandingsFencing';
+              $scope.getStandingsFun(Url);
+            } else {
+              Url = 'match/getStandings';
+              $scope.getStandingsFun(Url);
+            }
             if ($scope.oneSportDetail.eventPdf) {
               $scope.showPdf = true;
               $scope.pdfdata = $scope.oneSportDetail.eventPdf;
@@ -109,23 +119,28 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
 
   };
   //For Points table
-  if ($stateParams.id) {
-    var Obj = {};
-    Obj.sport = $stateParams.id;
-    NavigationService.getSportStandings(Obj, function (data) {
-      console.log(data, "data");
-      errorService.errorCode(data, function (allData) {
-        if (!allData.message) {
-          if (allData.value) {
-            $scope.tablePoint = allData.data.tablePoint;
-            console.log("$scope.tablePoint ", $scope.tablePoint);
-          }
-        } else {
-          toastr.error(allData.message, 'Error Message');
-        }
-      });
-    });
-  }
+  $scope.getStandingsFun = function (Url) {
+    if ($stateParams.id && Url) {
+      var Obj = {};
+      Obj.sport = $stateParams.id;
+      if (Url) {
+        NavigationService.getSportStandings(Obj, Url, function (data) {
+          console.log(data, "data");
+          errorService.errorCode(data, function (allData) {
+            if (!allData.message) {
+              if (allData.value) {
+                $scope.tablePoint = allData.data.tablePoint;
+                console.log("$scope.tablePoint ", $scope.tablePoint);
+              }
+            } else {
+              toastr.error(allData.message, 'Error Message');
+            }
+          });
+        });
+      }
+    }
+  };
+
   //for Points Table
   $scope.showMorePoints = function (bool) {
     if (bool) {
