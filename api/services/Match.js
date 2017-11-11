@@ -1028,6 +1028,7 @@ var model = {
                         callback(err, null);
                     } else {
                         if (_.isEmpty(found)) {
+                            finalData.qualifying = sendObj;
                             callback(null, []);
                         } else {
                             finalData.qualifying = sendObj;
