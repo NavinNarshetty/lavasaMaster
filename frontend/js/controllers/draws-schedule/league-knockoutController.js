@@ -76,13 +76,16 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
               }
               if (allData.data.qualifying) {
                 $scope.matches = allData.data.qualifying.roundsList;
-                $scope.getOneSport($scope.matches[0].match[0].sport);
-                _.each($scope.matches, function (data) {
-                  _.each(data.match, function (key) {
-                    //knockout service to sort result 
-                    knockoutService.sortLeagueKnockoutResult(key);
+                if ($scope.matches.length > 0) {
+                  $scope.getOneSport($scope.matches[0].match[0].sport);
+                  _.each($scope.matches, function (data) {
+                    _.each(data.match, function (key) {
+                      //knockout service to sort result 
+                      knockoutService.sortLeagueKnockoutResult(key);
+                    });
                   });
-                });
+                }
+
               }
               console.log($scope.knockout, "$scope.knockout");
               console.log($scope.matches, "$scope.matches ");
