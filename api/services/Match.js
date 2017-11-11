@@ -1219,6 +1219,7 @@ var model = {
                     });
                 },
                 function (matchesPerPool, callback) {
+                    console.log("matchesPerPool", matchesPerPool);
                     var arr = _.keys(matchesPerPool);
                     var i = 0;
                     while (i < arr.length) {
@@ -1243,6 +1244,7 @@ var model = {
                             return x;
                         });
                         match.teams = t;
+                        console.log("match", match);
                         teams = [];
                         standings.push(match);
                         i++;
@@ -1393,6 +1395,7 @@ var model = {
 
     getPointsPerPoolFencing: function (standings, data, callback) {
         async.concatSeries(standings.teams, function (team, callback) {
+            console.log("team", team);
             async.waterfall([
                     function (callback) {
                         var teamData = {};
@@ -1471,6 +1474,7 @@ var model = {
                             }
                             // } 
                         });
+                        console.log("scores", scores);
                         callback(null, scores);
                     },
                 ],
