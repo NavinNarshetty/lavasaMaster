@@ -18,7 +18,7 @@
                             </a>
                             <p ng-if="sfaCity == 'Hyderabad'">Draws & Schedule for other sports will be available shortly.</p> -->
                         </div>
-                        <div class="championshipdraw-card ">
+                        <div class="championshipdraw-card hidden">
                             <form name=championshipDrawsForm class="championshipdraw-card-form">
                                 <!-- SPORT -->
                                 <div class="form-group">
@@ -252,9 +252,9 @@
                                                         <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
                                                             <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
                                                             <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
-                                                            <span>-</span> {{schedule.date2}}
-                                                            <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                            <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
+                                                            <span>-</span>                                                        {{schedule.date2}}
+                                                        <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                        {{schedule.month}}
                                                         </span>
                                                         <span ng-if="schedule.date">{{schedule.date}}
                                                             <sup>th</sup> {{schedule.month}} </span>
@@ -303,9 +303,9 @@
                                                         <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
                                                             <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
                                                             <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
-                                                            <span>-</span> {{schedule.date2}}
-                                                            <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                            <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
+                                                            <span>-</span>                                                        {{schedule.date2}}
+                                                        <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                        {{schedule.month}}
                                                         </span>
                                                         <span ng-if="schedule.date">{{schedule.date}}
                                                             <sup>th</sup> {{schedule.month}} </span>
