@@ -1150,7 +1150,7 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
         },
         getteamAthleteID: function (formData, callback) {
             $http({
-                url: adminUrl2 + 'Athelete/getOne',
+                url: adminUrl2 + 'EventBib/getAthleteProfile',
                 method: 'POST',
                 data: formData
             }).then(callback);

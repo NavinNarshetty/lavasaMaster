@@ -207,7 +207,7 @@ myApp.controller('eventAttendanceProfileCtrl', function ($scope, TemplateService
 
   if ($stateParams.id) {
     $scope.constraints = {}
-    $scope.constraints._id = $stateParams.id;
+    $scope.constraints.athleteId = $stateParams.id;
     console.log($scope.constraints, 'id for profile get one')
     NavigationService.getteamAthleteID($scope.constraints, function (data) {
       console.log(data, "athlete profile data")
