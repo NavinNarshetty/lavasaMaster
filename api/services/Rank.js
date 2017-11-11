@@ -168,7 +168,7 @@ var model = {
         var str = '^' + data.name;
         var re = new RegExp(str, 'i');
 
-        var sportRankipeline = [{
+        var sportRankPipeline = [{
             $match: {
                 "sportData.name": re
             }
@@ -270,14 +270,60 @@ var model = {
             $match: {
                 "sports.name": data.name
             }
-        },{
+        }, {
             $project: {
                 "award": 1,
                 "gender": 1,
-                "athlete":1
+                "athlete": 1
             }
         }];
 
+        var medalWinnerPipeLine = [{
+            $lookup: {
+                "from": "sportslists",
+                "localField": "sportslist",
+                "foreignField": "_id",
+                "as": "sportslist"
+            }
+        }, {
+            $unwind: {
+                path: "$sportslist",
+                includeArrayIndex: "arrayIndex", // optional
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }, {
+            $lookup: {
+                "from": "sportslistsubcategories",
+                "localField": "sportslist.sportsListSubCategory",
+                "foreignField": "_id",
+                "as": "sportslist.sportsListSubCategory"
+            }
+        }, {
+            $unwind: {
+                path: "$sportslist.sportsListSubCategory",
+                includeArrayIndex: "arrayIndex", // optional
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }, {
+            $match: {
+                "sportslist.sportsListSubCategory.name": {
+                    $regex: re
+                }
+            }
+        }, {
+            $lookup: {
+                "from": "agegroups",
+                "localField": "ageGroup",
+                "foreignField": "_id",
+                "as": "ageGroup"
+            }
+        }, {
+            $unwind: {
+                path: "$ageGroup",
+                includeArrayIndex: "arrayIndex", // optional
+                preserveNullAndEmptyArrays: false // optional
+            }
+        }];
 
         var sendObj = {
             table: [],
@@ -286,7 +332,7 @@ var model = {
 
         async.waterfall([
             function (callback) {
-                Rank.aggregate(sportRankipeline, function (err, result) {
+                Rank.aggregate(sportRankPipeline, function (err, result) {
                     if (err) {
                         callback(err, null);
                     } else {
@@ -296,7 +342,7 @@ var model = {
                     }
                 });
             },
-            function(sendObj,callback){
+            function (sendObj, callback) {
                 SpecialAwardDetails.aggregate(risingAwardPipeline, function (err, risingAwards) {
                     sendObj.risingAthletes = risingAwards;
                     console.log("risingAwards", risingAwards);
@@ -308,29 +354,69 @@ var model = {
                     }
                 })
             },
-            function(sendObj,callback){
-                async.concatSeries(sendObj.risingAthletes,function(singleData,callback){
-                    var matchObj={
-                        "athleteId":singleData.athlete
+            function (sendObj, callback) {
+                async.concatSeries(sendObj.risingAthletes, function (singleData, callback) {
+                    var matchObj = {
+                        "athleteId": singleData.athlete
                     }
-                    Profile.getAthleteProfile(matchObj,function(err,profile){
-                        if(err){
-                            callback(null,"");
-                        }else{
-                            singleData.medalData=_.groupBy(profile.medalData,'name'); 
-                            singleData.sportsPlayed=_.map(profile.sport,'sportslist.sportsListSubCategory.name');
-                            singleData.athleteProfile=profile.athlete;
-                            callback(null,singleData);
+                    Profile.getAthleteProfile(matchObj, function (err, profile) {
+                        if (err) {
+                            callback(null, "");
+                        } else {
+                            singleData.medalData = _.groupBy(profile.medalData, 'name');
+                            singleData.sportsPlayed = _.map(profile.sport, 'sportslist.sportsListSubCategory.name');
+                            singleData.athleteProfile = profile.athlete;
+                            callback(null, singleData);
                         }
                     })
-                },function(err,result){
-                    sendObj.risingAthletes=result;
+                }, function (err, result) {
+                    sendObj.risingAthletes = result;
+                    callback(null, sendObj);
+                })
+            },
+            // find all sport events
+            function (sendObj, callback) {
+                Sport.aggregate(medalWinnerPipeLine,function(err,sports){
+                    if(err){
+                        callback(err,null);
+                    }else{
+                        sendObj.medalWinners=sports;
+                        callback(null,sendObj);
+                    }
+                });
+            },
+            function(sendObj,callback){
+                async.concatSeries(sendObj.medalWinners,function(singleData,callback){
+                    var obj={
+                        "name":"",
+                        "medalWinners":[]
+                    }
+                    var matchObj={
+                        "sport":singleData._id
+                    }
+                    Match.getAllWinners(matchObj,function(err,data){
+                        
+                        var eventName=data.name;
+                        if(data.name!=singleData.sportslist.name){
+                            eventName=singleData.sportslist.name;
+                        }
+                        obj.name=singleData.ageGroup.name + " " + eventName;
+                        obj.medalWinners=data;
+                        callback(null,obj);
+                    });
+                },function(err,finalResult){
+                    sendObj.medalWinners=_.filter(finalResult,function(n){
+                        if(!_.isEmpty(n.medalWinners)){
+                            return n;
+                        }
+                    });
+                    // sendObj.medalWinners=finalResult;
                     callback(null,sendObj);
                 })
             }
 
         ], function (err, finalData) {
-            callback(null,finalData);
+            callback(null, finalData);
         })
 
     }
