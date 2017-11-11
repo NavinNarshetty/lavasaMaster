@@ -13045,7 +13045,6 @@ var model = {
                             if (!_.isEmpty(singleData.player)) {
                                 async.eachSeries(singleData.player, function (n, callback) {
                                     console.log("n", n);
-
                                     data.athlete = n._id;
                                     var pipeLine = Match.getAggregatePipeline(data);
                                     Match.aggregate(pipeLine, function (err, matchData) {
@@ -13091,6 +13090,7 @@ var model = {
                                                                 result.name = n.firstName + " " + n.surname;
                                                             }
                                                             result.sfaId = n.sfaId;
+                                                            result.gender = n.gender;
                                                             result.profile = n.photograph;
                                                             result.school = singleData.school[0].schoolName;
                                                             result.medaltype = singleData.medalType;
@@ -13108,6 +13108,7 @@ var model = {
                                                                 result.name = n.firstName + " " + n.surname;
                                                             }
                                                             result.sfaId = n.sfaId;
+                                                            result.gender = n.gender;
                                                             result.profile = n.photograph;
                                                             result.school = singleData.school[0].schoolName;
                                                             result.medaltype = singleData.medalType;
@@ -13133,6 +13134,7 @@ var model = {
                                                                 result.name = n.firstName + " " + n.surname;
                                                             }
                                                             result.sfaId = n.sfaId;
+                                                            result.gender = n.gender;
                                                             result.profile = n.photograph;
                                                             result.school = singleData.school[0].schoolName;
                                                             result.medaltype = singleData.medalType;
@@ -13145,6 +13147,7 @@ var model = {
                                                                 result.name = n.firstName + " " + n.surname;
                                                             }
                                                             result.profile = n.photograph;
+                                                            result.gender = n.gender;
                                                             result.sfaId = n.sfaId;
                                                             result.school = singleData.school[0].schoolName;
                                                             result.medaltype = singleData.medalType;
@@ -13178,9 +13181,6 @@ var model = {
                                 });
 
                             } else {
-
-
-
                                 async.eachSeries(singleData.team, function (n, callback) {
                                     data.team = n._id;
                                     var pipeLine = Match.getTeamAggregatePipeline(data);
@@ -13197,6 +13197,7 @@ var model = {
                                                         if (matchData[0].resultHeat) {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
+                                                            result.gender = n.studentTeam.studentId.gender;
 
                                                             console.log("school", n.school);
                                                             if (n.school != null) {
@@ -13219,6 +13220,7 @@ var model = {
                                                         } else if (matchData[0].resultQualifyingRound) {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
+                                                            result.gender = n.studentTeam.studentId.gender;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
@@ -13236,6 +13238,7 @@ var model = {
                                                         } else if (matchData[0].resultSwiss) {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
+                                                            result.gender = n.studentTeam.studentId.gender;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
@@ -13254,6 +13257,7 @@ var model = {
                                                         } else if (matchData[0].resultShooting) {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
+                                                            result.gender = n.studentTeam.studentId.gender;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
@@ -13264,10 +13268,10 @@ var model = {
                                                             result.result = matchData[0].resultShooting.finalScore;
                                                             callback(null, result);
                                                         } else if (matchData[0].resultsRacquet) {
-
                                                             console.log("matchData[0]", matchData[0]);
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
+                                                            result.gender = n.studentTeam.studentId.gender;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
@@ -13305,6 +13309,7 @@ var model = {
                                                         } else {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
+                                                            result.gender = n.studentTeam.studentId.gender;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
@@ -13359,11 +13364,6 @@ var model = {
                     if (_.isEmpty(data2)) {
                         callback(null, data2);
                     } else {
-
-                        console.log("****************************************************************************");
-                        console.log("****************************************************************************");
-                        console.log("****************************************************************************");
-                        console.log("****************************************************************************");
                         callback(null, data2);
 
                     }
