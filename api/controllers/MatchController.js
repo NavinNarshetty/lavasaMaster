@@ -78,9 +78,11 @@ var controller = {
                             var excelLength = importData.length;
                             var range = req.body.range;
                             var sum = 0;
-                            while (range >= 1) {
-                                sum = parseInt(sum) + range;
-                                range = range / 2;
+                            if (range != 0) {
+                                while (range >= 1) {
+                                    sum = parseInt(sum) + range;
+                                    range = range / 2;
+                                }
                             }
                             if (req.body.thirdPlace == "yes") {
                                 sum = sum + 1;
@@ -111,9 +113,11 @@ var controller = {
                             // var excelLength = importData.length;
                             var range = req.body.range;
                             var sum = 0;
-                            while (range >= 1) {
-                                sum = parseInt(sum) + range;
-                                range = range / 2;
+                            if (range != 0) {
+                                while (range >= 1) {
+                                    sum = parseInt(sum) + range;
+                                    range = range / 2;
+                                }
                             }
                             if (req.body.thirdPlace == "yes") {
                                 sum = sum + 1;
