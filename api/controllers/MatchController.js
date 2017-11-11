@@ -543,7 +543,7 @@ var controller = {
                             "value": false
                         })
                     } else {
-                        // console.log("sports", sportData);
+                        console.log("sports", sportData, req.body);
                         req.body.sport = sportData.sportId;
                         if (req.body.resultType == "knockout") {
                             Match.generateExcelKnockout(req.body, res);
