@@ -1559,9 +1559,9 @@ var model = {
                                                 singleData["PARTICIPANT 1"] = null;
                                                 callback(null, singleData);
                                             } else {
-                                                // console.log("singleData1", singleData);
+                                                console.log("singleData1", singleData);
                                                 var paramData = {};
-                                                paramData.participant = singleData["SFAID 1"].trim();
+                                                paramData.participant = _.trim(singleData["SFAID 1"]);
                                                 paramData.sport = singleData.SPORT;
                                                 Match.getAthleteId(paramData, function (err, complete) {
                                                     if (err || _.isEmpty(complete)) {
