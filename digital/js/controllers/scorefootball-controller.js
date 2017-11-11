@@ -111,7 +111,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
             console.log('save success');
             $rootScope.modalInstance.close('a');
           } else{
-            alert('fail save');
+            console.log('fail save');
           }
         });
       }
