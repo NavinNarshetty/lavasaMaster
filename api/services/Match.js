@@ -2926,7 +2926,7 @@ var model = {
                                     paramData.opponentsTeam = [];
                                     paramData.matchId = data.matchId;
                                     paramData.round = singleData["ROUND"];
-                                    if (_.isEmpty(singleData["TEAM NAME 1"]) || _.isEmpty(singleData["TEAM NAME 2"])) {
+                                    if (_.isEmpty(singleData["TEAM NAME 1"]) && _.isEmpty(singleData["TEAM NAME 2"])) {
                                         paramData.opponentsTeam = "";
                                     } else if (_.isEmpty(singleData["TEAM NAME 1"])) {
                                         paramData.opponentsTeam.push(singleData["TEAM NAME 2"]);
