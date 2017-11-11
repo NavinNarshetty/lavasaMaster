@@ -1613,7 +1613,7 @@ var model = {
                                                 callback(null, singleData);
                                             } else {
                                                 var paramData = {};
-                                                paramData.participant = singleData["SFAID 2"].trim();
+                                                paramData.participant = _.trim(singleData["SFAID 2"]);
                                                 paramData.sport = singleData.SPORT;
                                                 Match.getAthleteId(paramData, function (err, complete) {
                                                     if (err || _.isEmpty(complete)) {
