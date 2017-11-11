@@ -542,6 +542,7 @@ var model = {
                     AgeGroup.findOne({
                         name: data.age
                     }).lean().exec(function (err, found) {
+                        // console.log("age", found);
                         if (err || _.isEmpty(found)) {
                             callback(null, {
                                 error: "No Age found!",
@@ -555,11 +556,14 @@ var model = {
                 },
                 function (sport, callback) {
                     if (_.isEmpty(data.weight) || data.weight == undefined) {
+                        // console.log("inside weight");
                         callback(null, sport);
                     } else {
+
                         Weight.findOne({
                             name: data.weight
                         }).lean().exec(function (err, found) {
+                            // console.log("weight", found);
                             if (err || _.isEmpty(found)) {
                                 callback(null, {
                                     error: "No Weight found!",
@@ -576,6 +580,20 @@ var model = {
                     if (sport.error) {
                         callback(null, sport);
                     } else {
+                        if (sport.weight) {
+                            var matchObj = {
+                                gender: data.gender,
+                                sportslist: sport.sportslist,
+                                ageGroup: sport.age
+                            };
+                        } else {
+                            var matchObj = {
+                                gender: data.gender,
+                                sportslist: sport.sportslist,
+                                ageGroup: sport.age,
+                                weight: sport.weight
+                            };
+                        }
                         var matchObj = {};
                         matchObj.gender = data.gender;
                         matchObj.sportslist = sport.sportslist;
@@ -583,9 +601,11 @@ var model = {
                         if (sport.weight) {
                             matchObj.weight = sport.weight;
                         }
-                        // console.log("matchObj", matchObj);
+                        console.log("matchObj", matchObj);
                         Sport.findOne(matchObj).lean().exec(function (err, found) {
+                            console.log("sport", found);
                             if (err || _.isEmpty(found)) {
+                                // console.log("sport", found);
                                 callback(null, {
                                     error: "No Sport found!",
                                     success: data
@@ -1516,6 +1536,7 @@ var model = {
         async.waterfall([
                 function (callback) {
                     async.concatSeries(importData, function (singleData, callback) {
+                            // console.log("singleData", singleData);
                             async.waterfall([
                                     function (callback) {
                                         var date = Math.round((singleData.DATE - 25569) * 86400 * 1000);
@@ -1525,16 +1546,18 @@ var model = {
                                     },
                                     function (singleData, callback) {
                                         var paramData = {};
-                                        paramData.name = singleData.EVENT;
-                                        console.log("para,", paramData.name);
-                                        paramData.age = singleData["AGE GROUP"];
-                                        if (singleData.GENDER == "Boys" || singleData.GENDER == "Male" || singleData.GENDER == "male") {
+                                        paramData.name = _.trim(singleData.EVENT);
+
+                                        paramData.age = _.trim(singleData["AGE GROUP"]);
+                                        var gen = _.trim(singleData.GENDER);
+                                        if (gen == "Boys" || gen == "Male" || gen == "male") {
                                             paramData.gender = "male";
-                                        } else if (singleData.GENDER == "Girls" || singleData.GENDER == "Female" || singleData.GENDER == "female") {
+                                        } else if (gen == "Girls" || gen == "Female" || gen == "female") {
                                             paramData.gender = "female";
                                         }
                                         var weight = singleData["WEIGHT CATEGORIES"];
                                         paramData.weight = _.trimStart(weight, " ");
+                                        // console.log("para,", paramData);
                                         Match.getSportId(paramData, function (err, sportData) {
                                             if (err || _.isEmpty(sportData)) {
                                                 singleData.SPORT = null;
@@ -1550,7 +1573,7 @@ var model = {
                                         });
                                     },
                                     function (singleData, callback) {
-                                        console.log("logssss", singleData);
+                                        // console.log("logssss", singleData);
                                         if (singleData.error) {
                                             countError++;
                                             callback(null, singleData);
@@ -1559,7 +1582,7 @@ var model = {
                                                 singleData["PARTICIPANT 1"] = null;
                                                 callback(null, singleData);
                                             } else {
-                                                console.log("singleData1", singleData);
+                                                // console.log("singleData1", singleData);
                                                 var paramData = {};
                                                 paramData.participant = _.trim(singleData["SFAID 1"]);
                                                 paramData.sport = singleData.SPORT;
@@ -1580,7 +1603,7 @@ var model = {
                                         }
                                     },
                                     function (singleData, callback) {
-                                        console.log("logssss***", singleData);
+                                        // console.log("logssss***", singleData);
                                         if (singleData.error) {
                                             countError++;
                                             callback(null, singleData);
@@ -1606,27 +1629,9 @@ var model = {
                                         }
 
                                     },
-                                    // function (singleData, callback) {
-                                    //     console.log("logssss***", singleData);
-                                    //     if (singleData.error) {
-                                    //         countError++;
-                                    //         callback(null, singleData);
-                                    //     } else if (!_.isEmpty(singleData["NEW WEIGHT"])) {
-                                    //         Match.saveWeightChange(singleData, function (err, complete) {
-                                    //             if (err || _.isEmpty(complete)) {
-                                    //                 err = "New weight not valid";
-                                    //                 callback(err, null);
-                                    //             } else {
-                                    //                 singleData.SPORT = complete.sportId;
-                                    //                 callback(null, singleData);
-                                    //             }
-                                    //         });
-                                    //     } else {
-                                    //         callback(null, singleData);
-                                    //     }
-                                    // },
+
                                     function (singleData, callback) {
-                                        console.log("logssss", singleData);
+                                        // console.log("logssss", singleData);
                                         if (singleData.error) {
                                             countError++;
                                             callback(null, singleData);
