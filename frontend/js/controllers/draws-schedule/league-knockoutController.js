@@ -14,6 +14,7 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
   $scope.limitValue = 8;
   $scope.pointsLimit = 3;
   $scope.knockoutArr = [];
+  var Url = '';
   $scope.isTeam = $stateParams.isTeam;
 
   $scope.getOneSport = function (id) {
@@ -24,6 +25,15 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
         if (!allData.message) {
           if (allData.value) {
             $scope.oneSportDetail = allData.data;
+            $scope.sportsListSubCategoryName = $scope.oneSportDetail.sportslist.sportsListSubCategory.name;
+            console.log("  $scope.sportsListSubCategoryName", $scope.sportsListSubCategoryName);
+            if ($scope.sportsListSubCategoryName === 'Fencing') {
+              Url = 'match/getStandingsFencing';
+              $scope.getStandingsFun(Url);
+            } else {
+              Url = 'match/getStandings';
+              $scope.getStandingsFun(Url);
+            }
             if ($scope.oneSportDetail.eventPdf) {
               $scope.showPdf = true;
               $scope.pdfdata = $scope.oneSportDetail.eventPdf;
@@ -66,13 +76,16 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
               }
               if (allData.data.qualifying) {
                 $scope.matches = allData.data.qualifying.roundsList;
-                $scope.getOneSport($scope.matches[0].match[0].sport);
-                _.each($scope.matches, function (data) {
-                  _.each(data.match, function (key) {
-                    //knockout service to sort result 
-                    knockoutService.sortLeagueKnockoutResult(key);
+                if ($scope.matches.length > 0) {
+                  $scope.getOneSport($scope.matches[0].match[0].sport);
+                  _.each($scope.matches, function (data) {
+                    _.each(data.match, function (key) {
+                      //knockout service to sort result 
+                      knockoutService.sortLeagueKnockoutResult(key);
+                    });
                   });
-                });
+                }
+
               }
               console.log($scope.knockout, "$scope.knockout");
               console.log($scope.matches, "$scope.matches ");
@@ -109,23 +122,28 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
 
   };
   //For Points table
-  if ($stateParams.id) {
-    var Obj = {};
-    Obj.sport = $stateParams.id;
-    NavigationService.getSportStandings(Obj, function (data) {
-      console.log(data, "data");
-      errorService.errorCode(data, function (allData) {
-        if (!allData.message) {
-          if (allData.value) {
-            $scope.tablePoint = allData.data.tablePoint;
-            console.log("$scope.tablePoint ", $scope.tablePoint);
-          }
-        } else {
-          toastr.error(allData.message, 'Error Message');
-        }
-      });
-    });
-  }
+  $scope.getStandingsFun = function (Url) {
+    if ($stateParams.id && Url) {
+      var Obj = {};
+      Obj.sport = $stateParams.id;
+      if (Url) {
+        NavigationService.getSportStandings(Obj, Url, function (data) {
+          console.log(data, "data");
+          errorService.errorCode(data, function (allData) {
+            if (!allData.message) {
+              if (allData.value) {
+                $scope.tablePoint = allData.data.tablePoint;
+                console.log("$scope.tablePoint ", $scope.tablePoint);
+              }
+            } else {
+              toastr.error(allData.message, 'Error Message');
+            }
+          });
+        });
+      }
+    }
+  };
+
   //for Points Table
   $scope.showMorePoints = function (bool) {
     if (bool) {

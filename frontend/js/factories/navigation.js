@@ -932,9 +932,9 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 data: request
             }).then(callback);
         },
-        getSportStandings: function (request, callback) {
+        getSportStandings: function (request, url, callback) {
             $http({
-                url: adminUrl2 + 'match/getStandings',
+                url: adminUrl2 + url,
                 method: 'POST',
                 data: request
             }).then(callback);

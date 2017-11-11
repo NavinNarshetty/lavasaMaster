@@ -93,7 +93,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
           if (team._id === result.resultFootball.winner.player) {
             team.isWinner = true;
           }
-        } else if(result.resultHockey !== undefined){
+        } else if (result.resultHockey !== undefined) {
           if (team._id === result.resultHockey.winner.player) {
             team.isWinner = true;
           }
@@ -146,7 +146,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
     } else if (result.opponentsSingle.length > 0) {
       console.log(result.resultFencing, "result.resultFencing ");
       _.each(result.opponentsSingle, function (player, index) {
-        if (player) {
+        if (player && player.athleteId != null) {
           player.fullName = player.athleteId.firstName + ' ' + player.athleteId.surname;
           if (player.athleteId.school && player.athleteId.school != null) {
             player.schoolName = player.athleteId.school.name;
@@ -196,7 +196,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
       result.isDraw = result.resultFencing.isDraw;
       result.status = result.resultFencing.status;
 
-    } else if(result.resultHockey) {
+    } else if (result.resultHockey) {
       result.isNoMatch = result.resultHockey.isNoMatch;
       result.isDraw = result.resultHockey.isDraw;
       result.status = result.resultHockey.status;

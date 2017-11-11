@@ -165,7 +165,7 @@ myApp.service('knockoutService', function ($http, TemplateService, $state, toast
     } else if (result.opponentsSingle.length > 0) {
       console.log(result.resultFencing, "result.resultFencing ");
       _.each(result.opponentsSingle, function (player, index) {
-        if (player) {
+        if (player && player.athleteId != null) {
           player.fullName = player.athleteId.firstName + ' ' + player.athleteId.surname;
           if (player.athleteId.school && player.athleteId.school != null) {
             player.schoolName = player.athleteId.school.name;

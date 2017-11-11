@@ -24,14 +24,28 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
         if (!allData.message) {
           if (allData.value) {
             $scope.oneSportDetail = allData.data;
+            $scope.sportsListSubCategoryName = $scope.oneSportDetail.sportslist.sportsListSubCategory.name;
+            console.log("  $scope.sportsListSubCategoryName", $scope.sportsListSubCategoryName);
+            if ($scope.sportsListSubCategoryName === 'Fencing') {
+              Url = 'match/getStandingsFencing';
+              $scope.getStandingsFun(Url);
+            } else {
+              Url = 'match/getStandings';
+              $scope.getStandingsFun(Url);
+            }
+            if ($scope.oneSportDetail.eventPdf) {
+              $scope.showPdf = true;
+              $scope.pdfdata = $scope.oneSportDetail.eventPdf;
+              $scope.pdfURL = $filter('uploadpathTwo')($scope.pdfdata);
+              $scope.trustedURL = $sce.trustAsResourceUrl($scope.pdfURL);
+
+            }
           }
         } else {
           toastr.error(allData.message, 'Error Message');
         }
       });
     });
-
-
   };
 
   $scope.getSportSpecificRounds = function (roundName) {
@@ -102,22 +116,27 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
 
   };
   //For Points table
-  if ($stateParams.id) {
-    var Obj = {};
-    Obj.sport = $stateParams.id;
-    NavigationService.getSportStandings(Obj, function (data) {
-      console.log(data, "data");
-      errorService.errorCode(data, function (allData) {
-        if (!allData.message) {
-          if (allData.value) {
-            $scope.tablePoint = allData.data.tablePoint;
-          }
-        } else {
-          toastr.error(allData.message, 'Error Message');
-        }
-      });
-    });
-  }
+  $scope.getStandingsFun = function (Url) {
+    if ($stateParams.id && Url) {
+      var Obj = {};
+      Obj.sport = $stateParams.id;
+      if (Url) {
+        NavigationService.getSportStandings(Obj, Url, function (data) {
+          console.log(data, "data");
+          errorService.errorCode(data, function (allData) {
+            if (!allData.message) {
+              if (allData.value) {
+                $scope.tablePoint = allData.data.tablePoint;
+                console.log("$scope.tablePoint ", $scope.tablePoint);
+              }
+            } else {
+              toastr.error(allData.message, 'Error Message');
+            }
+          });
+        });
+      }
+    }
+  };
   //for Points Table
   $scope.showMorePoints = function (bool) {
     if (bool) {
@@ -183,11 +202,11 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
     $scope.currentMatch.sport = {};
     $scope.currentMatch.sport = $scope.oneSportDetail;
     $scope.currentMatch.sportName = $scope.currentMatch.sport.sportslist.sportsListSubCategory.name;
-    if($scope.currentMatch.resultFootball){
+    if ($scope.currentMatch.resultFootball) {
       $scope.currentMatch.result = $scope.currentMatch.resultFootball;
-    } else if($scope.currentMatch.resultHockey){
+    } else if ($scope.currentMatch.resultHockey) {
       $scope.currentMatch.result = $scope.currentMatch.resultHockey;
-    } else if ($scope.currentMatch.resultFencing){
+    } else if ($scope.currentMatch.resultFencing) {
       $scope.currentMatch.result = $scope.currentMatch.resultFencing;
     }
     modal = $uibModal.open({
