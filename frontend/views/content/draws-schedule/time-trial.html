@@ -72,12 +72,12 @@
                 <div class="text-capitalize" ng-if="eventName === 'Swimming 4x50m Medley Relay'|| eventName==='Swimming 4x50m Freestyle Relay'">
                   {{win.teamId |filterConcate : win.school | truncate :40}}
                 </div>
-                <div class="text-capitalize" ng-if="eventName!='Swimming 4x50m Medley Relay' && eventName!='Swimming 4x50m Freestyle Relay'">
+                <div class="text-capitalize" ng-if="eventName!='Swimming 4x50m Medley Relay' && eventName!='Swimming 4x50m Freestyle Relay'" title="{{win.name}}">
                   {{win.name}}
                 </div>
               </td>
               <td ng-if="eventName!='Swimming 4x50m Medley Relay' && eventName!='Swimming 4x50m Freestyle Relay'">
-                <div class="text-capitalize">
+                <div class="text-capitalize" title="{{win.school}}">
                   {{win.school}}
                 </div>
               </td>
@@ -165,7 +165,7 @@
                         </div>
                       </td>
                       <td>
-                        <div class="text-capitalize">
+                        <div class="text-capitalize" title="{{qualify.teamId | filterConcate : qualify.schoolName}}">
                           {{qualify.teamId | filterConcate : qualify.schoolName | truncate :40}}
                         </div>
                       </td>
@@ -189,13 +189,13 @@
                         </div>
                       </td>
                       <td>
-                        <div class="text-capitalize">
+                        <div class="text-capitalize" title="{{qualify.athleteId.fullName}}">
                           {{qualify.athleteId.fullName}}
                         </div>
                       </td>
 
                       <td>
-                        <div class="text-capitalize">
+                        <div class="text-capitalize" title="{{qualify.athleteId.school.name}}">
                           {{qualify.athleteId.school.name}}
                         </div>
                       </td>

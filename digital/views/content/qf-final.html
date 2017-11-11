@@ -61,12 +61,12 @@
             <tbody>
               <tr ng-repeat="win in timeTable | limitTo:3 track by $index">
                 <td>
-                  <div class="text-capitalize">
+                  <div class="text-capitalize" title="{{win.name}}">
                     {{win.name}}
                   </div>
                 </td>
                 <td>
-                  <div class="text-capitalize">
+                  <div class="text-capitalize" title="{{win.schoolname}}">
                     {{win.schoolname}}
                   </div>
                 </td>
@@ -205,10 +205,10 @@
                     </div>
                   </td>
                   <td>
-                    <div class="text-capitalize">{{final.opponentsSingle[0].athleteId.fullName}} </div>
+                    <div class="text-capitalize" title="{{final.opponentsSingle[0].athleteId.fullName}}">{{final.opponentsSingle[0].athleteId.fullName}} </div>
                   </td>
                   <td>
-                    <div class="text-capitalize">
+                    <div class="text-capitalize" title="{{final.opponentsSingle[0].athleteId.school.name}}">
                       {{final.opponentsSingle[0].athleteId.school.name}}
                     </div>
                   </td>

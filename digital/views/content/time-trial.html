@@ -67,12 +67,12 @@
                 </div>
               </td>
               <td>
-                <div class="text-capitalize">
+                <div class="text-capitalize" title="{{win.name}}">
                   {{win.name}}
                 </div>
               </td>
               <td ng-if="eventName!='Swimming 4x50m Medley Relay' && eventName!='Swimming 4x50m Freestyle Relay'">
-                <div class="text-capitalize">
+                <div class="text-capitalize" title="{{win.schoolname}}">
                   {{win.schoolname}}
                 </div>
               </td>
@@ -161,7 +161,7 @@
                         </div>
                       </td>
                       <td>
-                        <div class="text-capitalize">
+                        <div class="text-capitalize" title="{{qualify.schoolName}}">
                           {{qualify.schoolName}}
                         </div>
                       </td>
@@ -185,13 +185,13 @@
                         </div>
                       </td>
                       <td>
-                        <div class="text-capitalize">
+                        <div class="text-capitalize" title="{{qualify.athleteId.fullName}}">
                           {{qualify.athleteId.fullName}}
                         </div>
                       </td>
 
                       <td>
-                        <div class="text-capitalize">
+                        <div class="text-capitalize" title="{{qualify.athleteId.school.name}}">
                           {{qualify.athleteId.school.name}}
                         </div>
                       </td>

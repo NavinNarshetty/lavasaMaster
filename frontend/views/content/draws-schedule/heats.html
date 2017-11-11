@@ -86,13 +86,13 @@
                 </td>
                 <td>
                   <div class="text-capitalize ">
-                    <span ng-if="final.athleteId">{{final.athleteId.fullName}}</span>
+                    <span ng-if="final.athleteId" title="{{final.athleteId.fullName}}">{{final.athleteId.fullName}}</span>
                     <span ng-if="!final.athleteId">-</span>
                   </div>
                 </td>
                 <td>
                   <div class="text-capitalize ">
-                    <span ng-if="final.athleteId">{{final.athleteId.school.name}}</span>
+                    <span ng-if="final.athleteId" title="{{final.athleteId.school.name}}">{{final.athleteId.school.name}}</span>
                     <span ng-if="!final.athleteId">-</span>
                   </div>
                 </td>
@@ -130,7 +130,7 @@
                 </td>
                 <td>
                   <div class="text-capitalize " title="{{final.schoolNameWithTeamId}}">
-                    <span>{{final.schoolNameWithTeamId | truncate:'35'}}</span>
+                    <span title="{{final.schoolNameWithTeamId}}">{{final.schoolNameWithTeamId | truncate:'35'}}</span>
                     <span ng-if="!final.schoolNameWithTeamId">-</span>
                   </div>
                 </td>
@@ -247,13 +247,13 @@
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              <span>{{semifinal.athleteId.fullName}}</span>
+                              <span title="{{semifinal.athleteId.fullName}}">{{semifinal.athleteId.fullName}}</span>
                               <span ng-if="!semifinal.athleteId">-</span>
                             </div>
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              <span>{{semifinal.athleteId.school.name}}</span>
+                              <span title="{{semifinal.athleteId.school.name}}">{{semifinal.athleteId.school.name}}</span>
                               <span ng-if="!semifinal.athleteId">-</span>
                             </div>
                           </td>
@@ -278,7 +278,7 @@
                           </td>
                           <td>
                             <div class="text-capitalize " title="{{final.schoolNameWithTeamId}}">
-                              <span>{{semifinal.schoolNameWithTeamId | truncate:'35'}}</span>
+                              <span title="{{semifinal.schoolNameWithTeamId}}">{{semifinal.schoolNameWithTeamId | truncate:'35'}}</span>
                               <span ng-if="!semifinal.schoolNameWithTeamId">-</span>
                             </div>
                           </td>
@@ -394,13 +394,13 @@
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              <span>{{semifinal.athleteId.fullName}}</span>
+                              <span title="{{semifinal.athleteId.fullName}}">{{semifinal.athleteId.fullName}}</span>
                               <span ng-if="!semifinal.athleteId">-</span>
                             </div>
                           </td>
                           <td>
                             <div class="text-capitalize">
-                              <span> {{semifinal.athleteId.school.name}}</span>
+                              <span title="{{semifinal.athleteId.school.name}}"> {{semifinal.athleteId.school.name}}</span>
                               <span ng-if="!semifinal.athleteId">-</span>
                             </div>
                           </td>
@@ -425,7 +425,7 @@
                           </td>
                           <td>
                             <div class="text-capitalize " title="{{final.schoolNameWithTeamId}}">
-                              <span>{{semifinal.schoolNameWithTeamId | truncate:'35'}}</span>
+                              <span title="{{semifinal.schoolNameWithTeamId}}">{{semifinal.schoolNameWithTeamId | truncate:'35'}}</span>
                               <span ng-if="!semifinal.schoolNameWithTeamId">-</span>
                             </div>
                           </td>
