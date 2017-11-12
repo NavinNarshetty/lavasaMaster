@@ -85,17 +85,17 @@
               </td>
               <td>
                 <div class="">
-                  {{school.medal.gold.points}}
+                  {{school.goldCount}}
                 </div>
               </td>
               <td>
                 <div class="">
-                  {{school.medal.silver.points}}
+                  {{school.silverCount}}
                 </div>
               </td>
               <td>
                 <div class="">
-                  {{school.medal.bronze.points}}
+                  {{school.bronzeCount}}
                 </div>
               </td>
               <td class="">
@@ -198,7 +198,7 @@
                             <div class="profile-bluemedals">
                               <img ng-src="{{'bronze' | medalicon:'white'}}" alt="" class="img-responsive">
                             </div>
-                            <p class="schoolmedal-points m-clear">2 points</p>
+                            <p class="schoolmedal-points m-clear">1 points</p>
                           </div>
                         </th>
                         <th>
@@ -220,22 +220,26 @@
                         </td>
                         <td>
                           <div class="">
-                            {{item.goldPoints}}
+                            <span ng-if="item.goldCount">{{item.goldCount}}</span>
+                            <span ng-if="!item.goldCount">0</span>
                           </div>
                         </td>
                         <td>
                           <div class="">
-                            {{item.silverPoints}}
+                            <span ng-if="item.silverCount">{{item.silverCount}}</span>
+                            <span ng-if="!item.silverCount">0</span>
                           </div>
                         </td>
                         <td>
                           <div class="">
-                            {{item.bronzePoints}}
+                            <span ng-if="item.bronzeCount">{{item.bronzeCount}}</span>
+                            <span ng-if="!item.bronzeCount">0</span>
                           </div>
                         </td>
                         <td>
                           <div class="">
-                            {{item.totalPoints}}
+                            <span ng-if="item.totalPoints">{{item.totalPoints}}</span>
+                            <span ng-if="!item.totalPoints">0</span>
                           </div>
                         </td>
                       </tr>
@@ -251,7 +255,7 @@
               <!-- <a class="btn-viewmore" ng-click="showMedalWinner();">View All Medal Winners</a> -->
             </div>
           </div>
-          <div class="col-md-5 col-sm-12 col-xs-12">
+          <div class="col-md-5 col-sm-12 col-xs-12" ng-if="risingAthletes.length>0">
             <div class="resultsport-player">
               <p class="text-uppercase">Athlete of the season</p>
               <div class="topplayer-holder">

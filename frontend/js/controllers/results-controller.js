@@ -219,18 +219,18 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     } else {
       var detailTable = "";
       _.each(detail.sportData, function (n) {
-        n.goldMedal = "-";
-        n.silverMedal = "-";
-        n.bronzeMedal = "-";
+        n.goldMedal = 0;
+        n.silverMedal = 0;
+        n.bronzeMedal = 0;
         if (n.medals) {
           if (n.medals.gold) {
-            n.goldMedal = n.medals.gold.points;
+            n.goldMedal = n.medals.gold.count;
           }
           if (n.medals.silver) {
-            n.silverMedal = n.medals.silver.points;
+            n.silverMedal = n.medals.silver.count;
           }
           if (n.medals.bronze) {
-            n.bronzeMedal = n.medals.bronze.points;
+            n.bronzeMedal = n.medals.bronze.count;
           }
         }
         console.log('sport', n);
@@ -276,7 +276,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   // GENERATE RANKING TABLE
   // $scope.generateTable = function(){
   //   NavigationService.getSchoolRank(function(data){
-  //     if (data.data = true) {
+  //     if (data.data = true)7 {
   //       console.log("table GENERATED");
   //     }
   //   });
@@ -289,8 +289,26 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       $scope.rankTable = data.data;
       $scope.rankTable.tableLimit = 20;
       $scope.rankTable.showTable = true;
-      _.each($scope.rankTable, function (n) {
+      _.each($scope.rankTable, function (n,nkey) {
         n.rowDetail = false;
+        console.log(nkey, n);
+        n.goldCount = 0;
+        n.silverCount = 0;
+        n.bronzeCount = 0;
+        if (n.medal) {
+          if (n.medal.gold) {
+            n.goldCount = n.medal.gold.count;
+          }
+          if (n.medal.silver) {
+            n.silverCount = n.medal.silver.count;
+          }
+          if (n.medal.bronze) {
+            n.bronzeCount = n.medal.bronze.count;
+          }
+        }
+        if(!n.totalPoints){
+          n.totalPoints = 0;
+        }
       });
     } else {
       toastr.error('Ranking Table Error', 'Error');
