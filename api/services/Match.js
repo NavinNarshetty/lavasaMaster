@@ -7236,15 +7236,15 @@ var model = {
                 if (mainData.opponentsTeam.length > 0) {
                     obj["TEAM ID 1"] = mainData.opponentsTeam[0].teamId;
                     console.log(mainData.opponentsTeam[0].studentTeam[0])
-                    if (mainData.opponentsTeam[0].studentTeam[0].studentId.school) {
+                    // if (mainData.opponentsTeam[0].studentTeam[0].studentId.school) {
                         if(mainData.opponentsTeam[0].studentTeam[0].studentId.school.screenName){
                             obj["SCREEN SCHOOL NAME 1"] = mainData.opponentsTeam[0].studentTeam[0].studentId.school.screenName;
                         }else{
                             obj["SCREEN SCHOOL NAME 1"] = mainData.opponentsTeam[0].studentTeam[0].studentId.school.name;
                         }
-                    } else {
-                        obj["SCREEN SCHOOL NAME 1"] = mainData.schoolName;
-                    }
+                    // } else {
+                    //     obj["SCREEN SCHOOL NAME 1"] = mainData.schoolName;
+                    // }
                     if (mainData.resultsCombat) {
                         if (mainData.resultsCombat.winner) {
                             var i;
