@@ -7327,10 +7327,14 @@ var model = {
 
                 if (mainData.opponentsTeam.length > 1) {
                     obj["TEAM ID 2"] = mainData.opponentsTeam[1].teamId;
-                    if(obj["SCREEN SCHOOL NAME 2"] = mainData.opponentsTeam[1].studentTeam[0].studentId.school.screenName){
-                        obj["SCREEN SCHOOL NAME 2"] = mainData.opponentsTeam[1].studentTeam[0].studentId.school.screenName;
+                    if(mainData.opponentsTeam[1].studentTeam[0]){
+                        if(obj["SCREEN SCHOOL NAME 2"] = mainData.opponentsTeam[1].studentTeam[0].studentId.school.screenName){
+                            obj["SCREEN SCHOOL NAME 2"] = mainData.opponentsTeam[1].studentTeam[0].studentId.school.screenName;
+                        }else{
+                            obj["SCREEN SCHOOL NAME 2"] = mainData.opponentsTeam[1].studentTeam[0].studentId.school.name;
+                        }
                     }else{
-                        obj["SCREEN SCHOOL NAME 2"] = mainData.opponentsTeam[1].studentTeam[0].studentId.school.name;
+                        obj["SCREEN SCHOOL NAME 2"] =  '';
                     }
                     if (mainData.resultsCombat) {
                         var i;
