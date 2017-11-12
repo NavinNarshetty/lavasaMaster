@@ -70,17 +70,21 @@ myApp.controller('LeagueKnockoutCtrl', function ($scope, TemplateService, $state
               $scope.knockout.reverse();
               if ($scope.knockout.length > 0) {
                 _.each($scope.knockout, function (key) {
-                  //knockout service to sort result 
+                  //knockout service to sort result
                   knockoutService.sortLeagueKnockoutResult(key);
                 });
               }
               if (allData.data.qualifying) {
                 $scope.matches = allData.data.qualifying.roundsList;
                 if ($scope.matches.length > 0) {
-                  $scope.getOneSport($scope.matches[0].match[0].sport);
+                  if ($scope.matches.length > 0) {
+                    $scope.getOneSport($scope.matches[0].match[0].sport);
+                  } else {
+                    $scope.getOneSport($scope.knockout[0].sport);
+                  }
                   _.each($scope.matches, function (data) {
                     _.each(data.match, function (key) {
-                      //knockout service to sort result 
+                      //knockout service to sort result
                       knockoutService.sortLeagueKnockoutResult(key);
                     });
                   });
