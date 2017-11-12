@@ -157,15 +157,17 @@ Press release
                             <hr>
                             <div class="row mt15">
                                 <div class="col-md-3 mb15 col-sm-6 col-xs-12" ng-repeat="item in mediaArr.results  track by $index">
+                                  <!-- <pre>{{item|json}}</pre> -->
                                     <!-- <a class="various fancybox.iframe" href="https://www.youtube.com/embed/{{item.medialink}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
                                         rel="gallery1" fancybox> -->
                                     <a class="various fancybox.iframe" href="{{item.medialink | linkvideo :item.videotype}}" rel="gallery1" fancybox>
-                                        <div class="folder-box sf-relative h186">
+                                        <div class="folder-box sf-relative ">
+                                          <!-- h186 -->
                                             <!-- <img ng-src="{{item.medialink | newlinkvideo:item.videotype}}" alt="Sports For All" class="img-responsive width100 hover-min m-h"> -->
                                             <img ng-src="{{item.thumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h">
                                             <!-- <img ng-src="{{vimeoThumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h"> -->
                                             <div class="over-layer sf-absulate">
-                                                <h4 class="banner-set sf-absulate">{{ item.mediatitle}}</h4>
+                                                <h4 class="banner-set sf-absulate">{{item.mediatitle}}</h4>
                                             </div>
                                         </div>
                                     </a>

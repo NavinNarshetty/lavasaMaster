@@ -97,8 +97,9 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
                 $scope.folders = response.data;
                 _.each($scope.folders, function (key) {
                     key.medialink = key.media;
+                    key.thumbnail = "../img/media-video-thumb.jpg";
                 });
-                NavigationService.getVideoThumbnail($scope.folders);
+                // NavigationService.getVideoThumbnail($scope.folders);
             } else {
                 // console.log("No data found");
                 $scope.folders = [];
@@ -112,8 +113,12 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
                 console.log("get limited media : ", response);
                 $scope.mediaArr = response.data;
                 $scope.totalCount = response.data.options.count;
+
                 if ($scope.filter.mediatype == 'video') {
-                    NavigationService.getVideoThumbnail($scope.mediaArr.results);
+                  _.each($scope.mediaArr.results, function(n){
+                    n.thumbnail = "../img/media-video-thumb.jpg";
+                  })
+                    // NavigationService.getVideoThumbnail($scope.mediaArr.results);
                 }
             } else {
                 console.log("No data found");

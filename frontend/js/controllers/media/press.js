@@ -63,7 +63,10 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
                 $scope.mediaArr = response.data;
                 $scope.totalCount = response.data.options.count;
                 if ($scope.filter.mediatype == 'press-video') {
-                    NavigationService.getVideoThumbnail($scope.mediaArr.results);
+                    _.each($scope.mediaArr.results, function(n){
+                      n.thumbnail = "../img/media-video-thumb.jpg";
+                    });
+                    // NavigationService.getVideoThumbnail($scope.mediaArr.results);
                 }
             } else {
                 console.log("No data found");
