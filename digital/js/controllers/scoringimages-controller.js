@@ -75,11 +75,11 @@ myApp.controller('ScoringImagestCtrl', function($scope, TemplateService, Navigat
     // GET MATCH END
     // MATCH COMPLETE
     $scope.completePopup = function(){
-      if($scope.match.resultImages.matchPhoto.length == 0){
-        toastr.error('Please upload match photo.', 'Data Incomplete');
-      } else if ($scope.match.resultImages.status == 'IsLive' && $scope.match.resultImages.scoreSheet.length == 0) {
-        toastr.error('Please upload scoresheet.', 'Data Incomplete');
-      } else {
+      // if($scope.match.resultImages.matchPhoto.length == 0){
+      //   toastr.error('Please upload match photo.', 'Data Incomplete');
+      // } else if ($scope.match.resultImages.status == 'IsLive' && $scope.match.resultImages.scoreSheet.length == 0) {
+      //   toastr.error('Please upload scoresheet.', 'Data Incomplete');
+      // } else {
 
       var modalCompleteMatch;
         $rootScope.modalInstance = $uibModal.open({
@@ -88,7 +88,7 @@ myApp.controller('ScoringImagestCtrl', function($scope, TemplateService, Navigat
           templateUrl: 'views/modal/confirmcomplete.html',
           windowClass: 'completematch-modal'
         })
-      }
+      // }
     };
     $scope.log = function(){
       console.log("matchLOG", $scope.match);
