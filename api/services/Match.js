@@ -5939,8 +5939,12 @@ var model = {
                                 } else {
                                     obj["SCREEN NAME ATHLETE 1"] = firstName + ". " + mainData.opponentsSingle[0].athleteId.surname;
                                 }
+                                if (mainData.opponentsSingle[0].athleteId.school.screenName) {
+                                    obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.screenName;
+                                } else {
+                                    obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.name;
+                                }
 
-                                obj["SCREEN NAME SCHOOL 1"] = mainData.opponentsSingle[0].athleteId.school.screenName;;
 
                             } else {
                                 obj["SFA ID 1"] = "";
@@ -5957,7 +5961,11 @@ var model = {
                                 } else {
                                     obj["SCREEN NAME ATHLETE 2"] = fName + ". " + mainData.opponentsSingle[1].athleteId.surname;
                                 }
-                                obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.screenName;;
+                                if (mainData.opponentsSingle[1].athleteId.school.screenName) {
+                                    obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.screenName;
+                                } else {
+                                    obj["SCREEN NAME SCHOOL 2"] = mainData.opponentsSingle[1].athleteId.school.name;
+                                }
                                 if (mainData.resultKnockout) {
                                     var scoreArr = mainData.resultKnockout.finalScore.split("-");
                                     obj["Score A1"] = scoreArr[0];
@@ -13305,9 +13313,7 @@ var model = {
                                                                     }, function (err) {
                                                                         result.players = listPlayers;
                                                                         callback(null, result);
-                                                                    })
-
-                                                                    // callback(null, result);
+                                                                    });
                                                                 } else {
                                                                     callback(null, result);
                                                                 }
@@ -13317,7 +13323,7 @@ var model = {
                                                         } else {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
-                                                            result.gender = n.studentTeam.studentId.gender;
+                                                            result.gender = n.studentTeam[0].studentId.gender;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
