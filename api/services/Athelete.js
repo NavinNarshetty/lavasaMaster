@@ -2565,7 +2565,7 @@ var model = {
         }
     },
 
-    oldgenerateExcel: function (data, res) {
+    generateExcel: function (data, res) {
         console.log('generate req data', data);
 
         async.waterfall([
@@ -2768,7 +2768,7 @@ var model = {
 
     },
 
-    generateExcel: function (data, res) {
+    oldgenerateExcel: function (data, res) {
         Athelete.excelFilterAthlete(data, function (err, complete) {
             if (err) {
                 callback(err, null);
