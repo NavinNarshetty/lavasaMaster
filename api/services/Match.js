@@ -13213,7 +13213,7 @@ var model = {
                                                         if (matchData[0].resultHeat) {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
-                                                            result.gender = n.studentTeam.studentId.gender;
+                                                            result.gender = n.studentTeam[0].studentId.gender;
 
                                                             console.log("school", n.school);
                                                             if (n.school != null) {
@@ -13236,7 +13236,7 @@ var model = {
                                                         } else if (matchData[0].resultQualifyingRound) {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
-                                                            result.gender = n.studentTeam.studentId.gender;
+                                                            result.gender = n.studentTeam[0].studentId.gender;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
@@ -13254,7 +13254,7 @@ var model = {
                                                         } else if (matchData[0].resultSwiss) {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
-                                                            result.gender = n.studentTeam.studentId.gender;
+                                                            result.gender = n.studentTeam[0].studentId.gender;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
@@ -13273,7 +13273,7 @@ var model = {
                                                         } else if (matchData[0].resultShooting) {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
-                                                            result.gender = n.studentTeam.studentId.gender;
+                                                            result.gender = n.studentTeam[0].studentId.gender;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
@@ -13287,7 +13287,7 @@ var model = {
                                                             console.log("matchData[0]", matchData[0]);
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
-                                                            result.gender = n.studentTeam.studentId.gender;
+                                                            result.gender = n.studentTeam[0].studentId.gender;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
