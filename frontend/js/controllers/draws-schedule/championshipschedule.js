@@ -280,8 +280,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date1: '14',
                     date2: '17',
                     month: 'Nov',
-                    link: '',
-                    detail: '12th Nov 8 p.m.'
+                    link: 'img/event/throwball.pdf'
                 }, {
                     sport: 'Volleyball',
                     date1: '12',
