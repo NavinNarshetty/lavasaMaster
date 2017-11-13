@@ -95,7 +95,7 @@
                   <span class="display-block" ng-if="data.status === 'IsCompleted' && data.walkover">Won by walkover</span>
                   <span class="display-block" ng-if="data.status === 'IsCompleted' && data.isNoMatch">No match</span>
                   <a class="display-block" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && !data.resultFencing" ng-click="matchCenter(data)">Match Center</a>
-                  <p class="m-clear" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && data.resultFencing">{{data.resultFencing.players[0].finalPoints}} - {{data.resultFencing.players[0].finalPoints}}</p>
+                  <p class="m-clear" ng-if="data.status === 'IsCompleted' && !data.isNoMatch && !data.walkover && data.resultFencing">{{data.resultFencing.players[0].finalPoints}} - {{data.resultFencing.players[1].finalPoints}}</p>
                 </div>
               </td>
               <td>
@@ -353,7 +353,7 @@
                             <span class="display-block" ng-if="content.status === 'IsCompleted' && content.walkover">Won by walkover</span>
                             <span class="display-block" ng-if="content.status === 'IsCompleted' && content.isNoMatch">No match</span>
                             <a class="display-block" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && !content.resultFencing" ng-click="matchCenter(content)">Match Center</a>
-                            <p class="m-clear" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && content.resultFencing" >{{content.resultFencing.players[0].finalPoints}} - {{content.resultFencing.players[0].finalPoints}}</p>
+                            <p class="m-clear" ng-if="content.status === 'IsCompleted' && !content.isNoMatch && !content.walkover && content.resultFencing" >{{content.resultFencing.players[0].finalPoints}} - {{content.resultFencing.players[1].finalPoints}}</p>
                           </div>
                         </td>
                         <td>
