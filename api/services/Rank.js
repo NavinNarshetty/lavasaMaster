@@ -401,7 +401,8 @@ var model = {
                             eventName=singleData.sportslist.name;
                         }
                         obj.name=singleData.ageGroup.name + " " + eventName;
-                        obj.medalWinners=data;
+                        obj.medalWinners=_.groupBy(data,'gender');
+                        // obj.medalWinners=data;                        
                         callback(null,obj);
                     });
                 },function(err,finalResult){

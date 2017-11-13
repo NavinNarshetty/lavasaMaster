@@ -155,7 +155,8 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date1: '11',
                     date2: '12',
                     month: 'Nov',
-                    link: 'img/event/archery.pdf'
+                    link: 'img/event/archery.pdf',
+                    live: 'yes'
                 }, {
                     sport: 'Athletics',
                     date1: '13',
@@ -185,8 +186,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date1: '14',
                     date2: '17',
                     month: 'Nov',
-                    link: '',
-                    detail: '12th Nov 8 p.m.'
+                    link: 'img/event/carrom.pdf'
                 }, {
                     sport: 'Chess',
                     date1: '11',
@@ -218,7 +218,8 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date1: '11',
                     date2: '12',
                     month: 'Nov',
-                    link: 'img/event/hockey.pdf'
+                    link: 'img/event/hockey.pdf',
+                    live: 'yes'
                 }, {
                     sport: 'Judo',
                     date: '15',
@@ -247,20 +248,21 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     sport: 'Shooting',
                     date: '12',
                     month: 'Nov',
-                    link: 'img/event/shooting.pdf'
+                    link: 'img/event/shooting.pdf',
+                    live: 'yes'
                 }, {
                     sport: 'Swimming',
                     date1: '11',
                     date2: '12',
                     month: 'Nov',
-                    link: 'img/event/swimming.pdf'
+                    link: 'img/event/swimming.pdf',
+                    live: 'yes'
                 }, {
                     sport: 'Table Tennis',
                     date1: '15',
                     date2: '17',
                     month: 'Nov',
-                    link: '',
-                    detail: '12th Nov 8 p.m.'
+                    link: 'img/event/table-tennis.pdf'
                 }, {
                     sport: 'Taekwondo',
                     date: '15',
