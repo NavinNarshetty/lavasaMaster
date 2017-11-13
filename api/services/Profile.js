@@ -1458,6 +1458,12 @@ var model = {
                             var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
                             var newPipeLine = _.cloneDeep(pipeLine);
                             newPipeLine.push(
+                                // Stage 5
+                                {
+                                    $match: {
+                                        "sport.sportslist.sportsListSubCategory": objectid(sportName)
+                                    }
+                                },
                                 // Stage 7
                                 {
                                     $lookup: {
@@ -1488,7 +1494,7 @@ var model = {
                                 // Stage 10
                                 {
                                     $match: {
-                                        "opponentsTeam.studentTeam.studentId": data.athleteId
+                                        "opponentsTeam.studentTeam.studentId": objectid(data.athleteId)
                                     }
                                 },
                                 // Stage 8
@@ -1528,12 +1534,13 @@ var model = {
                                 }
                             );
                             Match.aggregate(newPipeLine, function (err, matchData) {
-                                console.log("matchData", matchData);
+                                // console.log("matchData", matchData);
                                 if (err) {
                                     callback(err, "error in mongoose");
                                 } else {
                                     var match = [];
                                     async.each(matchData, function (singleData, callback) {
+                                        console.log("singleData",singleData);
                                             var stats = {};
                                             stats.year = new Date(singleData.createdAt).getFullYear();
                                             stats.ageGroup = singleData.sport.ageGroup.name;
@@ -1549,11 +1556,11 @@ var model = {
                                             if (singleData.resultsCombat) {
                                                 var i = 0;
                                                 var result;
-                                                async.each(singleData.opponentsTeam, function (n, callback) {
-                                                        if (singleData.opponentsTeam.length == 1) {
+                                                if (singleData.resultsCombat.teams.length == 1) {
+                                                            var i=0;
                                                             var length = singleData.resultsCombat.teams[0].sets.length;
                                                             while (i < length) {
-                                                                console.log("players", singleData.resultsCombat.teams[0].sets[i]);
+                                                                // console.log("players", singleData.resultsCombat.teams[0].sets[i]);
                                                                 if (i == 0) {
                                                                     result = singleData.resultsCombat.teams[0].sets[i].point;
                                                                 } else {
@@ -1561,15 +1568,15 @@ var model = {
                                                                 }
                                                                 i++;
                                                             }
-                                                            console.log("i", result);
                                                             stats.score = result;
-
                                                             match.push(stats);
+                                                            console.log("match",match);
                                                             callback(null, match);
                                                         } else {
+                                                async.each(singleData.resultsCombat.teams, function (n, callback) {
                                                             StudentTeam.findOne({
                                                                 studentId: data.athleteId,
-                                                                teamId: n
+                                                                teamId: objectid(n.team)
                                                             }).lean().deepPopulate("studentId.school teamId").exec(function (err, found) {
                                                                 if (err) {
                                                                     callback(null, err);
@@ -1579,8 +1586,9 @@ var model = {
                                                                     stats.opponentName = found.teamId.name;
                                                                     stats.school = found.teamId.schoolName;
                                                                     stats.teamId = found.teamId.teamId;
-                                                                    if (singleData.resultsCombat.winner.player === n) {
+                                                                    if (singleData.resultsCombat.winner.player === n.team) {
                                                                         stats.isAthleteWinner = false;
+                                                                        var i=0;
                                                                         var length = singleData.resultsCombat.teams[0].sets.length;
                                                                         while (i < length) {
                                                                             console.log("teams", singleData.resultsCombat.teams[0].sets[i]);
@@ -1601,11 +1609,11 @@ var model = {
                                                                 }
 
                                                             });
-                                                        }
                                                     },
                                                     function (err) {
                                                         callback(null, match);
                                                     });
+                                            }
                                             } else if (singleData.resultsRacquet) {
                                                 var i = 0;
                                                 var result;
