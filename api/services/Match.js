@@ -5844,8 +5844,11 @@ var model = {
                                 } else {
                                     obj["SCREEN NAME ATHLETE"] = firstName + ". " + mainData.opponentsSingle[0].athleteId.surname;
                                 }
-
-                                obj["SCREEN NAME SCHOOL"] = mainData.opponentsSingle[0].athleteId.school.screenName;
+                                if (mainData.opponentsSingle[0].athleteId.school.screenName) {
+                                    obj["SCREEN NAME SCHOOL"] = mainData.opponentsSingle[0].athleteId.school.screenName;
+                                } else {
+                                    obj["SCREEN NAME SCHOOL"] = mainData.opponentsSingle[0].athleteId.school.name;
+                                }
 
                                 if (mainData.resultQualifyingRound) {
                                     obj["FINAL SCORE"] = mainData.resultQualifyingRound.player.finalScore;
@@ -13301,12 +13304,12 @@ var model = {
                                                                         callback();
                                                                     }, function (err) {
                                                                         result.players = listPlayers;
-                                                                        callback();
+                                                                        callback(null, result);
                                                                     })
 
                                                                     // callback(null, result);
                                                                 } else {
-                                                                    callback();
+                                                                    callback(null, result);
                                                                 }
                                                             }, function (err) {
                                                                 callback(null, result);
