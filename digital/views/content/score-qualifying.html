@@ -19,6 +19,11 @@
               </th>
               <th>
                 <div>
+                  <p class="m-clear">Match ID</p>
+                </div>
+              </th>
+              <th>
+                <div>
                   <p class="m-clear">Sfa ID</p>
                 </div>
               </th>
@@ -79,6 +84,9 @@
             <tr ng-repeat="match in qualifyingRound track by $index">
               <td>
                 <div class="text-capitalize text-left">{{$index + 1}} </div>
+              </td>
+              <td>
+                <div class="text-capitalize text-left">{{match.matchId}} </div>
               </td>
               <td>
                 <div class="text-capitalize text-left">{{match.opponentsSingle[0].athleteId.sfaId}} </div>
