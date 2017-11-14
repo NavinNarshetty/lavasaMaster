@@ -262,45 +262,46 @@
                                                     </div>
                                                     <div class="championsschdule-pdfbutton" ng-if="schedule.live">
                                                         <a ui-sref="results">
-                                                            <span class="champions-viewdraws">
+                                                            <span style="color:#5aeba4" class="champions-viewdraws ">
                                                                 View Results
                                                             </span>
                                                         </a>
                                                     </div>
 
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.link && !schedule.live">
-                                                        <a href="{{schedule.link}}" target="_blank">
-                                                            <span class="champions-viewdraws">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.link && !schedule.live ">
+                                                        <a href="{{schedule.link}} " target="_blank ">
+                                                            <span class="champions-viewdraws ">
                                                                 View Draws-Schedule
                                                             </span>
-                                                            <span class="pdf-champions">
-                                                                <i class="fa fa-file-pdf-o"></i>
+                                                            <span class="pdf-champions ">
+                                                                <i class="fa fa-file-pdf-o "></i>
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.liveResult">
-                                                        <a href="{{schedule.liveResult}}" target="_blank">
-                                                            <span class="champions-viewdraws">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.liveResult ">
+                                                        <a href="{{schedule.liveResult}} " target="_blank ">
+                                                            <span style="color:#5aeba4" class="champions-viewdraws ">
                                                                 View Result Day 1
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.liveResult == '' && schedule.sport == 'Karate'">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.liveResult==''
+                                                                && schedule.sport=='Karate' ">
                                                         <a>
-                                                            <span style="opacity:0" class="champions-viewdraws">
+                                                            <span style="opacity:0 " class="champions-viewdraws ">
                                                                 View
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.startList">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.startList ">
                                                         <a>
-                                                            <span class="champions-viewdraws">
+                                                            <span style="color:#5aeba4" class="champions-viewdraws ">
                                                                 View Start List Day 2
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.detail">
-                                                        <span class="champions-viewdraw">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.detail ">
+                                                        <span class="champions-viewdraw ">
                                                             Will be published by {{schedule.detail}}
                                                         </span>
                                                     </div>
@@ -310,9 +311,9 @@
                                     </table>
                                 </div>
                             </div>
-                            <div class="col-md-5 col-sm-6 col-xs-12">
-                                <div class="championshipschedule-tableholder tale-responsive">
-                                    <table class="table table-striped">
+                            <div class="col-md-5 col-sm-6 col-xs-12 ">
+                                <div class="championshipschedule-tableholder tale-responsive ">
+                                    <table class="table table-striped ">
                                         <thead>
                                             <tr>
                                                 <th>Sport </th>
@@ -320,73 +321,75 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="schedule in schedulelist2 track by $index">
+                                            <tr ng-repeat="schedule in schedulelist2 track by $index ">
                                                 <td>
-                                                    <div class="schedulesport-name">
+                                                    <div class="schedulesport-name ">
                                                         {{schedule.sport}}
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <div class="schedulesport-dates">
-                                                        <span ng-if="schedule.sport == ''" style="opacity:0;">dummy</span>
-                                                        <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
-                                                            <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
-                                                            <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
+                                                    <div class="schedulesport-dates ">
+                                                        <span ng-if="schedule.sport=='' " style="opacity:0; ">dummy</span>
+                                                        <span ng-if="schedule.date1 && schedule.date2 "> {{schedule.date1}}
+                                                            <sup ng-if="schedule.date1 !='2' && schedule.date1 !='22' ">th</sup>
+                                                            <sup ng-if="schedule.date1=='2' || schedule.date1=='22' ">nd</sup>
                                                             <span>-</span> {{schedule.date2}}
-                                                            <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                            <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
+                                                            <sup ng-if="schedule.date2 !='2' && schedule.date2 !='22' ">th</sup>
+                                                            <sup ng-if="schedule.date2=='2' || schedule.date2=='22' ">nd</sup> {{schedule.month}}
                                                         </span>
-                                                        <span ng-if="schedule.date">{{schedule.date}}
+                                                        <span ng-if="schedule.date ">{{schedule.date}}
                                                             <sup>th</sup> {{schedule.month}} </span>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.live">
-                                                        <a ui-sref="results">
-                                                            <span class="champions-viewdraws">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.live ">
+                                                        <a ui-sref="results ">
+                                                            <span style="color:#5aeba4" class="champions-viewdraws ">
                                                                 View Results
                                                             </span>
                                                         </a>
                                                     </div>
 
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.link && !schedule.live">
-                                                        <a href="{{schedule.link}}" target="_blank">
-                                                            <span class="champions-viewdraws">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.link && !schedule.live ">
+                                                        <a href="{{schedule.link}} " target="_blank ">
+                                                            <span class="champions-viewdraws ">
                                                                 View Draws-Schedule
                                                             </span>
-                                                            <span class="pdf-champions">
-                                                                <i class="fa fa-file-pdf-o"></i>
+                                                            <span class="pdf-champions ">
+                                                                <i class="fa fa-file-pdf-o "></i>
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.liveResult">
-                                                        <a href="{{schedule.liveResult}}" target="_blank">
-                                                            <span class="champions-viewdraws">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.liveResult ">
+                                                        <a href="{{schedule.liveResult}} " target="_blank ">
+                                                            <span style="color:#5aeba4" class="champions-viewdraws ">
                                                                 View Result Day 1
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.liveResult == '' && schedule.sport == 'Karate'">
+                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.liveResult==''
+                                                                && schedule.sport=='Karate'">
                                                         <a>
-                                                            <span style="opacity:0" class="champions-viewdraws">
+                                                            <span style="opacity:0 " class="champions-viewdraws ">
                                                                 View
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.startList == '' && schedule.sport == 'Karate'">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.startList==''
+                                                                && schedule.sport=='Karate' ">
                                                         <a>
-                                                            <span style="opacity:0" class="champions-viewdraws">
+                                                            <span style="opacity:0 " class="champions-viewdraws ">
                                                                 View
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.startList">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.startList">
                                                         <a>
-                                                            <span style="opacity:0" class="champions-viewdraws">
+                                                            <span style="color:#5aeba4" class="champions-viewdraws ">
                                                                 View Start List Day 2
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.detail">
-                                                        <span class="champions-viewdraw">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.detail ">
+                                                        <span class="champions-viewdraw ">
                                                             Will be published by {{schedule.detail}}
                                                         </span>
                                                     </div>
@@ -397,13 +400,13 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-md-offset-1 col-md-11 col-sm-12 col-xs-12">
-                                <div class="">
-                                    <p class="m-clear">
+                        <div class="row ">
+                            <div class="col-md-offset-1 col-md-11 col-sm-12 col-xs-12 ">
+                                <div class=" ">
+                                    <p class="m-clear ">
                                         *SFA shall keep you informed in-case there is any change of dates.
                                     </p>
-                                    <p class="m-clear" ng-if="isCollege == false && sfaCity == 'Mumbai'">*Football qualifiers will be held in November. Dates will be announced soon.</p>
+                                    <p class="m-clear " ng-if="isCollege==f alse && sfaCity=='Mumbai' ">*Football qualifiers will be held in November. Dates will be announced soon.</p>
                                 </div>
                             </div>
                         </div>

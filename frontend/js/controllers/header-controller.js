@@ -476,13 +476,13 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
     }, {
         name: 'karate'
     }, {
-        name: 'kho kho'
+        name: 'kho Kho'
     }, {
         name: 'shooting'
     }, {
         name: 'swimming'
     }, {
-        name: 'table tennis'
+        name: 'table Tennis'
     }, {
         name: 'taekwondo'
     }, {
@@ -492,7 +492,7 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
     }, {
         name: 'volleyball'
     }, {
-        name: 'water polo'
+        name: 'water Polo'
     }]
 
     $scope.mumbaiFooter = [{
@@ -524,9 +524,9 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
     }, {
         name: 'karate'
     }, {
-        name: 'kho kho'
+        name: 'kho Kho'
     }, {
-        name: 'sport mma'
+        name: 'sport MMA'
     }, {
         name: 'shooting'
     }, {
@@ -534,7 +534,7 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
     }, {
         name: 'swimming'
     }, {
-        name: 'table tennis'
+        name: 'table Tennis'
     }, {
         name: 'taekwondo'
     }, {
@@ -544,7 +544,7 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
     }, {
         name: 'volleyball'
     }, {
-        name: 'water polo'
+        name: 'water Polo'
     }, {
         name: 'wrestling'
     }]

@@ -1,0 +1,456 @@
+<footer ng-controller="footerctrl">
+    <!-- <div class="footer-slider">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="color-grey2 text-up font-semi text-c">sponsors</p>
+                    <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
+                        <ul class="padding0 text-c w1200" mycircle style="">
+                            <li class="text-center" ng-repeat="slid in games track by $index">
+                                <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
+                                    <img ng-src="{{slid.img}}" alt="">
+                                </a>
+                                <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
+                                <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p class="color-grey2 text-up font-semi text-c">partners</p>
+                    <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
+                        <ul class="padding0 text-c w1200" mycircle>
+                            <li class="text-center" ng-repeat="slid in partner track by $index">
+                                <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
+                                    <img ng-src="{{slid.img}}" alt="">
+                                </a>
+                                <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
+                                <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <section ng-if="hideFooter">
+        <div class="footer-slider" ng-if="selectedCity != 'hyderabad'">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="color-grey2 text-up font-semi text-c">sponsors</p>
+                        <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
+                            <!-- mycircle -->
+                            <ul class="padding0 text-c w1200" style="">
+                                <li class="text-center" ng-repeat="slid in games track by $index">
+                                    <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
+                                        <img ng-src="{{slid.img}}" alt="">
+                                    </a>
+                                    <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
+                                    <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="color-grey2 text-up font-semi text-c">partners</p>
+                        <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
+                            <!-- mycircle -->
+                            <ul class="padding0 text-c w1200">
+                                <li class="text-center" ng-repeat="slid in partner track by $index">
+                                    <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
+                                        <img ng-src="{{slid.img}}" alt="">
+                                    </a>
+                                    <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
+                                    <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-slider" ng-if="selectedCity == 'hyderabad'">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="color-grey2 text-up font-semi text-c">Supported by:</p>
+                        <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
+                            <!-- mycircle -->
+                            <ul class="padding0 text-c w1200" style="">
+                                <li class="text-center" ng-repeat="slid in supportedBy track by $index">
+                                    <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
+                                        <img ng-src="{{slid.img}}" alt="">
+                                    </a>
+                                    <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
+                                    <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <p class="color-grey2 text-up font-semi text-c">Sponsors & Partners:</p>
+                        <div class="sponser-list sf-list" style="width:100%;overflow:hidden;">
+                            <!-- mycircle -->
+                            <ul class="padding0 text-c w1200">
+                                <li class="text-center" ng-repeat="slid in sponsor_partner track by $index">
+                                    <a ng-if="slid.href" href="{{slid.href}}" target="_blank">
+                                        <img ng-src="{{slid.img}}" alt="">
+                                    </a>
+                                    <img ng-if="!slid.href" ng-src="{{slid.img}}" alt="">
+                                    <p class="color-grey2 f12 font-bold mt10 text-center text-up">{{slid.game}}</p>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="second-slider">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="f-list">
+                        <span class="color-yellow1"> SPORTS</span>
+                        <ul class="padding0 cl-nt">
+                            <li>
+                                <a href="{{linkForAllSports}}handball" target="_new">
+                                    handball
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}volleyball" target="_new">
+                                    volleyball
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}throwball" target="_new">
+                                    throwball
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}basketball" target="_new">
+                                    basketball
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}hockey" target="_new">
+                                    hockey
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}kho kho" target="_new">
+                                    kho-kho
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}kabaddi" target="_new">
+                                    kabaddi
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}football" target="_new">
+                                    football
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}badminton" target="_new">
+                                    badminton
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}tennis" target="_new">
+                                    tennis
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}table tennis" target="_new">
+                                    table tennis
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}squash" target="_new">
+                                    squash
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}judo" target="_new">
+                                    judo
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}taekwondo" target="_new">
+                                    taekwondo
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}boxing" target="_new">
+                                    boxing
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}fencing" target="_new">
+                                    fencing
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}karate" target="_new">
+                                    karate
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}wrestling" target="_new">
+                                    wrestling
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}sport mma" target="_new">
+                                    sport mma
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}shooting" target="_new">
+                                    shooting
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}archery" target="_new">
+                                    archery
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}swimming" target="_new">
+                                    swimming
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}water polo" target="_new">
+                                    water polo
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}carrom" target="_new">
+                                    carrom
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}chess" target="_new">
+                                    chess
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAllSports}}athletics" target="_new">
+                                    athletics
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="f-list">
+                        <span class="color-yellow1">PROFILE</span>
+                        <ul class="padding0">
+                            <li>
+                                <a href="{{linkForAll}}students" target="_new">
+                                    Athletes
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAll}}school" target="_new">
+                                    schools
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAll}}team" target="_new">
+                                    teams
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="f-list mt25">
+                        <span class="color-yellow1">RESULT</span>
+                        <ul class="padding0">
+                            <li>
+                                <a href="{{linkForAll}}school-ranking" target="_new">
+                                    school ranking
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAll}}champions" target="_new">
+                                    champions of sfa
+                                </a>
+                            </li>
+                            <!-- <li>
+                                <a ui-sref="result">
+                            sport result
+                          </a>
+                                        </li> -->
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-3">
+                    <div class="f-list">
+                        <ul class="padding0">
+                            <li hidden>
+                                <a href="{{linkForAll}}sponser-partner" target="_new">
+                                    sponsors & partners
+                                </a>
+                            </li>
+                            <!-- <li>
+                                        <a href="">
+                            sfa management team
+                            </a>
+                                    </li> -->
+                            <li hidden>
+                                <a ui-sref="faq">
+                                    <!-- <a href="{{linkForAll}}s" target="_new"> -->
+                                    faq’s
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="mt25 hide">
+                            <a href="{{linkForAll}}media-gallery" target="_new" class="color-yellow1 text-up">media &amp; gallery</a>
+                            <!-- <a ui-sref="media-gallery" class="color-yellow1 text-up">media &amp; gallery</a> -->
+                        </div>
+                        <div class="mt25 hide">
+                            <a href="{{linkForAll}}training-development" target="_new" class="color-yellow1 text-up">training &amp; development</a>
+                        </div>
+                        <div class="mt25">
+                            <a href="{{linkForAll}}about-us" target="_new" class="color-yellow1 text-up">about us</a>
+                        </div>
+                        <div class="mt25">
+                            <a href="{{linkForAll}}contact" target="_new" class="color-yellow1 text-up">CONTACT US</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="f-list hide">
+                        <span class="color-yellow1"> SFA MUMBAI {{year16}}</span>
+                        <ul class="padding0">
+                            <li>
+                                <!-- <a ui-sref="special-days"> -->
+                                <a href="{{linkForAll}}special-days" target="_new">
+                                    special days
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAll}}special-awards" target="_new">
+
+                                    special awards
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAll}}workshop-clinic" target="_new">
+                                    workshop & clinics
+                                </a>
+                            </li>
+                            <li>
+                                <a ui-sref="merchandise-apparels">
+                                    <a href="{{linkForAll}}merchandise-apparels" target="_new">
+                                        merchandise & apparels
+                                    </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAll}}food-and-entertainment" target="_new">
+                                    <!-- <a ui-sref="food-and-entertainment"> -->
+                                    food & entertainment
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{linkForAll}}medical-aid" target="_new">
+
+                                    medical aid
+                                </a>
+                            </li>
+                            <li>
+                                <!-- <a ui-sref="draw-schedule"> -->
+                                <a href="{{linkForAll}}draw-schedule" target="_new">
+                                    draws & schedule
+                                </a>
+                            </li>
+                            <li>
+                                <!-- <a ui-sref="venue"> -->
+                                <a href="{{linkForAll}}venue" target="_new">
+                                    venue
+                                </a>
+                            </li>
+                            <li>
+                                <a href="img/pdf/EventSchedule.pdf" target="_blank">
+                                    download schedule program
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt25">
+                <div class="col-md-7">
+                    <div class="sf-list all-l">
+                        <ul class="padding0">
+                            <li>
+                                All rights reserved
+                            </li>
+                            <li>
+                                <a ui-sref="terms-condition">
+                                    Terms and Conditions
+                                </a>
+                            </li>
+                            <li>
+                                Disclaimer
+                            </li>
+                            <li>
+                                © Copyright - SFA Events Pvt. Ltd
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-5">
+                    <div class="pull-right no-float">
+                        <div class="sf-list">
+                            <ul>
+                                <li>
+                                    <a href="https://www.facebook.com/sportsforallnow" target="_blank">
+                                        <i class="fa fa-facebook s-l-i"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://twitter.com/sfanow" target="_blank">
+                                        <i class="fa fa-twitter s-l-i"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://www.youtube.com/channel/UCWoiHFley8hGy0ad_t-0O7w" target="_blank">
+                                        <i class="fa fa-youtube s-l-i"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="https://instagram.com/sfanow/" target="_blank">
+                                        <i class="fa fa-instagram s-l-i"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt25">
+                <div class="col-md-12">
+                    <div class="di">
+                        <span class="display-inline color-yellow1">Disclaimer:</span>
+                        <p class="di-inline color-white"> All material available on this website is intellectual property and copyrighted content of SFA Events
+                            Pvt. Ltd., unless otherwise indicated. Unauthorized use and/or duplication of this material without
+                            written permission from this site’s author and/or owner is strictly prohibited</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
