@@ -1712,7 +1712,7 @@ var model = {
                                                                         } else {
                                                                             stats.isAthleteWinner = true;
                                                                         }
-                                                                        stats.status = singleData.resultsCombat.status;
+                                                                        stats.status = singleData.resultsRacquet.status;
                                                                     } else if (singleData.resultsRacquet.status == "IsCompleted" && singleData.resultsRacquet.isNoMatch == true) {
                                                                         stats.status = singleData.resultsCombat.status;
                                                                         stats.reason = "No Match";
@@ -1754,47 +1754,59 @@ var model = {
                                                 } else if (singleData.resultBasketball) {
                                                     var i = 0;
                                                     var result;
-                                                    async.each(singleData.opponentsTeam, function (n, callback) {
-                                                        if (singleData.opponentsTeam.length == 1) {
-                                                            stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints;
-                                                            stats.isAthleteWinner = true;
-                                                            match.push(stats);
-                                                            callback(null, match);
-                                                        } else {
+                                                    if (singleData.opponentsTeam.length == 1) {
+                                                        stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints;
+                                                        stats.isAthleteWinner = true;
+                                                        match.push(stats);
+                                                        callback(null, match);
+                                                    } else {
+                                                        async.each(singleData.resultBasketball.teams, function (n, callback) {
                                                             StudentTeam.findOne({
-                                                                studentId: data.athleteId,
-                                                                teamId: n
+                                                                teamId: n.team
                                                             }).lean().deepPopulate("studentId.school").exec(function (err, found) {
                                                                 if (err) {
                                                                     callback(null, err);
                                                                 } else if (_.isEmpty(found)) {
                                                                     callback(null, match);
                                                                 } else {
-                                                                    if (found.studentId.middleName) {
-                                                                        stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                    if (!singleData.opponentsTeam._id.equals(found.teamId)) {
+                                                                        if (found.studentId.middleName) {
+                                                                            stats.opponentName = found.studentId.firstName + " " + found.studentId.middleName + " " + found.studentId.surname;
+                                                                        } else {
+                                                                            stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
+                                                                        }
+                                                                        if (found.studentId.atheleteSchoolName) {
+                                                                            stats.school = found.studentId.atheleteSchoolName;
+                                                                        } else {
+                                                                            stats.school = found.studentId.school.name;
+                                                                        }
                                                                     } else {
-                                                                        stats.opponentName = found.studentId.firstName + " " + found.studentId.surname;
-                                                                    }
-                                                                    if (found.studentId.atheleteSchoolName) {
-                                                                        stats.school = found.studentId.atheleteSchoolName;
-                                                                    } else {
-                                                                        stats.school = found.studentId.school.name;
-                                                                    }
-                                                                    stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultBasketball.teams[1].teamResults.finalGoalPoints;
-                                                                    if (singleData.resultBasketball.winner.player === n) {
-                                                                        stats.isAthleteWinner = false;
-                                                                    } else {
-                                                                        stats.isAthleteWinner = true;
+                                                                        if (singleData.resultBasketball.status == "IsCompleted" && singleData.resultBasketball.isNoMatch == false) {
+                                                                            stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultBasketball.teams[1].teamResults.finalGoalPoints;
+                                                                            if (singleData.resultBasketball.winner.player === n.team) {
+                                                                                stats.isAthleteWinner = false;
+                                                                            } else {
+                                                                                stats.isAthleteWinner = true;
+                                                                            }
+                                                                            stats.status = singleData.resultBasketball.status;
+                                                                        } else if (singleData.resultBasketball.status == "IsCompleted" && singleData.resultBasketball.isNoMatch == true) {
+                                                                            stats.status = singleData.resultBasketball.status;
+                                                                            stats.reason = "No Match";
+                                                                        } else {
+                                                                            stats.status = singleData.resultBasketball.status;
+                                                                            stats.reason = "No Match";
+                                                                        }
                                                                     }
                                                                     match.push(stats);
                                                                     callback(null, match);
                                                                 }
 
                                                             });
-                                                        }
-                                                    }, function (err) {
-                                                        callback(null, match);
-                                                    });
+
+                                                        }, function (err) {
+                                                            callback(null, match);
+                                                        });
+                                                    }
                                                 } else if (singleData.resultFootball) {
                                                     var i = 0;
                                                     var result;
