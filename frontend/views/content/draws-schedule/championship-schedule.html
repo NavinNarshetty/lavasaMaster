@@ -293,7 +293,7 @@
                                                     <div class="championsschdule-pdfbutton " ng-if="schedule.liveResult ">
                                                         <a href="{{schedule.liveResult}} " target="_blank ">
                                                             <span style="color:#35db84" class="champions-viewdraws ">
-                                                                View Result Day 1
+                                                                View Result Day 1 & Day 2
                                                             </span>
                                                         </a>
                                                     </div>
@@ -305,7 +305,7 @@
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.startList ">
+                                                    <div class="championsschdule-pdfbutton hide" ng-if="schedule.startList">
                                                         <a href="{{schedule.startList}}" target="_blank">
                                                             <span class="champions-viewdraws">
                                                                 View Start List Day 2
@@ -403,7 +403,7 @@
                                                     <div class="championsschdule-pdfbutton " ng-if="schedule.liveResult ">
                                                         <a href="{{schedule.liveResult}} " target="_blank ">
                                                             <span style="color:#35db84" class="champions-viewdraws ">
-                                                                View Result Day 1
+                                                                View Result Day 1 & Day 2
                                                             </span>
                                                         </a>
                                                     </div>
@@ -415,7 +415,7 @@
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.startList==''
+                                                    <div class="championsschdule-pdfbutton hide" ng-if="schedule.startList==''
                                                                 && schedule.sport=='Karate' ">
                                                         <a>
                                                             <span style="opacity:0 " class="champions-viewdraws ">
@@ -423,7 +423,7 @@
                                                             </span>
                                                         </a>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.startList">
+                                                    <div class="hide championsschdule-pdfbutton " ng-if="schedule.startList">
                                                         <a href="{{schedule.startList}}" target="_blank">
                                                             <span class="champions-viewdraws ">
                                                                 View Start List Day 2
