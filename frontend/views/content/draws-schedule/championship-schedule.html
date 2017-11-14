@@ -292,6 +292,13 @@
                                                             </span>
                                                         </a>
                                                     </div>
+                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.startList">
+                                                        <a>
+                                                            <span class="champions-viewdraws">
+                                                                View Start List Day 2
+                                                            </span>
+                                                        </a>
+                                                    </div>
                                                     <div class="championsschdule-pdfbutton" ng-if="schedule.detail">
                                                         <span class="champions-viewdraw">
                                                             Will be published by {{schedule.detail}}
@@ -361,6 +368,20 @@
                                                         <a>
                                                             <span style="opacity:0" class="champions-viewdraws">
                                                                 View
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.startList == '' && schedule.sport == 'Karate'">
+                                                        <a>
+                                                            <span style="opacity:0" class="champions-viewdraws">
+                                                                View
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.startList">
+                                                        <a>
+                                                            <span style="opacity:0" class="champions-viewdraws">
+                                                                View Start List Day 2
                                                             </span>
                                                         </a>
                                                     </div>
