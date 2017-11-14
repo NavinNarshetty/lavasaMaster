@@ -13325,7 +13325,7 @@ var model = {
                                                             } else {
                                                                 result.profile = "";
                                                             }
-                                                            result.school = singleData.school[0].schoolName;
+                                                            result.school = n.schoolName;
                                                             result.medaltype = singleData.medalType;
                                                             result.result = matchData[0].resultShooting.finalScore;
                                                             callback(null, result);
@@ -13339,7 +13339,7 @@ var model = {
                                                             } else {
                                                                 result.profile = "";
                                                             }
-                                                            result.school = singleData.school[0].schoolName;
+                                                            result.school = n.schoolName;
                                                             result.medaltype = singleData.medalType;
                                                             async.each(matchData[0].resultsRacquet.teams, function (team, callback) {
                                                                 console.log("team", team, "n", n);
@@ -13369,7 +13369,7 @@ var model = {
                                                         } else {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
-                                                            result.gender = n.schoolName;
+                                                            result.gender = n.studentTeam[0].studentId.gender;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
