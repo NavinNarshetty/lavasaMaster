@@ -224,7 +224,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date2: '17',
                     month: 'Nov',
                     link: '',
-                    detail: '12th Nov 8 p.m.',
+                    detail: '15th Nov 11 a.m.',
                     liveResult: ''
                 }, {
                     sport: 'Hockey',
