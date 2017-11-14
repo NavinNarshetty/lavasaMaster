@@ -95,6 +95,8 @@ var controller = {
     },
 
     generateExcel: function (req, res) {
+        res.connection.setTimeout(200000000);
+        req.connection.setTimeout(200000000);
         IndividualSport.generateExcel(res);
     },
 

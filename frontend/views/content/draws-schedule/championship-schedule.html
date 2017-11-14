@@ -273,13 +273,20 @@
                                                         </a>
                                                     </div>
 
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.link && !schedule.live ">
-                                                        <a href="{{schedule.link}} " target="_blank ">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.link && !schedule.live && schedule.sport != 'Athletics'">
+                                                        <a href="{{schedule.link}}" target="_blank ">
                                                             <span class="champions-viewdraws ">
                                                                 View Draws-Schedule
                                                             </span>
                                                             <span class="pdf-champions ">
                                                                 <i class="fa fa-file-pdf-o "></i>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.startList1">
+                                                        <a href="{{schedule.startList1}}" target="_blank">
+                                                            <span class="champions-viewdraws">
+                                                                View Day 3 Schedule
                                                             </span>
                                                         </a>
                                                     </div>
@@ -376,13 +383,20 @@
                                                         </a>
                                                     </div>
 
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.link && !schedule.live ">
+                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.link && !schedule.live && schedule.sport != 'Athletics'">
                                                         <a href="{{schedule.link}} " target="_blank ">
                                                             <span class="champions-viewdraws ">
                                                                 View Draws-Schedule
                                                             </span>
                                                             <span class="pdf-champions ">
                                                                 <i class="fa fa-file-pdf-o "></i>
+                                                            </span>
+                                                        </a>
+                                                    </div>
+                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.startList1">
+                                                        <a href="{{schedule.startList1}}" target="_blank">
+                                                            <span class="champions-viewdraws">
+                                                                View Day 3 Schedule
                                                             </span>
                                                         </a>
                                                     </div>

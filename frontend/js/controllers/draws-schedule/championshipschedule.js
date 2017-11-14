@@ -165,7 +165,8 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     month: 'Nov',
                     link: 'img/event/athletics.pdf',
                     liveResult: 'img/event/day1.pdf',
-                    startList: 'img/event/list-day2.pdf'
+                    startList: 'img/event/list-day2.pdf',
+                    startList1: 'img/event/list-day3.pdf'
                 }, {
                     sport: 'Badminton',
                     date1: '10',
