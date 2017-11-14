@@ -156,7 +156,8 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date2: '12',
                     month: 'Nov',
                     link: 'img/event/archery.pdf',
-                    live: 'yes'
+                    live: 'yes',
+                    liveResult: ''
                 }, {
                     sport: 'Athletics',
                     date1: '13',
@@ -169,63 +170,73 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date1: '10',
                     date2: '14',
                     month: 'Nov',
-                    link: 'img/event/badminton.pdf'
+                    link: 'img/event/badminton.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Basketball',
                     date1: '11',
                     date2: '17',
                     month: 'Nov',
-                    link: 'img/event/basketball.pdf'
+                    link: 'img/event/basketball.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Boxing',
                     date1: '16',
                     date2: '17',
                     month: 'Nov',
-                    link: 'img/event/boxing.pdf'
+                    link: 'img/event/boxing.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Carrom',
                     date1: '14',
                     date2: '17',
                     month: 'Nov',
-                    link: 'img/event/carrom.pdf'
+                    link: 'img/event/carrom.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Chess',
                     date1: '11',
                     date2: '13',
                     month: 'Nov',
-                    link: 'img/event/chess.pdf'
+                    link: 'img/event/chess.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Fencing',
                     date1: '16',
                     date2: '17',
                     month: 'Nov',
                     link: '',
-                    detail: '12th Nov 8 p.m.'
+                    detail: '12th Nov 8 p.m.',
+                    liveResult: ''
                 }, {
                     sport: 'Football',
                     date1: '11',
                     date2: '17',
                     month: 'Nov',
-                    link: 'img/event/football.pdf'
+                    link: 'img/event/football.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Handball',
                     date1: '16',
                     date2: '17',
                     month: 'Nov',
                     link: '',
-                    detail: '12th Nov 8 p.m.'
+                    detail: '12th Nov 8 p.m.',
+                    liveResult: ''
                 }, {
                     sport: 'Hockey',
                     date1: '11',
                     date2: '12',
                     month: 'Nov',
                     link: 'img/event/hockey.pdf',
-                    live: 'yes'
+                    live: 'yes',
+                    liveResult: ''
                 }, {
                     sport: 'Judo',
                     date: '15',
                     month: 'Nov',
-                    link: 'img/event/judo.pdf'
+                    link: 'img/event/judo.pdf',
+                    liveResult: ''
                 }];
 
                 $scope.schedulelist2 = [{
@@ -233,72 +244,84 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date1: '10',
                     date2: '14',
                     month: 'Nov',
-                    link: 'img/event/kabaddi.pdf'
+                    link: 'img/event/kabaddi.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Karate',
                     date: '15',
                     month: 'Nov',
-                    link: 'img/event/karate.pdf'
+                    link: 'img/event/karate.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Kho Kho',
                     date1: '14',
                     date2: '17',
                     month: 'Nov',
-                    link: 'img/event/khokho.pdf'
+                    link: 'img/event/khokho.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Shooting',
                     date: '12',
                     month: 'Nov',
                     link: 'img/event/shooting.pdf',
-                    live: 'yes'
+                    live: 'yes',
+                    liveResult: ''
                 }, {
                     sport: 'Swimming',
                     date1: '11',
                     date2: '12',
                     month: 'Nov',
                     link: 'img/event/swimming.pdf',
-                    live: 'yes'
+                    live: 'yes',
+                    liveResult: ''
                 }, {
                     sport: 'Table Tennis',
                     date1: '15',
                     date2: '17',
                     month: 'Nov',
-                    link: 'img/event/table-tennis.pdf'
+                    link: 'img/event/table-tennis.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Taekwondo',
                     date: '15',
                     month: 'Nov',
-                    link: 'img/event/taekwondo.pdf'
+                    link: 'img/event/taekwondo.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Tennis',
                     date1: '15',
                     date2: '17',
                     month: 'Nov',
                     link: '',
-                    detail: '12th Nov 8 p.m.'
+                    detail: '12th Nov 8 p.m.',
+                    liveResult: ''
                 }, {
                     sport: 'Throwball',
                     date1: '14',
                     date2: '17',
                     month: 'Nov',
-                    link: 'img/event/throwball.pdf'
+                    link: 'img/event/throwball.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Volleyball',
                     date1: '12',
                     date2: '17',
                     month: 'Nov',
-                    link: 'img/event/volleyball.pdf'
+                    link: 'img/event/volleyball.pdf',
+                    liveResult: ''
                 }, {
                     sport: 'Water Polo',
                     date: '13',
                     month: 'Nov',
                     link: '',
-                    detail: '12th Nov 8 p.m.'
+                    detail: '12th Nov 8 p.m.',
+                    liveResult: ''
                 }, {
                     sport: '',
                     date: '',
                     month: '',
-                    link: ''
+                    link: '',
+                    liveResult: ''
                 }];
             }
         } else {
