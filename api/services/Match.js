@@ -13000,6 +13000,7 @@ var model = {
     },
 
     //----------------------------------Winners-------------------------------------------
+
     getAggregatePipeline: function (data) {
         var pipeline = [
             // Stage 1

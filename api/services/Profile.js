@@ -936,7 +936,6 @@ var model = {
                     });
                 },
                 function (profile, callback) {
-                    // var pipeLine = Profile.getSchoolSpecialAwardsAggregatePipeline(data);
                     SpecialAwardDetails.findOne({
                         school: data.school
                     }).lean().exec(function (err, awardData) {
@@ -1887,9 +1886,9 @@ var model = {
                                                             var length = singleData.resultVolleyball.teams[0].teamResults.sets.length;
                                                             while (i < length) {
                                                                 if (i == 0) {
-                                                                    result = singleData.resultVolleyball.teams[0].teamResults.sets[i].point;
+                                                                    result = singleData.resultVolleyball.teams[0].teamResults.sets[i].points;
                                                                 } else {
-                                                                    result = result + "," + singleData.resultVolleyball.teams[0].teamResults.sets[i].point;
+                                                                    result = result + "," + singleData.resultVolleyball.teams[0].teamResults.sets[i].points;
                                                                 }
                                                                 i++;
                                                                 console.log("i", result);
@@ -1935,9 +1934,9 @@ var model = {
                                                                             while (i < length) {
                                                                                 console.log("players", singleData.resultVolleyball.teams[0].teamResults.sets[i]);
                                                                                 if (i == 0) {
-                                                                                    result = singleData.resultVolleyball.teams[0].teamResults.sets[i].point + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].point;
+                                                                                    result = singleData.resultVolleyball.teams[0].teamResults.sets[i].points + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].points;
                                                                                 } else {
-                                                                                    result = result + "," + singleData.resultVolleyball.teams[0].teamResults.sets[i].point + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].point;
+                                                                                    result = result + "," + singleData.resultVolleyball.teams[0].teamResults.sets[i].points + "-" + singleData.resultVolleyball.teams[1].teamResults.sets[i].points;
                                                                                 }
                                                                                 i++;
                                                                                 console.log("i", result);
@@ -2044,7 +2043,7 @@ var model = {
                                                     var result;
                                                     if (singleData.resultWaterPolo.teams.length == 1) {
                                                         if (singleData.resultWaterPolo.status == "IsCompleted" && singleData.resultWaterPolo.isNoMatch == false) {
-                                                            stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;
+                                                            stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints;
                                                             stats.isAthleteWinner = true;
                                                             stats.status = singleData.resultWaterPolo.status;
                                                         } else if (singleData.resultWaterPolo.status == "IsCompleted" && singleData.resultWaterPolo.isNoMatch == true) {
@@ -2080,7 +2079,7 @@ var model = {
                                                                             }
                                                                         }
                                                                         if (singleData.resultWaterPolo.status == "IsCompleted" && singleData.resultWaterPolo.isNoMatch == false) {
-                                                                            stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoint;;
+                                                                            stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints + "-" + singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints;;
                                                                             if (singleData.resultWaterPolo.winner.player === n) {
                                                                                 stats.isAthleteWinner = false;
                                                                             } else {

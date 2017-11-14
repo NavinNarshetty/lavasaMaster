@@ -103,13 +103,18 @@ var controller = {
                             var knockout = _.groupBy(importData, 'STAGE');
                             var i = 0;
                             var excelLength = 0;
-                            _.each(knockout, function (n) {
-                                if (i == 0) {
-                                    i++;
-                                } else {
-                                    excelLength = n.length;
-                                }
-                            });
+                            if (!_.isEmpty(knockout.Knockout) && !_.isEmpty(knockout.League)) {
+                                _.each(knockout, function (n) {
+                                    if (i == 0) {
+                                        i++;
+                                    } else {
+                                        excelLength = n.length;
+                                    }
+                                });
+                            } else if (_.isEmpty(knockout.League)) {
+                                excelLength = knockout.Knockout.length;
+                            }
+                            console.log("excelLength", excelLength);
                             // var excelLength = importData.length;
                             var range = req.body.range;
                             var sum = 0;
@@ -119,8 +124,11 @@ var controller = {
                                     range = range / 2;
                                 }
                             }
-                            if (req.body.thirdPlace == "yes") {
+                            if (req.body.thirdPlace == "yes" && range != 0) {
                                 sum = sum + 1;
+                            } else if (req.body.thirdPlace == "yes" && range == 0) {
+                                sum = sum + 1;
+                                excelLength = sum;
                             }
                             if (excelLength == sum) {
                                 req.body.rangeTotal = sum;
