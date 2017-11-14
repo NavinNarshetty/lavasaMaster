@@ -13267,7 +13267,7 @@ var model = {
                                                             } else {
                                                                 result.profile = "";
                                                             }
-                                                            result.school = singleData.school[0].schoolName;
+                                                            result.school = n.schoolName;
                                                             result.medaltype = singleData.medalType;
                                                             async.each(matchData[0].resultHeat.teams, function (player, callback) {
                                                                 console.log("player", player, "n", n._id);
@@ -13288,7 +13288,7 @@ var model = {
                                                             } else {
                                                                 result.profile = "";
                                                             }
-                                                            result.school = singleData.school[0].schoolName;
+                                                            result.school = n.schoolName;
                                                             result.medaltype = singleData.medalType;
                                                             if (matchData[0].resultQualifyingRound.player.bestAttempt) {
                                                                 result.result = matchData[0].resultQualifyingRound.player.bestAttempt;
@@ -13306,7 +13306,7 @@ var model = {
                                                             } else {
                                                                 result.profile = "";
                                                             }
-                                                            result.school = singleData.school[0].schoolName;
+                                                            result.school = n.schoolName;
                                                             result.medaltype = singleData.medalType;
                                                             async.each(matchData[0].resultSwiss.players, function (player, callback) {
                                                                 if (player.id.equals(n._id)) {
@@ -13319,7 +13319,7 @@ var model = {
                                                         } else if (matchData[0].resultShooting) {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
-                                                            result.gender = n.studentTeam[0].studentId.gender;
+                                                            result.gender = n.schoolName;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
@@ -13369,13 +13369,13 @@ var model = {
                                                         } else {
                                                             result.name = n.name;
                                                             result.teamId = n.teamId;
-                                                            result.gender = n.studentTeam[0].studentId.gender;
+                                                            result.gender = n.schoolName;
                                                             if (n.school != null) {
                                                                 result.profile = n.school.schoolLogo;
                                                             } else {
                                                                 result.profile = "";
                                                             }
-                                                            result.school = singleData.school[0].schoolName;
+                                                            result.school = n.schoolName;
                                                             result.medaltype = singleData.medalType;
                                                             callback(null, result);
                                                         }
