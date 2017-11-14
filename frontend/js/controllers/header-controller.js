@@ -556,7 +556,7 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
     // CHAMPIONS JOSN
     $scope.mumbaiChampion = [{
         name: 'school championship',
-        mainLink: 'http://mumbaischool.sfanow.in',
+        // mainLink: 'http://mumbaischool.sfanow.in',
         champDetail: [{
             name: 'about championship',
             link: 'championship'
@@ -567,12 +567,15 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
             name: 'championship schedule',
             link: 'championship-schedule'
         }, {
+            name: 'draws schedule',
+            link: 'draws-schedule'
+        }, {
             name: 'faqs',
             link: 'faq'
         }]
     }, {
         name: 'college championship',
-        mainLink: 'http://mumbaicollege.sfanow.in',
+        // mainLink: 'http://mumbaicollege.sfanow.in',
         champDetail: [{
             name: 'register',
             link: 'register'
@@ -580,10 +583,13 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
             name: 'championship schedule',
             link: 'championship-schedule'
         }, {
+            name: 'draws schedule',
+            link: 'draws-schedule'
+        }, {
             name: 'faqs',
             link: 'faq'
         }]
-    }]
+    }];
     // CHAMPIONS JOSN END
 
     // CHAMPIONS JOSN
@@ -629,13 +635,13 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
 
     $scope.profileCollege = [{
         name: 'college',
-        mainLink: 'http://mumbaicollege.sfanow.in',
+        // mainLink: 'http://mumbaicollege.sfanow.in',
         detail: [{
             name: '2017 Athlete',
             link: 'students'
         }, {
             name: '2017 college',
-            link: 'college'
+            link: 'school'
         }, {
             name: '2017 teams',
             link: 'team'

@@ -103,14 +103,22 @@
         <!-- SFA MUMBAI / HYDERABAD 2017-18 -->
         <div class="col-md-3">
           <div class="f-list">
-            <span class="footer-header-color"> SFA <span class="text-uppercase">{{sfaCity}} </span>{{year16}}</span>
+            <span class="footer-header-color"> SFA
+              <span class="text-uppercase">{{sfaCity}} </span>{{eventYear}}</span>
             <ul class="padding0">
               <!-- MUMBAI -->
               <li ng-repeat="champions in mumbaiChampion track by $index" ng-if="selectedCity !=='hyderabad'">
                 <label class="footer-champ-header">{{champions.name}}</label>
-                <ul class="padding0">
+                <ul class="padding0" ng-if="champions.name != 'school championship'">
                   <li ng-repeat="detail in champions.champDetail track by $index">
-                    <a href="{{champions.mainLink}}/{{detail.link}}" target="_new">
+                    <a href="{{registerCollege}}/{{detail.link}}" target="_new">
+                      {{detail.name}}
+                    </a>
+                  </li>
+                </ul>
+                <ul class="padding0" ng-if="champions.name == 'school championship'">
+                  <li ng-repeat="detail in champions.champDetail track by $index">
+                    <a href="{{registerSchool}}/{{detail.link}}" target="_new">
                       {{detail.name}}
                     </a>
                   </li>
@@ -125,13 +133,13 @@
                 <ul class="padding0">
                   <li>
                     <a style="color:#27b465" href="{{linkForAll}}liveupdates" target="_new">
-                                Live Update
+                      Live Update
                     </a>
                   </li>
                   <li ng-repeat="detail in champions.champDetail track by $index">
                     <a href="{{registerSchool}}/{{detail.link}}" target="_new">
-                        {{detail.name}}
-                      </a>
+                      {{detail.name}}
+                    </a>
                   </li>
                 </ul>
               </li>
@@ -149,20 +157,21 @@
               <li ng-repeat="profileh in hyderabadProfile track by $index" ng-if="selectedCity=== 'hyderabad'">
 
                 <a href="{{registerSchool}}/{{profileh.link}}" target="_new">
-                               <span>2017</span>  <span>{{profileh.name}}</span>   
-                    </a>
+                  <span>2017</span>
+                  <span>{{profileh.name}}</span>
+                </a>
               </li>
               <li ng-repeat="profile in sfamumbaiProfile track by $index" ng-if="selectedCity !=='hyderabad'">
                 <label class="footer-champ-header">{{profile.name}}</label>
                 <ul class="padding0">
                   <li ng-repeat="detail in profile.detail track by $index">
                     <a href="{{registerSchool}}/{{detail.link}}" target="_new">
-                         <span>{{detail.name}}</span>
+                      <span>{{detail.name}}</span>
                     </a>
                   </li>
                   <li style="font-size:12px;">
                     <a href="{{linkForAll}}students" target="_new">
-                           <span>view profile from previous championship</span>
+                      <span>view profile from previous championship</span>
                     </a>
                   </li>
 
@@ -171,8 +180,8 @@
                 <label class="footer-champ-header">{{profileC.name}}</label>
                 <ul class="padding0">
                   <li ng-repeat="detail in profileC.detail track by $index">
-                    <a href="{{profileC.mainLink}}/{{detail.link}}" target="_new">
-                           <span>{{detail.name}}</span>
+                    <a href="{{registerCollege}}/{{detail.link}}" target="_new">
+                      <span>{{detail.name}}</span>
                     </a>
                   </li>
 
@@ -201,7 +210,7 @@
               </li>
               <li>
                 <a href="{{registerCollege}}/results" target="_new">
-                 2017 COLLEGE RANKING
+                  2017 COLLEGE RANKING
                 </a>
               </li>
             </ul>
@@ -212,12 +221,12 @@
               <ul class="padding0" ng-if="selectedCity !=='hyderabad'">
                 <li>
                   <a href="{{registerSchool}}/media-gallery" target="_new">
-                          SCHOOL 
-                        </a>
+                    SCHOOL
+                  </a>
                 </li>
                 <li>
                   <a href="{{registerCollege}}/media-gallery" target="_new">
-                          COLLEGE 
+                    COLLEGE
                   </a>
                 </li>
               </ul>
@@ -230,13 +239,13 @@
               <ul class="padding0" ng-if="selectedCity !=='hyderabad'">
                 <li>
                   <a href="{{registerSchool}}/media-press" target="_new">
-                            SCHOOL 
-                          </a>
+                    SCHOOL
+                  </a>
                 </li>
                 <li>
                   <a href="{{registerCollege}}/media-press" target="_new">
-                            COLLEGE 
-                    </a>
+                    COLLEGE
+                  </a>
                 </li>
               </ul>
               <!-- MUMBAI END -->
