@@ -208,7 +208,8 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     month: 'Nov',
                     link: '',
                     detail: '12th Nov 8 p.m.',
-                    liveResult: ''
+                    liveResult: '',
+                    orderList: ''
                 }, {
                     sport: 'Football',
                     date1: '11',
@@ -294,9 +295,9 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date1: '15',
                     date2: '17',
                     month: 'Nov',
-                    link: '',
-                    detail: '12th Nov 8 p.m.',
-                    liveResult: ''
+                    link: 'img/event/tennis.pdf',
+                    liveResult: '',
+                    orderList: 'img/event/order-day1.pdf'
                 }, {
                     sport: 'Throwball',
                     date1: '14',
