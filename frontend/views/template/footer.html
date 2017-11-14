@@ -83,7 +83,7 @@
         <!-- SPORTS HOLDER -->
         <div class="col-md-4">
           <div class="f-list">
-            <span class="footer-header-color"> SPORTS {{selectedCity}}</span>
+            <span class="footer-header-color"> SPORTS</span>
             <ul class="padding0 cl-nt">
               <li ng-repeat="sport in mumbaiFooter track by $index" ng-if="selectedCity !== 'hyderabad'">
                 <a href="{{linkForAllSports}}{{sport.name | firstcapitalize}}" target="_new">
@@ -100,40 +100,87 @@
         </div>
         <!-- SPORTS HOLDER END -->
 
-        <!-- SFA MUMBAI 2017-18 -->
+        <!-- SFA MUMBAI / HYDERABAD 2017-18 -->
         <div class="col-md-3">
           <div class="f-list">
-            <span class="footer-header-color"> SFA MUMBAI {{year16}}</span>
+            <span class="footer-header-color"> SFA <span class="text-uppercase">{{sfaCity}} </span>{{year16}}</span>
             <ul class="padding0">
-              <li ng-repeat="champions in mumbaiChampion track by $index">
+              <!-- MUMBAI -->
+              <li ng-repeat="champions in mumbaiChampion track by $index" ng-if="selectedCity !=='hyderabad'">
                 <label class="footer-champ-header">{{champions.name}}</label>
                 <ul class="padding0">
                   <li ng-repeat="detail in champions.champDetail track by $index">
-                    <a href="{{linkForAll}}{{detal.link}}" target="_new">
+                    <a href="{{champions.mainLink}}/{{detail.link}}" target="_new">
                       {{detail.name}}
                     </a>
                   </li>
                 </ul>
               </li>
+              <!-- MUMBAI END -->
+
+              <!-- HYDERABAD -->
+
+              <li ng-repeat="champions in hyderabadChampion track by $index" ng-if="selectedCity ==='hyderabad'">
+                <label class="footer-champ-header">{{champions.name}}</label>
+                <ul class="padding0">
+                  <li>
+                    <a style="color:#27b465" href="{{linkForAll}}liveupdates" target="_new">
+                                Live Update
+                    </a>
+                  </li>
+                  <li ng-repeat="detail in champions.champDetail track by $index">
+                    <a href="{{registerSchool}}/{{detail.link}}" target="_new">
+                        {{detail.name}}
+                      </a>
+                  </li>
+                </ul>
+              </li>
+              <!-- HYDERABAD END -->
             </ul>
           </div>
         </div>
-        <!-- SFA MUMBAI 2017-18 END -->
+        <!-- SFA MUMBAI / HYDERABAD 2017-18 END -->
 
         <!-- PROFILE -->
         <div class="col-md-2">
           <div class="f-list">
             <span class="footer-header-color">PROFILE</span>
             <ul class="padding0">
-              <!-- MUMBAI -->
-              <li ng-repeat="profile in sfaProfile track by $index" ng-if="selectedCity !=='hyderabad'">
-                <a href="{{linkForAll}}{{profile.link}}" target="_new">
-                  {{profile.name}}
-                </a>
+              <li ng-repeat="profileh in hyderabadProfile track by $index" ng-if="selectedCity=== 'hyderabad'">
+
+                <a href="{{registerSchool}}/{{profileh.link}}" target="_new">
+                               <span>2017</span>  <span>{{profileh.name}}</span>   
+                    </a>
+              </li>
+              <li ng-repeat="profile in sfamumbaiProfile track by $index" ng-if="selectedCity !=='hyderabad'">
+                <label class="footer-champ-header">{{profile.name}}</label>
+                <ul class="padding0">
+                  <li ng-repeat="detail in profile.detail track by $index">
+                    <a href="{{registerSchool}}/{{detail.link}}" target="_new">
+                         <span>{{detail.name}}</span>
+                    </a>
+                  </li>
+                  <li style="font-size:12px;">
+                    <a href="{{linkForAll}}students" target="_new">
+                           <span>view profile from previous championship</span>
+                    </a>
+                  </li>
+
+              </li>
+              <li ng-repeat="profileC in profileCollege track by $index" ng-if="selectedCity !=='hyderabad'">
+                <label class="footer-champ-header">{{profileC.name}}</label>
+                <ul class="padding0">
+                  <li ng-repeat="detail in profileC.detail track by $index">
+                    <a href="{{profileC.mainLink}}/{{detail.link}}" target="_new">
+                           <span>{{detail.name}}</span>
+                    </a>
+                  </li>
+
               </li>
               <!-- MUMBAI END -->
 
-            </ul>
+
+              </ul>
           </div>
 
         </div>
@@ -143,35 +190,79 @@
         <!-- RESULTS -->
         <div class="col-md-3">
           <div class="f-list">
-            <span class="color-yellow1">RESULTS</span>
+            <span class="color-yellow1" ng-if="selectedCity !=='hyderabad'">RESULTS</span>
             <!-- RESULTS HOLDER -->
-            <ul class="padding0">
+            <!-- MUMBAI -->
+            <ul class="padding0" ng-if="selectedCity !=='hyderabad'">
               <li>
-                <a href="{{linkForAll}}" target="_new">
-                  SCHOOL RANKING
+                <a href="{{registerSchool}}/results" target="_new">
+                  2017 SCHOOL RANKING
                 </a>
               </li>
               <li>
-                <a href="{{linkForAll}}" target="_new">
-                  COLLEGE RANKING
+                <a href="{{registerCollege}}/results" target="_new">
+                 2017 COLLEGE RANKING
                 </a>
+              </li>
+            </ul>
+            <div class="gallery-mumbai">
+              <span style="color:#27b465" ng-if="selectedCity !=='hyderabad'">GALLERY</span>
+              <!-- RESULTS HOLDER -->
+              <!-- MUMBAI -->
+              <ul class="padding0" ng-if="selectedCity !=='hyderabad'">
+                <li>
+                  <a href="{{registerSchool}}/media-gallery" target="_new">
+                          SCHOOL 
+                        </a>
+                </li>
+                <li>
+                  <a href="{{registerCollege}}/media-gallery" target="_new">
+                          COLLEGE 
+                  </a>
+                </li>
+              </ul>
+              <!-- MUMBAI END -->
+            </div>
+            <div class="mediapress-mumbai">
+              <span style="color:#27b465" ng-if="selectedCity !=='hyderabad'">PRESS & MEDIA</span>
+              <!-- RESULTS HOLDER -->
+              <!-- MUMBAI -->
+              <ul class="padding0" ng-if="selectedCity !=='hyderabad'">
+                <li>
+                  <a href="{{registerSchool}}/media-press" target="_new">
+                            SCHOOL 
+                          </a>
+                </li>
+                <li>
+                  <a href="{{registerCollege}}/media-press" target="_new">
+                            COLLEGE 
+                    </a>
+                </li>
+              </ul>
+              <!-- MUMBAI END -->
+            </div>
+
+
+            <ul class="padding0" ng-if="selectedCity ==='hyderabad'">
+              <li class="footer-header-color">
+                <a href="{{registerSchool}}/results" style="color:#27b465" target="_new">Results</a>
               </li>
             </ul>
             <!-- RESULTS HOLDER -->
 
             <!-- GALLERY -->
-            <div class="mt5">
-              <a href="{{linkForAll}}media-gallery" target="_new" class="footer-header-color text-up">gallery</a>
+            <div class="mt5" ng-if="selectedCity==='hyderabad'">
+              <a href="{{registerSchool}}/media-gallery" target="_new" class="footer-header-color text-up">gallery</a>
             </div>
             <!-- GALLERY END -->
             <!-- PRESS MEDIA -->
-            <div class="mt5">
-              <a href="{{linkForAll}}media-gallery" target="_new" class="footer-header-color text-up">PRESS &amp; MEDIA</a>
+            <div class="mt5" ng-if="selectedCity==='hyderabad'">
+              <a href="{{registerSchool}}/media-press" target="_new" class="footer-header-color text-up">PRESS &amp; MEDIA</a>
             </div>
             <!-- PRESS MEDIA END -->
             <!-- SPONSOR  -->
             <div class="mt5">
-              <a href="{{linkForAll}}" target="_new" class="footer-header-color text-up">SPONSORS &amp; PARTNERS</a>
+              <a href="{{registerSchool}}/sponsors-partner" target="_new" class="footer-header-color text-up">SPONSORS &amp; PARTNERS</a>
             </div>
             <!-- SPONSOR END -->
             <!-- ABOUT US -->

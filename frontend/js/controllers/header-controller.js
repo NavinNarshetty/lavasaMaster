@@ -308,6 +308,8 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
         $scope.selectedCity = 'hyderabad';
     } else if (window.location.host == "ahmedabadschool.sfanow.in" || window.location.host == "ahmedabadcollege.sfanow.in") {
         $scope.selectedCity = 'ahmedabad';
+    } else {
+        $scope.selectedCity = 'hyderabad';
     }
 
     if (window.location.origin != globalLinkSchoolRegister) {
@@ -554,43 +556,99 @@ myApp.controller('footerctrl', function ($scope, TemplateService, $rootScope, Na
     // CHAMPIONS JOSN
     $scope.mumbaiChampion = [{
         name: 'school championship',
+        mainLink: 'http://mumbaischool.sfanow.in',
         champDetail: [{
             name: 'about championship',
-            link: ''
+            link: 'championship'
         }, {
             name: 'register',
-            link: ''
+            link: 'register'
         }, {
             name: 'championship schedule',
-            link: ''
+            link: 'championship-schedule'
         }, {
             name: 'faqs',
-            link: ''
+            link: 'faq'
         }]
     }, {
         name: 'college championship',
+        mainLink: 'http://mumbaicollege.sfanow.in',
         champDetail: [{
             name: 'register',
-            link: ''
+            link: 'register'
         }, {
             name: 'championship schedule',
-            link: ''
+            link: 'championship-schedule'
         }, {
             name: 'faqs',
-            link: ''
+            link: 'faq'
+        }]
+    }]
+    // CHAMPIONS JOSN END
+
+    // CHAMPIONS JOSN
+    $scope.hyderabadChampion = [{
+        name: 'school championship',
+        champDetail: [{
+            name: 'about championship',
+            link: 'championship'
+        }, {
+            name: 'register',
+            link: 'register'
+        }, {
+            name: 'championship schedule',
+            link: 'championship-schedule'
+        }, {
+            name: 'draws schedule',
+            link: 'draws-schedule'
+        }, {
+            name: 'special event',
+            link: 'specialevents'
+        }, {
+            name: 'faqs',
+            link: 'faq'
         }]
     }]
     // CHAMPIONS JOSN END
 
     // MUMBAI PROFILE
-    $scope.sfaProfile = [{
+    $scope.sfamumbaiProfile = [{
+        name: 'school',
+        school: true,
+        detail: [{
+            name: '2017 Athlete',
+            link: 'students'
+        }, {
+            name: '2017 school',
+            link: 'school'
+        }, {
+            name: '2017 teams',
+            link: 'team'
+        }]
+    }]
+
+    $scope.profileCollege = [{
+        name: 'college',
+        mainLink: 'http://mumbaicollege.sfanow.in',
+        detail: [{
+            name: '2017 Athlete',
+            link: 'students'
+        }, {
+            name: '2017 college',
+            link: 'college'
+        }, {
+            name: '2017 teams',
+            link: 'team'
+        }]
+    }]
+    // MUMBAI PROFILE END
+
+    // MUMBAI PROFILE
+    $scope.hyderabadProfile = [{
         name: 'athletes',
         link: 'students'
     }, {
         name: 'school',
-        link: 'school'
-    }, {
-        name: 'college',
         link: 'school'
     }, {
         name: 'teams',
