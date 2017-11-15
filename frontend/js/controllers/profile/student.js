@@ -203,16 +203,21 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
                 console.log($scope.studentProfile);
                 $scope.studentProfile = data.data;
                 $scope.athlete = $scope.studentProfile.athlete;
-                if ($scope.athlete.middleName) {
-                    $scope.fullName = $scope.athlete.firstName + ' ' + $scope.athlete.middleName + ' ' + $scope.athlete.surname;
-                } else {
-                    $scope.fullName = $scope.athlete.firstName + ' ' + $scope.athlete.surname;
+                if ($scope.athlete) {
+                    if ($scope.athlete.middleName) {
+                        $scope.fullName = $scope.athlete.firstName + ' ' + $scope.athlete.middleName + ' ' + $scope.athlete.surname;
+                    } else {
+                        $scope.fullName = $scope.athlete.firstName + ' ' + $scope.athlete.surname;
+                    }
+
+                    if ($scope.athlete.atheleteSchoolName) {
+                        $scope.schoolName = $scope.athlete.atheleteSchoolName;
+                    } else {
+                        $scope.schoolName = $scope.athlete.school.name;
+                    }
                 }
-                if ($scope.athlete.atheleteSchoolName) {
-                    $scope.schoolName = $scope.athlete.atheleteSchoolName;
-                } else {
-                    $scope.schoolName = $scope.athlete.school.name;
-                }
+
+
                 if ($scope.studentProfile.sport.length > 0) {
                     $scope.certificate = true;
                 } else {
@@ -262,6 +267,7 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
                     });
                 }
                 if (subArrLength >= $scope.studentProfile.sport.length) {
+                    console.log(" $scope.studentProfile.sport", $scope.studentProfile.sport);
                     $scope.sport = $scope.studentProfile.sport;
                 }
 
@@ -311,13 +317,16 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
 
         });
     };
+
     $scope.sportStats = function (data) {
         console.log('stats', data);
+        $scope.table.layout = data.sportslist.drawFormat.name;
         $scope.constraints = {};
         $scope.constraints.athleteId = $scope.studentid;
-        $scope.constraints.sportsListSubCategory = data.sportslist.sportsListSubCategory._id;
+        $scope.constraints.sportsListSubCategory = data.subCategory;
         NavigationService.getAthleteStats($scope.constraints, function (data) {
             console.log('stats inside', data);
+            $scope.studentStats = data.data;
 
         });
     };
@@ -370,7 +379,8 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
         });
     };
     $scope.nowSport = {};
-    $scope.sportsSelected = function (sport) {
+    $scope.sportsSelected = function (sport, index) {
+        console.log("$index", index);
         console.log(sport);
         $scope.nowSport = sport;
         $scope.activateSports(sport.sportslist.sportsListSubCategory._id);
@@ -380,7 +390,10 @@ myApp.controller('StudentProfileCtrl', function ($scope, $filter, TemplateServic
         // $scope.filterStatistics.category = undefined;
         // $scope.filterStatistics.year = $scope.filter.year;
         // $scope.filterStatistics.sport = sport._id;
+        $scope.filterStatistics.sport = sport;
+        console.log("sport.sportslist.drawFormat.name", sport.sportslist.drawFormat.name);
         $scope.table.layout = sport.sportslist.drawFormat.name;
+        // console.log(" $scope.table.layout", $scope.table.layout);
         // NavigationService.filterCategoryBySport({
         //     sportList: sport._id
         // }, function (response) {
