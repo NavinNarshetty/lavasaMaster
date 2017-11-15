@@ -207,8 +207,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     date1: '16',
                     date2: '17',
                     month: 'Nov',
-                    link: '',
-                    detail: '12th Nov 8 p.m.',
+                    link: 'img/event/fencing.pdf',
                     liveResult: '',
                     orderList: ''
                 }, {
