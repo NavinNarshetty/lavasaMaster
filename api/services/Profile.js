@@ -5346,18 +5346,24 @@ var model = {
                             Registration.findOne({
                                 schoolName: n.name
                             }).lean().exec(function (err, found) {
-                                console.log("found", found);
-                                if (found.schoolLogo) {
-                                    profile.schoolLogo = found.schoolLogo;
+                                // console.log("found", found);
+                                if (err) {
+                                    callback(err, null);
+                                } else if (_.isEmpty(found)) {
+                                    callback(null, []);
                                 } else {
-                                    profile.schoolLogo = "";
+                                    if (found.schoolLogo) {
+                                        profile.schoolLogo = found.schoolLogo;
+                                    } else {
+                                        profile.schoolLogo = "";
+                                    }
+                                    profile.status = found.status;
+                                    profile.schoolName = n.name;
+                                    profile.totalPoints = n.totalPoints;
+                                    profile.medals = n.medal;
+                                    profile.schoolId = n._id;
+                                    callback(null, profile);
                                 }
-                                profile.status = found.status;
-                                profile.schoolName = n.name;
-                                profile.totalPoints = n.totalPoints;
-                                profile.medals = n.medal;
-                                profile.schoolId = n._id;
-                                callback(null, profile);
                             });
                         },
                         function (err, profile) {
