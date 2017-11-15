@@ -32,7 +32,7 @@ schema.plugin(deepPopulate, {
             select: '_id name gender ageGroup sportslist weight'
         },
         "sport.sportslist": {
-            select: '_id name '
+            select: '_id name sportListSubCategory'
         },
         "sport.ageGroup": {
             select: '_id name '
