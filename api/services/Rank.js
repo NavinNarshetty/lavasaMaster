@@ -744,5 +744,112 @@ var model = {
         return pipeline;
     },
 
+    getAgeGroupsAndEvents: function (data, callback) {
+        // console.log("data", data);
+        var str = '^' + data.name;
+        var re = new RegExp(str, 'i');
+        console.log("re", re);
+
+        async.waterfall([
+            function (callback) {
+                var sendObj = {
+                    "ageGroups": [],
+                    "events": []
+                };
+                var pipeline = [{
+                    $lookup: {
+                        "from": "sportslists",
+                        "localField": "sportslist",
+                        "foreignField": "_id",
+                        "as": "sportslist"
+                    }
+                }, {
+                    $unwind: {
+                        path: "$sportslist",
+                        includeArrayIndex: "arrayIndex", // optional
+                        preserveNullAndEmptyArrays: false // optional
+                    }
+                }, {
+                    $lookup: {
+                        "from": "sportslistsubcategories",
+                        "localField": "sportslist.sportsListSubCategory",
+                        "foreignField": "_id",
+                        "as": "sportslist.sportsListSubCategory"
+                    }
+                }, {
+                    $unwind: {
+                        path: "$sportslist.sportsListSubCategory",
+                        includeArrayIndex: "arrayIndex", // optional
+                        preserveNullAndEmptyArrays: false // optional
+                    }
+                }, {
+                    $match: {
+                        "sportslist.sportsListSubCategory.name": re
+                    }
+                }, {
+                    $lookup: {
+                        "from": "agegroups",
+                        "localField": "ageGroup",
+                        "foreignField": "_id",
+                        "as": "ageGroup"
+                    }
+                }, {
+                    $unwind: {
+                        path: "$ageGroup",
+                        includeArrayIndex: "arrayIndex", // optional
+                        preserveNullAndEmptyArrays: false // optional
+                    }
+                }, {
+                    $project: {
+                        // specifications
+                        "ageGroup": 1,
+                        "sportslist": 1,
+                        "gender": 1
+                    }
+                }];
+
+                console.log("pipeline", pipeline);
+                var agePipeline = _.cloneDeep(pipeline);
+                console.log("pipeline", pipeline);
+                agePipeline.push({
+                    $group: {
+                        "_id": "$ageGroup.name"
+                    }
+                });
+                Sport.aggregate(agePipeline, function (err, data) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        sendObj.ageGroups = _.map(data, '_id');
+                        callback(null, sendObj, pipeline);
+                    }
+                })
+            },
+            function (sendObj, pipeline, callback) {
+                var eventPipeline = _.cloneDeep(pipeline);
+                eventPipeline.push({
+                    $group: {
+                        "_id": "$sportslist.name"
+                    }
+                });
+                Sport.aggregate(eventPipeline, function (err, data) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        sendObj.events = _.map(data, '_id');
+                        sendObj.gender = ['male', 'female', 'mixed'];
+                        callback(null, sendObj);
+                    }
+                })
+            }
+        ], function (err, final) {
+            if (err) {
+                callback(err, null);
+            } else {
+                callback(null, final);
+            }
+        });
+    }
+
 };
 module.exports = _.assign(module.exports, exports, model);

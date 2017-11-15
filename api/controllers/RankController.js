@@ -18,9 +18,9 @@ var controller = {
         }
     },
 
-    getAgeGroupsBySport: function (req, res) {
+    getAgeGroupsAndEvents: function (req, res) {
         if (req.body.name) {
-            Rank.getAgeGroupsBySport(req.body, res.callback);
+            Rank.getAgeGroupsAndEvents(req.body,res.callback);
         } else {
             res.json({
                 data: "Insufficient Data",
@@ -29,16 +29,6 @@ var controller = {
         }
     },
 
-    getEventsBySport: function (req, res) {
-        if (req.body.name) {
-            Rank.getEventsBySport(req.body, res.callback);
-        } else {
-            res.json({
-                data: "Insufficient Data",
-                value: false
-            });
-        }
-    },
 
     getMedalWinners: function (req, res) {
         if (req.body) {
