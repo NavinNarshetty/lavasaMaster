@@ -252,7 +252,7 @@
               <a class="btn-viewmore" ng-click="viewMoreSport(sportTable.showTable);" ng-if="sportTable.length>5">View
                 <span ng-if="sportTable.showTable == true">Full</span>
                 <span ng-if="sportTable.showTable == false">Less</span> Ranking Table</a>
-              <!-- <a class="btn-viewmore" ng-click="showMedalWinner();">View All Medal Winners</a> -->
+              <!--<a class="btn-viewmore" ng-click="showMedalWinner();">View <span ng-if="!showAllMedalWinner">All</span> <span ng-if="showAllMedalWinner">Less</span> Medal Winners</a>-->
             </div>
           </div>
           <div class="col-md-5 col-sm-12 col-xs-12" ng-if="risingAthletes.length>0">
@@ -365,17 +365,37 @@
               <!-- MEDAL WINNER -->
               <div class="viewallmedal-winnerholder" ng-repeat="medalWinner in medalWinners track by $index">
                 <p class="viewallmedal-winnertitle">
-                  <span>{{medalWinner.age}} {{medalWinner.eventName}}</span>
+                  <span>{{medalWinner[0].name}}</span>
+                  <!-- <pre>{{medalWinner|json}}</pre> -->
                 </p>
-                <div class="viewall-winnerrow" ng-repeat="winnerList in medalWinner.winners track by $index">
-                  <div class="row">
-                    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="winner in winnerList.list track by $index">
-                      <div class="allmedal-winnercard">
+                <div class="viewall-winnerrow" ng-repeat="winnerList in medalWinner track by $index">
+                  <!-- <pre>{{winnerList|json}}</pre> -->
+                  <div class="row" ng-if="winnerList.medalWinners.male">
+                    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="winner in winnerList.medalWinners.male track by $index" >
+                      <!-- <pre>{{winner}}</pre> -->
+                      <div class="allmedal-winnercard " >
                         <div class="allmedal-medalholder">
-                          <img ng-src="{{winner.medal|medalicon:'blue'}}" alt="" class="img-responsive">
+                          <img ng-src="{{winner.medaltype|medalicon:'blue'}}" alt="{{winner.medaltype}} Medal" class="img-responsive">
                         </div>
                         <div class="allmedal-profilepic">
-                          <img src="img/dishapatani1.jpg" alt="" class="img-responsive">
+                          <img ng-src="{{winner.profile|serverimage2}}" alt="{{winner.sfaId}} - {{winner.name}} | {{winner.school}}" class="img-responsive">
+                        </div>
+                        <div class="allmedal-studentdetails">
+                          <p class="allmedal-studentname">{{winner.name}}</p>
+                          <p class="allmedal-studentschool">{{winner.school}}</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row" ng-if="winnerList.medalWinners.female">
+                    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="winner in winnerList.medalWinners.female track by $index" >
+                      <!-- <pre>{{winner}}</pre> -->
+                      <div class="allmedal-winnercard " >
+                        <div class="allmedal-medalholder">
+                          <img ng-src="{{winner.medaltype|medalicon:'blue'}}" alt="{{winner.medaltype}} Medal" class="img-responsive">
+                        </div>
+                        <div class="allmedal-profilepic">
+                          <img ng-src="{{winner.profile|serverimage2}}" alt="{{winner.sfaId}} - {{winner.name}} | {{winner.school}}" class="img-responsive">
                         </div>
                         <div class="allmedal-studentdetails">
                           <p class="allmedal-studentname">{{winner.name}}</p>
