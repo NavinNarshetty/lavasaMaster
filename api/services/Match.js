@@ -13101,9 +13101,10 @@ var model = {
                     });
                 },
                 function (found, callback) {
+                    // console.log("found", found);
                     var finalData = [];
                     async.eachSeries(found, function (singleData, callback) {
-                            console.log("singleData", singleData);
+                            // console.log("singleData", singleData);
                             if (!_.isEmpty(singleData.player)) {
                                 async.eachSeries(singleData.player, function (n, callback) {
                                     console.log("n", n);
@@ -13430,7 +13431,6 @@ var model = {
                 }
             });
     },
-
 
 };
 module.exports = _.assign(module.exports, exports, model);

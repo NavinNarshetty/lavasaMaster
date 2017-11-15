@@ -1059,6 +1059,68 @@ var model = {
         return pipeline;
     },
 
+    getFilterAggregatePipeline: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "sports",
+                    "localField": "sport",
+                    "foreignField": "_id",
+                    "as": "sport"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport",
+                }
+            },
+            {
+                $lookup: {
+                    "from": "agegroups",
+                    "localField": "sport.ageGroup",
+                    "foreignField": "_id",
+                    "as": "sport.ageGroup"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$sport.ageGroup",
+                }
+            },
+
+            {
+                $match: {
+                    "sport.ageGroup.name": data.age,
+                    "sport.gender": data.gender
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "sportslists",
+                    "localField": "sport.sportslist",
+                    "foreignField": "_id",
+                    "as": "sport.sportslist"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$sport.sportslist",
+
+                }
+            }
+
+        ];
+        return pipeline;
+    },
     getAthleteStats: function (data, callback) {
         var match = [];
         var stats = {};
@@ -3168,110 +3230,444 @@ var model = {
                                 console.log("found", found);
                                 var pipeLine = Profile.getAthleteStatAggregatePipeline(data);
                                 var newPipeLine = _.cloneDeep(pipeLine);
-                                newPipeLine.push(
-                                    // Stage 5
-                                    {
-                                        $match: {
-                                            "sport.sportslist.sportsListSubCategory": objectid(sportName)
-                                        }
-                                    },
-                                    // Stage 6
-                                    {
-                                        $lookup: {
-                                            "from": "individualsports",
-                                            "localField": "opponentsSingle",
-                                            "foreignField": "_id",
-                                            "as": "opponentsSingle"
-                                        }
-                                    },
+                                if (_.isEmpty(data.age) && _.isEmpty(data.gender)) {
+                                    newPipeLine.push(
+                                        // Stage 5
+                                        {
+                                            $match: {
+                                                "sport.sportslist.sportsListSubCategory": objectid(sportName)
+                                            }
+                                        },
+                                        // Stage 6
+                                        {
+                                            $lookup: {
+                                                "from": "individualsports",
+                                                "localField": "opponentsSingle",
+                                                "foreignField": "_id",
+                                                "as": "opponentsSingle"
+                                            }
+                                        },
 
-                                    // Stage 7
-                                    {
-                                        $unwind: {
-                                            path: "$opponentsSingle",
-                                        }
-                                    },
+                                        // Stage 7
+                                        {
+                                            $unwind: {
+                                                path: "$opponentsSingle",
+                                            }
+                                        },
 
-                                    // Stage 8
-                                    {
-                                        $lookup: {
-                                            "from": "atheletes",
-                                            "localField": "opponentsSingle.athleteId",
-                                            "foreignField": "_id",
-                                            "as": "opponentsSingle.athleteId"
-                                        }
-                                    },
+                                        // Stage 8
+                                        {
+                                            $lookup: {
+                                                "from": "atheletes",
+                                                "localField": "opponentsSingle.athleteId",
+                                                "foreignField": "_id",
+                                                "as": "opponentsSingle.athleteId"
+                                            }
+                                        },
 
-                                    // Stage 9
-                                    {
-                                        $unwind: {
-                                            path: "$opponentsSingle.athleteId",
-                                        }
-                                    },
+                                        // Stage 9
+                                        {
+                                            $unwind: {
+                                                path: "$opponentsSingle.athleteId",
+                                            }
+                                        },
 
-                                    // Stage 10
-                                    {
-                                        $lookup: {
-                                            "from": "schools",
-                                            "localField": "opponentsSingle.athleteId.school",
-                                            "foreignField": "_id",
-                                            "as": "opponentsSingle.athleteId.school"
-                                        }
-                                    },
+                                        // Stage 10
+                                        {
+                                            $lookup: {
+                                                "from": "schools",
+                                                "localField": "opponentsSingle.athleteId.school",
+                                                "foreignField": "_id",
+                                                "as": "opponentsSingle.athleteId.school"
+                                            }
+                                        },
 
-                                    // Stage 11
-                                    {
-                                        $unwind: {
-                                            path: "$opponentsSingle.athleteId.school",
+                                        // Stage 11
+                                        {
+                                            $unwind: {
+                                                path: "$opponentsSingle.athleteId.school",
 
-                                        }
-                                    },
+                                            }
+                                        },
 
-                                    // Stage 12
-                                    {
-                                        $match: {
-                                            $or: [{
-                                                "opponentsSingle.athleteId.school.name": data.schoolName
-                                            }, {
-                                                "opponentsSingle.athleteId.atheleteSchoolName": data.schoolName
-                                            }]
-                                        }
-                                    },
+                                        // Stage 12
+                                        {
+                                            $match: {
+                                                $or: [{
+                                                    "opponentsSingle.athleteId.school.name": data.schoolName
+                                                }, {
+                                                    "opponentsSingle.athleteId.atheleteSchoolName": data.schoolName
+                                                }]
+                                            }
+                                        },
 
-                                    {
-                                        $lookup: {
-                                            "from": "agegroups",
-                                            "localField": "sport.ageGroup",
-                                            "foreignField": "_id",
-                                            "as": "sport.ageGroup"
-                                        }
-                                    },
+                                        {
+                                            $lookup: {
+                                                "from": "agegroups",
+                                                "localField": "sport.ageGroup",
+                                                "foreignField": "_id",
+                                                "as": "sport.ageGroup"
+                                            }
+                                        },
 
-                                    {
-                                        $unwind: {
-                                            path: "$sport.ageGroup",
+                                        {
+                                            $unwind: {
+                                                path: "$sport.ageGroup",
 
-                                        }
-                                    },
+                                            }
+                                        },
 
-                                    {
-                                        $lookup: {
-                                            "from": "weights",
-                                            "localField": "sport.weight",
-                                            "foreignField": "_id",
-                                            "as": "sport.weight"
+                                        {
+                                            $lookup: {
+                                                "from": "weights",
+                                                "localField": "sport.weight",
+                                                "foreignField": "_id",
+                                                "as": "sport.weight"
+                                            }
+                                        }, {
+                                            $unwind: {
+                                                path: "$sport.weight",
+                                                preserveNullAndEmptyArrays: true // optional
+                                            }
+                                        }, {
+                                            $sort: {
+                                                createdAt: 1
+                                            }
                                         }
-                                    }, {
-                                        $unwind: {
-                                            path: "$sport.weight",
-                                            preserveNullAndEmptyArrays: true // optional
+                                    );
+                                } else if (_.isEmpty(data.age) && !_.isEmpty(data.gender)) {
+                                    newPipeLine.push(
+                                        // Stage 5
+                                        {
+                                            $match: {
+                                                "sport.sportslist.sportsListSubCategory": objectid(sportName),
+                                                "sport.gender": data.gender
+                                            }
+                                        },
+                                        // Stage 6
+                                        {
+                                            $lookup: {
+                                                "from": "individualsports",
+                                                "localField": "opponentsSingle",
+                                                "foreignField": "_id",
+                                                "as": "opponentsSingle"
+                                            }
+                                        },
+
+                                        // Stage 7
+                                        {
+                                            $unwind: {
+                                                path: "$opponentsSingle",
+                                            }
+                                        },
+
+                                        // Stage 8
+                                        {
+                                            $lookup: {
+                                                "from": "atheletes",
+                                                "localField": "opponentsSingle.athleteId",
+                                                "foreignField": "_id",
+                                                "as": "opponentsSingle.athleteId"
+                                            }
+                                        },
+
+                                        // Stage 9
+                                        {
+                                            $unwind: {
+                                                path: "$opponentsSingle.athleteId",
+                                            }
+                                        },
+
+                                        // Stage 10
+                                        {
+                                            $lookup: {
+                                                "from": "schools",
+                                                "localField": "opponentsSingle.athleteId.school",
+                                                "foreignField": "_id",
+                                                "as": "opponentsSingle.athleteId.school"
+                                            }
+                                        },
+
+                                        // Stage 11
+                                        {
+                                            $unwind: {
+                                                path: "$opponentsSingle.athleteId.school",
+
+                                            }
+                                        },
+
+                                        // Stage 12
+                                        {
+                                            $match: {
+                                                $or: [{
+                                                    "opponentsSingle.athleteId.school.name": data.schoolName
+                                                }, {
+                                                    "opponentsSingle.athleteId.atheleteSchoolName": data.schoolName
+                                                }]
+                                            }
+                                        },
+
+                                        {
+                                            $lookup: {
+                                                "from": "agegroups",
+                                                "localField": "sport.ageGroup",
+                                                "foreignField": "_id",
+                                                "as": "sport.ageGroup"
+                                            }
+                                        },
+
+                                        {
+                                            $unwind: {
+                                                path: "$sport.ageGroup",
+
+                                            }
+                                        },
+
+                                        {
+                                            $lookup: {
+                                                "from": "weights",
+                                                "localField": "sport.weight",
+                                                "foreignField": "_id",
+                                                "as": "sport.weight"
+                                            }
+                                        }, {
+                                            $unwind: {
+                                                path: "$sport.weight",
+                                                preserveNullAndEmptyArrays: true // optional
+                                            }
+                                        }, {
+                                            $sort: {
+                                                createdAt: 1
+                                            }
                                         }
-                                    }, {
-                                        $sort: {
-                                            createdAt: 1
+                                    );
+                                } else if (!_.isEmpty(data.age) && _.isEmpty(data.gender)) {
+                                    newPipeLine.push(
+                                        // Stage 5
+                                        {
+                                            $match: {
+                                                "sport.sportslist.sportsListSubCategory": objectid(sportName)
+                                            }
+                                        },
+                                        // Stage 6
+                                        {
+                                            $lookup: {
+                                                "from": "individualsports",
+                                                "localField": "opponentsSingle",
+                                                "foreignField": "_id",
+                                                "as": "opponentsSingle"
+                                            }
+                                        },
+
+                                        // Stage 7
+                                        {
+                                            $unwind: {
+                                                path: "$opponentsSingle",
+                                            }
+                                        },
+
+                                        // Stage 8
+                                        {
+                                            $lookup: {
+                                                "from": "atheletes",
+                                                "localField": "opponentsSingle.athleteId",
+                                                "foreignField": "_id",
+                                                "as": "opponentsSingle.athleteId"
+                                            }
+                                        },
+
+                                        // Stage 9
+                                        {
+                                            $unwind: {
+                                                path: "$opponentsSingle.athleteId",
+                                            }
+                                        },
+
+                                        // Stage 10
+                                        {
+                                            $lookup: {
+                                                "from": "schools",
+                                                "localField": "opponentsSingle.athleteId.school",
+                                                "foreignField": "_id",
+                                                "as": "opponentsSingle.athleteId.school"
+                                            }
+                                        },
+
+                                        // Stage 11
+                                        {
+                                            $unwind: {
+                                                path: "$opponentsSingle.athleteId.school",
+
+                                            }
+                                        },
+
+                                        // Stage 12
+                                        {
+                                            $match: {
+                                                $or: [{
+                                                    "opponentsSingle.athleteId.school.name": data.schoolName
+                                                }, {
+                                                    "opponentsSingle.athleteId.atheleteSchoolName": data.schoolName
+                                                }]
+                                            }
+                                        },
+
+                                        {
+                                            $lookup: {
+                                                "from": "agegroups",
+                                                "localField": "sport.ageGroup",
+                                                "foreignField": "_id",
+                                                "as": "sport.ageGroup"
+                                            }
+                                        },
+
+                                        {
+                                            $unwind: {
+                                                path: "$sport.ageGroup",
+
+                                            }
+                                        },
+
+                                        {
+                                            $match: {
+                                                "sport.ageGroup.name": data.age,
+                                            }
+                                        },
+
+
+                                        {
+                                            $lookup: {
+                                                "from": "weights",
+                                                "localField": "sport.weight",
+                                                "foreignField": "_id",
+                                                "as": "sport.weight"
+                                            }
+                                        }, {
+                                            $unwind: {
+                                                path: "$sport.weight",
+                                                preserveNullAndEmptyArrays: true // optional
+                                            }
+                                        }, {
+                                            $sort: {
+                                                createdAt: 1
+                                            }
                                         }
-                                    }
-                                );
+                                    );
+                                } else if (!_.isEmpty(data.age) && !_.isEmpty(data.gender)) {
+                                    newPipeLine.push(
+                                        // Stage 5
+                                        {
+                                            $match: {
+                                                "sport.sportslist.sportsListSubCategory": objectid(sportName)
+                                            }
+                                        },
+
+                                        // Stage 6
+                                        {
+                                            $lookup: {
+                                                "from": "individualsports",
+                                                "localField": "opponentsSingle",
+                                                "foreignField": "_id",
+                                                "as": "opponentsSingle"
+                                            }
+                                        },
+
+                                        // Stage 7
+                                        {
+                                            $unwind: {
+                                                path: "$opponentsSingle",
+                                            }
+                                        },
+
+                                        // Stage 8
+                                        {
+                                            $lookup: {
+                                                "from": "atheletes",
+                                                "localField": "opponentsSingle.athleteId",
+                                                "foreignField": "_id",
+                                                "as": "opponentsSingle.athleteId"
+                                            }
+                                        },
+
+                                        // Stage 9
+                                        {
+                                            $unwind: {
+                                                path: "$opponentsSingle.athleteId",
+                                            }
+                                        },
+
+                                        // Stage 10
+                                        {
+                                            $lookup: {
+                                                "from": "schools",
+                                                "localField": "opponentsSingle.athleteId.school",
+                                                "foreignField": "_id",
+                                                "as": "opponentsSingle.athleteId.school"
+                                            }
+                                        },
+
+                                        // Stage 11
+                                        {
+                                            $unwind: {
+                                                path: "$opponentsSingle.athleteId.school",
+
+                                            }
+                                        },
+
+                                        // Stage 12
+                                        {
+                                            $match: {
+                                                $or: [{
+                                                    "opponentsSingle.athleteId.school.name": data.schoolName
+                                                }, {
+                                                    "opponentsSingle.athleteId.atheleteSchoolName": data.schoolName
+                                                }]
+                                            }
+                                        },
+
+                                        {
+                                            $lookup: {
+                                                "from": "agegroups",
+                                                "localField": "sport.ageGroup",
+                                                "foreignField": "_id",
+                                                "as": "sport.ageGroup"
+                                            }
+                                        },
+
+                                        {
+                                            $unwind: {
+                                                path: "$sport.ageGroup",
+
+                                            }
+                                        },
+
+                                        {
+                                            $match: {
+                                                "sport.ageGroup.name": data.age,
+                                                "sport.gender": data.gender
+                                            }
+                                        },
+
+
+                                        {
+                                            $lookup: {
+                                                "from": "weights",
+                                                "localField": "sport.weight",
+                                                "foreignField": "_id",
+                                                "as": "sport.weight"
+                                            }
+                                        }, {
+                                            $unwind: {
+                                                path: "$sport.weight",
+                                                preserveNullAndEmptyArrays: true // optional
+                                            }
+                                        }, {
+                                            $sort: {
+                                                createdAt: 1
+                                            }
+                                        }
+                                    );
+                                }
                                 Match.aggregate(newPipeLine, function (err, matchData) {
                                     console.log("matchData", matchData);
                                     if (err) {
