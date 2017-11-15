@@ -1458,9 +1458,9 @@ img.fancybox-image {
                 @include transition(all 1s ease);
             }
             .bottom {
-                position: absolute;
-                top: 0;
-                text-align: center;
+                // position: absolute;
+                // top: 0;
+                // text-align: center;
             }
             figcaption {
                 text-transform: uppercase;
@@ -1471,11 +1471,11 @@ img.fancybox-image {
                 @include transition(all 1s ease);
             }
             .top {
-                opacity: 1;
+                display: block;
                 @include transition(all 1s ease);
             }
             .bottom {
-                opacity: 0;
+                display: none;
                 @include transition(all 1s ease);
             }
         }
@@ -1489,16 +1489,18 @@ img.fancybox-image {
         li.bigger {
             cursor: pointer;
             .top {
-                opacity: 0;
+                // opacity: 0;
+                display: none;
             }
             .bottom {
-                opacity: 1; //                     width:100px !important;
+                // opacity: 1; //                     width:100px !important;
+                display: block;
             }
             figcaption {
                 color: $brand-primary;
             }
             img {
-                width: 86px;
+                width: 75px;
             }
             figcaption {
                 font-size: 15px;
