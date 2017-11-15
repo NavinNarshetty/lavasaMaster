@@ -323,12 +323,17 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       if (data.value == true) {
         $scope.sportTable = data.data.table;
         $scope.risingAthletes = data.data.risingAthletes;
+        if(data.data.medalWinners){
+          $scope.medalWinners = data.data.medalWinners;
+          $scope.medalWinners = _.groupBy($scope.medalWinners, 'name');
+        }
         $scope.sportTable.tableLimit = 5;
         $scope.sportTable.showTable = true;
         _.each($scope.risingAthletes, function (n) {
           n.fullName = n.athleteProfile.firstName + n.athleteProfile.surname;
           // n.goldCount = n.medalData
         });
+        $scope.showAllMedalWinner = false;
         console.log('School Table', $scope.sportTable);
         console.log('rising', $scope.risingAthletes);
       } else {
