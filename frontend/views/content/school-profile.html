@@ -146,10 +146,9 @@
         </div>
         <div class="sf-absulate spon" ng-if="getSchoolProfile.supporterName && getSchoolProfile.supporterName">
             <div class="">
-
                 <span class="color-orange text-cap f16 pull-left">Supported by:</span>
                 <span class="onside text-center">
-                    <img src="{{ getSchoolProfile.supporterLogo | serverimage2 }}">
+                    <img ng-src="{{ getSchoolProfile.supporterLogo | serverimage2 }}">
                     <span class="color-white text-cap f16">
                         <h4>{{getSchoolProfile.supporterName }}</h4>
                     </span>
@@ -389,7 +388,7 @@
                         </div>
                         <div class="statistics " ng-show="tab=='statistics'">
                             <div class="row">
-                                <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
+                                <div class="col-md-3 col-sm-4 col-xs-12 text-c-m hide">
                                     <h4 class="text-up color-blue display-inline">Year</h4>
                                     <div class="display-inline">
                                         <div class="sfa-select">
@@ -492,9 +491,24 @@
                                                     </td>
                                                     <td class="sf-relative">
                                                         <div class="text-center display-inline ver-mid main-pos sf-absulate">
-                                                            <div class="sf-play">
-                                                                {{stat.result || '-'}}
-                                                                <!-- <span>{{(table.layout == 'Qualifying Knockout'&& (stat.qualifyingknockout.heats.length
+                                                            <div class="sf-play" ng-if="!stat.result && table.layout == 'Knockout' || table.layout == 'League' || table.layout == 'League cum Knockout'">
+                                                                <span ng-if="stat.isAthleteWinner == true && !stat.reason && stat.opponentName">Won</span>
+                                                                <span ng-if="stat.isAthleteWinner == false">Loss</span>
+                                                                <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && !stat.reason">-</span>
+                                                                <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true && stat.reason">{{stat.reason}}</span>
+                                                                <span ng-if="stat.isAthleteWinner == true && stat.reason">{{stat.reason}}</span>
+                                                                <span ng-if="stat.isAthleteWinner == true && !stat.reason && !stat.opponentName">Bye</span>
+                                                            </div>
+                                                            <div class="sf-play" ng-if=" !stat.result && table.layout  !== 'Knockout' && table.layout  !== 'League' && table.layout !== 'League cum Knockout'">
+                                                                <span ng-if="stat.isAthleteWinner == true">Won</span>
+                                                                <span ng-if="stat.isAthleteWinner == false">Loss</span>
+                                                                <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true">-</span>
+                                                            </div>
+                                                            <div class="sf-play" ng-if="stat.result">
+                                                                <span>{{stat.result || '-'}}</span>
+                                                            </div>
+                                                            <!-- <div class="sf-play">
+                                                                <span>{{(table.layout == 'Qualifying Knockout'&& (stat.qualifyingknockout.heats.length
                                                                     == 0 ? stat.self.result : ((stat.self.position || ordinal)+'
                                                                     / '+stat.self.result))) || (table.layout == 'Knockout'&&
                                                                     stat.self.result) || (table.layout == 'Swiss League'&&
@@ -504,8 +518,8 @@
                                                                     ordinal)):stat.self.result)) || (table.layout == 'League'
                                                                     && stat.self.result) || (table.layout == 'League cum
                                                                     Knockout' && stat.self.result) || (table.layout == "Qualifying
-                                                                    Round" && stat.qualifyinground.result) || ""}}</span> -->
-                                                            </div>
+                                                                    Round" && stat.qualifyinground.result) || ""}}</span>
+                                                            </div> -->
                                                             <div class="replay-img " ng-if="stat.video">
                                                                 <!-- <a ng-if="stat.video != 'YTU' && stat.video != 'NA'" class="various fancybox.iframe" href="https://www.youtube.com/embed/{{stat.video}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
                                                                             rel="gallery1" fancybox>

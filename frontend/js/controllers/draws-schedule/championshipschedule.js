@@ -315,16 +315,16 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     liveResult: ''
                 }, {
                     sport: 'Water Polo',
-                    date: '13',
-                    month: 'Nov',
+                    date: 'NA',
+                    liveResult: '',
                     link: '',
-                    detail: '12th Nov 8 p.m.',
-                    liveResult: ''
+                    hide: 'yes'
                 }, {
                     sport: '',
                     date: '',
                     month: '',
                     link: '',
+
                     liveResult: ''
                 }];
             }
