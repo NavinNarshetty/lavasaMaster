@@ -279,6 +279,70 @@ var model = {
             }
         }];
 
+
+
+        var sendObj = {
+            table: [],
+            risingAthletes: []
+        }
+
+        async.waterfall([
+            function (callback) {
+                Rank.aggregate(sportRankPipeline, function (err, result) {
+                    // console.log("result",result);
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        var sendObj = {};
+                        sendObj.table = result;
+                        callback(null, sendObj);
+                    }
+                });
+            },
+            function (sendObj, callback) {
+                SpecialAwardDetails.aggregate(risingAwardPipeline, function (err, risingAwards) {
+                    sendObj.risingAthletes = risingAwards;
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        sendObj.risingAthletes = risingAwards;
+                        callback(null, sendObj);
+                    }
+                })
+            },
+            function (sendObj, callback) {
+                async.concatSeries(sendObj.risingAthletes, function (singleData, callback) {
+                    var matchObj = {
+                        "athleteId": singleData.athlete
+                    }
+                    Profile.getAthleteProfile(matchObj, function (err, profile) {
+                        if (err) {
+                            callback(null, "");
+                        } else {
+                            singleData.medalData = _.groupBy(profile.medalData, 'name');
+                            singleData.sportsPlayed = _.map(profile.sport, 'sportslist.sportsListSubCategory.name');
+                            singleData.athleteProfile = profile.athlete;
+                            callback(null, singleData);
+                        }
+                    })
+                }, function (err, result) {
+                    sendObj.risingAthletes = result;
+                    callback(null, sendObj);
+                })
+            }
+
+        ], function (err, finalData) {
+            callback(null, finalData);
+        })
+
+    },
+
+    getMedalWinners: function () {
+        // console.log("data", data);
+        var str = '^' + data.name;
+        var re = new RegExp(str, 'i');
+        console.log("re", re);
+
         var medalWinnerPipeLine = [{
             $lookup: {
                 "from": "sportslists",
@@ -326,59 +390,12 @@ var model = {
             }
         }];
 
-        var sendObj = {
-            table: [],
-            risingAthletes: []
-        }
-
         async.waterfall([
-            function (callback) {
-                Rank.aggregate(sportRankPipeline, function (err, result) {
-                    // console.log("result",result);
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        var sendObj = {};
-                        sendObj.table = result;
-                        callback(null, sendObj);
-                    }
-                });
-            },
-            function (sendObj, callback) {
-                SpecialAwardDetails.aggregate(risingAwardPipeline, function (err, risingAwards) {
-                    sendObj.risingAthletes = risingAwards;
-                    // console.log("risingAwards", risingAwards);
-                    if (err) {
-                        callback(err, null);
-                    } else {
-                        sendObj.risingAthletes = risingAwards;
-                        callback(null, sendObj);
-                    }
-                })
-            },
-            function (sendObj, callback) {
-                async.concatSeries(sendObj.risingAthletes, function (singleData, callback) {
-                    var matchObj = {
-                        "athleteId": singleData.athlete
-                    }
-                    Profile.getAthleteProfile(matchObj, function (err, profile) {
-                        if (err) {
-                            callback(null, "");
-                        } else {
-                            singleData.medalData = _.groupBy(profile.medalData, 'name');
-                            singleData.sportsPlayed = _.map(profile.sport, 'sportslist.sportsListSubCategory.name');
-                            singleData.athleteProfile = profile.athlete;
-                            callback(null, singleData);
-                        }
-                    })
-                }, function (err, result) {
-                    sendObj.risingAthletes = result;
-                    callback(null, sendObj);
-                })
-            },
             // find all sport events
-            function (sendObj, callback) {
+
+        function (callback) {
                 Sport.aggregate(medalWinnerPipeLine, function (err, sports) {
+                    var sendObj={};
                     // console.log("medalWinnerPipeLine",sports);
                     if (err) {
                         callback(err, null);
@@ -433,11 +450,9 @@ var model = {
                     callback(null, sendObj);
                 })
             }
-
-        ], function (err, finalData) {
-            callback(null, finalData);
-        })
-
+        ], function (err, finalResult) {
+            callback(null, finalResult);
+        });
     }
 };
 module.exports = _.assign(module.exports, exports, model);
