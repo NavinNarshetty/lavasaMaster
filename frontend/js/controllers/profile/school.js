@@ -217,12 +217,6 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     $scope.template = TemplateService.getHTML("content/school-profile.html");
     TemplateService.title = "School Profile"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
-    // $scope.callObject = {};
-    // $scope.callObject._id = $stateParams.id;
-    // $scope.callObject.year = year.getFullYear().toString();
-    // $scope.callObject.gender = "All";
-    // $scope.callObject.agegroup = "All";
-    // console.log($scope.callObject);
     var year = new Date();
     $scope.filter = {};
     $scope.schooldata = {};
@@ -230,9 +224,9 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     $scope.dropdowns = {};
     $scope.dropdowns.category = [];
     $scope.filterStatistics = {};
+    $scope.filterStatistics.school = $stateParams.id;
     $scope.filterStatistics.pagenumber = 1;
     $scope.filterStatistics.pagesize = 8;
-    $scope.filterStatistics.school = $stateParams.id;
     $scope.table = {};
     $scope.students = {};
     // $scope.state = $state;
@@ -434,11 +428,11 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
         value: "",
         name: "All"
     }, {
-        value: "Boys",
-        name: "Boys"
+        value: "male",
+        name: "Male"
     }, {
-        value: "Girls",
-        name: "Girls"
+        value: "female",
+        name: "Female"
     }];
     $scope.tabchange = function (tab, a) {
         $scope.tab = tab;
@@ -446,7 +440,6 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             $scope.classa = "active-list";
             $scope.classb = '';
             $scope.classc = '';
-
         } else if (a == 2) {
             $scope.classa = '';
             $scope.classb = "active-list";
@@ -500,7 +493,17 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     //     $scope.filterStatistics.pagenumber = 1;
 
     // };
-
+    $scope.getSportAgeGroup = function () {
+        NavigationService.filterAgegroupBySport({
+            sportList: $scope.filter.sport._id
+        }, function (response) {
+            if (response.value) {
+                $scope.agegroup = response.data;
+            } else {
+                $scope.agegroup = [];
+            }
+        });
+    };
     $scope.getSchoolStats = function () {
         $scope.filterStatistics.schoolName = $scope.schoolName;
         $scope.schoolStats = undefined;
@@ -563,11 +566,27 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
         $scope.tabchange('player', 1);
         $scope.getSchoolStats();
         $scope.getDrawFormats();
+        $scope.filterStatistics.age = '';
+        $scope.filterStatistics.gender = '';
+        $scope.getSportAgeGroup();
         // $scope.filter.sport = selected;
         // $scope.agegroup = [];
         // $scope.filterStatistics.year = _.clone($scope.filter.year);
         // $scope.callObject.year = _.clone($scope.filter.year);
         // $scope.getSportAgeGroup();
+    };
+    $scope.callReload = function (data, option) {
+        if (option == 'gender') {
+            $scope.filterStatistics.gender = data;
+        }
+        if (option == 'age') {
+            $scope.filterStatistics.age = data;
+        }
+        if ($scope.filterStatistics.gender !== '' || $scope.filterStatistics.age !== '') {
+            $scope.getSchoolStats();
+        } else {
+            $scope.getSchoolStats();
+        }
     };
     // $scope.schoolMedalCount = function (constraints) {
     //     NavigationService.getSchoolMedalCount(constraints, function (data) {

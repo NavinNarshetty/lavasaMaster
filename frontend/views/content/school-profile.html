@@ -327,7 +327,7 @@
                     <div class="box-content bx-mob">
                         <div class="player" ng-show="tab=='player'">
                             <div class="row">
-                                <div class="col-md-offset-2 col-md-3 col-sm-4 col-xs-12 text-c-m">
+                                <div class="col-md-offset-2 col-md-3 col-sm-4 col-xs-12 text-c-m hide">
                                     <h4 class="text-up color-blue display-inline">Year</h4>
                                     <div class="display-inline">
                                         <div class="sfa-select">
@@ -343,7 +343,7 @@
                                     <h4 class="text-up color-blue display-inline">gender</h4>
                                     <div class="display-inline">
                                         <div class="sfa-select">
-                                            <select class="select" ng-change="callReload();" ng-model="callObject.gender" ng-options="item.value as item.name for item in gender">
+                                            <select class="select" ng-change="callReload(genderValue,'gender');" ng-model="genderValue" ng-options="item.value as item.name for item in gender">
                                             </select>
                                             <span class="only-border"></span>
                                         </div>
