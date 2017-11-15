@@ -164,9 +164,10 @@ var model = {
     },
 
     getSchoolBySport: function (data, callback) {
-        console.log("data", data);
+        // console.log("data", data);
         var str = '^' + data.name;
         var re = new RegExp(str, 'i');
+        console.log("re",re);
 
         var sportRankPipeline = [{
             $match: {
@@ -333,6 +334,7 @@ var model = {
         async.waterfall([
             function (callback) {
                 Rank.aggregate(sportRankPipeline, function (err, result) {
+                    // console.log("result",result);
                     if (err) {
                         callback(err, null);
                     } else {
@@ -345,7 +347,7 @@ var model = {
             function (sendObj, callback) {
                 SpecialAwardDetails.aggregate(risingAwardPipeline, function (err, risingAwards) {
                     sendObj.risingAthletes = risingAwards;
-                    console.log("risingAwards", risingAwards);
+                    // console.log("risingAwards", risingAwards);
                     if (err) {
                         callback(err, null);
                     } else {
@@ -377,6 +379,7 @@ var model = {
             // find all sport events
             function (sendObj, callback) {
                 Sport.aggregate(medalWinnerPipeLine,function(err,sports){
+                    // console.log("medalWinnerPipeLine",sports);
                     if(err){
                         callback(err,null);
                     }else{
@@ -394,14 +397,28 @@ var model = {
                     var matchObj={
                         "sport":singleData._id
                     }
-                    Match.getAllWinners(matchObj,function(err,data){
+                    console.log("matchObj",matchObj);
+                    Medal.find(matchObj).deepPopulate("team sport").lean().exec(function(err,data){
+                        console.log("data",data);
                         
                         var eventName=data.name;
                         if(data.name!=singleData.sportslist.name){
                             eventName=singleData.sportslist.name;
                         }
                         obj.name=singleData.ageGroup.name + " " + eventName;
-                        obj.medalWinners=_.groupBy(data,'gender');
+                        obj.sport=singleData._id;
+                        // obj.medalWinners=;
+                    
+
+                        obj.medalWinners = _.map(data,function (single) {
+                            var obj={};
+                            obj.medalType = single.medalType;
+                            if(single.sport && single.sport.gender){
+                                obj.gender=single.sport.gender;
+                            }
+                            return obj;
+                        });
+    
                         // obj.medalWinners=data;                        
                         callback(null,obj);
                     });
@@ -411,6 +428,7 @@ var model = {
                             return n;
                         }
                     });
+                    // sendObj.medalWinners=_.groupBy(finalResult,'name');
                     // sendObj.medalWinners=finalResult;
                     callback(null,sendObj);
                 })
