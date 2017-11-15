@@ -42,14 +42,14 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
             $scope.totalItem = data.data.total;
         });
     };
-    // $scope.search = {};
-    // $scope.search.active = false;
-    // $scope.filter = {};
-    // $scope.filterselected = {};
-    // $scope.school = {};
-    // $scope.pagination = {};
-    // $scope.pagination.pagesize = 20;
-    // $scope.filter.pagenumber = 1;
+    $scope.search = {};
+    $scope.search.active = false;
+    $scope.filter = {};
+    $scope.filterselected = {};
+    $scope.school = {};
+    $scope.pagination = {};
+    $scope.pagination.pagesize = 20;
+    $scope.filter.pagenumber = 1;
     // $scope.setPage = function (pageNo) {
     //     $scope.currentPage = pageNo;
     // };
@@ -144,6 +144,72 @@ myApp.controller('SchoolCtrl', function ($scope, TemplateService, NavigationServ
     // };
     // $scope.filter.year = "top20";
     // $scope.changeYear();
+    $scope.getSchoolPerChoice = function (constraintsObj) {
+        NavigationService.getSchoolPerChoice(constraintsObj, function (data) {
+            console.log(data, "data");
+            if (data.value) {
+                $scope.topschools = data.data;
+            }
+
+        });
+
+    }
+    $scope.changeYear = function () {
+        $scope.filterselected.title = "";
+
+        if ($scope.filter.year == "top20" || !$scope.filter.year) {
+            $scope.constraintsObj = {};
+            $scope.constraintsObj.choice = 'top20';
+            $scope.school.showAll = false;
+            $scope.school.showTop20 = false;
+            // $scope.submitSearch();
+            $scope.filterselected.title = "SFA MUMBAI " + eventYear + " - Top 20 Schools";
+            console.log("year16", year16);
+            $scope.getSchoolPerChoice($scope.constraintsObj);
+        } else {
+            var constraints = {};
+            constraints.choice = 'all';
+            constraints.year = null;
+            $scope.filterselected.title = "All Schools";
+            // if ($scope.filter.year == '2015') {
+            //     $scope.filterselected.title = "SFA MUMBAI " + year15;
+            //     constraints.year = $scope.filter.year;
+            // } else if ($scope.filter.year == '2016') {
+            //     $scope.filterselected.title = "SFA MUMBAI " + year16;
+            //     constraints.year = $scope.filter.year;
+            // }
+            $scope.allSchoolByYear(constraints);
+            $scope.school.showAll = true;
+            $scope.school.showTop20 = true;
+        }
+    };
+
+
+    $scope.allSchoolByYear = function (constraints) {
+        // NavigationService.getSchoolByYear(constraints, function (data) {
+        //     if (data.value !== false) {
+        //         $scope.allSchools = data.data.data;
+        //         $scope.schoolSplit = Math.round($scope.allSchools.length / 2);
+        //         $scope.schoolsData = _.chunk($scope.allSchools, $scope.schoolSplit);
+        //     } else {
+        //         $scope.allSchools = [];
+        //         $scope.schoolsData = [];
+        //     }
+        // });
+        NavigationService.getSchoolPerChoice(constraints, function (data) {
+            console.log(data, "data");
+            if (data.value === true) {
+                $scope.allSchools = data.data;
+                $scope.schoolSplit = Math.round($scope.allSchools.length / 2);
+                $scope.schoolsData = _.chunk($scope.allSchools, $scope.schoolSplit);
+            } else {
+                $scope.allSchools = [];
+                $scope.schoolsData = [];
+            }
+        });
+    };
+    $scope.filter.year = "top20";
+    $scope.changeYear();
 });
 
 myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams, $state, $uibModal, configService) {
