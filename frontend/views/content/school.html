@@ -36,7 +36,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" ng-if="!inputs.search hide">
+        <div class="row" ng-if="!inputs.search">
             <div class="text-center mt40">
                 <h3 class="font-semi color-orange text-up f162">{{filterselected.title}}</h3>
             </div>
@@ -48,11 +48,11 @@
                         <div class="display-inline">
                             <div class="sfa-select">
                                 <select class="select" ng-model="filter.year" ng-change="changeYear()">
-                                        <option value="top20">Top 20 {{type | firstcapitalize}}s</option>
-                                        <!-- <option value="2015">SFA MUMBAI {{year15}}</option>
+                                    <option value="top20">Top 20 {{type | firstcapitalize}}s</option>
+                                    <!-- <option value="2015">SFA MUMBAI {{year15}}</option>
                                         <option value="2016">SFA MUMBAI {{year16}}</option> -->
-                                        <option value="all">All {{type | firstcapitalize}}s</option>
-                                    </select>
+                                    <option value="all">All {{type | firstcapitalize}}s</option>
+                                </select>
                                 <span class="only-border"></span>
                             </div>
                         </div>
@@ -85,18 +85,15 @@
                                                 <div class="medal-count sf-list color-orange font-semi">
                                                     <ul class="padding0">
                                                         <li>
-                                                            <img src="img/sf-gold.png" alt="">{{data.medals.gold.count ||
-                                                            '0'}}
+                                                            <img src="img/sf-gold.png" alt="">{{data.medals.gold.count || '0'}}
 
                                                         </li>
                                                         <li>
-                                                            <img src="img/sf-silver.png" alt="">{{data.medals.silver.count
-                                                            || '0'}}
+                                                            <img src="img/sf-silver.png" alt="">{{data.medals.silver.count || '0'}}
                                                         </li>
                                                         <li>
 
-                                                            <img src="img/sf-bronze.png" alt="">{{data.medals.bronze.count
-                                                            || '0'}}
+                                                            <img src="img/sf-bronze.png" alt="">{{data.medals.bronze.count || '0'}}
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -123,10 +120,10 @@
                                 <ul>
                                     <li ng-repeat="schools1 in schoolsData[0]">
                                         <a ui-sref="school-profile({id:schools1._id})">
-                                                <span>{{$index + 1}}</span>
-                                                <!-- <span>{{ schools1.sfaid }}</span> -->
-                                                <p>{{schools1.name | letterLimit : 53}}</p>
-                                            </a>
+                                            <span>{{$index + 1}}</span>
+                                            <!-- <span>{{ schools1.sfaid }}</span> -->
+                                            <p>{{schools1.name | letterLimit : 53}}</p>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
@@ -139,10 +136,10 @@
                                 <ul>
                                     <li ng-repeat="schools2 in schoolsData[1]">
                                         <a ui-sref="school-profile({id:schools2._id})">
-                                                <span>{{$index + schoolSplit + 1}}</span>
-                                                <!-- <span>{{ schools2.sfaid }}</span> -->
-                                                <p>{{schools2.name | letterLimit : 53}}</p>
-                                            </a>
+                                            <span>{{$index + schoolSplit + 1}}</span>
+                                            <!-- <span>{{ schools2.sfaid }}</span> -->
+                                            <p>{{schools2.name | letterLimit : 53}}</p>
+                                        </a>
                                     </li>
                                 </ul>
                             </div>
