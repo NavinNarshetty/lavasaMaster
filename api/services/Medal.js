@@ -31,6 +31,12 @@ schema.plugin(deepPopulate, {
         "sport": {
             select: '_id name gender ageGroup sportslist weight'
         },
+        "sport.sportslist": {
+            select: '_id name '
+        },
+        "sport.ageGroup": {
+            select: '_id name '
+        },
         "school": {
             select: '_id name '
         },

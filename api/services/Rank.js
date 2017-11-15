@@ -65,11 +65,9 @@ var model = {
 
     getSchoolByRanks: function (callback) {
         Rank.find().sort(Rank.sortingOrder).lean().exec(function (err, data) {
-
             var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis', 'Athletics', 'Swimming']
             var sportsFound = [];
             var arr = [];
-
 
             async.concatSeries(data, function (singleData, callback) {
 
@@ -136,9 +134,6 @@ var model = {
                         });
 
                         singleData.sportData.push(obj);
-
-
-
                     }
                     delete singleData[sportName];
                     singleData.sportData = _.filter(singleData.sportData, function (n) {
@@ -337,7 +332,7 @@ var model = {
 
     },
 
-    getMedalWinners: function () {
+    getMedalWinners: function (data, callback) {
         // console.log("data", data);
         var str = '^' + data.name;
         var re = new RegExp(str, 'i');
@@ -393,10 +388,9 @@ var model = {
         async.waterfall([
             // find all sport events
 
-        function (callback) {
+            function (callback) {
                 Sport.aggregate(medalWinnerPipeLine, function (err, sports) {
-                    var sendObj={};
-                    // console.log("medalWinnerPipeLine",sports);
+                    var sendObj = {};
                     if (err) {
                         callback(err, null);
                     } else {
@@ -414,10 +408,10 @@ var model = {
                     var matchObj = {
                         "sport": singleData._id
                     }
-                    // console.log("matchObj", matchObj);
-                    Medal.find(matchObj).deepPopulate("player.school team sport.sportslist").lean().exec(function (err, data) {
-                        console.log("medal", data);
-
+                    Medal.find(matchObj).deepPopulate("player.school team sport.sportslist").lean().exec(function (err, found) {
+                        if (found) {
+                            console.log("medal", found.sport.sportslist);
+                        }
                         var eventName = data.name;
                         if (data.name != singleData.sportslist.name) {
                             eventName = singleData.sportslist.name;

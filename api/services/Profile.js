@@ -1002,7 +1002,7 @@ var model = {
                         _.each(found, function (singleData) {
                             if (!_.isEmpty(singleData.school)) {
                                 _.each(singleData.school, function (school) {
-                                    if (school.schoolName === data.school) {
+                                    if (school.schoolName === data.schoolName) {
                                         medals.push(singleData);
                                     }
                                 });
