@@ -105,7 +105,7 @@
                             </div>
                             <div class="btn-common mt25">
                                 <!-- <button type="button" name="button" class="text-up btn-orange padd-btn" ui-sref="student-bio({'id':studentid})">athlete bio</button> -->
-                                <button type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-if="certificate" ng-click="getCertificate(studentid);">Certificate</button>
+                                <button type="button" name="button" class="text-up btn-orange padd-btn ml10 hide" ng-if="certificate" ng-click="getCertificate(studentid);">Certificate</button>
                                 <button ng-if="specialAward" type="button" name="button" class="text-up btn-orange padd-btn ml10" ng-click="getSpecialAward(studentid)">Special Award</button>
                             </div>
                         </div>
@@ -273,14 +273,8 @@
                                                     <span ng-if="stat.isAthleteWinner == false">Loss</span>
                                                     <span ng-if="stat.isAthleteWinner != false && stat.isAthleteWinner != true">-</span>
                                                 </div>
-                                                <div class="sf-play">
-                                                    <span>{{table.layout == 'Swiss League'&& stat.result || table.layout
-                                                        == 'Knockout'&& stat.result || (table.layout == 'Heats' && ((stat.standing
-                                                        || ordinal) ?(stat.result?(stat.standing || ordinal)+'
-                                                        / '+stat.result:(stat.standing || ordinal)):stat.result))
-                                                        || (table.layout == 'League' && stat.result) || (table.layout
-                                                        == 'League cum Knockout' && stat.result) || (table.layout ==
-                                                    'Qualifying Round' && stat.result) || ""}}</span>
+                                                <div class="sf-play" ng-if="stat.result">
+                                                    <span>{{stat.result || '-'}}</span>
                                                 </div>
 
                                                 <!-- <div class="replay-img" ng-if="stat.knockout.video || stat.heat.video || stat.league.video || stat.leagueknockout.video || stat.qualifyinground.video || stat.qualifyingknockout.video">
