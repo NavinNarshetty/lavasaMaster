@@ -4775,9 +4775,15 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
                 }
             } else {
                 //for team 
-                $scope.urlTosend = 'registration/getOne'
-                $scope.constraintsObj._id = schoolId.school;
-                $scope.getSchoolNameFun($scope.constraintsObj, $scope.urlTosend, schoolId._id);
+                if (schoolId.school) {
+                    $scope.urlTosend = 'registration/getOne'
+                    $scope.constraintsObj._id = schoolId.school;
+                    $scope.getSchoolNameFun($scope.constraintsObj, $scope.urlTosend, schoolId._id);
+                } else {
+                    $scope.schoolInfo = {};
+                    $scope.schoolInfo.schoolName = schoolId.schoolName;
+                    $scope.medalInfoForm.school.push($scope.schoolInfo);
+                }
             }
 
 
