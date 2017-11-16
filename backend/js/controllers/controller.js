@@ -4204,7 +4204,7 @@ myApp.controller('ViewOldSchoolCtrl', function ($scope, TemplateService, Navigat
         }
 
         $scope.weightUpload = function (data) {
-            $scope.url = "Match/uploadExcelWeight";
+            $scope.url = "Match/weightUpload";
             $scope.constraints = {};
             $scope.constraints = data;
             console.log("form", $scope.constraints);

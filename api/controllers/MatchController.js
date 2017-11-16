@@ -312,7 +312,7 @@ var controller = {
         }
     },
 
-    uploadExcelWeight: function (req, res) {
+    weightUpload: function (req, res) {
         if (req.body) {
             async.waterfall([
                     function (callback) {

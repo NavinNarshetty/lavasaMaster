@@ -1788,7 +1788,8 @@ var model = {
                                             countError++;
                                             callback(null, singleData);
                                         } else if (!_.isEmpty(singleData["NEW WEIGHT"])) {
-                                            Match.saveWeightChange(singleData, function (err, complete) {
+                                            console.log("singleData+++++", singleData);
+                                            Match.saveWeightChangeNew(singleData, function (err, complete) {
                                                 if (err || _.isEmpty(complete)) {
                                                     err = "New weight not valid";
                                                     callback(err, null);
@@ -1858,6 +1859,7 @@ var model = {
                     }
                     var weight = singleData["NEW WEIGHT"];
                     paramData.weight = _.trimStart(weight, " ");
+
                     Match.getSportId(paramData, function (err, sportData) {
                         if (err || _.isEmpty(sportData)) {
                             err = "Weight may have wrong values";
@@ -1871,6 +1873,7 @@ var model = {
                     });
                 },
                 function (sportData, callback) {
+                    console.log("new data", sportData);
                     if (sportData.error) {
                         countError++;
                         callback(null, sportData);
@@ -1878,6 +1881,7 @@ var model = {
                         if (singleData["PARTICIPANT"]) {
                             var participant = {};
                             participant.id = singleData["PARTICIPANT"];
+                            participant.sport = singleData.SPORT;
                             Match.updateIndividualSport(participant, sportData, function (err, updatedData) {
                                 if (err || _.isEmpty(updatedData)) {
                                     err = "Weight may have wrong values";
@@ -1931,6 +1935,7 @@ var model = {
                     });
                 },
                 function (sportData, callback) {
+                    console.log("new weight", sportData);
                     if (sportData.error) {
                         countError++;
                         callback(null, sportData);
@@ -2009,7 +2014,8 @@ var model = {
         async.waterfall([
                 function (callback) {
                     IndividualSport.findOne({
-                        _id: data.id
+                        _id: data.id,
+                        sport: data.sport
                     }).lean().exec(function (err, found) {
                         if (err || _.isEmpty(found)) {
                             callback(null, {
@@ -2024,7 +2030,7 @@ var model = {
                 function (found, callback) {
                     var sportArry = [];
                     _.each(found.sport, function (n) {
-                        if (param.sportId.equals(n)) {
+                        if (data.sport.equals(n)) {
                             sportArry.push(param.sportId);
                         } else {
                             sportArry.push(n);

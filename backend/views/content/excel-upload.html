@@ -20,7 +20,7 @@
                         </div>
                     </div>
                     <div ng-include="view" ng-init="qwerty=form"></div>
-                    <div class="col-md-12" ng-if="qwerty.resultType">
+                    <div class="col-md-12">
                         <h4>Upload Excel File:</h4>
                         <upload-image no-view type="excel" ng-model="form.file" ng-callback="excelUploaded();"></upload-image>
                     </div>
