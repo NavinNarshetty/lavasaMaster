@@ -296,7 +296,7 @@ myApp.controller('ChampionshipScheduleCtrl', function ($scope, TemplateService, 
                     month: 'Nov',
                     link: 'img/event/tennis.pdf',
                     liveResult: '',
-                    orderList: 'img/event/order-day2.pdf'
+                    orderList: 'img/event/order-day3.pdf'
                 }, {
                     sport: 'Throwball',
                     date1: '14',
