@@ -99,7 +99,7 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
                     key.medialink = key.media;
                     key.thumbnail = "../img/media-video-thumb.jpg";
                 });
-                // NavigationService.getVideoThumbnail($scope.folders);
+                NavigationService.getVideoThumbnail($scope.folders);
             } else {
                 // console.log("No data found");
                 $scope.folders = [];
@@ -118,7 +118,7 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
                   _.each($scope.mediaArr.results, function(n){
                     n.thumbnail = "../img/media-video-thumb.jpg";
                   })
-                    // NavigationService.getVideoThumbnail($scope.mediaArr.results);
+                    NavigationService.getVideoThumbnail($scope.mediaArr.results);
                 }
             } else {
                 console.log("No data found");

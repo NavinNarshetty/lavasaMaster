@@ -896,19 +896,19 @@ myApp.controller('MatchStartCtrl', function ($scope, TemplateService, Navigation
         if ($scope.drawFormat == 'League cum Knockout') {
           $scope.matchResult.resultFencing = $scope.formData;
           if (!$scope.matchResult.resultFencing.status) {
-            $scope.matchResult.resultFencing.status = "IsPending";
+            // $scope.matchResult.resultFencing.status = "IsPending";
           }
         } else {
           $scope.matchResult.resultsCombat = $scope.formData;
           if (!$scope.matchResult.resultsCombat.status) {
-            $scope.matchResult.resultsCombat.status = "IsPending";
+            // $scope.matchResult.resultsCombat.status = "IsPending";
           }
         }
         break;
       case "Racquet Sports":
         $scope.matchResult.resultsRacquet = $scope.formData;
         if (!$scope.matchResult.resultsRacquet.status) {
-          $scope.matchResult.resultsRacquet.status = "IsPending";
+          // $scope.matchResult.resultsRacquet.status = "IsPending";
         }
         break;
     }

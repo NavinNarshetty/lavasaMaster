@@ -615,6 +615,13 @@ $brand-green: #0eda85 !default; //green
     color: $sport-darkgrey;
 }
 
+.allmedals-filterholder{
+  margin-bottom: 10px;
+  .sportfilter-select{
+    padding: 0;
+  }
+}
+
 .result-tablemedal {
     width: 18px;
     margin: 0 auto;

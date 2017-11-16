@@ -148,6 +148,13 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     }
   };
   // FILTER OPTIONS END
+  // MEDAL FILTER OPTIONS
+  $scope.medalFilter = {
+    gender: "",
+    ageGroup: "",
+    event: ""
+  }
+  // MEDAL FILTER OPTIONS END
 
   configService.getDetail(function (data) {
     $scope.state = data.state;
@@ -315,6 +322,33 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     }
   });
   // GET RANKING TABLE END
+  // GET MEDAL WINNERS
+  // $scope.getMedalWinners = function(){
+  //     NavigationService.getMedalWinners($scope.sportFilter, function(data){
+  //       // var data = data.data;
+  //       console.log('getMedalWinners',data);
+  //     })
+  //   NavigationService.getAgeGroupsAndEvents($scope.sportFilter, function(data){
+  //     console.log('getAgeGroupsAndEvents',data);
+  //     if (data.value = true) {
+  //       var data = data.data;
+  //       $scope.medalFilterList = {
+  //         ageGroups: data.ageGroups,
+  //         events: data.events,
+  //         gender: data.gender
+  //       }
+  //       console.log('medalFilterList',$scope.medalFilterList);
+  //     } else{
+  //       console.log("getAgeGroupsAndEvents Failed");
+  //     }
+  //   })
+  // }
+  // $scope.getMedalWinners();
+
+  // $scope.medalList = function(){
+  //   console.log("medalFilter", $scope.medalFilter);
+  // }
+  // GET MEDAL WINNERS END
   // GET SPORT RANKING TABLE
   $scope.getSchoolBySport = function () {
     NavigationService.getSchoolBySport($scope.sportFilter, function (data) {
@@ -340,6 +374,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         toastr.error('Sport Ranking Error', 'Error');
       }
     });
+    // $scope.getMedalWinners();
   };
   $scope.getSchoolBySport();
   // GET SPORT RANKING TABLE END

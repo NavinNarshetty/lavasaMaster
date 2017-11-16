@@ -66,7 +66,7 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
                     _.each($scope.mediaArr.results, function(n){
                       n.thumbnail = "../img/media-video-thumb.jpg";
                     });
-                    // NavigationService.getVideoThumbnail($scope.mediaArr.results);
+                    NavigationService.getVideoThumbnail($scope.mediaArr.results);
                 }
             } else {
                 console.log("No data found");

@@ -1211,5 +1211,14 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 data: formData
             }).then(callback);
         },
+        getMedalWinners: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'rank/getMedalWinners',
+                method: 'POST',
+                data: request
+            }).then(function (data) {
+                callback(data.data);
+            });
+        },
     };
 });
