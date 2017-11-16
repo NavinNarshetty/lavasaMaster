@@ -31,6 +31,7 @@ global["database"] = "live-sfa";
 // global["database"] = "forMatches";
 // global["database"] = "digitalScoring";
 // global["database"] = "sfa";
+// global["database"] = "liveHy";
 mongoose.Promise = global.Promise;
 mongoose.connect('mongodb://localhost:27017/' + database, function (err) {
     if (err) {

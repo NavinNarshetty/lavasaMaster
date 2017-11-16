@@ -844,7 +844,7 @@ var model = {
                         .groupBy('sportsListSubCategory.name')
                         .map(function (items, name) {
                             var gender = _(items)
-                                .groupBy('StudentTeam.studentId.gender')
+                                .groupBy('studentTeam.studentId.gender')
                                 .map(function (values, name) {
                                     var teams = [];
                                     _.each(values, function (n) {

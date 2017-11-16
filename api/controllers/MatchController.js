@@ -325,6 +325,7 @@ var controller = {
                         });
                     },
                     function (importData, callback) {
+                        console.log("called", importData);
                         Match.saveforWeightIndividual(importData, function (err, complete) {
                             if (err || _.isEmpty(complete)) {
                                 callback(err, null);
