@@ -5361,7 +5361,7 @@ var model = {
                                     profile.schoolName = n.name;
                                     profile.totalPoints = n.totalPoints;
                                     profile.medals = n.medal;
-                                    profile.schoolId = n._id;
+                                    profile.schoolId = found._id;
                                     callback(null, profile);
                                 }
                             });
