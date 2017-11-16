@@ -511,6 +511,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             console.log(response);
             if (response.value) {
                 $scope.agegroup = response.data.ageGroups;
+                $scope.agegroup.unshift('All');
             } else {
                 $scope.agegroup = [];
             }
@@ -595,9 +596,17 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             $scope.filterStatistics.gender = data;
         }
         if (option == 'age') {
-            $scope.filterStatistics.age = data;
+            if (data == 'All') {
+                $scope.filterStatistics.age = '';
+            } else {
+                $scope.filterStatistics.age = data;
+            }
         }
-        if ($scope.filterStatistics.gender !== '' || $scope.filterStatistics.age !== '') {
+        if ($scope.filterStatistics.gender !== '' && $scope.filterStatistics.age !== '') {
+            $scope.getSchoolStats();
+        } else if ($scope.filterStatistics.gender !== '' && $scope.filterStatistics.age === '') {
+            $scope.getSchoolStats();
+        } else if ($scope.filterStatistics.gender === '' && $scope.filterStatistics.age !== '') {
             $scope.getSchoolStats();
         } else {
             $scope.getSchoolStats();

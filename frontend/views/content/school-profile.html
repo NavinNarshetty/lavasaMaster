@@ -188,9 +188,9 @@
                         <li>
                             <a>
                                 <div class="sports-participate text-center">
-                                    <!-- <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width"> -->
-                                    <img ng-src="{{ sportDetails.name !== filter.sport.name && (sportDetails.inactiveimage | serverimage2) || (sportDetails.image  | serverimage2)}}"
-                                        alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);">
+                                    <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width">
+                                    <!-- <img ng-src="{{ sportDetails.name !== filter.sport.name && (sportDetails.inactiveimage | serverimage2) || (sportDetails.image  | serverimage2)}}"
+                                        alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);"> -->
                                     <span class="color-base text-up f16 mt10 equalSpacing">{{sportDetails.name}}</span>
                                     <div class="combine mt10">
                                         <div class="boy-sec display-inline color-base icon-right">
@@ -340,7 +340,7 @@
                                     <h4 class="text-up color-blue display-inline">age group</h4>
                                     <div class="display-inline">
                                         <div class="sfa-select">
-                                            <select class="select" ng-change="callReload(ageValue,'age');" ng-model="ageValue" ng-options="item for item in agegroup">
+                                            <select class="select" ng-change="callReload(ageValue,'age');" ng-model="ageValue" ng-options="item for item in agegroup | orderBy">
                                                 <option value=""></option>
                                             </select>
                                             <span class="only-border"></span>
