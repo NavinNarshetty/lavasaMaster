@@ -89,7 +89,7 @@ var model = {
             // Stage 1
             {
                 $match: {
-                    schoolName: data.schoolName
+                    "schoolName": data.schoolName
                 }
             },
 
@@ -124,7 +124,6 @@ var model = {
             {
                 $unwind: {
                     path: "$sport.sportslist",
-
                 }
             },
 
@@ -142,10 +141,43 @@ var model = {
             {
                 $unwind: {
                     path: "$sportsListSubCategory",
+                }
+            },
+
+            // Stage 8
+            {
+                $lookup: {
+                    "from": "studentteams",
+                    "localField": "studentTeam",
+                    "foreignField": "_id",
+                    "as": "studentTeam"
+                }
+            },
+
+            // Stage 9
+            {
+                $unwind: {
+                    path: "$studentTeam",
 
                 }
             },
 
+            // Stage 10
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "studentTeam.studentId",
+                    "foreignField": "_id",
+                    "as": "studentTeam.studentId"
+                }
+            },
+
+            // Stage 11
+            {
+                $unwind: {
+                    path: "$studentTeam.studentId"
+                }
+            },
         ];
         return pipeline;
     },
@@ -812,7 +844,7 @@ var model = {
                         .groupBy('sportsListSubCategory.name')
                         .map(function (items, name) {
                             var gender = _(items)
-                                .groupBy('sport.gender')
+                                .groupBy('StudentTeam.studentId.gender')
                                 .map(function (values, name) {
                                     var teams = [];
                                     _.each(values, function (n) {
@@ -1121,6 +1153,7 @@ var model = {
         ];
         return pipeline;
     },
+
     getAthleteStats: function (data, callback) {
         var match = [];
         var stats = {};
@@ -5444,5 +5477,6 @@ var model = {
                 callback(null, data2);
             });
     },
+
 };
 module.exports = _.assign(module.exports, exports, model);
