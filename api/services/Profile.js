@@ -3710,6 +3710,7 @@ var model = {
                                                             player.name = name;
                                                             player.school = school;
                                                             player.sfaId = found.sfaId;
+                                                            player.athleteId = found._id;
                                                             player.profilePic = found.photograph;
                                                             profile.players.push(player);
                                                             var i = 0;
@@ -3757,6 +3758,7 @@ var model = {
                                                                         player1.name = name;
                                                                         player1.school = school;
                                                                         player1.sfaId = found.sfaId;
+                                                                        player1.athleteId = found._id;
                                                                         player1.profilePic = found.photograph;
                                                                         profile.players.push(player1);
                                                                         callback(null, profile);
@@ -3765,6 +3767,7 @@ var model = {
                                                                         player1.name = name;
                                                                         player1.school = school;
                                                                         player1.sfaId = found.sfaId;
+                                                                        player1.athleteId = found._id;
                                                                         player1.profilePic = found.photograph;
                                                                         profile.players.push(player1);
                                                                         var i = 0;
@@ -3817,6 +3820,7 @@ var model = {
                                                             player.name = name;
                                                             player.school = school;
                                                             player.sfaId = found.sfaId;
+                                                            player.athleteId = found._id;
                                                             player.profilePic = found.photograph;
                                                             profile.players.push(player);
                                                             while (i < singleData.resultsRacquet.players[0].sets.length) {
@@ -3877,6 +3881,7 @@ var model = {
                                                                         player1.name = name;
                                                                         player1.school = school;
                                                                         player1.sfaId = found.sfaId;
+                                                                        player1.athleteId = found._id;
                                                                         player1.profilePic = found.photograph;
                                                                         profile.players.push(player1);
                                                                     } else {
@@ -3884,6 +3889,7 @@ var model = {
                                                                         player1.name = name;
                                                                         player1.school = school;
                                                                         player1.sfaId = found.sfaId;
+                                                                        player1.athleteId = found._id;
                                                                         player1.profilePic = found.photograph;
                                                                         profile.players.push(player1);
                                                                         while (i < singleData.resultsRacquet.players[0].sets.length) {
@@ -3926,6 +3932,7 @@ var model = {
                                                                 player.name = name;
                                                                 player.school = school;
                                                                 player.sfaId = found.athleteId.sfaId;
+                                                                player.athleteId = found.athleteId._id;
                                                                 player.profilePic = found.athleteId.photograph;
                                                                 profile.players.push(player);
                                                                 stats.score = n.time;
@@ -3957,6 +3964,7 @@ var model = {
                                                         player.name = name;
                                                         player.school = school;
                                                         player.sfaId = found.sfaId;
+                                                        player.athleteId = found._id;
                                                         player.profilePic = found.photograph;
                                                         profile.players.push(player);
                                                         profile.match.push(stats);
@@ -3993,6 +4001,7 @@ var model = {
                                                         player.name = name;
                                                         player.school = school;
                                                         player.sfaId = found.sfaId;
+                                                        player.athleteId = found._id;
                                                         player.profilePic = found.photograph;
                                                         profile.players.push(player);
                                                     });
@@ -4035,6 +4044,7 @@ var model = {
                                                         player.name = name;
                                                         player.school = school;
                                                         player.sfaId = found.sfaId;
+                                                        player.athleteId = found._id;
                                                         player.profilePic = found.photograph;
                                                         profile.players.push(player);
                                                     });
@@ -4083,6 +4093,7 @@ var model = {
                                                     player1.name = name;
                                                     player1.school = school;
                                                     player1.sfaId = singleData.opponentsSingle.athleteId.sfaId;
+                                                    player1.athleteId = singleData.opponentsSingle.athleteId._id;
                                                     player1.profilePic = singleData.opponentsSingle.athleteId.photograph;
                                                     profile.players.push(player1);
                                                     profile.match.push(stats);
@@ -4108,6 +4119,7 @@ var model = {
                                                             player.name = name;
                                                             player.school = school;
                                                             player.sfaId = found.sfaId;
+                                                            player.athleteId = found._id;
                                                             player.profilePic = found.photograph;
                                                             profile.players.push(player);
                                                             result = singleData.resultFencing.players[0].finalPoints;
@@ -4155,6 +4167,7 @@ var model = {
                                                                         player.name = name;
                                                                         player.school = school;
                                                                         player.sfaId = found.sfaId;
+                                                                        player.athleteId = found._id;
                                                                         player.profilePic = found.photograph;
                                                                         profile.players.push(player);
                                                                     } else {
@@ -4162,6 +4175,7 @@ var model = {
                                                                         player.name = name;
                                                                         player.school = school;
                                                                         player.sfaId = found.sfaId;
+                                                                        player.athleteId = found._id;
                                                                         player.profilePic = found.photograph;
                                                                         profile.players.push(player);
                                                                         while (i < singleData.resultFencing.players[0].sets.length) {
@@ -4300,6 +4314,7 @@ var model = {
                                                                 player.name = name;
                                                                 player.school = school;
                                                                 player.sfaId = found.sfaId;
+                                                                player.athleteId = found._id;
                                                                 player.profilePic = found.photograph;
                                                                 profile.players.push(player);
                                                             });
@@ -4349,6 +4364,7 @@ var model = {
                                                                                     player.name = name;
                                                                                     player.school = school;
                                                                                     player.sfaId = found.sfaId;
+                                                                                    player.athleteId = found._id;
                                                                                     player.profilePic = found.photograph;
                                                                                     profile.players.push(player);
                                                                                     callback();
@@ -4428,6 +4444,7 @@ var model = {
                                                                 player.name = name;
                                                                 player.school = school;
                                                                 player.sfaId = found.sfaId;
+                                                                player.athleteId = found._id;
                                                                 player.profilePic = found.photograph;
                                                                 profile.players.push(player);
                                                             });
@@ -4522,6 +4539,7 @@ var model = {
                                                                                     player.name = name;
                                                                                     player.school = school;
                                                                                     player.sfaId = found.sfaId;
+                                                                                    player.athleteId = found._id;
                                                                                     player.profilePic = found.photograph;
                                                                                     profile.players.push(player);
                                                                                     callback();
@@ -4560,6 +4578,7 @@ var model = {
                                                             player.name = name;
                                                             player.school = school;
                                                             player.sfaId = found.studentId.sfaId;
+                                                            player.athleteId = found.studentId._id;
                                                             player.profilePic = found.studentId.photograph;
                                                             profile.players.push(player);
                                                         });
@@ -4595,6 +4614,7 @@ var model = {
                                                             player.name = name;
                                                             player.school = school;
                                                             player.sfaId = found.studentId.sfaId;
+                                                            player.athleteId = found.studentId._id;
                                                             player.profilePic = found.studentId.photograph;
                                                             profile.players.push(player);
                                                             stats.score = singleData.resultBasketball.teams[0].teamResults.finalGoalPoints;
@@ -4628,6 +4648,7 @@ var model = {
                                                                                 player.name = name;
                                                                                 player.school = school;
                                                                                 player.sfaId = found.studentId.sfaId;
+                                                                                player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
                                                                                 profile.players.push(player);
                                                                                 callback(null, found);
@@ -4697,6 +4718,7 @@ var model = {
                                                             player.name = name;
                                                             player.school = school;
                                                             player.sfaId = found.studentId.sfaId;
+                                                            player.athleteId = found.studentId._id;
                                                             player.profilePic = found.studentId.photograph;
                                                             profile.players.push(player);
                                                             stats.score = singleData.resultFootball.teams[0].teamResults.finalPoints;
@@ -4730,6 +4752,7 @@ var model = {
                                                                                 player.name = name;
                                                                                 player.school = school;
                                                                                 player.sfaId = found.studentId.sfaId;
+                                                                                player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
                                                                                 profile.players.push(player);
                                                                                 callback(null, found);
@@ -4800,6 +4823,7 @@ var model = {
                                                             player.name = name;
                                                             player.school = school;
                                                             player.sfaId = found.studentId.sfaId;
+                                                            player.athleteId = found.studentId._id;
                                                             player.profilePic = found.studentId.photograph;
                                                             profile.players.push(player);
                                                             stats.score = singleData.resultVolleyball.teams[0].teamResults.finalPoints;
@@ -4833,6 +4857,7 @@ var model = {
                                                                                 player.name = name;
                                                                                 player.school = school;
                                                                                 player.sfaId = found.studentId.sfaId;
+                                                                                player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
                                                                                 profile.players.push(player);
                                                                                 callback(null, found);
@@ -4908,6 +4933,7 @@ var model = {
                                                             player.name = name;
                                                             player.school = school;
                                                             player.sfaId = found.studentId.sfaId;
+                                                            player.athleteId = found.studentId._id;
                                                             player.profilePic = found.studentId.photograph;
                                                             profile.players.push(player);
                                                             stats.score = singleData.resultHockey.teams[0].teamResults.finalPoints;
@@ -4941,6 +4967,7 @@ var model = {
                                                                                 player.name = name;
                                                                                 player.school = school;
                                                                                 player.sfaId = found.studentId.sfaId;
+                                                                                player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
                                                                                 profile.players.push(player);
                                                                                 callback(null, found);
@@ -5008,6 +5035,7 @@ var model = {
                                                             player.name = name;
                                                             player.school = school;
                                                             player.sfaId = found.studentId.sfaId;
+                                                            player.athleteId = found.studentId._id;
                                                             player.profilePic = found.studentId.photograph;
                                                             profile.players.push(player);
                                                             stats.score = singleData.resultWaterPolo.teams[0].teamResults.finalGoalPoints;
@@ -5041,6 +5069,7 @@ var model = {
                                                                                 player.name = name;
                                                                                 player.school = school;
                                                                                 player.sfaId = found.studentId.sfaId;
+                                                                                player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
                                                                                 profile.players.push(player);
                                                                                 callback(null, found);
@@ -5108,6 +5137,7 @@ var model = {
                                                             player.name = name;
                                                             player.school = school;
                                                             player.sfaId = found.studentId.sfaId;
+                                                            player.athleteId = found.studentId._id;
                                                             player.profilePic = found.studentId.photograph;
                                                             profile.players.push(player);
                                                             stats.score = singleData.resultKabaddi.teams[0].teamResults.finalPoints;
@@ -5141,6 +5171,7 @@ var model = {
                                                                                 player.name = name;
                                                                                 player.school = school;
                                                                                 player.sfaId = found.studentId.sfaId;
+                                                                                player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
                                                                                 profile.players.push(player);
                                                                                 callback(null, found);
@@ -5208,6 +5239,7 @@ var model = {
                                                             player.name = name;
                                                             player.school = school;
                                                             player.sfaId = found.studentId.sfaId;
+                                                            player.athleteId = found.studentId._id;
                                                             player.profilePic = found.studentId.photograph;
                                                             profile.players.push(player);
                                                             stats.score = singleData.resultHandball.teams[0].teamResults.finalPoints;
@@ -5241,6 +5273,7 @@ var model = {
                                                                                 player.name = name;
                                                                                 player.school = school;
                                                                                 player.sfaId = found.studentId.sfaId;
+                                                                                player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
                                                                                 profile.players.push(player);
                                                                                 callback(null, found);

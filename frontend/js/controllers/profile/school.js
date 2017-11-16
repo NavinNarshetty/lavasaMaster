@@ -326,7 +326,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                     schoolSport = schoolSport + 1;
                 });
 
-
+                // console.log('before', $scope.getSchoolProfile.registerSport);
                 if (schoolSport == $scope.getSchoolProfile.registerSport.length) {
                     _.each($scope.getSchoolProfile.registerSport, function (n, key) {
                         var sportArr = [];
@@ -345,7 +345,15 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                             $scope.sportObj = _.findIndex($scope.getSchoolProfile.registerSport, ['name', sportName[0]]);
                         }
                         if ($scope.sportObj != key && $scope.sportObj != -1) {
+                            // console.log('before assign each to main', n.maleCount);
+                            // console.log('before assign each to main', n.femaleCount);
+                            // console.log('before assign to main', $scope.getSchoolProfile.registerSport[$scope.sportObj].maleCount);
+                            // console.log('before assign to main', $scope.getSchoolProfile.registerSport[$scope.sportObj].femaleCount);
                             $scope.getSchoolProfile.registerSport[$scope.sportObj].subCategory.push(n.subCategory[0]);
+                            // $scope.getSchoolProfile.registerSport[$scope.sportObj].maleCount = $scope.getSchoolProfile.registerSport[$scope.sportObj].maleCount + n.maleCount;
+                            // $scope.getSchoolProfile.registerSport[$scope.sportObj].femaleCount = $scope.getSchoolProfile.registerSport[$scope.sportObj].femaleCount + n.femaleCount;
+                            // console.log('after assign to main', $scope.getSchoolProfile.registerSport[$scope.sportObj].maleCount);
+                            // console.log('after assign to main', $scope.getSchoolProfile.registerSport[$scope.sportObj].femaleCount);
                             n.removeElement = true;
                         } else if ($scope.sportObj != key && $scope.sportObj == -1) {
                             if (n.name == 'Table Tennis Doubles') {
@@ -362,6 +370,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
                     });
                 }
                 if (subArrLength >= $scope.getSchoolProfile.registerSport.length) {
+                    // console.log('Final', $scope.getSchoolProfile.registerSport);
                     $scope.schoolSports = $scope.getSchoolProfile.registerSport;
                 }
 
@@ -494,15 +503,15 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
 
     // };
     $scope.getSportAgeGroup = function () {
-        NavigationService.filterAgegroupBySport({
-            sportList: $scope.filter.sport._id
-        }, function (response) {
-            if (response.value) {
-                $scope.agegroup = response.data;
-            } else {
-                $scope.agegroup = [];
-            }
-        });
+        // NavigationService.filterAgegroupBySport({
+        //     sportList: $scope.filter.sport._id
+        // }, function (response) {
+        //     if (response.value) {
+        //         $scope.agegroup = response.data;
+        //     } else {
+        //         $scope.agegroup = [];
+        //     }
+        // });
     };
     $scope.getSchoolStats = function () {
         $scope.filterStatistics.schoolName = $scope.schoolName;
@@ -511,6 +520,9 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             console.log('STATS AND PLAYERS:', response);
             if (response.value) {
                 $scope.schoolStats = response.data;
+                // console.log('initial', $scope.schoolStats.players.length);
+                // $scope.schoolStats.players = _.uniqBy($scope.schoolStats.players, 'sfaId');
+                // console.log($scope.schoolStats.players.length);
                 _.each($scope.schoolStats.match, function (n) {
 
                     console.log(n.score);

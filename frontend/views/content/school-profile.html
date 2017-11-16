@@ -188,8 +188,9 @@
                         <li>
                             <a>
                                 <div class="sports-participate text-center">
-                                    <!-- sportDetails.image  | serverimage2 -->
-                                    <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width">
+                                    <!-- <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width"> -->
+                                    <img ng-src="{{ sportDetails.name !== filter.sport.name && (sportDetails.inactiveimage | serverimage2) || (sportDetails.image  | serverimage2)}}"
+                                        alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);">
                                     <span class="color-base text-up f16 mt10 equalSpacing">{{sportDetails.name}}</span>
                                     <div class="combine mt10">
                                         <div class="boy-sec display-inline color-base icon-right">
@@ -267,7 +268,7 @@
             </div>
         </div>
         <div class="row" ng-if="!statsDetail">
-            <div class="col-md-3 mt15" ng-repeat="data in athletes track by $index">
+            <div class="col-md-3 mt15" ng-repeat="data in athletes | orderBy:'name' track by $index">
                 <a href="">
                     <div class="school-sec" ui-sref="student-profile({id:data._id})">
                         <!-- <img src="img/sf-cl.png" alt="" class="mt-min-18"> -->
@@ -278,7 +279,7 @@
                             </div> -->
                         </div>
                         <div class="stu-name text-center" title="{{data.name}}">
-                            <h4 class="color-orange text-up font-semi">{{data.name | shorten:15}}</h4>
+                            <h4 class="color-orange text-up font-semi">{{data.name | shorten:8}}</h4>
                         </div>
                         <div class="stu-id text-center">
                             <h4 class="color-blue">SFA ID: {{data.sfaId}}</h4>
@@ -362,7 +363,7 @@
                                 </div>
                             </div>
                             <div class="row mt25">
-                                <div class="col-md-3 mt15" ng-repeat="data in schoolStats.players" ng-if="schoolStats.players.length > 0">
+                                <div class="col-md-3 mt15" ng-repeat="data in schoolStats.players | orderBy: 'name'" ng-if="schoolStats.players.length > 0">
                                     <a ui-sref="student-profile({id:data._id})">
                                         <div class="school-sec">
                                             <img ng-src="img/sf-cl.png" alt="" class="mt-min-18" ng-if="data.isCl">
