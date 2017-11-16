@@ -364,7 +364,7 @@
                             </div>
                             <div class="row mt25">
                                 <div class="col-md-3 mt15" ng-repeat="data in schoolStats.players | orderBy: 'name'" ng-if="schoolStats.players.length > 0">
-                                    <a ui-sref="student-profile({id:data._id})">
+                                    <a ui-sref="student-profile({id:data.athleteId})">
                                         <div class="school-sec">
                                             <img ng-src="img/sf-cl.png" alt="" class="mt-min-18" ng-if="data.isCl">
                                             <div class="stu-img text-center sf-relative specialSetting">
