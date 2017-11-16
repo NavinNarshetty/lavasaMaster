@@ -230,6 +230,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     $scope.table = {};
     $scope.students = {};
     // $scope.state = $state;
+    $scope.sportContingent = {};
     $scope.schoolData = {};
     $scope.schoolData.page = 1;
     $scope.schoolData.school = $stateParams.id;
@@ -431,20 +432,7 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             }
         });
     };
-    // $scope.setPage = function (pageNo) {
-    //     $scope.currentPage = pageNo;
-    // };
 
-    $scope.gender = [{
-        value: "",
-        name: "All"
-    }, {
-        value: "male",
-        name: "Male"
-    }, {
-        value: "female",
-        name: "Female"
-    }];
     $scope.tabchange = function (tab, a) {
         $scope.tab = tab;
         if (a == 1) {
@@ -462,8 +450,6 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             $scope.classc = "active-list";
         }
     };
-    $scope.sportContingent = {};
-
     // $scope.onChangeContingentYear = function () {
     //     $scope.filterStatistics.pagenumber = 1;
     //     $scope.contingent = {};
@@ -512,8 +498,14 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
             if (response.value) {
                 $scope.agegroup = response.data.ageGroups;
                 $scope.agegroup.unshift('All');
+                $scope.gender = response.data.gender;
+                $scope.gender.unshift('All');
+                $scope.eventCategory = response.data.events;
+                $scope.eventCategory.unshift('All');
             } else {
                 $scope.agegroup = [];
+                $scope.gender = [];
+                $scope.eventCategory = [];
             }
         });
     };
@@ -607,6 +599,40 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
         } else if ($scope.filterStatistics.gender !== '' && $scope.filterStatistics.age === '') {
             $scope.getSchoolStats();
         } else if ($scope.filterStatistics.gender === '' && $scope.filterStatistics.age !== '') {
+            $scope.getSchoolStats();
+        } else {
+            $scope.getSchoolStats();
+        }
+    };
+    $scope.callReloadStat = function (data, option) {
+        if (option == 'gender') {
+            if (data == 'All') {
+                $scope.filterStatistics.gender = '';
+            } else {
+                $scope.filterStatistics.gender = data;
+            }
+        }
+        if (option == 'age') {
+            if (data == 'All') {
+                $scope.filterStatistics.age = '';
+            } else {
+                $scope.filterStatistics.age = data;
+            }
+        }
+        if (option == 'event') {
+            if (data == 'All') {
+                $scope.filterStatistics.event = '';
+            } else {
+                $scope.filterStatistics.event = data;
+            }
+        }
+        if ($scope.filterStatistics.gender !== '' && $scope.filterStatistics.age !== '' && $scope.filterStatistics.event !== '') {
+            $scope.getSchoolStats();
+        } else if ($scope.filterStatistics.gender !== '' && $scope.filterStatistics.age === '' && $scope.filterStatistics.event === '') {
+            $scope.getSchoolStats();
+        } else if ($scope.filterStatistics.gender === '' && $scope.filterStatistics.age !== '' && $scope.filterStatistics.event === '') {
+            $scope.getSchoolStats();
+        } else if ($scope.filterStatistics.gender === '' && $scope.filterStatistics.age === '' && $scope.filterStatistics.event !== '') {
             $scope.getSchoolStats();
         } else {
             $scope.getSchoolStats();

@@ -330,7 +330,7 @@
                                     <h4 class="text-up color-blue display-inline">gender</h4>
                                     <div class="display-inline">
                                         <div class="sfa-select">
-                                            <select class="select" ng-change="callReload(genderValue,'gender');" ng-model="genderValue" ng-options="item.value as item.name for item in gender">
+                                            <select class="select" ng-change="callReload(genderValue,'gender');" ng-model="genderValue" ng-options="item for item in gender | orderBy">
                                             </select>
                                             <span class="only-border"></span>
                                         </div>
