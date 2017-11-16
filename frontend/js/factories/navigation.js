@@ -499,6 +499,15 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                 data: request
             }).success(callback);
         },
+        getAgeGroupsAndEvents: function (request, callback) {
+            $http({
+                url: adminUrl2 + 'rank/getAgeGroupsAndEvents',
+                method: 'POST',
+                data: request
+            }).then(function (data) {
+                callback(data.data);
+            });
+        },
 
         // getFolders: function (request, callback) {
         //     $http({
