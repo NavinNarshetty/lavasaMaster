@@ -408,134 +408,559 @@ var model = {
                 },
                 function (sendObj, callback) {
                     if (data.event && data.age && data.gender) {
-                        var pipeLine = Profile.getMedalAggregatePipeline(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push({
-                            $match: {
-                                "sport.sportslist.name": data.event,
-                                "sport.ageGroup.name": data.age,
-                                "sport.gender": data.gender
-                            }
-                        });
-                        Medal.aggregate(pipeLine, function (err, found) {
-
-                            if (err) {
-                                callback();
-                            } else if (_.isEmpty(found)) {
-                                callback();
-                            } else {
-                                var obj = {};
-                                obj.medals = [];
-                                async.eachSeries(found, function (medalData, callback) {
-                                    console.log("medalData", medalData);
-                                    if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
-                                        obj.name = medalData.sport.ageGroup.name;
-                                    } else {
-                                        obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
-                                    }
-                                    obj.gender = medalData.sport.gender;
-                                    if (!_.isEmpty(medalData.team)) {
-                                        async.each(medalData.team, function (n, callback) {
-                                            var info = {};
-                                            info.sport = medalData.sport._id;
-                                            info.medal = medalData.medalType;
-                                            info.participantName = n.name;
-                                            info.school = n.schoolName;
-                                            info.TeamId = n.teamId;
-                                            obj.medals.push(info);
-                                            callback(null, final);
-                                        }, function (err) {
-                                            callback(null, obj);
-                                        });
-                                    } else {
-                                        async.each(medalData.player, function (n, callback) {
-                                            var info = {};
-                                            info.sport = medalData.sport._id;
-                                            info.medal = medalData.medalType;
-                                            if (n.middleName) {
-                                                info.participantName = n.firstName + " " + n.middleName + " " + n.surname;
-                                            } else {
-                                                info.participantName = n.firstName + " " + n.surname;
-                                            }
-                                            if (n.athleteSchoolName) {
-                                                info.school = n.athleteSchoolName;
-                                            } else {
-                                                info.school = n.school.name;
-                                            }
-                                            info.sfaId = n.sfaId;
-                                            obj.medal.push(info);
-                                            callback(null, obj);
-                                        }, function (err) {
-                                            callback(null, obj);
-                                        });
-                                    }
-                                }, function (err) {
-                                    final.push(obj);
-                                    callback(null, obj);
-                                });
-                            }
-                        });
-                    } else if (data.event && data.age) {
-                        var pipeLine = Profile.getMedalAggregatePipeline(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push({
-                            $match: {
-                                "sport.sportslist.name": data.event,
-                                "sport.ageGroup.name": data.age
-                            }
-                        });
-                        Match.aggregate(newPipeLine, function (err, matchData) {});
-                    } else if (data.event && data.gender) {
-                        var pipeLine = Profile.getMedalAggregatePipeline(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push({
-                            $match: {
-                                "sport.sportslist.name": data.event,
-                                "sport.gender": data.gender
-                            }
-                        });
-                        Match.aggregate(newPipeLine, function (err, matchData) {});
-                    } else if (data.age && data.gender) {
-                        var pipeLine = Profile.getMedalAggregatePipeline(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push({
-                            $match: {
-                                "sport.ageGroup.name": data.age,
-                                "sport.gender": data.gender
-                            }
-                        });
-                        Match.aggregate(newPipeLine, function (err, matchData) {});
-                    } else if (data.event) {
-                        var pipeLine = Profile.getMedalAggregatePipeline(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push(
-
-                        );
-                        Match.aggregate(newPipeLine, function (err, matchData) {});
-                    } else if (data.age) {
-                        var pipeLine = Profile.getMedalAggregatePipeline(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push(
-
-                        );
-                        Match.aggregate(newPipeLine, function (err, matchData) {});
-                    } else if (data.gender) {
-                        var pipeLine = Profile.getMedalAggregatePipeline(data);
-                        var newPipeLine = _.cloneDeep(pipeLine);
-                        newPipeLine.push(
-
-                        );
-                        Match.aggregate(newPipeLine, function (err, matchData) {});
-                    } else {
-                        console.log("inside");
                         var final = [];
                         async.eachSeries(sendObj.medalWinners, function (singleData, callback) {
-                                // console.log("singleData", singleData);
-                                // var pipeLine = Rank.getMedalAggregatePipeline(singleData);
-                                // // var newPipeLine = _.cloneDeep(pipeLine);
+                                var matchObj = {
+                                    "sport": singleData._id
+                                }
+                                Medal.find(matchObj).deepPopulate("player.school team sport.sportslist.sportsListSubCategory sport.ageGroup").lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback();
+                                    } else if (_.isEmpty(found)) {
+                                        callback();
+                                    } else {
+                                        var obj = {};
+                                        obj.medals = [];
+                                        async.eachSeries(found, function (medalData, callback) {
+                                            console.log("medalData", medalData);
+                                            if (medalData.sport.sportslist.name === data.event && medalData.sport.ageGroup.name === data.age && medalData.sport.gender == data.gender) {
+                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
+                                                    obj.name = medalData.sport.ageGroup.name;
+                                                } else {
+                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
+                                                }
+                                                obj.gender = medalData.sport.gender;
+                                                if (!_.isEmpty(medalData.team)) {
+                                                    async.each(medalData.team, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        info.participantName = n.name;
+                                                        info.school = n.schoolName;
+                                                        info.TeamId = n.teamId;
+                                                        obj.medals.push(info);
+                                                        callback(null, final);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                } else {
+                                                    async.each(medalData.player, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        if (n.middleName) {
+                                                            info.participantName = n.firstName + " " + n.middleName + " " + n.surname;
+                                                        } else {
+                                                            info.participantName = n.firstName + " " + n.surname;
+                                                        }
+                                                        if (n.athleteSchoolName) {
+                                                            info.school = n.athleteSchoolName;
+                                                        } else {
+                                                            info.school = n.school.name;
+                                                        }
+                                                        info.sfaId = n.sfaId;
+                                                        obj.medal.push(info);
+                                                        callback(null, obj);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                }
+                                            } else {
+                                                obj.err = "erroor";
+                                                callback(null, obj);
+                                            }
+                                        }, function (err) {
+                                            if (!obj.err) {
+                                                final.push(obj);
+                                            }
+                                            callback(null, obj);
+                                        });
 
-                                // Medal.aggregate(pipeLine, function (err, found) {
-                                // console.log("found", found);
+                                    }
+                                });
+                            },
+                            function (err) {
+                                var results = _.groupBy(final, "name");
+                                _.each(results, function (result, key) {
+                                    results[key] = _.groupBy(result, 'gender');
+                                });
+                                callback(null, results);
+                            });
+                    } else if (data.event && data.age) {
+                        var final = [];
+                        async.eachSeries(sendObj.medalWinners, function (singleData, callback) {
+                                var matchObj = {
+                                    "sport": singleData._id
+                                }
+                                Medal.find(matchObj).deepPopulate("player.school team sport.sportslist.sportsListSubCategory sport.ageGroup").lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback();
+                                    } else if (_.isEmpty(found)) {
+                                        callback();
+                                    } else {
+                                        var obj = {};
+                                        obj.medals = [];
+                                        async.eachSeries(found, function (medalData, callback) {
+                                            console.log("medalData", medalData);
+                                            if (medalData.sport.sportslist.name === data.event && medalData.sport.ageGroup.name === data.age) {
+                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
+                                                    obj.name = medalData.sport.ageGroup.name;
+                                                } else {
+                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
+                                                }
+                                                obj.gender = medalData.sport.gender;
+                                                if (!_.isEmpty(medalData.team)) {
+                                                    async.each(medalData.team, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        info.participantName = n.name;
+                                                        info.school = n.schoolName;
+                                                        info.TeamId = n.teamId;
+                                                        obj.medals.push(info);
+                                                        callback(null, final);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                } else {
+                                                    async.each(medalData.player, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        if (n.middleName) {
+                                                            info.participantName = n.firstName + " " + n.middleName + " " + n.surname;
+                                                        } else {
+                                                            info.participantName = n.firstName + " " + n.surname;
+                                                        }
+                                                        if (n.athleteSchoolName) {
+                                                            info.school = n.athleteSchoolName;
+                                                        } else {
+                                                            info.school = n.school.name;
+                                                        }
+                                                        info.sfaId = n.sfaId;
+                                                        obj.medal.push(info);
+                                                        callback(null, obj);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                }
+                                            } else {
+                                                obj.err = "erroor";
+                                                callback(null, obj);
+                                            }
+                                        }, function (err) {
+                                            if (!obj.err) {
+                                                final.push(obj);
+                                            }
+                                            callback(null, obj);
+                                        });
+
+                                    }
+                                });
+                            },
+                            function (err) {
+                                var results = _.groupBy(final, "name");
+                                _.each(results, function (result, key) {
+                                    results[key] = _.groupBy(result, 'gender');
+                                });
+                                callback(null, results);
+                            });
+                    } else if (data.event && data.gender) {
+                        var final = [];
+                        async.eachSeries(sendObj.medalWinners, function (singleData, callback) {
+                                var matchObj = {
+                                    "sport": singleData._id
+                                }
+                                Medal.find(matchObj).deepPopulate("player.school team sport.sportslist.sportsListSubCategory sport.ageGroup").lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback();
+                                    } else if (_.isEmpty(found)) {
+                                        callback();
+                                    } else {
+                                        var obj = {};
+                                        obj.medals = [];
+                                        async.eachSeries(found, function (medalData, callback) {
+                                            console.log("medalData", medalData);
+                                            if (medalData.sport.sportslist.name === data.event && medalData.sport.gender == data.gender) {
+                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
+                                                    obj.name = medalData.sport.ageGroup.name;
+                                                } else {
+                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
+                                                }
+                                                obj.gender = medalData.sport.gender;
+                                                if (!_.isEmpty(medalData.team)) {
+                                                    async.each(medalData.team, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        info.participantName = n.name;
+                                                        info.school = n.schoolName;
+                                                        info.TeamId = n.teamId;
+                                                        obj.medals.push(info);
+                                                        callback(null, final);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                } else {
+                                                    async.each(medalData.player, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        if (n.middleName) {
+                                                            info.participantName = n.firstName + " " + n.middleName + " " + n.surname;
+                                                        } else {
+                                                            info.participantName = n.firstName + " " + n.surname;
+                                                        }
+                                                        if (n.athleteSchoolName) {
+                                                            info.school = n.athleteSchoolName;
+                                                        } else {
+                                                            info.school = n.school.name;
+                                                        }
+                                                        info.sfaId = n.sfaId;
+                                                        obj.medal.push(info);
+                                                        callback(null, obj);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                }
+                                            } else {
+                                                obj.err = "error";
+                                                callback(null, obj);
+                                            }
+                                        }, function (err) {
+                                            if (!obj.err) {
+                                                final.push(obj);
+                                            }
+                                            callback(null, obj);
+                                        });
+
+                                    }
+                                });
+                            },
+                            function (err) {
+                                var results = _.groupBy(final, "name");
+                                _.each(results, function (result, key) {
+                                    results[key] = _.groupBy(result, 'gender');
+                                });
+                                callback(null, results);
+                            });
+                    } else if (data.age && data.gender) {
+                        var final = [];
+                        async.eachSeries(sendObj.medalWinners, function (singleData, callback) {
+                                var matchObj = {
+                                    "sport": singleData._id
+                                }
+                                Medal.find(matchObj).deepPopulate("player.school team sport.sportslist.sportsListSubCategory sport.ageGroup").lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback();
+                                    } else if (_.isEmpty(found)) {
+                                        callback();
+                                    } else {
+                                        var obj = {};
+                                        obj.medals = [];
+                                        async.eachSeries(found, function (medalData, callback) {
+                                            console.log("medalData", medalData);
+                                            if (medalData.sport.ageGroup.name === data.age && medalData.sport.gender == data.gender) {
+                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
+                                                    obj.name = medalData.sport.ageGroup.name;
+                                                } else {
+                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
+                                                }
+                                                obj.gender = medalData.sport.gender;
+                                                if (!_.isEmpty(medalData.team)) {
+                                                    async.each(medalData.team, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        info.participantName = n.name;
+                                                        info.school = n.schoolName;
+                                                        info.TeamId = n.teamId;
+                                                        obj.medals.push(info);
+                                                        callback(null, final);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                } else {
+                                                    async.each(medalData.player, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        if (n.middleName) {
+                                                            info.participantName = n.firstName + " " + n.middleName + " " + n.surname;
+                                                        } else {
+                                                            info.participantName = n.firstName + " " + n.surname;
+                                                        }
+                                                        if (n.athleteSchoolName) {
+                                                            info.school = n.athleteSchoolName;
+                                                        } else {
+                                                            info.school = n.school.name;
+                                                        }
+                                                        info.sfaId = n.sfaId;
+                                                        obj.medal.push(info);
+                                                        callback(null, obj);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                }
+                                            } else {
+                                                obj.err = "erroor";
+                                                callback(null, obj);
+                                            }
+                                        }, function (err) {
+                                            if (!obj.err) {
+                                                final.push(obj);
+                                            }
+                                            callback(null, obj);
+                                        });
+
+                                    }
+                                });
+                            },
+                            function (err) {
+                                var results = _.groupBy(final, "name");
+                                _.each(results, function (result, key) {
+                                    results[key] = _.groupBy(result, 'gender');
+                                });
+                                callback(null, results);
+                            });
+                    } else if (data.event) {
+                        var final = [];
+                        async.eachSeries(sendObj.medalWinners, function (singleData, callback) {
+                                var matchObj = {
+                                    "sport": singleData._id
+                                }
+                                Medal.find(matchObj).deepPopulate("player.school team sport.sportslist.sportsListSubCategory sport.ageGroup").lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback();
+                                    } else if (_.isEmpty(found)) {
+                                        callback();
+                                    } else {
+                                        var obj = {};
+                                        obj.medals = [];
+                                        async.eachSeries(found, function (medalData, callback) {
+                                            console.log("medalData", medalData);
+                                            if (medalData.sport.sportslist.name === data.event) {
+                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
+                                                    obj.name = medalData.sport.ageGroup.name;
+                                                } else {
+                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
+                                                }
+                                                obj.gender = medalData.sport.gender;
+                                                if (!_.isEmpty(medalData.team)) {
+                                                    async.each(medalData.team, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        info.participantName = n.name;
+                                                        info.school = n.schoolName;
+                                                        info.TeamId = n.teamId;
+                                                        obj.medals.push(info);
+                                                        callback(null, final);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                } else {
+                                                    async.each(medalData.player, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        if (n.middleName) {
+                                                            info.participantName = n.firstName + " " + n.middleName + " " + n.surname;
+                                                        } else {
+                                                            info.participantName = n.firstName + " " + n.surname;
+                                                        }
+                                                        if (n.athleteSchoolName) {
+                                                            info.school = n.athleteSchoolName;
+                                                        } else {
+                                                            info.school = n.school.name;
+                                                        }
+                                                        info.sfaId = n.sfaId;
+                                                        obj.medal.push(info);
+                                                        callback(null, obj);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                }
+                                            } else {
+                                                obj.err = "erroor";
+                                                callback(null, obj);
+                                            }
+                                        }, function (err) {
+                                            if (!obj.err) {
+                                                final.push(obj);
+                                            }
+                                            callback(null, obj);
+                                        });
+
+                                    }
+                                });
+                            },
+                            function (err) {
+                                var results = _.groupBy(final, "name");
+                                _.each(results, function (result, key) {
+                                    results[key] = _.groupBy(result, 'gender');
+                                });
+                                callback(null, results);
+                            });
+                    } else if (data.age) {
+                        var final = [];
+                        async.eachSeries(sendObj.medalWinners, function (singleData, callback) {
+                                var matchObj = {
+                                    "sport": singleData._id
+                                }
+                                Medal.find(matchObj).deepPopulate("player.school team sport.sportslist.sportsListSubCategory sport.ageGroup").lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback();
+                                    } else if (_.isEmpty(found)) {
+                                        callback();
+                                    } else {
+                                        var obj = {};
+                                        obj.medals = [];
+                                        async.eachSeries(found, function (medalData, callback) {
+                                            console.log("medalData", medalData);
+                                            if (medalData.sport.ageGroup.name === data.age) {
+                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
+                                                    obj.name = medalData.sport.ageGroup.name;
+                                                } else {
+                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
+                                                }
+                                                obj.gender = medalData.sport.gender;
+                                                if (!_.isEmpty(medalData.team)) {
+                                                    async.each(medalData.team, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        info.participantName = n.name;
+                                                        info.school = n.schoolName;
+                                                        info.TeamId = n.teamId;
+                                                        obj.medals.push(info);
+                                                        callback(null, final);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                } else {
+                                                    async.each(medalData.player, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        if (n.middleName) {
+                                                            info.participantName = n.firstName + " " + n.middleName + " " + n.surname;
+                                                        } else {
+                                                            info.participantName = n.firstName + " " + n.surname;
+                                                        }
+                                                        if (n.athleteSchoolName) {
+                                                            info.school = n.athleteSchoolName;
+                                                        } else {
+                                                            info.school = n.school.name;
+                                                        }
+                                                        info.sfaId = n.sfaId;
+                                                        obj.medal.push(info);
+                                                        callback(null, obj);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                }
+                                            } else {
+                                                obj.err = "erroor";
+                                                callback(null, obj);
+                                            }
+                                        }, function (err) {
+                                            if (!obj.err) {
+                                                final.push(obj);
+                                            }
+                                            callback(null, obj);
+                                        });
+
+                                    }
+                                });
+                            },
+                            function (err) {
+                                var results = _.groupBy(final, "name");
+                                _.each(results, function (result, key) {
+                                    results[key] = _.groupBy(result, 'gender');
+                                });
+                                callback(null, results);
+                            });
+                    } else if (data.gender) {
+                        var final = [];
+                        async.eachSeries(sendObj.medalWinners, function (singleData, callback) {
+                                var matchObj = {
+                                    "sport": singleData._id
+                                }
+                                Medal.find(matchObj).deepPopulate("player.school team sport.sportslist.sportsListSubCategory sport.ageGroup").lean().exec(function (err, found) {
+                                    if (err) {
+                                        callback();
+                                    } else if (_.isEmpty(found)) {
+                                        callback();
+                                    } else {
+                                        var obj = {};
+                                        obj.medals = [];
+                                        async.eachSeries(found, function (medalData, callback) {
+                                            console.log("medalData", medalData);
+                                            if (medalData.sport.gender == data.gender) {
+                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
+                                                    obj.name = medalData.sport.ageGroup.name;
+                                                } else {
+                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
+                                                }
+                                                obj.gender = medalData.sport.gender;
+                                                if (!_.isEmpty(medalData.team)) {
+                                                    async.each(medalData.team, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        info.participantName = n.name;
+                                                        info.school = n.schoolName;
+                                                        info.TeamId = n.teamId;
+                                                        obj.medals.push(info);
+                                                        callback(null, final);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                } else {
+                                                    async.each(medalData.player, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        if (n.middleName) {
+                                                            info.participantName = n.firstName + " " + n.middleName + " " + n.surname;
+                                                        } else {
+                                                            info.participantName = n.firstName + " " + n.surname;
+                                                        }
+                                                        if (n.athleteSchoolName) {
+                                                            info.school = n.athleteSchoolName;
+                                                        } else {
+                                                            info.school = n.school.name;
+                                                        }
+                                                        info.sfaId = n.sfaId;
+                                                        obj.medal.push(info);
+                                                        callback(null, obj);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                }
+                                            } else {
+                                                obj.err = "erroor";
+                                                callback(null, obj);
+                                            }
+                                        }, function (err) {
+                                            final.push(obj);
+                                            callback(null, obj);
+                                        });
+
+                                    }
+                                });
+                            },
+                            function (err) {
+                                var results = _.groupBy(final, "name");
+                                _.each(results, function (result, key) {
+                                    results[key] = _.groupBy(result, 'gender');
+                                });
+                                callback(null, results);
+                            });
+                    } else {
+                        var final = [];
+                        async.eachSeries(sendObj.medalWinners, function (singleData, callback) {
                                 var matchObj = {
                                     "sport": singleData._id
                                 }
@@ -591,7 +1016,9 @@ var model = {
                                                 });
                                             }
                                         }, function (err) {
-                                            final.push(obj);
+                                            if (!obj.err) {
+                                                final.push(obj);
+                                            }
                                             callback(null, obj);
                                         });
                                     }
@@ -612,137 +1039,7 @@ var model = {
             });
     },
 
-    getMedalAggregatePipeline: function (singleData) {
-        console.log("Sport", singleData);
-        var pipeline = [
-            // Stage 7
-            {
-                $match: {
-                    "sport": singleData._id
-                }
-            },
 
-            // Stage 1
-            {
-                $lookup: {
-                    "from": "sports",
-                    "localField": "sport",
-                    "foreignField": "_id",
-                    "as": "sport"
-                }
-            },
-
-            // Stage 2
-            {
-                $unwind: {
-                    path: "$sport",
-                }
-            },
-
-            // Stage 3
-            {
-                $lookup: {
-                    "from": "sportslists",
-                    "localField": "sport.sportslist",
-                    "foreignField": "_id",
-                    "as": "sport.sportslist"
-                }
-            },
-
-            // Stage 4
-            {
-                $unwind: {
-                    path: "$sport.sportslist",
-
-                }
-            },
-            {
-                $lookup: {
-                    "from": "sportslistsubcategories",
-                    "localField": "sport.sportslist.sportsListSubCategory",
-                    "foreignField": "_id",
-                    "as": "sport.sportslist"
-                }
-            },
-
-            // Stage 4
-            {
-                $unwind: {
-                    path: "$sport.sportslist.sportsListSubCategory",
-
-                }
-            },
-
-            // Stage 5
-            {
-                $lookup: {
-                    "from": "agegroups",
-                    "localField": "sport.ageGroup",
-                    "foreignField": "_id",
-                    "as": "sport.ageGroup"
-                }
-            },
-
-            // Stage 6
-            {
-                $unwind: {
-                    path: "$sport.ageGroup",
-
-                }
-            },
-
-            // // Stage 5
-            // {
-            //     $lookup: {
-            //         "from": "teamsports",
-            //         "localField": "team",
-            //         "foreignField": "_id",
-            //         "as": "team"
-            //     }
-            // },
-
-            // Stage 6
-            // {
-            //     $unwind: {
-            //         path: "$team",
-
-            //     }
-            // },
-            // {
-            //     $lookup: {
-            //         "from": "individualsports",
-            //         "localField": "player",
-            //         "foreignField": "_id",
-            //         "as": "player"
-            //     }
-            // },
-
-            // Stage 6
-            // {
-            //     $unwind: {
-            //         path: "$player",
-
-            //     }
-            // },
-            // {
-            //     $lookup: {
-            //         "from": "schools",
-            //         "localField": "player.school",
-            //         "foreignField": "_id",
-            //         "as": "player.school"
-            //     }
-            // },
-
-            // // Stage 6
-            // {
-            //     $unwind: {
-            //         path: "$player.school",
-            //     }
-            // },
-
-        ];
-        return pipeline;
-    },
 
     getAgeGroupsAndEvents: function (data, callback) {
         // console.log("data", data);
