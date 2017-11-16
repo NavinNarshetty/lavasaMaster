@@ -188,9 +188,9 @@
                         <li>
                             <a>
                                 <div class="sports-participate text-center">
-                                    <!-- <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width"> -->
-                                    <img ng-src="{{ sportDetails.name !== filter.sport.name && (sportDetails.inactiveimage | serverimage2) || (sportDetails.image  | serverimage2)}}"
-                                        alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);">
+                                    <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width">
+                                    <!-- <img ng-src="{{ sportDetails.name !== filter.sport.name && (sportDetails.inactiveimage | serverimage2) || (sportDetails.image  | serverimage2)}}"
+                                        alt="" class="img-responsive image-width" ng-click="selectSport(sportDetails);"> -->
                                     <span class="color-base text-up f16 mt10 equalSpacing">{{sportDetails.name}}</span>
                                     <div class="combine mt10">
                                         <div class="boy-sec display-inline color-base icon-right">
@@ -202,20 +202,6 @@
                                     </div>
                                 </div>
                             </a>
-                            <!-- <a ng-click="selectSport(sportDetails)">
-                                <div class="sports-participate text-center">
-                                    <img ng-src="{{sportDetails.inactiveimage | serverimage2}}" alt="" class="img-responsive image-width">
-                                    <span class="color-base text-up f16 mt10 equalSpacing">{{sportDetails.name}}</span>
-                                    <div class="combine mt10">
-                                        <div class="boy-sec display-inline color-base icon-right">
-                                            <img ng-src="img/sf-boys-mini.png" alt="">{{ sportDetails.maleCount || 0 }}
-                                        </div>
-                                        <div class="boy-sec display-inline color-base icon-left">
-                                            <img ng-src="img/sf-girl-mini.png" alt="">{{ sportDetails.femaleCount || 0 }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </a> -->
                         </li>
                     </flex-slider>
                     <div class="text-center" ng-if="!(schoolSports.length > 0)">
