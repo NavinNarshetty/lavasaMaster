@@ -397,6 +397,7 @@ var model = {
                 // find all sport events
                 function (callback) {
                     Sport.aggregate(medalWinnerPipeLine, function (err, sports) {
+                        console.log("sports",sports);
                         var sendObj = {};
                         if (err) {
                             callback(err, null);
@@ -974,14 +975,9 @@ var model = {
                                         obj.medals = [];
                                         async.eachSeries(found, function (medalData, callback) {
                                             if (medalData) {
-                                                console.log("medalData", medalData);
-                                                console.log("sport************",medalData.sport);
                                                 if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
                                                     obj.name = medalData.sport.ageGroup.name;
                                                 } else {
-                                                    console.log(" medalData.ageGroup *******", medalData);
-                                                    console.log("medalData.sport.sportslist ****", medalData.sport.sportslist);
-                                                    
                                                     obj.name = medalData.sport.ageGroup.name + " " + medalData.sport.sportslist.name;
                                                 }
                                                 obj.gender = medalData.sport.gender;
@@ -1008,8 +1004,9 @@ var model = {
                                                         } else {
                                                             info.participantName = n.firstName + " " + n.surname;
                                                         }
-                                                        if (n.athleteSchoolName) {
-                                                            info.school = n.athleteSchoolName;
+                                                        console.log("n******",n);
+                                                        if (n.atheleteSchoolName) {
+                                                            info.school = n.atheleteSchoolName;
                                                         } else {
                                                             info.school = n.school.name;
                                                         }
