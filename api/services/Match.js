@@ -1817,6 +1817,7 @@ var model = {
                 },
                 function (singleData, callback) {
                     async.concatSeries(singleData, function (n, callback) {
+                        console.log('Weight ++++++++++++++',countError, n);
                             if (countError != 0 && n.error == null) {
                                 Match.remove({
                                     _id: n.success._id
