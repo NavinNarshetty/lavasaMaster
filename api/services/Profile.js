@@ -858,7 +858,7 @@ var model = {
                                     return {
                                         name: name,
                                         team: teams,
-                                        count: items.length
+                                        count: values.length
                                     };
                                 }).value();
                             return {
@@ -886,7 +886,7 @@ var model = {
                                     return {
                                         name: name,
                                         individual: teams,
-                                        count: items.length
+                                        count: values.length
                                     };
                                 }).value();
                             return {
