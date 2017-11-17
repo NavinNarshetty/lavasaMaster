@@ -973,47 +973,57 @@ var model = {
                                         var obj = {};
                                         obj.medals = [];
                                         async.eachSeries(found, function (medalData, callback) {
-                                            console.log("medalData", medalData);
-                                            if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
-                                                obj.name = medalData.sport.ageGroup.name;
+                                            if (medalData) {
+                                                console.log("medalData", medalData);
+                                                console.log("sport************",medalData.sport);
+                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
+                                                    obj.name = medalData.sport.ageGroup.name;
+                                                } else {
+                                                    console.log(" medalData.ageGroup *******", medalData);
+                                                    console.log("medalData.sport.sportslist ****", medalData.sport.sportslist);
+                                                    
+                                                    obj.name = medalData.sport.ageGroup.name + " " + medalData.sport.sportslist.name;
+                                                }
+                                                obj.gender = medalData.sport.gender;
+                                                if (!_.isEmpty(medalData.team)) {
+                                                    async.each(medalData.team, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        info.participantName = n.name;
+                                                        info.school = n.schoolName;
+                                                        info.TeamId = n.teamId;
+                                                        obj.medals.push(info);
+                                                        callback(null, final);
+                                                    }, function (err) {
+                                                        callback(null, obj);
+                                                    });
+                                                } else {
+                                                    async.each(medalData.player, function (n, callback) {
+                                                        var info = {};
+                                                        info.sport = medalData.sport._id;
+                                                        info.medal = medalData.medalType;
+                                                        if (n.middleName) {
+                                                            info.participantName = n.firstName + " " + n.middleName + " " + n.surname;
+                                                        } else {
+                                                            info.participantName = n.firstName + " " + n.surname;
+                                                        }
+                                                        if (n.athleteSchoolName) {
+                                                            info.school = n.athleteSchoolName;
+                                                        } else {
+                                                            info.school = n.school.name;
+                                                        }
+                                                        info.sfaId = n.sfaId;
+                                                        obj.medals.push(info);
+                                                        callback(null, obj);
+                                                    }, function (err) {
+                                                        obj.err = "erroor";
+                                                        callback(null, obj);
+                                                    });
+                                                }
                                             } else {
-                                                obj.name = medalData.ageGroup.name + " " + medalData.sport.sportslist.name;
-                                            }
-                                            obj.gender = medalData.sport.gender;
-                                            if (!_.isEmpty(medalData.team)) {
-                                                async.each(medalData.team, function (n, callback) {
-                                                    var info = {};
-                                                    info.sport = medalData.sport._id;
-                                                    info.medal = medalData.medalType;
-                                                    info.participantName = n.name;
-                                                    info.school = n.schoolName;
-                                                    info.TeamId = n.teamId;
-                                                    obj.medals.push(info);
-                                                    callback(null, final);
-                                                }, function (err) {
-                                                    callback(null, obj);
-                                                });
-                                            } else {
-                                                async.each(medalData.player, function (n, callback) {
-                                                    var info = {};
-                                                    info.sport = medalData.sport._id;
-                                                    info.medal = medalData.medalType;
-                                                    if (n.middleName) {
-                                                        info.participantName = n.firstName + " " + n.middleName + " " + n.surname;
-                                                    } else {
-                                                        info.participantName = n.firstName + " " + n.surname;
-                                                    }
-                                                    if (n.athleteSchoolName) {
-                                                        info.school = n.athleteSchoolName;
-                                                    } else {
-                                                        info.school = n.school.name;
-                                                    }
-                                                    info.sfaId = n.sfaId;
-                                                    obj.medal.push(info);
-                                                    callback(null, obj);
-                                                }, function (err) {
-                                                    callback(null, obj);
-                                                });
+                                                obj.err = "erroor";
+                                                callback(null, obj);
                                             }
                                         }, function (err) {
                                             if (!obj.err) {
