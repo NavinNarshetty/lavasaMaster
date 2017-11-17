@@ -5299,6 +5299,7 @@ var model = {
                                                         async.each(singleData.resultsCombat.teams, function (n, callback) {
                                                                 async.waterfall([
                                                                         function (callback) {
+                                                                            if (n.team === singleData.opponentsTeam._id.toString()){
                                                                             async.each(n.players, function (p, callback) {
                                                                                 Athelete.findOne({
                                                                                     _id: new objectid(p.player)
@@ -5325,6 +5326,9 @@ var model = {
                                                                             }, function (err) {
                                                                                 callback(null, profile);
                                                                             });
+                                                                        }else{                
+                                                                                callback(null,profile);
+                                                                            }
                                                                         },
                                                                         function (profile, callback) {
                                                                             if (n.team !== singleData.opponentsTeam._id.toString()) {
@@ -5474,6 +5478,7 @@ var model = {
                                                                             }
                                                                         },
                                                                         function (profile, callback) {
+                                                                            if (n.team !== singleData.opponentsTeam._id.toString()){
                                                                             async.each(n.players, function (p, callback) {
                                                                                 Athelete.findOne({
                                                                                     _id: new objectid(n.players[p].player)
@@ -5500,6 +5505,9 @@ var model = {
                                                                             }, function (err) {
                                                                                 callback(null, profile);
                                                                             });
+                                                                            }else{
+                                                                                callback(null, profile);
+                                                                            }
                                                                         }
                                                                     ],
                                                                     function (err, data2) {
@@ -5579,6 +5587,7 @@ var model = {
                                                         async.each(singleData.resultBasketball.teams, function (n, callback) {
                                                             async.waterfall([
                                                                     function (callback) {
+                                                                        
                                                                         StudentTeam.findOne({
                                                                             teamId: n.team
                                                                         }).lean().deepPopulate("studentId.school teamId.school").exec(function (err, found) {
@@ -5603,7 +5612,9 @@ var model = {
                                                                                 player.sfaId = found.studentId.sfaId;
                                                                                 player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
+                                                                                if (n.team === singleData.opponentsTeam._id.toString()) {
                                                                                 profile.players.push(player);
+                                                                                }
                                                                                 callback(null, found);
                                                                             }
                                                                         });
@@ -5707,7 +5718,9 @@ var model = {
                                                                                 player.sfaId = found.studentId.sfaId;
                                                                                 player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
+                                                                                if (n.team === singleData.opponentsTeam._id.toString()) {
                                                                                 profile.players.push(player);
+                                                                                }
                                                                                 callback(null, found);
                                                                             }
                                                                         });
@@ -5812,7 +5825,9 @@ var model = {
                                                                                 player.sfaId = found.studentId.sfaId;
                                                                                 player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
+                                                                                if (n.team === singleData.opponentsTeam._id.toString()) {
                                                                                 profile.players.push(player);
+                                                                                }
                                                                                 callback(null, found);
                                                                             }
                                                                         });
@@ -5922,7 +5937,9 @@ var model = {
                                                                                 player.sfaId = found.studentId.sfaId;
                                                                                 player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
+                                                                                if (n.team === singleData.opponentsTeam._id.toString()) {
                                                                                 profile.players.push(player);
+                                                                                }
                                                                                 callback(null, found);
                                                                             }
                                                                         });
@@ -6024,7 +6041,9 @@ var model = {
                                                                                 player.sfaId = found.studentId.sfaId;
                                                                                 player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
+                                                                                if (n.team === singleData.opponentsTeam._id.toString()) {
                                                                                 profile.players.push(player);
+                                                                                }
                                                                                 callback(null, found);
                                                                             }
                                                                         });
@@ -6126,7 +6145,9 @@ var model = {
                                                                                 player.sfaId = found.studentId.sfaId;
                                                                                 player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
+                                                                                if (n.team === singleData.opponentsTeam._id.toString()) {
                                                                                 profile.players.push(player);
+                                                                                }
                                                                                 callback(null, found);
                                                                             }
                                                                         });
@@ -6228,7 +6249,9 @@ var model = {
                                                                                 player.sfaId = found.studentId.sfaId;
                                                                                 player.athleteId = found.studentId._id;
                                                                                 player.profilePic = found.studentId.photograph;
+                                                                                if (n.team === singleData.opponentsTeam._id.toString()) {
                                                                                 profile.players.push(player);
+                                                                                }
                                                                                 callback(null, found);
                                                                             }
                                                                         });
