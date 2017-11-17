@@ -1815,27 +1815,27 @@ var model = {
                             callback(null, singleData)
                         });
                 },
-                function (singleData, callback) {
-                    async.concatSeries(singleData, function (n, callback) {
-                        console.log('Weight ++++++++++++++',countError, n);
-                            if (countError != 0 && n.error == null) {
-                                Match.remove({
-                                    _id: n.success._id
-                                }).exec(function (err, found) {
-                                    if (err || _.isEmpty(found)) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, n);
-                                    }
-                                });
-                            } else {
-                                callback(null, n);
-                            }
-                        },
-                        function (err, singleData) {
-                            callback(null, singleData);
-                        });
-                },
+                // function (singleData, callback) {
+                //     async.concatSeries(singleData, function (n, callback) {
+                //         console.log('Weight ++++++++++++++',countError, n);
+                //             if (countError != 0 && n.error == null) {
+                //                 Match.remove({
+                //                     _id: n.success._id
+                //                 }).exec(function (err, found) {
+                //                     if (err || _.isEmpty(found)) {
+                //                         callback(err, null);
+                //                     } else {
+                //                         callback(null, n);
+                //                     }
+                //                 });
+                //             } else {
+                //                 callback(null, n);
+                //             }
+                //         },
+                //         function (err, singleData) {
+                //             callback(null, singleData);
+                //         });
+                // },
             ],
             function (err, results) {
                 if (err || _.isEmpty(results)) {
