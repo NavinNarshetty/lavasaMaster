@@ -4232,13 +4232,13 @@ var model = {
                                                                     if (player.player !== singleData.opponentsSingle.athleteId._id.toString()) {
                                                                         stats.opponentName = name;
                                                                         stats.school = school;
-                                                                        var player1 = {};
-                                                                        player1.name = name;
-                                                                        player1.school = school;
-                                                                        player1.sfaId = found.sfaId;
-                                                                        player1.athleteId = found._id;
-                                                                        player1.profilePic = found.photograph;
-                                                                        profile.players.push(player1);
+                                                                        // var player1 = {};
+                                                                        // player1.name = name;
+                                                                        // player1.school = school;
+                                                                        // player1.sfaId = found.sfaId;
+                                                                        // player1.athleteId = found._id;
+                                                                        // player1.profilePic = found.photograph;
+                                                                        // profile.players.push(player1);
                                                                         callback(null, profile);
                                                                     } else {
                                                                         var player1 = {};
@@ -4355,13 +4355,13 @@ var model = {
                                                                             stats.status = singleData.resultsRacquet.status;
                                                                         }
 
-                                                                        var player1 = {};
-                                                                        player1.name = name;
-                                                                        player1.school = school;
-                                                                        player1.sfaId = found.sfaId;
-                                                                        player1.athleteId = found._id;
-                                                                        player1.profilePic = found.photograph;
-                                                                        profile.players.push(player1);
+                                                                        // var player1 = {};
+                                                                        // player1.name = name;
+                                                                        // player1.school = school;
+                                                                        // player1.sfaId = found.sfaId;
+                                                                        // player1.athleteId = found._id;
+                                                                        // player1.profilePic = found.photograph;
+                                                                        // profile.players.push(player1);
                                                                     } else {
                                                                         var player1 = {};
                                                                         player1.name = name;
@@ -4396,6 +4396,7 @@ var model = {
                                                             IndividualSport.findOne({
                                                                 _id: n.id
                                                             }).lean().deepPopulate("athleteId.school").exec(function (err, found) {
+                                                                
                                                                 if (found.athleteId.middleName) {
                                                                     var name = found.athleteId.firstName + " " + found.athleteId.middleName + " " + found.athleteId.surname;
                                                                 } else {
@@ -4406,13 +4407,18 @@ var model = {
                                                                 } else {
                                                                     var school = found.athleteId.school.name;
                                                                 }
+                                                                
+
+                                                                
                                                                 var player = {};
                                                                 player.name = name;
                                                                 player.school = school;
                                                                 player.sfaId = found.athleteId.sfaId;
                                                                 player.athleteId = found.athleteId._id;
                                                                 player.profilePic = found.athleteId.photograph;
+                                                                if(school==data.schoolName){
                                                                 profile.players.push(player);
+                                                                }
                                                                 stats.score = n.time;
                                                                 stats.result = n.result;
                                                                 profile.match.push(stats);
@@ -4481,7 +4487,9 @@ var model = {
                                                         player.sfaId = found.sfaId;
                                                         player.athleteId = found._id;
                                                         player.profilePic = found.photograph;
+                                                        if(school==data.schoolName){
                                                         profile.players.push(player);
+                                                        }
                                                     });
                                                     async.each(singleData.resultSwiss.players, function (n, callback) {
                                                         if (n.id === singleData.opponentsSingle._id) {
@@ -4524,7 +4532,9 @@ var model = {
                                                         player.sfaId = found.sfaId;
                                                         player.athleteId = found._id;
                                                         player.profilePic = found.photograph;
+                                                        if(school==data.schoolName){
                                                         profile.players.push(player);
+                                                        }
                                                     });
                                                     async.each(singleData.resultKnockout.players, function (n, callback) {
                                                         if (n.player === singleData.opponentsSingle.athleteId._id.toString()) {
@@ -4599,7 +4609,9 @@ var model = {
                                                             player.sfaId = found.sfaId;
                                                             player.athleteId = found._id;
                                                             player.profilePic = found.photograph;
+                                                            if(school==data.schoolName){
                                                             profile.players.push(player);
+                                                            }
                                                             result = singleData.resultFencing.players[0].finalPoints;
                                                             if (singleData.resultFencing.status == "IsCompleted" && singleData.resultFencing.isNoMatch == false) {
                                                                 stats.isAthleteWinner = true;
