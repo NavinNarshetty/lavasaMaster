@@ -1846,6 +1846,7 @@ var model = {
     },
 
     saveWeightChangeNew: function (singleData, callback) {
+        var countError = 0;
         console.log("called");
         async.waterfall([
                 function (callback) {
@@ -1910,6 +1911,7 @@ var model = {
     },
 
     saveWeightChange: function (singleData, callback) {
+        var countError = 0;
         async.waterfall([
                 function (callback) {
                     var paramData = {};
