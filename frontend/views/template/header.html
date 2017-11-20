@@ -6,15 +6,19 @@
                 <div class="col-md-2 col-sm-2">
                     <div class="navbar-header">
                         <button type="button" class="navbar-toggle collapsed btn-togle" data-toggle="collapse" data-target="#nav-collapse" aria-expanded="false">
-                                <span class="sr-only">Toggle navigation</span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                                <span class="icon-bar"></span>
-                            </button>
-                        <a class="" href="{{linkForAll}}" target="_blank">
-                                <img src="img/cl-logo.png" alt="logo" class="mr-min hidden-xs hidden-sm"> </a>
-                        <a class="" href="{{linkForAll}}" target="_blank">
-                                <img src="img/cl-logo2.png" alt="logo" class="mr-min hidden-lg hidden-md w800 mLogoPlacing"> </a>
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="" ng-if="selectedCity !== 'hyderabad'" href="{{linkForAll}}" target="_blank">
+                            <img src="img/cl-logo.png" alt="logo" class="mr-min hidden-xs hidden-sm"> </a>
+                        <a class="" ng-if="selectedCity !== 'hyderabad'" href="{{linkForAll}}" target="_blank">
+                            <img src="img/cl-logo2.png" alt="logo" class="mr-min hidden-lg hidden-md w800 mLogoPlacing"> </a>
+                        <a class="" ng-if="selectedCity === 'hyderabad'" href="{{linkForAll}}" target="_blank">
+                            <img src="img/cl-logo.png" alt="logo" class="mr-min hidden-xs hidden-sm"> </a>
+                        <a class="" ng-if="selectedCity === 'hyderabad'" href="{{linkForAll}}" target="_blank">
+                            <img src="img/cl-logo2.png" alt="logo" class="mr-min hidden-lg hidden-md w800 mLogoPlacing"> </a>
                     </div>
                 </div>
                 <!-- NAVIGATION HEADER -->
@@ -26,8 +30,8 @@
                             <li>
                                 <div class="header-name-top">
                                     <a href="{{linkForAll}}about-us" target="_blank">
-                                            ABOUT
-                                        </a>
+                                        ABOUT
+                                    </a>
                                 </div>
                             </li>
                             <!-- ABOUT US END -->
@@ -46,29 +50,29 @@
                                             <label for="">School</label>
                                         </div>
                                         <a ng-if="registerSchool" href="{{registerSchool}}/students" target="_blank">
-                                                <span>2017</span>
-                                                <span>ATHLETES</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>ATHLETES</span>
+                                        </a>
                                         <a ng-if="!registerSchool" ui-sref="students">
-                                                <span>2017</span>
-                                                <span>ATHLETES</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>ATHLETES</span>
+                                        </a>
                                         <a ng-if="registerSchool" href="{{registerSchool}}/school" target="_blank">
-                                                <span>2017</span>
-                                                <span>SCHOOLS</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>SCHOOLS</span>
+                                        </a>
                                         <a ng-if="!registerSchool" ui-sref="school">
-                                                <span>2017</span>
-                                                <span>SCHOOLS</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>SCHOOLS</span>
+                                        </a>
                                         <a ng-if="registerSchool" href="{{registerSchool}}/team" target="_blank">
-                                                <span>2017</span>
-                                                <span>TEAMS</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>TEAMS</span>
+                                        </a>
                                         <a ng-if="!registerSchool" ui-sref="team">
-                                                <span>2017</span>
-                                                <span>TEAMS</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>TEAMS</span>
+                                        </a>
                                         <a href="{{linkForAll}}athlete" target="_blank" ng-if="selectedCity !== 'hyderabad'">
                                             <p class="m-clear" style="font-size:12px;">VIEW PROFILE FROM</p>
                                             <p class="m-clear" style="font-size:12px;">PREVIOUS CHAMPIONSHIP</p>
@@ -79,29 +83,29 @@
                                             <label for="">College</label>
                                         </div>
                                         <a ng-if="registerCollege" href="{{registerCollege}}students" target="_blank">
-                                                <span>2017</span>
-                                                <span>ATHLETES</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>ATHLETES</span>
+                                        </a>
                                         <a ng-if="!registerCollege" ui-sref="students">
-                                                <span>2017</span>
-                                                <span>ATHLETES</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>ATHLETES</span>
+                                        </a>
                                         <a ng-if="registerCollege" href="{{registerCollege}}school" target="_blank">
-                                                <span>2017</span>
-                                                <span>SCHOOLS</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>SCHOOLS</span>
+                                        </a>
                                         <a ng-if="!registerCollege" ui-sref="school">
-                                                <span>2017</span>
-                                                <span>SCHOOLS</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>SCHOOLS</span>
+                                        </a>
                                         <a ng-if="registerCollege" href="{{registerCollege}}team" target="_blank">
-                                                <span>2017</span>
-                                                <span>TEAMS</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>TEAMS</span>
+                                        </a>
                                         <a ng-if="!registerCollege" ui-sref="team">
-                                                <span>2017</span>
-                                                <span>TEAMS</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>TEAMS</span>
+                                        </a>
                                     </li>
 
                                 </ul>
@@ -113,8 +117,8 @@
                             <li class="sports-hover">
                                 <div class="header-name-top header-sport-caret">
                                     <a ng-mouseenter="options=!options" ng-model="checkbox">
-                                            SPORTS
-                                        </a>
+                                        SPORTS
+                                    </a>
                                 </div>
                                 <div class="caret-custom" ng-mouseenter="options=true" ng-mouseleave="options=false" ng-show="options || checkbox"></div>
                             </li>
@@ -133,19 +137,19 @@
                                 <ul class="dropdown-menu sf-absulate blue-menus ">
                                     <li class="padding0 ">
                                         <a href="{{registerSchool}}/results" target="_blank " ui-sref="school-ranking">
-                                                <span>2017</span>
-                                                <span>SCHOOL RANKING</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>SCHOOL RANKING</span>
+                                        </a>
                                         <a href="{{registerCollege}}/results" target="_blank ">
-                                                <span>2017</span>
-                                                <span>COLLEGE RANKING</span>
-                                            </a>
+                                            <span>2017</span>
+                                            <span>COLLEGE RANKING</span>
+                                        </a>
                                         <a href="{{linkForAll}}school-ranking" target="_blank ">
-                                                <span>PREVIOUS SCHOOL RANKING</span>
-                                            </a>
+                                            <span>PREVIOUS SCHOOL RANKING</span>
+                                        </a>
                                         <a href="{{linkForAll}}champions " target="_blank " ui-sref="champions ">
-                                                <span>PREVIOUS CHAMPIONS OF SFA</span>
-                                            </a>
+                                            <span>PREVIOUS CHAMPIONS OF SFA</span>
+                                        </a>
 
                                     </li>
                                 </ul>
@@ -157,8 +161,8 @@
                             <li ng-if="selectedCity === 'hyderabad'">
                                 <div class="header-name-top ">
                                     <a href="{{registerSchool}}/results" target="_blank ">
-                                            RESULTS
-                                        </a>
+                                        RESULTS
+                                    </a>
                                 </div>
                             </li>
                             <!-- HYDERABAD END -->
@@ -173,11 +177,11 @@
                                 <ul class="dropdown-menu sf-absulate blue-menus ">
                                     <li>
                                         <a href="{{registerSchool}}/media-gallery " target="_blank ">
-                                                <span>SCHOOL</span>
-                                            </a>
+                                            <span>SCHOOL</span>
+                                        </a>
                                         <a href="{{registerCollege}}/media-gallery " target="_blank ">
-                                                <span>COLLEGE</span>
-                                            </a>
+                                            <span>COLLEGE</span>
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
@@ -186,8 +190,8 @@
                             <li ng-if="selectedCity==='hyderabad'">
                                 <div class="header-name-top ">
                                     <a href="{{registerSchool}}/media-gallery" target="_blank ">
-                                            GALLERY
-                                        </a>
+                                        GALLERY
+                                    </a>
                                 </div>
                             </li>
                             <!-- HYDERABAD -->
@@ -203,11 +207,11 @@
                                 <ul class="dropdown-menu sf-absulate blue-menus ">
                                     <li>
                                         <a href="{{registerSchool}}/media-press " target="_blank ">
-                                                <span>SCHOOL</span>
-                                            </a>
+                                            <span>SCHOOL</span>
+                                        </a>
                                         <a href="{{registerCollege}}/media-press " target="_blank ">
-                                                <span>COLLEGE</span>
-                                            </a>
+                                            <span>COLLEGE</span>
+                                        </a>
                                     </li>
                                 </ul>
                             </li>
@@ -216,8 +220,8 @@
                             <li ng-if="selectedCity==='hyderabad'">
                                 <div class="header-name-top ">
                                     <a href="{{registerSchool}}/media-press" target="_blank ">
-                                            PRESS &amp; MEDIA
-                                        </a>
+                                        PRESS &amp; MEDIA
+                                    </a>
                                 </div>
                             </li>
                             <!-- HYDERABAD END -->
@@ -228,8 +232,8 @@
                             <li>
                                 <div class="header-name-top ">
                                     <a href="{{specialLink}}/sponsors-partner" target="_blank ">
-                                            SPONSORS &amp; PARTNERS
-                                        </a>
+                                        SPONSORS &amp; PARTNERS
+                                    </a>
                                 </div>
                             </li>
                             <!-- SPONSORS AND PARTNERS END -->
@@ -239,24 +243,25 @@
                                 <div class="display-inline forCityPlacingSm ">
                                     <div class="citySelect sfa-select ">
                                         <select name="city " id="city " ng-model="selectedCity " ng-change="changeUrl(selectedCity) ">
-                                                <option value="mumbai ">Mumbai</option>
-                                                <option value="hyderabad ">Hyderabad</option>
-                                                <!-- <option value="ahmedabad ">Ahmedabad</option> -->
-                                            </select>
+                                            <option value="mumbai ">Mumbai</option>
+                                            <option value="hyderabad ">Hyderabad</option>
+                                            <!-- <option value="ahmedabad ">Ahmedabad</option> -->
+                                        </select>
                                         <span class="only-border "></span>
                                     </div>
                                 </div>
-                                <a class="dropdown-toggle mb25 " data-toggle="dropdown" ng-mouseenter="optionss=!optionss" ng-model="checkboxs ">
-                                    <span ng-if="selectedCity==='hyderabad'">LIVE</span>    SFA {{selectedCity | capitalize}} <span ng-if="selectedCity==='mumbai'">{{eventYear}}</span>
-                                    </a>
+                                <a ng-if="selectedCity!=='hyderabad'" class="dropdown-toggle mb25 " data-toggle="dropdown" ng-mouseenter="optionss=!optionss"
+                                    ng-model="checkboxs ">
+                                    <span ng-if="selectedCity==='Hyderabad'">LIVE</span> SFA {{selectedCity | capitalize}} {{eventYear}}
+                                </a>
                                 <ul class="dropdown-menu cl-pr forSm typePlace ">
                                     <ul class="display-inline typeList ">
                                         <li>
                                             <a>SCHOOL CHAMPIONSHIP</a>
                                         </li>
-                                        <li>
+                                        <!-- <li>
                                             <a href="{{linkForAll}}/liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
-                                        </li>
+                                        </li> -->
                                         <li ng-if="!registerSchool ">
                                             <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
                                         </li>
@@ -351,17 +356,17 @@
                             <!-- ABOUT US -->
                             <li>
                                 <a href="{{linkForAll}}about-us " target="_blank ">
-                                        ABOUT
-                                    </a>
+                                    ABOUT
+                                </a>
                             </li>
                             <!-- ABOUT US END -->
                             <!-- PROFILES -->
                             <!-- MUMBAI -->
                             <li class="dropdown" ng-if="selectedCity==='mumbai'">
                                 <a class="dropdown-toggle" data-toggle="dropdown">
-                                        PROFILES
-                                        <span class="caret"></span>
-                                    </a>
+                                    PROFILES
+                                    <span class="caret"></span>
+                                </a>
                                 <ul class="dropdown-menu text-center cl-pr">
                                     <li>
                                         <label for="">SCHOOL</label>
@@ -398,9 +403,9 @@
                             <!-- HYDERABAD -->
                             <li ng-if="selectedCity==='hyderabad'">
                                 <a class="dropdown-toggle" data-toggle="dropdown">
-                                        PROFILES
-                                        <span class="caret"></span>
-                                    </a>
+                                    PROFILES
+                                    <span class="caret"></span>
+                                </a>
                                 <ul class="dropdown-menu text-center cl-pr">
                                     <li>
                                         <a href="{{registerSchool}}/students " target="_blank "> 2017 ATHLETES</a>
@@ -419,9 +424,9 @@
                             <!-- RESULT -->
                             <li class="dropdown" ng-if="selectedCity==='mumbai'">
                                 <a class="dropdown-toggle" data-toggle="dropdown">
-                                        RESULTS
-                                        <span class="caret "></span>
-                                    </a>
+                                    RESULTS
+                                    <span class="caret "></span>
+                                </a>
                                 <ul class="dropdown-menu text-center cl-pr ">
                                     <li>
                                         <a href="{{registerSchool}}/results" target="_blank ">2017 SCHOOL RANKING</a>
@@ -440,8 +445,8 @@
                             <!-- HYDERABAD -->
                             <li ng-if="selectedCity==='hyderabad'">
                                 <a href="{{registerSchool}}/results" target="_blank ">
-                                        RESULTS
-                                    </a>
+                                    RESULTS
+                                </a>
                             </li>
                             <!-- HYDERABAD END -->
                             <!-- RESULT -->
@@ -449,9 +454,9 @@
                             <!-- MUMBAI -->
                             <li class="dropdown" ng-if="selectedCity==='mumbai'">
                                 <a class="dropdown-toggle" data-toggle="dropdown">
-                                        GALLERY
-                                        <span class="caret"></span>
-                                    </a>
+                                    GALLERY
+                                    <span class="caret"></span>
+                                </a>
                                 <ul class="dropdown-menu text-center cl-pr ">
                                     <li>
                                         <a href="{{registerSchool}}/media-gallery" target="_blank ">SCHOOL</a>
@@ -466,8 +471,8 @@
                             <!-- HYDERABAD -->
                             <li ng-if="selectedCity==='hyderabad'">
                                 <a href="{{registerSchool}}/media-gallery" target="_blank ">
-                                        GALLERY
-                                    </a>
+                                    GALLERY
+                                </a>
                             </li>
                             <!-- HYDERABAD END -->
                             <!-- GALLERY END -->
@@ -476,9 +481,9 @@
                             <!-- MUMBAI -->
                             <li class="dropdown" ng-if="selectedCity==='mumbai'">
                                 <a class="dropdown-toggle" data-toggle="dropdown">
-                                        MEDIA
-                                        <span class="caret"></span>
-                                    </a>
+                                    MEDIA
+                                    <span class="caret"></span>
+                                </a>
                                 <ul class="dropdown-menu text-center cl-pr ">
                                     <li>
                                         <a href="{{linkForAll}}school" target="_blank " ui-sref="school-ranking">SCHOOL</a>
@@ -492,15 +497,15 @@
                             <!-- HYDERABAD -->
                             <li ng-if="selectedCity==='hyderabad'">
                                 <a href="{{linkForAll}}" target="_blank ">
-                                        MEDIA
-                                    </a>
+                                    MEDIA
+                                </a>
                             </li>
                             <!-- HYDERABAD -->
                             <!-- MEDIA END -->
                             <li>
                                 <a href="{{specialLink}}/sponsors-partner" target="_blank ">
-                                        SPONSORS &amp; PARTNERS
-                                    </a>
+                                    SPONSORS &amp; PARTNERS
+                                </a>
                             </li>
                         </ul>
                         <!-- MOBILE HEADER END -->
@@ -512,23 +517,25 @@
                     <div class="display-inline ">
                         <div class="citySelect sfa-select ">
                             <select name="city " id="city " ng-model="selectedCity " ng-change="changeUrl(selectedCity) ">
-                                    <option value="mumbai">Mumbai</option>
-                                    <option value="hyderabad">Hyderabad</option>
-                                    <!-- <option value="ahmedabad ">Ahmedabad</option> -->
-                                </select>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="hyderabad">Hyderabad</option>
+                                <!-- <option value="ahmedabad ">Ahmedabad</option> -->
+                            </select>
                             <span class="only-border "></span>
                         </div>
                     </div>
-                    <div class="sfa-mum ">
+                    <div class="sfa-mum " ng-if="selectedCity!=='hyderabad'">
                         <button type="button " name="button " class="btn btn-sfatop " ng-mouseenter="optionss=!optionss
-                                  " ng-model="checkboxs "> <span ng-if="selectedCity==='hyderabad'">LIVE</span>    SFA {{selectedCity | capitalize}} <span ng-if="selectedCity==='mumbai'">{{eventYear}}</span></button>
+                                  " ng-model="checkboxs ">
+                            <span ng-if="selectedCity==='Hyderabad'">LIVE</span> SFA {{selectedCity | capitalize}} {{eventYear}}</button>
                     </div>
                 </div>
-                <div class="visible-xs ">
+                <div class="visible-xs " ng-if="selectedCity!=='hyderabad'">
                     <div class=" ">
                         <a class="dropdown-toggle mb25 " data-toggle="dropdown">
                             <div class="sfa-mum sfa-mum-m ">
-                                <button type="button" name="button " class="btn btn-sfatop margin0 " ng-mouseenter="optionss=!optionss"> <span ng-if="selectedCity==='hyderabad'">LIVE</span> SFA {{selectedCity | capitalize}} <span ng-if="selectedCity==='mumbai'">{{eventYear}}</span></button>
+                                <button type="button" name="button " class="btn btn-sfatop margin0 " ng-mouseenter="optionss=!optionss">
+                                    <span ng-if="selectedCity==='Hyderabad'">LIVE</span> SFA {{selectedCity | capitalize}} {{eventYear}}</button>
                             </div>
                         </a>
                         <ul class="dropdown-menu text-center cl-pr placingDrop typePlacing ">
@@ -536,9 +543,9 @@
                                 <li>
                                     <a>SCHOOL CHAMPIONSHIP</a>
                                 </li>
-                                <li class="live-update-color">
+                                <!-- <li class="live-update-color">
                                     <a href="{{linkForAll}}/liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
-                                </li>
+                                </li> -->
                                 <li ng-if="!registerSchool ">
                                     <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
                                 </li>
@@ -623,10 +630,10 @@
                     <div class="display-inline forCityPlacing ">
                         <div class="citySelect sfa-select ">
                             <select name="city " id="city " ng-model="selectedCity " ng-change="changeUrl(selectedCity) ">
-                                    <option value="mumbai">Mumbai</option>
-                                    <option value="hyderabad">Hyderabad</option>
-                                    <!-- <option value="ahmedabad ">Ahmedabad</option> -->
-                                </select>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="hyderabad">Hyderabad</option>
+                                <!-- <option value="ahmedabad ">Ahmedabad</option> -->
+                            </select>
                             <span class="only-border "></span>
                         </div>
                     </div>
@@ -646,9 +653,9 @@
                             <li>
                                 <p>SCHOOL CHAMPIONSHIP</p>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="{{linkForAll}}/liveupdates " style="color:#5aeba4 !important" target="_blank ">LIVE UPDATES</a>
-                            </li>
+                            </li> -->
                             <li ng-if="!registerSchool ">
                                 <a ui-sref="championship "> ABOUT CHAMPIONSHIP</a>
                             </li>
@@ -745,43 +752,43 @@
                                         <ul class="padding0 ">
                                             <li>
                                                 <a href="{{linkForAllSports}}Basketball " target="_blank ">
-                                                        Basketball
-                                                    </a>
+                                                    Basketball
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Football " target="_blank ">
-                                                        Football
-                                                    </a>
+                                                    Football
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Handball " target="_blank ">
-                                                        Handball
-                                                    </a>
+                                                    Handball
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Hockey " target="_blank ">
-                                                        Hockey
-                                                    </a>
+                                                    Hockey
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Kabaddi " target="_blank ">
-                                                        Kabaddi
-                                                    </a>
+                                                    Kabaddi
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Kho Kho " target="_blank ">
-                                                        Kho Kho
-                                                    </a>
+                                                    Kho Kho
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Throwball " target="_blank ">
-                                                        Throwball
-                                                    </a>
+                                                    Throwball
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Volleyball " target="_blank ">
-                                                        Volleyball
-                                                    </a>
+                                                    Volleyball
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -792,23 +799,23 @@
                                         <ul class="padding0 ">
                                             <li>
                                                 <a href="{{linkForAllSports}}Badminton " target="_blank ">
-                                                        Badminton
-                                                    </a>
+                                                    Badminton
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Table Tennis " target="_blank ">
-                                                        Table Tennis
-                                                    </a>
+                                                    Table Tennis
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Tennis " target="_blank ">
-                                                        Tennis
-                                                    </a>
+                                                    Tennis
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Squash " target="_blank ">
-                                                        Squash
-                                                    </a>
+                                                    Squash
+                                                </a>
                                             </li>
 
                                         </ul>
@@ -820,38 +827,38 @@
                                         <ul class="padding0 ">
                                             <li>
                                                 <a href="{{linkForAllSports}}Boxing " target="_blank ">
-                                                        Boxing
-                                                    </a>
+                                                    Boxing
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Fencing " target="_blank ">
-                                                        Fencing
-                                                    </a>
+                                                    Fencing
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Judo " target="_blank ">
-                                                        Judo
-                                                    </a>
+                                                    Judo
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Karate " target="_blank ">
-                                                        Karate
-                                                    </a>
+                                                    Karate
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Sport MMA " target="_blank ">
-                                                        Sport MMA
-                                                    </a>
+                                                    Sport MMA
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Taekwondo " target="_blank ">
-                                                        Taekwondo
-                                                    </a>
+                                                    Taekwondo
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Wrestling " target="_blank ">
-                                                        Wrestling
-                                                    </a>
+                                                    Wrestling
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -862,13 +869,13 @@
                                         <ul class="padding0 ">
                                             <li>
                                                 <a href="{{linkForAllSports}}Archery " target="_blank ">
-                                                        Archery
-                                                    </a>
+                                                    Archery
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Shooting " target="_blank ">
-                                                        Shooting
-                                                    </a>
+                                                    Shooting
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
@@ -879,13 +886,13 @@
                                         <ul class="padding0 ">
                                             <li>
                                                 <a href="{{linkForAllSports}}Swimming " target="_blank ">
-                                                        Swimming
-                                                    </a>
+                                                    Swimming
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Water Polo " target="_blank ">
-                                                        Water Polo
-                                                    </a>
+                                                    Water Polo
+                                                </a>
                                             </li>
 
                                         </ul>
@@ -897,18 +904,18 @@
                                         <ul class="padding0 ">
                                             <li>
                                                 <a href="{{linkForAllSports}}Athletics " target="_blank ">
-                                                        Athletics
-                                                    </a>
+                                                    Athletics
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Carrom " target="_blank ">
-                                                        Carrom
-                                                    </a>
+                                                    Carrom
+                                                </a>
                                             </li>
                                             <li>
                                                 <a href="{{linkForAllSports}}Chess " target="_blank ">
-                                                        Chess
-                                                    </a>
+                                                    Chess
+                                                </a>
                                             </li>
                                         </ul>
                                     </div>
