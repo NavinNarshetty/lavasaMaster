@@ -6481,7 +6481,7 @@ var model = {
                                     }
                                 );
                                 IndividualSport.aggregate(newPipeLine, function (err, matchData) {
-                                    console.log("matchData", matchData);
+                                    // console.log("matchData", matchData);
                                     if (err) {
                                         callback(err, "error in mongoose");
                                     } else {

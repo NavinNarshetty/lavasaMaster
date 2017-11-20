@@ -10895,10 +10895,12 @@ var model = {
                                     data.isTeam = true;
                                 }
                                 var type = found.excelType.toLowerCase();
-                                if (type == "knockout") {
-                                    data.isKnockout == true;
+                                console.log("type", type);
+                                if (type === "knockout") {
+                                    data.isKnockout = true;
+                                    console.log("isKnockout", data.isKnockout);
                                 } else {
-                                    data.isKnockout == false;
+                                    data.isKnockout = false;
                                 }
                                 // console.log("data.isTeam", data.isNoMatch);
                                 data._id = found._id;
