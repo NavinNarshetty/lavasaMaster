@@ -11149,10 +11149,10 @@ var model = {
                                     data.isTeam = true;
                                 }
                                 var type = found.excelType.toLowerCase();
-                                if (type == "knockout") {
-                                    data.isKnockout == true;
+                                if (type === "knockout") {
+                                    data.isKnockout = true;
                                 } else {
-                                    data.isKnockout == false;
+                                    data.isKnockout = false;
                                 }
                                 // console.log("data.isTeam", data.isNoMatch);
                                 data._id = found._id;
