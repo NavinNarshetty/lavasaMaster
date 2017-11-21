@@ -12466,10 +12466,10 @@ var model = {
                                     };
                                 } else if (data.found.resultBasketball && data.found.resultBasketball.status == 'IsCompleted' && data.found.resultBasketball.isNoMatch == false) {
                                     winPlayer.push(data.found.resultBasketball.winner.player);
-                                    console.log("player", winPlayer);
+                                    console.log("player", winPlayer[0]);
                                     updateObj = {
                                         $set: {
-                                            opponentsTeam: winPlayer
+                                            opponentsTeam: winPlayer[0]
                                         }
                                     };
                                 } else if (data.found.resultHockey && data.found.resultHockey.status == 'IsCompleted' && data.found.resultHockey.isNoMatch == false) {
