@@ -503,6 +503,7 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
             resultVolleyball : $scope.match.resultVolleyball,
             matchId: $scope.matchData.matchId
           }
+          $interval.cancel(promise);
           NavigationService.saveMatch($scope.matchResult, function(data){
             if(data.value == true){
               $state.go('knockout-team', {

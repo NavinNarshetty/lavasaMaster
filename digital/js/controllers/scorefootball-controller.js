@@ -574,6 +574,7 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
             resultFootball : $scope.match.resultFootball,
             matchId: $scope.matchData.matchId
           }
+          $interval.cancel(promise);
           NavigationService.saveFootball($scope.matchResult, function(data){
             if(data.value == true){
               $state.go('league-knockoutTeam', {

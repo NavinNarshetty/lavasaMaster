@@ -322,6 +322,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
     $scope.matchComplete=function(){
       $scope.match[resultVar].status = "IsCompleted";
+      $interval.cancel(promise);
       save($scope.match,3);
       completeMatchModal.close();
     };
