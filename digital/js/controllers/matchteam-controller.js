@@ -535,6 +535,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                 if (data.value == true) {
                     toastr.success('Match result has been successfully reset', 'Result Reset');
                     $rootScope.modalInstance.close('a');
+                    location.reload();
                 } else {
                     toastr.error('Match result reset failed. Please try again', 'Result Reset Failed');
                 }
