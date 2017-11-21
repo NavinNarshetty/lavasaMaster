@@ -137,7 +137,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                                 $scope.formData = $scope.matchDetails.resultFootball;
                                 if ($scope.matchDetails.resultFootball.status == 'IsCompleted') {
                                     toastr.warning("This match has already been scored.", "Match Complete");
-                                    $state.go('league-knockout', {
+                                    $state.go('league-knockoutTeam', {
                                         drawFormat: $stateParams.drawFormat,
                                         id: $stateParams.sport
                                     });
@@ -385,7 +385,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                 NavigationService.saveFootball($scope.matchResult, function (data) {
                     if (data.value == true) {
                         toastr.success('Results stored successfully', 'Saved success');
-                        $state.go('league-knockout', {
+                        $state.go('league-knockoutTeam', {
                             drawFormat: $stateParams.drawFormat,
                             id: $stateParams.sport
                         });

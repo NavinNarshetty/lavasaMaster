@@ -619,6 +619,12 @@ $brand-green: #0eda85 !default; //green
   margin-bottom: 10px;
   .sportfilter-select{
     padding: 0;
+
+    .ui-select-bootstrap {
+      .ui-select-choices-row > span{
+        font-size: 12px;
+      }
+    }
   }
 }
 

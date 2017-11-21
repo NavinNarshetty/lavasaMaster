@@ -290,70 +290,74 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   // };
   // GENERATE RANKING TABLE END
   // GET RANKING TABLE
-  NavigationService.getSchoolByRanks(function (data) {
-    console.log('rankingTable', data);
-    if (data.value == true) {
-      $scope.rankTable = data.data;
-      $scope.rankTable.tableLimit = 20;
-      $scope.rankTable.showTable = true;
-      _.each($scope.rankTable, function (n,nkey) {
-        n.rowDetail = false;
-        console.log(nkey, n);
-        n.goldCount = 0;
-        n.silverCount = 0;
-        n.bronzeCount = 0;
-        if (n.medal) {
-          if (n.medal.gold) {
-            n.goldCount = n.medal.gold.count;
+  $scope.getSchoolByRanks = function(){
+    NavigationService.getSchoolByRanks(function (data) {
+      console.log('rankingTable', data);
+      if (data.value == true) {
+        $scope.rankTable = data.data;
+        $scope.rankTable.tableLimit = 20;
+        $scope.rankTable.showTable = true;
+        _.each($scope.rankTable, function (n,nkey) {
+          n.rowDetail = false;
+          n.goldCount = 0;
+          n.silverCount = 0;
+          n.bronzeCount = 0;
+          if (n.medal) {
+            if (n.medal.gold) {
+              n.goldCount = n.medal.gold.count;
+            }
+            if (n.medal.silver) {
+              n.silverCount = n.medal.silver.count;
+            }
+            if (n.medal.bronze) {
+              n.bronzeCount = n.medal.bronze.count;
+            }
           }
-          if (n.medal.silver) {
-            n.silverCount = n.medal.silver.count;
+          if(!n.totalPoints){
+            n.totalPoints = 0;
           }
-          if (n.medal.bronze) {
-            n.bronzeCount = n.medal.bronze.count;
-          }
-        }
-        if(!n.totalPoints){
-          n.totalPoints = 0;
-        }
-      });
-    } else {
-      toastr.error('Ranking Table Error', 'Error');
-    }
-  });
-  // GET RANKING TABLE END
-  // GET MEDAL WINNERS
-  // $scope.getMedalWinners = function(){
-  //     NavigationService.getMedalWinners($scope.sportFilter, function(data){
-  //       // var data = data.data;
-  //       console.log('getMedalWinners',data);
-  //     })
-  //   NavigationService.getAgeGroupsAndEvents($scope.sportFilter, function(data){
-  //     console.log('getAgeGroupsAndEvents',data);
-  //     if (data.value = true) {
-  //       var data = data.data;
-  //       $scope.medalFilterList = {
-  //         ageGroups: data.ageGroups,
-  //         events: data.events,
-  //         gender: data.gender
-  //       }
-  //       console.log('medalFilterList',$scope.medalFilterList);
-  //     } else{
-  //       console.log("getAgeGroupsAndEvents Failed");
-  //     }
-  //   })
-  // }
-  // $scope.getMedalWinners();
+        });
+      } else {
+        toastr.error('Ranking Table Error', 'Error');
+      }
+    });
+  }
+  $scope.getSchoolByRanks();
 
-  // $scope.medalList = function(){
-  //   console.log("medalFilter", $scope.medalFilter);
-  // }
-  // GET MEDAL WINNERS END
+  // GET RANKING TABLE END
+  // GET MEDAL FILTER
+  $scope.getMedalFilter = function(){
+    NavigationService.getAgeGroupsAndEvents($scope.sportFilter, function(data){
+      // console.log('getAgeGroupsAndEvents',data);
+      if (data.value = true) {
+        var data = data.data;
+        $scope.medalFilterList = {
+          ageGroups: data.ageGroups,
+          events: data.events,
+          gender: data.gender
+        }
+        console.log('medalFilterList',$scope.medalFilterList);
+      } else{
+        console.log("getAgeGroupsAndEvents Failed", data);
+      }
+    });
+  }
+
+  $scope.medalList = function(){
+    console.log("medalFilter", $scope.medalFilter);
+  }
+  // GET MEDAL FILTER END
+  // GET MEDAL WINNER
+  $scope.getMedalWinners = function(){
+    NavigationService.getMedalWinners($scope.sportFilter, function(data){
+      console.log('getMedalWinners',data);
+    });
+  }
+  // GET MEDAL WINNER END
   // GET SPORT RANKING TABLE
   $scope.getSchoolBySport = function () {
     NavigationService.getSchoolBySport($scope.sportFilter, function (data) {
       var data = data.data;
-      console.log('Data', data);
       if (data.value == true) {
         $scope.sportTable = data.data.table;
         $scope.risingAthletes = data.data.risingAthletes;
@@ -374,6 +378,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         toastr.error('Sport Ranking Error', 'Error');
       }
     });
+    $scope.getMedalFilter();
     // $scope.getMedalWinners();
   };
   $scope.getSchoolBySport();
