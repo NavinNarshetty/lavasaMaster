@@ -1,0 +1,112 @@
+<!-- HEADER -->
+<div class="heading-sec">
+  <div class="row">
+    <div class="col-md-4 column">
+      <div class="heading-profile">
+        <h2>{{title}} Champions Schedule</h2>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- HEADER END -->
+
+<!-- FORM -->
+<div class=" panel-content ">
+  <div class="row ">
+    <div class="col-md-12 ">
+      <div class="widget ">
+        <div class="table-area ">
+          <div class="widget-title">
+            <form name="championSchedule" role='form'>
+              <!-- SELECT SPORTS -->
+              <div class="form-group">
+                <label>Select Sport</label>
+                <ui-select name="selectsportslist" id="selectsportslist" theme="bootstrap" ng-model="form.sportslist" ng-change="searchSportList($select.selected._id)"
+                  required>
+                  <ui-select-match placeholder="Enter Sports List" allow-clear="true">
+                    {{$select.selected.name}}
+                  </ui-select-match>
+                  <ui-select-choices refresh.delay="0" repeat="item in sportitems | filter:$select.search" refresh="getAllSportList($select.search)">
+                    <span ng-bind-html="item.name"></span>
+                  </ui-select-choices>
+                </ui-select>
+                <div class="error-msg" ng-if="detailForm.selectsportslist.$invalid && detailForm.selectsportslist.$touched">Please Enter Sport List *</div>
+              </div>
+              <!-- SELECT SPORTS END -->
+              <!-- DATE -->
+              <div class="form-group">
+                <label for="">Date</label>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label for="">To</label>
+                    <input type="text" ng-model="formData.name" class="form-control" placeholder="Enter Start Date" required>
+                  </div>
+                  <div class="col-md-6">
+                    <label for="">From</label>
+                    <input type="text" ng-model="formData.name" class="form-control" placeholder="Enter End Date" required>
+                  </div>
+                </div>
+              </div>
+              <!-- DATE END -->
+              <!-- UPLOAD TIME AND TEXT -->
+              <div class="form-group">
+                <label>Upload Time & Text</label>
+                <input type="text" ng-model="formData.name" class="form-control" placeholder="Enter Upload Text">
+              </div>
+              <!-- UPLOAD TIME AND TEXT END -->
+
+              <!-- TABLE FOR CHOOSE FILE -->
+              <div class="form-group">
+                <div class="swiperGallery-button text-right" ng-click="addRow(formData);">
+                  <button class="btn btn-default" type="submit">Add Row</button>
+                </div>
+                <div class="swiperGallery-holder table-responsive">
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Select Type</th>
+                        <th>Text</th>
+                        <th>Pdf Upload</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="item in formData.pdf track by $index">
+                        <td>
+                          <div class="form-group">
+                            <select name="selectDraws" class="form-control" ng-model="item.pdfType" required>
+                                  <option value="schedulePdf">Sports Draws</option>
+                                  <option value="resultPdf">Result</option>
+                                  <option value="startList">Start List</option>
+                                  <option value="order">Order</option>
+                                  <option value="other">Other</option>
+                          </select>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-group">
+                            <input type="text" placeholder="Enter Text" class="form-control" ng-model="item.textHeader">
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-group">
+                            <upload-image ng-model="item.dpdf" type="pdf" ispdf=true required></upload-image>
+                          </div>
+                        </td>
+                        <td ng-click="deleteRow(formData,$index);">
+                          <button class="btn btn-default" type="submit">Delete</button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- TABLE FOR CHOOSE FILE END -->
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- FORM END -->

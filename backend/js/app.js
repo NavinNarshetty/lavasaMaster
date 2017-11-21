@@ -488,6 +488,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             templateUrl: "views/template.html",
             controller: 'DetailRisingCtrl'
         })
+        // Detail schedule
+        .state('detail-championschedule', {
+            url: "/detail-championschedule",
+            templateUrl: "views/template.html",
+            controller: 'DetailScheduleCtrl'
+        })
         //additional payment
         .state('additional-payment', {
             url: "/additional-payment",
