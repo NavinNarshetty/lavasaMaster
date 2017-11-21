@@ -9326,7 +9326,7 @@ var model = {
                                     console.log("player", winPlayer);
                                     updateObj = {
                                         $set: {
-                                            opponentsTeam: winPlayer
+                                            opponentsTeam: winPlayer[0]
                                         }
                                     };
                                 } else if (data.found.resultHockey && data.found.resultHockey.status == 'IsCompleted' && data.found.resultHockey.isNoMatch == false) {
