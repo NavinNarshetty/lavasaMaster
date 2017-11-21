@@ -15,7 +15,13 @@ var schema = new Schema({
     pdfDetail: Schema.Types.Mixed
 });
 
-schema.plugin(deepPopulate, {});
+schema.plugin(deepPopulate, {
+    populate: {
+        'sport': {
+            select: '_id name'
+        }
+    }
+});
 schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Schedule', schema);
