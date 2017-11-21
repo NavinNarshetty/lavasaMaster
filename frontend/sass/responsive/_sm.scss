@@ -28,5 +28,16 @@
       line-height: 1.2;
     }
     // SPECIAL EVENTS PAGE END
+    // MATCH CENTER
+    .teammatchcenter-modal{
+      .matchplayer-details{
+        width: calc(100% - 85px);
+        .matchplayer-school{
+          font-size: 14px;
+        }
+      }
+
+    }
+    // MATCH CENTER  END
     // Tablet End
  }

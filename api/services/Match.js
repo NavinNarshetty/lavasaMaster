@@ -4326,7 +4326,7 @@ var model = {
                     }
                 } else {
                     obj["TEAM ID 1"] = "";
-                    obj["PARTICIPANT 1"] = "";
+                    // obj["PARTICIPANT 1"] = "";
                     obj["SCHOOL 1"] = "";
                     obj["RESULT 1"] = "";
                     obj["SCORE 1"] = "";
@@ -4584,15 +4584,35 @@ var model = {
                         obj["FINAL SCORE 2"] = "";
                         obj["DATA POINTS 2"] = "";
                     }
-                } else {
-                    obj["TEAM ID 2"] = "";
-                    obj["PARTICIPANT 2"] = "";
-                    obj["SCHOOL 2"] = "";
-                    obj["RESULT 2"] = "";
+                } 
+                else {
+                     obj["TEAM ID 2"] = "";
+                    // obj["PARTICIPANT 2"] = "";
+                     obj["SCHOOL 2"] = "";
+                     obj["RESULT 2"] = "";
+                    if(mainData.resultBasketball){
+                        obj["QUARTER SCORE 2"]="";
+                        obj["FINAL SCORE"]="";
+                        obj["VIDEO TYPE"] = "";
+                        obj["VIDEO"] = "";
+                    }else if (mainData.resultHandball||mainData.resultKabaddi){
+                       obj["HALF SCORE 2"]="";
+                       obj["FINAL SCORE 2"]="";
+                       obj["DATA POINTS 2"] = "";
+                       obj["VIDEO TYPE"] = "";
+                       obj["VIDEO"] = "";
+                    }else if (mainData.resultWaterPolo){
+                         obj["QUARTER SCORE 2"]="";
+                         obj["FINAL SCORE"]="";
+                         obj["DATA POINTS 2"] = "";
+                         obj["VIDEO TYPE"] = "";
+                         obj["VIDEO"] = "";
+                    }else{
                     obj["SCORE 2"] = "";
                     obj["DATA POINTS 2"] = "";
                     obj["VIDEO TYPE"] = "";
                     obj["VIDEO"] = "";
+                }
                 }
                 callback(null, obj);
 

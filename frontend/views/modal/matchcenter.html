@@ -47,7 +47,7 @@
               </div>
               <div class="matchplayer-details">
                 <p class="matchplayer-name"><span> {{currentMatch.opponentsSingle[$index].athleteId.fullName}}</span></p>
-                <p class="matchplayer-school">{{currentMatch.opponentsSingle[$index].athleteId.school.name | truncate:'22'}}</p>
+                <p class="matchplayer-school" title="{{currentMatch.opponentsSingle[$index].athleteId.school.name}}">{{currentMatch.opponentsSingle[$index].athleteId.school.name | truncate:'22'}}</p>
               </div>
             </div>
           </div>
@@ -81,7 +81,6 @@
                     <input type="number" ng-model="set.serviceError" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
                   </div>
                   <div class="col-md-4 col-sm-6 col-xs-6" ng-if="currentMatch.sport.sportslist.name=='Tennis Singles'">
-                    <label class="datapoint-name">
                     <label class="text-uppercase setpoint-label">Double Faults</label>
                     <input type="number" ng-model="set.doubleFaults" class="matchcenter-playerpoint display-inline form-control" readonly placeholder="0">
                   </div>
