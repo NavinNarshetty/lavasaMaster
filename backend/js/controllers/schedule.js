@@ -21,10 +21,10 @@ myApp.controller('DetailScheduleCtrl', function ($scope, TemplateService, Naviga
       $scope.sportitems = data.data.results;
 
     });
-  }
+  };
   $scope.searchSportList = function (data) {
     $scope.draws = data;
-  }
+  };
 
 
   $scope.addRow = function (formData) {
@@ -33,21 +33,35 @@ myApp.controller('DetailScheduleCtrl', function ($scope, TemplateService, Naviga
       $scope.formData.pdfDetail.push({
         "pdfType": '',
         "textHeader": '',
-        "dpdf": ''
-      })
+        "pdfName": ''
+      });
     } else {
       $scope.formData.pdfDetail.push({
         "pdfType": '',
         "textHeader": '',
-        "dpdf": ''
-      })
+        "pdfName": ''
+      });
     }
 
-  }
+  };
   $scope.addRow();
 
   $scope.deleteRow = function (formData, index) {
     formData.pdfDetail.splice(index, 1);
-  }
+  };
+  $scope.saveschedule = function (formData) {
+    if (formData) {
+      $scope.url = "Schedule/save";
+      NavigationService.apiCall($scope.url, formData, function (data) {
+        console.log("data.value", data);
+        if (data.value === true) {
+          toastr.success(" Saved Successfully", "SportList Message");
+
+
+        }
+
+      });
+    }
+  };
 });
 //DETAIL SCHEDULE END
