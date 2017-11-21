@@ -292,7 +292,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   // GET RANKING TABLE
   $scope.getSchoolByRanks = function(){
     NavigationService.getSchoolByRanks(function (data) {
-      console.log('rankingTable', data);
+      // console.log('rankingTable', data);
       if (data.value == true) {
         $scope.rankTable = data.data;
         $scope.rankTable.tableLimit = 20;
@@ -336,7 +336,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
           events: data.events,
           gender: data.gender
         }
-        console.log('medalFilterList',$scope.medalFilterList);
+        // console.log('medalFilterList',$scope.medalFilterList);
       } else{
         console.log("getAgeGroupsAndEvents Failed", data);
       }
@@ -350,7 +350,10 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   // GET MEDAL WINNER
   $scope.getMedalWinners = function(){
     NavigationService.getMedalWinners($scope.sportFilter, function(data){
-      console.log('getMedalWinners',data);
+      // console.log('getMedalWinners',data);
+      $scope.medalWinners = data.data;
+      console.log('$scope.medalWinners',$scope.medalWinners);
+
     });
   }
   // GET MEDAL WINNER END
@@ -372,8 +375,8 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
           // n.goldCount = n.medalData
         });
         $scope.showAllMedalWinner = false;
-        console.log('School Table', $scope.sportTable);
-        console.log('rising', $scope.risingAthletes);
+        // console.log('School Table', $scope.sportTable);
+        // console.log('rising', $scope.risingAthletes);
       } else {
         toastr.error('Sport Ranking Error', 'Error');
       }

@@ -321,7 +321,8 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
 
 
     $scope.matchComplete=function(){
-      save();
+      $scope.match[resultVar].status = "IsCompleted";
+      save($scope.match,3);
       completeMatchModal.close();
     };
 
@@ -330,7 +331,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       if (match[resultVar].matchPhoto.length != 0) {
         if (match[resultVar].scoreSheet.length != 0) {
           if (match[resultVar].winner && match[resultVar].winner.player && match[resultVar].winner.player != "") {
-            match[resultVar].status = "IsCompleted";
+            // match[resultVar].status = "IsCompleted";
 
             completeMatchModal = $uibModal.open({
               animation: true,

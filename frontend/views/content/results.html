@@ -394,44 +394,56 @@
             </div>
             <!-- FILTER END -->
             <div class="viewallmedal-winner">
+              <!-- <pre>{{medalWinners|json}}</pre> -->
               <!-- MEDAL WINNER -->
-              <div class="viewallmedal-winnerholder" ng-repeat="medalWinner in medalWinners track by $index">
+              <div class="viewallmedal-winnerholder" ng-repeat="(key,medalWinner) in medalWinners track by $index">
                 <p class="viewallmedal-winnertitle">
-                  <span>{{medalWinner[0].name}}</span>
+                  <span>{{key}}</span>
                   <!-- <pre>{{medalWinner|json}}</pre> -->
                 </p>
-                <div class="viewall-winnerrow" ng-repeat="winnerList in medalWinner track by $index">
-                  <!-- <pre>{{winnerList|json}}</pre> -->
-                  <div class="row" ng-if="winnerList.medalWinners.male">
-                    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="winner in winnerList.medalWinners.male track by $index" >
-                      <!-- <pre>{{winner}}</pre> -->
+                <div class="viewall-winnerrow">
+                  <div class="row" ng-if="medalWinner.male" ng-repeat="winner in medalWinner.male track by $index">
+                    <div class="col-md-4 col-sm-6 col-xs-12"  ng-repeat= "player in winner.medals track by $index">
+                      <!-- <pre>{{player|json}}</pre> -->
                       <div class="allmedal-winnercard " >
                         <div class="allmedal-medalholder">
-                          <img ng-src="{{winner.medaltype|medalicon:'blue'}}" alt="{{winner.medaltype}} Medal" class="img-responsive">
+                          <img ng-src="{{player.medal|medalicon:'blue'}}" alt="{{player.medal}} Medal" class="img-responsive">
                         </div>
-                        <div class="allmedal-profilepic">
-                          <img ng-src="{{winner.profile|serverimage2}}" alt="{{winner.sfaId}} - {{winner.name}} | {{winner.school}}" class="img-responsive">
+                        <div class="allmedal-profilepic" ng-if="player.profile">
+                          <img ng-src="{{player.profile|serverimage2}}" alt="{{winner.sfaId}} - {{winner.name}} | {{winner.school}}" class="img-responsive">
                         </div>
                         <div class="allmedal-studentdetails">
-                          <p class="allmedal-studentname">{{winner.name}}</p>
-                          <p class="allmedal-studentschool">{{winner.school}}</p>
+                          <div class="" ng-if="player.sfaId">
+                            <p class="allmedal-studentname">{{winner.name}}</p>
+                            <p class="allmedal-studentschool">{{winner.school}}</p>
+                          </div>
+                          <div class="" ng-if="player.TeamId">
+                            <p class="allmedal-studentname">{{player.TeamId}}</p>
+                            <p class="allmedal-studentschool">{{player.school}}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div class="row" ng-if="winnerList.medalWinners.female">
-                    <div class="col-md-4 col-sm-6 col-xs-12" ng-repeat="winner in winnerList.medalWinners.female track by $index" >
-                      <!-- <pre>{{winner}}</pre> -->
+                  <div class="row" ng-if="medalWinner.female" ng-repeat="winner in medalWinner.female track by $index">
+                    <div class="col-md-4 col-sm-6 col-xs-12"  ng-repeat= "player in winner.medals track by $index">
+                      <!-- <pre>{{player|json}}</pre> -->
                       <div class="allmedal-winnercard " >
                         <div class="allmedal-medalholder">
-                          <img ng-src="{{winner.medaltype|medalicon:'blue'}}" alt="{{winner.medaltype}} Medal" class="img-responsive">
+                          <img ng-src="{{player.medal|medalicon:'blue'}}" alt="{{player.medal}} Medal" class="img-responsive">
                         </div>
-                        <div class="allmedal-profilepic">
-                          <img ng-src="{{winner.profile|serverimage2}}" alt="{{winner.sfaId}} - {{winner.name}} | {{winner.school}}" class="img-responsive">
+                        <div class="allmedal-profilepic" ng-if="player.profile">
+                          <img ng-src="{{player.profile|serverimage2}}" alt="{{winner.sfaId}} - {{winner.name}} | {{winner.school}}" class="img-responsive">
                         </div>
                         <div class="allmedal-studentdetails">
-                          <p class="allmedal-studentname">{{winner.name}}</p>
-                          <p class="allmedal-studentschool">{{winner.school}}</p>
+                          <div class="" ng-if="player.sfaId">
+                            <p class="allmedal-studentname">{{winner.name}}</p>
+                            <p class="allmedal-studentschool">{{winner.school}}</p>
+                          </div>
+                          <div class="" ng-if="player.TeamId">
+                            <p class="allmedal-studentname">{{player.TeamId}}</p>
+                            <p class="allmedal-studentschool">{{player.school}}</p>
+                          </div>
                         </div>
                       </div>
                     </div>
