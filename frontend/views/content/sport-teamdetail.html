@@ -17,7 +17,9 @@
             </div>
           </div>
           <ul class="list-inline">
-            <li ng-click="logoutCandidate();" ng-if="detail.isLoggedIn"><a>Logout</a></li>
+            <li ng-click="logoutCandidate();" ng-if="detail.isLoggedIn">
+              <a>Logout</a>
+            </li>
           </ul>
         </div>
       </div>
@@ -68,7 +70,13 @@
                     <h4 ng-if="isCollege == true && sport.info[0].createdBy == 'School'">Created By: College</h4>
                     <h4 ng-if="isCollege == true && sport.info[0].createdBy != 'School'">Created By: {{sport.info[0].createdBy}}</h4>
                   </div>
-                  <div class="pull-right" ng-if="detail.userType == (sport.info[0].createdBy).toLowerCase()" style="margin-right: 15px;" ng-click="setTeamid(sport._id);selectService.team =[];">
+
+                  <div class="pull-right" ng-if="detail.userType == (sport.info[0].createdBy).toLowerCase() && detail.userType == 'school'"
+                    style="margin-right: 15px;" ng-click="setTeamid(sport._id);selectService.team =[];">
+                    <a class="btn btn-default" ui-sref="team-selection({id:stateId})">Edit</a>
+                  </div>
+                  <div class="pull-right" ng-if="sport.info[0].createdBy == 'College' && detail.userType == 'school'" style="margin-right: 15px;"
+                    ng-click="setTeamid(sport._id);selectService.team =[];">
                     <a class="btn btn-default" ui-sref="team-selection({id:stateId})">Edit</a>
                   </div>
                   <!-- <div class="pull-right" ng-if="detail.userType == (sport.info[0].createdBy).toLowerCase() && detail.mixAccess" style="margin-right: 15px;"
