@@ -3,12 +3,10 @@ var schema = new Schema({
         type: Schema.Types.ObjectId,
         ref: 'SportsListSubCategory'
     },
-    dateTo: {
+    scheduleDate: {
         type: String
     },
-    dateFrom: {
-        type: String
-    },
+
     uploadTime: {
         type: String
     },
