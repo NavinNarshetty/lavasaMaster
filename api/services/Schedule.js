@@ -10,6 +10,9 @@ var schema = new Schema({
     uploadTime: {
         type: String
     },
+    orderPlayText: {
+        type: String
+    },
     pdfDetail: Schema.Types.Mixed
 });
 
