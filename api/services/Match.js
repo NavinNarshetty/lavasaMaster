@@ -9323,10 +9323,10 @@ var model = {
                                     };
                                 } else if (data.found.resultBasketball && data.found.resultBasketball.status == 'IsCompleted' && data.found.resultBasketball.isNoMatch == false) {
                                     winPlayer.push(data.found.resultBasketball.winner.player);
-                                    console.log("player", winPlayer[0]);
+                                    console.log("player", winPlayer);
                                     updateObj = {
                                         $set: {
-                                            opponentsTeam: winPlayer[0]
+                                            opponentsTeam: winPlayer
                                         }
                                     };
                                 } else if (data.found.resultHockey && data.found.resultHockey.status == 'IsCompleted' && data.found.resultHockey.isNoMatch == false) {
