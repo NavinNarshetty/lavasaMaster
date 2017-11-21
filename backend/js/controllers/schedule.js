@@ -6,18 +6,37 @@ myApp.controller('DetailScheduleCtrl', function ($scope, TemplateService, Naviga
   TemplateService.title = $scope.menutitle;
   $scope.navigation = NavigationService.getnav();
   $scope.formData = {};
-  $scope.formData.pdf = [];
+  $scope.formData.pdfDetail = [];
+  $scope.formData.page = 1;
+  $scope.formData.type = '';
+  $scope.formData.keyword = '';
+
+  $scope.getAllSportList = function (data) {
+    $scope.url = "SportsListSubCategory/search";
+    console.log(data);
+    $scope.constraints = {};
+    $scope.constraints.keyword = data;
+    NavigationService.apiCall($scope.url, $scope.constraints, function (data) {
+      console.log("data.value sportlist", data);
+      $scope.sportitems = data.data.results;
+
+    });
+  }
+  $scope.searchSportList = function (data) {
+    $scope.draws = data;
+  }
+
 
   $scope.addRow = function (formData) {
     if (!formData) {
       console.log(formData, "in add row");
-      $scope.formData.pdf.push({
+      $scope.formData.pdfDetail.push({
         "pdfType": '',
         "textHeader": '',
         "dpdf": ''
       })
     } else {
-      $scope.formData.pdf.push({
+      $scope.formData.pdfDetail.push({
         "pdfType": '',
         "textHeader": '',
         "dpdf": ''
@@ -26,5 +45,9 @@ myApp.controller('DetailScheduleCtrl', function ($scope, TemplateService, Naviga
 
   }
   $scope.addRow();
+
+  $scope.deleteRow = function (formData, index) {
+    formData.pdfDetail.splice(index, 1);
+  }
 });
 //DETAIL SCHEDULE END

@@ -21,7 +21,7 @@
               <!-- SELECT SPORTS -->
               <div class="form-group">
                 <label>Select Sport</label>
-                <ui-select name="selectsportslist" id="selectsportslist" theme="bootstrap" ng-model="form.sportslist" ng-change="searchSportList($select.selected._id)"
+                <ui-select name="selectsportslist" id="selectsportslist" theme="bootstrap" ng-model="formData.sport" ng-change="searchSportList($select.selected._id)"
                   required>
                   <ui-select-match placeholder="Enter Sports List" allow-clear="true">
                     {{$select.selected.name}}
@@ -30,7 +30,7 @@
                     <span ng-bind-html="item.name"></span>
                   </ui-select-choices>
                 </ui-select>
-                <div class="error-msg" ng-if="detailForm.selectsportslist.$invalid && detailForm.selectsportslist.$touched">Please Enter Sport List *</div>
+                <div class="error-msg" ng-if="championSchedule.selectsportslist.$invalid && championSchedule.selectsportslist.$touched">Please Enter Sport List *</div>
               </div>
               <!-- SELECT SPORTS END -->
               <!-- DATE -->
@@ -39,11 +39,13 @@
                 <div class="row">
                   <div class="col-md-6">
                     <label for="">To</label>
-                    <input type="text" ng-model="formData.name" class="form-control" placeholder="Enter Start Date" required>
+                    <input type="text" ng-model="formData.DateTo" name="todate" class="form-control" placeholder="Enter Start Date" required>
+                    <div class="error-msg" ng-if="championSchedule.todate.$invalid && championSchedule.todate.$touched">Please Enter Start Date *</div>
                   </div>
                   <div class="col-md-6">
                     <label for="">From</label>
-                    <input type="text" ng-model="formData.name" class="form-control" placeholder="Enter End Date" required>
+                    <input type="text" ng-model="formData.DateFrom" name="enddate" class="form-control" placeholder="Enter End Date" required>
+                    <div class="error-msg" ng-if="championSchedule.enddate.$invalid && championSchedule.enddate.$touched">Please Enter End Date *</div>
                   </div>
                 </div>
               </div>
@@ -51,7 +53,7 @@
               <!-- UPLOAD TIME AND TEXT -->
               <div class="form-group">
                 <label>Upload Time & Text</label>
-                <input type="text" ng-model="formData.name" class="form-control" placeholder="Enter Upload Text">
+                <input type="text" ng-model="formData.uploadTime" class="form-control" placeholder="Enter Upload Text">
               </div>
               <!-- UPLOAD TIME AND TEXT END -->
 
@@ -71,7 +73,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr ng-repeat="item in formData.pdf track by $index">
+                      <tr ng-repeat="item in formData.pdfDetail track by $index">
                         <td>
                           <div class="form-group">
                             <select name="selectDraws" class="form-control" ng-model="item.pdfType" required>
@@ -94,7 +96,9 @@
                           </div>
                         </td>
                         <td ng-click="deleteRow(formData,$index);">
-                          <button class="btn btn-default" type="submit">Delete</button>
+                          <div class="form-group">
+                            <button class="btn btn-default" type="submit">Delete</button>
+                          </div>
                         </td>
                       </tr>
                     </tbody>
@@ -102,6 +106,16 @@
                 </div>
               </div>
               <!-- TABLE FOR CHOOSE FILE END -->
+              <!-- BUTTON -->
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="text-center mt20 odd-even-button">
+                    <button class="btn btn-default" type="submit" ng-click="saveschedule(formData)" ng-disabled="championSchedule.$invalid">Save</button>
+                    <button class="btn btn-default" ui-sref='sponsor'>Cancel</button>
+                  </div>
+                </div>
+              </div>
+              <!-- BUTTON END -->
             </form>
           </div>
         </div>
