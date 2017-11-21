@@ -24,6 +24,6 @@ schema.plugin(uniqueValidator);
 schema.plugin(timestamps);
 module.exports = mongoose.model('Schedule', schema);
 
-var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
+var exports = _.cloneDeep(require("sails-wohlig-service")(schema, 'sport', 'sport'));
 var model = {};
 module.exports = _.assign(module.exports, exports, model);
