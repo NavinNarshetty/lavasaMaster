@@ -9375,8 +9375,9 @@ var model = {
                                 }
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam)) {
                                 console.log("updating match", data.found);
+                                console.log("found0***",found[0].opponentsTeam);
                                 if (found[0].opponentsTeam.length == 1) {
-                                    console.log("found0***",found[0].opponentsTeam);
+                                    console.log("found again in 1",found[0].opponentsTeam);
                                     var playerId = found[0].opponentsTeam[0];
                                     winPlayer.push(playerId);
                                     if (data.found.resultsRacquet && data.found.resultsRacquet.status == "IsCompleted" && data.found.resultsRacquet.isNoMatch == false) {
