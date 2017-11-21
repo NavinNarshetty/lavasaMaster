@@ -9323,7 +9323,7 @@ var model = {
                                     };
                                 } else if (data.found.resultBasketball && data.found.resultBasketball.status == 'IsCompleted' && data.found.resultBasketball.isNoMatch == false) {
                                     winPlayer.push(data.found.resultBasketball.winner.player);
-                                    console.log("player", winPlayer);
+                                    console.log("player", winPlayer[0]);
                                     updateObj = {
                                         $set: {
                                             opponentsTeam: winPlayer[0]
@@ -9376,6 +9376,7 @@ var model = {
                             } else if (data.isTeam == true && !_.isEmpty(found[0].opponentsTeam)) {
                                 console.log("updating match", data.found);
                                 if (found[0].opponentsTeam.length == 1) {
+                                    console.log("found0***",found[0].opponentsTeam);
                                     var playerId = found[0].opponentsTeam[0];
                                     winPlayer.push(playerId);
                                     if (data.found.resultsRacquet && data.found.resultsRacquet.status == "IsCompleted" && data.found.resultsRacquet.isNoMatch == false) {
@@ -12466,10 +12467,10 @@ var model = {
                                     };
                                 } else if (data.found.resultBasketball && data.found.resultBasketball.status == 'IsCompleted' && data.found.resultBasketball.isNoMatch == false) {
                                     winPlayer.push(data.found.resultBasketball.winner.player);
-                                    console.log("player", winPlayer[0]);
+                                    console.log("player", winPlayer);
                                     updateObj = {
                                         $set: {
-                                            opponentsTeam: winPlayer[0]
+                                            opponentsTeam: winPlayer
                                         }
                                     };
                                 } else if (data.found.resultHockey && data.found.resultHockey.status == 'IsCompleted' && data.found.resultHockey.isNoMatch == false) {
