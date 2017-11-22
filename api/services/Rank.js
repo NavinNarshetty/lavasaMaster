@@ -397,7 +397,7 @@ var model = {
                 // find all sport events
                 function (callback) {
                     Sport.aggregate(medalWinnerPipeLine, function (err, sports) {
-                        console.log("sports",sports);
+                        // console.log("sports", sports);
                         var sendObj = {};
                         if (err) {
                             callback(err, null);
@@ -411,6 +411,7 @@ var model = {
                     if (data.event && data.age && data.gender) {
                         var final = [];
                         async.eachSeries(sendObj.medalWinners, function (singleData, callback) {
+                                console.log("singleData", singleData);
                                 var matchObj = {
                                     "sport": singleData._id
                                 }
@@ -423,7 +424,7 @@ var model = {
                                         var obj = {};
                                         obj.medals = [];
                                         async.eachSeries(found, function (medalData, callback) {
-                                            console.log("medalData", medalData);
+                                            // console.log("medalData", medalData);
                                             if (medalData.sport.sportslist.name === data.event && medalData.sport.ageGroup.name === data.age && medalData.sport.gender == data.gender) {
                                                 if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
                                                     obj.name = medalData.sport.ageGroup.name;
@@ -502,7 +503,7 @@ var model = {
                                         var obj = {};
                                         obj.medals = [];
                                         async.eachSeries(found, function (medalData, callback) {
-                                            console.log("medalData", medalData);
+                                            // console.log("medalData", medalData);
                                             if (medalData.sport.sportslist.name === data.event && medalData.sport.ageGroup.name === data.age) {
                                                 if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
                                                     obj.name = medalData.sport.ageGroup.name;
@@ -581,7 +582,7 @@ var model = {
                                         var obj = {};
                                         obj.medals = [];
                                         async.eachSeries(found, function (medalData, callback) {
-                                            console.log("medalData", medalData);
+                                            // console.log("medalData", medalData);
                                             if (medalData.sport.sportslist.name === data.event && medalData.sport.gender == data.gender) {
                                                 if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
                                                     obj.name = medalData.sport.ageGroup.name;
@@ -660,7 +661,7 @@ var model = {
                                         var obj = {};
                                         obj.medals = [];
                                         async.eachSeries(found, function (medalData, callback) {
-                                            console.log("medalData", medalData);
+                                            // console.log("medalData", medalData);
                                             if (medalData.sport.ageGroup.name === data.age && medalData.sport.gender == data.gender) {
                                                 if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
                                                     obj.name = medalData.sport.ageGroup.name;
@@ -739,7 +740,7 @@ var model = {
                                         var obj = {};
                                         obj.medals = [];
                                         async.eachSeries(found, function (medalData, callback) {
-                                            console.log("medalData", medalData);
+                                            // console.log("medalData", medalData);
                                             if (medalData.sport.sportslist.name === data.event) {
                                                 if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
                                                     obj.name = medalData.sport.ageGroup.name;
@@ -818,7 +819,7 @@ var model = {
                                         var obj = {};
                                         obj.medals = [];
                                         async.eachSeries(found, function (medalData, callback) {
-                                            console.log("medalData", medalData);
+                                            // console.log("medalData", medalData);
                                             if (medalData.sport.ageGroup.name === data.age) {
                                                 if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
                                                     obj.name = medalData.sport.ageGroup.name;
@@ -897,7 +898,7 @@ var model = {
                                         var obj = {};
                                         obj.medals = [];
                                         async.eachSeries(found, function (medalData, callback) {
-                                            console.log("medalData", medalData);
+                                            // console.log("medalData", medalData);
                                             if (medalData.sport.gender == data.gender) {
                                                 if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
                                                     obj.name = medalData.sport.ageGroup.name;
@@ -962,6 +963,7 @@ var model = {
                     } else {
                         var final = [];
                         async.eachSeries(sendObj.medalWinners, function (singleData, callback) {
+                                // console.log("singleData", singleData);
                                 var matchObj = {
                                     "sport": singleData._id
                                 }
@@ -973,13 +975,10 @@ var model = {
                                     } else {
                                         var obj = {};
                                         obj.medals = [];
+                                        // console.log("medal found***", found);
                                         async.eachSeries(found, function (medalData, callback) {
                                             if (medalData) {
-                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
-                                                    obj.name = medalData.sport.ageGroup.name;
-                                                } else {
-                                                    obj.name = medalData.sport.ageGroup.name + " " + medalData.sport.sportslist.name;
-                                                }
+                                                obj.name = medalData.sport.ageGroup.name + " " + medalData.sport.sportslist.name;
                                                 obj.gender = medalData.sport.gender;
                                                 if (!_.isEmpty(medalData.team)) {
                                                     async.each(medalData.team, function (n, callback) {
@@ -995,6 +994,7 @@ var model = {
                                                         callback(null, obj);
                                                     });
                                                 } else {
+                                                    // console.log("went in player", medalData.player);
                                                     async.each(medalData.player, function (n, callback) {
                                                         var info = {};
                                                         info.sport = medalData.sport._id;
@@ -1004,7 +1004,7 @@ var model = {
                                                         } else {
                                                             info.participantName = n.firstName + " " + n.surname;
                                                         }
-                                                        console.log("n******",n);
+                                                        // console.log("n******", n);
                                                         if (n.atheleteSchoolName) {
                                                             info.school = n.atheleteSchoolName;
                                                         } else {
@@ -1014,7 +1014,9 @@ var model = {
                                                         obj.medals.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
-                                                        obj.err = "erroor";
+                                                        if (err) {
+                                                            obj.err = "erroor";
+                                                        }
                                                         callback(null, obj);
                                                     });
                                                 }
