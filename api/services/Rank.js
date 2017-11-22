@@ -426,11 +426,7 @@ var model = {
                                         async.eachSeries(found, function (medalData, callback) {
                                             // console.log("medalData", medalData);
                                             if (medalData.sport.sportslist.name === data.event && medalData.sport.ageGroup.name === data.age && medalData.sport.gender == data.gender) {
-                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
-                                                    obj.name = medalData.sport.ageGroup.name;
-                                                } else {
-                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
-                                                }
+                                                obj.name = medalData.sport.ageGroup.name + " " + medalData.singleData.sportslist.name;
                                                 obj.gender = medalData.sport.gender;
                                                 if (!_.isEmpty(medalData.team)) {
                                                     async.each(medalData.team, function (n, callback) {
@@ -508,11 +504,7 @@ var model = {
                                         async.eachSeries(found, function (medalData, callback) {
                                             // console.log("medalData", medalData);
                                             if (medalData.sport.sportslist.name === data.event && medalData.sport.ageGroup.name === data.age) {
-                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
-                                                    obj.name = medalData.sport.ageGroup.name;
-                                                } else {
-                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
-                                                }
+                                                obj.name = medalData.sport.ageGroup.name + " " + medalData.singleData.sportslist.name;
                                                 obj.gender = medalData.sport.gender;
                                                 if (!_.isEmpty(medalData.team)) {
                                                     async.each(medalData.team, function (n, callback) {
@@ -590,11 +582,7 @@ var model = {
                                         async.eachSeries(found, function (medalData, callback) {
                                             // console.log("medalData", medalData);
                                             if (medalData.sport.sportslist.name === data.event && medalData.sport.gender == data.gender) {
-                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
-                                                    obj.name = medalData.sport.ageGroup.name;
-                                                } else {
-                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
-                                                }
+                                                obj.name = medalData.sport.ageGroup.name + " " + medalData.singleData.sportslist.name;
                                                 obj.gender = medalData.sport.gender;
                                                 if (!_.isEmpty(medalData.team)) {
                                                     async.each(medalData.team, function (n, callback) {
@@ -672,11 +660,7 @@ var model = {
                                         async.eachSeries(found, function (medalData, callback) {
                                             // console.log("medalData", medalData);
                                             if (medalData.sport.ageGroup.name === data.age && medalData.sport.gender == data.gender) {
-                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
-                                                    obj.name = medalData.sport.ageGroup.name;
-                                                } else {
-                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
-                                                }
+                                                obj.name = medalData.sport.ageGroup.name + " " + medalData.singleData.sportslist.name;
                                                 obj.gender = medalData.sport.gender;
                                                 if (!_.isEmpty(medalData.team)) {
                                                     async.each(medalData.team, function (n, callback) {
@@ -754,11 +738,7 @@ var model = {
                                         async.eachSeries(found, function (medalData, callback) {
                                             // console.log("medalData", medalData);
                                             if (medalData.sport.sportslist.name === data.event) {
-                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
-                                                    obj.name = medalData.sport.ageGroup.name;
-                                                } else {
-                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
-                                                }
+                                                obj.name = medalData.sport.ageGroup.name + " " + medalData.singleData.sportslist.name;
                                                 obj.gender = medalData.sport.gender;
                                                 if (!_.isEmpty(medalData.team)) {
                                                     async.each(medalData.team, function (n, callback) {
@@ -836,11 +816,7 @@ var model = {
                                         async.eachSeries(found, function (medalData, callback) {
                                             // console.log("medalData", medalData);
                                             if (medalData.sport.ageGroup.name === data.age) {
-                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
-                                                    obj.name = medalData.sport.ageGroup.name;
-                                                } else {
-                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
-                                                }
+                                                obj.name = medalData.sport.ageGroup.name + " " + medalData.singleData.sportslist.name;
                                                 obj.gender = medalData.sport.gender;
                                                 if (!_.isEmpty(medalData.team)) {
                                                     async.each(medalData.team, function (n, callback) {
@@ -918,11 +894,7 @@ var model = {
                                         async.eachSeries(found, function (medalData, callback) {
                                             // console.log("medalData", medalData);
                                             if (medalData.sport.gender == data.gender) {
-                                                if (medalData.sport.sportslist.sportsListSubCategory.name === medalData.sport.sportslist.name) {
-                                                    obj.name = medalData.sport.ageGroup.name;
-                                                } else {
-                                                    obj.name = medalData.ageGroup.name + " " + medalData.singleData.sportslist.name;
-                                                }
+                                                obj.name = medalData.sport.ageGroup.name + " " + medalData.singleData.sportslist.name;
                                                 obj.gender = medalData.sport.gender;
                                                 if (!_.isEmpty(medalData.team)) {
                                                     async.each(medalData.team, function (n, callback) {
