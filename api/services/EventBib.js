@@ -332,24 +332,24 @@ var model = {
                                 callback(err, null);
                             } else {
                                 if (_.isEmpty(found)) {
-                                    athleteProfile = profile.athlete;
-                                    athleteProfile.additionalPaymentStatus = "Pending";
+                                    // athleteProfile = profile.athlete;
+                                    profile.additionalPaymentStatus = "Pending";
                                     callback(null, athleteProfile);
                                 } else {
-                                    athleteProfile = profile.athlete;
+                                    // athleteProfile = profile.athlete;
                                     if (found.paymentStatus == "Paid") {
-                                        athleteProfile.additionalPaymentStatus = "Paid";
+                                        profile.additionalPaymentStatus = "Paid";
                                     } else {
-                                        athleteProfile.additionalPaymentStatus = "Pending";
+                                        profile.additionalPaymentStatus = "Pending";
                                     }
-                                    callback(null, athleteProfile);
+                                    callback(null, profile);
                                 }
                             }
                         });
                     } else {
                         console.log("inside else");
-                        athleteProfile = profile.athlete;
-                        callback(null, athleteProfile);
+                        // athleteProfile = profile.athlete;
+                        callback(null, profile);
                     }
                 }
             ],
