@@ -464,6 +464,9 @@ var model = {
                                                         obj.medal.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
+                                                        if (err) {
+                                                            obj.err = "error";
+                                                        }
                                                         callback(null, obj);
                                                     });
                                                 }
@@ -543,6 +546,9 @@ var model = {
                                                         obj.medal.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
+                                                        if (err) {
+                                                            obj.err = "error";
+                                                        }
                                                         callback(null, obj);
                                                     });
                                                 }
@@ -622,6 +628,9 @@ var model = {
                                                         obj.medal.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
+                                                        if (err) {
+                                                            obj.err = "error";
+                                                        }
                                                         callback(null, obj);
                                                     });
                                                 }
@@ -701,6 +710,9 @@ var model = {
                                                         obj.medal.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
+                                                        if (err) {
+                                                            obj.err = "error";
+                                                        }
                                                         callback(null, obj);
                                                     });
                                                 }
@@ -780,6 +792,9 @@ var model = {
                                                         obj.medal.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
+                                                        if (err) {
+                                                            obj.err = "error";
+                                                        }
                                                         callback(null, obj);
                                                     });
                                                 }
@@ -859,6 +874,9 @@ var model = {
                                                         obj.medal.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
+                                                        if (err) {
+                                                            obj.err = "error";
+                                                        }
                                                         callback(null, obj);
                                                     });
                                                 }
@@ -938,6 +956,9 @@ var model = {
                                                         obj.medal.push(info);
                                                         callback(null, obj);
                                                     }, function (err) {
+                                                        if (err) {
+                                                            obj.err = "error";
+                                                        }
                                                         callback(null, obj);
                                                     });
                                                 }
@@ -1015,7 +1036,7 @@ var model = {
                                                         callback(null, obj);
                                                     }, function (err) {
                                                         if (err) {
-                                                            obj.err = "erroor";
+                                                            obj.err = "error";
                                                         }
                                                         callback(null, obj);
                                                     });
