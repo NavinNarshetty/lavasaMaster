@@ -367,10 +367,61 @@ var model = {
     getSchool: function (data, callback) {
         async.waterfall([
             function (callback) {
-
+                School.find().lean().exec(function (err, oldSchool) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(oldSchool)) {
+                        callback(null, []);
+                    } else {
+                        callback(null, oldSchool);
+                    }
+                });
+            },
+            function (oldSchool, callback) {
+                Registration.find().lean().exec(function (err, registeredSchool) {
+                    if (err) {
+                        callback(err, null);
+                    } else if (_.isEmpty(registeredSchool)) {
+                        var school = [].concat.apply([], [
+                            oldSchool
+                        ]);
+                        callback(null, school);
+                    } else {
+                        var school = [].concat.apply([], [
+                            oldSchool,
+                            registeredSchool
+                        ]);
+                        callback(null, school);
+                    }
+                });
+            },
+            function (school, callback) {
+                async.concatSeries(school, function (singleData, callback) {
+                    var info = {};
+                    info._id = singleData._id;
+                    if (singleData.name) {
+                        info.schoolName = singleData.name;
+                    } else {
+                        info.schoolName = singleData.schoolName;
+                    }
+                    callback(null, info);
+                }, function (err, final) {
+                    if (err) {
+                        callback(err, null);
+                    } else {
+                        callback(null, final);
+                    }
+                });
             }
         ], function (err, found) {
-
+            if (err) {
+                callback(err, null);
+            } else {
+                var schoolUniq = _.uniqBy(found.schoolName, function (item) {
+                    return JSON.stringify(item);
+                });
+                callback(null, schoolUniq);
+            }
         });
 
     }
