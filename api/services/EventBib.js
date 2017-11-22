@@ -299,7 +299,6 @@ var model = {
                                 } else {
                                     if (schoolData.status == "Verified") {
                                         profile.isSchoolRegistered = true;
-
                                     } else {
                                         profile.isSchoolRegistered = false;
                                     }
@@ -323,6 +322,7 @@ var model = {
                 },
                 function (profile, callback) {
                     var athleteProfile = {};
+                    console.log("profile", profile);
                     if (profile.isSchoolRegistered == false && profile.isSponsered == false) {
                         console.log("inside if");
                         AdditionalPayment.find({
@@ -332,7 +332,9 @@ var model = {
                                 callback(err, null);
                             } else {
                                 if (_.isEmpty(found)) {
-                                    callback(null, []);
+                                    athleteProfile = profile.athlete;
+                                    athleteProfile.additionalPaymentStatus = "Pending";
+                                    callback(null, athleteProfile);
                                 } else {
                                     athleteProfile = profile.athlete;
                                     if (found.paymentStatus == "Paid") {
