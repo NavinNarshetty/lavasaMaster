@@ -6579,14 +6579,83 @@ var model = {
                             } else {
                                 var pipeLine = Profile.getTeamAggregatePipeline(data);
                                 var newPipeLine = _.cloneDeep(pipeLine);
-                                newPipeLine.push(
-                                    // Stage 5
-                                    {
-                                        $match: {
-                                            "sportsListSubCategory._id": objectid(sportName),
+                                if (_.isEmpty(data.gender) && _.isEmpty(data.age)) {
+                                    newPipeLine.push(
+                                        // Stage 5
+                                        {
+                                            $match: {
+                                                "sportsListSubCategory._id": objectid(sportName),
+                                            }
                                         }
-                                    }
-                                );
+                                    );
+                                } else if (data.age && _.isEmpty(data.gender)) {
+                                    newPipeLine.push(
+                                        // Stage 5
+                                        {
+                                            $match: {
+                                                "sportsListSubCategory._id": objectid(sportName),
+
+                                            }
+                                        }, {
+                                            $lookup: {
+                                                "from": "agegroups",
+                                                "localField": "sport.ageGroup",
+                                                "foreignField": "_id",
+                                                "as": "sport.ageGroup"
+                                            }
+                                        },
+
+                                        {
+                                            $unwind: {
+                                                path: "$sport.ageGroup",
+
+                                            }
+                                        }, {
+                                            $match: {
+                                                "sport.ageGroup.name": data.age
+
+                                            }
+                                        }
+                                    );
+                                } else if (data.gender && _.isEmpty(data.age)) {
+                                    newPipeLine.push(
+                                        // Stage 5
+                                        {
+                                            $match: {
+                                                "sportsListSubCategory._id": objectid(sportName),
+                                                "sport.gender": data.gender
+                                            }
+                                        }
+                                    );
+                                } else if (data.age && data.gender) {
+                                    newPipeLine.push(
+                                        // Stage 5
+                                        {
+                                            $match: {
+                                                "sportsListSubCategory._id": objectid(sportName),
+                                                "sport.gender": data.gender
+                                            }
+                                        }, {
+                                            $lookup: {
+                                                "from": "agegroups",
+                                                "localField": "sport.ageGroup",
+                                                "foreignField": "_id",
+                                                "as": "sport.ageGroup"
+                                            }
+                                        },
+
+                                        {
+                                            $unwind: {
+                                                path: "$sport.ageGroup",
+
+                                            }
+                                        }, {
+                                            $match: {
+                                                "sport.ageGroup.name": data.age,
+                                            }
+                                        }
+                                    );
+                                }
                                 TeamSport.aggregate(newPipeLine, function (err, teamSportData) {
                                     if (err) {
                                         callback(err, "error in mongoose");
