@@ -284,26 +284,77 @@ var model = {
                 function (found, callback) {
                     profile.athlete = found;
                     if (found.atheleteSchoolName) {
-                        profile.isSchoolRegistered = false;
+                        var matchObj = {
+                            schoolName: found.atheleteSchoolName
+                        };
+                    } else {
+                        var matchObj = {
+                            schoolName: found.school.name
+                        };
+                    }
+                    Registration.findOne(matchObj).lean().exec(function (err, schoolData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(schoolData)) {
+                                profile.isSchoolRegistered = false;
+                                if (profile.athlete.registrationFee == 'Sponsor') {
+                                    profile.isSponsered = true;
+                                } else {
+                                    profile.isSponsered = false;
+                                }
+                                callback(null, profile);
+                            } else {
+                                if (schoolData.status == "Verified") {
+                                    profile.isSchoolRegistered = true;
+                                } else {
+                                    profile.isSchoolRegistered = false;
+                                }
+                                if (profile.athlete.registrationFee == 'Sponsor') {
+                                    profile.isSponsered = true;
+                                } else {
+                                    profile.isSponsered = false;
+                                }
+                                console.log("profile", profile);
+                                callback(null, profile);
+                            }
+                        }
+                    });
+
+                },
+                function (found, callback) {
+                    IndividualSport.findOne({
+                        athleteId: data.athleteId
+                    }).lean().exec(function (err, sportData) {
+                        if (err) {
+                            callback(err, null);
+                        } else {
+                            if (_.isEmpty(sportData)) {
+                                profile.issport = false;
+                                callback(null, profile);
+                            } else {
+                                profile.issport = true;
+                                console.log("profile", profile);
+                                callback(null, profile);
+                            }
+                        }
+                    });
+                },
+                function (profile, callback) {
+                    if (profile.issport == true) {
                         callback(null, profile);
                     } else {
-                        Registration.findOne({
-                            schoolName: found.school.name
-                        }).lean().exec(function (err, schoolData) {
+                        StudentTeam.findOne({
+                            studentId: data.athleteId
+                        }).lean().exec(function (err, sportData) {
                             if (err) {
                                 callback(err, null);
                             } else {
-                                if (_.isEmpty(schoolData)) {
-                                    profile.isSchoolRegistered = false;
+                                if (_.isEmpty(sportData)) {
+                                    profile.issport = false;
                                     callback(null, profile);
                                 } else {
-                                    if (schoolData.status == "Verified") {
-                                        profile.isSchoolRegistered = true;
-                                    } else {
-                                        profile.isSchoolRegistered = false;
-                                    }
-                                    profile.isSponsered = false;
-                                    console.log("profile", profile);
+                                    profile.issport = true;
                                     callback(null, profile);
                                 }
                             }
@@ -311,20 +362,9 @@ var model = {
                     }
                 },
                 function (profile, callback) {
-                    if (profile.isSponsered == false && profile.isSchoolRegistered == false) {
-                        if (profile.athlete.registrationFee == 'Sponsor') {
-                            profile.isSponsered = true;
-                        }
-                        callback(null, profile);
-                    } else {
-                        callback(null, profile);
-                    }
-                },
-                function (profile, callback) {
                     var athleteProfile = {};
-                    console.log("profile", profile);
+                    // console.log("profile", profile);
                     if (profile.isSchoolRegistered == false && profile.isSponsered == false) {
-                        console.log("inside if");
                         AdditionalPayment.find({
                             athleteId: data.athleteId
                         }).lean().exec(function (err, found) {
@@ -332,24 +372,116 @@ var model = {
                                 callback(err, null);
                             } else {
                                 if (_.isEmpty(found)) {
-                                    // athleteProfile = profile.athlete;
-                                    profile.additionalPaymentStatus = "Pending";
+                                    athleteProfile._id = profile.athlete._id;
+                                    athleteProfile.firstName = profile.athlete.firstName;
+                                    if (profile.athlete.middleName) {
+                                        athleteProfile.middleName = profile.athlete.middleName;
+                                    }
+                                    athleteProfile.surname = profile.athlete.surname;
+                                    athleteProfile.paymentStatus = profile.athlete.paymentStatus;
+                                    if (profile.athlete.atheleteSchoolName) {
+                                        athleteProfile.schoolName = profile.athlete.atheleteSchoolName;
+                                    } else {
+                                        athleteProfile.schoolName = profile.athlete.school.name;
+                                    }
+                                    athleteProfile.sfaId = profile.athlete.sfaId;
+                                    athleteProfile.age = profile.athlete.age;
+                                    athleteProfile.dob = profile.athlete.dob;
+                                    athleteProfile.photograph = profile.athlete.photograph;
+                                    athleteProfile.gender = profile.athlete.gender;
+                                    if (profile.athlete.remarks) {
+                                        athleteProfile.remarks = profile.athlete.remarks;
+                                    }
+                                    athleteProfile.atheleteSchoolIdImage = profile.athlete.atheleteSchoolIdImage;
+                                    athleteProfile.birthImage = profile.athlete.birthImage;
+                                    if (profile.athlete.photoImage) {
+                                        athleteProfile.photoImage = profile.athlete.photoImage;
+                                    }
+                                    athleteProfile.ageProof = profile.athlete.ageProof;
+                                    athleteProfile.isSchoolRegistered = profile.isSchoolRegistered;
+                                    athleteProfile.isSponsered = profile.isSponsered;
+                                    if (profile.athlete.isBib) {
+                                        athleteProfile.isBib = profile.athlete.isBib;
+                                    }
+                                    athleteProfile.additionalPaymentStatus = "Pending";
+                                    athleteProfile.issport = profile.issport;
                                     callback(null, athleteProfile);
                                 } else {
-                                    // athleteProfile = profile.athlete;
-                                    if (found.paymentStatus == "Paid") {
-                                        profile.additionalPaymentStatus = "Paid";
-                                    } else {
-                                        profile.additionalPaymentStatus = "Pending";
+                                    athleteProfile._id = profile.athlete._id;
+                                    athleteProfile.firstName = profile.athlete.firstName;
+                                    if (profile.athlete.middleName) {
+                                        athleteProfile.middleName = profile.athlete.middleName;
                                     }
-                                    callback(null, profile);
+                                    athleteProfile.surname = profile.athlete.surname;
+                                    athleteProfile.paymentStatus = profile.athlete.paymentStatus;
+                                    if (profile.athlete.atheleteSchoolName) {
+                                        athleteProfile.schoolName = profile.athlete.atheleteSchoolName;
+                                    } else {
+                                        athleteProfile.schoolName = profile.athlete.school.name;
+                                    }
+                                    athleteProfile.sfaId = profile.athlete.sfaId;
+                                    athleteProfile.age = profile.athlete.age;
+                                    athleteProfile.dob = profile.athlete.dob;
+                                    athleteProfile.photograph = profile.athlete.photograph;
+                                    athleteProfile.gender = profile.athlete.gender;
+                                    if (profile.athlete.remarks) {
+                                        athleteProfile.remarks = profile.athlete.remarks;
+                                    }
+                                    athleteProfile.atheleteSchoolIdImage = profile.athlete.atheleteSchoolIdImage;
+                                    athleteProfile.birthImage = profile.athlete.birthImage;
+                                    if (profile.athlete.photoImage) {
+                                        athleteProfile.photoImage = profile.athlete.photoImage;
+                                    }
+                                    athleteProfile.ageProof = profile.athlete.ageProof;
+                                    athleteProfile.isSchoolRegistered = profile.isSchoolRegistered;
+                                    athleteProfile.isSponsered = profile.isSponsered;
+                                    if (profile.athlete.isBib) {
+                                        athleteProfile.isBib = profile.athlete.isBib;
+                                    }
+                                    if (found.paymentStatus == "Paid") {
+                                        athleteProfile.additionalPaymentStatus = "Paid";
+                                    } else {
+                                        athleteProfile.additionalPaymentStatus = "Pending";
+                                    }
+                                    athleteProfile.issport = profile.issport;
+                                    callback(null, athleteProfile);
                                 }
                             }
                         });
                     } else {
-                        console.log("inside else");
-                        // athleteProfile = profile.athlete;
-                        callback(null, profile);
+                        athleteProfile._id = profile.athlete._id;
+                        athleteProfile.firstName = profile.athlete.firstName;
+                        if (profile.athlete.middleName) {
+                            athleteProfile.middleName = profile.athlete.middleName;
+                        }
+                        athleteProfile.surname = profile.athlete.surname;
+                        athleteProfile.paymentStatus = profile.athlete.paymentStatus;
+                        if (profile.athlete.atheleteSchoolName) {
+                            athleteProfile.schoolName = profile.athlete.atheleteSchoolName;
+                        } else {
+                            athleteProfile.schoolName = profile.athlete.school.name;
+                        }
+                        athleteProfile.sfaId = profile.athlete.sfaId;
+                        athleteProfile.age = profile.athlete.age;
+                        athleteProfile.dob = profile.athlete.dob;
+                        athleteProfile.photograph = profile.athlete.photograph;
+                        athleteProfile.gender = profile.athlete.gender;
+                        if (profile.athlete.remarks) {
+                            athleteProfile.remarks = profile.athlete.remarks;
+                        }
+                        athleteProfile.atheleteSchoolIdImage = profile.athlete.atheleteSchoolIdImage;
+                        athleteProfile.birthImage = profile.athlete.birthImage;
+                        if (profile.athlete.photoImage) {
+                            athleteProfile.photoImage = profile.athlete.photoImage;
+                        }
+                        athleteProfile.ageProof = profile.athlete.ageProof;
+                        athleteProfile.isSchoolRegistered = profile.isSchoolRegistered;
+                        athleteProfile.isSponsered = profile.isSponsered;
+                        if (profile.athlete.isBib) {
+                            athleteProfile.isBib = profile.athlete.isBib;
+                        }
+                        athleteProfile.issport = profile.issport;
+                        callback(null, athleteProfile);
                     }
                 }
             ],
