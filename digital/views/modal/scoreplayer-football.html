@@ -74,10 +74,16 @@
           <div class="col-md-3 col-sm-3">
               <div class="teamscore-pointholder">
                   <label for=""> Out </label>
-                  <div class="relate teamscore-point mtb-10">
-                      <!-- <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'out');" ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus"></i></button> -->
+                  <!-- <div class="relate teamscore-point mtb-10">
+                      <button class="btn score-buttons teamscore-buttons score-decrement" ng-click="decrementPlayerPoint(selectedPlayer,'out');" ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-minus"></i></button>
                       <input type="number" ng-model="selectedPlayer.playerPoints.out.length" min="0" placeholder="0" max="99" class="score-number teamscore-number display-inline form-control" readonly>
                       <button class="btn score-buttons teamscore-buttons score-increment" ng-click="incrementPlayerPoint(selectedPlayer,'out');" ng-disabled="selectedPlayer.isPlaying ==  false"><i class="fa fa-plus"></i></button>
+                  </div> -->
+                  <div class="custom-toggle">
+                    <label class="switch">
+                      <input type="checkbox" ng-model="selectedPlayer.isPlaying">
+                      <div class="slider round"></div>
+                    </label>
                   </div>
                   <div class="input-group">
                       <input type="number" class="form-control" ng-model="selectedPlayer.playerPoints.out[selectedPlayer.playerPoints.out.length-1].time" placeholder="Time" ng-disabled="selectedPlayer.out.length <= 0">
@@ -87,7 +93,7 @@
           </div>
           <!-- OUT -->
           <!-- IN -->
-          <div class="col-md-3 col-sm-3">
+          <div class="col-md-3 col-sm-3" ng-if="!selectedPlayer.isPlaying">
               <div class="teamscore-pointholder">
                 <div class="match-selectwinner">
                   <label for="">Select substitute</label>

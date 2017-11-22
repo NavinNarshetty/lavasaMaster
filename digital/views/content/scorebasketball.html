@@ -104,8 +104,11 @@
         <!-- HALF TIME FULL TIME -->
         <div class="racquet-setscore">
           <div class="scoring-set form-group" ng-repeat="team in match.resultBasketball.teams track by $index">
-            <div class="matchplayer-image" title="{{match.teams[$index].schoolName}} | {{match.teams[$index].sfaId}}">
+            <!-- <div class="matchplayer-image" title="{{match.teams[$index].schoolName}} | {{match.teams[$index].sfaId}}">
               <img ng-src="{{match.teams[$index].photograph|serverimage}}" alt="{{match.teams[$index].schoolName}}" class="img-responsive">
+            </div> -->
+            <div class="scorematch-teamschool">
+              <p>{{team.schoolName}}</p>
             </div>
             <!-- QUARTER POINTS -->
             <div class="relate setpoint-element" ng-repeat="quarter in team.teamResults.quarterPoints track by $index">

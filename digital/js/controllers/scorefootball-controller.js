@@ -569,6 +569,38 @@ myApp.controller('FootballScoreCtrl', function($scope, TemplateService, Navigati
     // FOR LEAGUE END
     $scope.matchComplete = function(){
       if ($scope.match.resultFootball) {
+        _.each($scope.match.resultFootball.teams, function(n, nkey){
+          if(n.teamResults.totalShots == ""){
+            n.teamResults.totalShots = 0;
+          }
+          if(n.teamResults.shotsOnGoal == ""){
+            n.teamResults.shotsOnGoal = 0;
+          }
+          if(n.teamResults.corners == ""){
+            n.teamResults.corners = 0;
+          }
+          if(n.teamResults.penalty == ""){
+            n.teamResults.penalty = 0;
+          }
+          if(n.teamResults.saves == ""){
+            n.teamResults.saves = 0;
+          }
+          if(n.teamResults.fouls == ""){
+            n.teamResults.fouls = 0;
+          }
+          if(n.teamResults.offSide == ""){
+            n.teamResults.offSide = 0;
+          }
+          if(n.teamResults.halfPoints == ""){
+            n.teamResults.halfPoints = 0;
+          }
+          if(n.teamResults.finalPoints == ""){
+            n.teamResults.finalPoints = 0;
+          }
+          if(n.teamResults.penaltyPoints == ""){
+            n.teamResults.penaltyPoints = 0;
+          }
+        });
         $scope.match.resultFootball.status = "IsCompleted";
           $scope.matchResult = {
             resultFootball : $scope.match.resultFootball,

@@ -31,7 +31,7 @@
                 <div class="row">
                     <!-- TEAM 1 PLAYER DETAILS -->
                     <div class="col-md-4 col-sm-4">
-                        <p class="clearfix m-clear"><span class="pull-right">Jersey No.</span><span>Player Name</span></p>
+                        <p class="clearfix m-clear"><span class="pull-right">Jersey No.</span><span>SFA ID - Player Name</span></p>
                         <div class="teamplaying">
                             <div class="teamplaying-title">
                                 <p>Players</p>
@@ -39,7 +39,7 @@
                             <div class="team-playing" ng-repeat="player in match.resultFootball.teams[0].players track by $index">
                                 <!-- <p ng-if="$index==0">Players</p> -->
                                 <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="addPlayerPoints(player,$index, 0)">
-                                    <p class="clearfix m-clear" title="{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}</span></p>
+                                    <p class="clearfix m-clear" title="{{player.fullName}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.sfaId}} - {{player.fullName}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                                 <!-- <p ng-if="$index==0">Substitues</p> -->
                                 <div class="teamplayer" ng-if="player.isPlaying==false" >
                                   <!-- ng-click="addPlayerPoints(player,$index)" -->
-                                    <p class="clearfix m-clear" title="{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}</span></p>
+                                    <p class="clearfix m-clear" title="{{player.fullName}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.sfaId}} - {{player.fullName}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -129,14 +129,14 @@
                     <!-- TEAM SCORES END -->
                     <!-- TEAM 2 PLAYER DETAILS -->
                     <div class="col-md-4 col-sm-4">
-                        <p class="clearfix m-clear"><span class="pull-right">Jersey No.</span><span>Player Name</span></p>
+                        <p class="clearfix m-clear"><span class="pull-right">Jersey No.</span><span>SFA ID - Player Name</span></p>
                         <div class="teamplaying">
                             <div class="teamplaying-title">
                                 <p>Players</p>
                             </div>
                             <div class="team-playing" ng-repeat="player in match.resultFootball.teams[1].players track by $index">
                                 <div class="teamplayer" ng-if="player.isPlaying==true" ng-click="addPlayerPoints(player,$index, 1)">
-                                    <p class="clearfix m-clear" title="{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].studentTeam[$index].studentId.firstName}} {{match.teams[1].studentTeam[$index].studentId.surname}}</span></p>
+                                    <p class="clearfix m-clear" title="{{player.fullName}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.sfaId}} -  {{player.fullName}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -147,7 +147,7 @@
                             <div class="team-substitute" ng-repeat="player in match.resultFootball.teams[1].players track by $index">
                                 <div class="teamplayer" ng-if="player.isPlaying==false" >
                                   <!-- ng-click="addPlayerPoints(player,$index)" -->
-                                    <p class="clearfix m-clear" title="{{match.teams[0].studentTeam[$index].studentId.firstName}} {{match.teams[0].studentTeam[$index].studentId.surname}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[1].studentTeam[$index].studentId.firstName}} {{match.teams[1].studentTeam[$index].studentId.surname}}</span></p>
+                                    <p class="clearfix m-clear" title="{{player.fullName}}"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.sfaId}} - {{player.fullName}}</span></p>
                                 </div>
                             </div>
                         </div>
@@ -158,8 +158,11 @@
                 <!-- HALF TIME FULL TIME -->
                 <div class="racquet-setscore">
                   <div class="scoring-set form-group" ng-repeat="team in match.resultFootball.teams track by $index">
-                    <div class="matchplayer-image" title="{{match.teams[$index].schoolName}} | {{match.teams[$index].sfaId}}">
+                    <!-- <div class="matchplayer-image" title="{{match.teams[$index].schoolName}} | {{match.teams[$index].sfaId}}">
                         <img ng-src="{{match.teams[$index].photograph|serverimage}}" alt="{{match.teams[$index].schoolName}}" class="img-responsive">
+                    </div> -->
+                    <div class="scorematch-teamschool">
+                      <p>{{team.schoolName}}</p>
                     </div>
                     <div class="relate setpoint-element" >
                       <label for="player1score" class="text-uppercase" >Half Time </label>
@@ -232,7 +235,7 @@
                             <button class="btn btn-scoring btn-green-outline" ng-click="startPenalty(match.resultFootball)">Penalty Shootouts</button>
                           </div>
                         </div>
-                        <div class="col-md-2" ng-if="match.stage == 'League'">
+                        <div class="col-md-2 col-sm-6" ng-if="match.stage == 'League'">
                           <div class="text-left draw-checkbox">
                             <label for="match.resultFootball.isDraw">For Draw Match</label>
                             <div class="custom-checkbox" ng-class="{'custom-checkbox-checked': match.resultFootball.isDraw == true}" ng-model="match.resultFootball.isDraw"

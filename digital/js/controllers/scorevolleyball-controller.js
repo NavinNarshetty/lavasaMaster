@@ -498,6 +498,25 @@ myApp.controller('VolleyballScoreCtrl', function($scope, TemplateService, Naviga
     };
     $scope.matchComplete = function(){
       if ($scope.match.resultVolleyball) {
+        _.each($scope.match.resultVolleyball.teams, function(n, nkey){
+          if(n.teamResults.block == ""){
+            n.teamResults.block = 0;
+          }
+          if(n.teamResults.fouls == ""){
+            n.teamResults.fouls = 0;
+          }
+          if(n.teamResults.spike == ""){
+            n.teamResults.spike = 0;
+          }
+          if(n.teamResults.finalPoints == ""){
+            n.teamResults.finalPoints = 0;
+          }
+          _.each(n.teamResults.sets, function(m, mkey){
+            if(m.points == ""){
+              m.points = 0;
+            }
+          })
+        });
         $scope.match.resultVolleyball.status = "IsCompleted";
           $scope.matchResult = {
             resultVolleyball : $scope.match.resultVolleyball,

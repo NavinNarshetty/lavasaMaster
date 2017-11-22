@@ -7,8 +7,8 @@
             <div class="col-md-6 col-sm-6" ng-repeat="team in matchPenalty.teams track by $index" ng-init="teamIndex = $index">
                 <div class="teamcard mainteamcard">
                     <div class="teamcard-header text-uppercase">
-                        <p>{{match.teams[$index].schoolName}}</p>
-                        <p>Team ID: <span> {{match.teams[$index].teamId}} </span></p>
+                        <p>{{team.schoolName}}</p>
+                        <p>Team ID: <span> {{team.teamId}} </span></p>
                     </div>
                 </div>
                 <div class="teamplaying">
@@ -20,7 +20,7 @@
                         <!-- <p ng-if="$index==0">Players</p> -->
                         <div class="teamplayer" ng-if="player.isPlaying==true">
                             <div class="penaltyshoot-player">
-                                <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{match.teams[teamIndex].studentTeam[$index].studentId.firstName}} {{match.teams[teamIndex].studentTeam[$index].studentId.surname}}</span></p>
+                                <p class="clearfix m-clear"><span class="pull-right">{{player.jerseyNo}}</span> <span>{{player.fullName}}</span></p>
                             </div>
                             <!-- PENALTY POINTS -->
                             <div class="relate penalty-point">

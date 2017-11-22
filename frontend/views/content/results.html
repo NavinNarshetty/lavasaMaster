@@ -252,7 +252,7 @@
               <a class="btn-viewmore" ng-click="viewMoreSport(sportTable.showTable);" ng-if="sportTable.length>5">View
                 <span ng-if="sportTable.showTable == true">Full</span>
                 <span ng-if="sportTable.showTable == false">Less</span> Ranking Table</a>
-              <!--<a class="btn-viewmore" ng-click="showMedalWinner();">View <span ng-if="!showAllMedalWinner">All</span> <span ng-if="showAllMedalWinner">Less</span> Medal Winners</a>-->
+              <!--<a class="btn-viewmore" ng-click="showMedalWinner();" ng-if="medalWinners">View <span ng-if="!showAllMedalWinner">All</span> <span ng-if="showAllMedalWinner">Less</span> Medal Winners</a>-->
             </div>
           </div>
           <div class="col-md-5 col-sm-12 col-xs-12" ng-if="risingAthletes.length>0">
@@ -342,7 +342,7 @@
                 <div class="col-md-3 col-sm-4 col-xs-6">
                   <label class="sportfilter-label">Gender</label>
                   <div class="sportfilter-select">
-                    <ui-select name="selectsporttype" ng-model="medalFilter.gender" theme="bootstrap">
+                    <ui-select name="selectsporttype" ng-model="medalFilter.gender" theme="bootstrap" on-select="getMedalWinners();">
                       <ui-select-match placeholder="Select Gender">{{$select.selected}}</ui-select-match>
                       <ui-select-choices repeat="gender in medalFilterList.gender | filter: $select.search">
                         <div>
@@ -357,7 +357,7 @@
                 <div class="col-md-3 col-sm-4 col-xs-6">
                   <label class="sportfilter-label">Age</label>
                   <div class="sportfilter-select">
-                    <ui-select name="selectsporttype" ng-model="medalFilter.ageGroup" theme="bootstrap">
+                    <ui-select name="selectsporttype" ng-model="medalFilter.age" theme="bootstrap" on-select="getMedalWinners();">
                       <ui-select-match placeholder="Select Age">{{$select.selected}}</ui-select-match>
                       <ui-select-choices repeat="ageGroup in medalFilterList.ageGroups | filter: $select.search">
                         <div>
@@ -372,7 +372,7 @@
                 <div class="col-md-3 col-sm-4 col-xs-6">
                   <label class="sportfilter-label">Event</label>
                   <div class="sportfilter-select">
-                    <ui-select name="selectsporttype" ng-model="medalFilter.event" theme="bootstrap">
+                    <ui-select name="selectsporttype" ng-model="medalFilter.event" theme="bootstrap" on-select="getMedalWinners();">
                       <ui-select-match placeholder="Select Event">{{$select.selected}}</ui-select-match>
                       <ui-select-choices repeat="event in medalFilterList.events | filter: $select.search">
                         <div>
@@ -383,13 +383,6 @@
                   </div>
                 </div>
                 <!-- AGE FILTER -->
-                <!-- APPLY BUTTON -->
-                <div class="col-md-3 col-sm-4 col-xs-6">
-                  <div class="allmedal-filter">
-                    <button class="btn btn-default" ng-click="medalList();">Apply</button>
-                  </div>
-                </div>
-                <!-- APPLY BUTTON END -->
               </div>
             </div>
             <!-- FILTER END -->
@@ -413,9 +406,10 @@
                           <img ng-src="{{player.profile|serverimage2}}" alt="{{winner.sfaId}} - {{winner.name}} | {{winner.school}}" class="img-responsive">
                         </div>
                         <div class="allmedal-studentdetails">
+                          <!-- <pre>{{player|json}}</pre> -->
                           <div class="" ng-if="player.sfaId">
-                            <p class="allmedal-studentname">{{winner.name}}</p>
-                            <p class="allmedal-studentschool">{{winner.school}}</p>
+                            <p class="allmedal-studentname">{{player.participantName}}</p>
+                            <p class="allmedal-studentschool">{{player.school}}</p>
                           </div>
                           <div class="" ng-if="player.TeamId">
                             <p class="allmedal-studentname">{{player.TeamId}}</p>
@@ -437,8 +431,8 @@
                         </div>
                         <div class="allmedal-studentdetails">
                           <div class="" ng-if="player.sfaId">
-                            <p class="allmedal-studentname">{{winner.name}}</p>
-                            <p class="allmedal-studentschool">{{winner.school}}</p>
+                            <p class="allmedal-studentname">{{player.participantName}}</p>
+                            <p class="allmedal-studentschool">{{player.school}}</p>
                           </div>
                           <div class="" ng-if="player.TeamId">
                             <p class="allmedal-studentname">{{player.TeamId}}</p>

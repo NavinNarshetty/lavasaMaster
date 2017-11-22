@@ -109,8 +109,11 @@
       <!-- SET SCORE UPLOADS -->
       <div class="racquet-setscore">
         <div class="scoring-set form-group" ng-repeat="player in match.resultsRacquet.players track by $index">
-          <div class="matchplayer-image" title="{{match.players[$index].firstName}} {{match.players[$index].surname}} | {{match.players[$index].sfaId}}">
+          <!-- <div class="matchplayer-image" title="{{match.players[$index].firstName}} {{match.players[$index].surname}} | {{match.players[$index].sfaId}}">
               <img ng-src="{{match.players[$index].photograph|serverimage}}" alt="{{match.players[$index].firstName}} {{match.players[$index].surname}}" class="img-responsive">
+          </div> -->
+          <div class="scorematch-teamschool">
+            <p>{{player.fullName}}</p>
           </div>
           <div class="relate setpoint-element" ng-repeat="set in player.sets track by $index">
             <label for="player1score" class="text-uppercase" >SET <span>{{$index+1}}</span></label>

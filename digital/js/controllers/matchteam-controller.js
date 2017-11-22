@@ -40,6 +40,11 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                         drawFormat: $stateParams.drawFormat,
                         id: $stateParams.sport
                     });
+                } else if ($stateParams.drawFormat === 'League cum Knockout') {
+                    $state.go('league-knockoutTeam', {
+                        drawFormat: $stateParams.drawFormat,
+                        id: $stateParams.sport
+                    });
                 }
             }
         }
@@ -62,7 +67,7 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                 $scope.resultVar = resultVar = ResultSportInitialization.getResultVariable($scope.matchDetails.sportsName);
                 console.log($scope.matchDetails, '$scope.matchDetails');
                 if ($scope.matchDetails.teams.length == 0) {
-                    toasstr.error("EmptyData");
+                    toastr.error("EmptyData");
                     if ($stateParams.drawFormat === 'Knockout') {
                         $state.go('knockout-team', {
                             drawFormat: $stateParams.drawFormat,
@@ -70,6 +75,11 @@ myApp.controller('MatchTeamCtrl', function ($scope, TemplateService, NavigationS
                         });
                     } else if ($stateParams.drawFormat === 'Heats') {
                         $state.go('heats', {
+                            drawFormat: $stateParams.drawFormat,
+                            id: $stateParams.sport
+                        });
+                    } else if ($stateParams.drawFormat === 'League cum Knockout') {
+                        $state.go('league-knockoutTeam', {
                             drawFormat: $stateParams.drawFormat,
                             id: $stateParams.sport
                         });

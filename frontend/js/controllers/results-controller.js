@@ -148,13 +148,6 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
     }
   };
   // FILTER OPTIONS END
-  // MEDAL FILTER OPTIONS
-  $scope.medalFilter = {
-    gender: "",
-    ageGroup: "",
-    event: ""
-  }
-  // MEDAL FILTER OPTIONS END
 
   configService.getDetail(function (data) {
     $scope.state = data.state;
@@ -173,6 +166,11 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   $scope.sportFilter = {
     name: "Archery"
   };
+  // MEDAL FILTER OPTIONS
+  $scope.medalFilter = {
+    name: $scope.sportFilter.name,
+  }
+  // MEDAL FILTER OPTIONS END
   // VARIABLE INITITALISE END
 
   // FUNCTIONS
@@ -242,7 +240,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         }
         console.log('sport', n);
         // <td colspan="3"> <div> </div> </td>
-        detailTable = detailTable + '<tr>   <td class="dd-sportname">' + n.name + ' </td> <td > <div class="detail-resultholder"> ' + n.goldMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.silverMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.bronzeMedal + ' </div> </td> <td > <div class="detail-resultholder">' + n.totalPoints + ' </div> </td> </tr>';
+        detailTable = detailTable + '<tr>   <td class="dd-sportname" colspan="2">' + n.name + ' </td> <td colspan="1"> <div class="detail-resultholder"> ' + n.goldMedal + ' </div> </td> <td colspan="1"> <div class="detail-resultholder">' + n.silverMedal + ' </div> </td> <td colspan="1"> <div class="detail-resultholder">' + n.bronzeMedal + ' </div> </td> <td colspan="1"> <div class="detail-resultholder">' + n.totalPoints + ' </div> </td> </tr>';
       });
       $scope.rankDetail = detail;
       demo = '<tr id="rankDetail' + index + '"> <td class = "pad-clear" colspan = "6"> <div class="schoolrank-details"> <table class = "table"> ' + detailTable + '</table> </div> </td> </tr>'
@@ -280,16 +278,6 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   // FUNCTIONS END
 
   // APIS
-  // GENERATE RANKING TABLE
-  // $scope.generateTable = function(){
-  //   NavigationService.getSchoolRank(function(data){
-  //     if (data.data = true)7 {
-  //       console.log("table GENERATED");
-  //     }
-  //   });
-  // };
-  // GENERATE RANKING TABLE END
-  // GET RANKING TABLE
   $scope.getSchoolByRanks = function(){
     NavigationService.getSchoolByRanks(function (data) {
       // console.log('rankingTable', data);
@@ -342,17 +330,18 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       }
     });
   }
-
-  $scope.medalList = function(){
-    console.log("medalFilter", $scope.medalFilter);
-  }
   // GET MEDAL FILTER END
   // GET MEDAL WINNER
   $scope.getMedalWinners = function(){
-    NavigationService.getMedalWinners($scope.sportFilter, function(data){
+    $scope.medalFilter.name = $scope.sportFilter.name;
+    NavigationService.getMedalWinners($scope.medalFilter, function(data){
       // console.log('getMedalWinners',data);
-      $scope.medalWinners = data.data;
-      console.log('$scope.medalWinners',$scope.medalWinners);
+      if (data.value == true) {
+        $scope.medalWinners = data.data;
+        console.log('$scope.medalWinners',$scope.medalWinners);
+      } else {
+        toastr.error('Error in getMedalWinners');
+      }
 
     });
   }
@@ -382,7 +371,7 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       }
     });
     $scope.getMedalFilter();
-    // $scope.getMedalWinners();
+    $scope.getMedalWinners();
   };
   $scope.getSchoolBySport();
   // GET SPORT RANKING TABLE END
