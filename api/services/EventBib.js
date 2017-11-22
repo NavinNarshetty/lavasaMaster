@@ -365,9 +365,36 @@ var model = {
     },
 
     getSchool: function (data, callback) {
+        var Model = this;
+        var Const = this(data);
+        var maxRow = Config.maxRow / 2;
+
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var start = (page - 1) * maxRow;
+        if (data.input) {
+            var matchObj = {
+                $or: [{
+                    name: {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }, {
+                    schoolName: {
+                        $regex: data.input,
+                        $options: "i"
+                    }
+                }]
+            };
+        } else {
+            var matchObj = {};
+        }
+
         async.waterfall([
             function (callback) {
-                School.find().lean().exec(function (err, oldSchool) {
+                School.find(matchObj).lean().skip(start).limit(maxRow).exec(function (err, oldSchool) {
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(oldSchool)) {
@@ -378,7 +405,7 @@ var model = {
                 });
             },
             function (oldSchool, callback) {
-                Registration.find().lean().exec(function (err, registeredSchool) {
+                Registration.find(matchObj).lean().skip(start).limit(maxRow).exec(function (err, registeredSchool) {
                     if (err) {
                         callback(err, null);
                     } else if (_.isEmpty(registeredSchool)) {
@@ -396,6 +423,7 @@ var model = {
                 });
             },
             function (school, callback) {
+                // console.log("school", school);
                 async.concatSeries(school, function (singleData, callback) {
                     var info = {};
                     info._id = singleData._id;
@@ -409,6 +437,7 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else {
+                        // console.log("final", final);
                         callback(null, final);
                     }
                 });
@@ -417,9 +446,9 @@ var model = {
             if (err) {
                 callback(err, null);
             } else {
-                var schoolUniq = _.uniqBy(found.schoolName, function (item) {
-                    return JSON.stringify(item);
-                });
+                console.log("main count:", found.length);
+                var schoolUniq = _.uniqBy(found, "schoolName");
+                console.log("uniq count:", schoolUniq.length);
                 callback(null, schoolUniq);
             }
         });
