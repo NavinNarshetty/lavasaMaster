@@ -1119,8 +1119,24 @@ var model = {
                     if (err) {
                         callback(err, null);
                     } else {
+                        var temp1 = [];
+                        var temp2 = [];
                         sendObj.ageGroups = _.map(data, '_id');
-                        callback(null, sendObj, pipeline);
+                        _.each(sendObj.ageGroups, function (n, k1) {
+                            temp1.push(parseInt((_.split(n, '-'))[1]));
+                            if (k1 == sendObj.ageGroups.length-1) {
+                                temp1.sort();
+                                _.each(temp1, function (n, k2) {
+                                    temp2.push("U-" + n);
+                                    if (k2 == temp1.length-1) {
+                                        sendObj.ageGroups = temp2;
+                                        callback(null, sendObj, pipeline);
+                                    }
+                                });
+                            }
+                        });
+
+
                     }
                 })
             },
