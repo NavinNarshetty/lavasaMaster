@@ -254,17 +254,17 @@ var model = {
                         .keyword(options)
                         .page(options, callback);
                 },
-                function (found, callback) {
-                    Athelete.getSportRegisteredAthlete(found, function (err, athlete) {
-                        if (err) {
-                            callback(err, null);
-                        } else if (_.isEmpty(athlete)) {
-                            callback(null, []);
-                        } else {
-                            callback(null, athlete);
-                        }
-                    });
-                }
+                // function (found, callback) {
+                //     Athelete.getSportRegisteredAthlete(found, function (err, athlete) {
+                //         if (err) {
+                //             callback(err, null);
+                //         } else if (_.isEmpty(athlete)) {
+                //             callback(null, []);
+                //         } else {
+                //             callback(null, athlete);
+                //         }
+                //     });
+                // }
             ],
             function (err, data2) {
                 if (err) {

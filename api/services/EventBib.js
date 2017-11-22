@@ -364,5 +364,16 @@ var model = {
             });
     },
 
+    getSchool: function (data, callback) {
+        async.waterfall([
+            function (callback) {
+
+            }
+        ], function (err, found) {
+
+        });
+
+    }
+
 };
 module.exports = _.assign(module.exports, exports, model);
