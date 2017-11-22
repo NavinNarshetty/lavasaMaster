@@ -1820,12 +1820,10 @@ var model = {
                                 });
                             },
                             function (callback) {
-
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
-                                smsData.content = "Congratulations! You are now a verified SFA Athlete. Kindly check your registered Email ID for your SFA ID and Password.";
+                                smsData.content = "Congratulations ! SFA ID " + data.sfaId + "and Password " + data.password + ".Kindly complete your Sports Registrations";
                                 console.log("smsdata", smsData);
-                                // callback(null, smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
                                         console.log(err);
