@@ -869,14 +869,17 @@ var model = {
                             res.json(err);
                         } else {
                             console.log("files", files);
-                            _.each(files, function (n) {
+                            async.each(files, function (n, callback) {
+                                console.log("inside each", n);
                                 gfs.remove({
                                     filename: n.filename,
                                 }, function (err, done) {
                                     console.log("done", done);
+                                    callback();
                                 });
+                            }, function (err) {
+                                image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
                             });
-                            image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
                         }
                     });
                 });
