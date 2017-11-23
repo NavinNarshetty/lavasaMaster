@@ -872,8 +872,8 @@ var model = {
                             _.each(files, function (n) {
                                 gfs.remove({
                                     filename: n.filename,
-                                }, function () {
-
+                                }, function (err, done) {
+                                    console.log("done", done);
                                 });
                             });
                             image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);

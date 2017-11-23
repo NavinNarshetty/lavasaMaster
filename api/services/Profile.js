@@ -531,7 +531,7 @@ var model = {
                             if (_.isEmpty(medalData)) {
                                 profile.medalData = medalData;
                             } else {
-                                // profile.medalData = _.groupBy(medalData, 'medalType');
+                                console.log("medals", medalData);
                                 profile.medalData = _(medalData)
                                     .groupBy('medalType')
                                     .map(function (items, name) {
@@ -605,6 +605,7 @@ var model = {
                                         if (!_.isEmpty(singleData.player)) {
                                             async.eachSeries(singleData.player, function (player, callback) {
                                                     if (player.equals(data.athleteId)) {
+                                                        console.log("match", player, "data", data.athleteId);
                                                         medals.push(singleData);
                                                     }
                                                     callback(null, singleData);
@@ -613,15 +614,17 @@ var model = {
                                                     callback(null, singleData);
                                                 });
                                         } else {
-                                            // console.log("team", singleData.team);
+                                            console.log("team", singleData.team);
                                             async.eachSeries(singleData.team, function (teamData, callback) {
                                                     StudentTeam.find({
                                                         sport: mainData._id,
                                                         teamId: teamData,
                                                         studentId: data.athleteId
                                                     }).lean().exec(function (err, found) {
-                                                        console.log("found", found);
-                                                        medals.push(singleData);
+                                                        console.log("found", found, "teamdata", singleData);
+                                                        if (!_.isEmpty(found)) {
+                                                            medals.push(singleData);
+                                                        }
                                                         callback(null, found);
                                                     });
                                                 },
