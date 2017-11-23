@@ -62,6 +62,7 @@ myApp.controller('DetailScheduleCtrl', function ($scope, TemplateService, Naviga
   $scope.addRow();
 
   $scope.deleteRow = function (formData, index) {
+    console.log("in delete")
     formData.pdfDetail.splice(index, 1);
   };
 
