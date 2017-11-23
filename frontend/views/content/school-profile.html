@@ -392,6 +392,38 @@
                                     <h4 class="text-up color-blue display-inline">gender</h4>
                                     <div class="display-inline">
                                         <div class="sfa-select">
+                                            <select class="select" ng-change="callReloadStat(genderValue,'gender');" ng-model="genderValue" ng-options="item for item in gender | orderBy">
+                                            </select>
+                                            <span class="only-border"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
+                                    <h4 class="text-up color-blue display-inline">age group</h4>
+                                    <div class="display-inline">
+                                        <div class="sfa-select">
+                                            <select class="select" ng-change="callReloadStat(ageValue,'age');" ng-model="ageValue" ng-options="item for item in agegroup | orderBy">
+                                                <option value=""></option>
+                                            </select>
+                                            <span class="only-border"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
+                                    <h4 class="text-up color-blue display-inline">category</h4>
+                                    <div class="display-inline">
+                                        <div class="sfa-select">
+                                            <select class="select" ng-change="callReloadStat(eventValue,'event');" ng-model="eventValue" ng-options="item for item in eventCategory | orderBy">
+                                                <option value=""></option>
+                                            </select>
+                                            <span class="only-border"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="col-md-3 col-sm-4 col-xs-12 text-c-m">
+                                    <h4 class="text-up color-blue display-inline">gender</h4>
+                                    <div class="display-inline">
+                                        <div class="sfa-select">
                                             <select ng-change="getStats()" ng-model="filterStatistics.gender" class="select">
                                                 <option value=""></option>
                                                 <option value="Boys">Boys</option>
@@ -410,8 +442,8 @@
                                             <span class="only-border"></span>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-3 col-sm-4 col-xs-12 text-c-m" ng-if="dropdowns.category.length > 0">
+                                </div> -->
+                                <!-- <div class="col-md-3 col-sm-4 col-xs-12 text-c-m" ng-if="dropdowns.category.length > 0">
                                     <h4 class="text-up color-blue display-inline">category</h4>
                                     <div class="display-inline">
                                         <div class="sfa-select">
@@ -419,7 +451,7 @@
                                             <span class="only-border"></span>
                                         </div>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="row mt25 main-over" ng-if="statsDetail">
                                 <div class="col-md-12 mt25">
