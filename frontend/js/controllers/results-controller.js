@@ -113,6 +113,8 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       $scope.filterOptions = [{
         name: 'Archery'
       }, {
+        name: 'Athletics'
+      }, {
         name: 'Basketball'
       }, {
         name: 'Boxing'
@@ -196,8 +198,13 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   $scope.showMedalWinner = function () {
     if ($scope.showAllMedalWinner == true) {
       $scope.showAllMedalWinner = false;
+      $scope.medalFilter = {
+        name: $scope.sportFilter.name
+      }
     } else {
       $scope.showAllMedalWinner = true;
+      $scope.getMedalFilter();
+      $scope.getMedalWinners();
     }
   }
   // VIEW MEDAL WINNER END
@@ -275,6 +282,15 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
   }
   // SPORT RANKING TABLE END
   // VIEW MORE / LESS FUNCTIONS END
+  // CLEAR FILTER
+  $scope.clearMedalFilter = function(){
+    $scope.medalFilter = {
+      name: $scope.sportFilter.name
+    }
+    $scope.getMedalWinners();
+    console.log($scope.medalFilter, 'clear');
+  }
+  // CLEAR FILTER END
   // FUNCTIONS END
 
   // APIS
@@ -338,6 +354,39 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
       // console.log('getMedalWinners',data);
       if (data.value == true) {
         $scope.medalWinners = data.data;
+        _.each($scope.medalWinners, function(n){
+          if (n.male) {
+            _.each(n.male, function(m){
+              _.each(m.medals, function(o){
+                if (o.medal === 'gold') {
+                  o.medalOrder = 1;
+                } else if(o.medal === 'silver'){
+                  o.medalOrder = 2;
+                } else if (o.medal === 'bronze') {
+                  o.medalOrder = 3;
+                }
+              });
+            })
+          }
+          if (n.female) {
+            _.each(n.female, function(m){
+              _.each(m.medals, function(o){
+                if (o.medal === 'gold') {
+                  o.medalOrder = 1;
+                } else if(o.medal === 'silver'){
+                  o.medalOrder = 2;
+                } else if (o.medal === 'bronze') {
+                  o.medalOrder = 3;
+                }
+              });
+            })
+          }
+        })
+        if (_.isEmpty($scope.medalWinners)) {
+          $scope.showMedalList = false;
+        } else{
+          $scope.showMedalList = true;
+        }
         console.log('$scope.medalWinners',$scope.medalWinners);
       } else {
         toastr.error('Error in getMedalWinners');
@@ -370,8 +419,6 @@ myApp.controller('ResultsCtrl', function ($scope, TemplateService, $state, Navig
         toastr.error('Sport Ranking Error', 'Error');
       }
     });
-    $scope.getMedalFilter();
-    $scope.getMedalWinners();
   };
   $scope.getSchoolBySport();
   // GET SPORT RANKING TABLE END

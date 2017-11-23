@@ -90,7 +90,7 @@
             </h3>
           <div class="knockout-cardholder" ng-repeat="card in roundsList[0].match track by $index">
             <div class="knockout-card"  ng-if="card.opponentsSingle.length>0" ng-repeat="player in card.opponentsSingle track by $index" ng-class="{'knockout-winnercard':player.isWinner===true}">
-              <div class="knockout-cardimage display-inline ver-mid" ng-if="player.athleteId.photograph">
+              <div class="knockout-cardimage display-inline ver-mid" >
                 <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt="{{player.athleteId.fullName}}" class="img-responsive">
               </div>
 
@@ -157,7 +157,7 @@
           <div class=" knockout-cardholder">
             <div class="knockout-card " ng-if="card.opponentsSingle.length>0" ng-repeat="player in card.opponentsSingle track by $index "
               ng-class="{'knockout-winnercard':player.isWinner===true}">
-              <div class="knockout-cardimage display-inline ver-mid " ng-if="player.athleteId.photograph">
+              <div class="knockout-cardimage display-inline ver-mid " >
                 <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt="{{player.athleteId.fullName}}" class="img-responsive ">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid ">
@@ -223,7 +223,7 @@
           <div class=" knockout-cardholder">
             <div class="knockout-card " ng-class="{'knockout-winnercard':player.isWinner===true}" ng-repeat="player in card.opponentsSingle track by $index"
               ng-if="card.opponentsSingle.length>0">
-              <div class="knockout-cardimage display-inline ver-mid " ng-if="player.athleteId.photograph">
+              <div class="knockout-cardimage display-inline ver-mid " >
                 <img ng-src="{{player.athleteId.photograph|serverimage2:50:50:'cover'}}" alt="{{player.athleteId.fullName}}" class="img-responsive ">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid ">

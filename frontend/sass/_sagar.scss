@@ -772,8 +772,16 @@ $brand-green: #0eda85 !default; //green
     height: 50px;
     border-radius: 100%;
     display: inline-block;
+    position: relative;
     overflow: hidden;
     vertical-align: middle;
+    img.loading{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: auto;
+    }
 }
 
 .allmedal-studentdetails {
