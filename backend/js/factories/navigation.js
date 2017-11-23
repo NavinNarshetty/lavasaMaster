@@ -194,6 +194,11 @@ myApp.factory('NavigationService', function ($http) {
                 sref: "#/risingstar",
                 icon: "phone"
             }]
+        }, {
+            name: "Champion Schedule",
+            classis: "activeColor",
+            sref: "#/championschedule",
+            icon: "phone"
         },
         {
             name: "Faq",

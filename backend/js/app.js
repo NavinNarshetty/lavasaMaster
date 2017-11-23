@@ -490,9 +490,14 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         })
         // Detail schedule
         .state('detail-championschedule', {
-            url: "/detail-championschedule",
+            url: "/detail-championschedule/:id",
             templateUrl: "views/template.html",
             controller: 'DetailScheduleCtrl'
+        })
+        .state('championschedule', {
+            url: "/championschedule",
+            templateUrl: "views/template.html",
+            controller: 'ChampionScheduleCtrl'
         })
         //additional payment
         .state('additional-payment', {

@@ -37,25 +37,27 @@
               <div class="form-group">
                 <label for="">Date</label>
                 <div class="row">
-                  <div class="col-md-6">
-                    <label for="">To</label>
-                    <input type="text" ng-model="formData.DateTo" name="todate" class="form-control" placeholder="Enter Start Date" required>
-                    <div class="error-msg" ng-if="championSchedule.todate.$invalid && championSchedule.todate.$touched">Please Enter Start Date *</div>
-                  </div>
-                  <div class="col-md-6">
-                    <label for="">From</label>
-                    <input type="text" ng-model="formData.DateFrom" name="enddate" class="form-control" placeholder="Enter End Date" required>
-                    <div class="error-msg" ng-if="championSchedule.enddate.$invalid && championSchedule.enddate.$touched">Please Enter End Date *</div>
+                  <div class="col-md-12">
+                    <input type="text" ng-model="formData.scheduleDate" name="todate" class="form-control" placeholder="Enter Schedule Date"
+                      required>
+                    <div class="error-msg" ng-if="championSchedule.todate.$invalid && championSchedule.todate.$touched">Please Enter Schedule Date *</div>
                   </div>
                 </div>
               </div>
               <!-- DATE END -->
               <!-- UPLOAD TIME AND TEXT -->
               <div class="form-group">
-                <label>Upload Time & Text</label>
-                <input type="text" ng-model="formData.uploadTime" class="form-control" placeholder="Enter Upload Text">
+                <label>Upload Time & Text(Optional)</label>
+                <input type="text" ng-model="formData.uploadTime" class="form-control" placeholder="For eg: 12th Nov - 14th Nov">
               </div>
               <!-- UPLOAD TIME AND TEXT END -->
+
+              <!-- ORDER OF PLAY -->
+              <div class="form-group">
+                <label>Order of Text(Optional)</label>
+                <input type="text" ng-model="formData.orderPlayText" class="form-control" placeholder="Enter Order Of Text">
+              </div>
+              <!-- ORDER OF PLAY END -->
 
               <!-- TABLE FOR CHOOSE FILE -->
               <div class="form-group">
@@ -69,6 +71,7 @@
                         <th>Select Type</th>
                         <th>Text</th>
                         <th>Pdf Upload</th>
+                        <th>Link</th>
                         <th>Action</th>
                       </tr>
                     </thead>
@@ -76,11 +79,11 @@
                       <tr ng-repeat="item in formData.pdfDetail track by $index">
                         <td>
                           <div class="form-group">
-                            <select name="selectDraws" class="form-control" ng-model="item.pdfType" required>
-                                  <option value="schedulePdf">Sports Draws</option>
+                            <select name="selectDraws" class="form-control" ng-model="item.pdfType">
+                                  <option value="schedulePdf">Draws & schedule</option>
                                   <option value="resultPdf">Result</option>
-                                  <option value="startList">Start List</option>
-                                  <option value="order">Order</option>
+                                  <option value="resultlink">Result Link</option>
+                                  <option value="order">Order of play</option>
                                   <option value="other">Other</option>
                           </select>
                           </div>
@@ -92,7 +95,13 @@
                         </td>
                         <td>
                           <div class="form-group">
-                            <upload-image ng-model="item.pdfName" type="pdf" ispdf=true required></upload-image>
+                            <upload-image ng-model="item.pdfName" type="pdf" ispdf=true></upload-image>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="form-group">
+                            <input type="text" placeholder="eg:http://hyderabadschool.sfanow.in/results" class="form-control" ng-model="item.resultLink"
+                              title="eg:http://hyderabadschool.sfanow.in/results">
                           </div>
                         </td>
                         <td ng-click="deleteRow(formData,$index);">
@@ -105,13 +114,14 @@
                   </table>
                 </div>
               </div>
+
               <!-- TABLE FOR CHOOSE FILE END -->
               <!-- BUTTON -->
               <div class="row">
                 <div class="col-md-12">
                   <div class="text-center mt20 odd-even-button">
                     <button class="btn btn-default" type="submit" ng-click="saveschedule(formData)" ng-disabled="championSchedule.$invalid">Save</button>
-                    <button class="btn btn-default" ui-sref='sponsor'>Cancel</button>
+                    <button class="btn btn-default" ui-sref='championschedule'>Cancel</button>
                   </div>
                 </div>
               </div>

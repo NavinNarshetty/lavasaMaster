@@ -111,10 +111,11 @@ myApp.controller('eventAttendanceCtrl', function ($scope, TemplateService, $stat
   $scope.schoolParameter.input = '';
   $scope.getSchoolreg = function (input) {
     if (input != undefined) {
-      NavigationService.getSchoolRegistration(input, function (data) {
+      $scope.url = "EventBib/getSchool"
+      NavigationService.apiCallWithData($scope.url, input, function (data) {
         console.log(data, "get all school");
         // if (data.value) {
-        $scope.schoolData = data.data.data.results;
+        $scope.schoolData = data.data;
         console.log($scope.schoolData, "check this")
         // }
       });
