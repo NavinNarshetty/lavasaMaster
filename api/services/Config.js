@@ -834,7 +834,7 @@ var model = {
     },
 
     rotateImage: function (filename, angle, callback, res) {
-
+        var fid = filename.substr(0, filename.lastIndexOf('.'));
         var readstream = gfs.createReadStream({
             filename: filename
         });
@@ -869,17 +869,21 @@ var model = {
                             res.json(err);
                         } else {
                             console.log("files", files);
-                            async.each(files, function (n, callback) {
+                            async.concatSeries(files, function (n, callback) {
                                 console.log("inside each", n);
-                                gfs.remove({
-                                    id: n._id
-                                }, function (err, gridStore) {
-                                    if (err) return handleError(err);
-                                    console.log('success');
-                                    callback();
+                                gfs.files.remove({
+                                    _id: n._id
+                                }, function (err, found) {
+                                    if (err) {
+                                        console.log("error");
+                                    } else {
+                                        // console.log("old file removed", found);
+                                        console.log("image", image);
+                                        image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
+                                    }
                                 });
-                            }, function (err) {
-                                image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
+                            }, function (err, found) {
+                                callback(null, found);
                             });
                         }
                     });
@@ -888,7 +892,7 @@ var model = {
         }
 
         function writer2(err, imageBuf) {
-
+            console.log("inside", imageBuf);
             var writestream2 = gfs.createWriteStream({
                 filename: filename,
             });
