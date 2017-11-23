@@ -1,6 +1,6 @@
 module.exports = _.cloneDeep(require("sails-wohlig-controller"));
 var controller = {
-    getAll: function (res) {
+    getAll: function (req, res) {
         Schedule.find().deepPopulate("sport").lean().sort({
             createdAt: -1
         }).exec(function (err, found) {
