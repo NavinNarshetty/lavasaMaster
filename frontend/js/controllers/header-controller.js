@@ -1,5 +1,6 @@
 var year15 = '2015-16';
 var year16 = '2016-17';
+var year17 = '2017-18';
 var eventYear = '2017-18';
 // var year15 = '2015';
 // var year16 = '2016';
