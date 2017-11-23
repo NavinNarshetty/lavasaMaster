@@ -71,18 +71,24 @@
                     <h4 ng-if="isCollege == true && sport.info[0].createdBy != 'School'">Created By: {{sport.info[0].createdBy}}</h4>
                   </div>
 
-                  <div class="pull-right" ng-if="detail.userType == (sport.info[0].createdBy).toLowerCase() && detail.userType == 'school'"
+                  <!-- <div class="pull-right" ng-if="detail.userType == (sport.info[0].createdBy).toLowerCase() && detail.userType == 'school'"
                     style="margin-right: 15px;" ng-click="setTeamid(sport._id);selectService.team =[];">
                     <a class="btn btn-default" ui-sref="team-selection({id:stateId})">Edit</a>
                   </div>
                   <div class="pull-right" ng-if="sport.info[0].createdBy == 'College' && detail.userType == 'school'" style="margin-right: 15px;"
                     ng-click="setTeamid(sport._id);selectService.team =[];">
                     <a class="btn btn-default" ui-sref="team-selection({id:stateId})">Edit</a>
-                  </div>
+                  </div> -->
                   <!-- <div class="pull-right" ng-if="detail.userType == (sport.info[0].createdBy).toLowerCase() && detail.mixAccess" style="margin-right: 15px;"
                     ng-click="setTeamid(sport._id)">
                     <a class="btn btn-default" ui-sref="team-selection({id:stateId})">Edit</a>
                   </div> -->
+                  <div class="pull-right" ng-if="detail.userType == 'school'" style="margin-right: 15px;" ng-click="setTeamid(sport._id)">
+                    <a class="btn btn-default" ui-sref="team-selection({id:stateId})">Edit</a>
+                  </div>
+                  <div class="pull-right" ng-if="detail.userType == 'athlete' && detail.mixAccess == true" style="margin-right: 15px;" ng-click="setTeamid(sport._id)">
+                    <a class="btn btn-default" ui-sref="team-selection({id:stateId})">Edit</a>
+                  </div>
                 </div>
               </div>
               <div class="row" style="margin: 0 0px 0 -15px;">
