@@ -1034,6 +1034,7 @@ var model = {
                                                         } else {
                                                             info.school = n.school.name;
                                                         }
+                                                        info.profile = n.photograph;
                                                         info.sfaId = n.sfaId;
                                                         obj.medals.push(info);
                                                         callback(null, obj);
