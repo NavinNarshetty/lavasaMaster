@@ -5,12 +5,21 @@ var controller = {
             createdAt: -1
         }).exec(function (err, found) {
             if (err) {
-                res.callback(err, null);
+                res.json({
+                    "data": err,
+                    "value": false
+                });
             } else {
                 if (_.isEmpty(found)) {
-                    res.callback(null, []);
+                    res.json({
+                        "data": [],
+                        "value": true
+                    })
                 } else {
-                    res.callback(null, found);
+                    res.json({
+                        "data": found,
+                        "value": true
+                    })
                 }
             }
         });
