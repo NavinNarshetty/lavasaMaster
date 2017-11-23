@@ -1077,8 +1077,6 @@ var model = {
             });
     },
 
-
-
     getAgeGroupsAndEvents: function (data, callback) {
         // console.log("data", data);
         var str = '^' + data.name;

@@ -777,7 +777,7 @@ var model = {
         });
     },
 
-    rotateImage: function (filename, angle, callback, res) {
+    oldrotateImage: function (filename, angle, callback, res) {
 
         var readstream = gfs.createReadStream({
             filename: filename
@@ -833,7 +833,7 @@ var model = {
         }
     },
 
-    newrotateImage: function (filename, angle, callback, res) {
+    rotateImage: function (filename, angle, callback, res) {
 
         var readstream = gfs.createReadStream({
             filename: filename
