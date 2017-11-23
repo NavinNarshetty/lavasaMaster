@@ -749,6 +749,9 @@ var model = {
                         sendObj.matchFound = true;
                         callback(null, sendObj);
                     } else {
+                        if (data.drawFormat) {
+                            sendObj.drawFormat = data.drawFormat;
+                        }
                         sendObj.matchFound = false;
                         callback(null, sendObj);
                     }
@@ -1326,6 +1329,16 @@ var model = {
                                 "resultFootball.teams.team": teamid,
                             }, {
                                 "resultHockey.teams.team": teamid,
+                            }, {
+                                "resultHandball.teams.team": teamid,
+                            }, {
+                                "resultKabaddi.teams.team": teamid,
+                            }, {
+                                "resultBasketball.teams.team": teamid,
+                            }, {
+                                "resultVolleyball.teams.team": teamid,
+                            }, {
+                                "resultWaterPolo.teams.team": teamid,
                             }],
 
                             round: standings.name
@@ -1381,7 +1394,7 @@ var model = {
                                 } else {
                                     scores.loss = ++scores.loss;
                                 }
-                            } else {
+                            } else if (match.resultHockey) {
                                 if (match.resultHockey.teams.length == 2) {
                                     if (teamData._id == match.resultHockey.teams[0].team && match.resultHockey.teams[0].noShow == true) {
                                         scores.noShow = ++scores.noShow;
@@ -1397,6 +1410,111 @@ var model = {
                                     scores.win = ++scores.win;
                                     scores.points = scores.points + 3;
                                 } else if (_.isEmpty(match.resultHockey.winner.player) && match.resultHockey.isDraw == true) {
+                                    scores.draw = ++scores.draw;
+                                    scores.points = scores.points + 1;
+                                } else {
+                                    scores.loss = ++scores.loss;
+                                }
+                            } else if (match.resultBasketball) {
+                                if (match.resultBasketball.teams.length == 2) {
+                                    if (teamData._id == match.resultBasketball.teams[0].team && match.resultBasketball.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    } else if (teamData._id == match.resultBasketball.teams[1].team && match.resultBasketball.teams[1].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                } else {
+                                    if (teamData._id == match.resultBasketball.teams[0].team && match.resultBasketball.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                }
+                                if (teamData._id == match.resultBasketball.winner.player) {
+                                    scores.win = ++scores.win;
+                                    scores.points = scores.points + 3;
+                                } else if (_.isEmpty(match.resultBasketball.winner.player) && match.resultBasketball.isDraw == true) {
+                                    scores.draw = ++scores.draw;
+                                    scores.points = scores.points + 1;
+                                } else {
+                                    scores.loss = ++scores.loss;
+                                }
+                            } else if (match.resultHandball) {
+                                if (match.resultHandball.teams.length == 2) {
+                                    if (teamData._id == match.resultHandball.teams[0].team && match.resultHandball.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    } else if (teamData._id == match.resultHandball.teams[1].team && match.resultHandball.teams[1].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                } else {
+                                    if (teamData._id == match.resultHandball.teams[0].team && match.resultHandball.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                }
+                                if (teamData._id == match.resultHandball.winner.player) {
+                                    scores.win = ++scores.win;
+                                    scores.points = scores.points + 3;
+                                } else if (_.isEmpty(match.resultHandball.winner.player) && match.resultHandball.isDraw == true) {
+                                    scores.draw = ++scores.draw;
+                                    scores.points = scores.points + 1;
+                                } else {
+                                    scores.loss = ++scores.loss;
+                                }
+                            } else if (match.resultKabaddi) {
+                                if (match.resultKabaddi.teams.length == 2) {
+                                    if (teamData._id == match.resultKabaddi.teams[0].team && match.resultKabaddi.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    } else if (teamData._id == match.resultKabaddi.teams[1].team && match.resultKabaddi.teams[1].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                } else {
+                                    if (teamData._id == match.resultKabaddi.teams[0].team && match.resultKabaddi.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                }
+                                if (teamData._id == match.resultKabaddi.winner.player) {
+                                    scores.win = ++scores.win;
+                                    scores.points = scores.points + 3;
+                                } else if (_.isEmpty(match.resultKabaddi.winner.player) && match.resultKabaddi.isDraw == true) {
+                                    scores.draw = ++scores.draw;
+                                    scores.points = scores.points + 1;
+                                } else {
+                                    scores.loss = ++scores.loss;
+                                }
+                            } else if (match.resultVolleyball) {
+                                if (match.resultVolleyball.teams.length == 2) {
+                                    if (teamData._id == match.resultVolleyball.teams[0].team && match.resultVolleyball.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    } else if (teamData._id == match.resultVolleyball.teams[1].team && match.resultVolleyball.teams[1].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                } else {
+                                    if (teamData._id == match.resultVolleyball.teams[0].team && match.resultVolleyball.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                }
+                                if (teamData._id == match.resultVolleyball.winner.player) {
+                                    scores.win = ++scores.win;
+                                    scores.points = scores.points + 3;
+                                } else if (_.isEmpty(match.resultVolleyball.winner.player) && match.resultVolleyball.isDraw == true) {
+                                    scores.draw = ++scores.draw;
+                                    scores.points = scores.points + 1;
+                                } else {
+                                    scores.loss = ++scores.loss;
+                                }
+                            } else if (match.resultWaterPolo) {
+                                if (match.resultWaterPolo.teams.length == 2) {
+                                    if (teamData._id == match.resultWaterPolo.teams[0].team && match.resultWaterPolo.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    } else if (teamData._id == match.resultWaterPolo.teams[1].team && match.resultWaterPolo.teams[1].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                } else {
+                                    if (teamData._id == match.resultWaterPolo.teams[0].team && match.resultWaterPolo.teams[0].noShow == true) {
+                                        scores.noShow = ++scores.noShow;
+                                    }
+                                }
+                                if (teamData._id == match.resultWaterPolo.winner.player) {
+                                    scores.win = ++scores.win;
+                                    scores.points = scores.points + 3;
+                                } else if (_.isEmpty(match.resultWaterPolo.winner.player) && match.resultWaterPolo.isDraw == true) {
                                     scores.draw = ++scores.draw;
                                     scores.points = scores.points + 1;
                                 } else {

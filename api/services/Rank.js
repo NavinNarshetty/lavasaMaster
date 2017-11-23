@@ -481,11 +481,15 @@ var model = {
                                 });
                             },
                             function (err) {
-                                var results = _.groupBy(final, "name");
-                                _.each(results, function (result, key) {
-                                    results[key] = _.groupBy(result, 'gender');
-                                });
-                                callback(null, results);
+                                if (final.length > 0) {
+                                    var results = _.groupBy(final, "name");
+                                    _.each(results, function (result, key) {
+                                        results[key] = _.groupBy(result, 'gender');
+                                    });
+                                    callback(null, results);
+                                } else {
+                                    callback(null, []);
+                                }
                             });
                     } else if (data.event && data.age) {
                         var final = [];
@@ -559,11 +563,15 @@ var model = {
                                 });
                             },
                             function (err) {
-                                var results = _.groupBy(final, "name");
-                                _.each(results, function (result, key) {
-                                    results[key] = _.groupBy(result, 'gender');
-                                });
-                                callback(null, results);
+                                if (final.length > 0) {
+                                    var results = _.groupBy(final, "name");
+                                    _.each(results, function (result, key) {
+                                        results[key] = _.groupBy(result, 'gender');
+                                    });
+                                    callback(null, results);
+                                } else {
+                                    callback(null, []);
+                                }
                             });
                     } else if (data.event && data.gender) {
                         var final = [];
@@ -637,11 +645,15 @@ var model = {
                                 });
                             },
                             function (err) {
-                                var results = _.groupBy(final, "name");
-                                _.each(results, function (result, key) {
-                                    results[key] = _.groupBy(result, 'gender');
-                                });
-                                callback(null, results);
+                                if (final.length > 0) {
+                                    var results = _.groupBy(final, "name");
+                                    _.each(results, function (result, key) {
+                                        results[key] = _.groupBy(result, 'gender');
+                                    });
+                                    callback(null, results);
+                                } else {
+                                    callback(null, []);
+                                }
                             });
                     } else if (data.age && data.gender) {
                         var final = [];
@@ -715,11 +727,15 @@ var model = {
                                 });
                             },
                             function (err) {
-                                var results = _.groupBy(final, "name");
-                                _.each(results, function (result, key) {
-                                    results[key] = _.groupBy(result, 'gender');
-                                });
-                                callback(null, results);
+                                if (final.length > 0) {
+                                    var results = _.groupBy(final, "name");
+                                    _.each(results, function (result, key) {
+                                        results[key] = _.groupBy(result, 'gender');
+                                    });
+                                    callback(null, results);
+                                } else {
+                                    callback(null, []);
+                                }
                             });
                     } else if (data.event) {
                         var final = [];
@@ -793,11 +809,15 @@ var model = {
                                 });
                             },
                             function (err) {
-                                var results = _.groupBy(final, "name");
-                                _.each(results, function (result, key) {
-                                    results[key] = _.groupBy(result, 'gender');
-                                });
-                                callback(null, results);
+                                if (final.length > 0) {
+                                    var results = _.groupBy(final, "name");
+                                    _.each(results, function (result, key) {
+                                        results[key] = _.groupBy(result, 'gender');
+                                    });
+                                    callback(null, results);
+                                } else {
+                                    callback(null, []);
+                                }
                             });
                     } else if (data.age) {
                         var final = [];
@@ -871,11 +891,15 @@ var model = {
                                 });
                             },
                             function (err) {
-                                var results = _.groupBy(final, "name");
-                                _.each(results, function (result, key) {
-                                    results[key] = _.groupBy(result, 'gender');
-                                });
-                                callback(null, results);
+                                if (final.length > 0) {
+                                    var results = _.groupBy(final, "name");
+                                    _.each(results, function (result, key) {
+                                        results[key] = _.groupBy(result, 'gender');
+                                    });
+                                    callback(null, results);
+                                } else {
+                                    callback(null, []);
+                                }
                             });
                     } else if (data.gender) {
                         var final = [];
@@ -919,7 +943,7 @@ var model = {
                                                         } else {
                                                             info.participantName = n.firstName + " " + n.surname;
                                                         }
-                                                        console.log("n",n);
+                                                        console.log("n", n);
                                                         if (n.atheleteSchoolName) {
                                                             info.school = n.atheleteSchoolName;
                                                         } else {
@@ -948,11 +972,15 @@ var model = {
                                 });
                             },
                             function (err) {
-                                var results = _.groupBy(final, "name");
-                                _.each(results, function (result, key) {
-                                    results[key] = _.groupBy(result, 'gender');
-                                });
-                                callback(null, results);
+                                if (final.length > 0) {
+                                    var results = _.groupBy(final, "name");
+                                    _.each(results, function (result, key) {
+                                        results[key] = _.groupBy(result, 'gender');
+                                    });
+                                    callback(null, results);
+                                } else {
+                                    callback(null, []);
+                                }
                             });
                     } else {
                         var final = [];
@@ -1028,11 +1056,15 @@ var model = {
                                 });
                             },
                             function (err) {
-                                var results = _.groupBy(final, "name");
-                                _.each(results, function (result, key) {
-                                    results[key] = _.groupBy(result, 'gender');
-                                });
-                                callback(null, results);
+                                if (final.length > 0) {
+                                    var results = _.groupBy(final, "name");
+                                    _.each(results, function (result, key) {
+                                        results[key] = _.groupBy(result, 'gender');
+                                    });
+                                    callback(null, results);
+                                } else {
+                                    callback(null, []);
+                                }
                             });
                     }
                 }
@@ -1125,12 +1157,13 @@ var model = {
                         sendObj.ageGroups = _.map(data, '_id');
                         _.each(sendObj.ageGroups, function (n, k1) {
                             temp1.push(parseInt((_.split(n, '-'))[1]));
-                            if (k1 == sendObj.ageGroups.length-1) {
-                                temp1.sort(function(a,b){  
-                                    return a-b});
+                            if (k1 == sendObj.ageGroups.length - 1) {
+                                temp1.sort(function (a, b) {
+                                    return a - b
+                                });
                                 _.each(temp1, function (n, k2) {
                                     temp2.push("U-" + n);
-                                    if (k2 == temp1.length-1) {
+                                    if (k2 == temp1.length - 1) {
                                         sendObj.ageGroups = temp2;
                                         callback(null, sendObj, pipeline);
                                     }
