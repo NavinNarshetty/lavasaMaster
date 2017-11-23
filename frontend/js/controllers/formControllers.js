@@ -11,6 +11,30 @@ myApp.controller('RegisterCtrl', function ($scope, $uibModal, TemplateService, N
         $scope.sfaCity = data.sfaCity;
         $scope.isCollege = data.isCollege;
         $scope.type = data.type;
+        $scope.getAllSchedule = function (data) {
+            $scope.url = "Schedule/getAll";
+            console.log(data);
+            $scope.constraints = {};
+            $scope.constraints.keyword = data;
+            NavigationService.apiCallWithData($scope.url, $scope.constraints, function (data) {
+                console.log("data.value sportlist", data);
+                $scope.scheduleData = data.data;
+                $scope.scheduleData = _.sortBy($scope.scheduleData, 'sport.name');
+                $scope.scheduleOdd = $scope.scheduleData.length % 2;
+                if ($scope.scheduleOdd !== 0) {
+                    console.log('in not')
+                    $scope.scheduleData.push({})
+                }
+                $scope.scheduleData1 = $scope.scheduleData.slice(0, $scope.scheduleData.length / 2);
+                // $scope.scheduleData1 = _.partition($scope.scheduleData, $scope.scheduleData = $scope.scheduleData.length % 2);
+                $scope.scheduleData2 = $scope.scheduleData.slice($scope.scheduleData.length / 2);
+                console.log($scope.scheduleData1, 'chunk1');
+                console.log($scope.scheduleData2, 'chunk2');
+
+
+            });
+        };
+        $scope.getAllSchedule()
     });
     $scope.menu = "menu-out";
     $scope.closeAge = false;
@@ -76,6 +100,8 @@ myApp.controller('RegisterCtrl', function ($scope, $uibModal, TemplateService, N
         $(".side-menu1").addClass("menu-out");
         $scope.closeAge = false;
     };
+
+
 
     $scope.endEntries = [{
         sport: 'Archery',

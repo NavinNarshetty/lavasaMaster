@@ -256,59 +256,11 @@
                                         <div class="t-center ">
                                             <ul class="display-table list-style v-line f-12 sf-relative ">
 
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">1. Archery:</span> 15
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec
+                                                <li class="pl-8" ng-repeat="mumbaiSchool in scheduleData1 track by $index">
+                                                    <span class="font-boldcus "><span hidden>{{$index+1}}.</span> {{mumbaiSchool.sport.name}}
+                                                    <span ng-if="mumbaiSchool.sport">:</span></span>
+                                                    <span>{{mumbaiSchool.scheduleDate}}</span>
                                                 </li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">2. Athletics:</span> 9
-                                                    <sup>th</sup>-12
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">3. Badminton:</span> 6
-                                                    <sup>th</sup>-13
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">4. Basketball:</span> 6
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">5. Boxing:</span> 13
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">6. Carrom:</span> 9
-                                                    <sup>th</sup>-11
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">7. Chess:</span> 13
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">8. Fencing:</span> 14
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">9. Football:</span> 6
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">10. Handball:</span> 6
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">11. Hockey:</span> 2
-                                                    <sup>nd</sup>-5
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">12. Judo:</span> 16
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">13. Kabaddi:</span> 6
-                                                    <sup>th</sup>-12
-                                                    <sup>th</sup> Dec</li>
                                             </ul>
                                         </div>
                                     </div>
@@ -317,58 +269,11 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="t-center ">
                                             <ul class="display-table list-style v-line f-12 To25 ">
-                                                <li>
-                                                    <span class="font-boldcus ">14. Karate:</span> 8
-                                                    <sup>th</sup>-10
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">15. Kho Kho:</span> 7
-                                                    <sup>th</sup>-10
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">16. Sport MMA:</span> 11
-                                                    <sup>th</sup>-12
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">17. Shooting:</span> 6
-                                                    <sup>th</sup>-9
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">18. Squash:</span> 7
-                                                    <sup>th</sup>-10
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">19. Swimming:</span> 9
-                                                    <sup>th</sup>-10
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">20. Table Tennis:</span> 13
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">21. Taekwondo:</span> 6
-                                                    <sup>th</sup>-7
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">22. Tennis:</span> 7
-                                                    <sup>th</sup>-13
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">23. Throwball:</span> 14
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">24. Volleyball:</span> 6
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">25. Water Polo:</span> 11
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">26. Wrestling:</span> 14
-                                                    <sup>th</sup>-15
-                                                    <sup>th</sup> Dec</li>
-                                                <!-- <li>26. Wrestling: TBA</li> -->
+                                                <li ng-repeat="mumbaiSchool in scheduleData2 track by $index">
+                                                    <span class="font-boldcus "><span hidden>{{$index+1}}.</span> {{mumbaiSchool.sport.name}}
+                                                    <span ng-if="mumbaiSchool.sport">:</span></span>
+                                                    <span>{{mumbaiSchool.scheduleDate}}</span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -379,81 +284,23 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12 ver-line ">
                                         <div class="t-center">
                                             <ul class="display-table list-style v-line f-12 sf-relative">
-
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">1. Archery:</span> 15
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec
+                                                <li class="pl-8" ng-repeat="mumbaiCollege in scheduleData1 track by $index">
+                                                    <span class="font-boldcus "><span hidden>{{$index+1}}.</span> {{mumbaiCollege.sport.name}}
+                                                    <span ng-if="mumbaiCollege.sport">:</span></span>
+                                                    <span>{{mumbaiCollege.scheduleDate}}</span>
                                                 </li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">2. Basketball:</span> 6
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">3. Boxing:</span> 13
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">4. Carrom:</span> 9
-                                                    <sup>th</sup>-11
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">5. Chess:</span> 13
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">6. Fencing:</span> 14
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">7. Handball:</span> 6
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8">
-                                                    <span class="font-boldcus ">8. Hockey:</span> 2
-                                                    <sup>nd</sup>-5
-                                                    <sup>th</sup> Dec</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">9. Judo:</span> 16
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
+
                                             </ul>
                                         </div>
                                     </div>
                                     <div class="col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="t-center ">
                                             <ul class="display-table list-style v-line f-12 To25 ">
-                                                <li>
-                                                    <span class="font-boldcus ">10. Kabaddi:</span> 6
-                                                    <sup>th</sup>-12
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">11. Shooting:</span> 6
-                                                    <sup>th</sup>-9
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">12. Squash:</span> 7
-                                                    <sup>th</sup>-10
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">13. Swimming:</span> 9
-                                                    <sup>th</sup>-10
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">14. Taekwondo:</span> 6
-                                                    <sup>th</sup>-7
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">15. Tennis:</span> 7
-                                                    <sup>th</sup>-13
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">16. Volleyball:</span> 6
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Dec</li>
-                                                <li>
-                                                    <span class="font-boldcus ">17. Water Polo:</span> 11
-                                                    <sup>th</sup> Dec</li>
+                                                <li ng-repeat="mumbaiCollege in scheduleData2 track by $index">
+                                                    <span class="font-boldcus "><span hidden>{{$index+1}}.</span> {{mumbaiCollege.sport.name}}
+                                                    <span ng-if="mumbaiCollege.sport">:</span></span>
+                                                    <span>{{mumbaiCollege.scheduleDate}}</span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
@@ -1047,57 +894,12 @@
                                         <div class="t-center ">
                                             <ul class="display-table list-style v-line f-12 sf-relative ">
 
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">1. Archery:</span> 11
-                                                    <sup>th</sup>-12
-                                                    <sup>th</sup> Nov
+                                                <li class="pl-8" ng-repeat="hydSport in scheduleData1 track by $index">
+                                                    <span class="font-boldcus "><span hidden>{{$index+1}}.</span> {{hydSport.sport.name}}
+                                                    <span ng-if="hydSport.sport">:</span></span>
+                                                    <span>{{hydSport.scheduleDate}}</span>
                                                 </li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">2. Athletics:</span> 13
-                                                    <sup>th</sup>-15
-                                                    <sup>th</sup> Nov</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">3. Badminton:</span> 10
-                                                    <sup>th</sup>-14
-                                                    <sup>th</sup> Nov</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">4. Basketball:</span>11
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Nov</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">5. Boxing:</span> 16
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Nov</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">6. Carrom:</span> 14
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Nov</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">7. Chess:</span> 11
-                                                    <sup>th</sup>-13
-                                                    <sup>th</sup> Nov</li>
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">8. Fencing:</span> 16
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Nov</li>
-                                                <!-- <li class="pl-8 "><span class="font-boldcus ">9. Football:</span> 6<sup>th</sup>-17<sup>th</sup>                                                    Nov</li> -->
-                                                <li class="pl-8 ">
-                                                    <span class="font-boldcus ">9. Football:</span> 11
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Nov</li>
-                                                <!-- <li class="pl-8">9. Football: TBA</li> -->
-                                                <li>
-                                                    <span class="font-boldcus ">10. Handball:</span> 16
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Nov</li>
-                                                <li>
-                                                    <span class="font-boldcus ">11. Hockey:</span> 11
-                                                    <sup>th</sup>-12
-                                                    <sup>th</sup> Nov</li>
-                                                <li>
-                                                    <span class="font-boldcus ">12. Judo:</span> 15
-                                                    <sup>th</sup> Nov</li>
-                                                <!-- -16<sup>th</sup>                                     -->
+
                                             </ul>
                                         </div>
                                     </div>
@@ -1106,47 +908,11 @@
                                     <div class="col-md-6 col-sm-6 col-xs-12 ">
                                         <div class="t-center ">
                                             <ul class="display-table list-style v-line f-12 To25 ">
-                                                <li>
-                                                    <span class="font-boldcus ">13. Kabaddi:</span> 10
-                                                    <sup>th</sup>-14
-                                                    <sup>th</sup> Nov</li>
-                                                <li>
-                                                    <span class="font-boldcus ">14. Karate:</span> 15
-                                                    <sup>th</sup> Nov</li>
-                                                <li>
-                                                    <span class="font-boldcus ">15. Kho Kho:</span> 14
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Nov</li>
-                                                <li>
-                                                    <span class="font-boldcus ">16. Shooting:</span> 12
-                                                    <sup>th</sup> Nov</li>
-                                                <li>
-                                                    <span class="font-boldcus ">17. Swimming:</span> 11
-                                                    <sup>th</sup>-12
-                                                    <sup>th</sup> Nov</li>
-                                                <li>
-                                                    <span class="font-boldcus ">18. Table Tennis:</span> 15
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Nov</li>
-                                                <li>
-                                                    <span class="font-boldcus ">19. Taekwondo:</span> 15
-                                                    <sup>th</sup> Nov</li>
-                                                <!-- -17<sup>th</sup>                                                    -->
-                                                <li>
-                                                    <span class="font-boldcus ">20. Tennis:</span> 15
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Nov</li>
-                                                <li>
-                                                    <span class="font-boldcus ">21. Throwball:</span> 14
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Nov</li>
-                                                <li>
-                                                    <span class="font-boldcus ">22. Volleyball:</span> 12
-                                                    <sup>th</sup>-17
-                                                    <sup>th</sup> Nov</li>
-                                                <li>
-                                                    <span class="font-boldcus ">23. Water Polo:</span> 13
-                                                    <sup>th</sup> Nov</li>
+                                                <li ng-repeat="hydSport in scheduleData2 track by $index">
+                                                    <span class="font-boldcus"><span hidden>{{$index+ 1 + trackLength}}.</span>                                                    {{hydSport.sport.name}}<span ng-if="hydSport.sport">:</span></span>
+                                                    </span>
+                                                    <span>{{hydSport.scheduleDate}}</span>
+                                                </li>
                                             </ul>
                                         </div>
                                     </div>
