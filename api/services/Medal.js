@@ -662,7 +662,7 @@ var model = {
                                     if (pdfObj.sportObj.medalType == 'gold') {
                                         pdfObj.sportObj.heading = basePath + "Gold.png";
                                     } else if (pdfObj.sportObj.medalType == 'silver') {
-                                        pdfObj.sportObj.heading = basePath + "Silver.png";
+                                        pdfObj.sportObj.heading = "https://storage.googleapis.com/sfacertificate/Sliver.png";
                                     } else if (pdfObj.sportObj.medalType == 'bronze') {
                                         pdfObj.sportObj.heading = basePath + "Bronze.png";
                                     } else {
