@@ -708,10 +708,14 @@ var model = {
                     function(fileNameArr, callback){
                         var path="pdf/";
                         console.log("athleteDetails",athleteDetails);
-                        var fileName=athleteDetails.sfaId + "-" + athleteDetails.firstName + athleteDetails.middleName + athleteDetails.surname ;
-                        Config.merge2pdfs(fileNameArr,path,fileName,function(data){
-                            callback(null,fileName);
-                        });
+                        if(fileNameArr.length>1){
+                            var fileName=athleteDetails.sfaId + "-" + athleteDetails.firstName + athleteDetails.middleName + athleteDetails.surname ;
+                            Config.merge2pdfs(fileNameArr,path,fileName,function(data){
+                                callback(null,fileName+ ".pdf");
+                            });
+                        }else if(fileNameArr.length==1){
+                            callback(null,fileNameArr[0]);
+                        }
                     }
                 ], function (err, result) {
                     callback(null, result);
