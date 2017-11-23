@@ -1,4 +1,4 @@
-myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $http, $log, $stateParams) {
+myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, NavigationService, $timeout, $http, $log, configService, $stateParams) {
     //Used to name the .html file
 
     $scope.template = TemplateService.getHTML("content/media-gallery.html");
@@ -11,6 +11,15 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
     $scope.filter = {};
     $scope.folders = [];
     $scope.flag.openGallerys = false;
+    //configService
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
+    });
     // if ($stateParams.name) {
     //     console.log($stateParams);
     //     $scope.flags.openGallery = true
@@ -106,7 +115,10 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
             }
         });
     };
-    $scope.loadMedia = function () {
+    $scope.loadMedia = function (year) {
+        if (year == '2015' || year == '2016') {
+            window.open("https://mumbai.sfanow.in/media-gallery/" + $stateParams.type + "/" + $stateParams.folder, '_self');
+        }
         $scope.mediaArr = undefined;
         NavigationService.getLimitedMedia($scope.filter, function (response) {
             if (response.value) {
@@ -115,9 +127,9 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
                 $scope.totalCount = response.data.options.count;
 
                 if ($scope.filter.mediatype == 'video') {
-                  _.each($scope.mediaArr.results, function(n){
-                    n.thumbnail = "../img/media-video-thumb.jpg";
-                  })
+                    _.each($scope.mediaArr.results, function (n) {
+                        n.thumbnail = "../img/media-video-thumb.jpg";
+                    })
                     NavigationService.getVideoThumbnail($scope.mediaArr.results);
                 }
             } else {

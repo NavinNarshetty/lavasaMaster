@@ -15,15 +15,16 @@
             <div class="col-md-12">
                 <div class="box-content bx-mob pad-m-main pad-m-main">
                     <div class="pht">
-                        <div class="row hide">
+                        <div class="row" ng-if="sfaCity === 'Mumbai' && type ==='school'">
                             <div class="text-center">
                                 <div class="col-md-12 col-xs-12 col-sm-6 text-c-m">
                                     <h4 class="text-up color-blue display-inline">year</h4>
                                     <div class="display-inline">
                                         <div class="sfa-select">
-                                            <select ng-change="loadMedia();" class="select" ng-model="filter.year">
+                                            <select ng-change="loadMedia(filter.year);" class="select" ng-model="filter.year">
                                                 <option value="2015">SFA MUMBAI {{year15}}</option>
                                                 <option value="2016">SFA MUMBAI {{year16}}</option>
+                                                <option value="2017">SFA MUMBAI {{eventYear}}</option>
                                             </select>
                                             <span class="only-border"></span>
                                         </div>

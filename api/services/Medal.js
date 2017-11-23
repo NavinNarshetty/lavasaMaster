@@ -459,6 +459,7 @@ var model = {
                         } else {
                             pdfObj.athleteName = pdfObj.athlete.firstName + ' ' + pdfObj.athlete.surname;
                         }
+                        pdfObj.athleteName=_.startCase(_.toLower(pdfObj.athleteName));
                         callback(null, athleteDetails);
                     } else {
                         finalCallback("Athlete Not Found", null)

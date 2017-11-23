@@ -1,4 +1,4 @@
-myApp.controller('MediaPressCtrl', function ($scope, TemplateService, NavigationService, $timeout, $stateParams) {
+myApp.controller('MediaPressCtrl', function ($scope, TemplateService, NavigationService, $timeout, configService, $stateParams) {
     //Used to name the .html file
 
     $scope.template = TemplateService.getHTML("content/media-press.html");
@@ -55,7 +55,10 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
     //         }
     //     });
     // };
-    $scope.loadMedia = function () {
+    $scope.loadMedia = function (year) {
+        if (year == '2015' || year == '2016') {
+            window.open("https://mumbai.sfanow.in/media-press", '_self');
+        }
         $scope.mediaArr = undefined;
         NavigationService.getLimitedMedia($scope.filter, function (response) {
             if (response) {
@@ -63,8 +66,8 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
                 $scope.mediaArr = response.data;
                 $scope.totalCount = response.data.options.count;
                 if ($scope.filter.mediatype == 'press-video') {
-                    _.each($scope.mediaArr.results, function(n){
-                      n.thumbnail = "../img/media-video-thumb.jpg";
+                    _.each($scope.mediaArr.results, function (n) {
+                        n.thumbnail = "../img/media-video-thumb.jpg";
                     });
                     NavigationService.getVideoThumbnail($scope.mediaArr.results);
                 }
@@ -100,4 +103,14 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
             $scope.getMediaFolders();
         }
     }
+
+    //configService
+    configService.getDetail(function (data) {
+        $scope.state = data.state;
+        $scope.year = data.year;
+        $scope.eventYear = data.eventYear;
+        $scope.sfaCity = data.sfaCity;
+        $scope.isCollege = data.isCollege;
+        $scope.type = data.type;
+    });
 });

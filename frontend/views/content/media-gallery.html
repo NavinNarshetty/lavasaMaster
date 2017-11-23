@@ -68,15 +68,16 @@ Press release
                                         <div class="text-center">
                                             <h4 class="color-orange text-up font-bold">{{filter.folder}}</h4>
                                         </div>
-                                        <div class="hide">
+                                        <div class="" ng-if="sfaCity === 'Mumbai' && type ==='school'">
                                             <!--mt-min-30 mt-min-40-->
                                             <div class="float-right">
                                                 <h4 class="text-up color-blue display-inline">year</h4>
                                                 <div class="display-inline">
                                                     <div class="sfa-select">
-                                                        <select ng-change="loadMedia()" class="select" ng-model="filter.year">
+                                                        <select ng-change="loadMedia(filter.year)" class="select" ng-model="filter.year">
                                                             <option value="2015">SFA MUMBAI {{year15}}</option>
                                                             <option value="2016">SFA MUMBAI {{year16}}</option>
+                                                            <option value="2017">SFA MUMBAI {{eventYear}}</option>
                                                         </select>
                                                         <span class="only-border"></span>
                                                     </div>
@@ -136,15 +137,16 @@ Press release
                                         <div class="text-center">
                                             <h4 class="color-orange text-up font-bold">{{filter.folder}}</h4>
                                         </div>
-                                        <div class="hide">
+                                        <div class=" " ng-if="sfaCity === 'Mumbai' && type ==='school'">
                                             <!--mt-min-30 mt-min-40-->
                                             <div class="float-right">
                                                 <h4 class="text-up color-blue display-inline">year</h4>
                                                 <div class="display-inline">
                                                     <div class="sfa-select">
-                                                        <select ng-change="loadMedia()" class="select" ng-model="filter.year">
+                                                        <select ng-change="loadMedia(filter.year)" class="select" ng-model="filter.year">
                                                             <option value="2015">SFA MUMBAI {{year15}}</option>
                                                             <option value="2016">SFA MUMBAI {{year16}}</option>
+                                                            <option value="2017">SFA MUMBAI {{eventYear}}</option>
                                                         </select>
                                                         <span class="only-border"></span>
                                                     </div>
@@ -157,12 +159,12 @@ Press release
                             <hr>
                             <div class="row mt15">
                                 <div class="col-md-3 mb15 col-sm-6 col-xs-12" ng-repeat="item in mediaArr.results  track by $index">
-                                  <!-- <pre>{{item|json}}</pre> -->
+                                    <!-- <pre>{{item|json}}</pre> -->
                                     <!-- <a class="various fancybox.iframe" href="https://www.youtube.com/embed/{{item.medialink}}?autoplay=1&modestbranding=0&showinfo=0&rel=0&loop=1"
                                         rel="gallery1" fancybox> -->
                                     <a class="various fancybox.iframe" href="{{item.medialink | linkvideo :item.videotype}}" rel="gallery1" fancybox>
                                         <div class="folder-box sf-relative ">
-                                          <!-- h186 -->
+                                            <!-- h186 -->
                                             <!-- <img ng-src="{{item.medialink | newlinkvideo:item.videotype}}" alt="Sports For All" class="img-responsive width100 hover-min m-h"> -->
                                             <img ng-src="{{item.thumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h">
                                             <!-- <img ng-src="{{vimeoThumbnail}}" alt="Sports For All" class="img-responsive width100 hover-min m-h"> -->
