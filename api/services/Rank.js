@@ -467,7 +467,7 @@ var model = {
                                                     });
                                                 }
                                             } else {
-                                                obj.err = "erroor";
+                                                obj.err = "error";
                                                 callback(null, obj);
                                             }
                                         }, function (err) {
@@ -916,7 +916,7 @@ var model = {
                                         var obj = {};
                                         obj.medals = [];
                                         async.eachSeries(found, function (medalData, callback) {
-                                            console.log("medalData", medalData);
+                                            // console.log("medalData", medalData);
                                             if (medalData.sport.gender == data.gender) {
                                                 obj.name = medalData.sport.ageGroup.name + " " + medalData.sport.sportslist.name;
                                                 obj.gender = medalData.sport.gender;
@@ -964,7 +964,9 @@ var model = {
                                                 callback(null, obj);
                                             }
                                         }, function (err) {
-                                            final.push(obj);
+                                            if (!obj.err) {
+                                                final.push(obj);
+                                            }
                                             callback(null, obj);
                                         });
 
