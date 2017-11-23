@@ -99,6 +99,28 @@ myApp.controller('RacquetDoublesScoreCtrl', function ($scope, TemplateService, N
   };
   $scope.matchComplete = function () {
     if ($scope.match.resultsRacquet) {
+      _.each($scope.match.resultsRacquet.teams, function(n){
+        _.each(n.sets, function(m){
+          if (m.point == "") {
+            m.point = 0;
+          }
+          if (m.ace == "") {
+            m.ace = 0;
+          }
+          if (m.unforcedError == "") {
+            m.unforcedError = 0;
+          }
+          if (m.serviceError == "") {
+            m.serviceError = 0;
+          }
+          if (m.doubleFaults == "") {
+            m.doubleFaults = 0;
+          }
+          if (m.winner == "") {
+            m.winner = 0;
+          }
+        })
+      });
       $scope.match.resultsRacquet.status = "IsCompleted";
       $scope.matchResult = {
         resultsRacquet: $scope.match.resultsRacquet,

@@ -29,7 +29,7 @@
             </div>
             <div class="relate setpoint-element" ng-repeat="set in player.sets track by $index">
               <label class="text-uppercase setpointlabel">SET <span>{{$index+1}}</span></label>
-              <input type="number" ng-model="set.point" class="score-number display-inline form-control" readonly>
+              <input type="number" placeholder="0" ng-model="set.point" class="score-number display-inline form-control" readonly>
             </div>
           </div>
         </div>
@@ -39,6 +39,7 @@
         <div class="col-md-6 col-sm-6 col-xs-12" ng-repeat="player in currentMatch.resultsRacquet.players track by $index">
           <div class="combatscore-player">
             <div class="matchplayer-card {{player.player}}">
+              <pre>{{player|json}}</pre>
               <div class="matchplayer-playerid">
                 <p>SFA ID: <span>{{currentMatch.opponentsSingle[$index].athleteId.sfaId}}</span></p>
               </div>
