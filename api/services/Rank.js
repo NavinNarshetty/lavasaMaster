@@ -1126,7 +1126,8 @@ var model = {
                         _.each(sendObj.ageGroups, function (n, k1) {
                             temp1.push(parseInt((_.split(n, '-'))[1]));
                             if (k1 == sendObj.ageGroups.length-1) {
-                                temp1.sort();
+                                temp1.sort(function(a,b){  
+                                    return a-b});
                                 _.each(temp1, function (n, k2) {
                                     temp2.push("U-" + n);
                                     if (k2 == temp1.length-1) {
