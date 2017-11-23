@@ -707,8 +707,10 @@ var model = {
 
                     function(fileNameArr, callback){
                         var path="pdf/";
-                        Config.merge2pdfs(fileNameArr,path,athleteDetails.sfaId,function(data){
-                            callback(null,"merged");
+                        console.log("athleteDetails",athleteDetails);
+                        var fileName=athleteDetails.sfaId + "-" + athleteDetails.firstName + athleteDetails.middleName + athleteDetails.surname ;
+                        Config.merge2pdfs(fileNameArr,path,fileName,function(data){
+                            callback(null,fileName);
                         });
                     }
                 ], function (err, result) {
