@@ -18,30 +18,30 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- <tr ng-repeat="schedule in schedulelist track by $index"> -->
-                                        <tr ng-repeat="schedule in scheduleData1 | orderBy:'sport.name' track by $index">
+                                        <tr ng-repeat="schedule in schedulelist track by $index">
+                                            <!-- <tr ng-repeat="schedule in scheduleData1 | orderBy:'sport.name' track by $index"> -->
                                             <td class="champions-table-td">
                                                 <div class="schedulesport-name">
-                                                    <!-- {{schedule.sport}} -->
-                                                    {{schedule.sport.name}}
+                                                    {{schedule.sport}}
+                                                    <!-- {{schedule.sport.name}} -->
                                                 </div>
                                             </td>
                                             <td class="champions-table-td">
                                                 <div class="table2-championstable">
                                                     <div class="schedulesport-dates">
-                                                        <span>{{schedule.scheduleDate}}</span>
-                                                        <!-- <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
+                                                        <!-- <span>{{schedule.scheduleDate}}</span> -->
+                                                        <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
                                                                     <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
                                                                     <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
-                                                                    <span>-</span>                                                    {{schedule.date2}}
-                                                                <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                                <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                    {{schedule.month}}
-                                                                </span>
-                                                                <span ng-if="schedule.date">{{schedule.date}}
-                                                                    <sup>th</sup> {{schedule.month}} </span> -->
-                                                        <!-- <span ng-if="!schedule.date && !schedule.date1 && !schedule.date2">TBA</span> -->
+                                                                    <span>-</span>                                                        {{schedule.date2}}
+                                                        <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                        {{schedule.month}}
+                                                        </span>
+                                                        <span ng-if="schedule.date">{{schedule.date}}
+                                                                    <sup>th</sup> {{schedule.month}} </span>
+                                                        <span ng-if="!schedule.date && !schedule.date1 && !schedule.date2">TBA</span>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton" ng-repeat="pdf in schedule.pdfDetail track by $index">
+                                                    <!-- <div class="championsschdule-pdfbutton" ng-repeat="pdf in schedule.pdfDetail track by $index">
                                                         <a href="{{pdf.trustedURL}}" target="_new" ng-if="pdf.pdfType !=='resultlink'">
                                                             <span ng-class="{'champions-draw-orange':pdf.pdfType =='schedulePdf' || pdf.pdfType =='order','champions-result-green':pdf.pdfType == 'resultPdf'}">
                                                                             {{pdf.textHeader}}
@@ -50,7 +50,7 @@
                                                     </div>
                                                     <div class="champions-upload-time" ng-if="schedule.uploadTime">
                                                         <span>{{schedule.uploadTime}}</span>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
 
                                             </td>
@@ -69,30 +69,30 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <!-- <tr ng-repeat="schedule in schedulelist2 track by $index"> -->
-                                        <tr ng-repeat="schedule in scheduleData2 track by $index">
+                                        <tr ng-repeat="schedule in schedulelist2 track by $index">
+                                            <!-- <tr ng-repeat="schedule in scheduleData2 track by $index"> -->
                                             <td ng-class="{'champions-height-odd':!schedule.sport}" class="champions-table-td">
                                                 <div class="schedulesport-name">
-                                                    <!-- {{schedule.sport}} -->
-                                                    {{schedule.sport.name}}
+                                                    {{schedule.sport}}
+                                                    <!-- {{schedule.sport.name}} -->
                                                 </div>
                                             </td>
                                             <td ng-class="{'champions-height-odd':!schedule.sport}" class="champions-table-td">
                                                 <div class="table2-championstable">
                                                     <div class="schedulesport-dates">
-                                                        <span>{{schedule.scheduleDate}}</span>
-                                                        <!-- <span ng-if="schedule.sport == ''" style="opacity:0;">dummy</span>
-                                                                <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
+                                                        <!-- <span>{{schedule.scheduleDate}}</span> -->
+                                                        <span ng-if="schedule.sport == ''" style="opacity:0;">dummy</span>
+                                                        <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
                                                                     <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
                                                                     <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
-                                                                    <span>-</span>                                                    {{schedule.date2}}
-                                                                <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                                <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                    {{schedule.month}}
-                                                                </span>
-                                                                <span ng-if="schedule.date">{{schedule.date}}
-                                                                    <sup>th</sup> {{schedule.month}} </span> -->
+                                                                    <span>-</span>                                                        {{schedule.date2}}
+                                                        <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
+                                                        <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup>                                                        {{schedule.month}}
+                                                        </span>
+                                                        <span ng-if="schedule.date">{{schedule.date}}
+                                                                    <sup>th</sup> {{schedule.month}} </span>
                                                     </div>
-                                                    <div class="championsschdule-pdfbutton" ng-repeat="pdf in schedule.pdfDetail track by $index">
+                                                    <!-- <div class="championsschdule-pdfbutton" ng-repeat="pdf in schedule.pdfDetail track by $index">
                                                         <a href="{{pdf.trustedURL}}" target="_new" ng-if="pdf.pdfType !=='resultlink'">
                                                                     <span ng-class="{'champions-draw-orange':pdf.pdfType =='schedulePdf' || pdf.pdfType =='order','champions-result-green':pdf.pdfType == 'resultPdf'}" ng-if="schedule.pdfDetail">
                                                                     {{pdf.textHeader}}
@@ -104,7 +104,7 @@
                                                     </div>
                                                     <div class="champions-upload-time" ng-if="schedule.uploadTime">
                                                         <span>{{schedule.uploadTime}}</span>
-                                                    </div>
+                                                    </div> -->
                                                 </div>
 
                                             </td>
