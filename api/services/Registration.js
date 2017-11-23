@@ -1136,7 +1136,7 @@ var model = {
                                 var smsData = {};
                                 smsData.mobile = data.mobile;
                                 // smsData.content = "Congratulations! You are now a verified SFA " + property[0].institutionType + ". Kindly check your registered Email ID for your SFA ID and Password.";
-                                "Congratulations ! SFA ID " + data.sfaID + "and Password " + data.password + ".Kindly complete your Sports Registrations";
+                                smsData.content = "Congratulations ! SFA ID " + data.sfaID + "and Password " + data.password + ".Kindly complete your Sports Registrations";
                                 console.log("smsdata", smsData);
                                 Config.sendSms(smsData, function (err, smsRespo) {
                                     if (err) {
