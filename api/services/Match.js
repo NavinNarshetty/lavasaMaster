@@ -707,7 +707,6 @@ var model = {
         var sendObj = {};
         async.waterfall([
             function (callback) {
-                console.log("Finding DrawFormat");
                 SportsList.findOne({
                     "_id": matchObj.sportslist
                 }).deepPopulate("drawFormat sportsListSubCategory sportsListSubCategory.sportsListCategory").exec(function (err, sportslist) {
@@ -724,7 +723,6 @@ var model = {
                 });
             },
             function (sportslist, callback) {
-                console.log("Finding sportId");
                 Sport.findOne(matchObj).exec(function (err, sportDetails) {
                     if (err) {
                         callback(err, null);
@@ -738,11 +736,9 @@ var model = {
                 });
             },
             function (sendObj, callback) {
-                console.log(sendObj, "----------------------sendObj---------------");
                 Match.findOne({
                     "sport": sendObj.sport
                 }).exec(function (err, data) {
-                    console.log(data, "---------------matchFound-------------------");
                     if (err) {
                         callback(err, null);
                     } else if (!_.isEmpty(data)) {
@@ -767,7 +763,6 @@ var model = {
     },
 
     getSportSpecificRounds: function (data, callback) {
-        // var finalData = [];
         var matchData = [];
         async.waterfall([
             function (callback) {
@@ -800,7 +795,6 @@ var model = {
                     var match = {};
                     match.name = arr[i];
                     match.match = dummy[i];
-                    // match.sportType = match.match[0].sport.sportslist.sportsListSubCategory.sportsListCategory.name
                     matchData.push(match);
                     i++;
                 }
@@ -824,7 +818,6 @@ var model = {
                 }
             }
         ], function (err, result) {
-            console.log("Final Callback");
             if (err) {
                 callback(err, null);
             } else {
@@ -838,7 +831,6 @@ var model = {
         var finalData = {};
         var matchData1 = [];
         var matchData2 = [];
-        console.log('request sent', data);
         async.waterfall([
             function (callback) {
                 var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
@@ -848,24 +840,19 @@ var model = {
                 }).lean().deepPopulate(deepSearch).sort({
                     createdAt: 1
                 }).exec(function (err, found) {
-                    console.log('enter find ====', found);
                     if (err) {
                         callback(err, null);
                     } else {
                         if (_.isEmpty(found)) {
-                            console.log('enter empty');
                             callback(null, []);
                         } else {
-                            console.log('enter found =====', found);
                             var matches = _.groupBy(found, 'round');
-                            console.log('grouped matches =====', matches);
                             callback(null, matches);
                         }
                     }
                 });
             },
             function (matches, callback) {
-                console.log('sent matches =====', matches);
                 var i = 0;
                 var dummy = [];
                 var arr = _.keys(matches);
@@ -876,27 +863,22 @@ var model = {
                     var match = {};
                     match.name = arr[i];
                     match.match = dummy[i];
-                    // match.sportType = match.match[0].sport.sportslist.sportsListSubCategory.sportsListCategory.name
                     matchData1.push(match);
                     i++;
                 }
                 var sendObj = {};
-                console.log("matchData1", matchData1);
                 sendObj.roundsListName = _.keys(matches);
                 sendObj.roundsList = matchData1;
-                console.log("sendObj", sendObj);
                 if (data.round) {
                     var index = _.findIndex(matchData1, function (n) {
                         return n.name == data.round
                     });
-
                     if (index != -1) {
                         sendObj.roundsList = _.slice(matchData1, index, index + 3);
                         callback(null, sendObj);
                     } else {
                         callback(null, sendObj);
                     }
-
                 } else {
                     callback(null, sendObj);
                 }
@@ -917,7 +899,6 @@ var model = {
                             callback(null, []);
                         } else {
                             finalData.qualifying = sendObj;
-                            console.log("finalData qualifying", finalData);
                             var matches = _.groupBy(found, 'round');
                             callback(null, matches);
                         }
@@ -935,38 +916,35 @@ var model = {
                     var match = {};
                     match.name = arr[i];
                     match.match = dummy[i];
-                    // match.sportType = match.match[0].sport.sportslist.sportsListSubCategory.sportsListCategory.name
                     matchData2.push(match);
                     i++;
                 }
                 var sendObj = {};
                 sendObj.roundsListName = _.keys(matches);
                 sendObj.roundsList = matchData2;
-                console.log("sendObj", sendObj);
+                // console.log("sendObj", sendObj);
                 if (data.round) {
                     var index = _.findIndex(matchData2, function (n) {
                         return n.name == data.round
                     });
-
                     if (index != -1) {
                         sendObj.roundsList = _.slice(matchData2, index, index + 3);
                         finalData.knockout = sendObj;
-                        console.log("Final Data", finalData);
+                        // console.log("Final Data", finalData);
                         callback(null, finalData);
                     } else {
                         finalData.knockout = sendObj;
-                        console.log("Final Data else 0", finalData);
+                        // console.log("Final Data else 0", finalData);
                         callback(null, finalData);
                     }
-
                 } else {
                     finalData.knockout = sendObj;
-                    console.log("Final Data else", finalData);
+                    // console.log("Final Data else", finalData);
                     callback(null, finalData);
                 }
             }
         ], function (err, result) {
-            console.log("Final Callback", result);
+            // console.log("Final Callback", result);
             if (err) {
                 callback(err, null);
             } else {
@@ -1000,7 +978,7 @@ var model = {
                             callback(null, []);
                         } else {
                             var matches = _.groupBy(found, 'round');
-                            console.log("matches", matches);
+                            // console.log("matches", matches);
                             callback(null, matches);
                         }
                     }
@@ -1024,12 +1002,10 @@ var model = {
                 var sendObj = {};
                 sendObj.roundsListName = _.keys(matches);
                 sendObj.roundsList = matchData1;
-                console.log("sendObj", sendObj);
                 if (data.round) {
                     var index = _.findIndex(matchData1, function (n) {
                         return n.name == data.round
                     });
-
                     if (index != -1) {
                         sendObj.roundsList = _.slice(matchData1, index, index + 3);
                         callback(null, sendObj);
@@ -1042,7 +1018,6 @@ var model = {
                 }
             },
             function (sendObj, callback) {
-                // var deepSearch = "sport.sportslist.sportsListSubCategory.sportsListCategory sport.ageGroup sport.weight opponentsSingle.athleteId.school opponentsTeam.studentTeam.studentId";
                 var deepSearch = "opponentsTeam.studentTeam.studentId";
                 Match.find({
                     sport: data.sport,
@@ -1053,7 +1028,7 @@ var model = {
                 }).lean().deepPopulate(deepSearch).sort({
                     createdAt: 1
                 }).exec(function (err, found) {
-                    console.log("found", found);
+                    // console.log("found", found);
                     if (err) {
                         callback(err, null);
                     } else {
@@ -1063,7 +1038,7 @@ var model = {
                         } else {
                             finalData.qualifying = sendObj;
                             var matches = _.groupBy(found, 'round');
-                            console.log("matches", matches);
+                            // console.log("matches", matches);
                             callback(null, matches);
                         }
                     }
@@ -1095,11 +1070,11 @@ var model = {
                     if (index != -1) {
                         sendObj.roundsList = _.slice(matchData2, index, index + 3);
                         finalData.knockout = sendObj;
-                        console.log("finalData", finalData);
+                        // console.log("finalData", finalData);
                         callback(null, finalData);
                     } else {
                         finalData.knockout = sendObj;
-                        console.log("finalData", finalData);
+                        // console.log("finalData", finalData);
                         callback(null, finalData);
                     }
 
@@ -1109,7 +1084,7 @@ var model = {
                 }
             }
         ], function (err, result) {
-            console.log("Final Callback");
+            // console.log("Final Callback");
             if (err) {
                 callback(err, null);
             } else {
@@ -1190,7 +1165,7 @@ var model = {
                     callback(null, standings);
                 },
                 function (standings, callback) {
-                    console.log("unique", standings);
+                    // console.log("unique", standings);
                     async.eachSeries(standings, function (n, callback) {
                         // console.log("*****", n);
                         Match.getPointsPerPool(n, data, function (err, complete) {
@@ -1249,7 +1224,7 @@ var model = {
                     });
                 },
                 function (matchesPerPool, callback) {
-                    console.log("matchesPerPool", matchesPerPool);
+                    // console.log("matchesPerPool", matchesPerPool);
                     var arr = _.keys(matchesPerPool);
                     var i = 0;
                     while (i < arr.length) {
@@ -1274,7 +1249,7 @@ var model = {
                             return x;
                         });
                         match.teams = t;
-                        console.log("match", match);
+                        // console.log("match", match);
                         teams = [];
                         standings.push(match);
                         i++;
@@ -1282,7 +1257,7 @@ var model = {
                     callback(null, standings);
                 },
                 function (standings, callback) {
-                    console.log("unique", standings);
+                    // console.log("unique", standings);
                     async.eachSeries(standings, function (n, callback) {
                         Match.getPointsPerPoolFencing(n, data, function (err, complete) {
                             if (err || _.isEmpty(complete)) {
@@ -1540,7 +1515,7 @@ var model = {
 
     getPointsPerPoolFencing: function (standings, data, callback) {
         async.concatSeries(standings.teams, function (team, callback) {
-            console.log("team", team);
+            // console.log("team", team);
             async.waterfall([
                     function (callback) {
                         var teamData = {};
@@ -1619,7 +1594,7 @@ var model = {
                             }
                             // }
                         });
-                        console.log("scores", scores);
+                        // console.log("scores", scores);
                         callback(null, scores);
                     },
                 ],

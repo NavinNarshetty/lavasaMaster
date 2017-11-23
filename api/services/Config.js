@@ -654,12 +654,12 @@ var model = {
         async.waterfall([
             function (callback) {
                 console.log("asdasdasdasda");
-                async.concatSeries(files, function (name,callback) {
-                    console.log(path+name);
-                    var file=path+name;
-                    callback(null,file);
+                async.concatSeries(files, function (name, callback) {
+                    console.log(path + name);
+                    var file = path + name;
+                    callback(null, file);
                 }, function (err, files) {
-                    console.log("files",files);
+                    console.log("files", files);
                     callback(null, files);
                 })
             },
@@ -687,19 +687,19 @@ var model = {
                 });
             },
             function (finalFiles, callback) {
-                _.each(finalFiles, function (n,k) {
+                _.each(finalFiles, function (n, k) {
                     fs.unlink(n, (err) => {
                         if (err) throw err;
                         else {
-                            if(finalFiles.length-1==k){
-                                callback(null,"merged");
+                            if (finalFiles.length - 1 == k) {
+                                callback(null, "merged");
                             }
                         }
                     });
                 });
             }
         ], function (err, result) {
-            callback(null,result);
+            callback(null, result);
         });
 
     },
@@ -862,15 +862,16 @@ var model = {
             proceedI++;
             if (proceedI === 1) {
                 Jimp.read(buf, function (err, image) {
-                    gfs.find({
-                        filename: filename,
-                    }).lean().exec(function (err, found) {
+                    gfs.files.find({
+                        filename: filename
+                    }).toArray(function (err, files) {
                         if (err) {
-                            callback(err, null);
+                            res.json(err);
                         } else {
-                            _.each(found, function (n) {
+                            console.log("files", files);
+                            _.each(files, function (n) {
                                 gfs.remove({
-                                    filename: n,
+                                    filename: n.filename,
                                 }, function () {
 
                                 });
@@ -898,6 +899,7 @@ var model = {
             });
         }
     },
+
 
 };
 module.exports = _.assign(module.exports, exports, model);
