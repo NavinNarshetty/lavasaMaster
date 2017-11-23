@@ -676,14 +676,14 @@ var model = {
                                 function (pdfObj, sport, callback) {
                                     console.log('data***************', pdfObj, sport)
                                     if (!pdfObj.sportObj.notFound) {
-                                        pdfObj.newFilename = pdfObj.athlete.sfaId + "-" + pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.filename + ".pdf";
+                                        pdfObj.newFilename = pdfObj.athlete.sfaId + "-" + pdfObj.sportObj.sportslist.name + pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.filename + ".pdf";
                                         // pdfObj.newFilename = pdfObj.sportObj.sportslist.sportsListSubCategory.name + "-" + pdfObj.sportObj.ageGroup.name + "-" + pdfObj.sportObj.gender + "-" + pdfObj.sportObj.sportslist.name + "-" + pdfObj.filename + ".pdf";
                                         Config.generatePdf(pdfObj, function (err, pdfRespo) {
                                             if (err) {
                                                 callback(null, err);
                                             } else if (pdfRespo) {
                                                 sport.pdfname = pdfRespo;
-                                                callback(null, sport);
+                                                callback(null, pdfRespo.name);
                                             } else {
                                                 callback(null, "Invalid data");
                                             }
@@ -693,17 +693,22 @@ var model = {
                                     }
                                 },
 
-                                function (sportObj, callback) {
-                                    seriesCallback(null, sportObj);
-                                    // callback(null, sportObj);
+                                function (fileNameArr, callback) {
+                                    seriesCallback(null, fileNameArr);
                                 }
-                            ], function (err, result) {
-                                callback(null, result);
+                            ], function (err, fileNameArr) {
+                                callback(null, fileNameArr);
                             });
 
-                        }, function (err, result) {
-                            athleteDetails.regSports = result;
-                            callback(null, athleteDetails);
+                        }, function (err, fileNameArr) {
+                            callback(null, fileNameArr);
+                        });
+                    },
+
+                    function(fileNameArr, callback){
+                        var path="pdf/";
+                        Config.merge2pdfs(fileNameArr,path,athleteDetails.sfaId,function(data){
+                            callback(null,"merged");
                         });
                     }
                 ], function (err, result) {

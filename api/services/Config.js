@@ -168,28 +168,14 @@ var model = {
             'Cache-Control': 'public, max-age=31557600',
             'Expires': new Date(Date.now() + 345600000).toUTCString()
         });
-        var readstream = gfs.createReadStream({
-            filename: filename
-        });
-        readstream.on('error', function (err) {
-            res.json({
-                value: false,
-                error: err
-            });
-        });
+
         var buf;
         var newNameExtire;
         var bufs = [];
         var proceedI = 0;
         var wi;
         var he;
-        readstream.on('data', function (d) {
-            bufs.push(d);
-        });
-        readstream.on('end', function () {
-            buf = Buffer.concat(bufs);
-            proceed();
-        });
+
 
 
         function proceed() {
@@ -241,6 +227,7 @@ var model = {
         var extension = filename.split(".").pop();
         if ((extension == "jpg" || extension == "png" || extension == "gif") && ((width && width > 0) || (height && height > 0))) {
             //attempt to get same size image and serve
+            console.log("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
             var newName = onlyName;
             if (width > 0) {
                 newName += "-" + width;
@@ -262,10 +249,10 @@ var model = {
                 filename: newNameExtire
             }, function (err, found) {
                 if (err) {
-                    res.json({
-                        value: false,
-                        error: err
-                    });
+                    // res.json({
+                    //     value: false,
+                    //     error: err
+                    // });
                 }
                 if (found) {
                     read2(newNameExtire);
@@ -275,6 +262,23 @@ var model = {
             });
             //else create a resized image and serve
         } else {
+            console.log("--------------------------------------------------------------------");
+            var readstream = gfs.createReadStream({
+                filename: filename
+            });
+            readstream.on('error', function (err) {
+                res.json({
+                    value: false,
+                    error: err
+                });
+            });
+            readstream.on('data', function (d) {
+                bufs.push(d);
+            });
+            readstream.on('end', function () {
+                buf = Buffer.concat(bufs);
+                proceed();
+            });
             readstream.pipe(res);
         }
         //error handling, e.g. file does not exist
@@ -566,6 +570,143 @@ var model = {
     },
 
     generatePdf: function (pdfObj, callback) {
+        console.log("generatePdf");
+
+        var pdf = require('html-pdf');
+
+        // obj = _.assign(obj, page);
+        var obj = {};
+        var env = {};
+
+
+        var file = pdfObj.filename;
+
+        var i = 0;
+        sails.hooks.views.render(file, {
+            data: pdfObj
+        }, function (err, html) {
+            if (err) {
+                callback(err, null);
+            } else {
+                //var path = "http://104.155.129.33:1337/upload/readFile/";
+                var path = "pdf/";
+                var newFilename = pdfObj.newFilename;
+                var writestream = fs.createWriteStream(path + newFilename);
+
+                writestream.on('finish', function (err, res) {
+                    if (err) {
+                        console.log("Something Fishy", err);
+                    } else {
+                        callback(null, {
+                            name: newFilename,
+                            url: path + newFilename
+                        });
+                    }
+                });
+
+                var options = {
+                    "paginationOffset": 5,
+                    "phantomPath": "node_modules/phantomjs-prebuilt/bin/phantomjs",
+                    // Export options 
+                    "directory": "/tmp",
+                    "height": "10.5in", // allowed units: mm, cm, in, px
+                    "width": "10in",
+                    "format": "Letter", // allowed units: A3, A4, A5, Legal, Letter, Tabloid 
+                    // "orientation": "portrait", // portrait or landscape 
+                    // "zoomFactor": "1", // default is 1 
+                    // Page options 
+                    "border": {
+                        "top": "0.5cm", // default is 0, units: mm, cm, in, px 
+                        "right": "0",
+                        "bottom": "0",
+                        "left": "0"
+                    },
+                    // File options 
+                    "type": "pdf", // allowed file types: png, jpeg, pdf 
+                    "timeout": 30000, // Timeout that will cancel phantomjs, in milliseconds 
+                    "footer": {
+                        "height": "0",
+                    },
+                    // "filename": page.filename + ".pdf"
+                };
+
+                pdf.create(html, options).toStream(function (err, stream) {
+                    if (err) {
+                        callback(err);
+                    } else {
+                        i++;
+                        stream.pipe(writestream);
+                    }
+                });
+            }
+
+        });
+    },
+
+    merge2pdfs: function (files, path, fileName, callback) {
+        const PDFMerge = require('pdf-merge');
+
+        // const files = [
+        //     "/home/wohlig/Documents/htdocs/lavasaBackend/pdf/HA17544-Athletics-certificate.pdf",
+        //     "/home/wohlig/Documents/htdocs/lavasaBackend/pdf/HA17544-Swimming-certificate.pdf",
+        // ];
+
+        async.waterfall([
+            function (callback) {
+                console.log("asdasdasdasda");
+                async.concatSeries(files, function (name,callback) {
+                    console.log(path+name);
+                    var file=path+name;
+                    callback(null,file);
+                }, function (err, files) {
+                    console.log("files",files);
+                    callback(null, files);
+                })
+            },
+            function (finalFiles, callback) {
+                // PDFMerge(files, {output: "/home/wohlig/Documents/htdocs/lavasaBackend/pdf/qq.pdf"})
+                // .then((buffer) => {
+
+                // });
+                var writestream = fs.createWriteStream(path + fileName + ".pdf");
+
+                PDFMerge(finalFiles, {
+                        output: 'Stream'
+                    })
+                    .then((stream) => {
+                        stream.pipe(writestream);
+                    });
+
+                writestream.on('finish', function (err, res) {
+                    if (err) {
+                        console.log("Something Fishy", null);
+                        callback(err, null);
+                    } else {
+                        callback(null, finalFiles);
+                    }
+                });
+            },
+            function (finalFiles, callback) {
+                _.each(finalFiles, function (n,k) {
+                    fs.unlink(n, (err) => {
+                        if (err) throw err;
+                        else {
+                            if(finalFiles.length-1==k){
+                                callback(null,"merged");
+                            }
+                        }
+                    });
+                });
+            }
+        ], function (err, result) {
+            callback(null,result);
+        });
+
+    },
+
+    getWriteStreamPdf: function (pdfObj, callback) {
+        console.log("generatePdf");
+
         var pdf = require('html-pdf');
 
         // obj = _.assign(obj, page);
@@ -599,6 +740,7 @@ var model = {
                 });
 
                 var options = {
+                    "paginationOffset": 5,
                     "phantomPath": "node_modules/phantomjs-prebuilt/bin/phantomjs",
                     // Export options 
                     "directory": "/tmp",
