@@ -65,7 +65,7 @@
             </h3>
           <div class="knockout-cardholder" ng-repeat="card in roundsList[0].match track by $index">
             <div class="knockout-card"  ng-if="card.opponentsTeam.length>0" ng-repeat="player  in card.opponentsTeam track by $index" ng-class="{'knockout-winnercard':player.isWinner===true}">
-              <div class="knockout-cardimage display-inline ver-mid" ng-if="player.school.schoolLogo">
+              <div class="knockout-cardimage display-inline ver-mid" >
                 <img ng-src="{{player.school.schoolLogo|serverimage2:50:50:'cover'}}" alt="{{player.schoolName}}" class="img-responsive">
               </div>
 
@@ -131,7 +131,7 @@
           <div class=" knockout-cardholder">
             <div class="knockout-card " ng-if="card.opponentsTeam.length>0" ng-repeat="player in card.opponentsTeam track by $index "
               ng-class="{'knockout-winnercard':player.isWinner===true}">
-              <div class="knockout-cardimage display-inline ver-mid " ng-if="player.school.schoolLogo">
+              <div class="knockout-cardimage display-inline ver-mid " >
                 <img ng-src="{{player.school.schoolLogo|serverimage2:50:50:'cover'}}" alt="{{player.schoolName}}" class="img-responsive ">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid ">
@@ -195,7 +195,7 @@
           <div class=" knockout-cardholder">
             <div class="knockout-card " ng-class="{'knockout-winnercard':player.isWinner===true}" ng-repeat="player in card.opponentsTeam track by $index"
               ng-if="card.opponentsTeam.length>0">
-              <div class="knockout-cardimage display-inline ver-mid " ng-if="player.school.schoolLogo">
+              <div class="knockout-cardimage display-inline ver-mid " >
                 <img ng-src="{{player.school.schoolLogo|serverimage2:50:50:'cover'}}" alt="{{player.schoolName}}" class="img-responsive ">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid ">

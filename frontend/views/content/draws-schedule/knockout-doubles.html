@@ -76,7 +76,7 @@
         </div>
       </div>
       <!--WINNERS FOR MOBILES END-->
-      
+
       <!--ROUND 1-->
       <div class="col-md-3 col-sm-4 col-xs-12">
           <h3 class="sport-success d-fjalla-one text-center text-uppercase">{{roundsList[0].name}}
@@ -85,7 +85,7 @@
               <div class="knockoutdouble-teamplayer"  ng-repeat="players  in card.opponentsTeam track by $index" >
             <div class="knockout-card knockout-custom-padding" ng-repeat="player in players.studentTeam track by $index" ng-class="{'knockout-winnercard':players.isWinner===true}">
 
-              <div class="knockout-cardimage display-inline ver-mid" ng-if="player.studentId.photograph">
+              <div class="knockout-cardimage display-inline ver-mid" >
                 <img ng-src="{{player.studentId.photograph|serverimage}}" alt="{{player.fullName}}" class="img-responsive">
               </div>
               <div class="display-inline knockout-cardplayername ver-mid">
@@ -142,7 +142,7 @@
             <div class=" knockout-doubles-cardholder">
               <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index">
                 <div class="knockout-card knockout-custom-padding" ng-repeat="player in players.studentTeam track by $index " ng-class="{'knockout-winnercard':players.isWinner===true}">
-                  <div class="knockout-cardimage display-inline ver-mid " ng-if="player.studentId.photograph">
+                  <div class="knockout-cardimage display-inline ver-mid " >
                     <img ng-src="{{player.studentId.photograph|serverimage}}" alt="{{player.fullName}}" class="img-responsive ">
                   </div>
                   <div class="display-inline knockout-cardplayername ver-mid ">
@@ -200,7 +200,7 @@
             <div class=" knockout-doubles-cardholder">
               <div class="knockoutdouble-teamplayer" ng-repeat="players in card.opponentsTeam track by $index" ng-class="{'knockout-winnercard':players.isWinner==true}">
                 <div class="knockout-card knockout-custom-padding " ng-repeat="player in players.studentTeam track by $index">
-                  <div class="knockout-cardimage display-inline ver-mid " ng-if="player.studentId.photograph">
+                  <div class="knockout-cardimage display-inline ver-mid " >
                     <img ng-src="{{player.studentId.photograph|serverimage}}" alt="{{player.fullName}}" class="img-responsive ">
                   </div>
                   <div class="display-inline knockout-cardplayername ver-mid ">

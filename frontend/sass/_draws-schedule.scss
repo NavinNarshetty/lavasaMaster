@@ -857,9 +857,17 @@ $sport-table-grey:#efeeee !default;
   height: 40px;
   border-radius: 100%;
   overflow: hidden;
+  position: relative;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
+  img.loading{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
 }
 
 .knockout-round-width {
@@ -965,7 +973,15 @@ $sport-table-grey:#efeeee !default;
   height: 40px;
   border-radius: 100%;
   overflow: hidden;
+  position: relative;
   vertical-align: middle;
+  img.loading{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: auto;
+  }
 }
 
 .knockout-winnercardplayername {
