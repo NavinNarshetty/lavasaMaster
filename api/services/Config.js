@@ -872,9 +872,10 @@ var model = {
                             async.each(files, function (n, callback) {
                                 console.log("inside each", n);
                                 gfs.remove({
-                                    filename: n.filename,
-                                }, function (err, done) {
-                                    console.log("done", done);
+                                    id: n._id
+                                }, function (err, gridStore) {
+                                    if (err) return handleError(err);
+                                    console.log('success');
                                     callback();
                                 });
                             }, function (err) {
