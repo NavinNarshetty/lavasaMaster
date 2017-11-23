@@ -38,7 +38,7 @@
                 <label for="">Date</label>
                 <div class="row">
                   <div class="col-md-12">
-                    <input type="text" ng-model="formData.scheduleDate" name="todate" class="form-control" placeholder="Enter Schedule Date"
+                    <input type="text" ng-model="formData.scheduleDate" name="todate" class="form-control" placeholder="for eg:12th - 14th Nov"
                       required>
                     <div class="error-msg" ng-if="championSchedule.todate.$invalid && championSchedule.todate.$touched">Please Enter Schedule Date *</div>
                   </div>
@@ -48,7 +48,7 @@
               <!-- UPLOAD TIME AND TEXT -->
               <div class="form-group">
                 <label>Upload Time & Text(Optional)</label>
-                <input type="text" ng-model="formData.uploadTime" class="form-control" placeholder="For eg: 12th Nov - 14th Nov">
+                <input type="text" ng-model="formData.uploadTime" class="form-control" placeholder="will be uploaded">
               </div>
               <!-- UPLOAD TIME AND TEXT END -->
 
@@ -113,6 +113,16 @@
                     </tbody>
                   </table>
                 </div>
+              </div>
+
+              <div class="form-group">
+                <span class="label label-danger">Note Only for table content*</span>
+                <br>
+                <p>1)Draws & schedule:Only Text & PDF </p>
+                <p>2)Result:Only Text & PDF </p>
+                <p>3)Result Link:Only Text & LINK </p>
+                <p>4)Order of play:Only Text & PDF </p>
+                <p>4)Other:Only Text & PDF </p>
               </div>
 
               <!-- TABLE FOR CHOOSE FILE END -->

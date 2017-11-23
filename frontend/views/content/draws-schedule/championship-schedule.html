@@ -142,18 +142,18 @@
     </section>
     <!-- VIEW DRAW FORM CARD END -->
     <!-- CHAMPIONSHIP SCHEDULE -->
-    <!-- <section>
-        <div class="championship-schedule championship-schedule-line">
+    <section>
+        <div class="championship-schedule championship-schedule-line mb-50">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-offset-1 col-md-10 col-sm-12 col-xs-12">
+                    <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12">
 
-                        <div class="championship-scheduletitle ">
+                        <div class="championship-scheduletitle">
                             <h2 class="text-center text-capitalize d-fjalla-one m-clear">Championship schedule</h2>
                         </div>
                         <div class="row">
                             <div class="col-md-offset-1 col-md-5 col-sm-6 col-xs-12">
-                                <div class="championshipschedule-tableholder tale-responsive">
+                                <div class="championshipschedule-tableholder  table-responsive">
                                     <table class="table table-striped">
                                         <thead>
                                             <tr>
@@ -162,18 +162,32 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="schedule in schedulelist track by $index">
-                                                <td>
+                                            <tr ng-repeat="schedule in scheduleData1 | orderBy:'sport.name' track by $index">
+                                                <td class="champions-table-td">
                                                     <div class="schedulesport-name">
-                                                        {{schedule.sport}}
+                                                        {{schedule.sport.name}}
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="schedulesport-dates">
-                                                        <span ng-if="schedule.sport!='Athletics' && schedule.sport!='Hockey'">  {{schedule.date1}} <sup>th</sup> <span>-</span>{{schedule.date2}}<sup>th</sup>{{schedule.month}}
-                                                        </span>
-                                                        <span ng-if="schedule.sport=='Athletics' || schedule.sport=='Hockey'">TBA</span>
+                                                <td class="champions-table-td">
+                                                    <div class="table2-championstable">
+                                                        <div class="schedulesport-dates">
+                                                            <span>{{schedule.scheduleDate}}</span>
+                                                        </div>
+                                                        <div class="championsschdule-pdfbutton" ng-repeat="pdf in schedule.pdfDetail track by $index">
+                                                            <a href="{{pdf.trustedURL}}" target="_new" ng-if="pdf.pdfType !=='resultlink'">
+                                                                <span ng-class="{'champions-draw-orange':pdf.pdfType =='schedulePdf' || pdf.pdfType =='order','champions-result-green':pdf.pdfType == 'resultPdf'}">
+                                                                                {{pdf.textHeader}}
+                                                                </span>
+                                                            </a>
+                                                            <a href="{{pdf.resultLink}}" target="_new" ng-if="pdf.pdfType =='resultlink'" class="champions-result-green">
+                                                                {{pdf.textHeader}}
+                                                            </a>
+                                                        </div>
+                                                        <div class="champions-upload-time" ng-if="schedule.uploadTime">
+                                                            <span>{{schedule.uploadTime}}</span>
+                                                        </div>
                                                     </div>
+
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -190,315 +204,49 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="schedule in schedulelist2 track by $index">
-                                                <td>
+                                            <tr ng-repeat="schedule in scheduleData2 track by $index">
+                                                <td ng-class="{'champions-height-odd':!schedule.sport}" class="champions-table-td">
                                                     <div class="schedulesport-name">
-                                                        {{schedule.sport}}
+                                                        {{schedule.sport.name}}
                                                     </div>
                                                 </td>
-                                                <td>
-                                                    <div class="schedulesport-dates">
-                                                        <span ng-if="schedule.sport == ''" style="opacity:0;">dummy</span>
-                                                        <span ng-if="schedule.sport!='Water Polo' && schedule.sport != ''">  {{schedule.date1}} <sup>th</sup> <span>-</span>{{schedule.date2}}<sup>th</sup>{{schedule.month}}
-                                                        </span>
-                                                        <span ng-if="schedule.sport=='Water Polo' ">{{schedule.date}} <sup>th</sup> {{schedule.month}}  </span>
+                                                <td ng-class="{'champions-height-odd':!schedule.sport}" class="champions-table-td">
+                                                    <div class="table2-championstable">
+                                                        <div class="schedulesport-dates">
+                                                            <span>{{schedule.scheduleDate}}</span>
+                                                        </div>
+                                                        <div class="championsschdule-pdfbutton" ng-repeat="pdf in schedule.pdfDetail track by $index">
+                                                            <a href="{{pdf.trustedURL}}" target="_new" ng-if="pdf.pdfType !=='resultlink'">
+                                                                        <span ng-class="{'champions-draw-orange':pdf.pdfType =='schedulePdf' || pdf.pdfType =='order','champions-result-green':pdf.pdfType == 'resultPdf'}" ng-if="schedule.pdfDetail">
+                                                                        {{pdf.textHeader}}
+                                                                        </span>
+                                                            </a>
+                                                            <a href="{{pdf.resultLink}}" target="_new" ng-if="pdf.pdfType =='resultlink'" class="champions-result-green">
+                                                                {{pdf.textHeader}}
+                                                            </a>
+                                                        </div>
+                                                        <div class="champions-upload-time" ng-if="schedule.uploadTime">
+                                                            <span>{{schedule.uploadTime}}</span>
+                                                        </div>
                                                     </div>
+
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
-                        </div>
-                        <div class="championship-schedule-tablefooter">
-                            <p class="m-clear">
-                                *SFA shall keep you informed in-case there is any change of dates.
-                            </p>
-                            <p class="m-clear">*Football qualifiers will be held in November. Dates will be announced soon.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
-    <section class="">
-        <div class="championship-schedule championship-schedule-line mb-50">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-offset-1 col-md-10 col-sm-offset-1 col-sm-10 col-xs-12">
-
-                        <div class="championship-scheduletitle ">
-                            <h2 class="text-center text-capitalize d-fjalla-one m-clear">Championship schedule</h2>
                         </div>
                         <div class="row">
-                            <div class="col-md-offset-1 col-md-5 col-sm-6 col-xs-12">
-                                <div class="championshipschedule-tableholder table-responsive">
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Sport </th>
-                                                <th>Dates</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="schedule in schedulelist track by $index">
-                                                <td>
-                                                    <div class="schedulesport-name">
-                                                        {{schedule.sport}}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="schedulesport-dates">
-                                                        <span ng-if="schedule.date1 && schedule.date2"> {{schedule.date1}}
-                                                            <sup ng-if="schedule.date1 != '2' && schedule.date1 != '22'">th</sup>
-                                                            <sup ng-if="schedule.date1 == '2' || schedule.date1 == '22'">nd</sup>
-                                                            <span>-</span> {{schedule.date2}}
-                                                            <sup ng-if="schedule.date2 != '2' && schedule.date2 != '22'">th</sup>
-                                                            <sup ng-if="schedule.date2 == '2' || schedule.date2 == '22'">nd</sup> {{schedule.month}}
-                                                        </span>
-                                                        <span ng-if="schedule.date">{{schedule.date}}
-                                                            <sup>th</sup> {{schedule.month}} </span>
-                                                        <span ng-if="!schedule.date && !schedule.date1 && !schedule.date2">TBA</span>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.detail">
-                                                        <span class="champions-viewdraw ">
-                                                            Will be published by {{schedule.detail}}
-                                                        </span>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.live">
-                                                        <a ui-sref="results">
-                                                            <span style="color:#35db84;" class="champions-viewdraws ">
-                                                                View Results
-                                                            </span>
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.link && !schedule.live && schedule.sport != 'Athletics'">
-                                                        <a href="{{schedule.link}}" target="_blank ">
-                                                            <span class="champions-viewdraws ">
-                                                                View Draws-Schedule
-                                                            </span>
-                                                            <span class="pdf-champions ">
-                                                                <i class="fa fa-file-pdf-o "></i>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.startList1">
-                                                        <a href="{{schedule.startList1}}" target="_blank">
-                                                            <span class="champions-viewdraws">
-                                                                View Day 3 Schedule
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.liveResult ">
-                                                        <a href="{{schedule.liveResult}} " target="_blank ">
-                                                            <span style="color:#35db84" class="champions-viewdraws ">
-                                                                View Result Day 1 & Day 2
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.liveResult==''
-                                                                && schedule.sport=='Karate' ">
-                                                        <a>
-                                                            <span style="opacity:0 " class="champions-viewdraws ">
-                                                                View
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton hide" ng-if="schedule.startList">
-                                                        <a href="{{schedule.startList}}" target="_blank">
-                                                            <span class="champions-viewdraws">
-                                                                View Start List Day 2
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.orderList==''
-                                                                && schedule.sport=='Fencing' ">
-                                                        <a>
-                                                            <span style="opacity:0 " class="champions-viewdraws ">
-                                                                View
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.orderList==''
-                                                                && schedule.sport=='Tennis' ">
-                                                        <span class="champions-viewdraw">
-                                                            Day 2 schedule will be uploaded
-                                                            <br> after end of Day 1.
-                                                        </span>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton hide" ng-if="schedule.sport=='Fencing'">
-                                                        <a>
-                                                            <span style="opacity:0 " class="champions-viewdraws ">
-                                                                View
-                                                                <br> View
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.orderList">
-                                                        <a href="{{schedule.orderList}}" target="_blank">
-                                                            <span class="champions-viewdraws">
-                                                                Order of Play ( Day 3 - 17/11/2017 )
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton hide" ng-if="schedule.sport=='Tennis'">
-                                                        <span class="champions-viewdraw">
-                                                            Order of Play Day 3 will be
-                                                            <br> updated soon.
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="col-md-5 col-sm-6 col-xs-12 ">
-                                <div class="championshipschedule-tableholder tale-responsive ">
-                                    <table class="table table-striped ">
-                                        <thead>
-                                            <tr>
-                                                <th>Sport </th>
-                                                <th>Dates</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr ng-repeat="schedule in schedulelist2 track by $index ">
-                                                <td>
-                                                    <div class="schedulesport-name ">
-                                                        {{schedule.sport}}
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="schedulesport-dates ">
-                                                        <span ng-if="schedule.sport=='' " style="opacity:0; ">dummy</span>
-                                                        <span ng-if="schedule.date1 && schedule.date2 "> {{schedule.date1}}
-                                                            <sup ng-if="schedule.date1 !='2' && schedule.date1 !='22' ">th</sup>
-                                                            <sup ng-if="schedule.date1=='2' || schedule.date1=='22' ">nd</sup>
-                                                            <span>-</span> {{schedule.date2}}
-                                                            <sup ng-if="schedule.date2 !='2' && schedule.date2 !='22' ">th</sup>
-                                                            <sup ng-if="schedule.date2=='2' || schedule.date2=='22' ">nd</sup> {{schedule.month}}
-                                                        </span>
-                                                        <span ng-if="schedule.date ">{{schedule.date}}
-                                                            <sup ng-if="schedule.hide != 'yes'">th</sup> {{schedule.month}} </span>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.live ">
-                                                        <a ui-sref="results ">
-                                                            <span style="color:#35db84;" class="champions-viewdraws ">
-                                                                View Results
-                                                            </span>
-                                                        </a>
-                                                    </div>
-
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.link && !schedule.live && schedule.sport != 'Athletics'">
-                                                        <a href="{{schedule.link}} " target="_blank ">
-                                                            <span class="champions-viewdraws ">
-                                                                View Draws-Schedule
-                                                            </span>
-                                                            <span class="pdf-champions ">
-                                                                <i class="fa fa-file-pdf-o "></i>
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.startList1">
-                                                        <a href="{{schedule.startList1}}" target="_blank">
-                                                            <span class="champions-viewdraws">
-                                                                View Day 3 Schedule
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.liveResult ">
-                                                        <a href="{{schedule.liveResult}} " target="_blank ">
-                                                            <span style="color:#35db84" class="champions-viewdraws ">
-                                                                View Result Day 1 & Day 2
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton" ng-if="schedule.liveResult==''
-                                                                && schedule.sport=='Karate'">
-                                                        <a>
-                                                            <span style="opacity:0 " class="champions-viewdraws ">
-                                                                View
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton hide" ng-if="schedule.startList==''
-                                                                && schedule.sport=='Karate' ">
-                                                        <a>
-                                                            <span style="opacity:0 " class="champions-viewdraws ">
-                                                                View
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="hide championsschdule-pdfbutton " ng-if="schedule.startList">
-                                                        <a href="{{schedule.startList}}" target="_blank">
-                                                            <span class="champions-viewdraws ">
-                                                                View Start List Day 2
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.orderList==''
-                                                    && schedule.sport=='Fencing' ">
-                                                        <a>
-                                                            <span style="opacity:0 " class="champions-viewdraws ">
-                                                                View
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.orderList==''
-                                                    && schedule.sport=='Tennis' ">
-                                                        <span class="champions-viewdraw">
-                                                            Day 2 schedule will be uploaded
-                                                            <br> after end of Day 1.
-                                                        </span>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.hide == 'yes'">
-                                                        <a>
-                                                            <span style="opacity:0 " class="champions-viewdraws ">
-                                                                View
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton hide" ng-if="schedule.sport=='Fencing' ">
-                                                        <a>
-                                                            <span style="opacity:0 " class="champions-viewdraws ">
-                                                                View
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.orderList">
-                                                        <a href="{{schedule.orderList}}" target="_blank">
-                                                            <span class="champions-viewdraws ">
-                                                                Order of Play ( Day 3 - 17/11/2017 )
-                                                            </span>
-                                                        </a>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton hide" ng-if="schedule.sport=='Tennis'">
-                                                        <span class="champions-viewdraw">
-                                                            Order of Play Day 3 will be
-                                                            <br> updated soon.
-                                                        </span>
-                                                    </div>
-                                                    <div class="championsschdule-pdfbutton " ng-if="schedule.detail ">
-                                                        <span class="champions-viewdraw ">
-                                                            Will be published by {{schedule.detail}}
-                                                        </span>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row ">
-                            <div class="col-md-offset-1 col-md-11 col-sm-12 col-xs-12 ">
-                                <div class=" ">
-                                    <p class="m-clear ">
+                            <div class="col-md-offset-1 col-md-11 col-sm-12 col-xs-12">
+                                <div class="">
+                                    <p class="m-clear">
                                         *SFA shall keep you informed in-case there is any change of dates.
                                     </p>
-                                    <p class="m-clear " ng-if="isCollege==false && sfaCity=='Mumbai' ">*Football qualifiers will be held in November. Dates will be announced soon.</p>
+                                    <p class="m-clear" ng-if="isCollege == false &&sfaCity == 'Mumbai'">*Football qualifiers will be held in November. Dates will be announced soon.</p>
+                                    <p class="m-clear">*The final draws and schedules for all sports will be published on the 8th November 2017.</p>
+                                    <p ng-if="sfaCity == 'Mumbai'">*The final draws and schedules publishing date for all sports will be announced soon.</p>
+                                    <p ng-if="sfaCity == 'Hyderabad'">*The final draws and schedules for all sports will be published on the 8th November 2017.</p>
                                 </div>
                             </div>
                         </div>
