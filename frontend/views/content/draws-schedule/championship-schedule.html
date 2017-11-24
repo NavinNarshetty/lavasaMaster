@@ -175,9 +175,6 @@
                                                         <div class="schedulesport-dates" ng-if="schedule.scheduleDate">
                                                             <span>{{schedule.scheduleDate}}</span>
                                                         </div>
-                                                        <div class="champions-upload-time" ng-if="schedule.uploadTime">
-                                                            <span>{{schedule.uploadTime}}</span>
-                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td class="champions-table-td hidden-xs">
@@ -185,12 +182,12 @@
                                                         <div class="schedulesport-dates" ng-if="schedule.scheduleDate">
                                                             <span>{{schedule.scheduleDate}}</span>
                                                         </div>
-                                                        <div class="champions-upload-time" ng-if="schedule.uploadTime">
-                                                            <span>{{schedule.uploadTime}}</span>
-                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td class="champions-table-td">
+                                                    <div class="champions-upload-time" ng-if="schedule.uploadTime">
+                                                        <span>{{schedule.uploadTime}}</span>
+                                                    </div>
                                                     <div class="championsschdule-pdfbutton text-left" ng-repeat="pdf in schedule.pdfDetail track by $index">
                                                         <a href="{{pdf.trustedURL}}" target="_new" ng-if="pdf.pdfType !=='resultlink'">
                                                                     <span ng-class="{'champions-draw-orange':pdf.pdfType =='schedulePdf' || pdf.pdfType =='order','champions-result-green':pdf.pdfType == 'resultPdf'}">
