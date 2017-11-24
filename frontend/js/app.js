@@ -472,6 +472,12 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
             url: "/knockout-doubles/:id",
             templateUrl: tempateURL,
             controller: 'KnockoutDoublesCtrl'
+        })
+        // DRAWS SCHEDULE END
+        .state('reportcard', {
+            url: "/reportcard",
+            templateUrl: tempateURL,
+            controller: 'ReportCardCtrl'
         });
     // if (window.location.origin != "http://testmumbaischool.sfanow.in") {
     if (window.location.origin == "http://mumbaischool.sfanow.in") {
