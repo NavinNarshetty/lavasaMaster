@@ -35,8 +35,7 @@
                                             </button>
                                             <ul class="dropdown-menu cur">
                                                 <li>
-                                                    <input type="radio" id="radio8" ng-model="formData.type" ng-change="changeAll()"
-                                                        value="">
+                                                    <input type="radio" id="radio8" ng-model="formData.type" ng-change="changeAll()" value="">
                                                     <label for="radio8">All</label>
                                                 </li>
                                                 <li>
@@ -48,45 +47,37 @@
                                                     <label for="radio2">SFA-ID</label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" id="radio9" ng-model="formData.type" value="UTM_Source"
-                                                        ng-change="changeInput()">
+                                                    <input type="radio" id="radio9" ng-model="formData.type" value="UTM_Source" ng-change="changeInput()">
                                                     <label for="radio9">UTM_Source</label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" id="radio10" ng-model="formData.type" value="UTM_Medium"
-                                                        ng-change="changeInput()">
+                                                    <input type="radio" id="radio10" ng-model="formData.type" value="UTM_Medium" ng-change="changeInput()">
                                                     <label for="radio10">UTM_Medium</label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" id="radio11" ng-model="formData.type" value="UTM_Campaign"
-                                                        ng-change="changeInput()">
+                                                    <input type="radio" id="radio11" ng-model="formData.type" value="UTM_Campaign" ng-change="changeInput()">
                                                     <label for="radio11">UTM_Campaign</label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" id="radio3" ng-model="formData.type" value="School Name"
-                                                        ng-change="changeInput()">
+                                                    <input type="radio" id="radio3" ng-model="formData.type" value="School Name" ng-change="changeInput()">
                                                     <label for="radio3">School Name
                                                     </label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" id="radio7" ng-model="formData.type" value="Athlete Name"
-                                                        ng-change="changeInput()">
+                                                    <input type="radio" id="radio7" ng-model="formData.type" value="Athlete Name" ng-change="changeInput()">
                                                     <label for="radio7">Athlete Name
                                                     </label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" id="radio4" ng-model="formData.type" value="Payment Mode"
-                                                        ng-change="changeInput()">
+                                                    <input type="radio" id="radio4" ng-model="formData.type" value="Payment Mode" ng-change="changeInput()">
                                                     <label for="radio4">Payment Mode</label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" id="radio5" ng-model="formData.type" value="Payment Status"
-                                                        ng-change="changeInput()">
+                                                    <input type="radio" id="radio5" ng-model="formData.type" value="Payment Status" ng-change="changeInput()">
                                                     <label for="radio5">Payment Status</label>
                                                 </li>
                                                 <li>
-                                                    <input type="radio" id="radio6" ng-model="formData.type" value="Verified Status"
-                                                        ng-change="changeInput()">
+                                                    <input type="radio" id="radio6" ng-model="formData.type" value="Verified Status" ng-change="changeInput()">
                                                     <label for="radio6">Verified Status</label>
                                                 </li>
                                             </ul>
@@ -118,7 +109,7 @@
                             <div class="col-md-6 ">
                                 <div class="pull-right">
                                     <form class="search-form mr-form ">
-                                        <input type="text" ng-change="searchInAthlete(search)" placeholder="Search Here...
+                                        <input type="text" ng-keydown="$event.keyCode === 13 && searchInAthlete(search)" placeholder="Search Here...
                              " ng-model="search" />
                                     </form>
                                     <a class="btn btn-success" ng-click="generateExcel(formData)">Excel Export</a>

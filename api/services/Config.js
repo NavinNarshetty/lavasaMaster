@@ -834,7 +834,8 @@ var model = {
     },
 
     rotateImage: function (filename, angle, callback, res) {
-        var fid = filename.substr(0, filename.lastIndexOf('.'));
+        var fid = filename.substr(0, filename.lastIndexOf('.')) + "-";
+        // console.log("fid", fid);
         var readstream = gfs.createReadStream({
             filename: filename
         });
@@ -862,31 +863,80 @@ var model = {
             proceedI++;
             if (proceedI === 1) {
                 Jimp.read(buf, function (err, image) {
-                    gfs.files.find({
-                        filename: filename
-                    }).toArray(function (err, files) {
-                        if (err) {
-                            res.json(err);
-                        } else {
-                            console.log("files", files);
-                            async.concatSeries(files, function (n, callback) {
-                                console.log("inside each", n);
-                                gfs.files.remove({
-                                    _id: n._id
-                                }, function (err, found) {
+                    async.waterfall([
+                            function (callback) {
+                                // var file = fid + "-";
+                                gfs.files.find({
+                                    filename: {
+                                        $regex: fid,
+                                        $options: "i"
+                                    }
+                                }).toArray(function (err, files) {
                                     if (err) {
-                                        console.log("error");
+                                        res.json(err);
+                                    } else if (_.isEmpty(files)) {
+                                        callback(null, image);
                                     } else {
-                                        // console.log("old file removed", found);
-                                        console.log("image", image);
-                                        image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
+                                        // console.log("files****", files);
+                                        async.concatSeries(files, function (n, callback) {
+                                            console.log("inside remove each", n);
+                                            gfs.files.remove({
+                                                _id: n._id
+                                            }, function (err, found) {
+                                                if (err) {
+                                                    console.log("error");
+                                                } else {
+                                                    console.log("image", image);
+                                                    callback(null, {
+                                                        data: "removed"
+                                                    });
+                                                }
+                                            });
+                                        }, function (err, found) {
+                                            callback(null, image);
+                                        });
+                                    }
+
+                                });
+                            },
+                            function (image, callback) {
+                                gfs.files.find({
+                                    filename: filename
+                                }).toArray(function (err, files) {
+                                    if (err) {
+                                        res.json(err);
+                                    } else {
+                                        // console.log("files", files);
+                                        async.concatSeries(files, function (n, callback) {
+                                            // console.log("inside each", n);
+                                            gfs.files.remove({
+                                                _id: n._id
+                                            }, function (err, found) {
+                                                if (err) {
+                                                    console.log("error");
+                                                } else {
+                                                    console.log("image", image);
+                                                    image.rotate(parseInt(angle)).getBuffer(Jimp.AUTO, writer2);
+                                                }
+                                            });
+                                        }, function (err, found) {
+                                            callback(null, found);
+                                        });
                                     }
                                 });
-                            }, function (err, found) {
-                                callback(null, found);
-                            });
-                        }
-                    });
+                            }
+                        ],
+                        function (err, complete) {
+                            if (err) {
+                                callback(null, []);
+                            } else if (complete) {
+                                if (_.isEmpty(complete)) {
+                                    callback(null, complete);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            }
+                        });
                 });
             }
         }

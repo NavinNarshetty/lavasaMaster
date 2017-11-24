@@ -96,7 +96,7 @@
                             <div class="col-md-6 ">
                                 <div class="pull-right">
                                     <form class="search-form mr-form ">
-                                        <input type="text " ng-change="searchInSchool(search) " placeholder="Search Here...
+                                        <input type="text " ng-keydown="$event.keyCode === 13 && searchInSchool(search) " placeholder="Search Here...
                              " ng-model="search" />
                                     </form>
                                     <a class="btn btn-success" ng-click="generateExcel(formData)">Excel Export</a>
