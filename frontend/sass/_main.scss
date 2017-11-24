@@ -2742,6 +2742,12 @@ img.fancybox-image {
     top: 67px;
 }
 
+.specialCase2{
+    width: 0;
+    top: 50px;
+    right:-22px;
+}
+
 .menu-list-hover {
     h5 {
         font-weight: bold;
@@ -7605,6 +7611,8 @@ h1.forgot-space {
 .curve-head-mum.newList {
     background: rgba(24, 31, 187, 1);
     position: relative;
+    min-width: 464px;
+    margin: 0;
     padding: 20px 10px 10px 0px;
     &:after {
         right: 22%;
