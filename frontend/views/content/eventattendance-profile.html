@@ -21,7 +21,8 @@
         <!-- ATHLETE NAME + SCHOOL -->
         <div class="event-athleteprofile-title">
           <h3 class="event-athletename d-fjalla-one">{{playerDetail.sfaId}}- {{playerDetail.fullName}}</h3>
-          <p class="event-athleteschoolname d-fjalla-one">{{playerDetail.schoolName}}</p>
+          <p class="event-athleteschoolname d-fjalla-one">{{playerDetail.schoolName}} <span>[ <span>{{playerDetail.schoolPaymentMode}}</span> - <span>{{playerDetail.schoolPaymentStatus}}</span>]</span>
+          </p>
         </div>
         <!-- ATHLETE NAME + SCHOOL -->
         <!-- GENDER -->
@@ -53,9 +54,14 @@
         <!-- REMARKS ENS -->
         <!-- SPORT REGISTERED -->
         <div class="event-athleteprofile-registered">
-          <p class="d-fjalla-one"> <span>Sports Registered :</span> <span ng-if="playerDetail.issport"> Yes </span> <span ng-if="!playerDetail.issport"> No</span>            </p>
+          <p class="d-fjalla-one"> <span>Sports Registered :</span> <span ng-if="playerDetail.issport">Yes </span> <span ng-if="!playerDetail.issport"> No</span>            </p>
         </div>
         <!-- SPORT REGISTERED END -->
+        <!-- STATUS -->
+        <div class="event-athleteprofile-status">
+          <p class="d-fjalla-one"> <span>Status :</span> <span>  {{playerDetail.status}} </span> </p>
+        </div>
+        <!-- STATUS END -->
         <!-- BIB -->
         <div class="form-group">
           <div class="event-athleteprofile-bib">
