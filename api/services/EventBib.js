@@ -307,6 +307,7 @@ var model = {
                             } else {
                                 if (schoolData.status == "Verified") {
                                     profile.isSchoolRegistered = true;
+
                                 } else {
                                     profile.isSchoolRegistered = false;
                                 }
@@ -315,6 +316,8 @@ var model = {
                                 } else {
                                     profile.isSponsered = false;
                                 }
+                                profile.paymentMode = schoolData.registrationFee;
+                                profile.schoolPaymentStatus = schoolData.paymentStatus;
                                 console.log("profile", profile);
                                 callback(null, profile);
                             }
@@ -384,6 +387,7 @@ var model = {
                                     } else {
                                         athleteProfile.schoolName = profile.athlete.school.name;
                                     }
+                                    // athleteProfile.schoolPaymentMode=profile.athlete.school.
                                     athleteProfile.sfaId = profile.athlete.sfaId;
                                     athleteProfile.age = profile.athlete.age;
                                     athleteProfile.dob = profile.athlete.dob;
@@ -405,6 +409,9 @@ var model = {
                                     }
                                     athleteProfile.additionalPaymentStatus = "Pending";
                                     athleteProfile.issport = profile.issport;
+                                    athleteProfile.schoolPaymentMode = profile.paymentMode;
+                                    athleteProfile.schoolPaymentStatus = profile.paymentStatus;
+                                    athleteProfile.status = profile.athlete.status;
                                     callback(null, athleteProfile);
                                 } else {
                                     athleteProfile._id = profile.athlete._id;
@@ -444,6 +451,9 @@ var model = {
                                         athleteProfile.additionalPaymentStatus = "Pending";
                                     }
                                     athleteProfile.issport = profile.issport;
+                                    athleteProfile.schoolPaymentMode = profile.paymentMode;
+                                    athleteProfile.schoolPaymentStatus = profile.paymentStatus;
+                                    athleteProfile.status = profile.athlete.status;
                                     callback(null, athleteProfile);
                                 }
                             }
@@ -481,6 +491,9 @@ var model = {
                             athleteProfile.isBib = profile.athlete.isBib;
                         }
                         athleteProfile.issport = profile.issport;
+                        athleteProfile.schoolPaymentMode = profile.paymentMode;
+                        athleteProfile.schoolPaymentStatus = profile.paymentStatus;
+                        athleteProfile.status = profile.athlete.status;
                         callback(null, athleteProfile);
                     }
                 }
