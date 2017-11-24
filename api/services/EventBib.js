@@ -410,7 +410,7 @@ var model = {
                                     athleteProfile.additionalPaymentStatus = "Pending";
                                     athleteProfile.issport = profile.issport;
                                     athleteProfile.schoolPaymentMode = profile.paymentMode;
-                                    athleteProfile.schoolPaymentStatus = profile.paymentStatus;
+                                    athleteProfile.schoolPaymentStatus = profile.schoolPaymentStatus;
                                     athleteProfile.status = profile.athlete.status;
                                     callback(null, athleteProfile);
                                 } else {
@@ -452,7 +452,7 @@ var model = {
                                     }
                                     athleteProfile.issport = profile.issport;
                                     athleteProfile.schoolPaymentMode = profile.paymentMode;
-                                    athleteProfile.schoolPaymentStatus = profile.paymentStatus;
+                                    athleteProfile.schoolPaymentStatus = profile.schoolPaymentStatus;
                                     athleteProfile.status = profile.athlete.status;
                                     callback(null, athleteProfile);
                                 }
@@ -492,7 +492,7 @@ var model = {
                         }
                         athleteProfile.issport = profile.issport;
                         athleteProfile.schoolPaymentMode = profile.paymentMode;
-                        athleteProfile.schoolPaymentStatus = profile.paymentStatus;
+                        athleteProfile.schoolPaymentStatus = profile.schoolPaymentStatus;
                         athleteProfile.status = profile.athlete.status;
                         callback(null, athleteProfile);
                     }
