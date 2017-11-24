@@ -79,7 +79,7 @@
                       <tr ng-repeat="item in formData.pdfDetail track by $index">
                         <td>
                           <div class="form-group">
-                            <select name="selectDraws" class="form-control" ng-model="item.pdfType">
+                            <select name="selectDraws" class="form-control" ng-model="item.pdfType" ng-change="callMe(item.pdfType,$index)">
                                   <option value="schedulePdf">Draws & schedule</option>
                                   <option value="resultPdf">Result</option>
                                   <option value="resultlink">Result Link</option>
@@ -94,9 +94,11 @@
                           </div>
                         </td>
                         <td>
-                          <div class="form-group">
-                            <upload-image ng-model="item.pdfName" type="pdf" ispdf=true></upload-image>
-                          </div>
+                          <fieldset ng-disabled="item.disableDirective">
+                            <div class="form-group">
+                              <upload-image ng-model="item.pdfName" type="pdf" ispdf=true></upload-image>
+                            </div>
+                          </fieldset>
                         </td>
                         <td>
                           <div class="form-group">

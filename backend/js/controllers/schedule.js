@@ -85,6 +85,16 @@ myApp.controller('DetailScheduleCtrl', function ($scope, TemplateService, Naviga
       });
     }
   };
+  $scope.callMe = function (value, index) {
+    if (value) {
+      if (value === 'resultlink') {
+        $scope.formData.pdfDetail[index].disableDirective = true;
+      } else {
+        $scope.formData.pdfDetail[index].disableDirective = false;
+      }
+
+    }
+  };
 });
 //DETAIL SCHEDULE END
 
