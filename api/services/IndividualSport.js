@@ -2424,6 +2424,7 @@ var model = {
                                 obj.SchoolName = n.school;
                             }
                             obj.Mobile = n.mobile;
+                            obj.Email = n.email;
                             obj.Gender = n.gender;
                             obj.Sport = n.sportName;
                             if (count == 0) {
@@ -2431,6 +2432,8 @@ var model = {
                                 event = age + " - " + n.eventname;
                                 if (n.weight) {
                                     obj.Weight_Category = n.weight;
+                                } else {
+                                    obj.Weight_Category = "";
                                 }
                                 count++;
                             } else {
@@ -2438,6 +2441,8 @@ var model = {
                                 event = event + " , " + age + " - " + n.eventname;
                                 if (n.weight) {
                                     obj.Weight_Category = n.weight;
+                                } else {
+                                    obj.Weight_Category = "";
                                 }
                             }
                             obj.Event_Category = event;

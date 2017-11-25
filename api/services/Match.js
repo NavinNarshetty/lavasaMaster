@@ -738,16 +738,17 @@ var model = {
             function (sendObj, callback) {
                 Match.findOne({
                     "sport": sendObj.sport
-                }).exec(function (err, data) {
+                }).exec(function (err, matchData) {
                     if (err) {
                         callback(err, null);
-                    } else if (!_.isEmpty(data)) {
+                    } else if (!_.isEmpty(matchData)) {
+                        console.log("matchData*******",matchData);
+                        if (matchData.drawFormat) {
+                            sendObj.drawFormat = matchData.drawFormat;
+                        }
                         sendObj.matchFound = true;
                         callback(null, sendObj);
                     } else {
-                        if (data.drawFormat) {
-                            sendObj.drawFormat = data.drawFormat;
-                        }
                         sendObj.matchFound = false;
                         callback(null, sendObj);
                     }
@@ -3217,7 +3218,11 @@ var model = {
                                         paramData.scheduleTime = singleData.TIME;
                                     }
                                     paramData.excelType = singleData["STAGE"];
+                                    if(data.resultType=="league-cum-knockout"){
+                                    paramData.drawFormat = 'League cum Knockout';
+                                    }else{
                                     paramData.drawFormat = data.resultType;
+                                    }
                                     Match.saveMatch(paramData, function (err, complete) {
                                         if (err || _.isEmpty(complete)) {
                                             callback(err, null);
