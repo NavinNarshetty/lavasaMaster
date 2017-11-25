@@ -285,7 +285,7 @@ myApp.config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locat
         //SPORTS REGISTRATION MODULE
 
         .state('sports-registration', {
-            url: "/sports-registration",
+            url: "/sports-registrationS",
             templateUrl: tempateURL,
             controller: 'SportsRegistrationCtrl'
         })

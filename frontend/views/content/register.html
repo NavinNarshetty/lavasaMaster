@@ -63,181 +63,106 @@
             <p class="text-center step mt35 mb25">Step 1 : {{type |firstcapitalize}} / Athlete Registration & Verification</p>
             <div class="row">
                 <div class="col-md-6 col-sm-12 col-xs-12">
-                    <div class="school-registration">
-                        <div class="btn-school text-center">
-                            <p>{{type |firstcapitalize}} Registration</p>
-                            <p>To be filled by {{type |firstcapitalize}} Authorities</p>
-                            <div class="school-icon">
-                                <img src="img/icon/2.png" class="img-responsive">
+                        <div class="school-registration">
+                                <div class="btn-school text-center">
+                                    <p>{{type |firstcapitalize}} Registration</p>
+                                    <p>To be filled by {{type |firstcapitalize}} Authorities</p>
+                                    <div class="school-icon">
+                                        <img src="img/icon/2.png" class="img-responsive">
+                                    </div>
+                                </div>
+                                <div class="category-padding f-s mod-cls text-center">
+                                    <p>
+                                        <b>CLOSED</b>
+                                    </p>
+                                </div>
+                                <div class="text-center mb-20 ">
+                                    <!-- <a ui-sref="formregis"> -->
+                                        <button class="btn-category green-btn ">{{type |firstcapitalize}} Registration has ended</button>
+                                    <!-- </a> -->
+                                </div>
                             </div>
-                        </div>
-                        <div class="category-padding f-s mod-cls">
-                            <p>
-                                <b>Register your {{type}} for SFA {{sfaCity}} {{eventYear}}:</b>
-                            </p>
-                            <ul class="list-unstyled school-list">
-                                <li ng-if="isCollege == false">Fill out the online ‘{{type |firstcapitalize}} Registration Form’ & pay the registration
-                                    amount of INR 12,000/- (inclusive of all applicable taxes)
-                                </li>
-                                <li ng-if="isCollege == true">Fill out the college registration form & pay the college registration fees.</li>
-                                <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 2500 will be charged to each college registering
-                                    for SFA Mumbai 2017</li>
-                                <li>After the verification process, SFA will issue a unique {{type}} SFA ID and password. (This
-                                    process may take up to 2 working days).
-                                    <!--**<br><span class="f-14">** Please keep your SFA ID and password safe as you will require this to register individual and and team athletes from your school.</span>-->
-                                </li>
-                                <li>Proceed to SPORTS REGISTRATION to register athletes from your {{type}} for their sport/sports
-                                    of interest.</li>
-                                <!-- <li>You will be notified once the sports registration is open.</li> -->
-                                <!--<li>Proceed to register athletes from your school for Sports Registration</li>-->
-                            </ul>
-                            <p class="f-16">Successful registration will enable all athletes from your {{type}} to participate in all
-                                <span ng-if="isCollege == false">26+</span>
-                                <span ng-if="isCollege == true">17+</span> disciplines of sport at a subsidized registration
-                                fee.
-                            </p>
-                            <p class="custom-a">
-                                <a ng-click="regisBenModal(type, sfaCity, year, eventYear)">
-                                    <strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{eventYear}}</strong>
-                                </a>
-                            </p>
-                        </div>
-                        <div class="text-center mb-20 ">
-                            <a ui-sref="formregis">
-                                <button class="btn-category green-btn "> Click here for {{type |firstcapitalize}} Registration Form</button>
-                            </a>
-                        </div>
-                    </div>
                 </div>
-
-
                 <div class="col-md-6 col-sm-12 col-xs-12">
-                    <div class="athletes">
-                        <div class="athlets-btn text-center">
-                            <div class="athlets-icon">
-                                <img src="img/icon/1.png" class="img-responsive">
+                        <div class="athletes">
+                                <div class="athlets-btn text-center">
+                                    <div class="athlets-icon">
+                                        <img src="img/icon/1.png" class="img-responsive">
+                                    </div>
+                                    <p>{{type | firstcapitalize}} Athlete Registration</p>
+                                    <p>To be filled by Athletes / Parents</p>
+                                </div>
+                                <div class="category-padding f-s mod-cls text-center">
+                                    <p>
+                                        <b>CLOSED</b>
+                                    </p>
+                                </div>
+                                <div class="text-center mb-20 ">
+                                    <!-- <a> -->
+                                        <button class="btn-category orange "> Athlete Registration has ended</button>
+                                    <!-- </a> -->
+                                </div>
                             </div>
-                            <p>{{type | firstcapitalize}} Athlete Registration</p>
-                            <p>To be filled by Athletes / Parents</p>
-                        </div>
-                        <div class="category-padding-athelet f-s mod-cls">
-                            <!--<p>Once an athlete registers with SFA, he/she can participate in as many sports as he/she chooses to
-                            (basis eligibility criteria).
-                        </p>-->
-                            <p>
-                                <b>Register as an athlete for SFA {{sfaCity}} {{eventYear}}:</b>
-                            </p>
-                            <ul class="list-unstyled athlete-list f-s">
-                                <li> Fill out the online ‘Athlete Registration Form’ & pay the registration amount of INR
-                                    <span ng-if="isCollege == false">200</span>
-                                    <span ng-if="isCollege == true">100</span>/- (inclusive of all applicable taxes)
-                                    <br>
-                                    <span class="f-14">*In the event that your {{type}} does not register for SFA {{sfaCity}} {{eventYear}}
-                                        by the
-                                        <span ng-if="isCollege == false"> 15th of October</span>
-                                    <span ng-if="isCollege == true"> 15th of October</span>, an additional fee of INR
-                                    <span ng-if="isCollege == false">400</span>
-                                    <span ng-if="isCollege == true">200</span>/- (Inclusive of all applicable taxes) will
-                                    be levied.</span>
-                                </li>
-                                <!-- <li ng-if="isCollege == true">Fill out the athlete registration form & pay the athlete registration fees.</li>
-                                <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 300 will be charged to each athlete registering
-                                    for SFA Mumbai 2017</li> -->
-                                <li>After the verification process, SFA will issue a unique athlete SFA ID and password. (This
-                                    process may take up to 2 working days).
-                                    <!--**<br><span class="f-14">**Please keep your SFA ID and password safe as you will require this to register yourself for 
-                            individual/team sports that you wish to participate in. </span>-->
-                                </li>
-                                <li>Proceed to SPORTS REGISTRATION to register for you particular sport/sports.
-                                    <!--<br><span class="f-14">* You can participate in all 25+ disciplines of sport</span><br>
-                                <span class="f-14">* The sport registration will be opening soon and you will be notified once the sport registration
-                                    process begins.</span>-->
-                                </li>
-                                <!-- <li>You will be notified once the sport registration is open.</li> -->
-                                <!--<li>Proceed to register for Sports Registration</li>-->
-                            </ul>
-                            <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
-                            from their school registrations. </p>-->
-                            <p class="custom-a mb-33" ng-if="isCollege==false">
-                                <a ng-click="athBenModal(type, sfaCity, year, eventYear) ">
-                                    <strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong>
-                                </a>
-                            </p>
-                            <p class="custom-a mb-75" ng-if="isCollege==true">
-                                <a ng-click="athBenModal(type, sfaCity, year, eventYear) ">
-                                    <strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong>
-                                </a>
-                            </p>
-                        </div>
-                        <div class="text-center mb-20 ">
-                            <a ui-sref="formathlete">
-                                <button class="btn-category orange "> Click here for Athlete Registration Form</button>
-                            </a>
-                        </div>
-                    </div>
                 </div>
             </div>
 
             <p class="text-center step mt50 mb25" ng-if="sfaCity == 'Mumbai'">Step 2 : Sports Registration</p>
             <div class="row" ng-if="sfaCity == 'Mumbai'">
                 <div class="col-md-6 col-sm-12 col-xs-12 ">
-                    <div class=" ">
-                        <!--<p class="text-center step mb-75 ">Step2 : Sport Registration</p>-->
-                        <div class="sport-registration school-registration ">
-                            <div class="btn-sport btn-school text-center ">
-                                <div class="school-icon ">
-                                    <img src="img/icon/3.png " class="img-responsive ">
+                        <div class=" ">
+                                <!--<p class="text-center step mb-75 ">Step2 : Sport Registration</p>-->
+                                <div class="sport-registration school-registration ">
+                                    <div class="btn-sport btn-school text-center ">
+                                        <div class="school-icon ">
+                                            <img src="img/icon/3.png " class="img-responsive ">
+                                        </div>
+                                        <p>Sport Registration</p>
+                                    </div>
+                                    <div class="category-padding-sport f-s mod-cls">
+                                        <p class="mb-50 text-center"><b>CLOSED</b></p>
+                                        <p style="opacity:0"  ng-if="isCollege == true">Once the athlete / {{type}} registration is complete, log in using your SFA ID and password
+                                            to register for your sport/sports of interest.
+                                        </p>
+                                        <p style="display:none" ng-if="isCollege == false">Once the athlete / {{type}} registration is complete, log in using your SFA ID and password
+                                            to register for your sport/sports of interest.
+                                        </p>
+                                        <p style="opacity:0">
+                                            If you do not have an SFA ID and Password, kindly register yourself as an athlete / {{type}} by clicking the relevant option.
+                                        </p>
+                                        <!-- <p class="custom-a " ng-if="isCollege==false"><a href="http://{{sfaCity}}school.sfanow.in/formregis
+                                    " target="_new ">Click here for {{type |firstcapitalize}} Registration Form</a>
+                                    </p>
+                                    <p class="mb-75 custom-a " ng-if="isCollege==false"><a href="http://mumbaischool.sfanow.in/formathlete
+                                    " target="_new "><strong>Click here for Athlete Registration Form</strong></a>
+                                    </p> -->
+                                        <p style="visibility:hidden" class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:
+                                            <br>
+                                            <a href="http://mumbaischool.sfanow.in/formregis" target="_new">http://mumbaischool.sfanow.in/formregis</a>
+                                        </p>
+                                        <p style="visibility:hidden" class="mb91 custom-a" ng-if="isCollege==false">For Athlete:
+                                            <br>
+                                            <a href="http://mumbaischool.sfanow.in/formathlete" target="_new">
+                                                <strong>http://mumbaischool.sfanow.in/formathlete</strong>
+                                            </a>
+                                        </p>
+                                        <p style="visibility:hidden" class="custom-a" ng-if="isCollege==true">For {{type | firstcapitalize}}:
+                                            <br>
+                                            <a href="http://mumbaicollege.sfanow.in/formregis" target="_new">http://mumbaicollege.sfanow.in/formregis</a>
+                                        </p>
+                                        <p style="visibility:hidden" class="custom-a" ng-if="isCollege==true">For Athlete:
+                                            <br>
+                                            <a href="http://mumbaicollege.sfanow.in/formathlete" target="_new">
+                                                <strong>http://mumbaicollege.sfanow.in/formathlete</strong>
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="text-center mb-20">
+                                        <!-- <a ui-sref="sports-registration"> -->
+                                            <button class="btn-category blue-light ">Sports Registration has ended</button>
+                                        <!-- </a> -->
+                                    </div>
                                 </div>
-                                <p>Sport Registration</p>
                             </div>
-                            <div class="category-padding-sport f-s mod-cls">
-                                <p>Once the athlete / {{type}} registration is complete, log in using your SFA ID and password
-                                    to register for your sport/sports of interest.
-                                </p>
-                                <p>
-                                    If you do not have an SFA ID and Password, kindly register yourself as an athlete / {{type}} by clicking the relevant option.
-                                </p>
-                                <!-- <p class="custom-a " ng-if="isCollege==false"><a href="http://{{sfaCity}}school.sfanow.in/formregis
-                            " target="_new ">Click here for {{type |firstcapitalize}} Registration Form</a>
-                            </p>
-                            <p class="mb-75 custom-a " ng-if="isCollege==false"><a href="http://mumbaischool.sfanow.in/formathlete
-                            " target="_new "><strong>Click here for Athlete Registration Form</strong></a>
-                            </p> -->
-                                <p class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:
-                                    <br>
-                                    <a href="http://mumbaischool.sfanow.in/formregis" target="_new">http://mumbaischool.sfanow.in/formregis</a>
-                                </p>
-                                <p class="mb91 custom-a" ng-if="isCollege==false">For Athlete:
-                                    <br>
-                                    <a href="http://mumbaischool.sfanow.in/formathlete" target="_new">
-                                        <strong>http://mumbaischool.sfanow.in/formathlete</strong>
-                                    </a>
-                                </p>
-                                <p class="custom-a" ng-if="isCollege==true">For {{type | firstcapitalize}}:
-                                    <br>
-                                    <a href="http://mumbaicollege.sfanow.in/formregis" target="_new">http://mumbaicollege.sfanow.in/formregis</a>
-                                </p>
-                                <p class="mb91 custom-a" ng-if="isCollege==true">For Athlete:
-                                    <br>
-                                    <a href="http://mumbaicollege.sfanow.in/formathlete" target="_new">
-                                        <strong>http://mumbaicollege.sfanow.in/formathlete</strong>
-                                    </a>
-                                </p>
-                                <!-- <p class="mb-33" ng-if="isCollege==true">All registered {{type}}s and athletes will be notified when registration for sports will
-                                    be open!
-                                </p> -->
-                            </div>
-                            <!--<div class="text-center mb-20 "><button class="btn-category blue-light ">Sports Registration Form</button></div>-->
-                            <div class="text-center mb-20">
-                                <a ui-sref="sports-registration">
-                                    <button class="btn-category blue-light ">Click here for Sports Registration</button>
-                                </a>
-                            </div>
-                            <!-- <div class="text-center mb-20" ng-if="isCollege==true"><button class="com-category blue-light">Opening shortly</button></div> -->
-                            <!-- <div class="text-center mb-20 "><a ui-sref="sports-registration "><button class="com-category
-                            blue-light " >Opening shortly</button></a></div> -->
-                        </div>
-                    </div>
                 </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 ">
                     <div class=" ">
@@ -279,7 +204,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="category-padding-sport cus-pd-lr f-s " ng-if="isCollege==true">
+                            <div class="category-padding-sport cus-pd-lr f-s " style="padding-bottom:13px" ng-if="isCollege==true">
                                 <div class="row ">
                                     <div class="col-md-6 col-sm-6 col-xs-12 ver-line ">
                                         <div class="t-center">
@@ -691,192 +616,107 @@
             </p>
             <p class="text-center step mt35 mb25">Step 1 : {{type |firstcapitalize}} / Athlete Registration & Verification</p>
             <div class="row">
-                <div class="col-md-6 col-sm-12 col-xs-12">
-                    <div class="school-registration">
-                        <div class="btn-school text-center">
-                            <p>{{type |firstcapitalize}} Registration</p>
-                            <p>To be filled by {{type |firstcapitalize}} Authorities</p>
-                            <div class="school-icon">
-                                <img src="img/icon/2.png" class="img-responsive">
-                            </div>
-                        </div>
-                        <div class="category-padding f-s mod-cls">
-                            <p>
-                                <b>Register your {{type}} for SFA {{sfaCity}} {{eventYear}}:</b>
-                            </p>
-                            <ul class="list-unstyled school-list">
-                                <li ng-if="isCollege == false">Fill out the online ‘{{type |firstcapitalize}} Registration Form’ & pay the registration
-                                    amount of INR 12,000/- (inclusive of all applicable taxes)
-                                </li>
-                                <li ng-if="isCollege == true">Fill out the college registration form & pay the college registration fees.</li>
-                                <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 2500 will be charged to each college registering
-                                    for SFA Mumbai 2017</li>
-                                <li>After the verification process, SFA will issue a unique {{type}} SFA ID and password. (This
-                                    process may take up to 2 working days).
-                                    <!--**<br><span class="f-14">** Please keep your SFA ID and password safe as you will require this to register individual and and team athletes from your school.</span>-->
-                                </li>
-                                <li>Proceed to SPORTS REGISTRATION to register athletes from your {{type}} for their sport/sports
-                                    of interest.</li>
-                                <!-- <li>Proceed to SPORTS REGISTRATION (Opening Shortly) to register athletes from your {{type}}
-                                    for their sport/sports of interest.</li>
-                                <li>You will be notified once the sports registration is open.</li> -->
-                                <!--<li>Proceed to register athletes from your school for Sports Registration</li>-->
-                            </ul>
-                            <p class="f-16">Successful registration will enable all athletes from your {{type}} to participate in all
-                                <span ng-if="isCollege == false">20+</span>
-                                <span ng-if="isCollege == true">15+</span> disciplines of sport at a subsidized registration
-                                fee.
-                            </p>
-                            <p class="custom-a">
-                                <a ng-click="regisBenModal(type, sfaCity, year, eventYear)">
-                                    <strong>Click here to view the benefits of registering your {{type}} for SFA {{sfaCity}} {{eventYear}}</strong>
-                                </a>
-                            </p>
-                        </div>
-                        <div class="text-center mb-20 ">
-
-                            <button class="btn-category green-btn ">{{type |firstcapitalize}} Registration has ended</button>
-
-                        </div>
-                    </div>
-                </div>
-
-
-                <div class="col-md-6 col-sm-12 col-xs-12">
-                    <div class="athletes">
-                        <div class="athlets-btn text-center">
-                            <div class="athlets-icon">
-                                <img src="img/icon/1.png" class="img-responsive">
-                            </div>
-                            <p>{{type | firstcapitalize}} Athlete Registration</p>
-                            <p>To be filled by Athletes / Parents</p>
-                        </div>
-                        <div class="category-padding-athelet f-s mod-cls">
-                            <!--<p>Once an athlete registers with SFA, he/she can participate in as many sports as he/she chooses to
-                            (basis eligibility criteria).
-                        </p>-->
-                            <p>
-                                <b>Register as an athlete for SFA {{sfaCity}} {{eventYear}}:</b>
-                            </p>
-                            <ul class="list-unstyled athlete-list f-s">
-                                <li ng-if="isCollege == false"> Fill out the online ‘Athlete Registration Form’ & pay the registration amount of INR 200/-
-                                    (inclusive of all applicable taxes)
-                                    <br>
-                                    <span class="f-14">*In the event that your school does not register for SFA {{sfaCity}} {{eventYear}} by
-                                        the 15th of October, an additional fee of INR 200/- (Inclusive of all applicable
-                                        taxes) will be levied.</span>
-                                </li>
-                                <li ng-if="isCollege == true">Fill out the athlete registration form & pay the athlete registration fees.</li>
-                                <li ng-if="isCollege == true">A discounted introductory registration fee of Rs. 300 will be charged to each athlete registering
-                                    for SFA Mumbai 2017</li>
-                                <li>After the verification process, SFA will issue a unique athlete SFA ID and password. (This
-                                    process may take up to 2 working days).
-                                    <!--**<br><span class="f-14">**Please keep your SFA ID and password safe as you will require this to register yourself for 
-                            individual/team sports that you wish to participate in. </span>-->
-                                </li>
-                                <li>Proceed to SPORTS REGISTRATION to register for you particular sport/sports.</li>
-                                <!-- <li>Proceed to SPORTS REGISTRATION (Opening Shortly) to register for you particular sport/sports.
-                                </li>
-                                <li>You will be notified once the sport registration is open.</li> -->
-                                <!--<li>Proceed to register for Sports Registration</li>-->
-                            </ul>
-                            <!--<p class="f-16">PS. All Athletes whether participating in individual or team sports need to register themselves separate
-                            from their school registrations. </p>-->
-                            <p class="custom-a mb-33" ng-if="isCollege==false">
-                                <a ng-click="athBenModal(type, sfaCity, year, eventYear) ">
-                                    <strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong>
-                                </a>
-                            </p>
-                            <p class="custom-a mb-75" ng-if="isCollege==true">
-                                <a ng-click="athBenModal(type, sfaCity, year, eventYear) ">
-                                    <strong>Click here to view the benefits of registering as athlete for SFA {{sfaCity}} {{eventYear}}</strong>
-                                </a>
-                            </p>
-                        </div>
-                        <div class="text-center mb-20 ">
-                            <button class="btn-category orange">Athlete Registration has ended</button>
-                            <a hidden ng-click="endReg()">
-                                <button class="btn-category orange"> Click here for Athlete Registration Form</button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- <div class="row">
-                <div class="col-md-offset-3 col-md-6 col-sm-12 col-xs-12">
-                    <div class="sport-sec">
-                        <p class="text-center step mb-75 ">Step2 : Sport Registration</p>
-                        <div class="sport-registration">
-                            <div class="btn-sport text-center">
-                                <div class="sport-icon">
-                                    <img src="img/icon/3.png" class="img-responsive">
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="school-registration">
+                                    <div class="btn-school text-center">
+                                        <p>{{type |firstcapitalize}} Registration</p>
+                                        <p>To be filled by {{type |firstcapitalize}} Authorities</p>
+                                        <div class="school-icon">
+                                            <img src="img/icon/2.png" class="img-responsive">
+                                        </div>
+                                    </div>
+                                    <div class="category-padding f-s mod-cls text-center">
+                                        <p>
+                                            <b>CLOSED</b>
+                                        </p>
+                                    </div>
+                                    <div class="text-center mb-20 ">
+                                        <!-- <a ui-sref="formregis"> -->
+                                            <button class="btn-category green-btn ">{{type |firstcapitalize}} Registration has ended</button>
+                                        <!-- </a> -->
+                                    </div>
                                 </div>
-                                <p>Sport Registration</p>
-                            </div>
-                            <div class="category-padding-sport f-s">
-                                <p>Once the athlete / school registration is complete, log in using your SFA ID and password
-                                    to register for your sport/sports of interest.
-                                </p>
-                                <p>All registered schools and athletes will be notified when registration for sports will be
-                                    open!
-                                </p>
-                            </div>
-                            <div class="text-center mb-20"><button class="com-category  blue-light">Opening shortly</button></div>
-                        </div>
                     </div>
-                </div>
-            </div>  -->
+                    <div class="col-md-6 col-sm-12 col-xs-12">
+                            <div class="athletes">
+                                    <div class="athlets-btn text-center">
+                                        <div class="athlets-icon">
+                                            <img src="img/icon/1.png" class="img-responsive">
+                                        </div>
+                                        <p>{{type | firstcapitalize}} Athlete Registration</p>
+                                        <p>To be filled by Athletes / Parents</p>
+                                    </div>
+                                    <div class="category-padding f-s mod-cls text-center">
+                                        <p>
+                                            <b>CLOSED</b>
+                                        </p>
+                                    </div>
+                                    <div class="text-center mb-20 ">
+                                        <!-- <a> -->
+                                            <button class="btn-category orange "> Athlete Registration has ended</button>
+                                        <!-- </a> -->
+                                    </div>
+                                </div>
+                    </div>
+            </div>
             <p class="text-center step mt50 mb25">Step 2 : Sports Registration</p>
             <div class="row">
-                <div class="col-md-6 col-sm-12 col-xs-12 ">
-                    <div class=" ">
-                        <!--<p class="text-center step mb-75 ">Step2 : Sport Registration</p>-->
-                        <div class="sport-registration school-registration ">
-                            <div class="btn-sport btn-school text-center ">
-                                <div class="school-icon ">
-                                    <img src="img/icon/3.png " class="img-responsive ">
+                    <div class="col-md-6 col-sm-12 col-xs-12 ">
+                            <div class=" ">
+                                <!--<p class="text-center step mb-75 ">Step2 : Sport Registration</p>-->
+                                <div class="sport-registration school-registration ">
+                                    <div class="btn-sport btn-school text-center ">
+                                        <div class="school-icon ">
+                                            <img src="img/icon/3.png " class="img-responsive ">
+                                        </div>
+                                        <p>Sport Registration</p>
+                                    </div>
+                                    <div class="category-padding-sport f-s mod-cls">
+                                        <p class="mb-25 text-center"><b>CLOSED</b></p>
+                                        <p style="opacity:0"  ng-if="isCollege == true">Once the athlete / {{type}} registration is complete, log in using your SFA ID and password
+                                            to register for your sport/sports of interest.
+                                        </p>
+                                        <p style="display:none" ng-if="isCollege == false">Once the athlete / {{type}} registration is complete, log in using your SFA ID and password
+                                            to register for your sport/sports of interest.
+                                        </p>
+                                        <p style="opacity:0">
+                                            If you do not have an SFA ID and Password, kindly register yourself as an athlete / {{type}} by clicking the relevant option.
+                                        </p>
+                                        <!-- <p class="custom-a " ng-if="isCollege==false"><a href="http://{{sfaCity}}school.sfanow.in/formregis
+                                    " target="_new ">Click here for {{type |firstcapitalize}} Registration Form</a>
+                                    </p>
+                                    <p class="mb-75 custom-a " ng-if="isCollege==false"><a href="http://mumbaischool.sfanow.in/formathlete
+                                    " target="_new "><strong>Click here for Athlete Registration Form</strong></a>
+                                    </p> -->
+                                        <p style="visibility:hidden" class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:
+                                            <br>
+                                            <a href="http://mumbaischool.sfanow.in/formregis" target="_new">http://mumbaischool.sfanow.in/formregis</a>
+                                        </p>
+                                        <p style="visibility:hidden" class="mb91 custom-a" ng-if="isCollege==false">For Athlete:
+                                            <br>
+                                            <a href="http://mumbaischool.sfanow.in/formathlete" target="_new">
+                                                <strong>http://mumbaischool.sfanow.in/formathlete</strong>
+                                            </a>
+                                        </p>
+                                        <p style="visibility:hidden" class="custom-a" ng-if="isCollege==true">For {{type | firstcapitalize}}:
+                                            <br>
+                                            <a href="http://mumbaicollege.sfanow.in/formregis" target="_new">http://mumbaicollege.sfanow.in/formregis</a>
+                                        </p>
+                                        <p style="visibility:hidden" class="custom-a" ng-if="isCollege==true">For Athlete:
+                                            <br>
+                                            <a href="http://mumbaicollege.sfanow.in/formathlete" target="_new">
+                                                <strong>http://mumbaicollege.sfanow.in/formathlete</strong>
+                                            </a>
+                                        </p>
+                                    </div>
+                                    <div class="text-center mb-20">
+                                        <!-- <a ui-sref="sports-registration"> -->
+                                            <button class="btn-category blue-light ">Sports Registration has ended</button>
+                                        <!-- </a> -->
+                                    </div>
                                 </div>
-                                <p>Sport Registration</p>
                             </div>
-                            <div class="category-padding-sport f-s mod-cls">
-                                <p>Once the athlete / {{type}} registration is complete, log in using your SFA ID and password
-                                    to register for your sport/sports of interest.
-                                </p>
-                                <p ng-if="isCollege==false" style="visibility:hidden">
-                                    If you do not have an SFA ID and Password, kindly register yourself as an athlete by clicking the relevant option.
-                                </p>
-                                <!-- <p class="custom-a " ng-if="isCollege==false"><a href="http://{{sfaCity}}school.sfanow.in/formregis
-                            " target="_new ">Click here for {{type |firstcapitalize}} Registration Form</a>
-                            </p>
-                            <p class="mb-75 custom-a " ng-if="isCollege==false"><a href="http://mumbaischool.sfanow.in/formathlete
-                            " target="_new "><strong>Click here for Athlete Registration Form</strong></a>
-                            </p> -->
-
-                                <p style="visibility:hidden" class="custom-a" ng-if="isCollege==false">For {{type | firstcapitalize}}:
-                                    <br>
-                                    <a href="http://hyderabadschool.sfanow.in/formregis " target="_new ">http://hyderabadschool.sfanow.in/formregis</a>
-                                </p>
-                                <p class="mb25 custom-a" style="visibility:hidden" ng-if="isCollege==false">For Athlete:
-                                    <br>
-                                    <!-- <a ng-click="endReg()"> -->
-                                    <strong>http://hyderabadschool.sfanow.in/formathlete</strong>
-                                    <!-- </a> -->
-                                </p>
-                                <p class="mb-33" ng-if="isCollege==true">All registered {{type}}s and athletes will be notified when registration for sports will
-                                    be open!
-                                </p>
-                            </div>
-                            <div class="text-center mb-20">
-                                <a hidden ui-sref="sports-registration">
-                                    <button class="btn-category blue-light">Click here for Sports Registration</button>
-                                </a>
-                                <button class="btn-category blue-light">Sports Registration has ended</button>
-                            </div>
-                            <!-- ng-if="isCollege==true" -->
-                            <!-- <div class="text-center mb-20"><button class="com-category blue-light">Opening shortly</button></div> -->
                         </div>
-                    </div>
-                </div>
                 <div class="col-md-6 col-sm-12 col-xs-12 ">
                     <div class=" ">
                         <!--<p class="text-center step mb-75 ">Step2 : Sport Registration</p>-->
@@ -918,7 +758,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="category-padding-sport cus-pd-lr f-s " ng-if="isCollege==true">
+                            <div class="category-padding-sport cus-pd-lr f-s " style="padding-bottom:18px" ng-if="isCollege==true">
                                 <!-- <div class="row ">
                                     <div class="col-md-6 col-sm-6 col-xs-12 ver-line ">
                                         <div class="t-center">
