@@ -1,3 +1,5 @@
+import { format } from "url";
+
 var schema = new Schema({
     sport: [{
         type: Schema.Types.ObjectId,
@@ -2414,7 +2416,7 @@ var model = {
                         _.each(mainData.info, function (n) {
                             console.log("info", n);
                             console.log("count", count);
-                            obj.Date = new Date(n.createdAt);
+                            obj.Date = moment(new Date(n.createdAt),'dd/MM/yyyy');
                             obj.SFAID = n.sfaid;
                             if (n.middlename) {
                                 obj.Athlete_Full_Name = n.firstname + " " + n.middlename + " " + n.surname;
