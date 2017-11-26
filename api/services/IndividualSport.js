@@ -2414,7 +2414,7 @@ var model = {
                         _.each(mainData.info, function (n) {
                             console.log("info", n);
                             console.log("count", count);
-                            obj.Date = moment(n.createdAt,'dd/MM/yyyy');
+                            obj.Date =new Date(n.createdAt).format('dd/MM/yyyy');
                             obj.SFAID = n.sfaid;
                             if (n.middlename) {
                                 obj.Athlete_Full_Name = n.firstname + " " + n.middlename + " " + n.surname;
