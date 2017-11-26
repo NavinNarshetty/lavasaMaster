@@ -1,5 +1,3 @@
-import { format } from "url";
-
 var schema = new Schema({
     sport: [{
         type: Schema.Types.ObjectId,
