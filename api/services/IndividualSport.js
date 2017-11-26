@@ -2362,6 +2362,7 @@ var model = {
                             athleteSchoolName: "$athleteId.atheleteSchoolName",
                             sfaid: "$athleteId.sfaId",
                             createdby: "$createdBy",
+                            createdAt: "$createdAt",
                             nominatedSchoolName: "$nominatedSchoolName",
                             nominatedContactDetails: "$nominatedContactDetails",
                             nominatedEmailId: "$nominatedEmailId",
@@ -2373,6 +2374,7 @@ var model = {
                             weight: "$sport.weight.name",
                             gender: "$sport.gender",
                             mobile: "$athleteId.mobile",
+                            email:"$athleteId.email"
                         }
                     }
                 }
@@ -2412,6 +2414,7 @@ var model = {
                         _.each(mainData.info, function (n) {
                             console.log("info", n);
                             console.log("count", count);
+                            obj.createdAt = new Date(n.createdAt);
                             obj.SFAID = n.sfaid;
                             if (n.middlename) {
                                 obj.Athlete_Full_Name = n.firstname + " " + n.middlename + " " + n.surname;
