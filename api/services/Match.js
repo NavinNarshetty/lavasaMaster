@@ -14075,6 +14075,7 @@ var model = {
                                     } else {
                                         paramData.scheduleTime = "";
                                     }
+                                    console.log("went for save", paramData.opponentsTeam);
                                     var matchObj = {
                                         $set: {
                                             sport: paramData.sport,
@@ -14083,7 +14084,7 @@ var model = {
                                             scheduleTime: paramData.scheduleTime
                                         }
                                     };
-                                    console.log("went for save");
+
                                     Match.update({
                                         matchId: paramData.matchId
                                     }, matchObj).exec(function (err, match) {
