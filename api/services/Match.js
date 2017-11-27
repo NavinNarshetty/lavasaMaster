@@ -14073,15 +14073,17 @@ var model = {
                                     if (!_.isEmpty(singleData.TIME) || singleData.TIME != null) {
                                         paramData.scheduleTime = singleData.TIME;
                                     }
+                                    console.log("went for save");
                                     Match.saveData({
                                         matchId: paramData.matchId
-                                    }, paramData, function (err, match) {
+                                    }, paramData).exec(function (err, match) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
                                             if (_.isEmpty(match)) {
                                                 callback(null, []);
                                             } else {
+                                                console.log("match",match);
                                                 callback(null, match);
                                             }
                                         }
