@@ -14065,8 +14065,8 @@ var model = {
                                             } else if (_.isEmpty(singleData["PARTICIPANT 2"])) {
                                                 paramData.opponentsTeam.push(singleData["PARTICIPANT 1"]);
                                             } else {
-                                                paramData.opponentsTeam.push(objectid(singleData["PARTICIPANT 1"]));
-                                                paramData.opponentsTeam.push(objectid(singleData["PARTICIPANT 2"]));
+                                                paramData.opponentsTeam.push(singleData["PARTICIPANT 1"]);
+                                                paramData.opponentsTeam.push(singleData["PARTICIPANT 2"]);
                                             }
                                             console.log("singleData", singleData);
 
@@ -14075,23 +14075,22 @@ var model = {
                                             paramData.scheduleDate = singleData.DATE;
                                             if (!_.isEmpty(singleData.TIME) || singleData.TIME != null) {
                                                 paramData.scheduleTime = singleData.TIME;
+                                            } else {
+                                                paramData.scheduleTime = "";
                                             }
-                                            // } else {
-                                            //     paramData.scheduleTime = "";
-                                            // }
-                                            // // console.log("went for save", paramData.opponentsTeam);
-                                            // var matchObj = {
-                                            //     $set: {
-                                            //         sport: paramData.sport,
-                                            //         opponentsTeam: paramData.opponentsTeam,
-                                            //         scheduleDate: paramData.scheduleDate,
-                                            //         scheduleTime: paramData.scheduleTime
-                                            //     }
-                                            // };
+                                            // console.log("went for save", paramData.opponentsTeam);
+                                            var matchObj = {
+                                                $set: {
+                                                    sport: paramData.sport,
+                                                    opponentsTeam: paramData.opponentsTeam,
+                                                    scheduleDate: paramData.scheduleDate,
+                                                    scheduleTime: paramData.scheduleTime
+                                                }
+                                            };
                                             if (!_.isEmpty(paramData.opponentsTeam)) {
                                                 Match.update({
                                                     matchId: paramData.matchId
-                                                }, paramData).exec(function (err, match) {
+                                                }, matchObj).exec(function (err, match) {
                                                     if (err) {
                                                         callback(err, null);
                                                     } else {
