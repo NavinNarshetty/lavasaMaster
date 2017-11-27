@@ -14073,9 +14073,9 @@ var model = {
                                     if (!_.isEmpty(singleData.TIME) || singleData.TIME != null) {
                                         paramData.scheduleTime = singleData.TIME;
                                     }
-                                    Match.update({
+                                    Match.saveData({
                                         matchId: paramData.matchId
-                                    }, paramData).exec(function (err, match) {
+                                    }, paramData, function (err, match) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
