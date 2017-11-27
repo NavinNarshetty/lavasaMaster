@@ -14081,10 +14081,7 @@ var model = {
                                             // console.log("went for save", paramData.opponentsTeam);
                                             var matchObj = {
                                                 $set: {
-                                                    sport: paramData.sport,
                                                     opponentsTeam: paramData.opponentsTeam,
-                                                    scheduleDate: paramData.scheduleDate,
-                                                    scheduleTime: paramData.scheduleTime
                                                 }
                                             };
                                             if (!_.isEmpty(paramData.opponentsTeam)) {
