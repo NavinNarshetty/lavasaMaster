@@ -14072,18 +14072,28 @@ var model = {
                                     paramData.scheduleDate = singleData.DATE;
                                     if (!_.isEmpty(singleData.TIME) || singleData.TIME != null) {
                                         paramData.scheduleTime = singleData.TIME;
+                                    } else {
+                                        paramData.scheduleTime = "";
                                     }
+                                    var matchObj = {
+                                        $set: {
+                                            sport: paramData.sport,
+                                            opponentsTeam: paramData.opponentsTeam,
+                                            scheduleDate: paramData.scheduleDate,
+                                            scheduleTime: paramData.scheduleTime
+                                        }
+                                    };
                                     console.log("went for save");
-                                    Match.saveData({
+                                    Match.update({
                                         matchId: paramData.matchId
-                                    }, paramData).exec(function (err, match) {
+                                    }, matchObj).exec(function (err, match) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
                                             if (_.isEmpty(match)) {
                                                 callback(null, []);
                                             } else {
-                                                console.log("match",match);
+                                                console.log("match", match);
                                                 callback(null, match);
                                             }
                                         }
