@@ -14000,11 +14000,11 @@ var model = {
                                     countError++;
                                     callback(null, singleData);
                                 } else {
-                                    if (_.isEmpty(singleData["TEAM 1"])) {
+                                    if (_.isEmpty(singleData["TEAM ID 1"])) {
                                         callback(null, singleData);
                                     } else {
                                         var paramData = {};
-                                        paramData.team = _.trim(singleData["TEAM 1"]);
+                                        paramData.team = _.trim(singleData["TEAM ID 1"]);
                                         paramData.sport = singleData.SPORT;
                                         Match.getTeamId(paramData, function (err, complete) {
                                             if (err || _.isEmpty(complete)) {
@@ -14029,11 +14029,11 @@ var model = {
                                     countError++;
                                     callback(null, singleData);
                                 } else {
-                                    if (_.isEmpty(singleData["TEAM 2"])) {
+                                    if (_.isEmpty(singleData["TEAM ID 2"])) {
                                         callback(null, singleData);
                                     } else {
                                         var paramData = {};
-                                        paramData.team = _.trim(singleData["TEAM 2"]);
+                                        paramData.team = _.trim(singleData["TEAM ID 2"]);
                                         paramData.sport = singleData.SPORT;
                                         Match.getTeamId(paramData, function (err, complete) {
                                             if (err || _.isEmpty(complete)) {
@@ -14075,22 +14075,23 @@ var model = {
                                     paramData.scheduleDate = singleData.DATE;
                                     if (!_.isEmpty(singleData.TIME) || singleData.TIME != null) {
                                         paramData.scheduleTime = singleData.TIME;
-                                    } else {
-                                        paramData.scheduleTime = "";
                                     }
-                                    console.log("went for save", paramData.opponentsTeam);
-                                    var matchObj = {
-                                        $set: {
-                                            sport: paramData.sport,
-                                            opponentsTeam: paramData.opponentsTeam,
-                                            scheduleDate: paramData.scheduleDate,
-                                            scheduleTime: paramData.scheduleTime
-                                        }
-                                    };
+                                    // } else {
+                                    //     paramData.scheduleTime = "";
+                                    // }
+                                    // console.log("went for save", paramData.opponentsTeam);
+                                    // var matchObj = {
+                                    //     $set: {
+                                    //         sport: paramData.sport,
+                                    //         opponentsTeam: paramData.opponentsTeam,
+                                    //         scheduleDate: paramData.scheduleDate,
+                                    //         scheduleTime: paramData.scheduleTime
+                                    //     }
+                                    // };
 
                                     Match.update({
                                         matchId: paramData.matchId
-                                    }, matchObj).exec(function (err, match) {
+                                    }, paramData).exec(function (err, match) {
                                         if (err) {
                                             callback(err, null);
                                         } else {
