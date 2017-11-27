@@ -459,18 +459,26 @@ var controller = {
                                     callback(null, complete);
                                 }
                             });
-                        } else if (req.body.resultType == "league-cum-knockout" && req.body.video == "no") {
-                            var knockout = _.groupBy(importData, 'STAGE');
-                            var i = 0;
-                            var excelData;
-                            _.each(knockout, function (n) {
-                                if (i == 0) {
-                                    i++;
+                        } else if (req.body.resultType == "league-cum-knockout" && req.body.video == "no" && req.body.playerType == "team") {
+                            // var knockout = _.groupBy(importData, 'STAGE');
+                            // var i = 0;
+                            // var excelData;
+                            // _.each(knockout, function (n) {
+                            //     if (i == 0) {
+                            //         i++;
+                            //     } else {
+                            //         excelData = n;
+                            //     }
+                            // });
+                            Match.updateLeagueKnockoutTeam(excelData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
                                 } else {
-                                    excelData = n;
+                                    callback(null, complete);
                                 }
                             });
-                            Match.updateKnockoutFootball(excelData, req.body, function (err, complete) {
+                        } else if (req.body.resultType == "league-cum-knockout" && req.body.video == "no" && req.body.playerType == "individual") {
+                            Match.updateLeagueKnockoutIndividual(excelData, req.body, function (err, complete) {
                                 if (err || _.isEmpty(complete)) {
                                     callback(err, null);
                                 } else {
@@ -478,7 +486,7 @@ var controller = {
                                 }
                             });
                         } else if (req.body.resultType == "league-cum-knockout" && req.body.video == "yes") {
-                            Match.updateVideo(excelData, req.body, function (err, complete) {
+                            Match.updateVideo(importData, req.body, function (err, complete) {
                                 if (err || _.isEmpty(complete)) {
                                     callback(err, null);
                                 } else {
@@ -486,7 +494,23 @@ var controller = {
                                 }
                             });
                         } else if (req.body.resultType == "knockout" && req.body.video == "yes") {
-                            Match.updateVideo(excelData, req.body, function (err, complete) {
+                            Match.updateVideo(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else if (req.body.resultType == "knockout" && req.body.playerType == "team") {
+                            Match.updateKnockoutTeam(importData, req.body, function (err, complete) {
+                                if (err || _.isEmpty(complete)) {
+                                    callback(err, null);
+                                } else {
+                                    callback(null, complete);
+                                }
+                            });
+                        } else if (req.body.resultType == "knockout" && req.body.playerType == "individual") {
+                            Match.updateKnockoutIndividual(importData, req.body, function (err, complete) {
                                 if (err || _.isEmpty(complete)) {
                                     callback(err, null);
                                 } else {
