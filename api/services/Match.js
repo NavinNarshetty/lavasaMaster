@@ -14068,6 +14068,8 @@ var model = {
                                         paramData.opponentsTeam.push(objectid(singleData["PARTICIPANT 1"]));
                                         paramData.opponentsTeam.push(objectid(singleData["PARTICIPANT 2"]));
                                     }
+                                    console.log("singleData", singleData);
+
                                     console.log("opponentsTeam", paramData.opponentsTeam);
                                     paramData.sport = singleData.SPORT;
                                     paramData.scheduleDate = singleData.DATE;
