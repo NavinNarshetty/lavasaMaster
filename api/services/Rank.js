@@ -73,7 +73,7 @@ var model = {
 
     getSchoolByRanks: function (callback) {
         Rank.find().sort(Rank.sortingOrder).lean().exec(function (err, data) {
-            var sportsToMerge = ['Tennis', 'Badminton', 'Table Tennis', 'Athletics', 'Swimming']
+            var sportsToMerge = ['Tennis', 'Badminton','Table Tennis', 'Athletics', 'Swimming']
             var sportsFound = [];
             var arr = [];
 
@@ -84,7 +84,7 @@ var model = {
 
                     singleData[sportName] = _.filter(singleData.sportData, function (sport) {
                         console.log(sport.name.indexOf(sportName) == 0);
-                        if (sport.name.indexOf(sportName) != -1) {
+                        if (sport.name.indexOf(sportName) != -1 && !sport.name.indexOf(sportName) > 0) {
                             return sport;
                         }
                     })
