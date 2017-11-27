@@ -14056,7 +14056,7 @@ var model = {
                                         } else {
                                             var paramData = {};
                                             paramData.opponentsTeam = [];
-                                            paramData.matchId = data.matchId;
+                                            paramData.matchId = singleData["MATCH ID"];
                                             paramData.round = _.trim(singleData["ROUND NAME"]);
                                             if (_.isEmpty(singleData["PARTICIPANT 1"]) && _.isEmpty(singleData["PARTICIPANT 2"])) {
                                                 paramData.opponentsTeam = "";
@@ -14087,7 +14087,7 @@ var model = {
                                             if (!_.isEmpty(paramData.opponentsTeam)) {
                                                 Match.update({
                                                     matchId: paramData.matchId
-                                                }, matchObj).exec(function (err, match) {
+                                                }, paramData).exec(function (err, match) {
                                                     if (err) {
                                                         callback(err, null);
                                                     } else {
