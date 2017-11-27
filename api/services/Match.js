@@ -14075,15 +14075,7 @@ var model = {
                                             paramData.scheduleDate = singleData.DATE;
                                             if (!_.isEmpty(singleData.TIME) || singleData.TIME != null) {
                                                 paramData.scheduleTime = singleData.TIME;
-                                            } else {
-                                                paramData.scheduleTime = "";
                                             }
-                                            // console.log("went for save", paramData.opponentsTeam);
-                                            var matchObj = {
-                                                $set: {
-                                                    opponentsTeam: paramData.opponentsTeam,
-                                                }
-                                            };
                                             if (!_.isEmpty(paramData.opponentsTeam)) {
                                                 Match.update({
                                                     matchId: paramData.matchId
@@ -14233,7 +14225,7 @@ var model = {
                                         } else {
                                             var paramData = {};
                                             paramData.opponentsSingle = [];
-                                            paramData.matchId = data.matchId;
+                                            paramData.matchId = singleData["MATCH ID"];
                                             paramData.round = _.trim(singleData["ROUND NAME"]);
                                             if (_.isEmpty(singleData["PARTICIPANT 1"]) && _.isEmpty(singleData["PARTICIPANT 2"])) {
                                                 paramData.opponentsSingle = "";
