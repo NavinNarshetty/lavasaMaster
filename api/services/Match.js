@@ -14065,9 +14065,10 @@ var model = {
                                     } else if (_.isEmpty(singleData["PARTICIPANT 2"])) {
                                         paramData.opponentsTeam.push(singleData["PARTICIPANT 1"]);
                                     } else {
-                                        paramData.opponentsTeam.push(singleData["PARTICIPANT 1"]);
-                                        paramData.opponentsTeam.push(singleData["PARTICIPANT 2"]);
+                                        paramData.opponentsTeam.push(objectid(singleData["PARTICIPANT 1"]));
+                                        paramData.opponentsTeam.push(objectid(singleData["PARTICIPANT 2"]));
                                     }
+                                    console.log("opponentsTeam", paramData.opponentsTeam);
                                     paramData.sport = singleData.SPORT;
                                     paramData.scheduleDate = singleData.DATE;
                                     if (!_.isEmpty(singleData.TIME) || singleData.TIME != null) {
