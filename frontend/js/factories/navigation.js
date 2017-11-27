@@ -1035,11 +1035,20 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                                 console.log(match);
                                 var match1, match2;
 
-                                if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
-                                    match1 = knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar];
-                                }
-                                if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
-                                    match2 = knockout.roundsList[key - 1].match[index * 2 + 1][resultVar.opponentsVar];
+                                if (round.name!="Third Place") {
+                                    if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
+                                        match1 = knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar];
+                                    }
+                                    if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
+                                        match2 = knockout.roundsList[key - 1].match[index * 2 + 1][resultVar.opponentsVar];
+                                    }
+                                } else {
+                                    if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
+                                        match1 = knockout.roundsList[key - 2].match[index * 2][resultVar.opponentsVar];
+                                    }
+                                    if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2 + 1] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
+                                        match2 = knockout.roundsList[key - 2].match[index * 2 + 1][resultVar.opponentsVar];
+                                    }
                                 }
                                 console.log(match[resultVar.opponentsVar], "resultVar.opponentsVar");
                                 match[resultVar.opponentsVar] = sortOpponents(match[resultVar.opponentsVar], match1, match2, key);
