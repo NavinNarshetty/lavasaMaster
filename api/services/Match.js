@@ -11513,6 +11513,7 @@ var model = {
                     });
                 },
                 function (found, callback) {
+                    console.log("data", data);
                     if (data.isKnockout == true) {
                         Match.find({
                             prevMatch: data._id
