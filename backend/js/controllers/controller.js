@@ -5224,26 +5224,28 @@ myApp.controller('AdditionalPaymentCtrl', function ($scope, TemplateService, Nav
         }
     }
     $scope.viewTable = function () {
-
-        $scope.url = "AdditionalPayment/search";
-        // $scope.search = $scope.formData.keyword;
-        $scope.formData.page = $scope.formData.page++;
-        NavigationService.apiCall($scope.url, $scope.formData, function (data) {
-            console.log("data.value", data);
-            $scope.items = data.data.results;
-            _.each($scope.items, function (n) {
-                console.log('N', n);
-                if (n.athleteId.middleName) {
-                    n.athleteName = n.athleteId.firstName + ' ' + n.athleteId.middleName + ' ' + n.athleteId.surname;
-                } else {
-                    n.athleteName = n.athleteId.firstName + ' ' + n.athleteId.surname;
-                }
-                n.sfaId = n.athleteId.sfaId;
-            });
-            $scope.totalItems = data.data.total;
-            $scope.maxRow = data.data.options.count;
-        });
-    }
+        
+                $scope.url = "AdditionalPayment/filter";
+                // $scope.search = $scope.formData.keyword;
+                $scope.formData.page = $scope.formData.page++;
+                NavigationService.apiCall($scope.url, $scope.formData, function (data) {
+                    // console.log("data.value", data);
+                    $scope.items = data.data.results;
+                    _.each($scope.items, function (n) {
+                        // console.log('N', n);
+                        if(n.athleteId){
+                            if (n.athleteId.middleName) {
+                                n.athleteName = n.athleteId.firstName + ' ' + n.athleteId.middleName + ' ' + n.athleteId.surname;
+                            } else {
+                                n.athleteName = n.athleteId.firstName + ' ' + n.athleteId.surname;
+                            }
+                            n.sfaId = n.athleteId.sfaId;
+                        }
+                    });
+                    $scope.totalItems = data.data.total; 
+                    $scope.maxRow = data.data.options.count;
+                });
+            }
     $scope.viewTable();
 
 

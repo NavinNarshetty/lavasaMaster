@@ -549,41 +549,42 @@ var model = {
                 }
             },
 
-            // Stage 3
-            {
-                $lookup: {
-                    "from": "schools",
-                    "localField": "athleteId.school",
-                    "foreignField": "_id",
-                    "as": "athleteId.school"
-                }
-            },
-
-            // Stage 4
-            {
-                $unwind: {
-                    path: "$athleteId.school",
-                    preserveNullAndEmptyArrays: true // optional
-                }
-            },
-
             // Stage 5
             {
                 $match: {
-                    $or: [{
-                            feeType: data.keyword
+                    $or: [
+                        {
+                            "feeType": {
+                             $regex: data.keyword,
+                             $options:"i"
+                            } 
                         },
                         {
-                            "athleteId.sfaId": data.keyword
+                            "athleteId.sfaId": {
+                             $regex: data.keyword,
+                             $options:"i"
+                            } 
                         },
                         {
-                            "athleteId.school.name": {
+                            "athleteId.sfaId": {
+                             $regex: data.keyword,
+                             $options:"i"
+                            } 
+                        },
+                        {
+                            "athleteId.surname": {
                                 $regex: data.keyword,
                                 $options: "i"
                             }
                         },
                         {
-                            "athleteId.atheleteSchoolName": {
+                            "athleteId.firstName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "athleteId.middleName": {
                                 $regex: data.keyword,
                                 $options: "i"
                             }
@@ -621,7 +622,7 @@ var model = {
         async.waterfall([
                 function (callback) {
                     AdditionalPayment.find().lean().exec(function (err, found) {
-                        if (err || _isEmpty(found)) {
+                        if (err || _.isEmpty(found)) {
                             callback(null, {
                                 err: "error found"
                             });
