@@ -3011,6 +3011,7 @@ var model = {
                     final.matchData = found;
                     console.log("final match", final);
                     async.eachSeries(found, function (singleData, callback) {
+                        console.log("singleData", singleData);
                         if (thirdPlaceCount == 0) {
                             if (count < 2) {
                                 match.prev.push(singleData._id);
@@ -3042,13 +3043,13 @@ var model = {
                                     prevMatch: final.finalPrevious[i]
                                 }
                             };
-                            // console.log("row", row, "rangeTotal", rangeTotal);
+                            console.log("row", row, "rangeTotal", rangeTotal);
                             if (final.matchData[row].round != "Third Place") {
                                 Match.update({
                                     _id: id
                                 }, updateObj).exec(
                                     function (err, match) {
-                                        // console.log("updated");
+                                        console.log("updated");
                                     });
                             }
                             i++;
@@ -3077,15 +3078,15 @@ var model = {
                             } else {
                                 if (_.isEmpty(found)) {
                                     callback(null, []);
-                                    // console.log("empty");
+                                    console.log("empty");
                                 } else {
-                                    // console.log("final", found);
+                                    console.log("final", found);
                                     var updateObj = {
                                         $set: {
                                             prevMatch: found.prevMatch
                                         }
                                     };
-                                    // console.log("updateObj", updateObj)
+                                    console.log("updateObj", updateObj)
                                     Match.update({
                                         sport: data.sport,
                                         round: {
@@ -3094,7 +3095,7 @@ var model = {
                                         }
                                     }, updateObj).exec(
                                         function (err, match) {
-                                            // console.log("match", match);
+                                            console.log("match", match);
                                             callback(null, final);
                                         });
                                 }
