@@ -47,6 +47,7 @@ module.exports = mongoose.model('AdditionalPayment', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
+
     paymentMail: function (data, callback) {
         console.log("getting inside", data);
         Athelete.findOne({ //finds one with refrence to id
@@ -526,6 +527,103 @@ var model = {
                     }
                 }
             });
+    },
+
+    getAggregatePipeline: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "athleteId",
+                    "foreignField": "_id",
+                    "as": "athleteId"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athleteId",
+
+                }
+            },
+
+            // Stage 3
+            {
+                $lookup: {
+                    "from": "schools",
+                    "localField": "athleteId.school",
+                    "foreignField": "_id",
+                    "as": "athleteId.school"
+                }
+            },
+
+            // Stage 4
+            {
+                $unwind: {
+                    path: "$athleteId.school",
+                    preserveNullAndEmptyArrays: true // optional
+                }
+            },
+
+            // Stage 5
+            {
+                $match: {
+                    $or: [{
+                            feeType: data.keyword
+                        },
+                        {
+                            "athleteId.sfaId": data.keyword
+                        },
+                        {
+                            "athleteId.school.name": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "athleteId.atheleteSchoolName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        }
+
+                    ]
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
+    filter: function (data, callback) {
+        var maxRow = Config.maxRow;
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var start = (page - 1) * maxRow;
+
+        var pipeLine = Profile.getAggregatePipeline(data);
+        var newPipeLine = _.cloneDeep(pipeLine);
+        newPipeLine.push(
+            // Stage 6
+            {
+                '$skip': parseInt(start)
+            }, {
+                '$limit': maxRow
+            });
+
+        AdditionalPayment.aggregate(newPipeLine, function (err, additionalData) {
+            if (err) {
+                callback(err, "error in mongoose");
+            } else if (_.isEmpty(additionalData)) {
+                callback(null, []);
+            } else {
+                callback(null, additionalData);
+            }
+        });
     },
 
 

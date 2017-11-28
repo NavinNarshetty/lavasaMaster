@@ -11,6 +11,18 @@ var controller = {
             })
         }
     },
+
+    filter: function (req, res) {
+        if (req.body) {
+            AdditionalPayment.filter(req.body, res.callback);
+        } else {
+            res.json({
+                "data": "Body not Found",
+                "value": false
+            })
+        }
+    },
+
     getOne: function (req, res) {
         if (req.body) {
             AdditionalPayment.getOne(req.body, res.callback);
