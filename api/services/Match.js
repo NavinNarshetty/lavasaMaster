@@ -10751,7 +10751,7 @@ var model = {
 
     },
 
-    updateLeagueKnockoutTeam: function (data, callback) {
+    updateLeagueKnockoutTeam: function (importData, data, callback) {
         var countError = 0;
         async.waterfall([
                 function (callback) {
@@ -10854,44 +10854,44 @@ var model = {
                                             callback(null, singleData);
                                         } else {
                                             var excelType = singleData["STAGE"].toLowerCase();
-                                            if (excelType == 'knockout') {
-                                                var paramData = {};
-                                                paramData.opponentsTeam = [];
-                                                paramData.matchId = singleData["MATCH ID"];
-                                                // paramData.matchId = data.matchId;
-                                                paramData.round = singleData["ROUND"];
-                                                if (_.isEmpty(singleData["TEAM NAME 1"]) || _.isEmpty(singleData["TEAM NAME 2"])) {
-                                                    paramData.opponentsTeam = "";
-                                                } else if (_.isEmpty(singleData["TEAM NAME 1"])) {
-                                                    paramData.opponentsTeam.push(singleData["TEAM NAME 2"]);
-                                                } else if (_.isEmpty(singleData["TEAM NAME 2"])) {
-                                                    paramData.opponentsTeam.push(singleData["TEAM NAME 1"]);
-                                                } else {
-                                                    paramData.opponentsTeam.push(singleData["TEAM NAME 1"]);
-                                                    paramData.opponentsTeam.push(singleData["TEAM NAME 2"]);
-                                                }
-                                                paramData.sport = singleData.SPORT;
-                                                paramData.scheduleDate = singleData.DATE;
-                                                paramData.scheduleTime = singleData.TIME;
-                                                paramData.excelType = singleData["STAGE"];
-                                                paramData.video = singleData["VIDEO"];
-                                                paramData.video = singleData["VIDEO TYPE"];
-                                                Match.update({
-                                                    matchId: paramData.matchId
-                                                }, paramData).exec(
-                                                    function (err, complete) {
-                                                        if (err || _.isEmpty(complete)) {
-                                                            callback(null, {
-                                                                error: err,
-                                                                success: singleData
-                                                            });
-                                                        } else {
-                                                            callback(null, singleData);
-                                                        }
-                                                    });
+                                            // if (excelType == 'knockout') {
+                                            var paramData = {};
+                                            paramData.opponentsTeam = [];
+                                            paramData.matchId = singleData["MATCH ID"];
+                                            // paramData.matchId = data.matchId;
+                                            paramData.round = singleData["ROUND"];
+                                            if (_.isEmpty(singleData["TEAM NAME 1"]) || _.isEmpty(singleData["TEAM NAME 2"])) {
+                                                paramData.opponentsTeam = "";
+                                            } else if (_.isEmpty(singleData["TEAM NAME 1"])) {
+                                                paramData.opponentsTeam.push(singleData["TEAM NAME 2"]);
+                                            } else if (_.isEmpty(singleData["TEAM NAME 2"])) {
+                                                paramData.opponentsTeam.push(singleData["TEAM NAME 1"]);
                                             } else {
-
+                                                paramData.opponentsTeam.push(singleData["TEAM NAME 1"]);
+                                                paramData.opponentsTeam.push(singleData["TEAM NAME 2"]);
                                             }
+                                            paramData.sport = singleData.SPORT;
+                                            paramData.scheduleDate = singleData.DATE;
+                                            paramData.scheduleTime = singleData.TIME;
+                                            paramData.excelType = singleData["STAGE"];
+                                            paramData.video = singleData["VIDEO"];
+                                            paramData.video = singleData["VIDEO TYPE"];
+                                            Match.update({
+                                                matchId: paramData.matchId
+                                            }, paramData).exec(
+                                                function (err, complete) {
+                                                    if (err || _.isEmpty(complete)) {
+                                                        callback(null, {
+                                                            error: err,
+                                                            success: singleData
+                                                        });
+                                                    } else {
+                                                        callback(null, singleData);
+                                                    }
+                                                });
+                                            // } else {
+
+                                            // }
                                             callback(null, singleData);
                                         }
                                     }
@@ -10953,7 +10953,7 @@ var model = {
             });
     },
 
-    updateLeagueKnockoutIndividual: function (data, callback) {
+    updateLeagueKnockoutIndividual: function (importData, data, callback) {
         var countError = 0;
         async.waterfall([
                 function (callback) {
@@ -11056,44 +11056,44 @@ var model = {
                                             callback(null, singleData);
                                         } else {
                                             var excelType = singleData["STAGE"].toLowerCase();
-                                            if (excelType == 'knockout') {
-                                                var paramData = {};
-                                                paramData.opponentsTeam = [];
-                                                paramData.matchId = singleData["MATCH ID"];
-                                                // paramData.matchId = data.matchId;
-                                                paramData.round = singleData["ROUND"];
-                                                if (_.isEmpty(singleData["NAME 1"]) || _.isEmpty(singleData["NAME 2"])) {
-                                                    paramData.opponentsTeam = "";
-                                                } else if (_.isEmpty(singleData["NAME 1"])) {
-                                                    paramData.opponentsTeam.push(singleData["NAME 2"]);
-                                                } else if (_.isEmpty(singleData["NAME 2"])) {
-                                                    paramData.opponentsTeam.push(singleData["NAME 1"]);
-                                                } else {
-                                                    paramData.opponentsTeam.push(singleData["NAME 1"]);
-                                                    paramData.opponentsTeam.push(singleData["NAME 2"]);
-                                                }
-                                                paramData.sport = singleData.SPORT;
-                                                paramData.scheduleDate = singleData.DATE;
-                                                paramData.scheduleTime = singleData.TIME;
-                                                paramData.excelType = singleData["STAGE"];
-                                                paramData.video = singleData["VIDEO"];
-                                                paramData.video = singleData["VIDEO TYPE"];
-                                                Match.update({
-                                                    matchId: paramData.matchId
-                                                }, paramData).exec(
-                                                    function (err, complete) {
-                                                        if (err || _.isEmpty(complete)) {
-                                                            callback(null, {
-                                                                error: err,
-                                                                success: singleData
-                                                            });
-                                                        } else {
-                                                            callback(null, singleData);
-                                                        }
-                                                    });
+                                            // if (excelType == 'knockout') {
+                                            var paramData = {};
+                                            paramData.opponentsTeam = [];
+                                            paramData.matchId = singleData["MATCH ID"];
+                                            // paramData.matchId = data.matchId;
+                                            paramData.round = singleData["ROUND"];
+                                            if (_.isEmpty(singleData["NAME 1"]) || _.isEmpty(singleData["NAME 2"])) {
+                                                paramData.opponentsTeam = "";
+                                            } else if (_.isEmpty(singleData["NAME 1"])) {
+                                                paramData.opponentsTeam.push(singleData["NAME 2"]);
+                                            } else if (_.isEmpty(singleData["NAME 2"])) {
+                                                paramData.opponentsTeam.push(singleData["NAME 1"]);
                                             } else {
-
+                                                paramData.opponentsTeam.push(singleData["NAME 1"]);
+                                                paramData.opponentsTeam.push(singleData["NAME 2"]);
                                             }
+                                            paramData.sport = singleData.SPORT;
+                                            paramData.scheduleDate = singleData.DATE;
+                                            paramData.scheduleTime = singleData.TIME;
+                                            paramData.excelType = singleData["STAGE"];
+                                            paramData.video = singleData["VIDEO"];
+                                            paramData.video = singleData["VIDEO TYPE"];
+                                            Match.update({
+                                                matchId: paramData.matchId
+                                            }, paramData).exec(
+                                                function (err, complete) {
+                                                    if (err || _.isEmpty(complete)) {
+                                                        callback(null, {
+                                                            error: err,
+                                                            success: singleData
+                                                        });
+                                                    } else {
+                                                        callback(null, singleData);
+                                                    }
+                                                });
+                                            // } else {
+
+                                            // }
                                             callback(null, singleData);
                                         }
                                     }
