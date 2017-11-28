@@ -47,6 +47,7 @@ module.exports = mongoose.model('AdditionalPayment', schema);
 
 var exports = _.cloneDeep(require("sails-wohlig-service")(schema));
 var model = {
+
     paymentMail: function (data, callback) {
         console.log("getting inside", data);
         Athelete.findOne({ //finds one with refrence to id
@@ -525,6 +526,149 @@ var model = {
                         callback(null, excelData);
                     }
                 }
+            });
+    },
+
+    getAggregatePipeline: function (data) {
+        var pipeline = [
+            // Stage 1
+            {
+                $lookup: {
+                    "from": "atheletes",
+                    "localField": "athleteId",
+                    "foreignField": "_id",
+                    "as": "athleteId"
+                }
+            },
+
+            // Stage 2
+            {
+                $unwind: {
+                    path: "$athleteId",
+
+                }
+            },
+
+            // Stage 5
+            {
+                $match: {
+                    $or: [
+                        {
+                            "feeType": {
+                             $regex: data.keyword,
+                             $options:"i"
+                            } 
+                        },
+                        {
+                            "athleteId.sfaId": {
+                             $regex: data.keyword,
+                             $options:"i"
+                            } 
+                        },
+                        {
+                            "athleteId.sfaId": {
+                             $regex: data.keyword,
+                             $options:"i"
+                            } 
+                        },
+                        {
+                            "athleteId.surname": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "athleteId.firstName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        },
+                        {
+                            "athleteId.middleName": {
+                                $regex: data.keyword,
+                                $options: "i"
+                            }
+                        }
+
+                    ]
+                }
+            },
+
+        ];
+        return pipeline;
+    },
+
+    filter: function (data, callback) {
+        var maxRow = Config.maxRow;
+        var page = 1;
+        if (data.page) {
+            page = data.page;
+        }
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['athleteId', 'feeType'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                asc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        async.waterfall([
+                function (callback) {
+                    AdditionalPayment.find().lean().exec(function (err, found) {
+                        if (err || _.isEmpty(found)) {
+                            callback(null, {
+                                err: "error found"
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.err) {
+                        callback(null, err);
+                    } else {
+                        var pipeLine = AdditionalPayment.getAggregatePipeline(data);
+                        var newPipeLine = _.cloneDeep(pipeLine);
+                        newPipeLine.push(
+                            // Stage 6
+                            {
+                                '$skip': parseInt(options.start)
+                            }, {
+                                '$limit': maxRow
+                            });
+
+                        AdditionalPayment.aggregate(newPipeLine, function (err, additionalData) {
+                            if (err) {
+                                callback(err, "error in mongoose");
+                            } else if (_.isEmpty(additionalData)) {
+                                callback(null, []);
+                            } else {
+                                var finalData = {};
+                                finalData.results = additionalData;
+                                finalData.total = found.length;
+                                finalData.options = options;
+                                callback(null, finalData);
+                            }
+                        });
+                    }
+                }
+            ],
+            function (err, complete) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, complete);
+                }
+
             });
     },
 

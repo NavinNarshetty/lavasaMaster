@@ -363,6 +363,84 @@ myApp.factory('ResultSportInitialization', function () {
                 };
             }
             return obj;
+        },
+
+        nullOrEmptyTo0:function(sportName,format){
+            switch (sportName) {
+                case "Basketball":
+                    format.teamResults.quarterPoints[0].basket=format.teamResults.quarterPoints[0].basket||0;
+                    format.teamResults.quarterPoints[1].basket=format.teamResults.quarterPoints[1].basket||0;
+                    format.teamResults.quarterPoints[2].basket=format.teamResults.quarterPoints[2].basket||0;
+                    format.teamResults.quarterPoints[3].basket=format.teamResults.quarterPoints[3].basket||0;
+                    format.teamResults.finalGoalPoints = format.teamResults.finalGoalPoints||0;
+                    break;
+
+                case "Handball":
+                    format.teamResults.halfPoints = format.teamResults.halfPoints || 0;
+                    format.teamResults.finalPoints = format.teamResults.finalPoints||0;
+                    format.teamResults.shotsOnGoal = format.teamResults.shotsOnGoal||0;
+                    format.teamResults.penalty = format.teamResults.penalty||0;
+                    format.teamResults.saves = format.teamResults.saves||0;
+                    break;
+
+                case "Hockey":
+                    format.teamResults.halfPoints = format.teamResults.halfPoints||0;
+                    format.teamResults.finalPoints = format.teamResults.finalPoints||0;
+                    format.teamResults.shotsOnGoal = format.teamResults.shotsOnGoal||0;
+                    format.teamResults.totalShots = format.teamResults.totalShots||0;
+                    format.teamResults.penalty = format.teamResults.penalty||0;
+                    format.teamResults.penaltyPoints = format.teamResults.penaltyPoints||0;
+                    format.teamResults.penaltyCorners = format.teamResults.penaltyCorners||0;
+                    format.teamResults.penaltyStroke = format.teamResults.penaltyStroke||0;
+                    format.teamResults.saves = format.teamResults.saves||0;
+                    format.teamResults.fouls = format.teamResults.fouls||0;
+                    break;
+
+                case "Kabaddi":
+                    format.teamResults.halfPoints = format.teamResults.halfPoints||0;
+                    format.teamResults.finalPoints = format.teamResults.finalPoints||0;
+                    format.teamResults.superTackle = format.teamResults.superTackle||0;
+                    format.teamResults.allOut = format.teamResults.allOut||0;
+                    break;
+
+                case "Water Polo":
+                    format.teamResults.quarterPoints[0].points=format.teamResults.quarterPoints[0].points||0;
+                    format.teamResults.quarterPoints[1].points=format.teamResults.quarterPoints[1].points||0;
+                    format.teamResults.quarterPoints[2].points=format.teamResults.quarterPoints[2].points||0;
+                    format.teamResults.quarterPoints[3].points=format.teamResults.quarterPoints[3].points||0;
+                    format.teamResults.finalGoalPoints = format.teamResults.finalGoalPoints||0;
+                    format.teamResults.shotsOnGoal = format.teamResults.shotsOnGoal||0;
+                    format.teamResults.totalShots = format.teamResults.totalShots||0;
+                    format.teamResults.penalty = format.teamResults.penalty||0;
+                    format.teamResults.penaltyPoints = format.teamResults.penaltyPoints||0;
+                    format.teamResults.penalty = format.teamResults.penalty||0;
+                    format.teamResults.saves = format.teamResults.saves||0;
+                    break;
+
+                case "Volleyball":
+                    format.teamResults.set = [];
+                    format.teamResults.fouls = "";
+                    format.teamResults.spike = "";
+                    format.teamResults.block = "";
+                    break;
+
+                case "Football":
+                    format.formation = "";
+                    format.teamResults.halfPoints = 0;
+                    format.teamResults.finalPoints = 0;
+                    format.teamResults.shotsOnGoal = 0;
+                    format.teamResults.totalShots = 0;
+                    format.teamResults.corners = 0;
+                    format.teamResults.penalty = 0;
+                    format.teamResults.saves = 0;
+                    format.teamResults.fouls = 0;
+                    format.teamResults.offSide = 0;
+                    format.teamResults.cleanSheet = 0;
+                    format.teamResults.noShow = 0;
+                    format.teamResults.walkover = 0;
+                    break;
+            };
+            return format;
         }
 
     }

@@ -368,7 +368,7 @@ var model = {
                     var athleteProfile = {};
                     // console.log("profile", profile);
                     if (profile.isSchoolRegistered == false && profile.isSponsered == false) {
-                        AdditionalPayment.find({
+                        AdditionalPayment.findOne({
                             athleteId: data.athleteId
                         }).lean().exec(function (err, found) {
                             if (err) {
@@ -445,11 +445,7 @@ var model = {
                                     if (profile.athlete.isBib) {
                                         athleteProfile.isBib = profile.athlete.isBib;
                                     }
-                                    if (found.paymentStatus == "Paid") {
-                                        athleteProfile.additionalPaymentStatus = "Paid";
-                                    } else {
-                                        athleteProfile.additionalPaymentStatus = "Pending";
-                                    }
+                                    athleteProfile.additionalPaymentStatus = found.paymentStatus;
                                     athleteProfile.issport = profile.issport;
                                     athleteProfile.schoolPaymentMode = profile.paymentMode;
                                     athleteProfile.schoolPaymentStatus = profile.schoolPaymentStatus;

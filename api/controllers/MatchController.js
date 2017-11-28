@@ -470,7 +470,7 @@ var controller = {
                             //         excelData = n;
                             //     }
                             // });
-                            Match.updateLeagueKnockoutTeam(excelData, req.body, function (err, complete) {
+                            Match.updateLeagueKnockoutTeam(importData, req.body, function (err, complete) {
                                 if (err || _.isEmpty(complete)) {
                                     callback(err, null);
                                 } else {
@@ -478,7 +478,7 @@ var controller = {
                                 }
                             });
                         } else if (req.body.resultType == "league-cum-knockout" && req.body.video == "no" && req.body.playerType == "individual") {
-                            Match.updateLeagueKnockoutIndividual(excelData, req.body, function (err, complete) {
+                            Match.updateLeagueKnockoutIndividual(importData, req.body, function (err, complete) {
                                 if (err || _.isEmpty(complete)) {
                                     callback(err, null);
                                 } else {

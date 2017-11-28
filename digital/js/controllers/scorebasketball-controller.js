@@ -291,8 +291,16 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
   //3-complete and save
   //
   $scope.saveMatch = function (match, flag) {
+    var url = "";
+
     function save() {
-      NavigationService.saveMatchPp(match, $scope.matchData.resultVar, function (data) {
+      if ($stateParams.drawFormat == "Knockout") {
+        url = "match/updateResult";
+      } else if ($stateParams.drawFormat == "League cum Knockout") {
+        url = "match/updateLeagueKnockout";
+      }
+
+      NavigationService.saveMatchPp(match, $scope.matchData.resultVar, url, function (data) {
         if (data.value == true) {
           //for saving players selected
           if (flag == '1') {
@@ -302,7 +310,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
             //Do Nothing
           } else if (flag == '3') {
             if ($scope.drawFormat == 'League cum Knockout') {
-              $state.go('league-knockoutTeam',{
+              $state.go('league-knockoutTeam', {
                 drawFormat: $stateParams.drawFormat,
                 id: $stateParams.sport
               })
@@ -319,11 +327,18 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       });
     }
 
-
-    $scope.matchComplete=function(){
+    $scope.matchComplete = function () {
       $scope.match[resultVar].status = "IsCompleted";
       $interval.cancel(promise);
-      save($scope.match,3);
+      console.log("resultVar", $scope.match[resultVar]);
+      _.each($scope.match[resultVar].teams, function (team, tk) {
+        team = ResultSportInitialization.nullOrEmptyTo0($scope.match.sportsName, team);
+        if ($scope.match[resultVar].teams.length - 1 == tk) {
+          console.log("resultVar", $scope.match[resultVar]);
+           save();
+        }
+      });
+     
       completeMatchModal.close();
     };
 
@@ -333,7 +348,6 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
         if (match[resultVar].scoreSheet.length != 0) {
           if (match[resultVar].winner && match[resultVar].winner.player && match[resultVar].winner.player != "") {
             // match[resultVar].status = "IsCompleted";
-
             completeMatchModal = $uibModal.open({
               animation: true,
               scope: $scope,
