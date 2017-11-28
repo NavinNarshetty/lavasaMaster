@@ -25,7 +25,7 @@
     <!-- SPONSER CONTENT END -->
 
     <!-- BANNER IMAGE -->
-    <div class="individual-banner-image">
+    <div class="individual-banner-image" ng-if="sponsorData.video.videoimage">
       <div class="individual-banner-holder relate">
         <a class="fancybox.iframe" fancybox href="{{sponsorData.video.link | linkvideo:sponsorData.video.videotype}}">
         <img ng-src="{{sponsorData.video.videoimage | serverimage2 }}" alt="Banner" class="img-responsive">
@@ -40,7 +40,7 @@
     <!-- SWIPER -->
     <div class="row">
       <div class="col-md-offset-2 col-md-8">
-        <div class="individual-swiper-holder">
+        <div class="individual-swiper-holder" ng-if="sponsorCard">
           <div class="swiper-container">
             <div class="swiper-wrapper">
               <div class="swiper-slide" ng-repeat="card in sponsorCard  track by $index">
@@ -87,7 +87,7 @@
     <!-- SWIPER END -->
 
     <!-- MASONARY -->
-    <div class="individual-sponsergalleryholder">{{gallery | json}}
+    <div class="individual-sponsergalleryholder" ng-if="sponsorGallery">
       <div class="row" masonry preserve-order>
         <div class="col-md-4 col-sm-6 col-xs-6 masonry-brick" ng-repeat="gallery in sponsorGallery track by $index">
           <!-- <a fancybox href="{{image.img}}"> -->
