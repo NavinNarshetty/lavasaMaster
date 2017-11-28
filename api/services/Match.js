@@ -10876,23 +10876,23 @@ var model = {
                                             paramData.excelType = singleData["STAGE"];
                                             paramData.video = singleData["VIDEO"];
                                             paramData.video = singleData["VIDEO TYPE"];
-                                            Match.update({
-                                                matchId: paramData.matchId
-                                            }, paramData).exec(
-                                                function (err, complete) {
-                                                    if (err || _.isEmpty(complete)) {
-                                                        callback(null, {
-                                                            error: err,
-                                                            success: singleData
-                                                        });
-                                                    } else {
-                                                        callback(null, singleData);
-                                                    }
-                                                });
-                                            // } else {
-
-                                            // }
-                                            // callback(null, singleData);
+                                            if (_.isEmpty(paramData.opponentsTeam)) {
+                                                Match.update({
+                                                    matchId: paramData.matchId
+                                                }, paramData).exec(
+                                                    function (err, complete) {
+                                                        if (err || _.isEmpty(complete)) {
+                                                            callback(null, {
+                                                                error: err,
+                                                                success: singleData
+                                                            });
+                                                        } else {
+                                                            callback(null, singleData);
+                                                        }
+                                                    });
+                                            } else {
+                                                callback(null, singleData);
+                                            }
                                         }
                                     }
                                 ],
