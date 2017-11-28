@@ -2990,7 +2990,7 @@ var model = {
                                 $options: "i"
                             }
                         }).lean().sort({
-                            createdAt: -1
+                            createdAt: 1
                         }).exec(function (err, found) {
                             if (err) {
                                 callback(err, null);
