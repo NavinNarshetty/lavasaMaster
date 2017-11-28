@@ -10854,11 +10854,9 @@ var model = {
                                             callback(null, singleData);
                                         } else {
                                             var excelType = singleData["STAGE"].toLowerCase();
-                                            // if (excelType == 'knockout') {
                                             var paramData = {};
                                             paramData.opponentsTeam = [];
                                             paramData.matchId = singleData["MATCH ID"];
-                                            // paramData.matchId = data.matchId;
                                             paramData.round = singleData["ROUND"];
                                             if (_.isEmpty(singleData["TEAM NAME 1"]) || _.isEmpty(singleData["TEAM NAME 2"])) {
                                                 paramData.opponentsTeam = "";
@@ -10911,16 +10909,12 @@ var model = {
                 function (singleData, callback) {
                     async.concatSeries(singleData, function (n, callback) {
                             console.log("n", n);
-                            if (countError != 0 && n.error == null) {
-                                console.log("inside", n._id, "count", countError);
-                                Match.remove({
-                                    _id: n.success._id
-                                }).exec(function (err, found) {
-                                    if (err || _.isEmpty(found)) {
-                                        callback(err, null);
-                                    } else {
-                                        callback(null, n);
-                                    }
+                            var excelType = n.STAGE.toLowerCase();
+                            if (excelType == 'knockout') {
+                                data.isLeagueKnockout = true;
+                                data.sport = n.SPORT;
+                                Match.addPreviousMatch(data, function (err, sportData) {
+                                    callback(null, n);
                                 });
                             } else {
                                 callback(null, n);
@@ -10929,20 +10923,7 @@ var model = {
                         function (err, singleData) {
                             callback(null, singleData);
                         });
-
                 },
-                function (singleData, callback) {
-                    console.log("singleData", singleData);
-                    if (singleData.error) {
-                        callback(null, singleData);
-                    } else {
-                        data.isLeagueKnockout = true;
-                        data.sport = singleData[0].success.sport;
-                        Match.addPreviousMatch(data, function (err, sportData) {
-                            callback(null, singleData);
-                        });
-                    }
-                }
             ],
             function (err, results) {
                 if (err || _.isEmpty(results)) {
