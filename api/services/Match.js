@@ -3034,19 +3034,20 @@ var model = {
                     });
                 },
                 function (final, callback) {
-                    var range = parseInt(data.range) + 1;
-                    var rangeTotal = data.rangeTotal;
-                    var i = final.finalPrevious.length;
+                    // var range = parseInt(data.range) + 1;
+                    // var rangeTotal = data.rangeTotal;
+                    var i = 0;
                     var row = 0;
                     var ThirdPlace = [];
                     async.eachSeries(final.finalPrevious, function (singleData, callback) {
+                            console.log("finalPrevious", singleData);
                             var id = final.matchData[row]._id;
                             var updateObj = {
                                 $set: {
                                     prevMatch: final.finalPrevious[i]
                                 }
                             };
-                            console.log("row", row, "rangeTotal", rangeTotal);
+                            // console.log("row", row, "rangeTotal", rangeTotal);
                             if (final.matchData[row].round != "Third Place") {
                                 Match.update({
                                     _id: id
