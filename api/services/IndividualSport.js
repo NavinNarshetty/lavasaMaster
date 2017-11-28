@@ -2374,7 +2374,7 @@ var model = {
                             weight: "$sport.weight.name",
                             gender: "$sport.gender",
                             mobile: "$athleteId.mobile",
-                            email:"$athleteId.email"
+                            email: "$athleteId.email"
                         }
                     }
                 }
@@ -2409,12 +2409,13 @@ var model = {
                         var basicInfo = {};
                         var event;
                         var age;
+                        var weightData;
                         basicInfo.sport = [];
                         var count = 0;
                         _.each(mainData.info, function (n) {
                             console.log("info", n);
                             console.log("count", count);
-                            obj.Date =moment(n.createdAt).format('DD/MM/YYYY');
+                            obj.Date = moment(n.createdAt).format('DD/MM/YYYY');
                             obj.SFAID = n.sfaid;
                             if (n.middlename) {
                                 obj.Athlete_Full_Name = n.firstname + " " + n.middlename + " " + n.surname;
@@ -2433,21 +2434,21 @@ var model = {
                             if (count == 0) {
                                 age = n.agegroup;
                                 event = age + " - " + n.eventname;
+
                                 if (n.weight) {
-                                    obj.Weight_Category = n.weight;
-                                } else {
-                                    obj.Weight_Category = "";
+                                    weightData = n.weight;
                                 }
                                 count++;
                             } else {
                                 age = n.agegroup;
                                 event = event + " , " + age + " - " + n.eventname;
-                                if (n.weight) {
-                                    obj.Weight_Category = n.weight;
-                                } else {
-                                    obj.Weight_Category = "";
+                                if (n.weight && _.isEmpty(weightData)) {
+                                    weightData = n.weight;
+                                } else if (n.weight && !_.isEmpty(weightData)) {
+                                    weightData = weightData + "-" + n.weight;
                                 }
                             }
+                            obj.Weight_Category = weightData;
                             obj.Event_Category = event;
                             if (n.createdby) {
                                 obj.CreatedBy = n.createdby;
