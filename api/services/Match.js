@@ -11457,7 +11457,7 @@ var model = {
                                 resultHockey: data.resultHockey
                             }
                         };
-                    } else if (data.resultsVolleyball) {
+                    } else if (data.resultVolleyball) {
                         var matchObj = {
                             $set: {
                                 resultVolleyball: data.resultVolleyball
