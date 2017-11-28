@@ -2970,7 +2970,7 @@ var model = {
                         Match.find({
                             sport: data.sport
                         }).lean().sort({
-                            createdAt: 1
+                            createdAt: -1
                         }).exec(function (err, found) {
                             if (err) {
                                 callback(err, null);
@@ -2990,7 +2990,7 @@ var model = {
                                 $options: "i"
                             }
                         }).lean().sort({
-                            createdAt: 1
+                            createdAt: -1
                         }).exec(function (err, found) {
                             if (err) {
                                 callback(err, null);
@@ -3036,7 +3036,7 @@ var model = {
                 function (final, callback) {
                     var range = parseInt(data.range) + 1;
                     var rangeTotal = data.rangeTotal;
-                    var i = 0;
+                    var i = final.finalPrevious.length;
                     var row = 0;
                     var ThirdPlace = [];
                     async.eachSeries(final.finalPrevious, function (singleData, callback) {
@@ -3055,7 +3055,7 @@ var model = {
                                         console.log("updated");
                                     });
                             }
-                            i++;
+                            i--;
                             row++;
                             callback(null, final);
                         },
@@ -11096,7 +11096,7 @@ var model = {
                     if (singleData.error) {
                         callback(null, singleData);
                     } else {
-                        Match.addPreviousMatch(data, function (err, sportData) {
+                        Match.addPreviousMatchUpdate(data, function (err, sportData) {
                             callback(null, singleData);
                         });
                     }
