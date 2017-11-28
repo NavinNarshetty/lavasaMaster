@@ -45,16 +45,12 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
                 callback(data)
             });
         },
-        saveMatchPp: function (match, resultVar, callback) {
-            // console.log(formData, 'saveMatch');
-            // console.log(match);
-            // console.log(resultVar);
+        saveMatchPp: function (match, resultVar, url, callback) {
             var obj = {};
             obj[resultVar] = match[resultVar];
             obj.matchId = match.matchId;
-            // console.log(obj);
             $http({
-                url: adminurl + "match/updateResult",
+                url: adminurl + url,
                 method: "POST",
                 data: obj
             }).success(function (data) {
@@ -64,7 +60,7 @@ myApp.factory('NavigationService', function ($http, ResultSportInitialization) {
         saveFootball: function (formData, callback) {
             // console.log(formData, 'saveMatch');
             $http({
-                url: adminurl + "match/updateFootball",
+                url: adminurl + "match/updateLeagueKnockout",
                 method: "POST",
                 data: formData
             }).success(function (data) {
