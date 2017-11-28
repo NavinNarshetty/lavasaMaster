@@ -11093,7 +11093,7 @@ var model = {
                     if (singleData.error) {
                         callback(null, singleData);
                     } else {
-                        Match.addPreviousMatchUpdate(data, function (err, sportData) {
+                        Match.addPreviousMatch(data, function (err, sportData) {
                             callback(null, singleData);
                         });
                     }
