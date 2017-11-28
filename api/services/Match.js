@@ -10916,21 +10916,28 @@ var model = {
                                 data.sport = n.SPORT;
                                 if (thirdplace == "third place") {
                                     data.thirdPlace = "yes";
-                                } else {
-                                    data.thirdPlace = "no";
                                 }
-                                console.log("data", data);
-                                Match.addPreviousMatch(data, function (err, sportData) {
-                                    callback(null, n);
-                                });
+                                callback(null, singleData);
                             } else {
-                                callback(null, n);
+                                callback(null, singleData);
                             }
                         },
                         function (err, singleData) {
                             callback(null, singleData);
                         });
                 },
+                function (singleData, callback) {
+                    console.log("singleData", singleData);
+                    if (singleData.error) {
+                        callback(null, singleData);
+                    } else {
+                        // data.isLeagueKnockout = true;
+                        // data.sport = singleData[0].success.sport;
+                        Match.addPreviousMatch(data, function (err, sportData) {
+                            callback(null, singleData);
+                        });
+                    }
+                }
             ],
             function (err, results) {
                 if (err || _.isEmpty(results)) {
