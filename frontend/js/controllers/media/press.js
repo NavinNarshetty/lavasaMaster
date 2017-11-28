@@ -55,6 +55,7 @@ myApp.controller('MediaPressCtrl', function ($scope, TemplateService, Navigation
     //         }
     //     });
     // };
+    console.log("window", window.location);
     $scope.loadMedia = function (year) {
         if (year == '2015' || year == '2016') {
             window.open("https://mumbai.sfanow.in/media-press", '_self');

@@ -11,6 +11,23 @@
 </section>
 <section class="bottom-padding">
     <div class="container">
+        <div class="row" ng-if="sfaCity === 'Mumbai' && type ==='school'">
+            <div class="text-center mt25">
+                <div class="col-md-12 col-xs-12 col-sm-6 text-c-m">
+                    <h4 class="text-up color-blue display-inline">year</h4>
+                    <div class="display-inline">
+                        <div class="sfa-select">
+                            <select ng-change="loadMedia(filter.year);" class="select" ng-model="filter.year">
+                                        <option value="2015">SFA MUMBAI {{year15}}</option>
+                                        <option value="2016">SFA MUMBAI {{year16}}</option>
+                                        <option value="2017">SFA MUMBAI {{eventYear}}</option>
+                                    </select>
+                            <span class="only-border"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-md-12">
                 <div class="text-center mt25">

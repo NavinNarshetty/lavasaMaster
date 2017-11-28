@@ -273,13 +273,19 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
         },
 
         getStudentProfile: function (id, callback) {
+            var dataObj = {};
+            var resStr1 = '';
+            resStr1 = id.substr(0, 4);
+            if (resStr1 == 'MA16') {
+                dataObj.sfaId = id;
+            } else {
+                dataObj.athleteId = id;
+            }
             $http({
                 url: adminUrl2 + 'profile/getAthleteProfile',
                 method: 'POST',
                 withCredentials: true,
-                data: {
-                    "athleteId": id
-                }
+                data: dataObj,
             }).then(function (data) {
                 callback(data.data);
             });
@@ -1035,7 +1041,7 @@ myApp.factory('NavigationService', function ($http, $window, $q, $timeout, $log,
                                 console.log(match);
                                 var match1, match2;
 
-                                if (round.name!="Third Place") {
+                                if (round.name != "Third Place") {
                                     if (knockout && knockout.roundsList[key - 1] && knockout.roundsList[key - 1].match[index * 2] && knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar]) {
                                         match1 = knockout.roundsList[key - 1].match[index * 2][resultVar.opponentsVar];
                                     }

@@ -218,13 +218,18 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     TemplateService.title = "School Profile"; //This is the Title of the Website
     $scope.navigation = NavigationService.getNavigation();
     var year = new Date();
+    $scope.resString = $stateParams.id.substr(0, 4);
     $scope.filter = {};
     $scope.schooldata = {};
     $scope.sportsStudentGender = {};
     $scope.dropdowns = {};
     $scope.dropdowns.category = [];
     $scope.filterStatistics = {};
-    $scope.filterStatistics.school = $stateParams.id;
+    if ($scope.resString == 'MS16') {
+        $scope.filterStatistics.sfaId = $stateParams.id;
+    } else {
+        $scope.filterStatistics.school = $stateParams.id;
+    }
     $scope.filterStatistics.pagenumber = 1;
     $scope.filterStatistics.pagesize = 8;
     $scope.table = {};
@@ -233,7 +238,12 @@ myApp.controller('SchoolProfileCtrl', function ($scope, TemplateService, Navigat
     $scope.sportContingent = {};
     $scope.schoolData = {};
     $scope.schoolData.page = 1;
-    $scope.schoolData.school = $stateParams.id;
+    if ($scope.resString == 'MS16') {
+        $scope.schoolData.sfaId = $stateParams.id;
+    } else {
+        $scope.schoolData.school = $stateParams.id;
+    }
+
     $scope.schoolData.maxSize = 8;
     // $scope.allYears = NavigationService.getAllYears();
     configService.getDetail(function (data) {

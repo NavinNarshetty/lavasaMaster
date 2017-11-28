@@ -117,7 +117,12 @@ myApp.controller('MediaGalleryCtrl', function ($scope, TemplateService, Navigati
     };
     $scope.loadMedia = function (year) {
         if (year == '2015' || year == '2016') {
-            window.open("https://mumbai.sfanow.in/media-gallery/" + $stateParams.type + "/" + $stateParams.folder, '_self');
+            if ($stateParams.type && $stateParams.folder) {
+                window.open("https://mumbai.sfanow.in/media-gallery/" + $stateParams.type + "/" + $stateParams.folder, '_self');
+            } else {
+                window.open("https://mumbai.sfanow.in/media-gallery", '_self');
+            }
+
         }
         $scope.mediaArr = undefined;
         NavigationService.getLimitedMedia($scope.filter, function (response) {
