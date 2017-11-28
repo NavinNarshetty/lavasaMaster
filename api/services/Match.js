@@ -11412,6 +11412,7 @@ var model = {
     },
 
     updateLeagueKnockout: function (data, callback) {
+        console.log("data", data);
         var updateObj = {};
         var updateObj1 = {};
         async.waterfall([
@@ -11425,6 +11426,7 @@ var model = {
                             if (_.isEmpty(found)) {
                                 callback(null, []);
                             } else {
+                                console.log("match found", found);
                                 callback(null, found);
                             }
                         }
