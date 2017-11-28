@@ -2990,7 +2990,7 @@ var model = {
                                 $options: "i"
                             }
                         }).lean().sort({
-                            createdAt: 1
+                            createdAt: -1
                         }).exec(function (err, found) {
                             if (err) {
                                 callback(err, null);
@@ -3040,7 +3040,7 @@ var model = {
                     var row = 0;
                     var ThirdPlace = [];
                     async.eachSeries(final.finalPrevious, function (singleData, callback) {
-                            console.log("finalPrevious", singleData);
+                            console.log("finalPrevious", singleData, "row", final.matchData[row]._id);
                             var id = final.matchData[row]._id;
                             var updateObj = {
                                 $set: {
