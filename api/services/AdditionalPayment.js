@@ -603,27 +603,72 @@ var model = {
         if (data.page) {
             page = data.page;
         }
-        var start = (page - 1) * maxRow;
+        var field = data.field;
+        var options = {
+            field: data.field,
+            filters: {
+                keyword: {
+                    fields: ['athleteId', 'feeType'],
+                    term: data.keyword
+                }
+            },
+            sort: {
+                asc: 'createdAt'
+            },
+            start: (page - 1) * maxRow,
+            count: maxRow
+        };
+        async.waterfall([
+                function (callback) {
+                    AdditionalPayment.find().lean().exec(function (err, found) {
+                        if (err || _isEmpty(found)) {
+                            callback(null, {
+                                err: "error found"
+                            });
+                        } else {
+                            callback(null, found);
+                        }
+                    });
+                },
+                function (found, callback) {
+                    if (found.err) {
+                        callback(null, err);
+                    } else {
+                        var pipeLine = AdditionalPayment.getAggregatePipeline(data);
+                        var newPipeLine = _.cloneDeep(pipeLine);
+                        newPipeLine.push(
+                            // Stage 6
+                            {
+                                '$skip': parseInt(options.start)
+                            }, {
+                                '$limit': maxRow
+                            });
 
-        var pipeLine = AdditionalPayment.getAggregatePipeline(data);
-        var newPipeLine = _.cloneDeep(pipeLine);
-        newPipeLine.push(
-            // Stage 6
-            {
-                '$skip': parseInt(start)
-            }, {
-                '$limit': maxRow
+                        AdditionalPayment.aggregate(newPipeLine, function (err, additionalData) {
+                            if (err) {
+                                callback(err, "error in mongoose");
+                            } else if (_.isEmpty(additionalData)) {
+                                callback(null, []);
+                            } else {
+                                var finalData = {};
+                                finalData.results = additionalData;
+                                finalData.total = found.length;
+                                finalData.options = options;
+                                callback(null, finalData);
+                            }
+                        });
+                    }
+                }
+            ],
+            function (err, complete) {
+                if (err) {
+                    console.log(err);
+                    callback(err, null);
+                } else {
+                    callback(null, complete);
+                }
+
             });
-
-        AdditionalPayment.aggregate(newPipeLine, function (err, additionalData) {
-            if (err) {
-                callback(err, "error in mongoose");
-            } else if (_.isEmpty(additionalData)) {
-                callback(null, []);
-            } else {
-                callback(null, additionalData);
-            }
-        });
     },
 
 
