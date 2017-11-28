@@ -10910,9 +10910,16 @@ var model = {
                     async.concatSeries(singleData, function (n, callback) {
                             console.log("n", n);
                             var excelType = n.STAGE.toLowerCase();
+                            var thirdplace = n.round.toLowerCase();
                             if (excelType == 'knockout') {
                                 data.isLeagueKnockout = true;
                                 data.sport = n.SPORT;
+                                if (thirdplace == "third place") {
+                                    data.thirdPlace = "yes";
+                                } else {
+                                    data.thirdPlace = "no";
+                                }
+                                console.log("data", data);
                                 Match.addPreviousMatch(data, function (err, sportData) {
                                     callback(null, n);
                                 });
