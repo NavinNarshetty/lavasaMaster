@@ -2849,6 +2849,7 @@ var model = {
                     }
 
                     final.matchData = found;
+                    console.log("final match", final);
                     async.eachSeries(found, function (singleData, callback) {
                         if (thirdPlaceCount == 0) {
                             if (count < 2) {
@@ -10931,8 +10932,6 @@ var model = {
                     if (singleData.error) {
                         callback(null, singleData);
                     } else {
-                        // data.isLeagueKnockout = true;
-                        // data.sport = singleData[0].success.sport;
                         Match.addPreviousMatch(data, function (err, sportData) {
                             callback(null, singleData);
                         });
