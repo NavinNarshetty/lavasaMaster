@@ -332,7 +332,7 @@ myApp.controller('ScoringCtrl', function ($scope, TemplateService, NavigationSer
       $interval.cancel(promise);
       console.log("resultVar", $scope.match[resultVar]);
       _.each($scope.match[resultVar].teams, function (team, tk) {
-        team = ResultSportInitialization.nullOrEmptyTo0("Basketball", team);
+        team = ResultSportInitialization.nullOrEmptyTo0($scope.match.sportsName, team);
         if ($scope.match[resultVar].teams.length - 1 == tk) {
           console.log("resultVar", $scope.match[resultVar]);
            save();
