@@ -10910,7 +10910,7 @@ var model = {
                     async.concatSeries(singleData, function (n, callback) {
                             console.log("n", n);
                             var excelType = n.STAGE.toLowerCase();
-                            var thirdplace = n.round.toLowerCase();
+                            var thirdplace = n.ROUND.toLowerCase();
                             if (excelType == 'knockout') {
                                 data.isLeagueKnockout = true;
                                 data.sport = n.SPORT;
