@@ -3056,7 +3056,7 @@ var model = {
                                         console.log("updated");
                                     });
                             }
-                            i--;
+                            i++;
                             row++;
                             callback(null, final);
                         },
