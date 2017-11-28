@@ -11416,23 +11416,23 @@ var model = {
         var updateObj = {};
         var updateObj1 = {};
         async.waterfall([
+                // function (callback) {
+                //     Match.findOne({
+                //         matchId: data.matchId
+                //     }).exec(function (err, found) {
+                //         if (err) {
+                //             callback(err, null);
+                //         } else {
+                //             if (_.isEmpty(found)) {
+                //                 callback(null, []);
+                //             } else {
+                //                 console.log("match found", found);
+                //                 callback(null, found);
+                //             }
+                //         }
+                //     });
+                // },
                 function (callback) {
-                    Match.findOne({
-                        matchId: data.matchId
-                    }).exec(function (err, found) {
-                        if (err) {
-                            callback(err, null);
-                        } else {
-                            if (_.isEmpty(found)) {
-                                callback(null, []);
-                            } else {
-                                console.log("match found", found);
-                                callback(null, found);
-                            }
-                        }
-                    });
-                },
-                function (found, callback) {
                     if (data.resultFootball) {
                         var matchObj = {
                             $set: {
@@ -11476,7 +11476,6 @@ var model = {
                             }
                         };
                     }
-
                     Match.update({
                         matchId: data.matchId
                     }, matchObj).exec(
@@ -11507,6 +11506,7 @@ var model = {
                                 } else if (!_.isEmpty(found.opponentsTeam)) {
                                     data.isTeam = true;
                                 }
+                                console.log("match found", found);
                                 console.log("found", found.excelType);
                                 var type = found.excelType.toLowerCase();
                                 console.log("type", type);
