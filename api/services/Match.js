@@ -2877,18 +2877,21 @@ var model = {
                     var ThirdPlace = [];
                     async.eachSeries(final.finalPrevious, function (singleData, callback) {
                             var id = final.matchData[row]._id;
+                            console.log("id", id);
+                            console.log("final.finalPrevious[i]", final.finalPrevious[i]);
                             var updateObj = {
                                 $set: {
                                     prevMatch: final.finalPrevious[i]
                                 }
                             };
-                            // console.log("row", row, "rangeTotal", rangeTotal);
+                            console.log("row", row, "rangeTotal", rangeTotal);
+
                             if (final.matchData[row].round != "Third Place") {
                                 Match.update({
                                     _id: id
                                 }, updateObj).exec(
                                     function (err, match) {
-                                        // console.log("updated");
+                                        console.log("updated");
                                     });
                             }
                             i++;
