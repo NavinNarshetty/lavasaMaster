@@ -737,7 +737,7 @@ var model = {
                 function (callback) {
                     if (!_.isEmpty(data.sfaId)) {
                         var matchObj = {
-                            sfaId: "MS16" + data.sfaId
+                            sfaId: data.sfaId
                         };
                     } else {
                         var matchObj = {

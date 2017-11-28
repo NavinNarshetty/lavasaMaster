@@ -11431,44 +11431,43 @@ var model = {
                     });
                 },
                 function (found, callback) {
-
-                    if (_.isEmpty(data.resultFootball)) {
+                    if (data.resultFootball) {
                         var matchObj = {
                             $set: {
                                 resultFootball: data.resultFootball
                             }
                         };
-                    } else if (_.isEmpty(data.resultBasketball)) {
+                    } else if (data.resultBasketball) {
                         var matchObj = {
                             $set: {
                                 resultBasketball: data.resultBasketball
                             }
                         };
-                    } else if (_.isEmpty(data.resultHandball)) {
+                    } else if (data.resultHandball) {
                         var matchObj = {
                             $set: {
                                 resultHandball: data.resultHandball
                             }
                         };
-                    } else if (_.isEmpty(data.resultHockey)) {
+                    } else if (data.resultHockey) {
                         var matchObj = {
                             $set: {
                                 resultHockey: data.resultHockey
                             }
                         };
-                    } else if (_.isEmpty(data.resultsVolleyball)) {
+                    } else if (data.resultsVolleyball) {
                         var matchObj = {
                             $set: {
                                 resultVolleyball: data.resultVolleyball
                             }
                         };
-                    } else if (_.isEmpty(data.resultWaterPolo)) {
+                    } else if (data.resultWaterPolo) {
                         var matchObj = {
                             $set: {
                                 resultWaterPolo: data.resultWaterPolo
                             }
                         };
-                    } else if (_.isEmpty(data.resultKabaddi)) {
+                    } else if (data.resultKabaddi) {
                         var matchObj = {
                             $set: {
                                 resultKabaddi: data.resultKabaddi

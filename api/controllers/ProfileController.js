@@ -40,7 +40,7 @@ var controller = {
                     function (callback) {
                         if (!_.isEmpty(req.sfaId)) {
                             var matchObj = {
-                                sfaId: "MA16" + req.body.sfaId
+                                sfaId: req.body.sfaId
                             };
                         } else {
                             var matchObj = {
