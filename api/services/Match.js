@@ -11055,6 +11055,24 @@ var model = {
                                                         }
                                                     });
                                             } else {
+                                                var obj = {
+                                                    $set: {
+                                                        round: paramData.round
+                                                    }
+                                                }
+                                                Match.update({
+                                                    matchId: paramData.matchId
+                                                }, obj).exec(
+                                                    function (err, complete) {
+                                                        if (err || _.isEmpty(complete)) {
+                                                            callback(null, {
+                                                                error: err,
+                                                                success: singleData
+                                                            });
+                                                        } else {
+                                                            callback(null, singleData);
+                                                        }
+                                                    });
                                                 callback(null, singleData);
                                             }
                                         }
