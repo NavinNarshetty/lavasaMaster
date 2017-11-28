@@ -75,7 +75,8 @@
             <tr ng-repeat="school in rankTable| limitTo:rankTable.tableLimit track by $index" id="rank{{$index}}">
               <td>
                 <div class="">
-                  {{$index + 1}}
+                  <span ng-if="school.totalPoints != 0">{{$index + 1}}</span>
+                  <span ng-if="school.totalPoints == 0">NA</span>
                 </div>
               </td>
               <td>
@@ -210,7 +211,8 @@
                       <tr ng-repeat="item in sportTable | limitTo:sportTable.tableLimit track by $index">
                         <td>
                           <div class="">
-                            {{$index + 1}}
+                            <span ng-if="item.totalPoints != 0">{{$index + 1}}</span>
+                            <span ng-if="item.totalPoints == 0">NA</span>
                           </div>
                         </td>
                         <td>

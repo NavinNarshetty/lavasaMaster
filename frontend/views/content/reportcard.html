@@ -1,3 +1,380 @@
-<div class="reportcard-page">
-  REPORT CARD
+<div class="">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="text-right">
+                    <button class="btn" ng-click="printFunction('printSectionId')"> Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="reportcard-page d-opensans-regular" id="printSectionId">
+    <!-- REPORT CARD HEADER -->
+    <section class="">
+        <div class="container">
+            <div class="clearfix reportcard-header">
+                <div class="pull-right">
+                    <div class="report-cupcard">
+                        <div class="report-cupholder">
+                            <img src="img/medal-icon/trophy-big.png" alt="SFA Trophy | Sports For All" title="SFA Trophy | Sports For All" class="img-responsive">
+                        </div>
+                        <div class="report-cuprank">
+                            <span>School Rank</span>
+                            <span class="report-ranktext d-teko-semibold"><span class="report-ranktext-big">99</span> <span class="report-ranktext-small">/<span>100</span></span>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="">
+                    <div class="reportcard-school d-fjalla-one">OPENING CEREMONY | LAUNCH OF THE #UNSTOPPABLE </div>
+                    <div class="reportcard-sfaid">Sfa ID: MS1024</div>
+                </div>
+            </div>
+            <div class="report-greenbar">
+                <div class="report-yellowbar"></div>
+            </div>
+        </div>
+    </section>
+    <!-- REPORT CARD HEADER END -->
+    <!-- REPORT SUMMARY SECTION -->
+    <section class="report-detailsection">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-5 col-sm-5 col-xs-12">
+                    <!-- CONTINGENT BOX -->
+                    <div class="report-content report-contingentholder">
+                        <div class="report-titles">Contingent</div>
+                        <div class="report-contingenttotal">
+                            <div class="">
+                                <div class="report-contingentblock">
+                                    <div class="report-contingentcount">321</div>
+                                    Total Athletes
+                                </div>
+                                <div class="report-contingentblock">
+                                    <div class="reportcontingent-gender">
+                                        <div class="report-gendericon">
+                                            <img src="img/medal-icon/male-small.png" alt="Male Athletes | SFA Championship" class="img-responsive">
+                                        </div>
+                                        <span class="report-contingentcount report-countmale">71</span>
+                                    </div>
+                                    <div class="reportcontingent-gender">
+                                        <div class="report-gendericon">
+                                            <img src="img/medal-icon/female-small.png" alt="Female Athletes | SFA Championship" class="img-responsive">
+                                        </div>
+                                        <span class="report-contingentcount report-countfemale">71</span>
+                                    </div>
+                                    <span class="display-block">
+                    GENder Ratio: <span><span>3</span> : <span>2</span></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="reportcontingent-sportlist">
+                            <ul class="list-unstyled">
+                                <li ng-repeat="list in lists track by $index">
+                                    <div class="clearfix">
+                                        <div class="pull-right">
+                                            <div class="report-contingentprogress">
+                                                <div class="progress progress-statistics">
+                                                    <div class="progress-bar reportgender-stats male-statistics" role="progressbar" style="width:45%">
+                                                        <span class="pull-right"> <span class="male-statisticsnumber">200</span></span>
+                                                    </div>
+                                                    <div class="progress-bar reportgender-stats female-statistics" role="progressbar" style="width:55%">
+                                                        <span class="pull-left"><span class="female-statisticsnumber">200</span></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="report-noshowcontingent">
+                                              <span>200</span>
+                                            </div>
+                                        </div>
+                                        <div class="text-uppercase">
+                                            Table tennis
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <!-- CONTINGENT KEY -->
+                        <div class="reportcontingent-keycard">
+                          <ul class="list-unstyled">
+                            <li>
+                              <div class="reportcontingent-key">
+                                <div class="report-keybox keybox-male"></div>
+                                <span>Male Participation</span>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="reportcontingent-key">
+                                <div class="report-keybox keybox-female"></div>
+                                <span>Female Participation</span>
+                              </div>
+                            </li>
+                            <li>
+                              <div class="reportcontingent-key">
+                                <div class="report-keybox"></div>
+                                <span>Registered but did not participate</span>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <!-- CONTINGENT KEY END -->
+                    </div>
+                    <!-- CONTINGENT BOX END -->
+                </div>
+                <div class="col-md-7 col-sm-7 col-xs-12">
+                    <!-- PERFORMANCE SUMMARY -->
+                    <div class="report-content report-performaneholder ">
+                        <div class="report-titles">Performance Summary</div>
+                        <div class="reportperformance-content">
+                            <!-- CUP AND RANK -->
+                            <div class="report-cupcard">
+                                <div class="report-cupholder">
+                                    <img src="img/medal-icon/trophy-big.png" alt="SFA Trophy | Sports For All" title="SFA Trophy | Sports For All" class="img-responsive">
+                                </div>
+                                <div class="report-cuprank">
+                                    <div class="report-schoolranktitle">School Rank</div>
+                                    <div class="report-schoolrank">Not Applicable</div>
+                                </div>
+                                <p>Your School did not win a medal at the SFA Championship 2017-18, </br> hence ineligible for a School Rank</p>
+                            </div>
+                            <!-- CUP AND RANK END -->
+                            <!-- MEDAL LIST -->
+                            <div class="reportperformance-medallist">
+                                <div class="report-medalflex">
+                                    <div class="report-medalcol">
+                                        <div class="">
+                                            <div class="report-medalholder">
+                                                <img src="img/medal-icon/gold-blue.png" alt="Gold Medal | SFA Championship" title="Gold Medal | SFA Championship" class="img-responsive">
+                                            </div>
+                                            <div class="report-rankholder">
+                                                <span class="report-ranktext-big d-teko-semibold">00</span>
+                                                <span class="inline-block">
+                          <span>Out of</span>
+                                                <span class="display-block d-teko-semibold">1568</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="report-medalcol">
+                                        <div class="">
+                                            <div class="report-medalholder">
+                                                <img src="img/medal-icon/silver-blue.png" alt="Silver Medal | SFA Championship" title="Silver Medal | SFA Championship" class="img-responsive">
+                                            </div>
+                                            <div class="report-rankholder">
+                                                <span class="report-ranktext-big d-teko-semibold">00</span>
+                                                <span class="inline-block">
+                          <span>Out of</span>
+                                                <span class="display-block d-teko-semibold">1568</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="report-medalcol">
+                                        <div class="">
+                                            <div class="report-medalholder">
+                                                <img src="img/medal-icon/bronze-blue.png" alt="Bronze Medal | SFA Championship" title="Bronze Medal | SFA Championship" class="img-responsive">
+                                            </div>
+                                            <div class="report-rankholder">
+                                                <span class="report-ranktext-big d-teko-semibold">00</span>
+                                                <span class="inline-block">
+                          <span>Out of</span>
+                                                <span class="display-block d-teko-semibold">1568</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- MEDAL LIST END -->
+                        </div>
+                    </div>
+                    <!-- PERFORMANCE SUMMARY END -->
+                    <!-- MEDALS TALLY -->
+                    <div class="report-content report-medalsummaryholder ">
+                        <div class="report-titles">Medal Tally</div>
+                        <div class="report-medaltableholder table-responsive hide">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <td>
+                                            <div class="text-uppercase">
+                                                Total Medals
+                                                <span class="report-ranktext report-medalcount d-teko-semibold"><span class="report-ranktext-big">99</span> <span class="report-ranktext-small">/<span>100</span></span>
+                                                </span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                <div class="report-medalholder">
+                                                    <img src="img/medal-icon/gold-blue.png" alt="Gold Medal | SFA Championship" title="Gold Medal | SFA Championship" class="img-responsive">
+                                                </div>
+                                                <div class="report-rankholder">
+                                                    <span class="report-ranktext-big d-teko-semibold">08</span>
+                                                    <span class="inline-block">
+                            <span>Out of</span>
+                                                    <span class="display-block d-teko-semibold">1568</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                <div class="report-medalholder">
+                                                    <img src="img/medal-icon/silver-blue.png" alt="Silver Medal | SFA Championship" title="Silver Medal | SFA Championship" class="img-responsive">
+                                                </div>
+                                                <div class="report-rankholder">
+                                                    <span class="report-ranktext-big d-teko-semibold">08</span>
+                                                    <span class="inline-block">
+                            <span>Out of</span>
+                                                    <span class="display-block d-teko-semibold">1568</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                <div class="report-medalholder">
+                                                    <img src="img/medal-icon/bronze-blue.png" alt="Bronze Medal | SFA Championship" title="Bronze Medal | SFA Championship" class="img-responsive">
+                                                </div>
+                                                <div class="report-rankholder">
+                                                    <span class="report-ranktext-big d-teko-semibold">08</span>
+                                                    <span class="inline-block">
+                            <span>Out of</span>
+                                                    <span class="display-block d-teko-semibold">1568</span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="">
+                                                Your Rank
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="list in lists track by $index">
+                                        <td>
+                                            <div class="report-medal-td reporttable-sportdetails">
+                                                <span class="reporttable-sportcount">08</span> <span>Table Tennis</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="report-medal-td">333</div>
+                                        </td>
+                                        <td>
+                                            <div class="report-medal-td">333</div>
+                                        </td>
+                                        <td>
+                                            <div class="report-medal-td">333</div>
+                                        </td>
+                                        <td>
+                                            <div class="report-medal-td"><span>333</span> / <span>500</span></div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!-- MEDALS TALLY END -->
+                    <div class="report-content report-schoolsummaryholder">
+                      <div class="report-summarycard">
+                        <ul class="list-unstyled">
+                          <li>
+                            <div class="">
+                              No Show: 5%
+                            </div>
+                          </li>
+                          <li>
+                            <div class="">
+                              Highest Participation: <span ng-repeat="list in lists| limitTo:4 track by $index">Table Tennis <span>,</span></span>
+                            </div>
+                          </li>
+                          <li>
+                            <div class="">
+                              Least Participation: <span ng-repeat="list in lists| limitTo:4 track by $index">Table Tennis <span>,</span></span>
+                            </div>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="report-wingraph"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12">
+                <div class="report-content">
+                  <span class="text-uppercase color-sportprimary d-opensans-semibold">Sports Participated:</span> <span><span>03</span> / <span>26</span></span>
+                </div>
+                <div class="report-content">
+                  <p class="text-uppercase m-clear color-sportprimary d-opensans-semibold">Did Not Participate In:</p>
+                  <div class=""><span ng-repeat="list in lists| limitTo:4 track by $index">Table Tennis <span>,</span></span></div>
+                </div>
+              </div>
+            </div>
+        </div>
+    </section>
+    <!-- REPORT SUMMARY SECTION END -->
+    <section class="report-schoolperformance-section">
+      <div class="container">
+        <div class="report-schoolheader">
+          Your School's Performance Vs. Top Performers at SFA Mumbai 2016
+        </div>
+        <div class="reportsummary-schooltable">
+          <div class="reportschool-tableholder table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <td>
+                    <div class="reporttable-schoolheader">
+                      School Name
+                    </div>
+                  </td>
+                  <td>
+                    <div class="reporttable-schoolheader">
+                      Criteria
+                    </div>
+                  </td>
+                  <td>
+                    <div class="text-center reporttable-schoolheader">
+                      Top Performance</div>
+                  </td>
+                  <td>
+                    <div class="text-center reporttable-schoolheader">
+                      Your Performance
+                    </div>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="list in lists track by $index">
+                  <td>
+                    <div class="">
+                      Ryan International High School, Kharghar
+                    </div>
+                  </td>
+                  <td>
+                    <div class="">
+                      Maximum Sports Participated
+                    </div>
+                  </td>
+                  <td>
+                    <div class="">
+                      3
+                    </div>
+                  </td>
+                  <td>
+                    <div class="">
+                      26
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </section>
 </div>

@@ -9,6 +9,10 @@ $sport-lightblue:#00aaff !default;
 $sport-grey: #e1e1e1 !default;
 $sport-darkgrey: #757575 !default;
 $brand-green: #0eda85 !default; //green
+$light-blue:#00aaff !default;
+$light-orange:#ffad25 !default;
+$bg-color-male: #99ddff !default;
+$bg-color-female: #ffdea8 !default;
 // COLORS END
 // COMMON CLASSES
 .full-height {
@@ -1728,4 +1732,345 @@ $tickerDuration: 60s;
 // RESULTS PAGE END
 
 // REPORT CARD PAGE
+.reportcard-page{
+  min-height: 100vh;
+  padding: 0px 0 50px;
+}
+.reportcard-header{
+  background-color: $sport-primary;
+  padding: 20px;
+  margin-top: 10px;
+}
+.report-greenbar{
+  width: 100%;
+  background-color: $brand-green;
+}
+.report-yellowbar{
+  width: 40%;
+  height: 20px;
+  background-color: $brand-warning;
+  position: relative;
+  &:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -20px;
+    border-right: 20px solid transparent;
+    border-bottom: 20px solid $brand-warning;
+  }
+}
+.reportcard-school{
+  color: #fff;
+  font-size: 24px;
+  text-transform: uppercase;
+}
+.reportcard-sfaid{
+  color: $sport-lightblue;
+  font-size: 21px;
+  text-transform: uppercase;
+}
+.report-cupholder{
+  width: 48px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.report-cuprank {
+  width: auto;
+  display: inline-block;
+  color: #fff;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.report-ranktext{
+  display: block;
+  line-height: 1;
+}
+.report-ranktext-big{
+  font-size: 36px;
+}
+.report-ranktext-small{
+  font-size: 27px;
+}
+.report-detailsection{
+  padding: 20px 0;
+}
+.report-titles {
+  margin: 10px 0;
+  color: $sport-primary;
+  font-size: 24px;
+  text-transform: uppercase;
+  @extend .d-fjalla-one;
+}
+.report-content{
+  padding: 0px 15px;
+  margin: 20px 0;
+}
+.report-medaltableholder{
+  .table{
+    > thead{
+      border: 1px solid #000;
+      >tr{
+        >td{
+          padding: 10px 8px;
+          vertical-align: bottom;
+        }
+      }
+    }
+    >tbody{
+      tr{
+        background-color: transparent;
+        >td{
+          padding: 0 8px;
+          border: none;
+          border-bottom: 2px solid #eee;
+          text-transform: uppercase;
+          &:first-child{
+            border: none;
+          }
+        }
+      }
+      .report-medal-td{
+        padding-top: 15px;
+        line-height: 1.4;
+      }
+    }
+  }
+}
+.report-medalholder{
+  width: 18px;
+  display: inline-block;
+}
+.report-medalcount{
+  color: $sport-primary;
+}
+.report-rankholder{
+  width: calc(100% - 22px);
+  display: inline-block;
+  font-size: 15px;
+  line-height: 1;
+  text-transform: uppercase;
+
+  .report-ranktext-big{
+    color: $sport-primary;
+  }
+}
+.reporttable-sportdetails{
+  border-bottom: 2px solid $brand-green;
+  margin-right: 5px;
+  text-align: left;
+}
+.reporttable-sportcount{
+  padding: 0px 5px;
+  background-color: $brand-green;
+}
+.report-contingenttotal{
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #000;
+}
+.report-contingentblock{
+  width: 49%;
+  display: inline-block;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.report-contingentcount{
+  font-size: 40px;
+  color: $sport-primary;
+  @extend .d-teko-semibold;
+}
+.report-countmale{
+  color: $light-blue;
+  font-size: 36px;
+  vertical-align: middle;
+}
+.report-countfemale{
+  color: $light-orange;
+  font-size: 36px;
+  vertical-align: middle;
+}
+.reportcontingent-gender{
+  width: 49%;
+  margin-bottom: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.report-gendericon{
+  width: 20px;
+  margin-right: 5px;
+  display: inline-block;
+  vertical-align: middle;
+}
+.reportperformance-content{
+  .report-cupholder{
+    width: 65px;
+    margin-bottom: 10px;
+  }
+  .report-cupcard{
+    padding: 20px 30px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+  }
+  .report-cuprank{
+    padding: 0px 15px;
+    color: #000;
+    text-align: left;
+  }
+}
+.report-schoolranktitle{
+  font-size: 16px;
+}
+.report-schoolrank{
+  color: $sport-primary;
+  font-size: 30px;
+  @extend .d-fjalla-one;
+}
+.reportperformance-medallist{
+  padding: 10px 30px;
+  border-bottom: 1px solid #ccc;
+
+  .report-medalholder{
+    width: 25px;
+  }
+  .report-rankholder{
+    width: calc(100% - 30px);
+    font-size: 16px;
+  }
+  .report-ranktext-big{
+    font-size: 48px;
+  }
+}
+.report-medalflex{
+  display: flex;
+}
+.report-medalcol{
+  flex: auto;
+  flex-wrap: wrap;
+}
+.report-contingentprogress{
+  width: 200px;
+  display: inline-block;
+  vertical-align: middle;
+
+  .progress{
+    border-radius: 0px;
+    margin-bottom: 15px;
+    background-color: transparent;
+  }
+  .reportgender-stats{
+    color: #000;
+    min-width: 20%;
+    max-width: 80%;
+  }
+  .male-statistics{
+    padding: 0px 5px;
+    background-color: $bg-color-male;
+  }
+  .female-statistics{
+    padding: 0px 5px;
+    background-color: $bg-color-female;
+  }
+}
+.report-noshowcontingent {
+  padding: 0 5px;
+  margin: 0 10px 15px;
+  background: #ccc;
+  display: inline-block;
+  vertical-align: middle;
+}
+.reportcontingent-keycard{
+  padding: 10px;
+  border: 1px solid #000;
+
+  ul{
+    margin: 0;
+  }
+}
+.report-keybox {
+    width: 15px;
+    height: 15px;
+    margin-bottom: 10px;
+    display: inline-block;
+    background: #ccc;
+    vertical-align: middle;
+}
+.keybox-male{
+  background-color: $bg-color-male;
+}
+.keybox-female{
+  background-color: $bg-color-female;
+}
+.report-wingraph{
+  width: 30%;
+  height: 100px;
+  border: 1px solid #000;
+  border-radius: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.report-summarycard{
+  max-width: 65%;
+  padding: 10px;
+  margin: 0 5px;
+  border: 1px solid #000;
+  display: inline-block;
+  vertical-align: middle;
+}
+.report-schoolheader {
+  padding: 15px;
+  display: inline-block;
+  background: $sport-lightblue;
+  position: relative;
+  color: #fff;
+  font-size: 24px;
+  text-transform: uppercase;
+  &:after{
+    content: '';
+    position: absolute;
+    top: 0;
+    right: -64px;
+    border-right: 64px solid transparent;
+    border-bottom: 64px solid $sport-lightblue;
+  }
+}
+.reportsummary-schooltable{
+  padding: 30px;
+  background-color: $sport-primary;
+}
+.reporttable-schoolheader {
+  color: #00aaff;
+  font-size: 18px;
+  text-transform: uppercase;
+}
+.reportschool-tableholder{
+  .table{
+    >tbody{
+      color: #fff;
+      >tr{
+        >td{
+          border: none;
+        }
+      }
+    }
+  }
+  .table-stiped{
+    >thead{
+      >tr{
+        >td{
+          border: none;
+        }
+      }
+    }
+  }
+  .table-striped > tbody > tr:nth-of-type(odd){
+    background-color: #172675;
+    // background-color: rgba(255,255,255,0.3);
+  }
+  .table-striped > tbody > tr:nth-of-type(even){
+    background-color: transparent;
+  }
+}
 // REPORT CARD PAGE END
