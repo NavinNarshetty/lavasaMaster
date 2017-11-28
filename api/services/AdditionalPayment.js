@@ -605,7 +605,7 @@ var model = {
         }
         var start = (page - 1) * maxRow;
 
-        var pipeLine = Profile.getAggregatePipeline(data);
+        var pipeLine = AdditionalPayment.getAggregatePipeline(data);
         var newPipeLine = _.cloneDeep(pipeLine);
         newPipeLine.push(
             // Stage 6
